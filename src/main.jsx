@@ -60,6 +60,28 @@ const apps = [
 
 const initialTabs = [{ id: 'workbench', label: '工作台', icon: Home24Regular, pinned: true }];
 
+const messageEntries = [
+  { id: 'msg-1', source: '任务', type: '执行提醒', sender: '陈伟', time: '今天 10:12', title: '完成设备点检复核', content: '3 号球磨机点检任务已完成，请确认复核结果。', attachment: '任务表单', formKind: 'task', read: false, icon: ClipboardTask24Regular, tone: 'blue' },
+  { id: 'msg-2', source: '流程', type: '待你审批', sender: '系统通知', time: '今天 09:38', title: '矿山应急照明设备采购申请', content: '该流程已流转至你，请在今天内完成审批。', attachment: '审批流表单', formKind: 'approval', read: false, icon: ApprovalsApp24Regular, tone: 'orange' },
+  { id: 'msg-3', source: '预警', type: '超期提醒', sender: '安环部', time: '昨天 16:45', title: '南区排水泵隐患整改复查', content: '整改期限临近，请及时查看现场复查情况。', attachment: '预警处置表单', formKind: 'warning', read: false, icon: ErrorCircle24Regular, tone: 'red' },
+  { id: 'msg-4', source: '任务', type: '任务分派', sender: '李明', time: '昨天 14:20', title: '平巷凿岩作业隐患排查任务', content: '你已被添加为执行人，请按要求完成岗位检查。', attachment: '任务表单', formKind: 'task', read: false, icon: ShieldCheckmark24Regular, tone: 'green' },
+  { id: 'msg-5', source: '系统', type: '系统通知', sender: '系统通知', time: '7 月 28 日 09:16', title: '生产日报已同步完成', content: '南区生产日报数据已归档，可进入生产管理查看。', attachment: '系统通知', formKind: 'system', read: true, icon: CheckmarkCircle24Regular, tone: 'blue' },
+];
+
+const taskEntries = [
+  { id: 'task-1', name: '完成设备点检复核', publishedAt: '今天 08:30', plannedAt: '今天 10:00', deadline: '今天 17:30', initiator: '陈伟', executor: '张宇', status: '待执行', attachment: '设备点检任务表' },
+  { id: 'task-2', name: '平巷凿岩作业隐患排查', publishedAt: '昨天 16:20', plannedAt: '今天 09:00', deadline: '今天 16:00', initiator: '李明', executor: '张宇', status: '执行中', attachment: '岗位隐患排查表' },
+  { id: 'task-3', name: '南区排水泵巡检', publishedAt: '昨天 14:10', plannedAt: '今天 13:30', deadline: '明天 10:00', initiator: '设备管理部', executor: '张宇', status: '待执行', attachment: '设备巡检记录表' },
+  { id: 'task-4', name: '提交第二季度风险排查记录', publishedAt: '7 月 28 日 11:05', plannedAt: '7 月 30 日 09:00', deadline: '7 月 30 日 18:00', initiator: '安环部', executor: '张宇', status: '待执行', attachment: '风险排查记录表' },
+];
+
+const processEntries = [
+  { id: 'flow-1', name: '矿山应急照明设备采购申请', initiator: '王建国', initiatedAt: '今天 09:12', currentNode: '部门负责人审批', approver: '张宇', status: '待审批', amount: '86,500 元', department: '机电管理部', urgency: '常规' },
+  { id: 'flow-2', name: '南区 2# 采场动火作业申请', initiator: '李明', initiatedAt: '今天 08:46', currentNode: '安全管理部审批', approver: '张宇', status: '待审批', amount: '不涉及', department: '生产管理部', urgency: '紧急' },
+  { id: 'flow-3', name: '碎矿车间停机检修计划', initiator: '赵磊', initiatedAt: '昨天 15:28', currentNode: '设备平台主管审批', approver: '刘海', status: '审批中', amount: '128,000 元', department: '设备管理部', urgency: '常规' },
+  { id: 'flow-4', name: '外协队入场资格审核', initiator: '周敏', initiatedAt: '昨天 10:20', currentNode: '安环部备案', approver: '孙宁', status: '审批中', amount: '不涉及', department: '安全管理部', urgency: '常规' },
+];
+
 const recentApps = [
   { name: '设备管理', time: '今天 10:26', icon: Wrench24Regular, tone: 'orange' },
   { name: '安全管理', time: '昨天 16:40', icon: ErrorCircle24Regular, tone: 'green' },
@@ -86,13 +108,64 @@ function AppNav({ active, onChange }) {
   </aside>;
 }
 
-function ApplicationTabs({ tabs, activeTab, onSelect, onClose }) {
+function ApplicationTabs({ tabs, activeTab, onSelect, onClose, onOpenMessages }) {
   return <header className="application-tabs" aria-label="应用页签">
     <div className="tabs-scroll" role="tablist" aria-label="已打开应用">{tabs.map(({ id, label, icon: Icon, pinned }) => <div className={activeTab === id ? 'application-tab active' : 'application-tab'} key={id}>
       <button role="tab" aria-selected={activeTab === id} onClick={() => onSelect(id)}><Icon/><span>{label}</span></button>
       {!pinned ? <button className="close-tab" aria-label={`关闭 ${label}`} onClick={() => onClose(id)}><DismissRegular/></button> : null}
-    </div>)}</div>
+    </div>)}</div><button className="message-entry" aria-label="消息中心" onClick={onOpenMessages}><Chat24Regular/><span>消息</span><b>4</b></button>
   </header>;
+}
+
+function MessageAttachmentDialog({ message, onClose }) {
+  const [submitted, setSubmitted] = useState(false);
+  if (!message) return null;
+  const kind = message.formKind;
+  const labels = { task: '任务表单', approval: '审批流表单', warning: '预警处置表单', system: '消息详情' };
+  return <div className="message-dialog-layer" onMouseDown={onClose} role="presentation"><section className="message-form-dialog" role="dialog" aria-modal="true" aria-labelledby="message-form-title" onMouseDown={(event) => event.stopPropagation()}><button className="message-dialog-close" aria-label="关闭消息表单" onClick={onClose}><DismissRegular/></button><header><span>{labels[kind]}</span><h2 id="message-form-title">{message.title}</h2><p>{message.content}</p></header>{submitted ? <div className="message-submit-success"><CheckmarkCircle24Regular/><h3>已完成处理</h3><p>当前为演示状态，提交内容已记录在本次会话中。</p><button onClick={onClose}>关闭</button></div> : kind === 'task' ? <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true); }}><div className="message-form-grid"><label>任务名称<input defaultValue={message.title} required /></label><label>执行人<input defaultValue="张宇" required /></label><label>截止时间<input type="date" defaultValue="2026-07-30" required /></label><label>任务状态<select defaultValue="已完成"><option>待处理</option><option>处理中</option><option>已完成</option></select></label></div><label className="message-form-wide">执行说明<textarea rows="3" defaultValue="现场点检已完成，等待复核确认。" /></label><footer><button type="button" onClick={onClose}>取消</button><button className="message-form-primary" type="submit">确认任务</button></footer></form> : kind === 'approval' ? <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true); }}><div className="approval-summary"><span>申请人<b>机电管理部</b></span><span>申请金额<b>￥28,600.00</b></span><span>当前节点<b>张宇审批</b></span></div><label className="message-form-wide">审批意见<textarea rows="4" placeholder="请输入审批意见" required /></label><footer><button type="button" onClick={onClose}>退回</button><button className="message-form-primary" type="submit">同意并提交</button></footer></form> : kind === 'warning' ? <form onSubmit={(event) => { event.preventDefault(); setSubmitted(true); }}><div className="warning-summary"><span><b>预警等级</b><strong>重要</strong></span><span><b>预警位置</b>南区排水泵房</span><span><b>触发时间</b>昨天 16:45</span></div><label className="message-form-wide">处置措施<textarea rows="4" placeholder="填写现场核查情况与处置措施" required /></label><footer><button type="button" onClick={onClose}>暂不处理</button><button className="message-form-primary" type="submit">确认处置</button></footer></form> : <div className="message-submit-success"><CheckmarkCircle24Regular/><h3>消息已阅读</h3><p>该消息不包含需要处理的业务表单。</p><button onClick={onClose}>关闭</button></div>}</section></div>;
+}
+
+function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
+  const [source, setSource] = useState('全部');
+  const [type, setType] = useState('全部');
+  const [status, setStatus] = useState('未读');
+  const [selectedMessage, setSelectedMessage] = useState(null);
+  const filteredMessages = messages.filter((message) => (source === '全部' || message.source === source) && (type === '全部' || message.type === type) && (status === '全部' || (status === '未读' ? !message.read : message.read)));
+  const unreadCount = messages.filter((message) => !message.read).length;
+  return <section className="message-center" aria-labelledby="message-center-title"><div className="message-path"><button onClick={onReturn}>工作台</button><ChevronRight24Regular/><strong id="message-center-title">互动消息</strong></div><header className="message-header"><div><p>消息中心</p><h1>互动消息列表 <span>({unreadCount} 条未读)</span></h1></div><button className="mark-all-read" onClick={onMarkAllRead} disabled={unreadCount === 0}><CheckmarkCircle24Regular/>全部标为已读</button></header><div className="message-filters" aria-label="消息筛选"><label>消息来源<select value={source} onChange={(event) => setSource(event.target.value)}><option>全部</option><option>任务</option><option>流程</option><option>预警</option><option>系统</option></select></label><label>消息类型<select value={type} onChange={(event) => setType(event.target.value)}><option>全部</option><option>执行提醒</option><option>待你审批</option><option>超期提醒</option><option>任务分派</option><option>系统通知</option></select></label><label>消息状态<select value={status} onChange={(event) => setStatus(event.target.value)}><option>未读</option><option>已读</option><option>全部</option></select></label></div><div className="message-list">{filteredMessages.length ? filteredMessages.map((message) => { const { id, source: messageSource, type: messageType, sender, time, title, content, attachment, read, icon: Icon, tone } = message; return <button className={read ? 'message-row read' : 'message-row'} key={id} onClick={() => { onMarkRead(id); setSelectedMessage(message); }}><span className={`message-row-icon ${tone}`}><Icon/></span><span className="message-row-content"><span><b>{sender}</b><time>{time}</time>{!read ? <i>未读</i> : null}</span><strong><em>{messageSource} · {messageType}</em>{title}</strong><p>{content}</p><small className="message-attachment"><ClipboardTask24Regular/>{attachment}</small></span><ArrowRight24Regular/></button>; }) : <div className="message-empty"><Chat24Regular/><p>没有符合条件的消息。</p></div>}</div><MessageAttachmentDialog key={selectedMessage?.id} message={selectedMessage} onClose={() => setSelectedMessage(null)}/></section>;
+}
+
+function TaskListPage({ onAction, onReturn, onOpenDetail }) {
+  const [selectedTask, setSelectedTask] = useState(null);
+  const openTaskForm = (task) => setSelectedTask({ ...task, title: task.name, content: `任务由 ${task.initiator} 发起，计划执行时间为 ${task.plannedAt}。`, formKind: 'task' });
+  return <section className="task-list-page" aria-labelledby="task-list-title"><div className="task-page-path"><button onClick={onReturn}>工作台</button><ChevronRight24Regular/><strong>任务</strong></div><header className="task-list-header"><div><p>任务中心</p><h1 id="task-list-title">任务列表</h1></div><button onClick={() => onAction('新建任务')}><Add24Regular/>新建任务</button></header><div className="task-list-table" role="table" aria-label="任务列表"><div className="task-table-head" role="row"><span>任务名称</span><span>发布时间</span><span>计划执行时间</span><span>计划结束时间</span><span>发起人</span><span>执行人</span><span>任务表附件</span><span>操作</span></div>{taskEntries.map((task) => <div className="task-table-row" role="row" key={task.id}><strong><button className="task-name-link" onClick={() => onOpenDetail(task)}>{task.name}</button><i className={task.status === '执行中' ? 'in-progress' : ''}>{task.status}</i></strong><span>{task.publishedAt}</span><span>{task.plannedAt}</span><span>{task.deadline}</span><span>{task.initiator}</span><span>{task.executor}</span><button className="task-attachment" onClick={() => openTaskForm(task)}><DocumentText24Regular/>{task.attachment}</button><span className="task-row-actions"><button className="task-execute" onClick={() => openTaskForm(task)}>执行</button><button className="task-more" onClick={() => onAction(`${task.name}操作`)}>操作</button></span></div>)}</div><MessageAttachmentDialog key={selectedTask?.id} message={selectedTask} onClose={() => setSelectedTask(null)}/></section>;
+}
+
+function TaskDetailPage({ task, onBack }) {
+  const [selectedTask, setSelectedTask] = useState(null);
+  const [comment, setComment] = useState('');
+  const [comments, setComments] = useState([{ id: 'comment-initial', author: '陈伟', time: '今天 09:06', content: '请在完成现场点检后同步复核结果。' }]);
+  const logs = [{ time: task.publishedAt, title: '任务已发布', content: `${task.initiator} 发起了此项任务。` }, { time: task.plannedAt, title: '任务已进入执行阶段', content: `${task.executor} 已收到执行提醒。` }, { time: '今天 10:12', title: '任务进度已更新', content: '现场点检完成，等待复核确认。' }];
+  const openTaskForm = () => setSelectedTask({ ...task, title: task.name, content: `任务由 ${task.initiator} 发起，计划执行时间为 ${task.plannedAt}。`, formKind: 'task' });
+  const submitComment = (event) => { event.preventDefault(); const text = comment.trim(); if (!text) return; setComments((current) => [...current, { id: `comment-${Date.now()}`, author: '张宇', time: '刚刚', content: text }]); setComment(''); };
+  return <section className="task-detail-page" aria-labelledby="task-detail-title"><div className="task-page-path"><button onClick={onBack}>任务列表</button><ChevronRight24Regular/><strong>{task.name}</strong></div><header className="task-detail-header"><div><p>任务详情</p><h1 id="task-detail-title">{task.name}</h1><span className={task.status === '执行中' ? 'detail-status in-progress' : 'detail-status'}>{task.status}</span></div><button onClick={openTaskForm}><ClipboardTask24Regular/>执行任务</button></header><div className="task-detail-layout"><div><section className="task-detail-section"><h2>任务主要信息</h2><div className="task-info-grid"><span><b>发布时间</b>{task.publishedAt}</span><span><b>计划执行时间</b>{task.plannedAt}</span><span><b>计划结束时间</b>{task.deadline}</span><span><b>发起人</b>{task.initiator}</span><span><b>执行人</b>{task.executor}</span><span><b>任务状态</b>{task.status}</span></div></section><section className="task-detail-section"><h2>任务附件表单</h2><button className="task-detail-attachment" onClick={openTaskForm}><span><DocumentText24Regular/></span><span><b>{task.attachment}</b><small>点击查看并填写任务表单</small></span><ArrowRight24Regular/></button></section><section className="task-detail-section task-comment-section"><h2>评论任务</h2><form onSubmit={submitComment}><textarea value={comment} onChange={(event) => setComment(event.target.value)} rows="3" placeholder="输入评论内容，通知任务相关人员" /><footer><span>评论将同步显示在任务日志中。</span><button type="submit">发送评论</button></footer></form><div className="task-comment-list">{comments.map((item) => <article key={item.id}><span>{item.author.slice(0, 1)}</span><div><b>{item.author}<time>{item.time}</time></b><p>{item.content}</p></div></article>)}</div></section></div><aside className="task-log-panel"><h2>任务日志</h2><ol>{logs.map((log) => <li key={log.time}><time>{log.time}</time><span /><div><b>{log.title}</b><p>{log.content}</p></div></li>)}</ol></aside></div><MessageAttachmentDialog key={selectedTask?.id} message={selectedTask} onClose={() => setSelectedTask(null)}/></section>;
+}
+
+function ProcessApprovalDialog({ process, onClose, onApprove }) {
+  if (!process) return null;
+  const logs = [
+    { time: process.initiatedAt, title: '流程已发起', detail: `${process.initiator} 提交了${process.name}。`, state: 'done' },
+    { time: '今天 09:25', title: '资料完整性校验通过', detail: '系统已完成表单与附件校验。', state: 'done' },
+    { time: '当前', title: process.currentNode, detail: `等待 ${process.approver} 审批。`, state: 'current' },
+  ];
+  const nodes = ['发起申请', '部门负责人', '安全审核', '归档完成'];
+  return <div className="process-dialog-layer" onMouseDown={onClose} role="presentation"><section className="process-dialog" role="dialog" aria-modal="true" aria-labelledby="process-dialog-title" onMouseDown={(event) => event.stopPropagation()}><header><div><p>流程审批</p><h2 id="process-dialog-title">{process.name}</h2><span className={process.status === '待审批' ? 'process-status pending' : 'process-status'}>{process.status}</span></div><button className="process-dialog-close" aria-label="关闭流程审批" onClick={onClose}><DismissRegular/></button></header><div className="process-dialog-body"><section className="process-dialog-section"><h3>流程关键信息</h3><div className="process-info-grid"><span><b>发起人</b>{process.initiator}</span><span><b>发起时间</b>{process.initiatedAt}</span><span><b>所属部门</b>{process.department}</span><span><b>当前节点</b>{process.currentNode}</span><span><b>审批人</b>{process.approver}</span><span><b>申请金额</b>{process.amount}</span></div></section><section className="process-dialog-section"><h3>审批流程图</h3><div className="process-flowchart" aria-label="审批流程图">{nodes.map((node, index) => <div key={node} className={index < 2 ? 'flow-node done' : index === 2 ? 'flow-node active' : 'flow-node'}><span>{index + 1}</span><b>{node}</b>{index < nodes.length - 1 ? <i /> : null}</div>)}</div></section><section className="process-dialog-section process-log-section"><h3>审批日志</h3><ol>{logs.map((log) => <li key={log.title}><time>{log.time}</time><span className={log.state} /><div><b>{log.title}</b><p>{log.detail}</p></div></li>)}</ol></section></div><footer><span>审批意见将同步写入流程日志。</span><div><button className="process-reject" onClick={() => onApprove('已退回')}>退回</button><button className="process-approve" onClick={() => onApprove('已同意')}><CheckmarkCircle24Regular/>同意并提交</button></div></footer></section></div>;
+}
+
+function ProcessListPage({ onReturn, onAction }) {
+  const [selectedProcess, setSelectedProcess] = useState(null);
+  const approve = (result) => { onAction(`${selectedProcess.name}${result}`); setSelectedProcess(null); };
+  return <section className="process-list-page" aria-labelledby="process-list-title"><div className="task-page-path"><button onClick={onReturn}>工作台</button><ChevronRight24Regular/><strong>流程</strong></div><header className="task-list-header"><div><p>流程中心</p><h1 id="process-list-title">流程列表</h1></div><button onClick={() => onAction('发起流程')}><Add24Regular/>发起流程</button></header><div className="process-list-table" role="table" aria-label="流程列表"><div className="process-table-head" role="row"><span>流程名称</span><span>发起人</span><span>发起时间</span><span>当前节点</span><span>当前审批人</span><span>状态</span><span>操作</span></div>{processEntries.map((process) => <div className="process-table-row" role="row" key={process.id}><button className="process-name-link" onClick={() => setSelectedProcess(process)}>{process.name}<small>{process.urgency === '紧急' ? '紧急处理' : '业务审批'}</small></button><span>{process.initiator}</span><span>{process.initiatedAt}</span><strong>{process.currentNode}</strong><span>{process.approver}</span><i className={process.status === '待审批' ? 'pending' : ''}>{process.status}</i><button className="process-approval-action" onClick={() => setSelectedProcess(process)}><ApprovalsApp24Regular/>审批</button></div>)}</div><ProcessApprovalDialog process={selectedProcess} onClose={() => setSelectedProcess(null)} onApprove={approve}/></section>;
 }
 
 function WorkQueue({ item, active, onSelect }) {
@@ -232,8 +305,10 @@ function App() {
   const [notice, setNotice] = useState('');
   const [openTabs, setOpenTabs] = useState(initialTabs);
   const [activeTab, setActiveTab] = useState('workbench');
+  const [messages, setMessages] = useState(messageEntries);
+  const [taskDetail, setTaskDetail] = useState(null);
   const showNotice = (label) => { setNotice(`已选择 ${label}`); window.setTimeout(() => setNotice(''), 2200); };
-  const selectTab = (id) => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setActiveTab(id); setActiveNav(id === 'workbench' ? '工作台' : '应用中心'); }); };
+  const selectTab = (id) => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setActiveTab(id); setActiveNav(id === 'workbench' || id === 'messages' ? '工作台' : id === 'tasks' ? '任务' : id === 'processes' ? '流程' : '应用中心'); }); };
   const openApplication = (name) => {
     const targetName = name === '应用中心' ? '双重预防机制' : name;
     const app = apps.find((item) => item.name === targetName);
@@ -241,6 +316,11 @@ function App() {
     window.scrollTo({ top: 0, behavior: 'smooth' });
     startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === targetName) ? current : [...current, { id: targetName, label: targetName, icon: app.icon }]); setActiveTab(targetName); setActiveNav('应用中心'); });
   };
+  const openMessages = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === 'messages') ? current : [...current, { id: 'messages', label: '消息', icon: Chat24Regular }]); setActiveTab('messages'); setActiveNav('工作台'); }); };
+  const openTasks = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setTaskDetail(null); setOpenTabs((current) => current.some((tab) => tab.id === 'tasks') ? current : [...current, { id: 'tasks', label: '任务', icon: ClipboardTask24Regular }]); setActiveTab('tasks'); setActiveNav('任务'); }); };
+  const openProcesses = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === 'processes') ? current : [...current, { id: 'processes', label: '流程', icon: Flowchart24Regular }]); setActiveTab('processes'); setActiveNav('流程'); }); };
+  const markMessageRead = (id) => setMessages((current) => current.map((message) => message.id === id ? { ...message, read: true } : message));
+  const markAllMessagesRead = () => setMessages((current) => current.map((message) => ({ ...message, read: true })));
   const closeTab = (id) => {
     const closingIndex = openTabs.findIndex((tab) => tab.id === id);
     const remainingTabs = openTabs.filter((tab) => tab.id !== id);
@@ -248,9 +328,9 @@ function App() {
   };
   const activeApplication = apps.find((app) => app.name === activeTab);
   return <FluentProvider theme={webLightTheme}><div className="workbench theme-light">
-    <AppNav active={activeNav} onChange={(label) => { if (label === '工作台') { selectTab('workbench'); return; } if (label === '应用中心') { openApplication('应用中心'); return; } setActiveNav(label); showNotice(label); }}/>
-    <div className="page-shell"><ApplicationTabs tabs={openTabs} activeTab={activeTab} onSelect={selectTab} onClose={closeTab}/>
-      <main>{activeApplication?.name === '双重预防机制' ? <DualPreventionPage onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : activeApplication ? <MockApplicationPage app={activeApplication} onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : <div className="main-layout"><div className="primary-column"><section className="priority-zone" aria-labelledby="priority-title"><div className="section-title priority-title"><div><h2 id="priority-title">今日待办</h2></div><button className="quiet-action" onClick={() => showNotice('任务总览')}>任务总览 <ArrowRight24Regular/></button></div><div className="queue-grid">{workQueues.map((item) => <WorkQueue item={item} key={item.id} active={activeQueue === item.id} onSelect={() => setActiveQueue(item.id)}/>)}</div></section><RecentApps onOpen={openApplication}/><ApplicationRail onOpen={openApplication}/></div>
+    <AppNav active={activeNav} onChange={(label) => { if (label === '工作台') { selectTab('workbench'); return; } if (label === '应用中心') { openApplication('应用中心'); return; } if (label === '任务') { openTasks(); return; } if (label === '流程') { openProcesses(); return; } setActiveNav(label); showNotice(label); }}/>
+    <div className="page-shell"><ApplicationTabs tabs={openTabs} activeTab={activeTab} onSelect={selectTab} onClose={closeTab} onOpenMessages={openMessages}/>
+      <main>{activeTab === 'messages' ? <MessageCenter messages={messages} onMarkRead={markMessageRead} onMarkAllRead={markAllMessagesRead} onReturn={() => selectTab('workbench')}/> : activeTab === 'tasks' ? taskDetail ? <TaskDetailPage task={taskDetail} onBack={() => setTaskDetail(null)}/> : <TaskListPage onAction={showNotice} onReturn={() => selectTab('workbench')} onOpenDetail={setTaskDetail}/> : activeTab === 'processes' ? <ProcessListPage onAction={showNotice} onReturn={() => selectTab('workbench')}/> : activeApplication?.name === '双重预防机制' ? <DualPreventionPage onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : activeApplication ? <MockApplicationPage app={activeApplication} onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : <div className="main-layout"><div className="primary-column"><section className="priority-zone" aria-labelledby="priority-title"><div className="section-title priority-title"><div><h2 id="priority-title">今日待办</h2></div><button className="quiet-action" onClick={() => showNotice('任务总览')}>任务总览 <ArrowRight24Regular/></button></div><div className="queue-grid">{workQueues.map((item) => <WorkQueue item={item} key={item.id} active={activeQueue === item.id} onSelect={() => setActiveQueue(item.id)}/>)}</div></section><RecentApps onOpen={openApplication}/><ApplicationRail onOpen={openApplication}/></div>
           <div className="secondary-column"><CommandPanel onAction={setDialog}/><ActivityFeed selectedTab={activityTab} onSelectTab={setActivityTab} onOpen={showNotice}/></div></div>}</main></div>
     {notice ? <div className="toast" role="status" aria-label={notice}><CheckmarkCircle24Regular/>{notice}</div> : null}<ActionDialog title={dialog} onClose={() => setDialog(null)}/>
   </div></FluentProvider>;
