@@ -1,5 +1,9 @@
-import { startTransition, useState } from 'react';
+import { startTransition, useEffect, useRef, useState } from 'react';
 import { createRoot } from 'react-dom/client';
+import { init, use } from 'echarts/core';
+import { BarChart, LineChart, PieChart, RadarChart } from 'echarts/charts';
+import { GridComponent, LegendComponent, RadarComponent, TitleComponent, TooltipComponent } from 'echarts/components';
+import { CanvasRenderer } from 'echarts/renderers';
 import { FluentProvider, webLightTheme } from '@fluentui/react-components';
 import {
   Add24Regular,
@@ -31,14 +35,20 @@ import {
   Wrench24Regular,
 } from '@fluentui/react-icons';
 import './styles.css';
+import './settings.css';
+import './dashboard.css';
+import './nav.css';
+import './safety-dynamics.css';
+
+use([BarChart, LineChart, PieChart, RadarChart, GridComponent, LegendComponent, RadarComponent, TitleComponent, TooltipComponent, CanvasRenderer]);
 
 const navigation = [
   { label: '工作台', icon: Home24Regular },
-  { label: '应用中心', icon: Apps24Regular },
+  { label: '应用', icon: Apps24Regular },
   { label: '任务', icon: ClipboardTask24Regular },
   { label: '流程', icon: Flowchart24Regular },
-  { label: '数据洞察', icon: DataBarVertical24Regular },
-  { label: '通讯录', icon: People24Regular },
+  { label: '安全动态', icon: ShieldCheckmark24Regular },
+  { label: '看板', icon: DataBarVertical24Regular },
 ];
 
 const workQueues = [
@@ -100,11 +110,11 @@ function IconButton({ label, children, active, onClick, badge }) {
   return <button className={`icon-button ${active ? 'active' : ''}`} aria-label={label} title={label} onClick={onClick}>{children}{badge ? <span className="semantic-badge" /> : null}</button>;
 }
 
-function AppNav({ active, onChange }) {
+function AppNav({ active, onChange, onOpenSettings }) {
   return <aside className="app-nav" aria-label="主导航">
     <div className="product-mark" aria-label="澄明工作台">C</div>
-    <nav>{navigation.map(({ label, icon: Icon }) => <button key={label} onClick={() => onChange(label)} className={active === label ? 'nav-link active' : 'nav-link'}><Icon/><span>{label}</span></button>)}</nav>
-    <div className="nav-bottom"><IconButton label="设置"><Settings24Regular/></IconButton><div className="profile-mini" aria-label="当前用户 张宇">张</div></div>
+    <nav>{navigation.map(({ label, icon: Icon }) => <button key={label} onClick={() => onChange(label)} className={active === label ? 'nav-link active' : 'nav-link'}><span className="nav-icon"><Icon/></span><span>{label}</span></button>)}</nav>
+    <div className="nav-bottom"><IconButton label="设置" active={active === '设置'} onClick={onOpenSettings}><Settings24Regular/></IconButton><div className="profile-mini" aria-label="当前用户 张宇">张</div></div>
   </aside>;
 }
 
@@ -297,6 +307,92 @@ function ActionDialog({ title, onClose }) {
   </section></div>;
 }
 
+const dashboardItems = [
+  { id: 'safety', name: '安全风险总览', description: '风险等级、隐患整改与作业预警的综合视图', metrics: [['今日检查', '28', '较昨日 +4'], ['待整改隐患', '16', '4 项临近逾期'], ['高风险作业', '3', '均在监控中'], ['整改完成率', '86%', '本月累计']], charts: ['risk', 'rectification', 'sources', 'trend'] },
+  { id: 'device', name: '设备运行态势', description: '关键设备运行状态、点检执行与故障分布', metrics: [['设备总数', '248', '当前在线 243'], ['待点检', '12', '今日需完成'], ['异常设备', '5', '等待处理'], ['设备完好率', '97.8%', '较上月 +0.6%']], charts: ['device', 'trend', 'sources', 'risk'] },
+  { id: 'production', name: '生产进度跟踪', description: '产量计划、班组进度与生产指标完成情况', metrics: [['本月产量', '12.6 万吨', '计划完成 91%'], ['今日进尺', '186 米', '较计划 +12 米'], ['作业班组', '8', '全部已开工'], ['生产达成率', '94%', '较上周 +3%']], charts: ['progress', 'trend', 'device', 'rectification'] },
+  { id: 'emergency', name: '应急管理看板', description: '应急物资、演练计划和预案执行情况', metrics: [['应急物资', '356', '库存充足'], ['本月演练', '4', '已完成 3 项'], ['应急预案', '18', '均为有效版本'], ['响应及时率', '100%', '本季度累计']], charts: ['sources', 'progress', 'risk', 'trend'] },
+];
+
+function DashboardChart({ type }) {
+  const chartRef = useRef(null);
+  useEffect(() => {
+    const node = chartRef.current;
+    if (!node) return undefined;
+    const chart = init(node);
+    const axisStyle = { axisLine: { lineStyle: { color: '#dce4ec' } }, axisLabel: { color: '#7b8998', fontSize: 10 }, splitLine: { lineStyle: { color: '#eef2f6' } } };
+    const options = {
+      risk: { title: { text: '风险等级分布', left: 14, top: 11, textStyle: { fontSize: 13, fontWeight: 700, color: '#1f2d3d' } }, tooltip: { trigger: 'item' }, legend: { bottom: 8, textStyle: { fontSize: 10, color: '#7b8998' } }, series: [{ type: 'pie', radius: ['42%', '66%'], center: ['50%', '51%'], label: { show: false }, data: [{ value: 4, name: '重大', itemStyle: { color: '#d95745' } }, { value: 12, name: '较大', itemStyle: { color: '#e89b3e' } }, { value: 31, name: '一般', itemStyle: { color: '#3c98d3' } }, { value: 47, name: '低风险', itemStyle: { color: '#5bb287' } }] }] },
+      rectification: { title: { text: '隐患整改闭环', left: 14, top: 11, textStyle: { fontSize: 13, fontWeight: 700, color: '#1f2d3d' } }, tooltip: { trigger: 'axis' }, grid: { left: 35, right: 16, top: 49, bottom: 26 }, xAxis: { type: 'category', data: ['一车间', '二车间', '南区', '北区', '选矿'], ...axisStyle }, yAxis: { type: 'value', ...axisStyle }, series: [{ type: 'bar', barWidth: 15, itemStyle: { color: '#1779ba', borderRadius: [3, 3, 0, 0] }, data: [16, 22, 13, 18, 25] }, { type: 'bar', barWidth: 15, itemStyle: { color: '#a9d8c3', borderRadius: [3, 3, 0, 0] }, data: [12, 18, 10, 15, 21] }] },
+      sources: { title: { text: '问题来源占比', left: 14, top: 11, textStyle: { fontSize: 13, fontWeight: 700, color: '#1f2d3d' } }, tooltip: { trigger: 'item' }, series: [{ type: 'pie', radius: '62%', center: ['50%', '55%'], label: { formatter: '{b}\n{d}%', fontSize: 10, color: '#637386' }, data: [{ value: 38, name: '日常检查', itemStyle: { color: '#438fc1' } }, { value: 26, name: '专项排查', itemStyle: { color: '#78b996' } }, { value: 21, name: '巡检上报', itemStyle: { color: '#e3a056' } }, { value: 15, name: '其他', itemStyle: { color: '#a8b5c3' } }] }] },
+      trend: { title: { text: '近 7 日趋势', left: 14, top: 11, textStyle: { fontSize: 13, fontWeight: 700, color: '#1f2d3d' } }, tooltip: { trigger: 'axis' }, grid: { left: 35, right: 17, top: 48, bottom: 26 }, xAxis: { type: 'category', boundaryGap: false, data: ['周一', '周二', '周三', '周四', '周五', '周六', '今日'], ...axisStyle }, yAxis: { type: 'value', ...axisStyle }, series: [{ type: 'line', smooth: true, symbol: 'circle', symbolSize: 5, lineStyle: { width: 2, color: '#1779ba' }, itemStyle: { color: '#1779ba' }, areaStyle: { color: 'rgba(23,121,186,.12)' }, data: [12, 18, 15, 24, 21, 27, 28] }] },
+      device: { title: { text: '设备状态监测', left: 14, top: 11, textStyle: { fontSize: 13, fontWeight: 700, color: '#1f2d3d' } }, tooltip: { trigger: 'axis' }, radar: { center: ['50%', '57%'], radius: '59%', indicator: [{ name: '运行', max: 100 }, { name: '点检', max: 100 }, { name: '保养', max: 100 }, { name: '检修', max: 100 }, { name: '备件', max: 100 }], axisName: { color: '#718093', fontSize: 10 }, splitArea: { areaStyle: { color: ['#fbfcfd', '#f4f7f9'] } } }, series: [{ type: 'radar', data: [{ value: [92, 84, 78, 88, 72], areaStyle: { color: 'rgba(41,137,190,.23)' }, lineStyle: { color: '#2684bf' }, itemStyle: { color: '#2684bf' } }] }] },
+      progress: { title: { text: '本月计划完成情况', left: 14, top: 11, textStyle: { fontSize: 13, fontWeight: 700, color: '#1f2d3d' } }, tooltip: { trigger: 'axis' }, grid: { left: 36, right: 17, top: 48, bottom: 26 }, xAxis: { type: 'category', data: ['采矿', '掘进', '选矿', '运输', '充填'], ...axisStyle }, yAxis: { type: 'value', max: 120, ...axisStyle }, series: [{ type: 'bar', barWidth: 15, data: [96, 91, 103, 88, 94], itemStyle: { color: '#5bb287', borderRadius: [3, 3, 0, 0] } }, { type: 'line', symbol: 'none', lineStyle: { color: '#de8c36', type: 'dashed' }, data: [100, 100, 100, 100, 100] }] },
+    };
+    chart.setOption(options[type]);
+    const observer = new ResizeObserver(() => chart.resize());
+    observer.observe(node);
+    return () => { observer.disconnect(); chart.dispose(); };
+  }, [type]);
+  return <div className="dashboard-chart" ref={chartRef} aria-label="数据图表" />;
+}
+
+function DashboardPage() {
+  const [selectedId, setSelectedId] = useState('safety');
+  const active = dashboardItems.find((item) => item.id === selectedId) ?? dashboardItems[0];
+  return <section className="dashboard-page" aria-labelledby="dashboard-title"><div className="dashboard-layout"><aside className="dashboard-sidebar" aria-label="看板列表"><header><DataBarVertical24Regular/><span>数据看板</span></header><nav>{dashboardItems.map((item) => <button key={item.id} className={item.id === selectedId ? 'active' : ''} onClick={() => setSelectedId(item.id)}><span><b>{item.name}</b><small>{item.description}</small></span><ChevronRight24Regular/></button>)}</nav></aside><div className="dashboard-content"><header className="dashboard-header"><div><p>看板中心</p><h1 id="dashboard-title">{active.name}</h1><span>{active.description}</span></div><button><CalendarLtr24Regular/>近 30 天<ChevronDown24Regular/></button></header><div className="dashboard-metrics">{active.metrics.map(([label, value, note]) => <article key={label}><span>{label}</span><b>{value}</b><small>{note}</small></article>)}</div><div className="dashboard-charts">{active.charts.map((type) => <section key={`${active.id}-${type}`}><DashboardChart type={type}/></section>)}</div></div></div></section>;
+}
+
+function SafetyDynamicsPage() {
+  const [filter, setFilter] = useState('全部');
+  const items = [
+    { type: '预警', tone: 'urgent', title: '南区排水泵房液位接近预警阈值', detail: '系统持续监测到液位上升，请安排现场复核。', time: '10 分钟前', status: '待处置' },
+    { type: '隐患', tone: 'notice', title: '3 号球磨机防护罩整改已提交复查', detail: '设备管理部已上传整改照片，等待安全管理员确认。', time: '今天 09:42', status: '待复查' },
+    { type: '检查', tone: 'check', title: '南区采场班前安全检查已完成', detail: '本次检查发现一般问题 2 项，已同步至整改台账。', time: '今天 08:15', status: '已归档' },
+    { type: '预警', tone: 'notice', title: '动火作业许可将在 2 小时后到期', detail: '作业区域：南区 2# 采场，请确认是否继续作业。', time: '昨天 16:30', status: '需关注' },
+  ];
+  const visible = filter === '全部' ? items : items.filter((item) => item.type === filter);
+  return <section className="safety-dynamics-page" aria-labelledby="safety-dynamics-title"><header className="safety-dynamics-header"><div><p>安全管理</p><h1 id="safety-dynamics-title">安全动态</h1><span>聚合风险预警、隐患整改和现场检查的实时信息。</span></div><button><ShieldCheckmark24Regular/>安全态势正常</button></header><div className="safety-dynamics-summary"><article><b>3</b><span>待处置预警</span></article><article><b>16</b><span>待整改隐患</span></article><article><b>28</b><span>今日安全检查</span></article></div><section className="safety-dynamics-list"><header><div className="safety-filter" role="tablist">{['全部', '预警', '隐患', '检查'].map((item) => <button key={item} className={filter === item ? 'active' : ''} onClick={() => setFilter(item)}>{item}</button>)}</div><button className="safety-view-all">查看处置台账 <ArrowRight24Regular/></button></header>{visible.map((item) => <article className="safety-dynamics-row" key={item.title}><span className={`safety-type ${item.tone}`}>{item.type}</span><div><h2>{item.title}</h2><p>{item.detail}</p></div><time>{item.time}<b>{item.status}</b></time><ChevronRight24Regular/></article>)}</section></section>;
+}
+
+const settingsItems = [
+  { label: '安全动态', icon: ShieldCheckmark24Regular, title: '安全动态', description: '设置与你相关的安全提醒、预警升级和动态订阅。' },
+  { label: '工作表', icon: DocumentText24Regular, title: '工作表', description: '管理常用工作表模板、字段与填报规则。' },
+  { label: '任务', icon: ClipboardTask24Regular, title: '任务', description: '配置任务提醒、默认执行人和逾期处理规则。' },
+  { label: '流程', icon: Flowchart24Regular, title: '流程', description: '维护审批模板、节点时限与流转通知。' },
+  { label: '数据台', icon: DataBarVertical24Regular, title: '数据台', description: '管理业务数据接入、字段口径和同步状态。' },
+  { label: '数据看板', icon: DataBarVertical24Regular, title: '数据看板', description: '设置个人看板的指标、排序和共享范围。' },
+  { label: '角色权限', icon: ShieldCheckmark24Regular, title: '角色权限', description: '查看角色职责及可访问的业务范围。' },
+  { label: '用户中心', icon: People24Regular, title: '用户中心', description: '维护个人资料、通知方式与登录设备。' },
+];
+
+function SettingsPage({ onAction }) {
+  const [selected, setSelected] = useState('安全动态');
+  const item = settingsItems.find((entry) => entry.label === selected) ?? settingsItems[0];
+  const Icon = item.icon;
+  const rowsBySetting = {
+    '安全动态': [['隐患整改逾期提醒', '整改期限前 24 小时通知', '已启用'], ['高风险作业预警', '出现预警时即时通知', '已启用'], ['安全检查动态', '每日汇总推送', '已启用']],
+    '工作表': [['岗位隐患排查表', '双重预防机制', '使用中'], ['设备点检记录表', '设备管理', '使用中'], ['动火作业申请表', '安全管理', '使用中']],
+    '任务': [['任务到期提醒', '截止前 2 小时', '已启用'], ['任务指派通知', '站内消息 + 待办', '已启用'], ['逾期升级规则', '超期 24 小时通知负责人', '已启用']],
+    '流程': [['动火作业申请', '安全管理部审批', '已发布'], ['设备采购申请', '部门负责人审批', '已发布'], ['外协队入场审核', '安环部备案', '已发布']],
+    '数据台': [['设备运行台账', '每 30 分钟同步', '正常'], ['隐患整改台账', '实时同步', '正常'], ['生产日报数据', '每日 18:00 汇总', '正常']],
+    '数据看板': [['安全风险总览', '个人可见', '已添加'], ['设备健康度', '管理层共享', '已添加'], ['生产进度跟踪', '个人可见', '已添加']],
+    '角色权限': [['安全管理员', '隐患、检查、预警管理', '当前角色'], ['任务执行人', '任务处理与反馈', '当前角色'], ['流程审批人', '审批与意见填写', '当前角色']],
+    '用户中心': [['姓名', '张宇', '已认证'], ['所属部门', '安全管理部', '已同步'], ['通知方式', '站内消息、短信提醒', '已启用']],
+  };
+  const rows = rowsBySetting[selected];
+  return <section className="settings-page" aria-labelledby="settings-title">
+    <div className="settings-layout">
+      <aside className="settings-sidebar" aria-label="设置菜单"><header><Settings24Regular/><span>设置中心</span></header><nav>{settingsItems.map(({ label, icon: MenuIcon }) => <button key={label} className={selected === label ? 'active' : ''} onClick={() => setSelected(label)}><MenuIcon/><span>{label}</span><ChevronRight24Regular/></button>)}</nav></aside>
+      <div className="settings-content">
+        <header className="settings-header"><span className="settings-header-icon"><Icon/></span><div><h1 id="settings-title">{item.title}</h1><p>{item.description}</p></div><button onClick={() => onAction(`新增${item.title}配置`)}><Add24Regular/>新增配置</button></header>
+        <section className="settings-panel" aria-labelledby="settings-list-title"><div className="settings-panel-title"><div><h2 id="settings-list-title">{item.title}配置</h2><p>以下内容为当前生效的配置项。</p></div><button onClick={() => onAction(`保存${item.title}设置`)}>保存设置</button></div><div className="settings-table"><div className="settings-table-head"><span>配置名称</span><span>规则 / 说明</span><span>状态</span><span>操作</span></div>{rows.map(([name, description, status]) => <div className="settings-table-row" key={name}><strong>{name}</strong><span>{description}</span><i>{status}</i><button onClick={() => onAction(`编辑${name}`)}>编辑</button></div>)}</div></section>
+        <section className="settings-note"><CheckmarkCircle24Regular/><div><b>设置即时生效</b><span>保存后将应用到当前账号及相应的业务模块。</span></div></section>
+      </div>
+    </div>
+  </section>;
+}
+
 function App() {
   const [activeNav, setActiveNav] = useState('工作台');
   const [activeQueue, setActiveQueue] = useState('task');
@@ -308,17 +404,20 @@ function App() {
   const [messages, setMessages] = useState(messageEntries);
   const [taskDetail, setTaskDetail] = useState(null);
   const showNotice = (label) => { setNotice(`已选择 ${label}`); window.setTimeout(() => setNotice(''), 2200); };
-  const selectTab = (id) => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setActiveTab(id); setActiveNav(id === 'workbench' || id === 'messages' ? '工作台' : id === 'tasks' ? '任务' : id === 'processes' ? '流程' : '应用中心'); }); };
+  const selectTab = (id) => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setActiveTab(id); setActiveNav(id === 'workbench' || id === 'messages' ? '工作台' : id === 'tasks' ? '任务' : id === 'processes' ? '流程' : id === 'settings' ? '设置' : id === 'dashboard' ? '看板' : id === 'safety-dynamics' ? '安全动态' : '应用'); }); };
   const openApplication = (name) => {
     const targetName = name === '应用中心' ? '双重预防机制' : name;
     const app = apps.find((item) => item.name === targetName);
     if (!app) { showNotice(name); return; }
     window.scrollTo({ top: 0, behavior: 'smooth' });
-    startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === targetName) ? current : [...current, { id: targetName, label: targetName, icon: app.icon }]); setActiveTab(targetName); setActiveNav('应用中心'); });
+    startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === targetName) ? current : [...current, { id: targetName, label: targetName, icon: app.icon }]); setActiveTab(targetName); setActiveNav('应用'); });
   };
   const openMessages = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === 'messages') ? current : [...current, { id: 'messages', label: '消息', icon: Chat24Regular }]); setActiveTab('messages'); setActiveNav('工作台'); }); };
   const openTasks = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setTaskDetail(null); setOpenTabs((current) => current.some((tab) => tab.id === 'tasks') ? current : [...current, { id: 'tasks', label: '任务', icon: ClipboardTask24Regular }]); setActiveTab('tasks'); setActiveNav('任务'); }); };
   const openProcesses = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === 'processes') ? current : [...current, { id: 'processes', label: '流程', icon: Flowchart24Regular }]); setActiveTab('processes'); setActiveNav('流程'); }); };
+  const openDashboard = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === 'dashboard') ? current : [...current, { id: 'dashboard', label: '看板', icon: DataBarVertical24Regular }]); setActiveTab('dashboard'); setActiveNav('看板'); }); };
+  const openSafetyDynamics = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === 'safety-dynamics') ? current : [...current, { id: 'safety-dynamics', label: '安全动态', icon: ShieldCheckmark24Regular }]); setActiveTab('safety-dynamics'); setActiveNav('安全动态'); }); };
+  const openSettings = () => { window.scrollTo({ top: 0, behavior: 'smooth' }); startTransition(() => { setOpenTabs((current) => current.some((tab) => tab.id === 'settings') ? current : [...current, { id: 'settings', label: '设置', icon: Settings24Regular }]); setActiveTab('settings'); setActiveNav('设置'); }); };
   const markMessageRead = (id) => setMessages((current) => current.map((message) => message.id === id ? { ...message, read: true } : message));
   const markAllMessagesRead = () => setMessages((current) => current.map((message) => ({ ...message, read: true })));
   const closeTab = (id) => {
@@ -328,9 +427,9 @@ function App() {
   };
   const activeApplication = apps.find((app) => app.name === activeTab);
   return <FluentProvider theme={webLightTheme}><div className="workbench theme-light">
-    <AppNav active={activeNav} onChange={(label) => { if (label === '工作台') { selectTab('workbench'); return; } if (label === '应用中心') { openApplication('应用中心'); return; } if (label === '任务') { openTasks(); return; } if (label === '流程') { openProcesses(); return; } setActiveNav(label); showNotice(label); }}/>
+    <AppNav active={activeNav} onOpenSettings={openSettings} onChange={(label) => { if (label === '工作台') { selectTab('workbench'); return; } if (label === '应用') { openApplication('应用中心'); return; } if (label === '任务') { openTasks(); return; } if (label === '流程') { openProcesses(); return; } if (label === '安全动态') { openSafetyDynamics(); return; } if (label === '看板') { openDashboard(); return; } setActiveNav(label); showNotice(label); }}/>
     <div className="page-shell"><ApplicationTabs tabs={openTabs} activeTab={activeTab} onSelect={selectTab} onClose={closeTab} onOpenMessages={openMessages}/>
-      <main>{activeTab === 'messages' ? <MessageCenter messages={messages} onMarkRead={markMessageRead} onMarkAllRead={markAllMessagesRead} onReturn={() => selectTab('workbench')}/> : activeTab === 'tasks' ? taskDetail ? <TaskDetailPage task={taskDetail} onBack={() => setTaskDetail(null)}/> : <TaskListPage onAction={showNotice} onReturn={() => selectTab('workbench')} onOpenDetail={setTaskDetail}/> : activeTab === 'processes' ? <ProcessListPage onAction={showNotice} onReturn={() => selectTab('workbench')}/> : activeApplication?.name === '双重预防机制' ? <DualPreventionPage onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : activeApplication ? <MockApplicationPage app={activeApplication} onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : <div className="main-layout"><div className="primary-column"><section className="priority-zone" aria-labelledby="priority-title"><div className="section-title priority-title"><div><h2 id="priority-title">今日待办</h2></div><button className="quiet-action" onClick={() => showNotice('任务总览')}>任务总览 <ArrowRight24Regular/></button></div><div className="queue-grid">{workQueues.map((item) => <WorkQueue item={item} key={item.id} active={activeQueue === item.id} onSelect={() => setActiveQueue(item.id)}/>)}</div></section><RecentApps onOpen={openApplication}/><ApplicationRail onOpen={openApplication}/></div>
+      <main>{activeTab === 'messages' ? <MessageCenter messages={messages} onMarkRead={markMessageRead} onMarkAllRead={markAllMessagesRead} onReturn={() => selectTab('workbench')}/> : activeTab === 'tasks' ? taskDetail ? <TaskDetailPage task={taskDetail} onBack={() => setTaskDetail(null)}/> : <TaskListPage onAction={showNotice} onReturn={() => selectTab('workbench')} onOpenDetail={setTaskDetail}/> : activeTab === 'processes' ? <ProcessListPage onAction={showNotice} onReturn={() => selectTab('workbench')}/> : activeTab === 'safety-dynamics' ? <SafetyDynamicsPage/> : activeTab === 'dashboard' ? <DashboardPage/> : activeTab === 'settings' ? <SettingsPage onAction={showNotice}/> : activeApplication?.name === '双重预防机制' ? <DualPreventionPage onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : activeApplication ? <MockApplicationPage app={activeApplication} onReturn={() => selectTab('workbench')} onAction={showNotice} onSwitchApplication={openApplication}/> : <div className="main-layout"><div className="primary-column"><section className="priority-zone" aria-labelledby="priority-title"><div className="section-title priority-title"><div><h2 id="priority-title">今日待办</h2></div><button className="quiet-action" onClick={() => showNotice('任务总览')}>任务总览 <ArrowRight24Regular/></button></div><div className="queue-grid">{workQueues.map((item) => <WorkQueue item={item} key={item.id} active={activeQueue === item.id} onSelect={() => setActiveQueue(item.id)}/>)}</div></section><RecentApps onOpen={openApplication}/><ApplicationRail onOpen={openApplication}/></div>
           <div className="secondary-column"><CommandPanel onAction={setDialog}/><ActivityFeed selectedTab={activityTab} onSelectTab={setActivityTab} onOpen={showNotice}/></div></div>}</main></div>
     {notice ? <div className="toast" role="status" aria-label={notice}><CheckmarkCircle24Regular/>{notice}</div> : null}<ActionDialog title={dialog} onClose={() => setDialog(null)}/>
   </div></FluentProvider>;

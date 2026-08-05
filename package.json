@@ -12,6 +12,7 @@
     "@fluentui/react-components": "^9.74.4",
     "@fluentui/react-icons": "^2.0.334",
     "@vitejs/plugin-react": "latest",
+    "echarts": "^6.1.0",
     "react": "latest",
     "react-dom": "latest",
     "vite": "latest"
