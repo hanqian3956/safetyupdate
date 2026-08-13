@@ -2553,6 +2553,18 @@ function EmbeddedTasksPage() {
   );
 }
 
+function EmbeddedWarningsPage() {
+  return (
+    <section className="embedded-warnings-page" aria-label="预警">
+      <iframe
+        className="embedded-warnings-frame"
+        src="/xiaodong/预警.html"
+        title="预警任务"
+      />
+    </section>
+  );
+}
+
 function WarningCenterPage() {
   const [filter, setFilter] = useState("全部");
   const warnings = [
@@ -2890,6 +2902,12 @@ const settingsItems = [
     icon: Flowchart24Regular,
     title: "流程",
     description: "维护审批模板、节点时限与流转通知。",
+  },
+  {
+    label: "预警",
+    icon: ErrorCircle24Regular,
+    title: "预警",
+    description: "维护预警规则、分级管控与处置统计。",
   },
   {
     label: "数据台",
@@ -4821,20 +4839,33 @@ function PersonalCenter({ onAction }) {
 function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const [selected, setSelected] = useState(initialSelected);
   const [organizations, setOrganizations] = useState([]);
-  const [worksheetExpanded, setWorksheetExpanded] = useState(true);
-  const worksheetTaskMenus = [
+  const [taskExpanded, setTaskExpanded] = useState(false);
+  const [warningExpanded, setWarningExpanded] = useState(false);
+  const taskPageMenus = [
     { label: "任务模版", view: "view-template" },
     { label: "发布任务", view: "view-publish" },
     { label: "我的任务", view: "view-mytask" },
     { label: "任务总台账", view: "view-ledger" },
     { label: "人员明细", view: "view-personnel" },
   ];
-  const worksheetTaskMenu = worksheetTaskMenus.find(
+  const taskPageMenu = taskPageMenus.find(
+    (entry) => entry.label === selected,
+  );
+  const warningPageMenus = [
+    { label: "预警信息表", view: "warning-info-table" },
+    { label: "预警规则设置", view: "warning-rule" },
+    { label: "预警分级看板", view: "warning-dashboard" },
+    { label: "预警任务", view: "warning-task" },
+    { label: "预警信息表统计", view: "warning-stats" },
+    { label: "预警统计", view: "warning-stats-aggr" },
+  ];
+  const warningPageMenu = warningPageMenus.find(
     (entry) => entry.label === selected,
   );
   const item =
     settingsItems.find((entry) => entry.label === selected) ??
-    worksheetTaskMenu ??
+    taskPageMenu ??
+    warningPageMenu ??
     settingsItems[0];
   const Icon = item.icon ?? DocumentText24Regular;
   const rowsBySetting = {
@@ -4884,7 +4915,8 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const isPersonalCenter = selected === "个人中心";
   const isRbac = selected === "角色权限";
   const isDynamicsSetting = selected === "安全动态";
-  const isWorksheetTaskSetting = Boolean(worksheetTaskMenu);
+  const isTaskPageSetting = Boolean(taskPageMenu);
+  const isWarningPageSetting = Boolean(warningPageMenu);
   return (
     <section className="settings-page" aria-labelledby="settings-title">
       <div className="settings-layout">
@@ -4895,26 +4927,63 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
           </header>
           <nav>
             {settingsItems.map(({ label, icon: MenuIcon }) =>
-              label === "工作表" ? (
+              label === "任务" ? (
                 <div className="settings-menu-group" key={label}>
                   <button
                     className={`settings-parent-menu ${
-                      selected === "工作表" || isWorksheetTaskSetting
+                      selected === "任务" || isTaskPageSetting
                         ? "active"
                         : ""
                     }`}
-                    onClick={() => setWorksheetExpanded((current) => !current)}
-                    aria-expanded={worksheetExpanded}
+                    onClick={() => {
+                      setSelected("任务模版");
+                      setTaskExpanded(true);
+                    }}
+                    aria-expanded={taskExpanded}
                   >
                     <MenuIcon />
                     <span>{label}</span>
-                    <ChevronDown24Regular
-                      className={worksheetExpanded ? "expanded" : ""}
+                    <ChevronRight24Regular
+                      className={taskExpanded ? "expanded" : ""}
                     />
                   </button>
-                  {worksheetExpanded ? (
+                  {taskExpanded ? (
                     <div className="settings-submenu-list">
-                      {worksheetTaskMenus.map((entry) => (
+                      {taskPageMenus.map((entry) => (
+                        <button
+                          key={entry.label}
+                          className={selected === entry.label ? "active" : ""}
+                          onClick={() => setSelected(entry.label)}
+                        >
+                          {entry.label}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : label === "预警" ? (
+                <div className="settings-menu-group" key={label}>
+                  <button
+                    className={`settings-parent-menu ${
+                      selected === "预警" || isWarningPageSetting
+                        ? "active"
+                        : ""
+                    }`}
+                    onClick={() => {
+                      setSelected("预警信息表");
+                      setWarningExpanded(true);
+                    }}
+                    aria-expanded={warningExpanded}
+                  >
+                    <MenuIcon />
+                    <span>{label}</span>
+                    <ChevronRight24Regular
+                      className={warningExpanded ? "expanded" : ""}
+                    />
+                  </button>
+                  {warningExpanded ? (
+                    <div className="settings-submenu-list">
+                      {warningPageMenus.map((entry) => (
                         <button
                           key={entry.label}
                           className={selected === entry.label ? "active" : ""}
@@ -4945,7 +5014,8 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
           !isPersonalCenter &&
           !isRbac &&
           !isDynamicsSetting &&
-          !isWorksheetTaskSetting ? (
+          !isTaskPageSetting &&
+          !isWarningPageSetting ? (
             <header className="settings-header">
               <span className="settings-header-icon">
                 <Icon />
@@ -4970,11 +5040,21 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
                 title="动态圈管理"
               />
             </section>
-          ) : isWorksheetTaskSetting ? (
-            <section className="settings-task-embed" aria-label={worksheetTaskMenu.label}>
+          ) : isTaskPageSetting ? (
+            <section className="settings-task-embed" aria-label={taskPageMenu.label}>
               <iframe
-                src={`/xiaodong/任务.html?view=${worksheetTaskMenu.view}`}
-                title={worksheetTaskMenu.label}
+                src={`/xiaodong/任务.html?view=${taskPageMenu.view}`}
+                title={taskPageMenu.label}
+              />
+            </section>
+          ) : isWarningPageSetting ? (
+            <section
+              className="settings-warning-embed"
+              aria-label={warningPageMenu.label}
+            >
+              <iframe
+                src={`/xiaodong/预警.html?view=${warningPageMenu.view}`}
+                title={warningPageMenu.label}
               />
             </section>
           ) : isUserCenter ? (
@@ -5208,10 +5288,10 @@ function App() {
       setActiveNav("工作台");
     });
   };
-  const openSettings = () => {
+  const openSettings = (initialSelected = "安全动态") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
-      setSettingsInitial("安全动态");
+      setSettingsInitial(initialSelected);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "settings")
           ? current
@@ -5319,7 +5399,7 @@ function App() {
             ) : activeTab === "safety-dynamics" ? (
               <EmbeddedDynamicsPage />
             ) : activeTab === "warnings" ? (
-              <WarningCenterPage />
+              <EmbeddedWarningsPage />
             ) : activeTab === "dashboard" ? (
               <DashboardPage />
             ) : activeTab === "settings" ? (
@@ -5342,12 +5422,27 @@ function App() {
                 onSwitchApplication={openApplication}
               />
             ) : (
-              <div className="main-layout">
-                <div className="primary-column">
-                  <section
-                    className="priority-zone"
-                    aria-labelledby="priority-title"
-                  >
+              <div className="workbench-home">
+                <header className="workbench-welcome">
+                  <div>
+                    <h1>
+                      智慧应急安全管理平台欢迎您，
+                      <button
+                        className="workbench-user-link"
+                        onClick={() => openSettings("个人中心")}
+                      >
+                        张宇
+                      </button>
+                    </h1>
+                  </div>
+                  <span>今日工作已更新</span>
+                </header>
+                <div className="main-layout">
+                  <div className="primary-column">
+                    <section
+                      className="priority-zone"
+                      aria-labelledby="priority-title"
+                    >
                     <div className="section-title priority-title">
                       <div>
                         <h2 id="priority-title">今日待办</h2>
@@ -5375,22 +5470,23 @@ function App() {
                         />
                       ))}
                     </div>
-                  </section>
-                  <RecentApps onOpen={openApplication} />
-                  <ApplicationRail
-                    onOpen={openApplication}
-                    favoriteApps={favoriteApps}
-                    onCustomize={setFavoriteApps}
-                  />
-                </div>
-                <div className="secondary-column">
-                  <CommandPanel onAction={setDialog} />
-                  <ActivityFeed
-                    selectedTab={activityTab}
-                    onSelectTab={setActivityTab}
-                    onOpen={showNotice}
-                    onOpenAll={openSafetyDynamics}
-                  />
+                    </section>
+                    <RecentApps onOpen={openApplication} />
+                    <ApplicationRail
+                      onOpen={openApplication}
+                      favoriteApps={favoriteApps}
+                      onCustomize={setFavoriteApps}
+                    />
+                  </div>
+                  <div className="secondary-column">
+                    <CommandPanel onAction={setDialog} />
+                    <ActivityFeed
+                      selectedTab={activityTab}
+                      onSelectTab={setActivityTab}
+                      onOpen={showNotice}
+                      onOpenAll={openSafetyDynamics}
+                    />
+                  </div>
                 </div>
               </div>
             )}

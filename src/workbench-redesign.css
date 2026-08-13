@@ -1,19 +1,27 @@
 /* Workbench-specific visual hierarchy. Existing routes keep their original layouts. */
 .workbench .main-layout { grid-template-columns: minmax(0, 1fr) 324px; gap: 18px; align-items: start; }
+.workbench .workbench-welcome { min-height: 52px; margin: 1px 0 13px; padding: 0 2px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
+.workbench .workbench-welcome p, .workbench .workbench-welcome h1 { margin: 0; }
+.workbench .workbench-welcome p { color: #5a819d; font-size: 10px; font-weight: 700; letter-spacing: .08em; }
+.workbench .workbench-welcome h1 { margin-top: 4px; color: #18374e; font-size: 21px; letter-spacing: -.04em; }
+.workbench .workbench-user-link { padding: 0; border: 0; border-bottom: 1px solid transparent; background: transparent; color: var(--accent); font: inherit; font-weight: 700; letter-spacing: inherit; }
+.workbench .workbench-user-link:hover { border-bottom-color: currentColor; }
+.workbench .workbench-user-link:focus-visible { outline: 2px solid color-mix(in srgb, var(--accent) 35%, transparent); outline-offset: 3px; border-radius: 2px; }
+.workbench .workbench-welcome > span { padding: 5px 8px; border: 1px solid #d8e6ef; border-radius: 5px; background: #f9fcfe; color: #70869a; font-size: 10px; }
 .workbench .primary-column { display: grid; gap: 18px; }
 .workbench .secondary-column { gap: 18px; }
-.workbench .priority-zone { container-type: inline-size; position: relative; overflow: hidden; padding: 22px; border-color: #d9e7f0; border-radius: 14px; background: linear-gradient(135deg, #fbfdff 0%, #f2f8fc 100%); box-shadow: 0 10px 30px rgb(34 91 134 / 7%); }
+.workbench .priority-zone { container-type: inline-size; position: relative; overflow: hidden; padding: 16px 18px; border-color: #d9e7f0; border-radius: 14px; background: linear-gradient(135deg, #fbfdff 0%, #f2f8fc 100%); box-shadow: 0 10px 30px rgb(34 91 134 / 7%); }
 .workbench .priority-zone::after { content: ''; position: absolute; top: -82px; right: -62px; width: 230px; height: 230px; border-radius: 50%; background: radial-gradient(circle, rgb(105 181 232 / 18%) 0%, rgb(105 181 232 / 0%) 68%); pointer-events: none; }
-.workbench .priority-title { position: relative; z-index: 1; margin-bottom: 16px; align-items: center; }
-.workbench .priority-title h2 { font-size: 21px; letter-spacing: -.04em; }
-.workbench .priority-title h2::before { content: ''; width: 4px; height: 20px; margin-right: 9px; display: inline-block; vertical-align: -4px; border-radius: 4px; background: var(--accent); }
+.workbench .priority-title { position: relative; z-index: 1; margin-bottom: 10px; align-items: center; }
+.workbench .priority-title h2 { font-size: 18px; letter-spacing: -.04em; }
+.workbench .priority-title h2::before { content: ''; width: 4px; height: 17px; margin-right: 8px; display: inline-block; vertical-align: -3px; border-radius: 4px; background: var(--accent); }
 .workbench .quiet-action { min-height: 31px; padding: 0 10px; border: 1px solid #c8deed; border-radius: 7px; background: rgb(255 255 255 / 74%); text-decoration: none; }
 .workbench .quiet-action:hover { border-color: #96c5e4; background: #fff; text-decoration: none; }
 .workbench .queue-grid { position: relative; z-index: 1; gap: 10px; grid-template-columns: repeat(4, minmax(0, 1fr)); }
-.workbench .work-queue, .workbench .work-queue:first-child, .workbench .work-queue:last-child { min-height: 150px; padding: 0 14px; border: 1px solid #dce8f0; border-radius: 10px; background: rgb(255 255 255 / 88%); box-shadow: 0 3px 10px rgb(37 88 125 / 4%); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
+.workbench .work-queue, .workbench .work-queue:first-child, .workbench .work-queue:last-child { min-height: 116px; padding: 0 13px; border: 1px solid #dce8f0; border-radius: 10px; background: rgb(255 255 255 / 88%); box-shadow: 0 3px 10px rgb(37 88 125 / 4%); transition: transform .18s ease, box-shadow .18s ease, border-color .18s ease; }
 .workbench .work-queue:hover { transform: translateY(-2px); border-color: #bad8eb; box-shadow: 0 10px 18px rgb(37 88 125 / 10%); }
 .workbench .work-queue.active { background: #fff; border-color: #91c5e8; box-shadow: 0 10px 22px rgb(39 119 178 / 13%); }
-.workbench .queue-title { padding: 14px 0 11px; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 8px; }
+.workbench .queue-title { padding: 12px 0 9px; grid-template-columns: 32px minmax(0, 1fr) auto; gap: 8px; }
 .workbench .queue-title > svg { display: none; }
 .workbench .queue-icon { width: 31px; height: 31px; border-radius: 8px; }
 .workbench .queue-icon svg { width: 17px; }
