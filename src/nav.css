@@ -13,7 +13,8 @@
 .nav-link:nth-child(2) .nav-icon { color: #8ec7f4; }
 .nav-link:nth-child(3) .nav-icon { color: #a9dec6; }
 .nav-link:nth-child(4) .nav-icon { color: #eabf8a; }
-.nav-link:nth-child(5) .nav-icon { color: #bbbadf; }
+.nav-link:nth-child(5) .nav-icon { color: #e4a09a; }
+.nav-link:nth-child(6) .nav-icon { color: #bbbadf; }
 .nav-bottom { gap: 11px; padding-bottom: 1px; }
 .nav-bottom .icon-button { width: 34px; height: 34px; border: 1px solid rgb(169 201 225 / 16%); border-radius: 8px; background: rgb(148 185 215 / 9%); }
 .nav-bottom .icon-button:hover, .nav-bottom .icon-button.active { background: #24547d; color: #e8f6ff; }

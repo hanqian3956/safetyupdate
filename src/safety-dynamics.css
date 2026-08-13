@@ -30,3 +30,5 @@
 .safety-dynamics-row time { color: var(--muted); font-size: 10px; text-align: right; }
 .safety-dynamics-row time b { margin-top: 4px; display: block; color: var(--accent); font-size: 10px; }
 .safety-dynamics-row > svg { width: 16px; color: #a4b0bd; }
+.embedded-dynamics-page { min-width: 1000px; height: calc(100dvh - 118px); min-height: 760px; overflow: hidden; background: transparent; }.embedded-dynamics-frame { width: 100%; height: 100%; display: block; border: 0; background: transparent; }
+.embedded-tasks-page { min-width: 1000px; height: calc(100dvh - 118px); min-height: 760px; overflow: hidden; background: transparent; }.embedded-tasks-frame { width: 100%; height: 100%; display: block; border: 0; background: transparent; }

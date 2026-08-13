@@ -1,0 +1,3244 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>预警模块 - 低代码平台原型</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #0f6cbd;
+  --primary-dark: #0b5394;
+  --primary-light: #eaf2fb;
+  --success: #2ba471;
+  --warning: #e6a23c;
+  --danger: #f5655b;
+  --info: #8b95a5;
+  --text-primary: #1f2733;
+  --text-regular: #515b69;
+  --text-secondary: #8b95a5;
+  --border-color: #e1e7ef;
+  --border-light: #eef1f5;
+  --bg-page: #f4f6f9;
+  --bg-white: #ffffff;
+  --bg-hover: #eef2f7;
+  --shadow-base: 0 1px 3px rgba(23,36,55,0.06), 0 4px 12px rgba(23,36,55,0.05);
+  --radius: 10px;
+}
+body {
+  font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ====== Layout ====== */
+.app-container { display: flex; height: 100vh; }
+
+/* ====== Sidebar ====== */
+.sidebar {
+  width: 230px;
+  background: #172437;
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.2s;
+  overflow: hidden;
+}
+.sidebar-header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  background: #1f3354;
+  white-space: nowrap;
+}
+.sidebar-header span { margin-left: 8px; }
+.sidebar-menu {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar-menu::-webkit-scrollbar { width: 4px; }
+.sidebar-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.menu-group-title {
+  padding: 10px 18px 6px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.menu-item, .submenu-title {
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  height: 38px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  font-size: 13px;
+  position: relative;
+}
+.menu-item:hover, .submenu-title:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.menu-item.active { background: var(--primary); color: #fff; box-shadow: inset 3px 0 0 #82c4fa; }
+.menu-item .menu-icon { width: 16px; margin-right: 8px; text-align: center; font-size: 14px; }
+.menu-item .menu-arrow { margin-left: auto; font-size: 10px; }
+.submenu-children { overflow: hidden; transition: max-height 0.2s; }
+.submenu-children .menu-item { padding-left: 42px; font-size: 12.5px; }
+
+/* ====== Main Content ====== */
+.main-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+.top-bar {
+  height: 42px;
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+  gap: 8px;
+}
+.breadcrumb { font-size: 13px; color: var(--text-secondary); }
+.breadcrumb span { color: var(--text-primary); }
+.top-bar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.top-bar-right .avatar {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--primary);
+  display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px;
+}
+.content-area { position: absolute; top: 42px; left: 0; right: 0; bottom: 0; overflow-y: auto; padding: 16px; }
+
+/* ====== Page Panels ====== */
+.page { display: none; }
+.page.active { display: block; }
+
+/* ====== Cards & Panels ====== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-base);
+  margin-bottom: 16px;
+}
+.card-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-title { font-size: 15px; font-weight: 600; }
+.card-body { padding: 16px; }
+
+/* ====== Buttons ====== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 15px;
+  font-size: 13px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-regular);
+  transition: all 0.15s;
+  gap: 4px;
+  white-space: nowrap;
+}
+.btn:hover { color: var(--primary); border-color: var(--primary); }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); color: #fff; }
+.btn-success { background: var(--success); border-color: var(--success); color: #fff; }
+.btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn-text { border: none; background: transparent; padding: 4px 8px; color: var(--primary); }
+.btn-text:hover { background: var(--primary-light); }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+.btn-group { display: flex; gap: 8px; }
+
+/* ====== Table ====== */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th {
+  background: #fafafa;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-regular);
+}
+.data-table tbody tr:hover { background: var(--bg-hover); }
+.data-table .link { color: var(--primary); cursor: pointer; text-decoration: none; }
+.data-table .link:hover { text-decoration: underline; }
+
+/* ====== Tags / Badges ====== */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: var(--radius);
+  line-height: 1.5;
+}
+.tag-danger { background: #fef0f0; color: var(--danger); border: 1px solid #fde2e2; }
+.tag-warning { background: #fdf6ec; color: var(--warning); border: 1px solid #faecd8; }
+.tag-success { background: #f0f9eb; color: var(--success); border: 1px solid #e1f3d8; }
+.tag-info { background: #f4f4f5; color: var(--info); border: 1px solid #e9e9eb; }
+.tag-primary { background: var(--primary-light); color: var(--primary); border: 1px solid #d9ecff; }
+
+/* ====== Risk Level Colors ====== */
+.risk-1 { color: #f5655b; font-weight: 600; }
+.risk-2 { color: #e6a23c; font-weight: 600; }
+.risk-3 { color: #0f6cbd; font-weight: 600; }
+.risk-4 { color: #2ba471; font-weight: 600; }
+
+/* ====== Form Elements ====== */
+.form-item { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-regular);
+  margin-bottom: 6px;
+}
+.form-label .required { color: var(--danger); margin-right: 2px; }
+.input, .select, .textarea {
+  width: 100%;
+  padding: 7px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+  background: #fff;
+}
+.input:focus, .select:focus, .textarea:focus { border-color: var(--primary); }
+.input:disabled, .select:disabled, .textarea:disabled {
+  background: #f5f7fa; color: var(--text-secondary); cursor: not-allowed;
+}
+.textarea { resize: vertical; min-height: 80px; }
+.form-row { display: flex; gap: 16px; }
+.form-row > .form-item { flex: 1; }
+
+/* ====== Tabs ====== */
+.tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
+.tab-item {
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-regular);
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  position: relative;
+  bottom: -1px;
+}
+.tab-item:hover { color: var(--primary); }
+.tab-item.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.task-tab-content { display: none; }
+.task-tab-content.active { display: block; }
+
+/* ====== Switch ====== */
+.switch { display: inline-flex; align-items: center; cursor: pointer; gap: 8px; }
+.switch-track {
+  width: 40px; height: 20px; border-radius: 10px;
+  background: #dcdfe6; position: relative; transition: background 0.2s;
+}
+.switch-thumb {
+  width: 16px; height: 16px; border-radius: 50%; background: #fff;
+  position: absolute; top: 2px; left: 2px; transition: left 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.switch.on .switch-track { background: var(--primary); }
+.switch.on .switch-thumb { left: 22px; }
+.switch-label { font-size: 13px; color: var(--text-regular); }
+
+/* ====== Modal ====== */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-header {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title { font-size: 16px; font-weight: 600; }
+.modal-close { cursor: pointer; font-size: 20px; color: var(--text-secondary); line-height: 1; }
+.modal-body { padding: 20px; overflow-y: auto; max-height: calc(90vh - 110px); }
+.modal-footer { padding: 12px 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px; }
+
+/* ====== Comment / Note ====== */
+.logic-note {
+  background: #f0f6ff;
+  border: 1px dashed #bcdcff;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  margin: 8px 0;
+  font-size: 12px;
+  color: #0b5394;
+  line-height: 1.8;
+}
+.logic-note::before { content: "📝 "; }
+.logic-note .note-title { font-weight: 600; margin-bottom: 2px; display: block; }
+
+/* ====== Risk Detail Display ====== */
+.risk-detail-display {
+  background: #f0f6ff;
+  border: 1px solid #bcdcff;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 12px 0 0 0;
+  animation: fadeIn 0.3s ease;
+}
+.risk-detail-display .form-row { margin-bottom: 8px; }
+.risk-detail-display .form-item { flex: 1; }
+.risk-detail-display .form-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
+
+/* ====== Statistics Cards ====== */
+.stat-row { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-card {
+  flex: 1;
+  min-width: 140px;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-base);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.stat-card:hover { transform: translateY(-2px); }
+.stat-card .stat-value { font-size: 28px; font-weight: 700; }
+.stat-card .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+.stat-card .stat-bar { height: 3px; border-radius: 2px; margin-top: 8px; }
+
+/* ====== Low-code Editor Layout ====== */
+.lc-editor { display: flex; height: 100%; }
+.lc-left {
+  width: 200px;
+  background: #fafafa;
+  border-right: 1px solid var(--border-color);
+  padding: 12px;
+  overflow-y: auto;
+}
+.lc-left-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600; }
+.lc-component {
+  padding: 8px 12px;
+  margin-bottom: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  cursor: grab;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  transition: all 0.15s;
+}
+.lc-component:hover { border-color: var(--primary); color: var(--primary); }
+.lc-component .comp-icon { font-size: 14px; }
+.lc-center {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #f9fafc;
+}
+.lc-right {
+  width: 300px;
+  border-left: 1px solid var(--border-color);
+  padding: 12px;
+  overflow-y: auto;
+  background: #fff;
+}
+.lc-right-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-light); }
+
+/* ====== Form Zone Divider ====== */
+.zone-divider {
+  background: linear-gradient(90deg, #e8f4ff, transparent);
+  border-left: 3px solid var(--primary);
+  padding: 8px 12px;
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.zone-divider .zone-tag { font-size: 12px; font-weight: 400; color: var(--text-secondary); }
+
+/* ====== Read-only field display ====== */
+.readonly-field {
+  background: #f5f7fa;
+  padding: 7px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--text-secondary);
+  min-height: 32px;
+}
+
+/* ====== Upload Area ====== */
+.upload-area {
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 13px;
+  transition: border-color 0.15s;
+}
+.upload-area:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ====== Signature Area ====== */
+.signature-area {
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  background: #fafafa;
+}
+.signature-area:hover { border-color: var(--primary); }
+
+/* ====== Condition Group ====== */
+.condition-group {
+  background: #f9fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.condition-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.condition-row .cond-field { flex: 1; min-width: 120px; }
+/* Sub-condition connector between sub-conditions */
+.sub-condition-connector {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 4px 0;
+  cursor: pointer;
+  user-select: none;
+}
+.sub-condition-connector:hover { color: var(--primary-dark); text-decoration: underline; }
+.condition-logic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--text-regular);
+}
+.condition-logic .logic-tag {
+  padding: 4px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+}
+.condition-logic .logic-tag.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ====== Selected items display ====== */
+.selected-items {
+  background: #f0f7ff;
+  border: 1px solid #d9ecff;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+.selected-item-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: #fff;
+  border: 1px solid #d9ecff;
+  border-radius: 12px;
+  font-size: 12px;
+  margin: 2px;
+}
+.selected-item-tag .remove { cursor: pointer; color: var(--danger); font-weight: 600; }
+
+/* ====== Radio Card ====== */
+.radio-card {
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.radio-card:hover { border-color: var(--primary); }
+.radio-card.selected { border-color: var(--primary); background: var(--primary-light); }
+.radio-card-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.radio-card-desc { font-size: 12px; color: var(--text-secondary); }
+
+/* ====== Checkbox list ====== */
+.checkbox-list { max-height: 200px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius); }
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
+  gap: 8px;
+  font-size: 13px;
+}
+.checkbox-item:last-child { border-bottom: none; }
+.checkbox-item:hover { background: var(--bg-hover); }
+.checkbox-item input[type="checkbox"] { cursor: pointer; }
+
+/* ====== Person category list（预警处理人/通知人按角色勾选） ====== */
+.person-cat-list {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: #fff;
+  max-height: 480px;
+  overflow-y: auto;
+}
+.person-cat-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+  gap: 8px;
+}
+.person-cat-row:last-child { border-bottom: none; }
+.person-cat-label { flex: 1; color: var(--text-primary); }
+.person-cat-state { width: 100px; text-align: left; font-size: 12px; color: var(--text-secondary); }
+.person-cat-actions { display: flex; align-items: center; gap: 12px; }
+.checkbox-item-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.checkbox-item-inline input[type="checkbox"] { cursor: pointer; }
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+.btn-icon:hover { border-color: var(--primary); color: var(--primary); }
+.person-cat-divider {
+  padding: 6px 12px;
+  background: #f5f7fa;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-light);
+  border-top: 1px solid var(--border-light);
+}
+
+/* ====== Timeline ====== */
+.timeline { padding-left: 16px; border-left: 2px solid var(--border-color); }
+.timeline-item { position: relative; padding: 0 0 16px 16px; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -21px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--primary);
+}
+.timeline-time { font-size: 12px; color: var(--text-secondary); }
+.timeline-content { font-size: 13px; color: var(--text-regular); margin-top: 2px; }
+
+/* ====== Toolbar ====== */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.toolbar .spacer { flex: 1; }
+
+/* ====== Search bar ====== */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+/* ====== Dashboard chart placeholder ====== */
+.chart-placeholder {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 200px;
+  padding: 16px 0;
+}
+.chart-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.chart-bar { width: 100%; border-radius: 3px 3px 0 0; transition: height 0.3s; cursor: pointer; }
+.chart-label { font-size: 12px; color: var(--text-secondary); }
+
+/* ====== Misc ====== */
+.text-muted { color: var(--text-secondary); }
+.text-sm { font-size: 12px; }
+.text-danger { color: var(--danger); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.pl-16 { padding-left: 16px; }
+.flex { display: flex; }
+.flex-1 { flex: 1; }
+.gap-8 { gap: 8px; }
+.gap-16 { gap: 16px; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.w-full { width: 100%; }
+.cursor-pointer { cursor: pointer; }
+.font-bold { font-weight: 600; }
+.no-select { user-select: none; }
+
+/* Divider */
+.divider { height: 1px; background: var(--border-light); margin: 12px 0; }
+
+/* Collapse arrow */
+.collapse-arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 10px;
+  margin-right: 4px;
+}
+.collapse-arrow.open { transform: rotate(90deg); }
+
+/* Sub-form table */
+.sub-form-table { width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; }
+.sub-form-table th { background: #fafafa; padding: 8px; font-size: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+.sub-form-table td { padding: 8px; border-bottom: 1px solid var(--border-light); font-size: 13px; }
+.sub-form-table .sub-input {
+  width: 100%; border: 1px solid transparent; padding: 4px 6px;
+  font-size: 13px; background: transparent; border-radius: 2px;
+}
+.sub-form-table .sub-input:focus { border-color: var(--primary); background: #fff; }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* Warning level badge */
+.warn-level {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ====== 预警规则设置（对齐参考原型样式） ====== */
+:root{
+  --amber:#0f6cbd;
+  --amber-soft:rgba(15,108,189,0.10);
+}
+.page-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+.ph-title{ font-size:18px; font-weight:700; color:var(--text-primary); }
+.ph-desc{ font-size:12px; color:var(--text-secondary); margin-top:6px; line-height:1.6; max-width:780px; }
+.ph-actions{ display:flex; gap:10px; flex-shrink:0; }
+
+.rtabs{ display:flex; gap:6px; background:var(--bg-hover); border-radius:8px; padding:5px; margin-bottom:18px; }
+.rtab{ flex:1; text-align:center; padding:10px 16px; font-size:13px; font-weight:600; color:var(--text-secondary); cursor:pointer; border-radius:8px; transition:.2s; display:flex; align-items:center; justify-content:center; gap:6px; }
+.rtab:hover{ color:var(--text-primary); }
+.rtab.active{ background:var(--bg-white); color:var(--amber); box-shadow:0 1px 3px rgba(0,0,0,.08); }
+.rtab .rt-num{ background:var(--amber-soft); color:var(--amber); font-size:11px; padding:1px 7px; border-radius:8px; }
+.rtab-pane{ display:none; }
+.rtab-pane.active{ display:block; animation:fadeUp .25s ease; }
+@keyframes fadeUp{ from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+
+.section-block{ background:var(--bg-white); border-radius:var(--radius); border:1px solid var(--border-light); padding:20px; margin-bottom:16px; }
+.section-block h5{ font-size:13px; font-weight:700; color:var(--text-primary); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border-light); display:flex; align-items:center; gap:8px; }
+.section-block h5 i{ color:var(--amber); font-size:14px; }
+
+.cond-relation{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; background:var(--amber-soft); border-radius:var(--radius); font-size:13px; font-weight:500; color:#0b5394; margin-bottom:14px; flex-wrap:wrap; }
+.cond-relation select{ padding:5px 10px; border:1px solid rgba(15,108,189,.35); border-radius:5px; font-size:13px; font-weight:700; color:#0b5394; background:var(--bg-white); }
+
+.cond-group{ border:1px solid var(--border-color); border-radius:var(--radius); padding:16px; margin-bottom:14px; background:var(--bg-white); }
+.cg-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.cg-title{ font-size:13px; font-weight:700; color:var(--text-secondary); }
+.group-rel{ display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); margin-right:12px; }
+.group-rel select{ padding:4px 8px; border:1px solid var(--border-color); border-radius:4px; font-size:12px; }
+.sub-cond-list{ margin-top:4px; }
+.sub-cond-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:9px 10px; background:var(--bg-hover); border:1px solid var(--border-light); border-radius:var(--radius); margin-bottom:6px; }
+.sub-cond-row select, .sub-cond-row input{ padding:6px 10px; font-size:12px; border:1px solid var(--border-color); border-radius:4px; }
+.sc-field{ min-width:120px; } .sc-logic{ min-width:110px; } .sc-value{ min-width:120px; }
+.sub-cond-connector{ padding:2px 0 2px 10px; }
+.sc-conn-tag{ display:inline-block; padding:2px 12px; border-radius:12px; background:var(--amber-soft); color:#0b5394; font-weight:700; font-size:11px; }
+.cg-add{ width:100%; margin-top:6px; border:1px dashed var(--border-color); color:var(--text-secondary); background:transparent; }
+.cg-add:hover{ border-color:var(--amber); color:var(--amber); }
+.risk-attr-area{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--border-light); }
+.risk-attr-area .ra-row{ display:flex; gap:16px; } .risk-attr-area .ra-row .form-item{ flex:1; }
+
+.empty-tip{ font-size:12px; color:var(--text-secondary); text-align:center; padding:12px; }
+.hide{ display:none !important; }
+.mb0{ margin-bottom:0 !important; }
+
+/* 组织架构选择（转发） */
+.org-picker{ border:1px solid var(--border-color); border-radius:var(--radius); overflow:hidden; }
+.org-search{ display:flex; align-items:center; gap:6px; padding:9px 12px; border-bottom:1px solid var(--border-light); background:var(--bg-hover); }
+.org-search i{ color:var(--text-secondary); }
+.org-search input{ border:none; background:transparent; outline:none; flex:1; font-size:13px; }
+.org-tree{ max-height:300px; overflow:auto; padding:6px; }
+.org-dept-head{ display:flex; align-items:center; gap:6px; padding:8px 10px; font-weight:600; cursor:pointer; font-size:13px; color:var(--text-primary); }
+.org-dept-head i{ transition:.2s; color:var(--text-secondary); }
+.org-dept-head .org-count{ margin-left:auto; font-size:11px; color:var(--text-secondary); background:var(--bg-hover); padding:1px 8px; border-radius:10px; }
+.org-people{ padding:2px 0 6px 18px; }
+.org-person{ display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:var(--radius); font-size:13px; cursor:pointer; color:var(--text-regular); }
+.org-person:hover{ background:var(--bg-hover); }
+.org-person.active{ background:var(--primary-light); color:var(--primary); font-weight:600; }
+.org-selected{ margin-top:12px; font-size:13px; color:var(--text-secondary); }
+.org-selected b{ color:var(--primary); }
+
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- ====== Sidebar ====== -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span>⚠️ 预警管控平台</span>
+    </div>
+    <div class="sidebar-menu" id="sidebarMenu">
+      <div class="menu-group-title">工作表</div>
+      <div class="menu-item active" data-page="warning-info-table" onclick="navigateTo('warning-info-table')">
+        <span class="menu-icon">📋</span> 预警信息表
+      </div>
+
+      <div class="menu-group-title">工作表管理</div>
+      <div class="menu-item" data-page="warning-rule" onclick="navigateTo('warning-rule')">
+        <span class="menu-icon">⚙️</span> 预警规则设置
+      </div>
+
+      <div class="menu-group-title">预警分级管控</div>
+      <div class="menu-item" data-page="warning-dashboard" onclick="navigateTo('warning-dashboard')">
+        <span class="menu-icon">📊</span> 预警分级看板
+      </div>
+      <div class="menu-item" data-page="warning-task" onclick="navigateTo('warning-task')">
+        <span class="menu-icon">🔔</span> 预警任务
+      </div>
+
+      <div class="menu-group-title">预警统计</div>
+      <div class="menu-item" data-page="warning-stats" onclick="navigateTo('warning-stats')">
+        <span class="menu-icon">📋</span> 预警信息表统计
+      </div>
+      <div class="menu-item" data-page="warning-stats-aggr" onclick="navigateTo('warning-stats-aggr')">
+        <span class="menu-icon">📈</span> 预警统计（按工作表）
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Main ====== -->
+  <div class="main-container">
+    <div class="top-bar">
+      <div class="breadcrumb" id="breadcrumb">工作表 / <span>预警信息表</span></div>
+      <div class="top-bar-right">
+        <span class="text-sm text-muted">管理员</span>
+        <div class="avatar">管</div>
+      </div>
+    </div>
+    <div class="content-area" id="contentArea">
+
+      <!-- ================================================================ -->
+      <!-- PAGE 1: 预警信息表 - 列表视图 -->
+      <!-- ================================================================ -->
+      <div class="page active" id="page-warning-info-table">
+
+        <!-- 列表视图 -->
+        <div id="wit-list-view">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">预警信息表</div>
+              <div class="btn-group">
+                <button class="btn btn-sm" onclick="showWitLogicModal()">
+                  📝 查看表单逻辑
+                </button>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="logic-note">
+                <span class="note-title">表单逻辑说明：</span>
+                1. 系统预制固定预警工作表模板，用户无新增、删除工作表权限，仅可维护单元格属性；<br>
+                2. 表单固定上下两大区块，不可删除、拆分：上区【预警基础信息区】系统自动抓取回填，下区【预警处置情况区】预警处理人工填写；<br>
+                3. 所有触发的预警统一写入本表，作为全量预警台账数据源，支持筛选、导出；<br>
+                4. 下区以列表形式展示，支持增行（多个处理人可分别填写处置情况）。
+              </div>
+
+              <div class="search-bar">
+                <input class="input" style="width: 200px;" placeholder="搜索表单名称..." value="预警信息表" readonly>
+                <select class="select" style="width: 140px;">
+                  <option>全部状态</option>
+                  <option>启用</option>
+                  <option>停用</option>
+                </select>
+                <button class="btn btn-primary btn-sm">🔍 查询</button>
+                <button class="btn btn-sm">重置</button>
+              </div>
+
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>表单名称</th>
+                    <th>表单类型</th>
+                    <th>状态</th>
+                    <th>简介</th>
+                    <th>更新人</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="link" onclick="enterWitEditView()">预警信息表</td>
+                    <td><span class="tag tag-primary">预警信息表</span></td>
+                    <td><span class="tag tag-success">启用</span></td>
+                    <td class="text-sm">系统预制统一模板，存储全部预警基础信息、处置记录</td>
+                    <td>系统</td>
+                    <td>2026-07-08 09:30</td>
+                    <td>
+                      <button class="btn-text btn-sm" onclick="enterWitEditView()">编辑</button>
+                      <button class="btn-text btn-sm" onclick="enterWitViewMode()">查看</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+              <div class="logic-note mt-16">
+                <span class="note-title">列表字段逻辑：</span>
+                表单名称为「预警信息表」（固定不可修改）；表单类型为「预警信息表」（固定）；状态仅支持启用/停用切换（不可删除表单）；简介为系统自动生成的表单描述。
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 编辑视图：低代码表单设计器 -->
+        <div id="wit-edit-view" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title flex items-center gap-8">
+                <button class="btn btn-sm" onclick="backToWitList()">← 返回</button>
+                <span>编辑预警信息表 - 表单设计器</span>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-sm btn-primary" onclick="backToWitList()">💾 保存</button>
+                <button class="btn btn-sm" onclick="backToWitList()">取消</button>
+              </div>
+            </div>
+            <div class="card-body" style="padding:0;">
+              <div class="lc-editor" style="height: calc(100vh - 200px);">
+
+                <!-- 左侧：低代码平台组件库 -->
+                <div class="lc-left">
+                  <div class="lc-left-title">组件库</div>
+                  <div class="lc-component"><span class="comp-icon">📝</span> 单行文本</div>
+                  <div class="lc-component"><span class="comp-icon">📄</span> 多行文本</div>
+                  <div class="lc-component"><span class="comp-icon">🔢</span> 数字</div>
+                  <div class="lc-component"><span class="comp-icon">📅</span> 日期时间</div>
+                  <div class="lc-component"><span class="comp-icon">📋</span> 下拉选择</div>
+                  <div class="lc-component"><span class="comp-icon">☑️</span> 多选框</div>
+                  <div class="lc-component"><span class="comp-icon">🔘</span> 单选框</div>
+                  <div class="lc-component"><span class="comp-icon">👤</span> 人员选择</div>
+                  <div class="lc-component"><span class="comp-icon">📎</span> 附件上传</div>
+                  <div class="lc-component"><span class="comp-icon">✍️</span> 电子签字</div>
+                  <div class="lc-component"><span class="comp-icon">📊</span> 子表单</div>
+                  <div class="lc-component"><span class="comp-icon">🔗</span> 关联数据</div>
+                  <div class="lc-component"><span class="comp-icon">📏</span> 地址</div>
+                  <div class="lc-component"><span class="comp-icon">🏷️</span> 标签</div>
+                  <div class="lc-component"><span class="comp-icon">💡</span> 提示文字</div>
+
+                  <div class="lc-left-title mt-16">布局组件</div>
+                  <div class="lc-component"><span class="comp-icon">▭</span> 分栏</div>
+                  <div class="lc-component"><span class="comp-icon">◧</span> 分组</div>
+                  <div class="lc-component"><span class="comp-icon">▬</span> 分割线</div>
+                </div>
+
+                <!-- 中间：表单画布 -->
+                <div class="lc-center">
+                  <div class="logic-note">
+                    <span class="note-title">表单设计器逻辑：</span>
+                    左侧为低代码平台组件库，拖拽至中间画布即可创建表单字段；右侧为表单属性编辑面板，可配置字段属性。上区【预警基础信息区】字段为系统自动抓取回填，设为只读；下区【预警处置情况区】为预警处理人工填写，以子表单（列表）形式展示，支持增行。
+                  </div>
+
+                  <!-- 上区：预警基础信息区 -->
+                  <div class="zone-divider">
+                    <span>上区 - 预警基础信息区</span>
+                    <span class="zone-tag">系统自动抓取回填，无需人工录入</span>
+                  </div>
+                  <div class="logic-note">
+                    <span class="note-title">上区逻辑：</span>
+                    本区所有字段均为系统自动抓取回填，字段属性设为「只读」，处理人无法手动修改。数据来源为预警规则触发时自动填充。
+                  </div>
+
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">工作表名称</label>
+                      <input class="input" value="预警信息表" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">工作项</label>
+                      <input class="input" value="安全巡检记录表" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">预警触发值</label>
+                      <input class="input" value="温度 > 80°C" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">预警发生时间</label>
+                      <input class="input" value="2026-07-08 10:23:45" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">通知人</label>
+                      <input class="input" value="通讯录及外部联系人、表单提交人的部门主管和副主管" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">处理人</label>
+                      <input class="input" value="表单提交人、预警所在事事号的负责人" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">预警处理期限</label>
+                      <input class="input" value="2026-07-08 18:00:00" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">表单提交人</label>
+                      <input class="input" value="王五（一线操作员）" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+
+                  <div class="divider mt-16 mb-16"></div>
+
+                  <!-- 下区：预警处置情况区 -->
+                  <div class="zone-divider">
+                    <span>下区 - 预警处置情况区</span>
+                    <span class="zone-tag">预警处理人工填写 · 支持增行（多处理人）</span>
+                  </div>
+                  <div class="logic-note">
+                    <span class="note-title">下区逻辑：</span>
+                    本区以子表单（列表）形式展示，因为可能有多个处理人需要填写，所以需要支持增行。每行包含：处理情况、整改照片/附件、实际处理人、电子签字。新增行后各处理人可独立填写各自的处置情况。
+                  </div>
+
+                  <div class="sub-form-table">
+                    <table style="width:100%;">
+                      <thead>
+                        <tr>
+                          <th style="width:25%;">处理情况</th>
+                          <th style="width:20%;">整改照片/附件</th>
+                          <th style="width:15%;">实际处理人</th>
+                          <th style="width:15%;">电子签字</th>
+                          <th style="width:8%;">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody id="disposalTableBody">
+                        <tr>
+                          <td><input class="sub-input" value="已停机降温，更换冷却风扇"></td>
+                          <td><span class="tag tag-info">📎 整改照片.jpg</span></td>
+                          <td><input class="sub-input" value="李四"></td>
+                          <td><span class="text-success">✅ 已签字</span></td>
+                          <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td><input class="sub-input" value="复核确认温度正常"></td>
+                          <td><span class="tag tag-info">📎 复核记录.pdf</span></td>
+                          <td><input class="sub-input" value="张三"></td>
+                          <td><span class="text-success">✅ 已签字</span></td>
+                          <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td><input class="sub-input" placeholder="请输入处理情况..."></td>
+                          <td><span class="tag tag-info" style="cursor:pointer;">📎 上传</span></td>
+                          <td><input class="sub-input" placeholder="选择人员..."></td>
+                          <td><span class="text-muted">待签字</span></td>
+                          <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <button class="btn btn-sm mt-8" onclick="addDisposalRow()">+ 增行</button>
+
+                  <div class="logic-note mt-16">
+                    <span class="note-title">增行逻辑：</span>
+                    点击「增行」按钮可在子表单底部新增一行空白处置记录。每个处理人可以独立填写自己的处理情况、上传整改照片/附件、记录实际处理人信息并进行电子签字。所有行数据均会保存到预警信息表中。
+                  </div>
+                </div>
+
+                <!-- 右侧：表单属性编辑 -->
+                <div class="lc-right">
+                  <div class="lc-right-title">表单属性</div>
+
+                  <div class="form-item">
+                    <label class="form-label">表单名称</label>
+                    <input class="input" value="预警信息表" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">表单编码</label>
+                    <input class="input" value="WRN_INFO_001" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">表单类型</label>
+                    <input class="input" value="预警信息表" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">表单描述</label>
+                    <textarea class="textarea" rows="3">系统预制统一模板，存储全部预警基础信息、处置记录；用户不可新增、删除工作表，仅可维护单元格属性</textarea>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="lc-right-title">字段属性 - 工作表名称</div>
+                  <div class="form-item">
+                    <label class="form-label">字段名称</label>
+                    <input class="input" value="工作表名称">
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">字段类型</label>
+                    <input class="input" value="单行文本" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">数据来源</label>
+                    <select class="select">
+                      <option>系统自动抓取</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">是否只读</label>
+                    <div class="switch on" onclick="toggleSwitch(this)">
+                      <div class="switch-track"><div class="switch-thumb"></div></div>
+                      <span class="switch-label">是</span>
+                    </div>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">是否必填</label>
+                    <div class="switch on" onclick="toggleSwitch(this)">
+                      <div class="switch-track"><div class="switch-thumb"></div></div>
+                      <span class="switch-label">是</span>
+                    </div>
+                  </div>
+
+                  <div class="logic-note">
+                    <span class="note-title">属性配置逻辑：</span>
+                    上区所有字段均设为「系统自动抓取」+「只读」，确保数据由系统自动回填，处理人无法篡改。下区子表单字段设为「人工填写」，可编辑。电子签字组件需要调用签章服务，签字后不可修改。
+                  </div>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 查看视图 -->
+        <div id="wit-view-mode" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title flex items-center gap-8">
+                <button class="btn btn-sm" onclick="backToWitList()">← 返回</button>
+                <span>查看 - 预警信息表（只读）</span>
+              </div>
+            </div>
+            <div class="card-body">
+              <div class="logic-note">
+                <span class="note-title">查看模式逻辑：</span>
+                查看模式下所有字段均为只读，仅可查看表单结构和数据，不可编辑。此模式用于权限较低的用户查看预警信息表结构。
+              </div>
+
+              <div class="zone-divider">
+                <span>上区 - 预警基础信息区</span>
+                <span class="zone-tag">系统自动抓取回填（只读）</span>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">工作表名称</label><div class="readonly-field">预警信息表</div></div>
+                <div class="form-item"><label class="form-label">工作项</label><div class="readonly-field">安全巡检记录表</div></div>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">预警触发值</label><div class="readonly-field">温度 > 80°C</div></div>
+                <div class="form-item"><label class="form-label">预警发生时间</label><div class="readonly-field">2026-07-08 10:23:45</div></div>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">通知人</label><div class="readonly-field">通讯录及外部联系人、表单提交人的部门主管和副主管</div></div>
+                <div class="form-item"><label class="form-label">处理人</label><div class="readonly-field">表单提交人、预警所在事事号的负责人</div></div>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">预警处理期限</label><div class="readonly-field">2026-07-08 18:00:00</div></div>
+                <div class="form-item"><label class="form-label">表单提交人</label><div class="readonly-field">王五（一线操作员）</div></div>
+              </div>
+
+              <div class="divider mt-16 mb-16"></div>
+
+              <div class="zone-divider">
+                <span>下区 - 预警处置情况区</span>
+                <span class="zone-tag">预警处理人工填写（只读）</span>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>处理情况</th>
+                    <th>整改照片/附件</th>
+                    <th>实际处理人</th>
+                    <th>电子签字</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>已停机降温，更换冷却风扇</td>
+                    <td>📎 整改照片.jpg</td>
+                    <td>李四</td>
+                    <td><span class="text-success">✅ 已签字</span></td>
+                  </tr>
+                  <tr>
+                    <td>复核确认温度正常</td>
+                    <td>📎 复核记录.pdf</td>
+                    <td>张三</td>
+                    <td><span class="text-success">✅ 已签字</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 3: 预警规则设置 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-rule">
+        <!-- 视图1：工作表列表 -->
+        <div id="rulesListView">
+          <div class="page-head">
+            <div>
+              <div class="ph-title">工作表预警配置</div>
+              <div class="ph-desc">选择目标工作表进入预警设置。同一表单的预警条件可自由选择「简易设置」或「关联风险库」，两者可共存。功能 / 工作表管理 / 预警设置。</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">工作表列表</div></div>
+            <div class="card-body">
+              <table class="data-table">
+                <thead><tr><th>工作表名称</th><th>已配置预警条件</th><th>预警类型</th><th>启用状态</th><th>最后更新</th><th style="text-align:right;">操作</th></tr></thead>
+                <tbody id="wsRuleBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 视图2：预警设置编辑器（两 Tab，无审批） -->
+        <div id="rulesEditView" class="hide">
+          <div class="page-head">
+            <div>
+              <div class="ph-title" id="ruleEditTitle">预警设置 · 安全巡检记录表</div>
+              <div class="ph-desc">预警条件、预警通知人及超时提醒分为两个 Tab 页独立配置。</div>
+            </div>
+            <div class="ph-actions">
+              <button class="btn" onclick="closeRuleEdit()"><i class="bi bi-arrow-left"></i> 返回列表</button>
+              <button class="btn btn-primary" onclick="saveRule()"><i class="bi bi-lightning-charge"></i> 启用规则</button>
+            </div>
+          </div>
+
+          <div class="rtabs">
+            <div class="rtab active" data-rtab="cond" onclick="switchRtab('cond')"><i class="bi bi-funnel"></i> 预警条件设置 <span class="rt-num" id="rtCondNum">0</span></div>
+            <div class="rtab" data-rtab="notify" onclick="switchRtab('notify')"><i class="bi bi-people"></i> 预警通知人及超时提醒 <span class="rt-num" id="rtNotifyNum">0</span></div>
+          </div>
+
+          <!-- Tab1 预警条件设置 -->
+          <div class="rtab-pane active" id="pane-cond">
+            <div class="logic-note">
+              <span class="note-title">【逻辑备注】</span>
+              本 Tab 采用「<b>条件组 + 子条件</b>」两级结构定义触发逻辑。顶部「条件组关系」决定多个条件组之间是<b>满足其一（任意）</b>还是<b>全部满足</b>才触发；每个条件组内部可包含多条<b>子条件</b>，通过组内「<b>且 / 或</b>」连接。每条预警独立指定「属于几级风险」（非必填）与「类型」（必填），不关联标准风险主库。
+            </div>
+            <div class="section-block">
+              <h5><i class="bi bi-diagram-2"></i> 条件组触发关系</h5>
+              <div class="cond-relation">
+                <i class="bi bi-check2-circle"></i> 当本表单提交后，满足以下
+                <select id="condRelation"><option value="any">任意一个条件组（或）</option><option value="all">全部条件组（且）</option></select>
+                时，触发预警。
+              </div>
+            </div>
+            <div class="section-block">
+              <h5><i class="bi bi-funnel"></i> 预警条件组列表
+                <button class="btn btn-sm" style="margin-left:auto; border:1px solid var(--border-color);" onclick="addCondition()"><i class="bi bi-plus"></i> 添加预警条件组</button>
+              </h5>
+              <div id="condContainer"></div>
+            </div>
+          </div>
+
+          <!-- Tab2 预警通知人及超时提醒 -->
+          <div class="rtab-pane" id="pane-notify">
+            <div class="logic-note">
+              <span class="note-title">【逻辑备注】</span>
+              一个表单可为不同预警条件分别配置通知与超时规则。点击「添加」后，需<b>先从本表已添加的预警条件中多选适用范围</b>，再配置处理人、通知人、处理期限与超期提醒。处理人/通知人按<b>角色类别</b>勾选（不定位到具体个人）。
+            </div>
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">通知及超时方案</div>
+                <button class="btn btn-primary btn-sm" onclick="showNotifyConfigModal()"><i class="bi bi-plus-lg"></i> 添加预警通知人及超时提醒</button>
+              </div>
+              <div class="card-body">
+                <table class="data-table">
+                  <thead><tr><th>适用预警条件</th><th>处理人</th><th>通知人</th><th>分级通知</th><th>处理期限</th><th>超期提醒</th><th style="text-align:right;">操作</th></tr></thead>
+                  <tbody id="notifyConfigList">
+                    <tr>
+                      <td><span class="selected-item-tag">预警条件组 1</span><span class="selected-item-tag">预警条件组 2</span></td>
+                      <td><span class="selected-item-tag">表单提交人</span><span class="selected-item-tag">预警所在事事号的负责人</span></td>
+                      <td><span class="selected-item-tag">预警所在事事号的管理员</span><span class="selected-item-tag">表单提交人的部门主管</span></td>
+                      <td>24小时</td>
+                      <td>超期1h → 表单提交人的直属上级</td>
+                      <td><span class="tag tag-success">已启用</span></td>
+                      <td><button class="btn-text btn-sm">编辑</button><button class="btn-text btn-sm text-danger">删除</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="selected-item-tag">预警条件组 3</span></td>
+                      <td><span class="selected-item-tag">表单提交人</span></td>
+                      <td><span class="selected-item-tag">预警所在事事号的本公司成员</span></td>
+                      <td>表单字段（截止日期）</td>
+                      <td>超期2h → 预警所在事事号的合作方</td>
+                      <td><span class="tag tag-info">未启用</span></td>
+                      <td><button class="btn-text btn-sm">编辑</button><button class="btn-text btn-sm text-danger">删除</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+            <div class="logic-note mt-16">
+              <span class="note-title">通知配置详细逻辑：</span>
+              每条通知配置可关联一个或多个预警条件（多选），表示该通知规则适用于哪些预警条件。<br>
+              处理期限二选一：① 固定时长（自定义小时/天数）；② 表单字段（选取表单内日期字段作为截止时限）。<br>
+              超期提醒支持多行新增提醒规则，配置超期时长和超期提醒人。
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 4: 预警分级看板 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-dashboard">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警分级看板</div>
+            <button class="btn btn-sm">📥 导出Excel</button>
+          </div>
+          <div class="card-body">
+            <div class="logic-note">
+              <span class="note-title">看板逻辑：</span>
+              仅展示已指定「属于几级风险」的预警。支持按风险等级、类型聚合统计。页面所有蓝色数字均可点击下钻查看对应预警明细。统计包含已作废状态。
+            </div>
+
+            <div class="search-bar">
+              <input class="input" type="date" style="width:160px;" value="2026-07-01">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;" value="2026-07-08">
+              <select class="select" style="width: 140px;">
+                <option>全部工作表</option>
+                <option>安全巡检记录表</option>
+                <option>设备运行日检表</option>
+              </select>
+              <select class="select" style="width: 120px;">
+                <option>全部等级</option>
+                <option>一级风险</option>
+                <option>二级风险</option>
+                <option>三级风险</option>
+                <option>四级风险</option>
+              </select>
+              <button class="btn btn-primary btn-sm">查询</button>
+            </div>
+
+            <!-- 统计卡片 -->
+            <div class="stat-row">
+              <div class="stat-card" onclick="showDrillModal('全部','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--primary);">28</div>
+                <div class="stat-label">预警总数</div>
+                <div class="stat-bar" style="background:var(--primary);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-success">20</div>
+                <div class="stat-label">已处理</div>
+                <div class="stat-bar" style="background:var(--success);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('未处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-danger">4</div>
+                <div class="stat-label">未处理</div>
+                <div class="stat-bar" style="background:var(--danger);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('处理中','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-warning">2</div>
+                <div class="stat-label">处理中</div>
+                <div class="stat-bar" style="background:var(--warning);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已作废','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--info);">2</div>
+                <div class="stat-label">已作废</div>
+                <div class="stat-bar" style="background:var(--info);"></div>
+              </div>
+            </div>
+
+            <div class="logic-note">
+              <span class="note-title">下钻逻辑：</span>
+              点击上方统计卡片的数字或下方表格中的蓝色数字，均可下钻查看对应分类的预警明细列表。已作废状态的预警也纳入统计。
+            </div>
+
+            <!-- 按风险等级统计 -->
+            <div class="card" style="box-shadow:none;border:1px solid var(--border-color);">
+              <div class="card-header">
+                <div class="card-title">按风险等级统计</div>
+              </div>
+              <div class="card-body">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>风险等级</th>
+                      <th>预警总数</th>
+                      <th>已处理</th>
+                      <th>未处理</th>
+                      <th>处理中</th>
+                      <th>已作废</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="risk-1">● 一级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','一级风险')">5</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','一级风险')">3</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','一级风险')">1</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','一级风险')">1</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','一级风险')">0</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','一级风险')">下钻查看</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="risk-2">● 二级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','二级风险')">12</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','二级风险')">8</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','二级风险')">3</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','二级风险')">1</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','二级风险')">0</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','二级风险')">下钻查看</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="risk-3">● 三级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','三级风险')">8</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','三级风险')">6</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','三级风险')">1</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','三级风险')">1</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','三级风险')">1</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','三级风险')">下钻查看</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="risk-4">● 四级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','四级风险')">3</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','四级风险')">3</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','四级风险')">0</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','四级风险')">0</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','四级风险')">0</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','四级风险')">下钻查看</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 按类型统计 -->
+            <div class="card mt-16" style="box-shadow:none;border:1px solid var(--border-color);">
+              <div class="card-header">
+                <div class="card-title">按类型统计</div>
+                <span class="text-sm text-muted">点击数字下钻查看明细</span>
+              </div>
+              <div class="card-body">
+                <div class="logic-note">
+                  <span class="note-title">类型统计逻辑：</span>
+                  类型采用国标固定字典（物体打击、高处坠落、中毒窒息、放炮、触电、火灾、灼烫等），类型较多，以可滚动列表+表格形式展示。每行数字均可点击下钻。
+                </div>
+                <div style="max-height:400px;overflow-y:auto;border:1px solid var(--border-color);border-radius:4px;">
+                  <table class="data-table" style="border:none;">
+                    <thead style="position:sticky;top:0;z-index:1;">
+                      <tr>
+                        <th>类型</th>
+                        <th>预警总数</th>
+                        <th>已处理</th>
+                        <th>未处理</th>
+                        <th>处理中</th>
+                        <th>已作废</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>灼烫</td>
+                        <td><span class="link" onclick="showDrillModal('全部','灼烫')">5</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','灼烫')">3</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','灼烫')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','灼烫')">1</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','灼烫')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','灼烫')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>高处坠落</td>
+                        <td><span class="link" onclick="showDrillModal('全部','高处坠落')">7</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','高处坠落')">5</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','高处坠落')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','高处坠落')">1</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','高处坠落')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','高处坠落')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>触电</td>
+                        <td><span class="link" onclick="showDrillModal('全部','触电')">4</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','触电')">3</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','触电')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','触电')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','触电')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','触电')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>物体打击</td>
+                        <td><span class="link" onclick="showDrillModal('全部','物体打击')">3</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','物体打击')">2</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','物体打击')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','物体打击')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','物体打击')">1</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','物体打击')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>火灾</td>
+                        <td><span class="link" onclick="showDrillModal('全部','火灾')">5</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','火灾')">4</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','火灾')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','火灾')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','火灾')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','火灾')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>中毒窒息</td>
+                        <td><span class="link" onclick="showDrillModal('全部','中毒窒息')">2</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','中毒窒息')">1</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','中毒窒息')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','中毒窒息')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','中毒窒息')">1</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','中毒窒息')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>冒顶片帮</td>
+                        <td><span class="link" onclick="showDrillModal('全部','冒顶片帮')">1</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','冒顶片帮')">1</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','冒顶片帮')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','冒顶片帮')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','冒顶片帮')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','冒顶片帮')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>放炮</td>
+                        <td><span class="link" onclick="showDrillModal('全部','放炮')">1</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','放炮')">1</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','放炮')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','放炮')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','放炮')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','放炮')">下钻</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+                <div class="logic-note mt-16">
+                  <span class="note-title">类型展示逻辑：</span>
+                  类型采用国标固定字典，类型可能较多，因此使用可滚动列表+表格形式展示，表头固定。每行数据包含预警总数、已处理、未处理、处理中、已作废五种状态数量，所有数字均可点击下钻查看明细。
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 5: 预警任务 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-task">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警任务</div>
+          </div>
+          <div class="card-body">
+            <div class="logic-note">
+              <span class="note-title">预警任务逻辑：</span>
+              状态页签：未处理、通知我、已处理、我转发。所有页签以「当前登录人」的待办/已办视角划分。每个Tab有独立的数据视图和操作按钮。<br>
+              仅「未处理」状态预警支持转发；单条预警仅允许转发1次，转发完成后隐藏转发按钮。页签均以当前登录人视角展示。
+            </div>
+
+            <!-- 状态页签 -->
+            <div class="tabs" id="task-tabs">
+              <div class="tab-item active" onclick="switchTaskTab(this, 'task-pending')">未处理 <span class="tag tag-danger" style="margin-left:4px;">3</span></div>
+              <div class="tab-item" onclick="switchTaskTab(this, 'task-notify')">通知我 <span class="tag tag-primary" style="margin-left:4px;">2</span></div>
+              <div class="tab-item" onclick="switchTaskTab(this, 'task-done')">已处理</div>
+              <div class="tab-item" onclick="switchTaskTab(this, 'task-forwarded')">我转发</div>
+            </div>
+
+            <div class="search-bar" id="task-search-bar">
+              <input class="input" type="date" style="width:160px;">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;">
+              <input class="input" style="width:140px;" placeholder="预警工作项...">
+              <select class="select" style="width: 120px;">
+                <option>全部等级</option>
+                <option>一级风险</option>
+                <option>二级风险</option>
+                <option>三级风险</option>
+                <option>四级风险</option>
+              </select>
+              <button class="btn btn-primary btn-sm">查询</button>
+            </div>
+
+            <!-- ====== Tab Contents ====== -->
+            <div class="task-tab-content active" id="task-pending-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警工作项</th><th>触发值</th><th>风险等级</th><th>处理人</th><th>触发时间</th><th>处理期限</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>WRN-20260708-001</td><td>安全巡检记录表</td><td>设备温度监控</td><td>温度=85°C</td><td><span class="risk-1">● 一级</span></td><td><span class="selected-item-tag">表单提交人</span><span class="selected-item-tag">预警所在事事号的负责人</span></td><td>07-08 10:23</td><td class="text-danger">07-08 18:00</td><td><span class="tag tag-danger">未处理</span></td>
+                    <td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">处理</button><button class="btn-text btn-sm" onclick="showForwardModal()">转发</button></td>
+                  </tr>
+                  <tr>
+                    <td>WRN-20260708-002</td><td>设备运行日检表</td><td>压力异常</td><td>压力=3.2MPa</td><td><span class="risk-2">● 二级</span></td><td><span class="selected-item-tag">表单提交人的部门主管和副主管</span></td><td>07-08 09:15</td><td>07-09 09:00</td><td><span class="tag tag-danger">未处理</span></td>
+                    <td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">处理</button><button class="btn-text btn-sm" onclick="showForwardModal()">转发</button></td>
+                  </tr>
+                  <tr>
+                    <td>WRN-20260708-003</td><td>隐患排查治理表</td><td>防护设施检查</td><td>防护栏缺失</td><td><span class="risk-1">● 一级</span></td><td><span class="selected-item-tag">预警所在事事号的管理员</span><span class="selected-item-tag">预警所在事事号的本公司成员</span></td><td>07-07 16:00</td><td class="text-danger">已超期</td><td><span class="tag tag-danger">未处理</span></td>
+                    <td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">处理</button><button class="btn-text btn-sm" onclick="showForwardModal()">转发</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="task-tab-content" id="task-notify-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警工作项</th><th>触发值</th><th>风险等级</th><th>通知类型</th><th>触发时间</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>WRN-20260708-001</td><td>安全巡检记录表</td><td>设备温度监控</td><td>温度=85°C</td><td><span class="risk-1">● 一级</span></td><td>超期提醒</td><td>07-08 10:23</td><td><span class="tag tag-danger">已超期</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">查看</button></td>
+                  </tr>
+                  <tr>
+                    <td>WRN-20260707-005</td><td>设备运行日检表</td><td>电气安全</td><td>接地不良</td><td><span class="risk-2">● 二级</span></td><td>分级通知</td><td>07-06 11:00</td><td><span class="tag tag-success">已处理</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">查看</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="task-tab-content" id="task-done-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警工作项</th><th>触发值</th><th>风险等级</th><th>我的提交时间</th><th>当前任务状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>WRN-20260707-005</td><td>设备运行日检表</td><td>电气安全</td><td>接地不良</td><td><span class="risk-2">● 二级</span></td><td>07-06 15:30</td><td><span class="tag tag-success">已完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">查看</button></td>
+                  </tr>
+                  <tr>
+                    <td>WRN-20260707-006</td><td>隐患排查治理表</td><td>物料堆放</td><td>堆垛超高</td><td><span class="risk-3">● 三级</span></td><td>07-05 16:00</td><td><span class="tag tag-success">已完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">查看</button></td>
+                  </tr>
+<tr>
+                  <td>WRN-20260708-008</td><td>安全巡检记录表</td><td>高温区域标识</td><td>警示缺失</td><td><span class="risk-1">● 一级</span></td><td>07-08 11:00</td><td><span class="tag tag-success">已处理</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">查看</button></td>
+                </tr>
+                <tr>
+                  <td>WRN-20260708-010</td><td>设备运行日检表</td><td>管道泄漏</td><td>压力骤降</td><td><span class="risk-1">● 一级</span></td><td>07-08 09:45</td><td><span class="tag tag-success">已处理</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">查看</button></td>
+                </tr>
+                </tbody>
+              </table>
+              <div class="logic-note mt-16">
+                <span class="note-title">「已处理」tab 逻辑：</span>
+                仅以「当前登录人是否已提交处理」为判断标准，与任务全局是否闭环无关。<br>
+                只要当前用户作为处理人已提交处置，该预警即出现在此tab中，不关注其他处理人的状态。<br>
+                「当前任务状态」列展示系统全局状态，供用户了解任务整体进展：已完成（已闭环）、处理中（仍有处理人未提交）等。
+              </div>
+            </div>
+
+            <div class="task-tab-content" id="task-forwarded-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警工作项</th><th>触发值</th><th>风险等级</th><th>转发给</th><th>转发时间</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td>WRN-20260706-009</td><td>安全巡检记录表</td><td>噪音超标</td><td>＞85分贝</td><td><span class="risk-2">● 二级</span></td><td><span class="selected-item-tag">表单提交人的直属上级</span></td><td>07-06 10:00</td><td><span class="tag tag-info">已转发</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModal()">查看</button></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="logic-note mt-16">
+              <span class="note-title">任务状态流转逻辑（当前登录人视角）：</span><br>
+              所有页签均以「当前登录人」的待办/已办为维度进行划分，不展示系统全局状态。<br>
+              <b>1. 未处理</b>：预警触发后当前登录人作为处理人，尚未提交处置。操作：【处理】打开处置弹窗、【转发】转给他人。若多个处理人中当前用户已提交，则该预警不再出现在此tab。<br>
+              <b>2. 通知我</b>：当前登录人作为通知人（非处理人），仅接收通知提醒。操作：仅【查看】。<br>
+              <b>3. 已处理</b>：当前登录人作为处理人已提交处置（仅以「是否提交」为标准，与任务是否闭环无关）。该预警可能仍处于「处理中」状态（其他处理人未提交），但当前用户无需再关注处理环节。操作：仅【查看】处置记录。<br>
+              <b>4. 我转发</b>：当前登录人将预警转发给他人后，在此留存转发记录。操作：仅【查看】，不可撤回。
+            </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 6: 预警信息表统计 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-stats">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警信息表统计</div>
+            <div class="btn-group">
+              <button class="btn btn-sm">📥 导出Excel</button>
+              <button class="btn btn-danger btn-sm" onclick="showVoidConfirmModal()">🗑️ 作废</button>
+            </div>
+          </div>
+          <div class="card-body">
+            <div class="logic-note">
+              <span class="note-title">预警信息表统计逻辑：</span>
+              统计范围：全量预警明细数据。筛选条件：触发日期、表单提交人、工作表。输出：完整标准化预警台账，支持Excel导出，用于安监合规归档。<br>
+              管理员可在此处对预警进行「作废」操作：勾选预警记录后点击「作废」按钮，确认后预警状态变更为「已作废」，不再计入有效统计。作废操作需管理员权限。
+            </div>
+
+            <div class="search-bar">
+              <input class="input" type="date" style="width:160px;" value="2026-07-01">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;" value="2026-07-08">
+              <select class="select" style="width: 140px;">
+                <option>全部工作表</option>
+                <option>安全巡检记录表</option>
+                <option>设备运行日检表</option>
+              </select>
+              <input class="input" style="width:140px;" placeholder="表单提交人...">
+              <select class="select" style="width: 120px;">
+                <option>全部状态</option>
+                <option>未处理</option>
+                <option>处理中</option>
+                <option>已完成</option>
+                <option>已作废</option>
+              </select>
+              <button class="btn btn-primary btn-sm">查询</button>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:30px;"><input type="checkbox" onchange="toggleSelectAllRows(this)"></th>
+                  <th>预警编号</th>
+                  <th>工作表</th>
+                  <th>预警工作项</th>
+                  <th>触发值</th>
+                  <th>风险等级</th>
+                  <th>触发时间</th>
+                  <th>提交人</th>
+                  <th>处理人</th>
+                  <th>处理期限</th>
+                  <th>状态</th>
+                  <th>处理时间</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td>WRN-20260708-001</td>
+                  <td>安全巡检记录表</td>
+                  <td>设备温度监控</td>
+                  <td>温度=85°C</td>
+                  <td><span class="risk-1">● 一级</span></td>
+                  <td>07-08 10:23</td>
+                  <td>王五</td>
+                  <td>表单提交人</td>
+                  <td>07-08 18:00</td>
+                  <td><span class="tag tag-danger">未处理</span></td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td>WRN-20260708-002</td>
+                  <td>设备运行日检表</td>
+                  <td>压力异常</td>
+                  <td>压力=3.2MPa</td>
+                  <td><span class="risk-2">● 二级</span></td>
+                  <td>07-08 09:15</td>
+                  <td>赵六</td>
+                  <td>预警所在事事号的负责人</td>
+                  <td>07-09 09:00</td>
+                  <td><span class="tag tag-danger">未处理</span></td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td>WRN-20260708-003</td>
+                  <td>隐患排查治理表</td>
+                  <td>防护设施检查</td>
+                  <td>防护栏缺失</td>
+                  <td><span class="risk-1">● 一级</span></td>
+                  <td>07-07 16:00</td>
+                  <td>王五</td>
+                  <td>预警所在事事号的管理员</td>
+                  <td class="text-danger">已超期</td>
+                  <td><span class="tag tag-warning">处理中</span></td>
+                  <td>-</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td>WRN-20260707-005</td>
+                  <td>设备运行日检表</td>
+                  <td>电气安全</td>
+                  <td>接地不良</td>
+                  <td><span class="risk-2">● 二级</span></td>
+                  <td>07-06 11:00</td>
+                  <td>赵六</td>
+                  <td>表单提交人</td>
+                  <td>07-07 11:00</td>
+                  <td><span class="tag tag-success">已处理</span></td>
+                  <td>07-06 15:30</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td>WRN-20260707-006</td>
+                  <td>隐患排查治理表</td>
+                  <td>物料堆放</td>
+                  <td>堆垛超高</td>
+                  <td><span class="risk-3">● 三级</span></td>
+                  <td>07-05 15:00</td>
+                  <td>王五</td>
+                  <td>预警所在事事号的本公司成员</td>
+                  <td>07-06 15:00</td>
+                  <td><span class="tag tag-success">已处理</span></td>
+                  <td>07-05 16:00</td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td>WRN-20260707-007</td>
+                  <td>安全巡检记录表</td>
+                  <td>通风检测</td>
+                  <td>排风故障</td>
+                  <td><span class="risk-4">● 四级</span></td>
+                  <td>07-04 10:00</td>
+                  <td>赵六</td>
+                  <td>表单提交人的部门主管和副主管</td>
+                  <td>07-05 10:00</td>
+                  <td><span class="tag" style="background:#f4f4f5;color:var(--info);border:1px solid #e9e9eb;">已作废</span></td>
+                  <td>-</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="logic-note mt-16">
+              <span class="note-title">作废操作逻辑：</span>
+              1. 管理员勾选一条或多条预警记录后点击「作废」按钮；<br>
+              2. 系统弹出确认对话框，提示作废后不可恢复；<br>
+              3. 确认后预警状态变更为「已作废」，已作废的预警不再计入有效统计，但仍保留在台账中供查询追溯；<br>
+              4. 作废操作记录操作人、操作时间，永久存储。
+            </div>
+
+            <div class="logic-note mt-16">
+              <span class="note-title">预警任务完整状态流转逻辑：</span><br>
+              以下为系统全局状态视角，预警信息表统计基于此状态进行聚合。每个「当前登录人」在预警任务页看到的Tab仅与个人相关。<br><br>
+              <b>状态定义：</b><br>
+              <b>1. 未处理</b>：预警触发后推送给处理人，处理人未提交处置。系统全局统计「未处理」= 所有处理人均未提交的预警数。<br>
+              <b>2. 处理中</b>：多个处理人时，部分人已提交、部分人未提交。全局状态为「处理中」。已提交的处理人个人视角中该预警已移至「已处理」tab；尚未提交的处理人个人视角中仍在「未处理」tab。<br>
+              <b>3. 已完成</b>：所有处理人均提交处置后，任务直接闭环。全局状态→已完成。此预警不再出现在任何人的待办列表中，仅在「已处理」tab中可查看记录。<br>
+              <b>4. 已作废</b>：管理员主动作废预警，不可恢复。已作废的预警不计入有效统计。<br><br>
+              <b>个人视角Tab映射关系：</b><br>
+              · 未处理Tab = 当前用户作为处理人且未提交处置的预警<br>
+              · 通知我Tab = 当前用户作为通知人（非处理人）的预警<br>
+              · 已处理Tab = 当前用户作为处理人已提交处置的预警<br>
+              · 我转发Tab = 当前用户转发的预警记录
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 7: 预警统计（按工作表聚合） -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-stats-aggr">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警统计（按工作表聚合）</div>
+            <button class="btn btn-sm">📥 导出Excel</button>
+          </div>
+          <div class="card-body">
+            <div class="logic-note">
+              <span class="note-title">预警统计逻辑：</span>
+              统计范围：按工作表聚合预警数据。筛选条件：预警任务状态、触发时间、工作表、提交人、实际处理人。展示内容：各工作表预警触发总数。统计包含已作废状态。
+            </div>
+
+            <div class="search-bar">
+              <input class="input" type="date" style="width:160px;" value="2026-07-01">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;" value="2026-07-08">
+              <select class="select" style="width: 140px;">
+                <option>全部工作表</option>
+                <option>安全巡检记录表</option>
+                <option>设备运行日检表</option>
+              </select>
+              <select class="select" style="width: 120px;">
+                <option>全部状态</option>
+                <option>未处理</option>
+                <option>处理中</option>
+                <option>已完成</option>
+                <option>已作废</option>
+              </select>
+              <input class="input" style="width:140px;" placeholder="提交人...">
+              <input class="input" style="width:140px;" placeholder="实际处理人...">
+              <button class="btn btn-primary btn-sm">查询</button>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-card" onclick="showDrillModal('全部','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--primary);">28</div>
+                <div class="stat-label">预警总数</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-success">20</div>
+                <div class="stat-label">已处理</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('未处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-danger">4</div>
+                <div class="stat-label">未处理</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('处理中','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-warning">2</div>
+                <div class="stat-label">处理中</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已作废','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--info);">2</div>
+                <div class="stat-label">已作废</div>
+              </div>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>工作表</th>
+                  <th>预警触发总数</th>
+                  <th>已处理</th>
+                  <th>未处理</th>
+                  <th>处理中</th>
+                  <th>已作废</th>
+                  <th>处理率</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>安全巡检记录表</td>
+                  <td><span class="link" onclick="showSheetDrillModal('安全巡检记录表', '全部')">15</span></td>
+                  <td><span class="link text-success" onclick="showSheetDrillModal('安全巡检记录表', '已处理')">10</span></td>
+                  <td><span class="link text-danger" onclick="showSheetDrillModal('安全巡检记录表', '未处理')">4</span></td>
+                  <td><span class="link text-warning" onclick="showSheetDrillModal('安全巡检记录表', '处理中')">1</span></td>
+                  <td><span class="link" style="color:var(--info);" onclick="showSheetDrillModal('安全巡检记录表', '已作废')">0</span></td>
+                  <td>66.7%</td>
+                </tr>
+                <tr>
+                  <td>设备运行日检表</td>
+                  <td><span class="link" onclick="showSheetDrillModal('设备运行日检表', '全部')">8</span></td>
+                  <td><span class="link text-success" onclick="showSheetDrillModal('设备运行日检表', '已处理')">6</span></td>
+                  <td><span class="link text-danger" onclick="showSheetDrillModal('设备运行日检表', '未处理')">1</span></td>
+                  <td><span class="link text-warning" onclick="showSheetDrillModal('设备运行日检表', '处理中')">1</span></td>
+                  <td><span class="link" style="color:var(--info);" onclick="showSheetDrillModal('设备运行日检表', '已作废')">0</span></td>
+                  <td>75.0%</td>
+                </tr>
+                <tr>
+                  <td>隐患排查治理表</td>
+                  <td><span class="link" onclick="showSheetDrillModal('隐患排查治理表', '全部')">5</span></td>
+                  <td><span class="link text-success" onclick="showSheetDrillModal('隐患排查治理表', '已处理')">4</span></td>
+                  <td><span class="link text-danger" onclick="showSheetDrillModal('隐患排查治理表', '未处理')">0</span></td>
+                  <td><span class="link text-warning" onclick="showSheetDrillModal('隐患排查治理表', '处理中')">0</span></td>
+                  <td><span class="link" style="color:var(--info);" onclick="showSheetDrillModal('隐患排查治理表', '已作废')">1</span></td>
+                  <td>80.0%</td>
+                </tr>
+              </tbody>
+            </table>
+
+            <div class="logic-note mt-16">
+              <span class="note-title">统计说明：</span>
+              各工作表预警触发总数包含所有状态的预警（未处理+处理中+已处理+已作废）。处理率 = 已处理 / (总数 - 已作废) × 100%。点击数字可下钻查看明细。
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ====== Modals ====== -->
+
+<!-- 表单逻辑查看 -->
+<div class="modal-overlay" id="modal-wit-logic">
+  <div class="modal" style="width:600px;">
+    <div class="modal-header">
+      <div class="modal-title">📋 预警信息表 - 表单逻辑说明</div>
+      <span class="modal-close" onclick="closeModal('modal-wit-logic')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note">
+        <span class="note-title">1. 表单创建规则：</span>
+        系统预制固定预警工作表模板，用户无新增、删除工作表权限，仅可维护工作表单元格属性。表单固定上下两大区块，不可删除、拆分。
+      </div>
+      <div class="logic-note">
+        <span class="note-title">2. 上区【预警基础信息区】：</span>
+        系统自动抓取回填，无需人工录入。字段包含：工作表名称、工作项、预警触发值、预警发生时间、通知人、处理人、预警处理期限、表单提交人等。所有字段设为只读。
+      </div>
+      <div class="logic-note">
+        <span class="note-title">3. 下区【预警处置情况区】：</span>
+        预警处理人工填写。字段包含：处理情况、整改照片/附件、实际处理人、电子签字等。以列表（子表单）形式展示，支持增行，因为可能有多个处理人需要填写。
+      </div>
+      <div class="logic-note">
+        <span class="note-title">4. 输出产物：</span>
+        所有触发的预警统一写入本表，作为全量预警台账数据源，支持筛选、导出。
+      </div>
+      <div class="logic-note">
+        <span class="note-title">5. 编辑入口：</span>
+        点击列表「编辑」按钮进入低代码平台表单设计器：左侧为组件库，中间为表单画布，右侧为表单属性编辑页面。点击「查看」按钮进入只读模式。
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-wit-logic')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 预警通知人配置 -->
+<div class="modal-overlay" id="modal-notify-config">
+  <div class="modal" style="width:700px;">
+    <div class="modal-header">
+      <div class="modal-title">添加预警通知人及超时提醒</div>
+      <span class="modal-close" onclick="closeModal('modal-notify-config')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note">
+        <span class="note-title">配置逻辑：</span>
+        当选择某个预警设置时，需要带出本表添加的所有预警条件供选择，支持多选。选择的预警条件展示在下方，然后再是下面的配置项。
+      </div>
+
+      <!-- 预警条件多选 -->
+      <div class="form-item">
+        <label class="form-label">选择预警条件 <span class="text-danger">*</span></label>
+        <div class="logic-note">
+          <span class="note-title">选择逻辑：</span>
+          可选择本表单设置的所有预警条件，也可以选择其中一个或多个。支持全选/反选。选择后条件展示在下方。
+        </div>
+        <div class="checkbox-list">
+          <div class="checkbox-item" style="background:#f0f7ff;font-weight:600;">
+            <input type="checkbox" id="notifySelectAll" onchange="toggleSelectAll(this, 'notifyCondList')">
+            <span>全选/反选</span>
+          </div>
+          <div id="notifyCondList">
+            <label class="checkbox-item">
+              <input type="checkbox" checked onchange="updateSelectedDisplay(this, 'notifySelectedDisplay')"> 预警条件组 1：温度超限
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked onchange="updateSelectedDisplay(this, 'notifySelectedDisplay')"> 预警条件组 2：巡检结果=异常
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" onchange="updateSelectedDisplay(this, 'notifySelectedDisplay')"> 预警条件组 3：压力+设备状态
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 已选预警条件展示 -->
+      <div class="logic-note">
+        <span class="note-title">已选预警条件：</span>
+        <span id="notifySelectedDisplay">
+          <span class="selected-item-tag">预警条件组 1：温度超限<span class="remove">×</span></span>
+          <span class="selected-item-tag">预警条件组 2：巡检结果=异常<span class="remove">×</span></span>
+        </span>
+        以下预警条件将适用本通知配置。
+      </div>
+
+      <div class="divider"></div>
+
+      <!-- 处理人 -->
+      <div class="form-item">
+        <label class="form-label">处理人 <span class="text-danger">*</span>（按角色类别勾选）</label>
+        <div class="selected-items">
+          <span class="selected-item-tag">表单提交人 · 处理人<span class="remove">×</span></span>
+          <span class="selected-item-tag">预警所在事事号的负责人 · 处理人<span class="remove">×</span></span>
+        </div>
+        <button class="btn btn-sm mt-8" onclick="showPersonSelectModal()">+ 配置处理人/通知人</button>
+      </div>
+
+      <!-- 处理人处置模式 -->
+      <div class="form-item">
+        <label class="form-label">处置模式 <span class="text-danger">*</span></label>
+        <div class="logic-note">
+          <span class="note-title">处置模式逻辑：</span>
+          处理人可选择多个，需指定多人处置时的协作模式：<br>
+          ① 并行处置，任意一人完成即可：所有处理人同时收到待办，任一处理人提交处置即视为完成；<br>
+          ② 并行处置，全部人员均需完成：所有处理人同时收到待办，每人需各自提交处置，全部提交后预警才闭环；<br>
+          ③ 串行依次处置：按选择顺序依次分配给处理人，前一人完成后流转至下一人。
+        </div>
+        <div class="form-row">
+          <label class="flex items-center gap-8" style="cursor:pointer;padding:8px 12px;border:1px solid var(--border-color);border-radius:4px;flex:1;">
+            <input type="radio" name="handleMode" value="parallel-any" checked>
+            <div>
+              <div class="font-bold text-sm">并行处置，任意一人完成即可</div>
+              <div class="text-muted text-sm">多人同时收到，任一完成即闭环</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-8" style="cursor:pointer;padding:8px 12px;border:1px solid var(--border-color);border-radius:4px;flex:1;">
+            <input type="radio" name="handleMode" value="parallel-all">
+            <div>
+              <div class="font-bold text-sm">并行处置，全部人员均需完成</div>
+              <div class="text-muted text-sm">多人同时收到，全部完成才闭环</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-8" style="cursor:pointer;padding:8px 12px;border:1px solid var(--border-color);border-radius:4px;flex:1;">
+            <input type="radio" name="handleMode" value="serial">
+            <div>
+              <div class="font-bold text-sm">串行依次处置</div>
+              <div class="text-muted text-sm">按顺序依次流转</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+      <!-- 通知人 -->
+      <div class="form-item">
+        <label class="form-label">通知人（按角色类别勾选）</label>
+        <div class="selected-items">
+          <span class="selected-item-tag">通讯录及外部联系人 · 通知人<span class="remove">×</span></span>
+          <span class="selected-item-tag">表单提交人的部门主管和副主管 · 通知人<span class="remove">×</span></span>
+        </div>
+        <button class="btn btn-sm mt-8" onclick="showPersonSelectModal()">+ 配置通知人</button>
+      </div>
+
+      <div class="logic-note">
+        <span class="note-title">人员选择逻辑：</span>
+        人员按「角色类别」勾选（不再细化到具体个人）：通讯录及外部联系人、表单内@成员、表单创建者相关、预警所在事事号相关人员（创建者/负责人/管理员/本公司成员/外部联系人/合作方）、表单提交人及其相关人员（部门主管、直属上级、部门成员）。<br>
+        每个类别可单独勾选「处理人」或「通知人」身份。系统将在预警触发时按当前规则动态解析人员范围。
+      </div>
+
+      <!-- 处理期限 -->
+      <div class="form-item">
+        <label class="form-label">处理期限 <span class="text-danger">*</span></label>
+        <div class="logic-note">
+          <span class="note-title">处理期限配置逻辑：</span>
+          处理期限二选一：<br>
+          ① 固定时长：自定义小时/天数作为处理截止时限；<br>
+          ② 表单字段：选取表单内日期字段（如「截止日期」「计划完成日期」等）作为截止时限，动态读取表单数据。
+        </div>
+        <div class="form-row">
+          <label class="flex items-center gap-8" style="cursor:pointer;">
+            <input type="radio" name="deadline" value="fixed" checked onchange="onDeadlineTypeChange(this)"> 固定时长
+          </label>
+          <label class="flex items-center gap-8" style="cursor:pointer;">
+            <input type="radio" name="deadline" value="field" onchange="onDeadlineTypeChange(this)"> 表单字段
+          </label>
+        </div>
+        <div class="form-row mt-8" id="deadline-fixed-area">
+          <div class="form-item">
+            <select class="select"><option>小时</option><option>天</option></select>
+          </div>
+          <div class="form-item">
+            <input class="input" type="number" value="24" placeholder="数值">
+          </div>
+        </div>
+        <div class="form-row mt-8" id="deadline-field-area" style="display:none;">
+          <div class="form-item">
+            <label class="form-label text-sm">选择表单日期字段</label>
+            <select class="select">
+              <option value="">请选择表单日期字段...</option>
+              <option>截止日期</option>
+              <option>计划完成日期</option>
+              <option>整改期限</option>
+              <option>验收日期</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 超期提醒 -->
+      <div class="form-item">
+        <label class="form-label">超期提醒</label>
+        <div class="logic-note">
+          支持多行新增提醒规则，每条规则配置「超期时长」与「超期提醒人」。点击行内的「设置」按钮按角色类别勾选超期提醒人（不再定位到个人）；预警触发后系统按当前规则动态解析人员范围并按时长送达提醒。
+        </div>
+        <div class="sub-form-table">
+          <table style="width:100%;">
+            <thead>
+              <tr><th>操作</th><th>超期时间</th><th>超期提醒人</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><button class="btn-text btn-sm text-danger" onclick="removeReminderRule(this)"><i class="bi bi-trash"></i></button></td>
+                <td>
+                  <div class="flex gap-4 items-center">
+                    <input class="sub-input" value="1" style="width:60px;">
+                    <select class="select" style="width:90px;">
+                      <option>小时</option>
+                      <option>天</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-primary" onclick="openOverdueReminderPicker(this)" data-reminder-cats="">设置</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-sm mt-8" onclick="addReminderRule()"><i class="bi bi-plus-lg"></i> 增加一行</button>
+      </div>
+
+      <!-- 消息渠道 -->
+      <div class="form-item">
+        <label class="form-label">消息渠道</label>
+        <div class="flex gap-16">
+          <label class="flex items-center gap-8"><input type="checkbox" checked> 系统站内消息</label>
+          <label class="flex items-center gap-8"><input type="checkbox" checked> 邮箱消息</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-notify-config')">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-notify-config')">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 预警处理人/通知人 -->
+<div class="modal-overlay" id="modal-person-select">
+  <div class="modal" style="width:680px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ 预警处理人/通知人</div>
+      <span class="modal-close" onclick="closeModal('modal-person-select')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note">
+        <span class="note-title">人员选择逻辑：</span>
+        按「角色类别」勾选「处理人」或「通知人」，不再选择到具体个人。系统将在预警触发时按当前规则动态解析人员范围。<br>
+        · <b>处理人</b>：预警触发后作为待办处理人，接收待办消息并在预警任务页签中处理；<br>
+        · <b>通知人</b>：预警触发后仅作为知会对象，接收通知消息但无需处理。
+      </div>
+
+      <div class="person-cat-list">
+        <!-- 通讯录及外部联系人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label" onclick="openOrgPicker(this.closest('.person-cat-row'))" style="cursor:pointer;">通讯录及外部联系人 <i class="bi bi-chevron-right text-muted"></i></div>
+          <div class="person-cat-state" onclick="openOrgPicker(this.closest('.person-cat-row'))" style="cursor:pointer;"><span class="text-primary">已选 0 人</span> <span class="text-muted">›</span></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+            <button class="btn-icon" title="从组织架构选择具体人员" onclick="openOrgPicker(this.closest('.person-cat-row'))">＋</button>
+          </div>
+        </div>
+        <div class="logic-note" style="margin:6px 0 4px;">
+          <span class="note-title">人员来源说明：</span>点击「通讯录及外部联系人」或「＋」从组织架构树勾选具体人员（支持姓名实时筛选、可多选）；其余分类为角色类别，系统触发时动态解析，不定位个人。所选项回写「已选 N 人」并作为该角色的固定对象参与预警推送。
+        </div>
+
+        <div class="person-cat-divider">动态通知人员</div>
+
+        <!-- 表单内@成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单内@成员</div>
+          <div class="person-cat-state"><span class="text-primary">已选 0 项</span></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <div class="person-cat-divider">表单的创建者-表单相关</div>
+
+        <!-- 预警所在事事号的创建者接收 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的创建者接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 预警所在事事号的负责人接收 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的负责人接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 预警所在事事号的管理员接收 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的管理员接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 预警所在事事号的本公司成员接收 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的本公司成员接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 预警所在事事号的外部联系人接收 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的外部联系人接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 预警所在事事号的合作方接收 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的合作方接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <div class="person-cat-divider">表单提交人</div>
+
+        <!-- 表单提交人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门主管和副主管 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的部门主管和副主管</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的直属上级 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的直属上级</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的部门成员</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div style="flex:1;"></div>
+      <button class="btn" onclick="closeModal('modal-person-select')">关闭</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-person-select')">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 超期提醒人 选择 -->
+<div class="modal-overlay" id="modal-overdue-reminder-select">
+  <div class="modal" style="width:560px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ 超期提醒人</div>
+      <span class="modal-close" onclick="closeModal('modal-overdue-reminder-select')">×</span>
+    </div>
+    <div class="modal-body" style="padding:0;">
+      <div class="person-cat-list">
+        <!-- 通讯录及外部联系人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label" onclick="openOrgPicker(this.closest('.person-cat-row'))" style="cursor:pointer;">通讯录及外部联系人 <i class="bi bi-chevron-right text-muted"></i></div>
+          <div class="person-cat-state" onclick="openOrgPicker(this.closest('.person-cat-row'))" style="cursor:pointer;"><span class="text-primary" data-role="count">已选 0 人</span> <span class="text-muted">›</span></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" data-role="ex"> 提醒人</label>
+            <button class="btn-icon" title="从组织架构选择具体人员" onclick="openOrgPicker(this.closest('.person-cat-row'))">＋</button>
+          </div>
+        </div>
+        <div class="logic-note" style="margin:6px 0 4px;">
+          <span class="note-title">人员来源说明：</span>点击「通讯录及外部联系人」或「＋」从组织架构树勾选具体人员（支持姓名实时筛选、可多选）；其余分类为角色类别，系统触发时动态解析，不定位个人。所选项回写「已选 N 人」并作为超期提醒人参与超时提醒。
+        </div>
+
+        <div class="person-cat-divider">动态通知人员</div>
+
+        <!-- 表单内@成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单内@成员</div>
+          <div class="person-cat-state"><span class="text-primary" data-role="count">已选 0 项</span> <span class="text-muted">›</span></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" data-role="ex"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 发布所在事事号的负责人接收 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">发布所在事事号的负责人接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门主管和副主管 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的部门主管和副主管</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 事事号所属部门主管和副主管 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">事事号所属部门主管和副主管</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 事事号所属部门的上级部门主管和副主管 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">事事号所属部门的上级部门主管和副主管</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 预警通知人的部门主管和副主管 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警通知人的部门主管和副主管</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 预警通知人的上级领导 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警通知人的上级领导</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 企业管理员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">企业管理员</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 企业创建者 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">企业创建者</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-overdue-reminder-select')">关闭</button>
+      <button class="btn btn-primary" onclick="confirmOverdueReminder()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 预警处理 -->
+<div class="modal-overlay" id="modal-task-detail">
+  <div class="modal" style="width:750px;">
+    <div class="modal-header">
+      <div class="modal-title">处理预警 - WRN-20260708-001</div>
+      <span class="modal-close" onclick="closeModal('modal-task-detail')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note">
+        <span class="note-title">处置流程逻辑：</span>
+        详情页上半区灰色只读区域展示完整预警基础信息、风险数据、处理期限；下半处置区填写处理情况、上传整改照片/附件、添加电子签字。提交逻辑：处理人提交处置后预警直接闭环，状态变更为「已完成」。
+      </div>
+
+      <div class="zone-divider">
+        <span>预警基础信息（只读）</span>
+        <span class="zone-tag">系统自动抓取</span>
+      </div>
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">工作表名称</label><div class="readonly-field">安全巡检记录表</div></div>
+        <div class="form-item"><label class="form-label">工作项</label><div class="readonly-field">设备温度监控</div></div>
+      </div>
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">预警触发值</label><div class="readonly-field">温度=85°C</div></div>
+        <div class="form-item"><label class="form-label">预警发生时间</label><div class="readonly-field">2026-07-08 10:23:45</div></div>
+      </div>
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">风险等级</label><div class="readonly-field"><span class="risk-1">● 一级风险</span></div></div>
+        <div class="form-item"><label class="form-label">类型</label><div class="readonly-field">灼烫</div></div>
+      </div>
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">处理人</label><div class="readonly-field">表单提交人、预警所在事事号的负责人</div></div>
+        <div class="form-item"><label class="form-label">处理期限</label><div class="readonly-field text-danger">2026-07-08 18:00:00</div></div>
+      </div>
+
+      <div class="divider mt-16 mb-16"></div>
+
+      <div class="zone-divider">
+        <span>预警处置（人工填写）</span>
+        <span class="zone-tag">支持增行</span>
+      </div>
+      <div class="form-item">
+        <label class="form-label">处理情况 <span class="text-danger">*</span></label>
+        <textarea class="textarea" placeholder="请填写处理情况..."></textarea>
+      </div>
+      <div class="form-item">
+        <label class="form-label">整改照片/附件</label>
+        <div class="upload-area">📎 点击或拖拽文件上传</div>
+      </div>
+      <div class="form-row">
+        <div class="form-item">
+          <label class="form-label">实际处理人</label>
+          <input class="input" value="李四" readonly style="background:#f5f7fa;">
+        </div>
+        <div class="form-item">
+          <label class="form-label">电子签字</label>
+          <div class="signature-area">✍️ 点击签字</div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-task-detail')">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-task-detail')">提交处置</button>
+    </div>
+  </div>
+</div>
+
+<!-- 转发 -->
+<div class="modal-overlay" id="modal-forward">
+  <div class="modal" style="width:640px;">
+    <div class="modal-header">
+      <div class="modal-title">转发预警任务</div>
+      <span class="modal-close" onclick="closeModal('modal-forward')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note">
+        <span class="note-title">转发逻辑：</span>
+        仅「未处理」状态预警支持转发；单条预警仅允许转发1次，转发完成后隐藏转发按钮。选定人员确认后，预警任务转移至新处理人待办；原处理人页面留存「我转发」独立页签记录。
+      </div>
+      <div class="form-item">
+        <label class="form-label">转发给 <span class="text-danger">*</span>（从组织架构选择具体人员）</label>
+        <div class="org-picker">
+          <div class="org-search"><i class="bi bi-search"></i><input id="orgFilter" placeholder="搜索姓名..." oninput="filterOrg()"></div>
+          <div class="org-tree" id="orgTree"></div>
+        </div>
+        <div class="org-selected">已选择：<b id="orgSelectedName">未选择</b></div>
+      </div>
+      <div class="form-item">
+        <label class="form-label">转办说明</label>
+        <textarea class="textarea" placeholder="请输入转办说明..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-forward')">取消</button>
+      <button class="btn btn-primary" onclick="confirmForward()">确认转发</button>
+    </div>
+  </div>
+</div>
+<!-- 组织架构选择（处理人/通知人/超期提醒人 共用：通讯录及外部联系人 具体人员） -->
+<div class="modal-overlay" id="modal-org-picker">
+  <div class="modal" style="width:640px;">
+    <div class="modal-header">
+      <div class="modal-title" id="orgPickerTitle">从组织架构选择人员</div>
+      <span class="modal-close" onclick="closeModal('modal-org-picker')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note">
+        <span class="note-title">选择逻辑：</span>仅「通讯录及外部联系人」支持定位到具体个人——点击后从组织架构树中勾选，支持按姓名实时筛选；其余分类为角色类别，系统触发时动态解析，不定位个人。本弹窗可多选，确认后回写为来源行「已选 N 人」并参与预警推送。
+      </div>
+      <div class="form-item">
+        <label class="form-label">选择人员（可多选）</label>
+        <div class="org-picker">
+          <div class="org-search"><i class="bi bi-search"></i><input id="orgPickerFilter" placeholder="搜索姓名..." oninput="filterPickerOrg()"></div>
+          <div class="org-tree" id="orgPickerTree"></div>
+        </div>
+        <div class="org-selected">已选择：<b id="orgPickerSelected">未选择</b></div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-org-picker')">取消</button>
+      <button class="btn btn-primary" onclick="confirmOrgPicker()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 下钻明细弹窗 -->
+<div class="modal-overlay" id="modal-drill">
+  <div class="modal" style="width:850px;">
+    <div class="modal-header">
+      <div class="modal-title" id="drillTitle">预警明细</div>
+      <span class="modal-close" onclick="closeModal('modal-drill')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note">
+        <span class="note-title">下钻明细逻辑：</span>
+        此列表展示点击的统计维度对应的预警明细数据。可在此查看每条预警的详细信息。
+      </div>
+      <div id="drillFilterInfo" class="search-bar">
+        <span class="tag tag-primary" style="padding:6px 12px;"></span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>预警编号</th>
+            <th>工作表</th>
+            <th>预警工作项</th>
+            <th>触发值</th>
+            <th>风险等级</th>
+            <th>类型</th>
+            <th>触发时间</th>
+            <th>处理人</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody id="drillTableBody">
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-drill')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 作废确认弹窗 -->
+<div class="modal-overlay" id="modal-void-confirm">
+  <div class="modal" style="width:450px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ 确认作废预警</div>
+      <span class="modal-close" onclick="closeModal('modal-void-confirm')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="logic-note" style="background:#fff0f0;border-color:#ffccc7;color:#cf1322;">
+        <span class="note-title">⚠️ 作废操作警告：</span>
+        作废后预警状态将变更为「已作废」，不可恢复！<br>
+        已作废的预警不再计入有效统计，但仍保留在台账中供查询追溯。<br>
+        作废操作将记录操作人、操作时间，永久存储。<br>
+        请确认是否继续？
+      </div>
+      <div class="form-item">
+        <label class="form-label">作废原因 <span class="text-danger">*</span></label>
+        <textarea class="textarea" placeholder="请输入作废原因..." rows="3"></textarea>
+      </div>
+      <div class="form-item">
+        <label class="form-label">选中预警数量</label>
+        <div class="readonly-field" id="voidCountDisplay">0 条</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-void-confirm')">取消</button>
+      <button class="btn btn-danger" onclick="confirmVoid()">确认作废</button>
+    </div>
+  </div>
+</div>
+
+<script>
+// ====== Navigation ======
+function navigateTo(pageId) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + pageId).classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+  document.querySelector(`.menu-item[data-page="${pageId}"]`).classList.add('active');
+
+  const breadcrumbMap = {
+    'warning-info-table': '工作表 / <span>预警信息表</span>',
+    'warning-rule': '工作表管理 / <span>预警规则设置</span>',
+    'warning-dashboard': '预警分级管控 / <span>预警分级看板</span>',
+    'warning-task': '预警分级管控 / <span>预警任务</span>',
+    'warning-stats': '预警统计 / <span>预警信息表统计</span>',
+    'warning-stats-aggr': '预警统计 / <span>预警统计（按工作表）</span>'
+  };
+  document.getElementById('breadcrumb').innerHTML = breadcrumbMap[pageId] || '';
+
+  // 重置预警信息表到列表视图
+  if (pageId === 'warning-info-table') backToWitList();
+  // 进入预警规则设置时展示工作表列表
+  if (pageId === 'warning-rule') { showRulesList(); renderWsRuleList(); }
+}
+
+// ====== Switch Toggle ======
+function toggleSwitch(el) {
+  el.classList.toggle('on');
+  const label = el.querySelector('.switch-label');
+  if (label) {
+    if (el.classList.contains('on')) {
+      label.textContent = label.textContent.replace('否', '是').replace('关闭', '开启') || '是';
+    } else {
+      label.textContent = label.textContent.replace('是', '否').replace('开启', '关闭') || '否';
+    }
+  }
+}
+
+// ====== Tabs ======
+function switchTab(el, contentId) {
+  const tabContainer = el.parentElement;
+  tabContainer.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // Find parent card body and toggle tab content
+  const cardBody = el.closest('.card-body');
+  cardBody.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(contentId).classList.add('active');
+}
+
+function switchTaskTab(el, tabId) {
+  const tabContainer = el.parentElement;
+  tabContainer.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // Switch all task-tab-content divs
+  document.querySelectorAll('.task-tab-content').forEach(c => c.classList.remove('active'));
+  const contentEl = document.getElementById(tabId + '-content');
+  if (contentEl) contentEl.classList.add('active');
+}
+
+// ====== Warning Info Table Views ======
+function enterWitEditView() {
+  document.getElementById('wit-list-view').style.display = 'none';
+  document.getElementById('wit-view-mode').style.display = 'none';
+  document.getElementById('wit-edit-view').style.display = 'block';
+}
+function enterWitViewMode() {
+  document.getElementById('wit-list-view').style.display = 'none';
+  document.getElementById('wit-edit-view').style.display = 'none';
+  document.getElementById('wit-view-mode').style.display = 'block';
+}
+function backToWitList() {
+  document.getElementById('wit-edit-view').style.display = 'none';
+  document.getElementById('wit-view-mode').style.display = 'none';
+  document.getElementById('wit-list-view').style.display = 'block';
+}
+
+// ====== Add/Remove Disposal Row ======
+function addDisposalRow() {
+  const tbody = document.getElementById('disposalTableBody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><input class="sub-input" placeholder="请输入处理情况..."></td>
+    <td><span class="tag tag-info" style="cursor:pointer;">📎 上传</span></td>
+    <td><input class="sub-input" placeholder="选择人员..."></td>
+    <td><span class="text-muted">待签字</span></td>
+    <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+  `;
+  tbody.appendChild(tr);
+}
+function removeDisposalRow(btn) {
+  const tbody = document.getElementById('disposalTableBody');
+  if (tbody.children.length <= 1) {
+    alert('至少保留一行处置记录');
+    return;
+  }
+  btn.closest('tr').remove();
+}
+
+// ====== 工作表预警配置（视图1 列表 / 视图2 编辑器）======
+let wsRuleData = [
+  { name:'安全巡检记录表', condCount:3, type:'简易设置', enabled:true, updated:'2026-07-08 10:23' },
+  { name:'设备运行日检表', condCount:2, type:'简易设置', enabled:true, updated:'2026-07-07 09:15' },
+  { name:'隐患排查治理表', condCount:2, type:'关联风险库', enabled:false, updated:'2026-07-06 16:00' },
+  { name:'预警信息表', condCount:0, type:'—', enabled:false, updated:'2026-07-01 08:00' }
+];
+function renderWsRuleList(){
+  const tb = document.getElementById('wsRuleBody');
+  if(!tb) return;
+  tb.innerHTML = wsRuleData.map(w=>`
+    <tr>
+      <td>${w.name}</td>
+      <td>${w.condCount>0? w.condCount+' 条':'<span class="text-muted">未配置</span>'}</td>
+      <td>${w.type==='—'?'<span class="text-muted">—</span>':w.type}</td>
+      <td>${w.enabled?'<span class="tag tag-success">已启用</span>':'<span class="tag tag-info">未启用</span>'}</td>
+      <td>${w.updated}</td>
+      <td style="text-align:right;"><button class="btn-text btn-sm" onclick="openRuleEdit('${w.name}')">预警规则设置</button></td>
+    </tr>`).join('');
+}
+function showRulesList(){
+  const ev = document.getElementById('rulesEditView'); if(ev) ev.classList.add('hide');
+  const lv = document.getElementById('rulesListView'); if(lv) lv.classList.remove('hide');
+}
+function openRuleEdit(wsName){
+  document.getElementById('rulesListView').classList.add('hide');
+  document.getElementById('rulesEditView').classList.remove('hide');
+  document.getElementById('ruleEditTitle').textContent = '预警设置 · ' + wsName;
+  switchRtab('cond');
+  renderCondGroups();
+  updateRuleNums();
+}
+function closeRuleEdit(){
+  document.getElementById('rulesEditView').classList.add('hide');
+  document.getElementById('rulesListView').classList.remove('hide');
+}
+function switchRtab(tab){
+  document.querySelectorAll('#page-warning-rule .rtab').forEach(t=>t.classList.toggle('active', t.dataset.rtab===tab));
+  document.querySelectorAll('#page-warning-rule .rtab-pane').forEach(p=>p.classList.toggle('active', p.id==='pane-'+tab));
+}
+function updateRuleNums(){
+  const rc = document.getElementById('rtCondNum'); if(rc) rc.textContent = conditionGroups.length;
+  const nn = document.getElementById('rtNotifyNum'); if(nn) nn.textContent = document.querySelectorAll('#notifyConfigList tr').length;
+}
+
+// ====== 预警条件组（条件组 + 子条件 两级）======
+let condGroupSeq = 0;
+let conditionGroups = [];
+function seedCondGroups(){
+  conditionGroups = [
+    { id: ++condGroupSeq, title:'预警条件组 1', relation:'all', riskLevel:'一级', type:'灼烫', subs:[{field:'温度',logic:'大于',value:'80'}] },
+    { id: ++condGroupSeq, title:'预警条件组 2', relation:'all', riskLevel:'一级', type:'高处坠落', subs:[{field:'巡检结果',logic:'等于',value:'异常'}] },
+    { id: ++condGroupSeq, title:'预警条件组 3', relation:'all', riskLevel:'一级', type:'容器爆炸', subs:[{field:'压力',logic:'大于',value:'3.0'},{field:'设备状态',logic:'等于',value:'故障'}] }
+  ];
+}
+function renderCondGroups(){
+  if(conditionGroups.length===0) seedCondGroups();
+  const c = document.getElementById('condContainer');
+  if(c) c.innerHTML = conditionGroups.map(g=>condGroupHtml(g)).join('');
+}
+function condGroupHtml(g){
+  const relOpt = (v,txt)=>`<option value="${v}" ${g.relation===v?'selected':''}>${txt}</option>`;
+  const subs = g.subs.map((s,i)=>subCondRowHtml(g.id,i,s)).join('');
+  const riskOpts = ['','一级','二级','三级','四级'].map(l=>{
+    const t = l===''? '不指定（不进入分级看板）' : l+'风险';
+    return `<option value="${l}" ${g.riskLevel===l?'selected':''}>${t}</option>`;
+  }).join('');
+  const typeOpts = ['','物体打击','高处坠落','冒顶片帮','中毒窒息','放炮','触电','火灾','灼烫','机械伤害','坍塌','其他'].map(t=>`<option value="${t}" ${g.type===t?'selected':''}>${t||'请选择类型...'}</option>`).join('');
+  return `<div class="cond-group" id="cond-${g.id}">
+    <div class="cg-head">
+      <span class="cg-title">${g.title}</span>
+      <div class="group-rel">组内子条件关系
+        <select onchange="setGroupRel(${g.id}, this.value)">${relOpt('all','且 (AND)')}${relOpt('any','或 (OR)')}</select>
+      </div>
+      <button class="btn-text text-danger" onclick="removeCondGroup(${g.id})">删除</button>
+    </div>
+    <div class="sub-cond-list">${subs}</div>
+    <button class="btn btn-sm cg-add" onclick="addSubCond(${g.id})"><i class="bi bi-plus"></i> 添加子条件</button>
+    <div class="risk-attr-area">
+      <div class="ra-row mb-8">
+        <div class="form-item">
+          <label class="form-label">属于几级风险</label>
+          <select onchange="setGroupRisk(${g.id}, this.value)">${riskOpts}</select>
+        </div>
+        <div class="form-item">
+          <label class="form-label">类型 <span class="text-danger">*</span></label>
+          <select onchange="setGroupType(${g.id}, this.value)">${typeOpts}</select>
+        </div>
+      </div>
+    </div>
+  </div>`;
+}
+function subCondRowHtml(gid, idx, s){
+  const conn = idx>0 ? `<div class="sub-cond-connector"><span class="sc-conn-tag">${groupRelText(gid)}</span></div>` : '';
+  const fields = ['','温度','压力','设备状态','巡检结果','操作人员'];
+  const logics = ['大于','小于','等于','不等于','大于等于','小于等于','包含','不包含'];
+  const fieldOpts = fields.map(f=>`<option ${s.field===f?'selected':''}>${f}</option>`).join('');
+  const logicOpts = logics.map(l=>`<option ${s.logic===l?'selected':''}>${l}</option>`).join('');
+  return conn + `<div class="sub-cond-row" data-gid="${gid}" data-sidx="${idx}">
+    <select class="sc-field">${fieldOpts}</select>
+    <select class="sc-logic">${logicOpts}</select>
+    <input class="sc-value" value="${s.value}" placeholder="判定值">
+    <button class="btn-text text-danger" onclick="removeSubCond(${gid}, ${idx})">✕</button>
+  </div>`;
+}
+function groupRelText(gid){
+  const g = conditionGroups.find(x=>x.id===gid);
+  return g && g.relation==='any' ? '或' : '且';
+}
+function addCondition(){
+  const g = { id: ++condGroupSeq, title:'预警条件组 '+(conditionGroups.length+1), relation:'all', riskLevel:'', type:'', subs:[{field:'',logic:'大于',value:''}] };
+  conditionGroups.push(g);
+  const c = document.getElementById('condContainer');
+  if(c) c.insertAdjacentHTML('beforeend', condGroupHtml(g));
+  updateRuleNums();
+}
+function removeCondGroup(id){
+  conditionGroups = conditionGroups.filter(g=>g.id!==id);
+  const el = document.getElementById('cond-'+id); if(el) el.remove();
+  renumberGroups(); updateRuleNums();
+}
+function renumberGroups(){
+  conditionGroups.forEach((g,i)=>g.title='预警条件组 '+(i+1));
+  conditionGroups.forEach(g=>{ const el=document.getElementById('cond-'+g.id); if(el) el.querySelector('.cg-title').textContent=g.title; });
+}
+function setGroupRel(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g){ g.relation=v; refreshConnectors(id); } }
+function refreshConnectors(id){
+  const list=document.querySelector('#cond-'+id+' .sub-cond-list'); if(!list) return;
+  const txt = groupRelText(id);
+  list.querySelectorAll('.sc-conn-tag').forEach(t=>t.textContent=txt);
+}
+function setGroupRisk(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.riskLevel=v; }
+function setGroupType(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.type=v; }
+function addSubCond(id){
+  const g=conditionGroups.find(x=>x.id===id); if(!g) return;
+  const idx=g.subs.length;
+  g.subs.push({field:'',logic:'大于',value:''});
+  const list=document.querySelector('#cond-'+id+' .sub-cond-list');
+  if(list) list.insertAdjacentHTML('beforeend', subCondRowHtml(id, idx, g.subs[idx]));
+  updateRuleNums();
+}
+function removeSubCond(id, idx){
+  const g=conditionGroups.find(x=>x.id===id); if(!g) return;
+  if(g.subs.length<=1){ alert('至少保留一个子条件！'); return; }
+  g.subs.splice(idx,1);
+  const list=document.querySelector('#cond-'+id+' .sub-cond-list');
+  if(list) list.innerHTML = g.subs.map((s,i)=>subCondRowHtml(id,i,s)).join('');
+}
+function saveRule(){ toast('success','预警规则已启用'); }
+
+// ====== 组织架构选择（转发）======
+let orgData = [
+  { dept:'安全环保部', members:['张安全','李巡检','王监察','刘防护'] },
+  { dept:'生产技术部', members:['赵技术','钱工程','孙设计'] },
+  { dept:'机电运输部', members:['周机电','吴运维','郑维修','冯电气'] },
+  { dept:'通风防尘部', members:['陈通风','褚防尘','卫测风'] },
+  { dept:'调度室', members:['沈调度','韩值班'] }
+];
+let selectedForwardPerson = '';
+function renderOrgTree(filter){
+  filter = (filter||'').trim();
+  const tree = document.getElementById('orgTree');
+  if(!tree) return;
+  let html='';
+  orgData.forEach((d,di)=>{
+    const members = d.members.filter(m=>!filter || m.indexOf(filter)>=0);
+    if(filter && members.length===0) return;
+    html += `<div class="org-dept">
+      <div class="org-dept-head" onclick="toggleOrgDept(${di})"><i class="bi bi-chevron-down"></i> ${d.dept} <span class="org-count">${d.members.length}</span></div>
+      <div class="org-people" id="orgPeople-${di}">${members.map(m=>`<div class="org-person" onclick="selectForwardPerson('${m}', this)"><i class="bi bi-person-circle"></i> ${m}</div>`).join('')}</div>
+    </div>`;
+  });
+  if(!html) html = '<div class="empty-tip">未找到匹配人员</div>';
+  tree.innerHTML = html;
+}
+function toggleOrgDept(di){ const p=document.getElementById('orgPeople-'+di); if(p) p.classList.toggle('hide'); }
+function filterOrg(){ renderOrgTree(document.getElementById('orgFilter').value); }
+function selectForwardPerson(name, el){
+  selectedForwardPerson = name;
+  const label = document.getElementById('orgSelectedName'); if(label) label.textContent = name;
+  document.querySelectorAll('.org-person').forEach(p=>p.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+function confirmForward(){
+  if(!selectedForwardPerson){ alert('请选择转发人'); return; }
+  closeModal('modal-forward');
+  toast('success','已转发给 ' + selectedForwardPerson);
+}
+
+// ====== 轻量 Toast ======
+function toast(type, msg){
+  let wrap = document.getElementById('wbToastWrap');
+  if(!wrap){ wrap=document.createElement('div'); wrap.id='wbToastWrap'; wrap.style.cssText='position:fixed;top:20px;right:20px;z-index:99999;display:flex;flex-direction:column;gap:8px;'; document.body.appendChild(wrap); }
+  const colors={success:'#2ba471',warning:'#e6a23c',info:'#0f6cbd',error:'#f5655b'};
+  const t=document.createElement('div');
+  t.textContent=msg; t.style.cssText='padding:10px 16px;border-radius:8px;color:#fff;font-size:13px;box-shadow:0 2px 12px rgba(23,36,55,.15);background:'+(colors[type]||'#0f6cbd')+';';
+  wrap.appendChild(t);
+  setTimeout(function(){ t.style.transition='opacity .3s'; t.style.opacity='0'; setTimeout(function(){ t.remove(); },300); }, 1800);
+}
+
+// ====== Org Picker（通讯录及外部联系人 具体人员多选，处理人/通知人/超期提醒人共用）======
+let _orgPickerSourceRow = null;
+let _orgPickerSelected = [];
+
+function renderPickerTree(filter){
+  filter = (filter||'').trim();
+  const tree = document.getElementById('orgPickerTree');
+  if(!tree) return;
+  let html='';
+  orgData.forEach((d,di)=>{
+    const members = d.members.filter(m=>!filter || m.indexOf(filter)>=0);
+    if(filter && members.length===0) return;
+    const peopleHtml = members.map(m=>{
+      const active = _orgPickerSelected.indexOf(m)!==-1 ? ' active' : '';
+      return '<div class="org-person'+active+'" onclick="togglePickerPerson(\''+m+'\', this)"><i class="bi bi-person-circle"></i> '+m+'</div>';
+    }).join('');
+    html += '<div class="org-dept">'+
+      '<div class="org-dept-head" onclick="togglePickerDept('+di+')"><i class="bi bi-chevron-down"></i> '+d.dept+' <span class="org-count">'+d.members.length+'</span></div>'+
+      '<div class="org-people" id="pickerPeople-'+di+'">'+peopleHtml+'</div>'+
+    '</div>';
+  });
+  if(!html) html = '<div class="empty-tip">未找到匹配人员</div>';
+  tree.innerHTML = html;
+}
+function togglePickerDept(di){ const p=document.getElementById('pickerPeople-'+di); if(p) p.classList.toggle('hide'); }
+function filterPickerOrg(){ renderPickerTree(document.getElementById('orgPickerFilter').value); }
+function togglePickerPerson(name, el){
+  const i = _orgPickerSelected.indexOf(name);
+  if(i===-1){ _orgPickerSelected.push(name); if(el) el.classList.add('active'); }
+  else { _orgPickerSelected.splice(i,1); if(el) el.classList.remove('active'); }
+  const lbl = document.getElementById('orgPickerSelected');
+  if(lbl) lbl.textContent = _orgPickerSelected.length ? _orgPickerSelected.join('、') : '未选择';
+}
+function openOrgPicker(rowEl){
+  _orgPickerSourceRow = rowEl;
+  const prev = (rowEl.getAttribute('data-selected')||'').split(',').filter(Boolean);
+  _orgPickerSelected = prev.slice();
+  const lbl = document.getElementById('orgPickerSelected');
+  if(lbl) lbl.textContent = _orgPickerSelected.length ? _orgPickerSelected.join('、') : '未选择';
+  const f = document.getElementById('orgPickerFilter'); if(f) f.value='';
+  renderPickerTree('');
+  showModal('modal-org-picker');
+}
+function confirmOrgPicker(){
+  if(!_orgPickerSourceRow){ closeModal('modal-org-picker'); return; }
+  if(_orgPickerSelected.length===0){ alert('请至少选择一名人员'); return; }
+  const stateEl = _orgPickerSourceRow.querySelector('.person-cat-state span.text-primary');
+  if(stateEl) stateEl.textContent = '已选 ' + _orgPickerSelected.length + ' 人';
+  _orgPickerSourceRow.setAttribute('data-selected', _orgPickerSelected.join(','));
+  closeModal('modal-org-picker');
+}
+
+// ====== Approval Mode Selection 已移除（审批模块取消）======
+
+// ====== Modals ======
+function showModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+function showWitLogicModal() { showModal('modal-wit-logic'); }
+function showNotifyConfigModal() { showModal('modal-notify-config'); }
+function showPersonSelectModal() { closeModal('modal-notify-config'); closeModal('modal-forward'); showModal('modal-person-select'); }
+function showTaskDetailModal() { showModal('modal-task-detail'); }
+function showForwardModal() { selectedForwardPerson=''; var lbl=document.getElementById('orgSelectedName'); if(lbl) lbl.textContent='未选择'; var f=document.getElementById('orgFilter'); if(f) f.value=''; renderOrgTree(''); showModal('modal-forward'); }
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+});
+
+// ====== Checkbox Select All ======
+function toggleSelectAll(masterCheckbox, listId) {
+  const list = document.getElementById(listId);
+  const checkboxes = list.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    cb.checked = masterCheckbox.checked;
+    cb.dispatchEvent(new Event('change'));
+  });
+}
+
+// ====== Update Selected Display ======
+function updateSelectedDisplay(checkbox, displayId) {
+  const display = document.getElementById(displayId);
+  if (!display) return;
+  const label = checkbox.parentElement;
+  const text = label.textContent.trim();
+  if (checkbox.checked) {
+    // Check if already exists
+    const existing = display.querySelector(`[data-cond="${text}"]`);
+    if (!existing) {
+      const tag = document.createElement('span');
+      tag.className = 'selected-item-tag';
+      tag.setAttribute('data-cond', text);
+      tag.innerHTML = `${text}<span class="remove" onclick="removeSelectedTag(this, '${displayId}')">×</span>`;
+      display.appendChild(tag);
+    }
+  } else {
+    const existing = display.querySelector(`[data-cond="${text}"]`);
+    if (existing) existing.remove();
+  }
+}
+
+function removeSelectedTag(removeEl, displayId) {
+  const tag = removeEl.parentElement;
+  const condText = tag.getAttribute('data-cond');
+  tag.remove();
+  // Uncheck the corresponding checkbox
+  document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+    if (cb.parentElement.textContent.trim() === condText) {
+      cb.checked = false;
+    }
+  });
+}
+
+// ====== Drill-down Modal ======
+const drillData = [
+  {id:'WRN-20260708-001', sheet:'安全巡检记录表', item:'设备温度监控', trigger:'温度=85°C', level:'一级', levelClass:'risk-1', type:'灼烫', time:'07-08 10:23', handler:'表单提交人', status:'未处理', statusClass:'tag-danger'},
+  {id:'WRN-20260708-002', sheet:'设备运行日检表', item:'压力异常', trigger:'压力=3.2MPa', level:'二级', levelClass:'risk-2', type:'触电', time:'07-08 09:15', handler:'预警所在事事号的负责人', status:'未处理', statusClass:'tag-danger'},
+  {id:'WRN-20260708-003', sheet:'隐患排查治理表', item:'防护设施检查', trigger:'防护栏缺失', level:'一级', levelClass:'risk-1', type:'高处坠落', time:'07-07 16:00', handler:'预警所在事事号的管理员', status:'处理中', statusClass:'tag-warning'},
+  {id:'WRN-20260708-004', sheet:'安全巡检记录表', item:'消防通道', trigger:'通道堵塞', level:'二级', levelClass:'risk-2', type:'火灾', time:'07-07 14:30', handler:'表单提交人的直属上级', status:'处理中', statusClass:'tag-warning'},
+  {id:'WRN-20260707-005', sheet:'设备运行日检表', item:'电气安全', trigger:'接地不良', level:'二级', levelClass:'risk-2', type:'触电', time:'07-06 11:00', handler:'表单提交人', status:'已处理', statusClass:'tag-success'},
+  {id:'WRN-20260707-006', sheet:'隐患排查治理表', item:'物料堆放', trigger:'堆垛超高', level:'三级', levelClass:'risk-3', type:'物体打击', time:'07-05 15:00', handler:'预警所在事事号的本公司成员', status:'已处理', statusClass:'tag-success'},
+  {id:'WRN-20260707-007', sheet:'安全巡检记录表', item:'通风检测', trigger:'排风故障', level:'四级', levelClass:'risk-4', type:'中毒窒息', time:'07-04 10:00', handler:'表单提交人的部门主管和副主管', status:'已作废', statusClass:'tag-info'},
+  {id:'WRN-20260706-008', sheet:'设备运行日检表', item:'设备检查', trigger:'设备过热', level:'一级', levelClass:'risk-1', type:'灼烫', time:'07-06 08:00', handler:'通讯录及外部联系人', status:'已处理', statusClass:'tag-success'},
+];
+
+function showDrillModal(status, dimension) {
+  const title = document.getElementById('drillTitle');
+  const filterInfo = document.getElementById('drillFilterInfo');
+  const tbody = document.getElementById('drillTableBody');
+
+  title.textContent = `预警明细 - ${dimension} / ${status}`;
+  filterInfo.innerHTML = `<span class="tag tag-primary" style="padding:6px 12px;">筛选维度：${dimension === '全部等级' ? '全部风险等级' : dimension} ｜ 状态：${status}</span>`;
+
+  // Filter data
+  let filtered = drillData;
+  if (status !== '全部') {
+    filtered = filtered.filter(d => d.status === status);
+  }
+  if (dimension !== '全部等级') {
+    // Check if dimension is a risk level
+    const riskMap = {'一级风险':'一级','二级风险':'二级','三级风险':'三级','四级风险':'四级'};
+    if (riskMap[dimension]) {
+      filtered = filtered.filter(d => d.level === riskMap[dimension]);
+    } else {
+      // It's an accident type
+      filtered = filtered.filter(d => d.type === dimension);
+    }
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" class="text-muted" style="text-align:center;padding:20px;">暂无数据</td></tr>';
+  } else {
+    tbody.innerHTML = filtered.map(d => `
+      <tr>
+        <td>${d.id}</td>
+        <td>${d.sheet}</td>
+        <td>${d.item}</td>
+        <td>${d.trigger}</td>
+        <td><span class="${d.levelClass}">● ${d.level}</span></td>
+        <td>${d.type}</td>
+        <td>${d.time}</td>
+        <td>${d.handler}</td>
+        <td><span class="tag ${d.statusClass}">${d.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  showModal('modal-drill');
+}
+
+// ====== Deadline Type Change ======
+function onDeadlineTypeChange(radio) {
+  const fixedArea = document.getElementById('deadline-fixed-area');
+  const fieldArea = document.getElementById('deadline-field-area');
+  if (radio.value === 'fixed') {
+    if (fixedArea) fixedArea.style.display = 'flex';
+    if (fieldArea) fieldArea.style.display = 'none';
+  } else {
+    if (fixedArea) fixedArea.style.display = 'none';
+    if (fieldArea) fieldArea.style.display = 'flex';
+  }
+}
+
+// ====== Add Reminder Rule ======
+// 当前正在编辑的超期提醒人行（由 openOverdueReminderPicker 设置）
+let _currentReminderRowBtn = null;
+
+function addReminderRule() {
+  const tableBody = document.querySelector('#modal-notify-config .sub-form-table tbody');
+  if (!tableBody) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = `
+    <td><button class="btn-text btn-sm text-danger" onclick="removeReminderRule(this)"><i class="bi bi-trash"></i></button></td>
+    <td>
+      <div class="flex gap-4 items-center">
+        <input class="sub-input" value="1" style="width:60px;">
+        <select class="select" style="width:90px;">
+          <option>小时</option>
+          <option>天</option>
+        </select>
+      </div>
+    </td>
+    <td>
+      <button type="button" class="btn btn-sm btn-outline-primary" onclick="openOverdueReminderPicker(this)" data-reminder-cats="">设置</button>
+    </td>
+  `;
+  tableBody.appendChild(tr);
+}
+
+function openOverdueReminderPicker(btn) {
+  _currentReminderRowBtn = btn;
+  const prevCats = (btn.getAttribute('data-reminder-cats') || '').split(',').filter(Boolean);
+  // 重置 checkbox 状态
+  const modal = document.getElementById('modal-overdue-reminder-select');
+  if (!modal) return;
+  modal.querySelectorAll('.person-cat-row').forEach(row => {
+    const cb = row.querySelector('input[type="checkbox"]');
+    if (!cb) return;
+    const label = row.querySelector('.person-cat-label').textContent.trim();
+    cb.checked = prevCats.indexOf(label) !== -1;
+  });
+  showModal('modal-overdue-reminder-select');
+}
+
+function confirmOverdueReminder() {
+  const modal = document.getElementById('modal-overdue-reminder-select');
+  const checked = [];
+  modal.querySelectorAll('.person-cat-row').forEach(row => {
+    const cb = row.querySelector('input[type="checkbox"]');
+    if (cb && cb.checked) {
+      checked.push(row.querySelector('.person-cat-label').textContent.trim());
+    }
+  });
+  if (checked.length === 0) {
+    alert('请至少选择一项超期提醒人');
+    return;
+  }
+  if (_currentReminderRowBtn) {
+    _currentReminderRowBtn.setAttribute('data-reminder-cats', checked.join(','));
+    _currentReminderRowBtn.textContent = '已设置 (' + checked.length + ')';
+  }
+  closeModal('modal-overdue-reminder-select');
+}
+
+function removeReminderRule(btn) {
+  const tbody = btn.closest('tbody');
+  if (tbody.children.length <= 1) {
+    alert('至少保留一条提醒规则');
+    return;
+  }
+  btn.closest('tr').remove();
+}
+
+// ====== Sheet Drill-down ======
+function showSheetDrillModal(sheetName, status) {
+  const title = document.getElementById('drillTitle');
+  const filterInfo = document.getElementById('drillFilterInfo');
+  const tbody = document.getElementById('drillTableBody');
+
+  title.textContent = `预警明细 - ${sheetName} / ${status === '全部' ? '全部状态' : status}`;
+  filterInfo.innerHTML = `<span class="tag tag-primary" style="padding:6px 12px;">工作表：${sheetName} ｜ 状态：${status === '全部' ? '全部状态' : status}</span>`;
+
+  // Filter data by sheet and status
+  let filtered = drillData.filter(d => d.sheet === sheetName);
+  if (status !== '全部') {
+    filtered = filtered.filter(d => d.status === status);
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="9" class="text-muted" style="text-align:center;padding:20px;">暂无匹配数据</td></tr>';
+  } else {
+    tbody.innerHTML = filtered.map(d => `
+      <tr>
+        <td>${d.id}</td>
+        <td>${d.sheet}</td>
+        <td>${d.item}</td>
+        <td>${d.trigger}</td>
+        <td><span class="${d.levelClass}">● ${d.level}</span></td>
+        <td>${d.type}</td>
+        <td>${d.time}</td>
+        <td>${d.handler}</td>
+        <td><span class="tag ${d.statusClass}">${d.status}</span></td>
+      </tr>
+    `).join('');
+  }
+
+  showModal('modal-drill');
+}
+
+// ====== Void (作废) Functions ======
+function toggleSelectAllRows(masterCheckbox) {
+  document.querySelectorAll('.row-check').forEach(cb => {
+    cb.checked = masterCheckbox.checked;
+  });
+}
+
+function showVoidConfirmModal() {
+  const checked = document.querySelectorAll('.row-check:checked');
+  if (checked.length === 0) {
+    alert('请先勾选需要作废的预警记录');
+    return;
+  }
+  document.getElementById('voidCountDisplay').textContent = `${checked.length} 条`;
+  showModal('modal-void-confirm');
+}
+
+function confirmVoid() {
+  const reasonEl = document.querySelector('#modal-void-confirm textarea');
+  if (!reasonEl || !reasonEl.value.trim()) {
+    alert('请填写作废原因后再确认！');
+    return;
+  }
+  const checked = document.querySelectorAll('.row-check:checked');
+  alert(`已成功作废 ${checked.length} 条预警记录，作废原因：${reasonEl.value.trim()}，状态已变更为「已作废」`);
+  closeModal('modal-void-confirm');
+  // Reset
+  document.querySelectorAll('.row-check').forEach(cb => { cb.checked = false; });
+  if (reasonEl) reasonEl.value = '';
+}
+
+// Initialize
+// (selectWarnMode 已移除：预警不再区分「自定义」与「关联标准风险」两种模式)
+</script>
+</body>
+</html>
