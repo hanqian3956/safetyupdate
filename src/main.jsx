@@ -74,6 +74,8 @@ const navigation = [
   { label: "看板", icon: DataBarVertical24Regular },
 ];
 
+const prototypeBase = `${import.meta.env.BASE_URL}xiaodong/`;
+
 const workQueues = [
   {
     id: "message",
@@ -427,7 +429,7 @@ function AppNav({ active, onChange, onOpenSettings }) {
         <IconButton
           label="设置"
           active={active === "设置"}
-          onClick={onOpenSettings}
+          onClick={() => onOpenSettings()}
         >
           <Settings24Regular />
         </IconButton>
@@ -2538,7 +2540,7 @@ function EmbeddedDynamicsPage() {
     <section className="embedded-dynamics-page" aria-label="动态">
       <iframe
         className="embedded-dynamics-frame"
-        src="/xiaodong/index.html"
+        src={`${prototypeBase}index.html`}
         title="动态"
       />
     </section>
@@ -2548,7 +2550,11 @@ function EmbeddedDynamicsPage() {
 function EmbeddedTasksPage() {
   return (
     <section className="embedded-tasks-page" aria-label="我的任务">
-      <iframe className="embedded-tasks-frame" src="/xiaodong/任务.html" title="我的任务" />
+      <iframe
+        className="embedded-tasks-frame"
+        src={`${prototypeBase}任务.html`}
+        title="我的任务"
+      />
     </section>
   );
 }
@@ -2558,7 +2564,7 @@ function EmbeddedWarningsPage() {
     <section className="embedded-warnings-page" aria-label="预警">
       <iframe
         className="embedded-warnings-frame"
-        src="/xiaodong/预警.html"
+        src={`${prototypeBase}预警.html`}
         title="预警任务"
       />
     </section>
@@ -4910,7 +4916,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
       ["通知方式", "站内消息、短信提醒", "已启用"],
     ],
   };
-  const rows = rowsBySetting[selected];
+  const rows = rowsBySetting[selected] ?? [];
   const isUserCenter = selected === "用户中心";
   const isPersonalCenter = selected === "个人中心";
   const isRbac = selected === "角色权限";
@@ -5036,14 +5042,14 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
               aria-label="动态圈管理"
             >
               <iframe
-                src="/xiaodong/index.html?view=feedno"
+                src={`${prototypeBase}index.html?view=feedno`}
                 title="动态圈管理"
               />
             </section>
           ) : isTaskPageSetting ? (
             <section className="settings-task-embed" aria-label={taskPageMenu.label}>
               <iframe
-                src={`/xiaodong/任务.html?view=${taskPageMenu.view}`}
+                src={`${prototypeBase}任务.html?view=${taskPageMenu.view}`}
                 title={taskPageMenu.label}
               />
             </section>
@@ -5053,7 +5059,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
               aria-label={warningPageMenu.label}
             >
               <iframe
-                src={`/xiaodong/预警.html?view=${warningPageMenu.view}`}
+                src={`${prototypeBase}预警.html?view=${warningPageMenu.view}`}
                 title={warningPageMenu.label}
               />
             </section>
