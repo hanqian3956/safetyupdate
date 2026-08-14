@@ -24,9 +24,11 @@ import {
   CheckmarkCircle24Regular,
   ClipboardTask24Regular,
   DataBarVertical24Regular,
+  Delete24Regular,
   DocumentText24Regular,
   DismissRegular,
   ErrorCircle24Regular,
+  Edit24Regular,
   Fire24Regular,
   Flash24Regular,
   Flowchart24Regular,
@@ -145,6 +147,9 @@ const apps = [
   { name: "消防管理", description: "巡检与演练", icon: Fire24Regular },
   { name: "应急管理", description: "预案与响应", icon: Lightbulb24Regular },
 ];
+
+const managedRoleOptions = ["系统管理员", "安全管理员", "任务执行人", "数据查看员"];
+const managedPositionOptions = ["安全管理员", "设备工程师", "生产主管"];
 
 const initialTabs = [
   { id: "workbench", label: "工作台", icon: Home24Regular, pinned: true },
@@ -2073,7 +2078,6 @@ function ActivityFeed({ selectedTab, onSelectTab, onOpen, onOpenAll }) {
     <section className="activity-feed" aria-labelledby="activity-title">
       <div className="section-title">
         <div>
-          <p>安全态势</p>
           <h2 id="activity-title">安全动态</h2>
         </div>
         <button className="quiet-action" onClick={onOpenAll}>
@@ -2571,6 +2575,20 @@ function EmbeddedWarningsPage() {
   );
 }
 
+function EmbeddedLowCodePage({ module, view }) {
+  const query = new URLSearchParams({ module, ...(view ? { view } : {}) });
+
+  return (
+    <section className="settings-lowcode-embed" aria-label={module}>
+      <iframe
+        key={query.toString()}
+        src={`${prototypeBase}低代码.html?${query.toString()}`}
+        title="低代码平台"
+      />
+    </section>
+  );
+}
+
 function WarningCenterPage() {
   const [filter, setFilter] = useState("全部");
   const warnings = [
@@ -2928,22 +2946,10 @@ const settingsItems = [
     description: "设置个人看板的指标、排序和共享范围。",
   },
   {
-    label: "角色权限",
-    icon: ShieldCheckmark24Regular,
-    title: "角色权限",
-    description: "查看角色职责及可访问的业务范围。",
-  },
-  {
-    label: "用户中心",
-    icon: People24Regular,
-    title: "用户中心",
-    description: "维护个人资料、通知方式与登录设备。",
-  },
-  {
-    label: "个人中心",
-    icon: PersonClock24Regular,
-    title: "个人中心",
-    description: "管理个人资料、账号安全和登录状态。",
+    label: "系统设置",
+    icon: Settings24Regular,
+    title: "系统设置",
+    description: "管理系统角色、用户和个人账号信息。",
   },
 ];
 
@@ -3299,17 +3305,62 @@ function organizationPath(nodes, id, trail = []) {
   return "";
 }
 
+function UserMultiSelect({ label, options, value, onChange, activeMenu, setActiveMenu }) {
+  const open = activeMenu === label;
+  const selectedLabels = options.filter((option) => value.includes(option));
+  const toggleOption = (option) =>
+    onChange(
+      value.includes(option)
+        ? value.filter((item) => item !== option)
+        : [...value, option],
+    );
+
+  return (
+    <div className="user-multi-select">
+      <span>{label}</span>
+      <button
+        type="button"
+        className={open ? "open" : ""}
+        aria-expanded={open}
+        onClick={() => setActiveMenu(open ? "" : label)}
+      >
+        <b>{selectedLabels.length ? selectedLabels.join("、") : `请选择${label}`}</b>
+        <ChevronDown24Regular />
+      </button>
+      {open ? (
+        <div className="user-multi-options" role="listbox" aria-label={label}>
+          {options.map((option) => (
+            <label key={option}>
+              <input
+                type="checkbox"
+                checked={value.includes(option)}
+                onChange={() => toggleOption(option)}
+              />
+              <span>{option}</span>
+            </label>
+          ))}
+        </div>
+      ) : null}
+    </div>
+  );
+}
+
 function UserManagementCenter({ organizations, setOrganizations }) {
-  const [activeTab, setActiveTab] = useState("organization");
+  const [activeTab, setActiveTab] = useState("users");
   const [users, setUsers] = useState([]);
   const [selectedOrganization, setSelectedOrganization] = useState("");
   const [dialog, setDialog] = useState(null);
   const [confirmAction, setConfirmAction] = useState(null);
+  const [editingUser, setEditingUser] = useState(null);
   const [userName, setUserName] = useState("");
   const [userAccount, setUserAccount] = useState("");
   const [userPhone, setUserPhone] = useState("");
   const [userPassword, setUserPassword] = useState("123456");
   const [userOrganization, setUserOrganization] = useState("");
+  const [userPositions, setUserPositions] = useState([]);
+  const [userRoles, setUserRoles] = useState([]);
+  const [activeUserMultiSelect, setActiveUserMultiSelect] = useState("");
+  const [userFieldErrors, setUserFieldErrors] = useState({});
   const [filters, setFilters] = useState({
     name: "",
     account: "",
@@ -3331,35 +3382,73 @@ function UserManagementCenter({ organizations, setOrganizations }) {
       (!filters.status || user.status === filters.status),
   );
   const openUserDialog = () => {
+    setEditingUser(null);
     setUserName("");
     setUserAccount("");
     setUserPhone("");
     setUserPassword("123456");
     setUserOrganization(selectedOrganization || organizationNodes[0]?.id || "");
+    setUserPositions([]);
+    setUserRoles([]);
+    setUserFieldErrors({});
+    setActiveUserMultiSelect("");
     setDialog("create");
   };
+  const openEditUserDialog = (user) => {
+    setEditingUser(user);
+    setUserName(user.name);
+    setUserAccount(user.account);
+    setUserPhone(user.phone === "未填写" ? "" : user.phone);
+    setUserPassword(user.password || "123456");
+    setUserOrganization(user.organizationId || organizationNodes[0]?.id || "");
+    setUserPositions(user.positions || []);
+    setUserRoles(user.roles || []);
+    setUserFieldErrors({});
+    setActiveUserMultiSelect("");
+    setDialog("create");
+  };
+  const clearUserFieldError = (field) =>
+    setUserFieldErrors((current) =>
+      current[field] ? { ...current, [field]: "" } : current,
+    );
   const addUser = (event) => {
     event.preventDefault();
     const name = userName.trim();
     const account = userAccount.trim();
-    if (!name || !account || !userOrganization) return;
+    const errors = {
+      name: name ? "" : "请输入用户名称",
+      account: account ? "" : "请输入账号",
+      password: userPassword.trim() ? "" : "请输入默认密码",
+      organization: userOrganization ? "" : "请选择所属组织",
+    };
+    if (Object.values(errors).some(Boolean)) {
+      setUserFieldErrors(errors);
+      return;
+    }
     const department = organizationPath(organizations, userOrganization);
-    setUsers((current) => [
-      ...current,
-      {
-        id: `user-${Date.now()}`,
-        name,
-        account,
-        phone: userPhone || "未填写",
-        password: userPassword,
-        organizationId: userOrganization,
-        department,
-        status: "启用",
-      },
-    ]);
+    const userData = {
+      name,
+      account,
+      phone: userPhone || "未填写",
+      password: userPassword,
+      organizationId: userOrganization,
+      department,
+      positions: userPositions,
+      roles: userRoles,
+    };
+    setUsers((current) =>
+      editingUser
+        ? current.map((user) =>
+            user.id === editingUser.id ? { ...user, ...userData } : user,
+          )
+        : [
+            ...current,
+            { id: `user-${Date.now()}`, ...userData, status: "启用" },
+          ],
+    );
     setSelectedOrganization(userOrganization);
     setDialog(null);
-    setNotice(`已新增用户：${name}`);
+    setNotice(`${editingUser ? "已保存用户" : "已新增用户"}：${name}`);
   };
   const downloadUserTemplate = () => {
     const csv =
@@ -3426,8 +3515,12 @@ function UserManagementCenter({ organizations, setOrganizations }) {
   const requestStatusToggle = (user) =>
     setConfirmAction({ type: "status", user });
   const requestDelete = (user) => setConfirmAction({ type: "delete", user });
+  const requestCreateCancel = () => setConfirmAction({ type: "cancel-create" });
   const confirmUserAction = () => {
-    if (confirmAction.type === "status") {
+    if (confirmAction.type === "cancel-create") {
+      setDialog(null);
+      setActiveUserMultiSelect("");
+    } else if (confirmAction.type === "status") {
       toggleUser(confirmAction.user.id);
       setNotice(
         `已${confirmAction.user.status === "启用" ? "停用" : "启用"}用户：${confirmAction.user.name}`,
@@ -3592,7 +3685,7 @@ function UserManagementCenter({ organizations, setOrganizations }) {
                         </button>
                         <span className="user-row-actions">
                           <button
-                            onClick={() => setNotice(`编辑用户：${user.name}`)}
+                            onClick={() => openEditUserDialog(user)}
                           >
                             编辑
                           </button>
@@ -3649,7 +3742,7 @@ function UserManagementCenter({ organizations, setOrganizations }) {
             {dialog === "create" ? (
               <form onSubmit={addUser}>
                 <header>
-                  <h2 id="user-dialog-title">新增用户</h2>
+                  <h2 id="user-dialog-title">{editingUser ? "编辑用户" : "新增用户"}</h2>
                   <button
                     type="button"
                     className="management-dialog-close"
@@ -3659,23 +3752,38 @@ function UserManagementCenter({ organizations, setOrganizations }) {
                     <DismissRegular />
                   </button>
                 </header>
-                <div className="management-dialog-body">
-                  <label>
+                <div
+                  className="management-dialog-body user-create-form"
+                  onMouseDown={(event) => {
+                    if (!event.target.closest(".user-multi-select")) {
+                      setActiveUserMultiSelect("");
+                    }
+                  }}
+                >
+                  <label className={userFieldErrors.name ? "field-error" : ""}>
                     用户名称
                     <input
                       value={userName}
-                      onChange={(event) => setUserName(event.target.value)}
+                      onChange={(event) => {
+                        setUserName(event.target.value);
+                        clearUserFieldError("name");
+                      }}
                       placeholder="例如：张宇"
                       autoFocus
                     />
+                    {userFieldErrors.name ? <em>{userFieldErrors.name}</em> : null}
                   </label>
-                  <label>
+                  <label className={userFieldErrors.account ? "field-error" : ""}>
                     账号
                     <input
                       value={userAccount}
-                      onChange={(event) => setUserAccount(event.target.value)}
+                      onChange={(event) => {
+                        setUserAccount(event.target.value);
+                        clearUserFieldError("account");
+                      }}
                       placeholder="例如：zhangyu"
                     />
+                    {userFieldErrors.account ? <em>{userFieldErrors.account}</em> : null}
                   </label>
                   <label>
                     手机号
@@ -3685,21 +3793,26 @@ function UserManagementCenter({ organizations, setOrganizations }) {
                       placeholder="例如：13800000000"
                     />
                   </label>
-                  <label>
+                  <label className={userFieldErrors.password ? "field-error" : ""}>
                     默认密码
                     <input
                       type="password"
                       value={userPassword}
-                      onChange={(event) => setUserPassword(event.target.value)}
+                      onChange={(event) => {
+                        setUserPassword(event.target.value);
+                        clearUserFieldError("password");
+                      }}
                     />
+                    {userFieldErrors.password ? <em>{userFieldErrors.password}</em> : null}
                   </label>
-                  <label>
+                  <label className={`user-organization-field${userFieldErrors.organization ? " field-error" : ""}`}>
                     所属组织
                     <select
                       value={userOrganization}
-                      onChange={(event) =>
-                        setUserOrganization(event.target.value)
-                      }
+                      onChange={(event) => {
+                        setUserOrganization(event.target.value);
+                        clearUserFieldError("organization");
+                      }}
                     >
                       {organizationNodes.map((node) => (
                         <option key={node.id} value={node.id}>
@@ -3707,13 +3820,30 @@ function UserManagementCenter({ organizations, setOrganizations }) {
                         </option>
                       ))}
                     </select>
+                    {userFieldErrors.organization ? <em>{userFieldErrors.organization}</em> : null}
                   </label>
+                  <UserMultiSelect
+                    label="岗位"
+                    options={managedPositionOptions}
+                    value={userPositions}
+                    onChange={setUserPositions}
+                    activeMenu={activeUserMultiSelect}
+                    setActiveMenu={setActiveUserMultiSelect}
+                  />
+                  <UserMultiSelect
+                    label="角色"
+                    options={managedRoleOptions}
+                    value={userRoles}
+                    onChange={setUserRoles}
+                    activeMenu={activeUserMultiSelect}
+                    setActiveMenu={setActiveUserMultiSelect}
+                  />
                 </div>
                 <footer>
                   <button
                     type="button"
                     className="management-dialog-cancel"
-                    onClick={() => setDialog(null)}
+                    onClick={requestCreateCancel}
                   >
                     取消
                   </button>
@@ -3798,7 +3928,9 @@ function UserManagementCenter({ organizations, setOrganizations }) {
             </header>
             <div className="management-dialog-body">
               <p>
-                {confirmAction.type === "delete"
+                {confirmAction.type === "cancel-create"
+                  ? `确定取消${editingUser ? "编辑" : "新增"}用户吗？已填写的信息将不会保存。`
+                  : confirmAction.type === "delete"
                   ? `确定删除用户“${confirmAction.user.name}”吗？删除后无法恢复。`
                   : `确定${confirmAction.user.status === "启用" ? "停用" : "启用"}用户“${confirmAction.user.name}”吗？`}
               </p>
@@ -3948,6 +4080,7 @@ function RbacPage({ onAction }) {
   const [roleMenus, setRoleMenus] = useState(new Set(allMenus.slice(0, 10)));
   const [confirmRole, setConfirmRole] = useState(null);
   const [dataRole, setDataRole] = useState(null);
+  const [dataScope, setDataScope] = useState("自定义数据权限");
   const [dataScopeIds, setDataScopeIds] = useState(new Set(["safety"]));
   const [dataTreeExpanded, setDataTreeExpanded] = useState(true);
   const [dataLinkage, setDataLinkage] = useState(true);
@@ -4147,6 +4280,7 @@ function RbacPage({ onAction }) {
   };
   const openDataPermission = (role) => {
     setDataRole(role);
+    setDataScope("自定义数据权限");
     setDataScopeIds(new Set(["safety"]));
     setDataTreeExpanded(true);
   };
@@ -4336,54 +4470,62 @@ function RbacPage({ onAction }) {
                 </label>
                 <label>
                   <span>权限范围</span>
-                  <select defaultValue="自定义数据权限">
+                  <select
+                    value={dataScope}
+                    onChange={(event) => setDataScope(event.target.value)}
+                  >
+                    <option>仅自己</option>
                     <option>全部数据权限</option>
-                    <option>本部门及下级</option>
+                    <option>本部门及以下</option>
                     <option>自定义数据权限</option>
                   </select>
                 </label>
               </div>
-              <div className="data-permission-tools">
-                <div className="data-expand-control">
-                  <input
-                    type="checkbox"
-                    checked={dataTreeExpanded}
-                    onChange={(event) => setDataTreeExpanded(event.target.checked)}
-                  />
-                  <button
-                    type="button"
-                    className="data-tool-link"
-                    onClick={() => setDataTreeExpanded((current) => !current)}
-                  >
-                    {dataTreeExpanded ? "折叠全部" : "展开全部"}
-                  </button>
-                </div>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={dataScopeIds.size === dataOrganizationIds(dataOrganizations).length}
-                    onChange={() =>
-                      setDataScopeIds((current) =>
-                        current.size === dataOrganizationIds(dataOrganizations).length
-                          ? new Set()
-                          : new Set(dataOrganizationIds(dataOrganizations)),
-                      )
-                    }
-                  />
-                  全选/全不选
-                </label>
-                <label>
-                  <input
-                    type="checkbox"
-                    checked={dataLinkage}
-                    onChange={(event) => setDataLinkage(event.target.checked)}
-                  />
-                  父子联动
-                </label>
-              </div>
-              <section className="data-permission-panel">
-                <DataPermissionTree nodes={dataOrganizations} />
-              </section>
+              {dataScope === "自定义数据权限" ? (
+                <>
+                  <div className="data-permission-tools">
+                    <div className="data-expand-control">
+                      <input
+                        type="checkbox"
+                        checked={dataTreeExpanded}
+                        onChange={(event) => setDataTreeExpanded(event.target.checked)}
+                      />
+                      <button
+                        type="button"
+                        className="data-tool-link"
+                        onClick={() => setDataTreeExpanded((current) => !current)}
+                      >
+                        {dataTreeExpanded ? "折叠全部" : "展开全部"}
+                      </button>
+                    </div>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={dataScopeIds.size === dataOrganizationIds(dataOrganizations).length}
+                        onChange={() =>
+                          setDataScopeIds((current) =>
+                            current.size === dataOrganizationIds(dataOrganizations).length
+                              ? new Set()
+                              : new Set(dataOrganizationIds(dataOrganizations)),
+                          )
+                        }
+                      />
+                      全选/全不选
+                    </label>
+                    <label>
+                      <input
+                        type="checkbox"
+                        checked={dataLinkage}
+                        onChange={(event) => setDataLinkage(event.target.checked)}
+                      />
+                      父子联动
+                    </label>
+                  </div>
+                  <section className="data-permission-panel">
+                    <DataPermissionTree nodes={dataOrganizations} />
+                  </section>
+                </>
+              ) : null}
             </div>
             <footer>
               <button
@@ -4842,11 +4984,625 @@ function PersonalCenter({ onAction }) {
   );
 }
 
+function PositionManagement({ onAction }) {
+  const [positions, setPositions] = useState([
+    { id: "position-1", code: "SAFETY_MANAGER", name: "安全管理员", order: 10, enabled: true, createdAt: "2026-08-14 09:20" },
+    { id: "position-2", code: "EQUIPMENT_ENGINEER", name: "设备工程师", order: 20, enabled: true, createdAt: "2026-08-13 15:36" },
+    { id: "position-3", code: "PRODUCTION_SUPERVISOR", name: "生产主管", order: 30, enabled: false, createdAt: "2026-08-12 11:08" },
+  ]);
+  const [selectedIds, setSelectedIds] = useState([]);
+  const [dialog, setDialog] = useState(null);
+  const [draft, setDraft] = useState({ code: "", name: "", order: 10, enabled: true });
+  const openEditor = (position = null) => {
+    setDraft(
+      position
+        ? { code: position.code, name: position.name, order: position.order, enabled: position.enabled }
+        : { code: "", name: "", order: positions.length * 10 + 10, enabled: true },
+    );
+    setDialog({ type: "editor", position });
+  };
+  const savePosition = (event) => {
+    event.preventDefault();
+    const code = draft.code.trim();
+    const name = draft.name.trim();
+    if (!code || !name) return;
+    const nameExists = positions.some(
+      (item) =>
+        item.id !== dialog.position?.id &&
+        item.name.trim().toLocaleLowerCase() === name.toLocaleLowerCase(),
+    );
+    if (nameExists) {
+      onAction("岗位名称已存在，请使用其他名称。");
+      return;
+    }
+
+    if (dialog.position) {
+      setPositions((current) => current.map((item) =>
+        item.id === dialog.position.id ? { ...item, code, name, order: Number(draft.order), enabled: draft.enabled } : item,
+      ));
+      onAction(`已保存岗位：${name}`);
+    } else {
+      setPositions((current) => [
+        ...current,
+        { id: `position-${Date.now()}`, code, name, order: Number(draft.order), enabled: draft.enabled, createdAt: "刚刚" },
+      ]);
+      onAction(`已新增岗位：${name}`);
+    }
+    setDialog(null);
+  };
+  const deletePositions = (ids) => {
+    setPositions((current) => current.filter((item) => !ids.includes(item.id)));
+    setSelectedIds((current) => current.filter((id) => !ids.includes(id)));
+    setDialog(null);
+    onAction("岗位已删除");
+  };
+  const toggleSelection = (id) => setSelectedIds((current) =>
+    current.includes(id) ? current.filter((item) => item !== id) : [...current, id],
+  );
+
+  return (
+    <>
+      <section className="position-management" aria-label="岗位管理">
+        <header className="position-management-header">
+          <h1>岗位管理</h1>
+          <div>
+            <button type="button" className="position-delete-button" disabled={!selectedIds.length} onClick={() => setDialog({ type: "delete", ids: selectedIds })}>
+              <Delete24Regular />删除岗位
+            </button>
+            <button type="button" className="position-add-button" onClick={() => openEditor()}>
+              <Add24Regular />新增岗位
+            </button>
+          </div>
+        </header>
+        <section className="position-table" aria-label="岗位列表">
+          <div className="position-table-head">
+            <span><input aria-label="全选岗位" type="checkbox" checked={positions.length > 0 && selectedIds.length === positions.length} onChange={() => setSelectedIds((current) => current.length === positions.length ? [] : positions.map((item) => item.id))} /></span>
+            <span>岗位编码</span><span>岗位名称</span><span>岗位排序</span><span>状态</span><span>创建时间</span><span>操作</span>
+          </div>
+          {positions.map((position) => (
+            <div className="position-table-row" key={position.id}>
+              <span><input aria-label={`选择${position.name}`} type="checkbox" checked={selectedIds.includes(position.id)} onChange={() => toggleSelection(position.id)} /></span>
+              <code>{position.code}</code><strong>{position.name}</strong><span>{position.order}</span>
+              <button type="button" className={`position-status ${position.enabled ? "enabled" : ""}`} aria-pressed={position.enabled} onClick={() => setPositions((current) => current.map((item) => item.id === position.id ? { ...item, enabled: !item.enabled } : item))}>
+                {position.enabled ? "启用" : "停用"}
+              </button>
+              <time>{position.createdAt}</time>
+              <span className="position-actions">
+                <button type="button" onClick={() => openEditor(position)}>修改</button>
+                <button type="button" onClick={() => setDialog({ type: "delete", ids: [position.id] })}>删除</button>
+              </span>
+            </div>
+          ))}
+        </section>
+      </section>
+      {dialog?.type === "editor" ? (
+        <div className="management-dialog-layer" onMouseDown={() => setDialog(null)} role="presentation">
+          <form className="management-dialog position-dialog" onSubmit={savePosition} onMouseDown={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="position-dialog-title">
+            <header>
+              <h2 id="position-dialog-title">{dialog.position ? "修改岗位" : "新增岗位"}</h2>
+              <button type="button" className="management-dialog-close" aria-label="关闭岗位弹窗" onClick={() => setDialog(null)}><DismissRegular /></button>
+            </header>
+            <div className="management-dialog-body position-form-grid">
+              <label><b>岗位编码</b><input value={draft.code} onChange={(event) => setDraft((current) => ({ ...current, code: event.target.value }))} placeholder="请输入岗位编码" autoFocus /></label>
+              <label><b>岗位名称</b><input value={draft.name} onChange={(event) => setDraft((current) => ({ ...current, name: event.target.value }))} placeholder="请输入岗位名称" /></label>
+              <label><b>岗位排序</b><input type="number" min="0" value={draft.order} onChange={(event) => setDraft((current) => ({ ...current, order: event.target.value }))} /></label>
+              <label className="position-enabled-field"><b>状态</b><input type="checkbox" checked={draft.enabled} onChange={(event) => setDraft((current) => ({ ...current, enabled: event.target.checked }))} /><span>{draft.enabled ? "启用" : "停用"}</span></label>
+            </div>
+            <footer>
+              <button type="button" className="management-dialog-cancel" onClick={() => setDialog(null)}>取消</button>
+              <button type="submit" className="management-dialog-primary">确定</button>
+            </footer>
+          </form>
+        </div>
+      ) : null}
+      {dialog?.type === "delete" ? (
+        <div className="management-dialog-layer" onMouseDown={() => setDialog(null)} role="presentation">
+          <section className="management-dialog management-confirm-dialog" onMouseDown={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="delete-position-title">
+            <header><h2 id="delete-position-title">确认删除</h2><button type="button" className="management-dialog-close" aria-label="关闭删除确认" onClick={() => setDialog(null)}><DismissRegular /></button></header>
+            <div className="management-dialog-body"><p>确定删除已选岗位吗？删除后无法恢复。</p></div>
+            <footer><button type="button" className="management-dialog-cancel" onClick={() => setDialog(null)}>取消</button><button type="button" className="management-dialog-primary" onClick={() => deletePositions(dialog.ids)}>确认删除</button></footer>
+          </section>
+        </div>
+      ) : null}
+    </>
+  );
+}
+
+function DictionaryManagement({ onAction }) {
+  const [dictionaries, setDictionaries] = useState([
+    {
+      id: "dict-1",
+      code: "SAFETY_LEVEL",
+      name: "安全风险等级",
+      remark: "用于风险辨识与预警分级。",
+      references: 28,
+      updater: "张宇",
+      updatedAt: "2026-08-14 10:24",
+      data: [
+        { id: "level-1", code: "01", name: "重大风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-2", code: "02", name: "较大风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+      ],
+    },
+    {
+      id: "dict-2",
+      code: "EQUIPMENT_TYPE",
+      name: "设备类型",
+      remark: "用于设备台账和巡检记录。",
+      references: 16,
+      updater: "李明",
+      updatedAt: "2026-08-13 16:40",
+      data: [
+        { id: "type-1", code: "01", name: "采矿车", updater: "李明", updatedAt: "2026-08-13 16:40" },
+        { id: "type-2", code: "02", name: "掘进机", updater: "李明", updatedAt: "2026-08-13 16:40" },
+      ],
+    },
+    { id: "dict-3", code: "HAZARD_CATEGORY", name: "隐患类别", remark: "", references: 21, updater: "陈伟", updatedAt: "2026-08-13 14:18", data: [] },
+    { id: "dict-4", code: "WORK_STATUS", name: "作业状态", remark: "", references: 9, updater: "张宇", updatedAt: "2026-08-12 09:36", data: [] },
+  ]);
+  const [dialog, setDialog] = useState(null);
+  const [draft, setDraft] = useState({ code: "", name: "", remark: "" });
+  const [dataRows, setDataRows] = useState([]);
+  const [selectedDataIds, setSelectedDataIds] = useState([]);
+  const [editingData, setEditingData] = useState(null);
+  const [dataSearch, setDataSearch] = useState("");
+  const [dataPage, setDataPage] = useState(1);
+  const [dataPageSize, setDataPageSize] = useState(10);
+
+  const filteredDataRows = dataRows.filter((item) =>
+    item.name.toLowerCase().includes(dataSearch.trim().toLowerCase()),
+  );
+  const dataPageCount = Math.max(
+    1,
+    Math.ceil(filteredDataRows.length / dataPageSize),
+  );
+  const currentDataPage = Math.min(dataPage, dataPageCount);
+  const pagedDataRows = filteredDataRows.slice(
+    (currentDataPage - 1) * dataPageSize,
+    currentDataPage * dataPageSize,
+  );
+
+  const openEditor = (dictionary = null) => {
+    setDraft(
+      dictionary
+        ? {
+            code: dictionary.code,
+            name: dictionary.name,
+            remark: dictionary.remark ?? "",
+          }
+        : { code: "", name: "", remark: "" },
+    );
+    setDataRows(dictionary?.data ?? []);
+    setSelectedDataIds([]);
+    setEditingData(null);
+    setDataSearch("");
+    setDataPage(1);
+    setDialog({ type: "editor", dictionary });
+  };
+
+  const saveDictionaryInfo = (event) => {
+    event.preventDefault();
+    const code = draft.code.trim();
+    const name = draft.name.trim();
+    if (!code || !name) return;
+
+    if (dialog.dictionary) {
+      setDictionaries((current) =>
+        current.map((item) =>
+          item.id === dialog.dictionary.id
+            ? {
+                ...item,
+                code,
+                name,
+                remark: draft.remark.trim(),
+                updater: "张宇",
+                updatedAt: "刚刚",
+              }
+            : item,
+        ),
+      );
+      setDialog((current) => ({
+        ...current,
+        dictionary: { ...current.dictionary, code, name, remark: draft.remark.trim() },
+      }));
+      onAction(`已保存字典信息：${name}`);
+    } else {
+      const dictionary = {
+        id: `dict-${Date.now()}`,
+        code,
+        name,
+        remark: draft.remark.trim(),
+        data: [],
+        references: 0,
+        updater: "张宇",
+        updatedAt: "刚刚",
+      };
+      setDictionaries((current) => [
+        dictionary,
+        ...current,
+      ]);
+      setDialog((current) => ({ ...current, dictionary }));
+      onAction(`已新增字典：${name}`);
+    }
+  };
+
+  const closeDictionaryEditor = () => {
+    if (!dialog?.dictionary) {
+      setDialog(null);
+      return;
+    }
+
+    const data = dataRows
+      .filter((entry) => !entry.isDraft)
+      .map(({ isDraft, ...entry }) => entry);
+    setDictionaries((current) =>
+      current.map((item) =>
+        item.id === dialog.dictionary.id
+          ? {
+              ...item,
+              data,
+              references: data.length,
+              updater: "张宇",
+              updatedAt: "刚刚",
+            }
+          : item,
+      ),
+    );
+    onAction(`已保存字典数据：${dialog.dictionary.name}`);
+    setDialog(null);
+  };
+
+  const addDataRow = () => {
+    setDataPage(1);
+    setEditingData(null);
+    setDataRows((current) =>
+      current.some((item) => item.isDraft)
+        ? current
+        : [
+            {
+              id: `data-${Date.now()}`,
+              code: "",
+              name: "",
+              updater: "",
+              updatedAt: "",
+              isDraft: true,
+            },
+            ...current,
+          ],
+    );
+  };
+
+  const updateDataRow = (id, field, value) => {
+    setDataRows((current) =>
+      current.map((item) =>
+        item.id === id ? { ...item, [field]: value } : item,
+      ),
+    );
+  };
+
+  const confirmDataRow = (id) => {
+    setDataRows((current) =>
+      current.map((item) =>
+        item.id === id && item.code.trim() && item.name.trim()
+          ? { ...item, isDraft: false, updater: "张宇", updatedAt: "刚刚" }
+          : item,
+      ),
+    );
+  };
+
+  const startEditingDataRow = (item) => {
+    setEditingData({ id: item.id, code: item.code, name: item.name });
+  };
+
+  const confirmEditingDataRow = () => {
+    if (!editingData?.code.trim() || !editingData.name.trim()) return;
+
+    setDataRows((current) =>
+      current.map((item) =>
+        item.id === editingData.id
+          ? {
+              ...item,
+              code: editingData.code.trim(),
+              name: editingData.name.trim(),
+              updater: "张宇",
+              updatedAt: "刚刚",
+            }
+          : item,
+      ),
+    );
+    setEditingData(null);
+  };
+
+  const toggleDataRow = (id) => {
+    setSelectedDataIds((current) =>
+      current.includes(id)
+        ? current.filter((item) => item !== id)
+        : [...current, id],
+    );
+  };
+
+  const deleteDataRows = (ids) => {
+    setDataRows((current) => current.filter((item) => !ids.includes(item.id)));
+    setSelectedDataIds((current) => current.filter((id) => !ids.includes(id)));
+    setEditingData((current) => (current && ids.includes(current.id) ? null : current));
+  };
+
+  const deleteDictionary = () => {
+    setDictionaries((current) =>
+      current.filter((item) => item.id !== dialog.dictionary.id),
+    );
+    onAction(`已删除字典：${dialog.dictionary.name}`);
+    setDialog(null);
+  };
+
+  return (
+    <section className="dictionary-management" aria-labelledby="dictionary-title">
+      <header className="dictionary-toolbar">
+        <div>
+          <h1 id="dictionary-title">字典管理</h1>
+        </div>
+        <button type="button" onClick={() => openEditor()}>
+          <Add24Regular />新增字典
+        </button>
+      </header>
+      <section className="dictionary-panel" aria-label="字典列表">
+        <div className="dictionary-table-head">
+          <span>编码</span>
+          <span>字典名称</span>
+          <span>被引用次数</span>
+          <span>更新人</span>
+          <span>更新时间</span>
+          <span>操作</span>
+        </div>
+        {dictionaries.map((dictionary) => (
+          <div className="dictionary-table-row" key={dictionary.id}>
+            <code>{dictionary.code}</code>
+            <strong>{dictionary.name}</strong>
+            <span>{dictionary.references}</span>
+            <span>{dictionary.updater}</span>
+            <time>{dictionary.updatedAt}</time>
+            <span className="dictionary-actions">
+              <button
+                type="button"
+                aria-label={`编辑${dictionary.name}`}
+                title="编辑"
+                onClick={() => openEditor(dictionary)}
+              >
+                <Edit24Regular />
+              </button>
+              <button
+                type="button"
+                aria-label={`删除${dictionary.name}`}
+                title="删除"
+                onClick={() => setDialog({ type: "delete", dictionary })}
+              >
+                <Delete24Regular />
+              </button>
+            </span>
+          </div>
+        ))}
+      </section>
+      {dialog?.type === "editor" ? (
+        <div className="management-dialog-layer" onMouseDown={() => setDialog(null)} role="presentation">
+          <form
+            className="management-dialog dictionary-dialog"
+            onSubmit={saveDictionaryInfo}
+            onMouseDown={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="dictionary-dialog-title"
+          >
+            <header>
+              <h2 id="dictionary-dialog-title">
+                {dialog.dictionary ? "编辑字典" : "新增字典"}
+              </h2>
+              <button type="button" className="management-dialog-close" aria-label="保存字典数据并关闭" onClick={closeDictionaryEditor}>
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="dictionary-dialog-body">
+              <div className="dictionary-form-grid">
+                <label>
+                  <b>字典编码</b>
+                  <input value={draft.code} onChange={(event) => setDraft((current) => ({ ...current, code: event.target.value }))} placeholder="请输入字典编码" autoFocus />
+                </label>
+                <label>
+                  <b>字典名称</b>
+                  <input value={draft.name} onChange={(event) => setDraft((current) => ({ ...current, name: event.target.value }))} placeholder="请输入字典名称" />
+                </label>
+                <label>
+                  <b>字典备注</b>
+                  <textarea value={draft.remark} onChange={(event) => setDraft((current) => ({ ...current, remark: event.target.value }))} placeholder="请输入字典备注" />
+                </label>
+              </div>
+              <div className="dictionary-confirm-bar">
+                <button type="button" className="management-dialog-cancel" onClick={() => setDialog(null)}>取消</button>
+                <button type="submit" className="management-dialog-primary">确定</button>
+              </div>
+              <section className="dictionary-data-section" aria-label="字典数据">
+                <header>
+                  <h3>字典数据</h3>
+                  <div>
+                    <input
+                      aria-label="搜索字典数据"
+                      placeholder="请输入数据名称"
+                      value={dataSearch}
+                      onChange={(event) => {
+                        setDataSearch(event.target.value);
+                        setDataPage(1);
+                      }}
+                    />
+                    <button type="button" className="dictionary-add-data" onClick={addDataRow}>添加数据</button>
+                    <button type="button" className="dictionary-batch-delete" disabled={!selectedDataIds.length} onClick={() => deleteDataRows(selectedDataIds)}>批量删除</button>
+                  </div>
+                </header>
+                <div className="dictionary-data-scroll">
+                  <div className="dictionary-data-head">
+                    <span>
+                      <input
+                        aria-label="全选字典数据"
+                        type="checkbox"
+                        checked={
+                          Boolean(filteredDataRows.filter((item) => !item.isDraft).length) &&
+                          selectedDataIds.length ===
+                            filteredDataRows.filter((item) => !item.isDraft).length
+                        }
+                        onChange={() => {
+                          const selectableIds = filteredDataRows
+                            .filter((item) => !item.isDraft)
+                            .map((item) => item.id);
+                          setSelectedDataIds((current) =>
+                            current.length === selectableIds.length ? [] : selectableIds,
+                          );
+                        }}
+                      />
+                    </span>
+                    <span>编码</span>
+                    <span>数据名称</span>
+                    <span>更新人</span>
+                    <span>更新时间</span>
+                    <span>操作</span>
+                  </div>
+                  {pagedDataRows.map((item) => {
+                    const isInlineEditing = editingData?.id === item.id;
+
+                    return (
+                    <div
+                      className={`dictionary-data-row ${item.isDraft || isInlineEditing ? "draft" : ""}`}
+                      key={item.id}
+                    >
+                      <span>
+                        <input
+                          aria-label={`选择${item.name || "新增数据"}`}
+                          type="checkbox"
+                          disabled={item.isDraft}
+                          checked={selectedDataIds.includes(item.id)}
+                          onChange={() => toggleDataRow(item.id)}
+                        />
+                      </span>
+                      {item.isDraft || isInlineEditing ? (
+                        <input
+                          aria-label={item.isDraft ? "新增数据编码" : `编辑${item.name}的编码`}
+                          value={item.isDraft ? item.code : editingData.code}
+                          onChange={(event) =>
+                            item.isDraft
+                              ? updateDataRow(item.id, "code", event.target.value)
+                              : setEditingData((current) => ({ ...current, code: event.target.value }))
+                          }
+                        />
+                      ) : (
+                        <code>{item.code}</code>
+                      )}
+                      {item.isDraft || isInlineEditing ? (
+                        <input
+                          aria-label={item.isDraft ? "新增数据名称" : `编辑${item.name}的数据名称`}
+                          value={item.isDraft ? item.name : editingData.name}
+                          onChange={(event) =>
+                            item.isDraft
+                              ? updateDataRow(item.id, "name", event.target.value)
+                              : setEditingData((current) => ({ ...current, name: event.target.value }))
+                          }
+                        />
+                      ) : (
+                        <strong>{item.name}</strong>
+                      )}
+                      <span>{item.updater}</span>
+                      <time>{item.updatedAt}</time>
+                      {item.isDraft ? (
+                        <span className="dictionary-draft-actions">
+                          <button type="button" aria-label="确认新增数据" onClick={() => confirmDataRow(item.id)}>
+                            <CheckmarkCircle24Regular />
+                          </button>
+                          <button type="button" aria-label="取消新增数据" onClick={() => deleteDataRows([item.id])}>
+                            <DismissRegular />
+                          </button>
+                        </span>
+                      ) : isInlineEditing ? (
+                        <span className="dictionary-draft-actions">
+                          <button type="button" aria-label="确认编辑数据" onClick={confirmEditingDataRow}>
+                            <CheckmarkCircle24Regular />
+                          </button>
+                          <button type="button" aria-label="取消编辑数据" onClick={() => setEditingData(null)}>
+                            <DismissRegular />
+                          </button>
+                        </span>
+                      ) : (
+                        <span className="dictionary-actions">
+                          <button type="button" aria-label={`编辑${item.name}`} title="编辑" onClick={() => startEditingDataRow(item)}>
+                            <Edit24Regular />
+                          </button>
+                          <button type="button" aria-label={`删除${item.name}`} title="删除" onClick={() => deleteDataRows([item.id])}>
+                            <Delete24Regular />
+                          </button>
+                        </span>
+                      )}
+                    </div>
+                    );
+                  })}
+                </div>
+                <footer className="dictionary-pagination">
+                  <span>共 {filteredDataRows.length} 条</span>
+                  <label>
+                    每页
+                    <select
+                      aria-label="每页数据条数"
+                      value={dataPageSize}
+                      onChange={(event) => {
+                        setDataPageSize(Number(event.target.value));
+                        setDataPage(1);
+                      }}
+                    >
+                      <option value={10}>10 条</option>
+                      <option value={20}>20 条</option>
+                      <option value={50}>50 条</option>
+                    </select>
+                  </label>
+                  <button type="button" aria-label="上一页" disabled={currentDataPage === 1} onClick={() => setDataPage((current) => current - 1)}>上一页</button>
+                  <b>{currentDataPage} / {dataPageCount}</b>
+                  <button type="button" aria-label="下一页" disabled={currentDataPage === dataPageCount} onClick={() => setDataPage((current) => current + 1)}>下一页</button>
+                </footer>
+              </section>
+            </div>
+          </form>
+        </div>
+      ) : null}
+      {dialog?.type === "delete" ? (
+        <div className="management-dialog-layer" onMouseDown={() => setDialog(null)} role="presentation">
+          <section className="management-dialog management-confirm-dialog" onMouseDown={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="delete-dictionary-title">
+            <header>
+              <h2 id="delete-dictionary-title">确认删除</h2>
+              <button type="button" className="management-dialog-close" aria-label="关闭删除确认" onClick={() => setDialog(null)}>
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="management-dialog-body">
+              <p>确定删除字典“{dialog.dictionary.name}”吗？删除后无法恢复。</p>
+            </div>
+            <footer>
+              <button type="button" className="management-dialog-cancel" onClick={() => setDialog(null)}>取消</button>
+              <button type="button" className="management-dialog-primary" onClick={deleteDictionary}>确认删除</button>
+            </footer>
+          </section>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
 function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const [selected, setSelected] = useState(initialSelected);
   const [organizations, setOrganizations] = useState([]);
+  const [worksheetExpanded, setWorksheetExpanded] = useState(false);
   const [taskExpanded, setTaskExpanded] = useState(false);
   const [warningExpanded, setWarningExpanded] = useState(false);
+  const [systemExpanded, setSystemExpanded] = useState(false);
+  const worksheetMenus = [
+    { label: "工作表单", module: "form" },
+    { label: "流程中心", module: "flow" },
+    { label: "应用中心", module: "app" },
+    { label: "字典管理" },
+  ];
+  const worksheetMenu = worksheetMenus.find((entry) => entry.label === selected);
+  const lowCodeMenu = worksheetMenu?.module ? worksheetMenu : null;
   const taskPageMenus = [
     { label: "任务模版", view: "view-template" },
     { label: "发布任务", view: "view-publish" },
@@ -4868,8 +5624,10 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const warningPageMenu = warningPageMenus.find(
     (entry) => entry.label === selected,
   );
+  const systemSettingsMenus = ["角色权限", "用户中心", "岗位管理", "个人中心"];
   const item =
     settingsItems.find((entry) => entry.label === selected) ??
+    worksheetMenu ??
     taskPageMenu ??
     warningPageMenu ??
     settingsItems[0];
@@ -4919,10 +5677,34 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const rows = rowsBySetting[selected] ?? [];
   const isUserCenter = selected === "用户中心";
   const isPersonalCenter = selected === "个人中心";
+  const isPositionManagement = selected === "岗位管理";
   const isRbac = selected === "角色权限";
   const isDynamicsSetting = selected === "安全动态";
+  const isDictionarySetting = selected === "字典管理";
+  const isLowCodeSetting = Boolean(lowCodeMenu);
   const isTaskPageSetting = Boolean(taskPageMenu);
   const isWarningPageSetting = Boolean(warningPageMenu);
+  const isSystemSetting = systemSettingsMenus.includes(selected);
+  const toggleSettingsSubmenu = (menu) => {
+    const expanded =
+      menu === "worksheet"
+        ? !worksheetExpanded
+        : menu === "task"
+          ? !taskExpanded
+          : menu === "warning"
+            ? !warningExpanded
+            : !systemExpanded;
+
+    setWorksheetExpanded(menu === "worksheet" && expanded);
+    setTaskExpanded(menu === "task" && expanded);
+    setWarningExpanded(menu === "warning" && expanded);
+    setSystemExpanded(menu === "system" && expanded);
+
+    if (!expanded) return;
+    if (menu === "worksheet") setSelected("工作表单");
+    if (menu === "task") setSelected("任务模版");
+    if (menu === "warning") setSelected("预警信息表");
+  };
   return (
     <section className="settings-page" aria-labelledby="settings-title">
       <div className="settings-layout">
@@ -4933,7 +5715,38 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
           </header>
           <nav>
             {settingsItems.map(({ label, icon: MenuIcon }) =>
-              label === "任务" ? (
+              label === "工作表" ? (
+                <div className="settings-menu-group" key={label}>
+                  <button
+                    className={`settings-parent-menu ${
+                      selected === "工作表" || isDictionarySetting || isLowCodeSetting
+                        ? "active"
+                        : ""
+                    }`}
+                    onClick={() => toggleSettingsSubmenu("worksheet")}
+                    aria-expanded={worksheetExpanded}
+                  >
+                    <MenuIcon />
+                    <span>{label}</span>
+                    <ChevronRight24Regular
+                      className={worksheetExpanded ? "expanded" : ""}
+                    />
+                  </button>
+                  {worksheetExpanded ? (
+                    <div className="settings-submenu-list">
+                      {worksheetMenus.map((entry) => (
+                        <button
+                          key={entry.label}
+                          className={selected === entry.label ? "active" : ""}
+                          onClick={() => setSelected(entry.label)}
+                        >
+                          {entry.label}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
+              ) : label === "任务" ? (
                 <div className="settings-menu-group" key={label}>
                   <button
                     className={`settings-parent-menu ${
@@ -4941,10 +5754,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
                         ? "active"
                         : ""
                     }`}
-                    onClick={() => {
-                      setSelected("任务模版");
-                      setTaskExpanded(true);
-                    }}
+                    onClick={() => toggleSettingsSubmenu("task")}
                     aria-expanded={taskExpanded}
                   >
                     <MenuIcon />
@@ -4975,10 +5785,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
                         ? "active"
                         : ""
                     }`}
-                    onClick={() => {
-                      setSelected("预警信息表");
-                      setWarningExpanded(true);
-                    }}
+                    onClick={() => toggleSettingsSubmenu("warning")}
                     aria-expanded={warningExpanded}
                   >
                     <MenuIcon />
@@ -5001,6 +5808,35 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
                     </div>
                   ) : null}
                 </div>
+              ) : label === "系统设置" ? (
+                <div className="settings-menu-group" key={label}>
+                  <button
+                    className={`settings-parent-menu ${
+                      isSystemSetting ? "active" : ""
+                    }`}
+                    onClick={() => toggleSettingsSubmenu("system")}
+                    aria-expanded={systemExpanded}
+                  >
+                    <MenuIcon />
+                    <span>{label}</span>
+                    <ChevronRight24Regular
+                      className={systemExpanded ? "expanded" : ""}
+                    />
+                  </button>
+                  {systemExpanded ? (
+                    <div className="settings-submenu-list">
+                      {systemSettingsMenus.map((entry) => (
+                        <button
+                          key={entry}
+                          className={selected === entry ? "active" : ""}
+                          onClick={() => setSelected(entry)}
+                        >
+                          {entry}
+                        </button>
+                      ))}
+                    </div>
+                  ) : null}
+                </div>
               ) : (
                 <button
                   key={label}
@@ -5018,8 +5854,11 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
         <div className="settings-content">
           {!isUserCenter &&
           !isPersonalCenter &&
+          !isPositionManagement &&
           !isRbac &&
           !isDynamicsSetting &&
+          !isDictionarySetting &&
+          !isLowCodeSetting &&
           !isTaskPageSetting &&
           !isWarningPageSetting ? (
             <header className="settings-header">
@@ -5046,6 +5885,13 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
                 title="动态圈管理"
               />
             </section>
+          ) : isDictionarySetting ? (
+            <DictionaryManagement onAction={onAction} />
+          ) : isLowCodeSetting ? (
+            <EmbeddedLowCodePage
+              module={lowCodeMenu.module}
+              view={lowCodeMenu.view}
+            />
           ) : isTaskPageSetting ? (
             <section className="settings-task-embed" aria-label={taskPageMenu.label}>
               <iframe
@@ -5070,6 +5916,8 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
             />
           ) : isPersonalCenter ? (
             <PersonalCenter onAction={onAction} />
+          ) : isPositionManagement ? (
+            <PositionManagement onAction={onAction} />
           ) : isRbac ? (
             <RbacPage onAction={onAction} />
           ) : (
