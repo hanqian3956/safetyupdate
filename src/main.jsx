@@ -311,6 +311,7 @@ const processEntries = [
     amount: "128,000 元",
     department: "设备管理部",
     urgency: "常规",
+    handledByMe: true,
   },
   {
     id: "flow-4",
@@ -323,6 +324,8 @@ const processEntries = [
     amount: "不涉及",
     department: "安全管理部",
     urgency: "常规",
+    ccToMe: true,
+    startedByMe: true,
   },
 ];
 
@@ -1212,8 +1215,112 @@ function ProcessApprovalDialog({ process, onClose, onApprove }) {
   );
 }
 
-function ProcessListPage({ onReturn, onAction }) {
+function ProcessListPage({ onReturn, onAction, initialFilter = "待审批" }) {
   const [selectedProcess, setSelectedProcess] = useState(null);
+  const [processFilter, setProcessFilter] = useState(initialFilter);
+  const [processFilters, setProcessFilters] = useState({
+    number: "",
+    title: "",
+    type: "",
+    status: "",
+  });
+  const [processLibraryTab, setProcessLibraryTab] = useState("全部");
+  const [processLibraryKeyword, setProcessLibraryKeyword] = useState("");
+  const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [formFullscreen, setFormFullscreen] = useState(false);
+  const [flowchartDialog, setFlowchartDialog] = useState(false);
+  const processTemplates = [
+    { category: "人资管理", tone: "blue", name: "员工离职申请", favorite: true },
+    { category: "人资管理", tone: "blue", name: "职员晋升审批" },
+    { category: "人资管理", tone: "blue", name: "职员调岗审批", recent: true },
+    { category: "基建管理", tone: "gold", name: "地表基建项目报建申请", favorite: true },
+    { category: "基建管理", tone: "gold", name: "年度工程计划编制审批" },
+    { category: "基建管理", tone: "gold", name: "项目合同申报审批", recent: true },
+    { category: "选矿管理", tone: "red", name: "换矿申请" },
+    { category: "选矿管理", tone: "red", name: "选厂药剂领用申请", recent: true },
+    { category: "选矿管理", tone: "red", name: "材料采购流程" },
+  ];
+  const processTabs = {
+    待审批: {
+      filters: ["number", "title", "type"],
+      columns: ["number", "title", "type", "initiator", "urgency", "arrivalAt"],
+    },
+    已审批: {
+      filters: ["number", "type"],
+      columns: ["number", "title", "type", "initiator", "urgency", "arrivalAt", "completedAt", "duration", "result"],
+    },
+    抄送给我: {
+      filters: ["number", "title"],
+      columns: ["number", "title", "type", "initiator", "urgency", "sentAt", "endedAt", "status"],
+    },
+    我发起的: {
+      filters: ["number", "status"],
+      columns: ["number", "title", "type", "urgency", "currentNode", "initiatedAt", "endedAt", "duration", "status"],
+    },
+  };
+  const columnLabels = {
+    number: "流程编号",
+    title: "标题",
+    type: "流程类型",
+    initiator: "发起人",
+    urgency: "紧急程度",
+    arrivalAt: "流程到达时间",
+    completedAt: "处理完成时间",
+    duration: "处理耗时",
+    result: "处理结果",
+    sentAt: "发送时间",
+    endedAt: "流程结束时间",
+    status: "流程状态",
+    currentNode: "当前节点",
+    initiatedAt: "发起时间",
+  };
+  const columnLabel = (column) => {
+    if (processFilter === "已审批" && column === "title") return "流程标题";
+    if (processFilter === "已审批" && column === "arrivalAt") return "任务到达时间";
+    return columnLabels[column];
+  };
+  const activeTab = processTabs[processFilter];
+  const visibleTemplates = processTemplates.filter(
+    (template) =>
+      (processLibraryTab === "全部" ||
+        (processLibraryTab === "我的收藏" && template.favorite) ||
+        (processLibraryTab === "最近使用" && template.recent)) &&
+      (!processLibraryKeyword.trim() ||
+        template.name.includes(processLibraryKeyword.trim())),
+  );
+  const processDetails = (process) => ({
+    number: `LC-2026-${process.id.replace("flow-", "0")}`,
+    title: process.name,
+    type: process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批",
+    initiator: process.initiator,
+    urgency: process.urgency,
+    arrivalAt: process.initiatedAt,
+    completedAt: process.handledByMe ? "今天 10:18" : "-",
+    duration: process.handledByMe ? "42 分钟" : "进行中",
+    result: process.handledByMe ? "同意" : "-",
+    sentAt: process.initiatedAt,
+    endedAt: process.status === "审批中" ? "-" : "进行中",
+    status: process.status,
+    currentNode: process.currentNode,
+    initiatedAt: process.initiatedAt,
+  });
+  const visibleProcesses = processEntries.filter((process) => {
+    const matchesFilter =
+      (processFilter === "待审批" &&
+        process.status === "待审批" &&
+        process.approver === "张宇") ||
+      (processFilter === "已审批" && process.handledByMe) ||
+      (processFilter === "抄送给我" && process.ccToMe) ||
+      (processFilter === "我发起的" && process.startedByMe);
+    const details = processDetails(process);
+    return (
+      matchesFilter &&
+      (!processFilters.number || details.number.includes(processFilters.number)) &&
+      (!processFilters.title || details.title.includes(processFilters.title)) &&
+      (!processFilters.type || details.type === processFilters.type) &&
+      (!processFilters.status || details.status === processFilters.status)
+    );
+  });
   const approve = (result) => {
     onAction(`${selectedProcess.name}${result}`);
     setSelectedProcess(null);
@@ -1230,54 +1337,191 @@ function ProcessListPage({ onReturn, onAction }) {
           <p>流程中心</p>
           <h1 id="process-list-title">流程列表</h1>
         </div>
-        <button onClick={() => onAction("发起流程")}>
+        <button onClick={() => setProcessFilter("发起流程")}>
           <Add24Regular />
           发起流程
         </button>
       </header>
+      <div className="process-toolbar">
+        <div className="process-filter-tabs" role="tablist" aria-label="流程状态">
+          {["发起流程", ...Object.keys(processTabs)].map((filter) => (
+            <button
+              key={filter}
+              role="tab"
+              aria-selected={processFilter === filter}
+              className={processFilter === filter ? "active" : ""}
+              onClick={() => setProcessFilter(filter)}
+            >
+              {filter}
+            </button>
+          ))}
+        </div>
+      </div>
+      {processFilter === "发起流程" ? (
+        <section className="process-library" aria-label="流程库">
+          <header>
+            <div className="process-library-tabs" role="tablist" aria-label="流程库分类">
+              {["全部", "我的收藏", "最近使用"].map((tab) => (
+                <button
+                  key={tab}
+                  role="tab"
+                  aria-selected={processLibraryTab === tab}
+                  className={processLibraryTab === tab ? "active" : ""}
+                  onClick={() => setProcessLibraryTab(tab)}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+            <input
+              value={processLibraryKeyword}
+              onChange={(event) => setProcessLibraryKeyword(event.target.value)}
+              placeholder="请输入流程任务名称关键字"
+              aria-label="搜索流程模板"
+            />
+          </header>
+          <div className="process-library-groups">
+            {["人资管理", "基建管理", "选矿管理"].map((category) => {
+              const templates = visibleTemplates.filter((item) => item.category === category);
+              const tone = processTemplates.find((item) => item.category === category)?.tone;
+              return (
+                <section key={category} className={`process-library-group ${tone}`}>
+                  <h2><i />{category}<small>（{templates.length}）</small></h2>
+                  {templates.length ? templates.map((template) => (
+                    <button
+                      key={template.name}
+                      onClick={() => {
+                        setSelectedTemplate(template);
+                        setFormFullscreen(false);
+                        setFlowchartDialog(false);
+                      }}
+                    >
+                      {template.name}
+                    </button>
+                  )) : <p>暂无流程</p>}
+                </section>
+              );
+            })}
+          </div>
+        </section>
+      ) : (
+        <>
+      <div className="process-query" aria-label="流程筛选">
+        {activeTab.filters.includes("number") ? (
+          <label>
+            <span>流程编号</span>
+            <input
+              value={processFilters.number}
+              onChange={(event) => setProcessFilters((current) => ({ ...current, number: event.target.value }))}
+              placeholder="请输入流程编号"
+            />
+          </label>
+        ) : null}
+        {activeTab.filters.includes("title") ? (
+          <label>
+            <span>标题</span>
+            <input
+              value={processFilters.title}
+              onChange={(event) => setProcessFilters((current) => ({ ...current, title: event.target.value }))}
+              placeholder="请输入标题"
+            />
+          </label>
+        ) : null}
+        {activeTab.filters.includes("type") ? (
+          <label>
+            <span>流程类型</span>
+            <select value={processFilters.type} onChange={(event) => setProcessFilters((current) => ({ ...current, type: event.target.value }))}>
+              <option value="">请选择流程类型</option>
+              <option>作业审批</option>
+              <option>采购申请</option>
+              <option>业务审批</option>
+            </select>
+          </label>
+        ) : null}
+        {activeTab.filters.includes("status") ? (
+          <label>
+            <span>状态</span>
+            <select value={processFilters.status} onChange={(event) => setProcessFilters((current) => ({ ...current, status: event.target.value }))}>
+              <option value="">请选择状态</option>
+              <option>待审批</option>
+              <option>审批中</option>
+            </select>
+          </label>
+        ) : null}
+        <button type="button" className="process-query-submit" onClick={() => onAction("已按当前条件筛选流程")}>搜索</button>
+        <button type="button" className="process-query-reset" onClick={() => setProcessFilters({ number: "", title: "", type: "", status: "" })}>重置</button>
+      </div>
       <div className="process-list-table" role="table" aria-label="流程列表">
-        <div className="process-table-head" role="row">
-          <span>流程名称</span>
-          <span>发起人</span>
-          <span>发起时间</span>
-          <span>当前节点</span>
-          <span>当前审批人</span>
-          <span>状态</span>
+        <div className="process-table-head" role="row" style={{ gridTemplateColumns: `repeat(${activeTab.columns.length + 1}, minmax(105px, 1fr))` }}>
+          {activeTab.columns.map((column) => <span key={column}>{columnLabel(column)}</span>)}
           <span>操作</span>
         </div>
-        {processEntries.map((process) => (
-          <div className="process-table-row" role="row" key={process.id}>
-            <button
-              className="process-name-link"
-              onClick={() => setSelectedProcess(process)}
-            >
-              {process.name}
-              <small>
-                {process.urgency === "紧急" ? "紧急处理" : "业务审批"}
-              </small>
-            </button>
-            <span>{process.initiator}</span>
-            <span>{process.initiatedAt}</span>
-            <strong>{process.currentNode}</strong>
-            <span>{process.approver}</span>
-            <i className={process.status === "待审批" ? "pending" : ""}>
-              {process.status}
-            </i>
+        {visibleProcesses.map((process) => (
+          <div className="process-table-row" role="row" key={process.id} style={{ gridTemplateColumns: `repeat(${activeTab.columns.length + 1}, minmax(105px, 1fr))` }}>
+            {activeTab.columns.map((column) => {
+              const value = processDetails(process)[column];
+              return column === "title" ? (
+                <button key={column} className="process-name-link" onClick={() => setSelectedProcess(process)}>{value}</button>
+              ) : column === "status" || column === "urgency" || column === "result" ? (
+                <i key={column} className={value === "待审批" || value === "紧急" ? "pending" : ""}>{value}</i>
+              ) : <span key={column}>{value}</span>;
+            })}
             <button
               className="process-approval-action"
               onClick={() => setSelectedProcess(process)}
             >
               <ApprovalsApp24Regular />
-              审批
+              {processFilter === "待审批" ? "审批" : "查看"}
             </button>
           </div>
         ))}
+        {!visibleProcesses.length ? (
+          <div className="process-empty">暂无符合条件的流程</div>
+        ) : null}
       </div>
+        </>
+      )}
       <ProcessApprovalDialog
         process={selectedProcess}
         onClose={() => setSelectedProcess(null)}
         onApprove={approve}
       />
+      {selectedTemplate ? (
+        <div className="process-form-layer" onMouseDown={() => { setSelectedTemplate(null); setFlowchartDialog(false); }} role="presentation">
+          <form className={`process-form-dialog${formFullscreen ? " fullscreen" : ""}`} onMouseDown={(event) => event.stopPropagation()} onSubmit={(event) => { event.preventDefault(); onAction(`已发起流程：${selectedTemplate.name}`); setSelectedTemplate(null); setFlowchartDialog(false); }}>
+            <header>
+              <div><p>发起流程</p><h2>{selectedTemplate.name}</h2></div>
+              <div>
+                <button type="button" className="process-form-text-action" onClick={() => setFlowchartDialog(true)}>查看流程图</button>
+                <button type="button" className="process-form-text-action" onClick={() => setFormFullscreen((current) => !current)}>{formFullscreen ? "退出全屏" : "全屏"}</button>
+                <button type="button" className="process-dialog-close" aria-label="关闭流程表单" onClick={() => { setSelectedTemplate(null); setFlowchartDialog(false); }}><DismissRegular /></button>
+              </div>
+            </header>
+            <div className="process-form-body">
+              <section>
+                <h3>申请信息</h3>
+                <div className="process-form-grid">
+                  <label>申请标题<input defaultValue={selectedTemplate.name} /></label>
+                  <label>申请部门<select defaultValue="安全管理部"><option>安全管理部</option><option>生产管理部</option><option>设备管理部</option></select></label>
+                  <label>紧急程度<select defaultValue="常规"><option>常规</option><option>紧急</option></select></label>
+                  <label>申请人<input defaultValue="张宇" disabled /></label>
+                  <label className="wide">申请说明<textarea rows="5" placeholder="请填写申请事由、工作安排及需要说明的事项" /></label>
+                  <label className="wide">相关附件<input type="file" /></label>
+                </div>
+              </section>
+            </div>
+            <footer><span>请确认信息无误后再发起流程。</span><div><button type="button" className="process-reject" onClick={() => { setSelectedTemplate(null); setFlowchartDialog(false); }}>取消</button><button type="submit" className="process-approve">发起流程</button></div></footer>
+          </form>
+        </div>
+      ) : null}
+      {selectedTemplate && flowchartDialog ? (
+        <div className="process-flowchart-layer" onMouseDown={() => setFlowchartDialog(false)} role="presentation">
+          <section className="process-flowchart-dialog" onMouseDown={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-label="审批流程图">
+            <header><div><p>审批流程图</p><h2>{selectedTemplate.name}</h2></div><button className="process-dialog-close" aria-label="关闭审批流程图" onClick={() => setFlowchartDialog(false)}><DismissRegular /></button></header>
+            <div className="process-flowchart"><div className="flow-node done"><span>1</span><b>发起申请</b><i /></div><div className="flow-node active"><span>2</span><b>部门负责人</b><i /></div><div className="flow-node"><span>3</span><b>安全审核</b><i /></div><div className="flow-node"><span>4</span><b>归档完成</b></div></div>
+          </section>
+        </div>
+      ) : null}
     </section>
   );
 }
@@ -2130,11 +2374,11 @@ function ActivityFeed({ selectedTab, onSelectTab, onOpen, onOpenAll }) {
   );
 }
 
-function CommandPanel({ onAction }) {
+function CommandPanel({ onAction, onOpenTask, onOpenProcess }) {
   return (
     <aside className="command-panel" aria-label="快捷操作">
       <p>快捷入口</p>
-      <button className="command-primary" onClick={() => onAction("发起任务")}>
+      <button className="command-primary" onClick={onOpenTask}>
         <span>
           <Add24Regular />
         </span>
@@ -2146,7 +2390,7 @@ function CommandPanel({ onAction }) {
       </button>
       <button
         className="command-secondary"
-        onClick={() => onAction("发起流程")}
+        onClick={onOpenProcess}
       >
         <span>
           <Flowchart24Regular />
@@ -2551,25 +2795,69 @@ function EmbeddedDynamicsPage() {
   );
 }
 
-function EmbeddedTasksPage() {
+function EmbeddedTasksPage({ initialTab = "我的任务" }) {
+  const taskTabs = [
+    { label: "发布任务", view: "view-publish" },
+    { label: "我的任务", view: "view-mytask" },
+    { label: "任务总台账", view: "view-ledger" },
+    { label: "人员明细", view: "view-personnel" },
+  ];
+  const [activeTaskTab, setActiveTaskTab] = useState(initialTab);
+  const activeTask = taskTabs.find((item) => item.label === activeTaskTab);
+
   return (
-    <section className="embedded-tasks-page" aria-label="我的任务">
+    <section className="embedded-tasks-page" aria-label="任务">
+      <nav className="embedded-task-tabs" aria-label="任务页面">
+        {taskTabs.map((tab) => (
+          <button
+            key={tab.label}
+            className={activeTaskTab === tab.label ? "active" : ""}
+            onClick={() => setActiveTaskTab(tab.label)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </nav>
       <iframe
+        key={activeTask.view}
         className="embedded-tasks-frame"
-        src={`${prototypeBase}任务.html`}
-        title="我的任务"
+        src={`${prototypeBase}任务.html?view=${activeTask.view}`}
+        title={activeTask.label}
       />
     </section>
   );
 }
 
 function EmbeddedWarningsPage() {
+  const warningTabs = [
+    { label: "预警分级看板", view: "warning-dashboard" },
+    { label: "预警任务", view: "warning-task" },
+    { label: "预警信息表统计", view: "warning-stats" },
+    { label: "预警统计", view: "warning-stats-aggr" },
+  ];
+  const [activeWarningTab, setActiveWarningTab] = useState("预警任务");
+  const activeWarning = warningTabs.find(
+    (item) => item.label === activeWarningTab,
+  );
+
   return (
     <section className="embedded-warnings-page" aria-label="预警">
+      <nav className="embedded-warning-tabs" aria-label="预警页面">
+        {warningTabs.map((tab) => (
+          <button
+            key={tab.label}
+            className={activeWarningTab === tab.label ? "active" : ""}
+            onClick={() => setActiveWarningTab(tab.label)}
+          >
+            {tab.label}
+          </button>
+        ))}
+      </nav>
       <iframe
+        key={activeWarning.view}
         className="embedded-warnings-frame"
-        src={`${prototypeBase}预警.html`}
-        title="预警任务"
+        src={`${prototypeBase}预警.html?view=${activeWarning.view}`}
+        title={activeWarning.label}
       />
     </section>
   );
@@ -2944,6 +3232,12 @@ const settingsItems = [
     icon: DataBarVertical24Regular,
     title: "数据看板",
     description: "设置个人看板的指标、排序和共享范围。",
+  },
+  {
+    label: "应用中心",
+    icon: Apps24Regular,
+    title: "应用中心",
+    description: "管理应用、工作表与流程中心的配置入口。",
   },
   {
     label: "系统设置",
@@ -5592,39 +5886,39 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const [selected, setSelected] = useState(initialSelected);
   const [organizations, setOrganizations] = useState([]);
   const [worksheetExpanded, setWorksheetExpanded] = useState(false);
+  const [processExpanded, setProcessExpanded] = useState(false);
   const [taskExpanded, setTaskExpanded] = useState(false);
   const [warningExpanded, setWarningExpanded] = useState(false);
   const [systemExpanded, setSystemExpanded] = useState(false);
   const worksheetMenus = [
     { label: "工作表单", module: "form" },
-    { label: "流程中心", module: "flow" },
-    { label: "应用中心", module: "app" },
-    { label: "字典管理" },
   ];
+  const processMenus = [{ label: "流程中心", module: "flow" }];
   const worksheetMenu = worksheetMenus.find((entry) => entry.label === selected);
-  const lowCodeMenu = worksheetMenu?.module ? worksheetMenu : null;
+  const processMenu = processMenus.find((entry) => entry.label === selected);
+  const applicationCenterMenu =
+    selected === "应用中心" ? { label: "应用中心", module: "app" } : null;
+  const directSettingsLowCodeMenu =
+    selected === "工作表"
+      ? { label: "工作表", module: "form" }
+      : selected === "流程"
+        ? { label: "流程", module: "flow" }
+        : null;
+  const lowCodeMenu = directSettingsLowCodeMenu ?? applicationCenterMenu;
   const taskPageMenus = [
     { label: "任务模版", view: "view-template" },
-    { label: "发布任务", view: "view-publish" },
-    { label: "我的任务", view: "view-mytask" },
-    { label: "任务总台账", view: "view-ledger" },
-    { label: "人员明细", view: "view-personnel" },
   ];
-  const taskPageMenu = taskPageMenus.find(
-    (entry) => entry.label === selected,
-  );
+  const taskPageMenu = selected === "任务"
+    ? { label: "任务", view: "view-template" }
+    : taskPageMenus.find((entry) => entry.label === selected);
   const warningPageMenus = [
     { label: "预警信息表", view: "warning-info-table" },
     { label: "预警规则设置", view: "warning-rule" },
-    { label: "预警分级看板", view: "warning-dashboard" },
-    { label: "预警任务", view: "warning-task" },
-    { label: "预警信息表统计", view: "warning-stats" },
-    { label: "预警统计", view: "warning-stats-aggr" },
   ];
   const warningPageMenu = warningPageMenus.find(
     (entry) => entry.label === selected,
   );
-  const systemSettingsMenus = ["角色权限", "用户中心", "岗位管理", "个人中心"];
+  const systemSettingsMenus = ["角色权限", "用户中心", "岗位管理", "个人中心", "字典管理"];
   const item =
     settingsItems.find((entry) => entry.label === selected) ??
     worksheetMenu ??
@@ -5682,26 +5976,32 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const isDynamicsSetting = selected === "安全动态";
   const isDictionarySetting = selected === "字典管理";
   const isLowCodeSetting = Boolean(lowCodeMenu);
+  const isWorksheetPageSetting = Boolean(worksheetMenu?.module);
   const isTaskPageSetting = Boolean(taskPageMenu);
   const isWarningPageSetting = Boolean(warningPageMenu);
+  const isProcessPageSetting = Boolean(processMenu);
   const isSystemSetting = systemSettingsMenus.includes(selected);
   const toggleSettingsSubmenu = (menu) => {
     const expanded =
       menu === "worksheet"
         ? !worksheetExpanded
-        : menu === "task"
+        : menu === "process"
+          ? !processExpanded
+          : menu === "task"
           ? !taskExpanded
           : menu === "warning"
             ? !warningExpanded
             : !systemExpanded;
 
     setWorksheetExpanded(menu === "worksheet" && expanded);
+    setProcessExpanded(menu === "process" && expanded);
     setTaskExpanded(menu === "task" && expanded);
     setWarningExpanded(menu === "warning" && expanded);
     setSystemExpanded(menu === "system" && expanded);
 
     if (!expanded) return;
     if (menu === "worksheet") setSelected("工作表单");
+    if (menu === "process") setSelected("流程中心");
     if (menu === "task") setSelected("任务模版");
     if (menu === "warning") setSelected("预警信息表");
   };
@@ -5715,68 +6015,15 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
           </header>
           <nav>
             {settingsItems.map(({ label, icon: MenuIcon }) =>
-              label === "工作表" ? (
-                <div className="settings-menu-group" key={label}>
-                  <button
-                    className={`settings-parent-menu ${
-                      selected === "工作表" || isDictionarySetting || isLowCodeSetting
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() => toggleSettingsSubmenu("worksheet")}
-                    aria-expanded={worksheetExpanded}
-                  >
-                    <MenuIcon />
-                    <span>{label}</span>
-                    <ChevronRight24Regular
-                      className={worksheetExpanded ? "expanded" : ""}
-                    />
-                  </button>
-                  {worksheetExpanded ? (
-                    <div className="settings-submenu-list">
-                      {worksheetMenus.map((entry) => (
-                        <button
-                          key={entry.label}
-                          className={selected === entry.label ? "active" : ""}
-                          onClick={() => setSelected(entry.label)}
-                        >
-                          {entry.label}
-                        </button>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
-              ) : label === "任务" ? (
-                <div className="settings-menu-group" key={label}>
-                  <button
-                    className={`settings-parent-menu ${
-                      selected === "任务" || isTaskPageSetting
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() => toggleSettingsSubmenu("task")}
-                    aria-expanded={taskExpanded}
-                  >
-                    <MenuIcon />
-                    <span>{label}</span>
-                    <ChevronRight24Regular
-                      className={taskExpanded ? "expanded" : ""}
-                    />
-                  </button>
-                  {taskExpanded ? (
-                    <div className="settings-submenu-list">
-                      {taskPageMenus.map((entry) => (
-                        <button
-                          key={entry.label}
-                          className={selected === entry.label ? "active" : ""}
-                          onClick={() => setSelected(entry.label)}
-                        >
-                          {entry.label}
-                        </button>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
+              ["工作表", "任务", "流程"].includes(label) ? (
+                <button
+                  key={label}
+                  className={selected === label ? "active" : ""}
+                  onClick={() => setSelected(label)}
+                >
+                  <MenuIcon />
+                  <span>{label}</span>
+                </button>
               ) : label === "预警" ? (
                 <div className="settings-menu-group" key={label}>
                   <button
@@ -5845,7 +6092,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
                 >
                   <MenuIcon />
                   <span>{label}</span>
-                  <ChevronRight24Regular />
+                  {label === "安全动态" ? null : <ChevronRight24Regular />}
                 </button>
               ),
             )}
@@ -5980,6 +6227,8 @@ function App() {
   const [favoriteApps, setFavoriteApps] = useState(() =>
     apps.map((app) => app.name),
   );
+  const [taskInitial, setTaskInitial] = useState("我的任务");
+  const [processInitial, setProcessInitial] = useState("待审批");
   const [settingsInitial, setSettingsInitial] = useState("安全动态");
   const [messages, setMessages] = useState(messageEntries);
   const [taskDetail, setTaskDetail] = useState(null);
@@ -6043,10 +6292,11 @@ function App() {
       setActiveNav("工作台");
     });
   };
-  const openTasks = () => {
+  const openTasks = (initialTab = "我的任务") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
       setTaskDetail(null);
+      setTaskInitial(initialTab);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "tasks")
           ? current
@@ -6059,9 +6309,10 @@ function App() {
       setActiveNav("任务");
     });
   };
-  const openProcesses = () => {
+  const openProcesses = (initialFilter = "待审批") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
+      setProcessInitial(initialFilter);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "processes")
           ? current
@@ -6244,9 +6495,11 @@ function App() {
                 onOpenSafety={openSafetyDynamics}
               />
             ) : activeTab === "tasks" ? (
-              <EmbeddedTasksPage />
+              <EmbeddedTasksPage key={taskInitial} initialTab={taskInitial} />
             ) : activeTab === "processes" ? (
               <ProcessListPage
+                key={processInitial}
+                initialFilter={processInitial}
                 onAction={showNotice}
                 onReturn={() => selectTab("workbench")}
               />
@@ -6333,7 +6586,11 @@ function App() {
                     />
                   </div>
                   <div className="secondary-column">
-                    <CommandPanel onAction={setDialog} />
+                    <CommandPanel
+                      onAction={setDialog}
+                      onOpenTask={() => openTasks("发布任务")}
+                      onOpenProcess={() => openProcesses("发起流程")}
+                    />
                     <ActivityFeed
                       selectedTab={activityTab}
                       onSelectTab={setActivityTab}
