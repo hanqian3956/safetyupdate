@@ -52,6 +52,8 @@ import "./todo-overview.css";
 import "./workbench-redesign.css";
 import "./organization-center.css";
 import "./user-management.css";
+import "./login.css";
+import "./enterprise-settings.css";
 
 use([
   BarChart,
@@ -75,6 +77,40 @@ const navigation = [
   { label: "预警", icon: ErrorCircle24Regular },
   { label: "看板", icon: DataBarVertical24Regular },
 ];
+
+// Shared registry for system-level icon selection and future feature reuse.
+const systemIconLibrary = [
+  { id: "home", label: "首页", icon: Home24Regular },
+  { id: "apps", label: "应用", icon: Apps24Regular },
+  { id: "shield", label: "安全防护", icon: ShieldCheckmark24Regular },
+  { id: "task", label: "任务", icon: ClipboardTask24Regular },
+  { id: "flow", label: "流程", icon: Flowchart24Regular },
+  { id: "warning", label: "预警", icon: ErrorCircle24Regular },
+  { id: "message", label: "消息", icon: Chat24Regular },
+  { id: "equipment", label: "设备", icon: Wrench24Regular },
+  { id: "production", label: "生产", icon: Toolbox24Regular },
+  { id: "fire", label: "消防", icon: Fire24Regular },
+  { id: "explosive", label: "火工品", icon: Flash24Regular },
+  { id: "document", label: "表单", icon: DocumentText24Regular },
+  { id: "dashboard", label: "看板", icon: DataBarVertical24Regular },
+  { id: "approval", label: "审批", icon: ApprovalsApp24Regular },
+  { id: "briefcase", label: "工作", icon: Briefcase24Regular },
+  { id: "calendar", label: "日程", icon: CalendarLtr24Regular },
+  { id: "check", label: "完成", icon: CheckmarkCircle24Regular },
+  { id: "people", label: "人员", icon: People24Regular },
+  { id: "person-clock", label: "值班", icon: PersonClock24Regular },
+  { id: "settings", label: "设置", icon: Settings24Regular },
+  { id: "sort", label: "排序", icon: ReOrderDotsVertical24Regular },
+  { id: "idea", label: "提示", icon: Lightbulb24Regular },
+  { id: "edit", label: "编辑", icon: Edit24Regular },
+  { id: "delete", label: "删除", icon: Delete24Regular },
+  { id: "arrow", label: "前往", icon: ArrowRight24Regular },
+];
+
+function SystemIcon({ name = "apps", className }) {
+  const Icon = systemIconLibrary.find((item) => item.id === name)?.icon ?? Apps24Regular;
+  return <Icon className={className} aria-hidden="true" />;
+}
 
 const prototypeBase = `${import.meta.env.BASE_URL}xiaodong/`;
 
@@ -413,11 +449,11 @@ function IconButton({ label, children, active, onClick, badge }) {
   );
 }
 
-function AppNav({ active, onChange, onOpenSettings }) {
+function AppNav({ active, onChange, onOpenSettings, brandLogo }) {
   return (
     <aside className="app-nav" aria-label="主导航">
       <div className="product-mark" aria-label="澄明工作台">
-        C
+        {brandLogo ? <img src={brandLogo} alt="企业 Logo" /> : "C"}
       </div>
       <nav>
         {navigation.map(({ label, icon: Icon }) => (
@@ -452,7 +488,10 @@ function ApplicationTabs({
   onSelect,
   onClose,
   onOpenMessages,
+  onOpenPersonal,
+  onLogout,
 }) {
+  const [profileOpen, setProfileOpen] = useState(false);
   return (
     <header className="application-tabs" aria-label="应用页签">
       <div className="tabs-scroll" role="tablist" aria-label="已打开应用">
@@ -483,15 +522,48 @@ function ApplicationTabs({
           </div>
         ))}
       </div>
-      <button
-        className="message-entry"
-        aria-label="消息中心"
-        onClick={onOpenMessages}
-      >
-        <Chat24Regular />
-        <span>消息</span>
-        <b>4</b>
-      </button>
+      <div className="topbar-actions">
+        <button
+          className="message-entry"
+          aria-label="消息中心，有 4 条未读消息"
+          onClick={onOpenMessages}
+        >
+          <Chat24Regular />
+          <span>消息</span>
+          <i className="message-dot" aria-hidden="true" />
+        </button>
+        <button
+          className="top-profile-avatar"
+          aria-label="用户菜单"
+          aria-expanded={profileOpen}
+          onClick={() => setProfileOpen((current) => !current)}
+        >
+          张
+        </button>
+        {profileOpen ? (
+          <div className="top-profile-menu" role="menu" aria-label="用户菜单">
+            <button
+              role="menuitem"
+              onClick={() => {
+                setProfileOpen(false);
+                onOpenPersonal();
+              }}
+            >
+              个人中心
+            </button>
+            <button
+              className="top-profile-logout"
+              role="menuitem"
+              onClick={() => {
+                setProfileOpen(false);
+                onLogout();
+              }}
+            >
+              退出登录
+            </button>
+          </div>
+        ) : null}
+      </div>
     </header>
   );
 }
@@ -1901,13 +1973,12 @@ const preventionForms = [
 ];
 
 function DualPreventionPage({
-  onReturn,
   onAction,
   onSwitchApplication,
   initialFormTitle = preventionForms[0].title,
 }) {
   const [selectedItem, setSelectedItem] = useState("岗位隐患排查清单");
-  const [activeForm, setActiveForm] = useState(true);
+  const [activeForm, setActiveForm] = useState(false);
   const [selectedForm, setSelectedForm] = useState(initialFormTitle);
   const [submitted, setSubmitted] = useState(false);
   const [inspectionTab, setInspectionTab] = useState("页面");
@@ -1958,53 +2029,26 @@ function DualPreventionPage({
           )}
         </nav>
         <div className="prevention-submenu">
-          {preventionSubmenu.map((item) =>
-            item === "岗位隐患排查清单" ? (
-              <div className="prevention-form-submenu" key={item}>
-                <button
-                  className={selectedItem === item ? "selected" : ""}
-                  onClick={() => {
-                    setSelectedItem(item);
-                    openForm();
-                  }}
-                >
-                  <span>{item}</span>
-                  <ChevronDown24Regular />
-                </button>
-                {preventionForms.map((form) => (
-                  <button
-                    key={form.title}
-                    className={selectedForm === form.title && activeForm ? "selected child" : "child"}
-                    onClick={() => {
-                      setSelectedItem(item);
-                      openForm(form);
-                    }}
-                  >
-                    <span>{form.title}</span>
-                  </button>
-                ))}
-              </div>
-            ) : (
-              <button
-                key={item}
-                className={selectedItem === item ? "selected" : ""}
-                onClick={() => {
-                  setSelectedItem(item);
-                  setActiveForm(false);
-                }}
-              >
-                <span>{item}</span>
-                {[
-                  "隐患排查任务发布",
-                  "隐患排查工作表",
-                  "隐患整改通知单",
-                  "隐患汇报",
-                ].includes(item) ? (
-                  <ChevronRight24Regular />
-                ) : null}
-              </button>
-            ),
-          )}
+          {preventionSubmenu.map((item) => (
+            <button
+              key={item}
+              className={selectedItem === item ? "selected" : ""}
+              onClick={() => {
+                setSelectedItem(item);
+                setActiveForm(false);
+              }}
+            >
+              <span>{item}</span>
+              {[
+                "隐患排查任务发布",
+                "隐患排查工作表",
+                "隐患整改通知单",
+                "隐患汇报",
+              ].includes(item) ? (
+                <ChevronRight24Regular />
+              ) : null}
+            </button>
+          ))}
         </div>
         <nav className="prevention-nav prevention-nav-bottom">
           <button
@@ -2243,15 +2287,35 @@ function DualPreventionPage({
               <strong id="prevention-page-title">{selectedLabel}</strong>
             </div>
             <div className="prevention-strip" />
-            <section className="prevention-list prevention-empty-content">
-              <div className="prevention-list-heading">
-                <h2>功能页面</h2>
-              </div>
-              <p>请从左侧菜单选择需要处理的业务。</p>
-            </section>
-            <button className="prevention-back" onClick={onReturn}>
-              返回工作台 <ArrowRight24Regular />
-            </button>
+            {selectedItem === "岗位隐患排查清单" ? (
+              <section className="prevention-list prevention-menu-catalog">
+                <div className="prevention-list-heading">
+                  <h2>全部</h2>
+                </div>
+                <div className="prevention-catalog-grid">
+                  {preventionForms.map(({ title, icon: Icon, tone }) => (
+                    <button
+                      type="button"
+                      className="prevention-catalog-card"
+                      key={title}
+                      onClick={() => openForm({ title })}
+                    >
+                      <span className={`prevention-form-icon ${tone}`}>
+                        <Icon />
+                      </span>
+                      <b>{title}</b>
+                    </button>
+                  ))}
+                </div>
+              </section>
+            ) : (
+              <section className="prevention-list prevention-empty-content">
+                <div className="prevention-list-heading">
+                  <h2>功能页面</h2>
+                </div>
+                <p>请从左侧菜单选择需要处理的业务。</p>
+              </section>
+            )}
           </>
         )}
       </div>
@@ -2370,7 +2434,7 @@ function ActivityFeed({ onOpen, onOpenAll }) {
     <section className="activity-feed" aria-labelledby="activity-title">
       <div className="section-title">
         <div>
-          <h2 id="activity-title">安全动态</h2>
+          <h2 id="activity-title">动态</h2>
         </div>
         <button className="quiet-action" onClick={onOpenAll}>
           查看全部 <ArrowRight24Regular />
@@ -3366,13 +3430,13 @@ function appendOrganizationNode(nodes, parentId, node) {
   );
 }
 
-function updateOrganizationNode(nodes, nodeId, name) {
+function updateOrganizationNode(nodes, nodeId, updates) {
   return nodes.map((item) =>
     item.id === nodeId
-      ? { ...item, name }
+      ? { ...item, ...updates }
       : {
           ...item,
-          children: updateOrganizationNode(item.children, nodeId, name),
+          children: updateOrganizationNode(item.children, nodeId, updates),
         },
   );
 }
@@ -3442,14 +3506,52 @@ function OrganizationTree({ nodes, onAddChild, onEdit, onDelete }) {
   );
 }
 
-function OrganizationCenter({ organizations, setOrganizations }) {
+function OrganizationCenter({ organizations, setOrganizations, users }) {
   const [formState, setFormState] = useState(null);
   const [organizationName, setOrganizationName] = useState("");
+  const [organizationType, setOrganizationType] = useState("公司");
+  const [organizationLeader, setOrganizationLeader] = useState(null);
+  const [leaderPickerOpen, setLeaderPickerOpen] = useState(false);
+  const [leaderOrganization, setLeaderOrganization] = useState("");
   const [message, setMessage] = useState(
     "尚未建立组织架构，可手动新增或导入模板。",
   );
   const importRef = useRef(null);
   const hasOrganization = organizations.length > 0;
+  const isRootOrganizationForm =
+    formState?.mode === "root" ||
+    (formState?.mode === "edit" &&
+      organizations.some((node) => node.id === formState.node.id));
+  const leaderPickerUsers = leaderOrganization
+    ? users.filter((user) => user.organizationId === leaderOrganization)
+    : users;
+  const leaderPickerSelectedUser = organizationLeader;
+  const openLeaderPicker = () => {
+    const defaultOrganization =
+      formState?.mode === "child"
+        ? formState.node.id
+        : formState?.mode === "edit"
+          ? formState.node.id
+          : organizations[0]?.id ?? "";
+    setLeaderOrganization(defaultOrganization);
+    setLeaderPickerOpen(true);
+  };
+  const LeaderPickerTree = ({ nodes }) => (
+    <ul className="assignment-org-tree">
+      {nodes.map((node) => (
+        <li key={node.id}>
+          <button
+            type="button"
+            className={leaderOrganization === node.id ? "active" : ""}
+            onClick={() => setLeaderOrganization(node.id)}
+          >
+            {node.name}
+          </button>
+          {node.children?.length ? <LeaderPickerTree nodes={node.children} /> : null}
+        </li>
+      ))}
+    </ul>
+  );
   const downloadTemplate = () => {
     const template =
       "\ufeff组织名称,上级组织\n华北矿业集团,\n安全管理部,华北矿业集团\n设备管理部,华北矿业集团\n南区采矿车间,安全管理部\n";
@@ -3464,27 +3566,46 @@ function OrganizationCenter({ organizations, setOrganizations }) {
   };
   const openRootForm = () => {
     setOrganizationName("");
+    setOrganizationType("公司");
+    setOrganizationLeader(null);
     setFormState({ mode: "root" });
   };
   const openChildForm = (node) => {
     setOrganizationName("");
+    setOrganizationType("部门");
+    setOrganizationLeader(null);
     setFormState({ mode: "child", node });
   };
   const openEditForm = (node) => {
     setOrganizationName(node.name);
+    setOrganizationType(node.type ?? "部门");
+    setOrganizationLeader(
+      users.find((user) => user.id === node.leaderId) ??
+        (node.leaderName
+          ? { id: node.leaderId ?? "", name: node.leaderName, department: "" }
+          : null),
+    );
     setFormState({ mode: "edit", node });
   };
   const saveOrganization = (event) => {
     event.preventDefault();
     const name = organizationName.trim();
     if (!name) return;
+    const organizationData = isRootOrganizationForm
+      ? { name }
+      : {
+          name,
+          type: organizationType,
+          leaderId: organizationLeader?.id ?? "",
+          leaderName: organizationLeader?.name ?? "",
+        };
     if (formState.mode === "edit") {
       setOrganizations((current) =>
-        updateOrganizationNode(current, formState.node.id, name),
+        updateOrganizationNode(current, formState.node.id, organizationData),
       );
       setMessage(`已更新组织：${name}`);
     } else {
-      const node = { id: `org-${Date.now()}`, name, children: [] };
+      const node = { id: `org-${Date.now()}`, ...organizationData, children: [] };
       setOrganizations((current) =>
         formState.mode === "child"
           ? appendOrganizationNode(current, formState.node.id, node)
@@ -3493,6 +3614,7 @@ function OrganizationCenter({ organizations, setOrganizations }) {
       setMessage(`已新增组织：${name}`);
     }
     setOrganizationName("");
+    setOrganizationLeader(null);
     setFormState(null);
   };
   const deleteOrganization = (node) => {
@@ -3653,6 +3775,28 @@ function OrganizationCenter({ organizations, setOrganizations }) {
                   autoFocus
                 />
               </label>
+              {!isRootOrganizationForm ? (
+                <>
+                  <label>
+                    组织类型
+                    <select
+                      value={organizationType}
+                      onChange={(event) => setOrganizationType(event.target.value)}
+                    >
+                      <option>公司</option>
+                      <option>部门</option>
+                    </select>
+                  </label>
+                  <label className="organization-leader-field">
+                    负责人
+                    <button type="button" onClick={openLeaderPicker}>
+                      {organizationLeader
+                        ? `${organizationLeader.name}${organizationLeader.department ? ` · ${organizationLeader.department}` : ""}`
+                        : "选择负责人"}
+                    </button>
+                  </label>
+                </>
+              ) : null}
             </div>
             <footer>
               <button
@@ -3667,6 +3811,103 @@ function OrganizationCenter({ organizations, setOrganizations }) {
               </button>
             </footer>
           </form>
+        </div>
+      ) : null}
+      {leaderPickerOpen ? (
+        <div
+          className="management-dialog-layer"
+          onMouseDown={() => setLeaderPickerOpen(false)}
+          role="presentation"
+        >
+          <section
+            className="management-dialog assign-user-dialog organization-leader-dialog"
+            onMouseDown={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="organization-leader-title"
+          >
+            <header>
+              <h2 id="organization-leader-title">选择负责人</h2>
+              <button
+                type="button"
+                className="management-dialog-close"
+                aria-label="关闭选择负责人弹窗"
+                onClick={() => setLeaderPickerOpen(false)}
+              >
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="assign-user-body">
+              <aside>
+                <header>组织架构</header>
+                {organizations.length ? (
+                  <LeaderPickerTree nodes={organizations} />
+                ) : (
+                  <p className="assign-user-empty">暂无可选组织</p>
+                )}
+              </aside>
+              <section>
+                <header>
+                  人员 <span>{leaderPickerUsers.length} 人</span>
+                </header>
+                {leaderPickerUsers.length ? (
+                  leaderPickerUsers.map((user) => (
+                    <label key={user.id}>
+                      <input
+                        type="radio"
+                        name="organization-leader"
+                        checked={organizationLeader?.id === user.id}
+                        onChange={() => setOrganizationLeader(user)}
+                      />
+                      <span>
+                        <b>{user.name}</b>
+                        <small>{user.account} · {user.department}</small>
+                      </span>
+                    </label>
+                  ))
+                ) : (
+                  <p className="assign-user-empty">该组织暂无人员</p>
+                )}
+              </section>
+              <section>
+                <header>
+                  已选负责人 <span>{leaderPickerSelectedUser ? "1 人" : "0 人"}</span>
+                </header>
+                {leaderPickerSelectedUser ? (
+                  <div>
+                    <span>
+                      <b>{leaderPickerSelectedUser.name}</b>
+                      <small>{leaderPickerSelectedUser.department || "未设置部门"}</small>
+                    </span>
+                    <button
+                      type="button"
+                      onClick={() => setOrganizationLeader(null)}
+                    >
+                      移除
+                    </button>
+                  </div>
+                ) : (
+                  <p className="assign-user-empty">暂未选择负责人</p>
+                )}
+              </section>
+            </div>
+            <footer>
+              <button
+                type="button"
+                className="management-dialog-cancel"
+                onClick={() => setLeaderPickerOpen(false)}
+              >
+                取消
+              </button>
+              <button
+                type="button"
+                className="management-dialog-primary"
+                onClick={() => setLeaderPickerOpen(false)}
+              >
+                确认选择
+              </button>
+            </footer>
+          </section>
         </div>
       ) : null}
     </>
@@ -3747,9 +3988,8 @@ function UserMultiSelect({ label, options, value, onChange, activeMenu, setActiv
   );
 }
 
-function UserManagementCenter({ organizations, setOrganizations }) {
+function UserManagementCenter({ organizations, setOrganizations, users, setUsers }) {
   const [activeTab, setActiveTab] = useState("users");
-  const [users, setUsers] = useState([]);
   const [selectedOrganization, setSelectedOrganization] = useState("");
   const [dialog, setDialog] = useState(null);
   const [confirmAction, setConfirmAction] = useState(null);
@@ -3957,6 +4197,7 @@ function UserManagementCenter({ organizations, setOrganizations }) {
           <OrganizationCenter
             organizations={organizations}
             setOrganizations={setOrganizations}
+            users={users}
           />
         ) : (
           <section className="user-center-layout">
@@ -4175,6 +4416,14 @@ function UserManagementCenter({ organizations, setOrganizations }) {
                     />
                     {userFieldErrors.name ? <em>{userFieldErrors.name}</em> : null}
                   </label>
+                  <label>
+                    手机号
+                    <input
+                      value={userPhone}
+                      onChange={(event) => setUserPhone(event.target.value)}
+                      placeholder="例如：13800000000"
+                    />
+                  </label>
                   <label className={userFieldErrors.account ? "field-error" : ""}>
                     账号
                     <input
@@ -4186,14 +4435,6 @@ function UserManagementCenter({ organizations, setOrganizations }) {
                       placeholder="例如：zhangyu"
                     />
                     {userFieldErrors.account ? <em>{userFieldErrors.account}</em> : null}
-                  </label>
-                  <label>
-                    手机号
-                    <input
-                      value={userPhone}
-                      onChange={(event) => setUserPhone(event.target.value)}
-                      placeholder="例如：13800000000"
-                    />
                   </label>
                   <label className={userFieldErrors.password ? "field-error" : ""}>
                     默认密码
@@ -4366,6 +4607,29 @@ function UserManagementCenter({ organizations, setOrganizations }) {
   );
 }
 
+function RolePermissionCheckbox({ node, selectedIds, getLeafIds, onToggle }) {
+  const inputRef = useRef(null);
+  const descendantIds = getLeafIds(node);
+  const selectedCount = descendantIds.filter((id) => selectedIds.has(id)).length;
+  const isChecked = selectedCount === descendantIds.length;
+  const isIndeterminate = selectedCount > 0 && selectedCount < descendantIds.length;
+
+  useEffect(() => {
+    if (inputRef.current) inputRef.current.indeterminate = isIndeterminate;
+  }, [isIndeterminate]);
+
+  return (
+    <input
+      ref={inputRef}
+      type="checkbox"
+      checked={isChecked}
+      aria-checked={isIndeterminate ? "mixed" : isChecked}
+      data-indeterminate={isIndeterminate ? "true" : undefined}
+      onChange={() => onToggle(node)}
+    />
+  );
+}
+
 function RbacPage({ onAction }) {
   const [roles, setRoles] = useState([
     {
@@ -4448,10 +4712,38 @@ function RbacPage({ onAction }) {
         },
       ],
     },
-    { name: "任务" },
-    { name: "流程" },
-    { name: "动态" },
-    { name: "预警" },
+    {
+      name: "任务",
+      children: [
+        { name: "发布任务" },
+        { name: "我的任务" },
+        { name: "任务总台账" },
+        { name: "人员明细" },
+      ],
+    },
+    {
+      name: "流程",
+      children: [
+        { name: "发起流程" },
+        { name: "待审批" },
+        { name: "已审批" },
+        { name: "抄送给我" },
+        { name: "我发起的" },
+      ],
+    },
+    {
+      name: "动态",
+      children: [{ name: "动态列表" }, { name: "发动态" }],
+    },
+    {
+      name: "预警",
+      children: [
+        { name: "预警分级看板" },
+        { name: "预警任务" },
+        { name: "预警信息表统计" },
+        { name: "预警统计" },
+      ],
+    },
     {
       name: "看板",
       children: [
@@ -4461,34 +4753,133 @@ function RbacPage({ onAction }) {
       ],
     },
     {
-      name: "设置",
+      name: "设置中心",
       children: [
         { name: "安全动态" },
         { name: "工作表" },
+        { name: "任务配置" },
+        { name: "流程配置" },
+        { name: "预警配置" },
         { name: "数据台" },
         { name: "数据看板" },
-        { name: "角色权限" },
-        { name: "用户中心" },
-        { name: "个人中心" },
+        { name: "应用中心" },
+        {
+          name: "系统设置",
+          children: [
+            { name: "角色权限" },
+            { name: "用户中心" },
+            { name: "岗位管理" },
+            { name: "字典管理" },
+            { name: "个人中心" },
+          ],
+        },
       ],
     },
   ];
-  const flattenMenus = (nodes) =>
-    nodes.flatMap((node) => [node.name, ...flattenMenus(node.children ?? [])]);
   const leafMenus = (nodes) =>
     nodes.flatMap((node) =>
       node.children?.length ? leafMenus(node.children) : [node.name],
     );
-  const allMenus = flattenMenus(menuTree);
+  const buttonActionsByPage = {
+    工作台: ["查看"],
+    岗位隐患排查: ["查看", "在线填报", "提交", "导出"],
+    风险分级管控: ["查看", "新增", "编辑", "删除", "导出"],
+    隐患排查治理: ["查看", "新增", "编辑", "删除", "导出"],
+    安全检查: ["查看", "新增", "编辑", "删除", "导出"],
+    作业许可: ["查看", "新增", "审批", "编辑", "删除"],
+    安全培训: ["查看", "新增", "编辑", "删除", "导出"],
+    设备点检: ["查看", "新增", "编辑", "删除", "导出"],
+    设备台账: ["查看", "新增", "编辑", "删除", "导出"],
+    维修计划: ["查看", "新增", "编辑", "删除", "导出"],
+    库存管理: ["查看", "新增", "编辑", "删除", "导出"],
+    领用登记: ["查看", "新增", "审核", "编辑", "删除"],
+    生产日报: ["查看", "新增", "编辑", "删除", "导出"],
+    生产计划: ["查看", "新增", "编辑", "删除", "导出"],
+    机电巡检: ["查看", "新增", "编辑", "删除", "导出"],
+    供电管理: ["查看", "新增", "编辑", "删除", "导出"],
+    消防检查: ["查看", "新增", "编辑", "删除", "导出"],
+    消防设施: ["查看", "新增", "编辑", "删除", "导出"],
+    应急预案: ["查看", "新增", "编辑", "删除", "导出"],
+    应急演练: ["查看", "新增", "编辑", "删除", "导出"],
+    发布任务: ["查看", "发布", "编辑", "删除"],
+    我的任务: ["查看", "执行任务", "提交反馈"],
+    任务总台账: ["查看", "导出"],
+    人员明细: ["查看", "导出"],
+    发起流程: ["查看", "发起流程"],
+    待审批: ["查看", "审批"],
+    已审批: ["查看", "导出"],
+    抄送给我: ["查看"],
+    我发起的: ["查看", "撤回", "催办"],
+    动态列表: ["查看", "删除"],
+    发动态: ["查看", "发布"],
+    预警分级看板: ["查看", "导出"],
+    预警任务: ["查看", "处置", "关闭", "导出"],
+    预警信息表统计: ["查看", "导出"],
+    预警统计: ["查看", "导出"],
+    安全风险总览: ["查看", "导出"],
+    设备健康度: ["查看", "导出"],
+    生产进度跟踪: ["查看", "导出"],
+    角色权限: ["查看", "新增", "编辑", "删除", "分配用户", "数据权限"],
+    用户中心: ["查看", "新增", "编辑", "删除", "授权", "重置密码"],
+    岗位管理: ["查看", "新增", "编辑", "删除"],
+    字典管理: ["查看", "新增", "编辑", "删除"],
+    个人中心: ["查看", "编辑资料", "修改密码", "退出登录"],
+  };
+  const createRolePermissionTree = (nodes, parents = []) =>
+    nodes.map((node) => {
+      const path = [...parents, node.name];
+      const key = path.join("/");
+      if (node.children?.length) {
+        return {
+          id: `menu:${key}`,
+          name: node.name,
+          type: "menu",
+          children: createRolePermissionTree(node.children, path),
+        };
+      }
+      const actions = buttonActionsByPage[node.name] ?? ["查看", "新增", "编辑", "删除"];
+      return {
+        id: `page:${key}`,
+        name: node.name,
+        type: "page",
+        children: actions.map((action) => ({
+          id: `button:${key}:${action}`,
+          name: action,
+          type: "button",
+        })),
+      };
+    });
+  const rolePermissionTree = createRolePermissionTree(menuTree);
+  const rolePermissionLeafIds = (node) =>
+    node.children?.length
+      ? node.children.flatMap(rolePermissionLeafIds)
+      : [node.id];
+  const allRolePermissionIds = rolePermissionTree.flatMap(rolePermissionLeafIds);
+  const defaultExpandedRoleMenuIds = () => {
+    const collectMenuIds = (nodes) =>
+      nodes.flatMap((node) =>
+        node.type === "menu"
+          ? [node.id, ...collectMenuIds(node.children ?? [])]
+          : [],
+      );
+    // Expand menu layers by default; page nodes remain collapsed so action buttons stay hidden.
+    return new Set(collectMenuIds(rolePermissionTree));
+  };
+  const defaultDataMenuScopes = () =>
+    Object.fromEntries(leafMenus(menuTree).map((name) => [name, "仅自己"]));
   const [dialog, setDialog] = useState(null);
   const [roleName, setRoleName] = useState("");
   const [roleStatus, setRoleStatus] = useState("启用");
-  const [roleMenus, setRoleMenus] = useState(new Set(allMenus.slice(0, 10)));
+  const [roleMenus, setRoleMenus] = useState(
+    new Set(allRolePermissionIds.slice(0, 18)),
+  );
+  const [rolePermissionTab, setRolePermissionTab] = useState("menu");
+  const [expandedRoleMenuIds, setExpandedRoleMenuIds] = useState(
+    defaultExpandedRoleMenuIds,
+  );
   const [confirmRole, setConfirmRole] = useState(null);
   const [dataRole, setDataRole] = useState(null);
-  const [dataMenuScopes, setDataMenuScopes] = useState(() =>
-    Object.fromEntries(leafMenus(menuTree).map((name) => [name, "全部"])),
-  );
+  const [dataMenuScopes, setDataMenuScopes] = useState(defaultDataMenuScopes);
   const [assignRole, setAssignRole] = useState(null);
   const [assignOrganization, setAssignOrganization] = useState("group");
   const [selectedUserIds, setSelectedUserIds] = useState(["u-zhang"]);
@@ -4583,13 +4974,19 @@ function RbacPage({ onAction }) {
   const openCreate = () => {
     setRoleName("");
     setRoleStatus("启用");
-    setRoleMenus(new Set(["工作台"]));
+    setRoleMenus(new Set(allRolePermissionIds.slice(0, 40)));
+    setDataMenuScopes(defaultDataMenuScopes());
+    setRolePermissionTab("menu");
+    setExpandedRoleMenuIds(defaultExpandedRoleMenuIds());
     setDialog({ mode: "create" });
   };
   const openEdit = (role) => {
     setRoleName(role.name);
     setRoleStatus(role.status);
-    setRoleMenus(new Set(allMenus.slice(0, 10)));
+    setRoleMenus(new Set(allRolePermissionIds.slice(0, 40)));
+    setDataMenuScopes(defaultDataMenuScopes());
+    setRolePermissionTab("menu");
+    setExpandedRoleMenuIds(defaultExpandedRoleMenuIds());
     setDialog({ mode: "edit", role });
   };
   const saveRole = (event) => {
@@ -4623,22 +5020,76 @@ function RbacPage({ onAction }) {
   const toggleMenu = (menu) =>
     setRoleMenus((current) => {
       const next = new Set(current);
-      next.has(menu) ? next.delete(menu) : next.add(menu);
+      const descendants = rolePermissionLeafIds(menu);
+      const isFullySelected = descendants.every((id) => next.has(id));
+      descendants.forEach((id) => {
+        if (isFullySelected) next.delete(id);
+        else next.add(id);
+      });
       return next;
     });
+  const toggleRoleMenuExpanded = (menuId) =>
+    setExpandedRoleMenuIds((current) => {
+      const next = new Set(current);
+      next.has(menuId) ? next.delete(menuId) : next.add(menuId);
+      return next;
+    });
+  const selectedDataPermissionTree = (nodes, parents = []) =>
+    nodes.flatMap((node) => {
+      const path = [...parents, node.name];
+      if (node.children?.length) {
+        const children = selectedDataPermissionTree(node.children, path);
+        return children.length ? [{ ...node, children }] : [];
+      }
+
+      // A page is available for data authorization once any operation on it is granted.
+      const pageKey = path.join("/");
+      const actionIds = (buttonActionsByPage[node.name] ?? ["查看", "新增", "编辑", "删除"])
+        .map((action) => `button:${pageKey}:${action}`);
+      return actionIds.some((id) => roleMenus.has(id)) ? [node] : [];
+    });
+  const dataPermissionMenuTree = selectedDataPermissionTree(menuTree);
+  const dataPermissionLeafCount = leafMenus(dataPermissionMenuTree).length;
+  const setAllDataPermissionScopes = (scope) =>
+    setDataMenuScopes((current) => ({
+      ...current,
+      ...Object.fromEntries(
+        leafMenus(dataPermissionMenuTree).map((name) => [name, scope]),
+      ),
+    }));
   const MenuTree = ({ nodes }) => (
     <ul className="role-menu-tree">
-      {nodes.map((node) => (
-        <li key={node.name}>
-          <label>
-            <input
-              type="checkbox"
-              checked={roleMenus.has(node.name)}
-              onChange={() => toggleMenu(node.name)}
-            />
-            <span>{node.name}</span>
-          </label>
-          {node.children ? <MenuTree nodes={node.children} /> : null}
+      {nodes.map((node, index) => (
+        <li
+          className={node.type === "button" ? "role-menu-action" : ""}
+          key={`${node.id}-${index}`}
+        >
+          <div className="role-menu-node">
+            <label className={node.type === "button" ? "role-menu-button" : ""}>
+              <RolePermissionCheckbox
+                node={node}
+                selectedIds={roleMenus}
+                getLeafIds={rolePermissionLeafIds}
+                onToggle={toggleMenu}
+              />
+              <span>{node.name}</span>
+            </label>
+            {node.children ? (
+              <button
+                type="button"
+                className={`role-menu-expand ${
+                  expandedRoleMenuIds.has(node.id) ? "expanded" : ""
+                }`}
+                aria-label={`${expandedRoleMenuIds.has(node.id) ? "收起" : "展开"}${node.name}`}
+                onClick={() => toggleRoleMenuExpanded(node.id)}
+              >
+                <ChevronRight24Regular />
+              </button>
+            ) : null}
+          </div>
+          {node.children && expandedRoleMenuIds.has(node.id) ? (
+            <MenuTree nodes={node.children} />
+          ) : null}
         </li>
       ))}
     </ul>
@@ -4708,9 +5159,8 @@ const organizationLeafIds = (node) =>
         .filter((user) => ["safety", "equipment", "production"].includes(user.organization))
         .map((user) => user.id),
     });
-    setDataMenuScopes(
-      Object.fromEntries(leafMenus(menuTree).map((name) => [name, "全部"])),
-    );
+    setDataMenuScopes(defaultDataMenuScopes());
+    setExpandedRoleMenuIds(defaultExpandedRoleMenuIds());
   };
   const toggleDataPermissionOrganization = (organization) => {
     const organizationIds = organizationLeafIds(organization);
@@ -4793,15 +5243,31 @@ const organizationLeafIds = (node) =>
       ))}
     </ul>
   );
-  const renderDataPermissionMenuTree = (nodes) =>
-    nodes.map((node) =>
-      node.children?.length ? (
-        <li className="data-permission-menu-group" key={node.name}>
-          <strong>{node.name}</strong>
-          <ul>{renderDataPermissionMenuTree(node.children)}</ul>
+  const renderDataPermissionMenuTree = (nodes, parents = []) =>
+    nodes.map((node) => {
+      const path = [...parents, node.name];
+      const nodeId = `${node.children?.length ? "menu" : "page"}:${path.join("/")}`;
+      const hasChildren = Boolean(node.children?.length);
+
+      return hasChildren ? (
+        <li className="data-permission-menu-group" key={nodeId}>
+          <div className="data-permission-menu-group-title">
+            <strong>{node.name}</strong>
+            <button
+              type="button"
+              className={expandedRoleMenuIds.has(nodeId) ? "expanded" : ""}
+              aria-label={`${expandedRoleMenuIds.has(nodeId) ? "收起" : "展开"}${node.name}`}
+              onClick={() => toggleRoleMenuExpanded(nodeId)}
+            >
+              <ChevronRight24Regular />
+            </button>
+          </div>
+          {expandedRoleMenuIds.has(nodeId) ? (
+            <ul>{renderDataPermissionMenuTree(node.children, path)}</ul>
+          ) : null}
         </li>
       ) : (
-        <li className="data-permission-menu-leaf" key={node.name}>
+        <li className="data-permission-menu-leaf" key={nodeId}>
           <span>{node.name}</span>
           <select
             aria-label={`${node.name}数据权限范围`}
@@ -4818,8 +5284,8 @@ const organizationLeafIds = (node) =>
             <option>仅自己</option>
           </select>
         </li>
-      ),
-    );
+      );
+    });
   const deleteRole = () => {
     setRoles((current) => current.filter((item) => item.id !== confirmRole.id));
     onAction(`已删除角色：${confirmRole.name}`);
@@ -4862,9 +5328,6 @@ const organizationLeafIds = (node) =>
               <span className="role-list-actions">
                 <button onClick={() => openEdit(role)}>编辑</button>
                 <button onClick={() => setConfirmRole(role)}>删除</button>
-                <button onClick={() => openDataPermission(role)}>
-                  数据权限
-                </button>
                 <button onClick={() => openAssign(role)}>分配用户</button>
               </span>
             </div>
@@ -4920,13 +5383,56 @@ const organizationLeafIds = (node) =>
                   </select>
                 </label>
               </div>
-              <section className="role-menu-selector">
-                <header>
-                  <b>菜单权限</b>
-                  <span>按系统菜单层级选择可访问范围</span>
-                </header>
-                <MenuTree nodes={menuTree} />
-              </section>
+              <nav className="role-permission-tabs" role="tablist" aria-label="角色权限类型">
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={rolePermissionTab === "menu"}
+                  className={rolePermissionTab === "menu" ? "active" : ""}
+                  onClick={() => setRolePermissionTab("menu")}
+                >
+                  菜单权限
+                </button>
+                <button
+                  type="button"
+                  role="tab"
+                  aria-selected={rolePermissionTab === "data"}
+                  className={rolePermissionTab === "data" ? "active" : ""}
+                  onClick={() => setRolePermissionTab("data")}
+                >
+                  数据权限
+                </button>
+              </nav>
+              {rolePermissionTab === "menu" ? (
+                <section className="role-menu-selector" role="tabpanel">
+                  <header>
+                    <b>菜单权限</b>
+                    <span>按菜单、页面与操作按钮选择可访问范围</span>
+                  </header>
+                  <MenuTree nodes={rolePermissionTree} />
+                </section>
+              ) : (
+                <section className="role-data-selector" role="tabpanel">
+                  <header>
+                    <b>授权项</b>
+                    <div className="role-data-permission-header-actions">
+                      <span>全部设置为：</span>
+                      {['全部', '本部门及以下', '仅自己'].map((scope) => (
+                        <button
+                          type="button"
+                          key={scope}
+                          onClick={() => setAllDataPermissionScopes(scope)}
+                        >
+                          {scope}
+                        </button>
+                      ))}
+                    </div>
+                  </header>
+                  <div className="data-permission-menu-panel">
+                    <ul>{renderDataPermissionMenuTree(dataPermissionMenuTree)}</ul>
+                  </div>
+                </section>
+              )}
             </div>
             <footer>
               <button
@@ -5050,10 +5556,10 @@ const organizationLeafIds = (node) =>
                       <h3>授权项</h3>
                       <p>仅对没有下级菜单的功能配置数据权限</p>
                     </div>
-                    <span>{leafMenus(menuTree).length} 项</span>
+                    <span>{dataPermissionLeafCount} 项</span>
                   </header>
                   <div className="data-permission-menu-panel">
-                    <ul>{renderDataPermissionMenuTree(menuTree)}</ul>
+                    <ul>{renderDataPermissionMenuTree(dataPermissionMenuTree)}</ul>
                   </div>
                 </section>
               </div>
@@ -5667,8 +6173,22 @@ function DictionaryManagement({ onAction }) {
         { id: "type-2", code: "02", name: "掘进机", updater: "李明", updatedAt: "2026-08-13 16:40" },
       ],
     },
-    { id: "dict-3", code: "HAZARD_CATEGORY", name: "隐患类别", remark: "", references: 21, updater: "陈伟", updatedAt: "2026-08-13 14:18", data: [] },
-    { id: "dict-4", code: "WORK_STATUS", name: "作业状态", remark: "", references: 9, updater: "张宇", updatedAt: "2026-08-12 09:36", data: [] },
+    {
+      id: "dict-3",
+      code: "POSITION",
+      name: "岗位字典",
+      remark: "用于用户岗位配置与任务分派。",
+      references: 12,
+      updater: "张宇",
+      updatedAt: "2026-08-19 09:30",
+      data: [
+        { id: "position-1", code: "SAFETY_ADMIN", name: "安全管理员", updater: "张宇", updatedAt: "2026-08-19 09:30" },
+        { id: "position-2", code: "EQUIPMENT_ENGINEER", name: "设备工程师", updater: "张宇", updatedAt: "2026-08-19 09:30" },
+        { id: "position-3", code: "PRODUCTION_SUPERVISOR", name: "生产主管", updater: "张宇", updatedAt: "2026-08-19 09:30" },
+      ],
+    },
+    { id: "dict-4", code: "HAZARD_CATEGORY", name: "隐患类别", remark: "", references: 21, updater: "陈伟", updatedAt: "2026-08-13 14:18", data: [] },
+    { id: "dict-5", code: "WORK_STATUS", name: "作业状态", remark: "", references: 9, updater: "张宇", updatedAt: "2026-08-12 09:36", data: [] },
   ]);
   const [dialog, setDialog] = useState(null);
   const [draft, setDraft] = useState({ code: "", name: "", remark: "" });
@@ -6119,9 +6639,126 @@ function DictionaryManagement({ onAction }) {
   );
 }
 
-function SettingsPage({ onAction, initialSelected = "安全动态" }) {
+function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
+  const logoInputRef = useRef(null);
+  const backgroundInputRef = useRef(null);
+  const [uploadError, setUploadError] = useState("");
+  const [iconPickerOpen, setIconPickerOpen] = useState(false);
+  const uploadImage = (key, event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      setUploadError("请选择 PNG、JPG 或 WebP 格式的图片");
+      return;
+    }
+    if (file.size > 1.5 * 1024 * 1024) {
+      setUploadError("图片大小不能超过 1.5MB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      onBrandingChange((current) => ({ ...current, [key]: String(reader.result) }));
+      setUploadError("");
+      onAction(key === "logo" ? "企业 Logo 已更新" : "登录页背景图已更新");
+    };
+    reader.readAsDataURL(file);
+  };
+  const clearImage = (key) => {
+    onBrandingChange((current) => ({ ...current, [key]: "" }));
+    onAction(key === "logo" ? "已恢复默认 Logo" : "已恢复默认登录背景");
+  };
+  const selectSystemIcon = (icon) => {
+    onBrandingChange((current) => ({ ...current, systemIcon: icon.id }));
+    setIconPickerOpen(false);
+    onAction(`已选择系统图标：${icon.label}`);
+  };
+  return (
+    <section className="enterprise-settings" aria-labelledby="enterprise-settings-title">
+      <header>
+        <h1 id="enterprise-settings-title">企业设置</h1>
+      </header>
+      <div className="enterprise-settings-grid">
+        <section className="enterprise-setting-card">
+          <header><h2>企业 Logo</h2></header>
+          <div className="enterprise-logo-preview">
+            {branding.logo ? <img src={branding.logo} alt="企业 Logo 预览" /> : <span>C</span>}
+          </div>
+          <div className="enterprise-setting-actions">
+            <button type="button" onClick={() => logoInputRef.current?.click()}>上传 Logo</button>
+            {branding.logo ? <button type="button" className="secondary" onClick={() => clearImage("logo")}>恢复默认</button> : null}
+          </div>
+          <input ref={logoInputRef} type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => uploadImage("logo", event)} hidden />
+        </section>
+        <section className="enterprise-setting-card enterprise-background-card">
+          <header><h2>登录页背景图</h2></header>
+          <div
+            className={`enterprise-background-preview${branding.loginBackground ? " custom" : ""}`}
+            style={branding.loginBackground ? { backgroundImage: `url(${branding.loginBackground})` } : undefined}
+          >
+            <span>登录页背景预览</span>
+          </div>
+          <div className="enterprise-setting-actions">
+            <button type="button" onClick={() => backgroundInputRef.current?.click()}>上传背景图</button>
+            {branding.loginBackground ? <button type="button" className="secondary" onClick={() => clearImage("loginBackground")}>恢复默认</button> : null}
+          </div>
+          <input ref={backgroundInputRef} type="file" accept="image/png,image/jpeg,image/webp" onChange={(event) => uploadImage("loginBackground", event)} hidden />
+        </section>
+        <section className="enterprise-setting-card enterprise-icon-card">
+          <header><h2>系统图标管理</h2></header>
+          <div className="enterprise-system-icon-preview" aria-label="当前系统图标预览">
+            <SystemIcon name={branding.systemIcon} />
+          </div>
+          <p>统一维护系统内可复用的功能图标。</p>
+          <div className="enterprise-setting-actions">
+            <button type="button" onClick={() => setIconPickerOpen(true)}>选择图标</button>
+          </div>
+        </section>
+      </div>
+      {uploadError ? <p className="enterprise-upload-error" role="alert">{uploadError}</p> : null}
+      {iconPickerOpen ? (
+        <div className="management-dialog-layer" onMouseDown={() => setIconPickerOpen(false)} role="presentation">
+          <section
+            className="management-dialog icon-picker-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-label="选择系统图标"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <button
+              type="button"
+              className="system-icon-picker-close"
+              aria-label="关闭图标选择弹窗"
+              onClick={() => setIconPickerOpen(false)}
+            >
+              <DismissRegular />
+            </button>
+            <h2 className="system-icon-picker-title">请选择图标</h2>
+            <div className="system-icon-picker-grid">
+              {systemIconLibrary.map((icon) => (
+                <button
+                  type="button"
+                  key={icon.id}
+                  aria-label={`选择${icon.label}图标`}
+                  title={icon.label}
+                  className={branding.systemIcon === icon.id ? "selected" : ""}
+                  onClick={() => selectSystemIcon(icon)}
+                >
+                  <span><SystemIcon name={icon.id} /></span>
+                </button>
+              ))}
+            </div>
+          </section>
+        </div>
+      ) : null}
+    </section>
+  );
+}
+
+function SettingsPage({ onAction, initialSelected = "安全动态", branding, onBrandingChange }) {
   const [selected, setSelected] = useState(initialSelected);
   const [organizations, setOrganizations] = useState([]);
+  const [users, setUsers] = useState([]);
   const [worksheetExpanded, setWorksheetExpanded] = useState(false);
   const [processExpanded, setProcessExpanded] = useState(false);
   const [taskExpanded, setTaskExpanded] = useState(false);
@@ -6155,7 +6792,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const warningPageMenu = warningPageMenus.find(
     (entry) => entry.label === selected,
   );
-  const systemSettingsMenus = ["角色权限", "用户中心", "岗位管理", "个人中心", "字典管理"];
+  const systemSettingsMenus = ["用户中心", "个人中心", "角色权限", "字典管理", "企业设置"];
   const item =
     settingsItems.find((entry) => entry.label === selected) ??
     worksheetMenu ??
@@ -6208,10 +6845,10 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   const rows = rowsBySetting[selected] ?? [];
   const isUserCenter = selected === "用户中心";
   const isPersonalCenter = selected === "个人中心";
-  const isPositionManagement = selected === "岗位管理";
   const isRbac = selected === "角色权限";
   const isDynamicsSetting = selected === "安全动态";
   const isDictionarySetting = selected === "字典管理";
+  const isEnterpriseSetting = selected === "企业设置";
   const isLowCodeSetting = Boolean(lowCodeMenu);
   const isWorksheetPageSetting = Boolean(worksheetMenu?.module);
   const isTaskPageSetting = Boolean(taskPageMenu);
@@ -6338,8 +6975,8 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
         <div className="settings-content">
           {!isUserCenter &&
           !isPersonalCenter &&
-          !isPositionManagement &&
           !isRbac &&
+          !isEnterpriseSetting &&
           !isDynamicsSetting &&
           !isDictionarySetting &&
           !isLowCodeSetting &&
@@ -6369,6 +7006,12 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
                 title="动态圈管理"
               />
             </section>
+          ) : isEnterpriseSetting ? (
+            <EnterpriseSettings
+              branding={branding}
+              onBrandingChange={onBrandingChange}
+              onAction={onAction}
+            />
           ) : isDictionarySetting ? (
             <DictionaryManagement onAction={onAction} />
           ) : isLowCodeSetting ? (
@@ -6397,11 +7040,11 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
             <UserManagementCenter
               organizations={organizations}
               setOrganizations={setOrganizations}
+              users={users}
+              setUsers={setUsers}
             />
           ) : isPersonalCenter ? (
             <PersonalCenter onAction={onAction} />
-          ) : isPositionManagement ? (
-            <PositionManagement onAction={onAction} />
           ) : isRbac ? (
             <RbacPage onAction={onAction} />
           ) : (
@@ -6453,7 +7096,151 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
   );
 }
 
+function LoginPage({ onLogin, branding }) {
+  const [savedCredentials] = useState(() => {
+    try {
+      return JSON.parse(window.localStorage.getItem("ething-login") || "null");
+    } catch {
+      return null;
+    }
+  });
+  const [account, setAccount] = useState(savedCredentials?.account ?? "");
+  const [password, setPassword] = useState(savedCredentials?.password ?? "");
+  const [rememberPassword, setRememberPassword] = useState(Boolean(savedCredentials));
+  const [error, setError] = useState("");
+  const [forgotPassword, setForgotPassword] = useState(false);
+  const submitLogin = (event) => {
+    event.preventDefault();
+    if (!account.trim() || !password) {
+      setError("请输入账号和密码");
+      return;
+    }
+    if (account.trim() !== "zhangyu" || password !== "123456") {
+      setError("账号或密码不正确，请重新输入");
+      return;
+    }
+    try {
+      if (rememberPassword) {
+        window.localStorage.setItem(
+          "ething-login",
+          JSON.stringify({ account: account.trim(), password }),
+        );
+      } else {
+        window.localStorage.removeItem("ething-login");
+      }
+    } catch {}
+    setError("");
+    onLogin();
+  };
+  return (
+    <main className="login-page">
+      <section
+        className={`login-brand-panel${branding.loginBackground ? " has-custom-background" : ""}`}
+        style={
+          branding.loginBackground
+            ? { "--login-background-image": `url(${branding.loginBackground})` }
+            : undefined
+        }
+        aria-labelledby="login-brand-title"
+      >
+        <div className="login-brand-mark">
+          {branding.logo ? <img src={branding.logo} alt="企业 Logo" /> : "C"}
+        </div>
+        <div className="login-brand-content">
+          <p>智慧应急安全管理平台</p>
+          <h1 id="login-brand-title">把安全工作放在一处，清晰推进。</h1>
+          <span>面向矿山现场的任务、流程、预警和业务应用协同入口。</span>
+          <ul>
+            <li><CheckmarkCircle24Regular /> 待办、流程与预警集中处理</li>
+            <li><CheckmarkCircle24Regular /> 业务应用与表单快速进入</li>
+            <li><CheckmarkCircle24Regular /> 动态信息及时同步到人</li>
+          </ul>
+        </div>
+        <div className="login-brand-grid" aria-hidden="true">
+          <i /><i /><i /><i />
+        </div>
+      </section>
+      <section className="login-form-panel" aria-labelledby="login-title">
+        <form className="login-form" onSubmit={submitLogin} noValidate>
+          <div className="login-form-heading">
+            <span>账号登录</span>
+            <h2 id="login-title">欢迎登录</h2>
+            <p>请输入账号和密码进入系统。</p>
+          </div>
+          <label>
+            账号
+            <input
+              value={account}
+              onChange={(event) => {
+                setAccount(event.target.value);
+                setError("");
+              }}
+              autoComplete="username"
+              placeholder="请输入账号"
+              autoFocus
+            />
+          </label>
+          <label>
+            密码
+            <input
+              type="password"
+              value={password}
+              onChange={(event) => {
+                setPassword(event.target.value);
+                setError("");
+              }}
+              autoComplete="current-password"
+              placeholder="请输入密码"
+            />
+          </label>
+          {error ? <p className="login-error" role="alert">{error}</p> : null}
+          <div className="login-options">
+            <label className="login-remember">
+              <input
+                type="checkbox"
+                checked={rememberPassword}
+                onChange={(event) => setRememberPassword(event.target.checked)}
+              />
+              <span>记住密码</span>
+            </label>
+            <button
+              type="button"
+              className="login-forgot-password"
+              onClick={() => setForgotPassword(true)}
+            >
+              忘记密码
+            </button>
+          </div>
+          {forgotPassword ? (
+            <p className="login-forgot-note" role="status">
+              请联系管理员重置密码。
+            </p>
+          ) : null}
+          <button type="submit" className="login-submit">
+            登录系统
+            <ArrowRight24Regular />
+          </button>
+          <p className="login-demo-account">演示账号：zhangyu　密码：123456</p>
+        </form>
+      </section>
+    </main>
+  );
+}
+
 function App() {
+  const [authenticated, setAuthenticated] = useState(false);
+  const [enterpriseBranding, setEnterpriseBranding] = useState(() => {
+    try {
+      const stored = JSON.parse(localStorage.getItem("enterprise-branding") ?? "{}");
+      return {
+        logo: typeof stored.logo === "string" ? stored.logo : "",
+        loginBackground: typeof stored.loginBackground === "string" ? stored.loginBackground : "",
+        systemIcon: typeof stored.systemIcon === "string" ? stored.systemIcon : "apps",
+      };
+    } catch {
+      return { logo: "", loginBackground: "", systemIcon: "apps" };
+    }
+  });
   const [activeNav, setActiveNav] = useState("工作台");
   const [activeQueue, setActiveQueue] = useState("task");
   const [dialog, setDialog] = useState(null);
@@ -6472,6 +7259,13 @@ function App() {
   const [settingsInitial, setSettingsInitial] = useState("安全动态");
   const [messages, setMessages] = useState(messageEntries);
   const [taskDetail, setTaskDetail] = useState(null);
+  useEffect(() => {
+    try {
+      localStorage.setItem("enterprise-branding", JSON.stringify(enterpriseBranding));
+    } catch {
+      // The current session still uses the uploaded assets when browser storage is unavailable.
+    }
+  }, [enterpriseBranding]);
   const showNotice = (label) => {
     setNotice(`已选择 ${label}`);
     window.setTimeout(() => setNotice(""), 2200);
@@ -6695,11 +7489,19 @@ function App() {
     });
   };
   const activeApplication = apps.find((app) => app.name === activeTab);
+  if (!authenticated) {
+    return (
+      <FluentProvider theme={webLightTheme}>
+        <LoginPage branding={enterpriseBranding} onLogin={() => setAuthenticated(true)} />
+      </FluentProvider>
+    );
+  }
   return (
     <FluentProvider theme={webLightTheme}>
       <div className="workbench theme-light">
         <AppNav
           active={activeNav}
+          brandLogo={enterpriseBranding.logo}
           onOpenSettings={openSettings}
           onChange={(label) => {
             if (label === "工作台") {
@@ -6741,6 +7543,8 @@ function App() {
             onSelect={selectTab}
             onClose={closeTab}
             onOpenMessages={openMessages}
+            onOpenPersonal={() => openSettings("个人中心")}
+            onLogout={() => setAuthenticated(false)}
           />
           <main>
             {activeTab === "messages" ? (
@@ -6780,12 +7584,13 @@ function App() {
                 key={settingsInitial}
                 initialSelected={settingsInitial}
                 onAction={showNotice}
+                branding={enterpriseBranding}
+                onBrandingChange={setEnterpriseBranding}
               />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
                 key={preventionInitial}
                 initialFormTitle={preventionInitial}
-                onReturn={() => selectTab("workbench")}
                 onAction={showNotice}
                 onSwitchApplication={openApplication}
               />
