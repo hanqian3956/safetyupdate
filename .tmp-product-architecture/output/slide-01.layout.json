@@ -1,0 +1,3286 @@
+{
+  "schema": "openai.presentation.layout/v4",
+  "unit": "px",
+  "slide": {
+    "aid": "sl/5msjis",
+    "id": "5msjis",
+    "slide": 1,
+    "layoutId": "f159592d-1117-409e-9f3c-1255d54755f5",
+    "layoutName": "Title Slide",
+    "layoutType": "title",
+    "masterLayoutId": "9db6c143-faaf-4c0d-a993-a33bbfe44bc3",
+    "masterLayoutName": "Master",
+    "backgroundColor": "#F7FAFC",
+    "frame": {
+      "left": 0,
+      "top": 0,
+      "width": 1280,
+      "height": 720
+    }
+  },
+  "theme": {
+    "colorSchemeName": "ChatGPT",
+    "colors": {
+      "accent1": "#156082",
+      "accent2": "#E97132",
+      "accent3": "#196B24",
+      "accent4": "#0F9ED5",
+      "accent5": "#A02B93",
+      "accent6": "#4EA72E",
+      "bg1": "#FFFFFF",
+      "bg2": "#000000",
+      "tx1": "#1F1F1F",
+      "tx2": "#FFFFFF",
+      "dk1": "#000000",
+      "lt1": "#FFFFFF",
+      "dk2": "#0E2841",
+      "lt2": "#E8E8E8",
+      "hlink": "#467886",
+      "folHlink": "#96607D"
+    },
+    "typefaces": [
+      "+mn-lt"
+    ]
+  },
+  "inheritedLayers": [
+    {
+      "scope": "layout",
+      "id": "f159592d-1117-409e-9f3c-1255d54755f5",
+      "name": "Title Slide",
+      "type": "title",
+      "parentLayoutId": "9db6c143-faaf-4c0d-a993-a33bbfe44bc3",
+      "elements": []
+    },
+    {
+      "scope": "master",
+      "id": "9db6c143-faaf-4c0d-a993-a33bbfe44bc3",
+      "name": "Master",
+      "type": "master",
+      "elements": []
+    }
+  ],
+  "elements": [
+    {
+      "order": 1,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jqhcfel0",
+      "id": "1",
+      "bbox": [
+        0,
+        0,
+        1280,
+        10
+      ],
+      "geometry": "rect",
+      "fillColor": "#1475C4",
+      "lineColor": "#1475C4",
+      "lineWidth": 0
+    },
+    {
+      "order": 2,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/krat8zml",
+      "id": "2",
+      "bbox": [
+        64,
+        31,
+        720,
+        54
+      ],
+      "geometry": "rect",
+      "text": "智慧应急安全管理平台",
+      "textPreview": "智慧应急安全管理平台",
+      "resolvedFontSize": 48,
+      "resolvedTextStyle": {
+        "fontSize": 48,
+        "typeface": "+mn-lt",
+        "color": "#102A43",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "智慧应急安全管理平台"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "智慧应急安全管理平台",
+          "resolvedTextStyle": {
+            "fontSize": 48,
+            "color": "#102A43",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "智慧应急安全管理平台",
+              "fontSize": 48,
+              "color": "#102A43",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 3,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5sjuh436",
+      "id": "3",
+      "bbox": [
+        66,
+        93,
+        180,
+        27
+      ],
+      "geometry": "rect",
+      "text": "产品架构图",
+      "textPreview": "产品架构图",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#1475C4",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "产品架构图"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "产品架构图",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#1475C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "产品架构图",
+              "fontSize": 22,
+              "color": "#1475C4",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 4,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/a18b2p4j",
+      "id": "4",
+      "bbox": [
+        250,
+        96,
+        810,
+        25
+      ],
+      "geometry": "rect",
+      "text": "以统一工作入口承接协同闭环，以安全业务应用与治理能力支撑日常运营",
+      "textPreview": "以统一工作入口承接协同闭环，以安全业务应用与治理能力支撑日常运营",
+      "resolvedFontSize": 19,
+      "resolvedTextStyle": {
+        "fontSize": 19,
+        "typeface": "+mn-lt",
+        "color": "#627D98",
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "以统一工作入口承接协同闭环，以安全业务应用与治理能力支撑日常运营"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "以统一工作入口承接协同闭环，以安全业务应用与治理能力支撑日常运营",
+          "resolvedTextStyle": {
+            "fontSize": 19,
+            "color": "#627D98"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "以统一工作入口承接协同闭环，以安全业务应用与治理能力支撑日常运营",
+              "fontSize": 19,
+              "color": "#627D98"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 5,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/v2hcbu5o",
+      "id": "5",
+      "bbox": [
+        1053,
+        42,
+        163,
+        22
+      ],
+      "geometry": "rect",
+      "text": "分层产品能力全景",
+      "textPreview": "分层产品能力全景",
+      "resolvedFontSize": 15,
+      "resolvedTextStyle": {
+        "fontSize": 15,
+        "typeface": "+mn-lt",
+        "color": "#829AB1",
+        "alignment": "right",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "分层产品能力全景"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "分层产品能力全景",
+          "resolvedTextStyle": {
+            "fontSize": 15,
+            "color": "#829AB1",
+            "alignment": "right"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "分层产品能力全景",
+              "fontSize": 15,
+              "color": "#829AB1",
+              "alignment": "right"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 6,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wnqt4zm9",
+      "id": "6",
+      "name": "layer-01",
+      "bbox": [
+        64,
+        143,
+        1152,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFFFF",
+      "lineColor": "#D9E2EC",
+      "lineWidth": 1
+    },
+    {
+      "order": 7,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xozud4nu",
+      "id": "7",
+      "name": "layer-accent-01",
+      "bbox": [
+        64,
+        143,
+        10,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#1475C4",
+      "lineColor": "#1475C4",
+      "lineWidth": 0
+    },
+    {
+      "order": 8,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/mxobyp47",
+      "id": "8",
+      "bbox": [
+        96,
+        154,
+        40,
+        18
+      ],
+      "geometry": "rect",
+      "text": "01",
+      "textPreview": "01",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#1475C4",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "01"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "01",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#1475C4",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "01",
+              "fontSize": 13,
+              "color": "#1475C4",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 9,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nyxc7u5s",
+      "id": "9",
+      "bbox": [
+        96,
+        176,
+        214,
+        28
+      ],
+      "geometry": "rect",
+      "text": "统一入口层",
+      "textPreview": "统一入口层",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#17304F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "统一入口层"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "统一入口层",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#17304F",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "统一入口层",
+              "fontSize": 22,
+              "color": "#17304F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 10,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/bmx47y1k",
+      "id": "10",
+      "bbox": [
+        320,
+        157,
+        1,
+        36
+      ],
+      "geometry": "rect",
+      "fillColor": "#D5E0EC",
+      "lineColor": "#D5E0EC",
+      "lineWidth": 0
+    },
+    {
+      "order": 11,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/alonetkf",
+      "id": "11",
+      "bbox": [
+        350,
+        168,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "工作台",
+      "textPreview": "工作台",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "工作台"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "工作台",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "工作台",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 12,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/xofm98jq",
+      "id": "12",
+      "bbox": [
+        518,
+        168,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "待办总览",
+      "textPreview": "待办总览",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "待办总览"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "待办总览",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "待办总览",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 13,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wn65g325",
+      "id": "13",
+      "bbox": [
+        686,
+        168,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "消息中心",
+      "textPreview": "消息中心",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "消息中心"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "消息中心",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "消息中心",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 14,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/jqh4bi1w",
+      "id": "14",
+      "bbox": [
+        854,
+        168,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "快捷入口",
+      "textPreview": "快捷入口",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "快捷入口"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "快捷入口",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "快捷入口",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 15,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/yp8nidkb",
+      "id": "15",
+      "bbox": [
+        1022,
+        168,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "常用应用",
+      "textPreview": "常用应用",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "常用应用"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "常用应用",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "常用应用",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 16,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lszmd8j2",
+      "id": "16",
+      "name": "layer-02",
+      "bbox": [
+        64,
+        217,
+        1152,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F4FBFA",
+      "lineColor": "#D9E2EC",
+      "lineWidth": 1
+    },
+    {
+      "order": 17,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/krq5k32h",
+      "id": "17",
+      "name": "layer-accent-02",
+      "bbox": [
+        64,
+        217,
+        10,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#138D8A",
+      "lineColor": "#138D8A",
+      "lineWidth": 0
+    },
+    {
+      "order": 18,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fud4ze1s",
+      "id": "18",
+      "bbox": [
+        96,
+        228,
+        40,
+        18
+      ],
+      "geometry": "rect",
+      "text": "02",
+      "textPreview": "02",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#138D8A",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "02"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "02",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#138D8A",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "02",
+              "fontSize": 13,
+              "color": "#138D8A",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 19,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/et4369k7",
+      "id": "19",
+      "bbox": [
+        96,
+        250,
+        214,
+        28
+      ],
+      "geometry": "rect",
+      "text": "协同服务层",
+      "textPreview": "协同服务层",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#17304F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "协同服务层"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "协同服务层",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#17304F",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "协同服务层",
+              "fontSize": 22,
+              "color": "#17304F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 20,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/i9c7eh4f",
+      "id": "20",
+      "bbox": [
+        320,
+        231,
+        1,
+        36
+      ],
+      "geometry": "rect",
+      "fillColor": "#D5E0EC",
+      "lineColor": "#D5E0EC",
+      "lineWidth": 0
+    },
+    {
+      "order": 21,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/3al8nml0",
+      "id": "21",
+      "bbox": [
+        350,
+        242,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "任务中心",
+      "textPreview": "任务中心",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "任务中心"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "任务中心",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "任务中心",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 22,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/4bupgrml",
+      "id": "22",
+      "bbox": [
+        518,
+        242,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "流程中心",
+      "textPreview": "流程中心",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "流程中心"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "流程中心",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "流程中心",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 23,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/5c3qpw36",
+      "id": "23",
+      "bbox": [
+        686,
+        242,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "动态中心",
+      "textPreview": "动态中心",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "动态中心"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "动态中心",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "动态中心",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 24,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/uls7ah4j",
+      "id": "24",
+      "bbox": [
+        854,
+        242,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "预警中心",
+      "textPreview": "预警中心",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "预警中心"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "预警中心",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "预警中心",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 25,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/vm1ojml4",
+      "id": "25",
+      "bbox": [
+        1022,
+        242,
+        156,
+        27
+      ],
+      "geometry": "rect",
+      "text": "看板与数据台",
+      "textPreview": "看板与数据台",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "看板与数据台"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "看板与数据台",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "看板与数据台",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 26,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gnapc7mp",
+      "id": "26",
+      "name": "layer-03",
+      "bbox": [
+        64,
+        291,
+        1152,
+        94
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFF9F7",
+      "lineColor": "#D9E2EC",
+      "lineWidth": 1
+    },
+    {
+      "order": 27,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ho3qlc3a",
+      "id": "27",
+      "name": "layer-accent-03",
+      "bbox": [
+        64,
+        291,
+        10,
+        94
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#E05A47",
+      "lineColor": "#E05A47",
+      "lineWidth": 0
+    },
+    {
+      "order": 28,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6hs76x4n",
+      "id": "28",
+      "bbox": [
+        96,
+        302,
+        40,
+        18
+      ],
+      "geometry": "rect",
+      "text": "03",
+      "textPreview": "03",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#E05A47",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "03"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "03",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#E05A47",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "03",
+              "fontSize": 13,
+              "color": "#E05A47",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 29,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/7i1of2ls",
+      "id": "29",
+      "bbox": [
+        96,
+        324,
+        214,
+        28
+      ],
+      "geometry": "rect",
+      "text": "安全业务应用层",
+      "textPreview": "安全业务应用层",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#17304F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "安全业务应用层"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "安全业务应用层",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#17304F",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "安全业务应用层",
+              "fontSize": 22,
+              "color": "#17304F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 30,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/9or214rm",
+      "id": "30",
+      "bbox": [
+        320,
+        305,
+        1,
+        66
+      ],
+      "geometry": "rect",
+      "fillColor": "#D5E0EC",
+      "lineColor": "#D5E0EC",
+      "lineWidth": 0
+    },
+    {
+      "order": 31,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/oni18za1",
+      "id": "31",
+      "bbox": [
+        350,
+        311,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "双重预防机制",
+      "textPreview": "双重预防机制",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "双重预防机制"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "双重预防机制",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "双重预防机制",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 32,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/nm90zu9w",
+      "id": "32",
+      "bbox": [
+        560,
+        311,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "安全管理",
+      "textPreview": "安全管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "安全管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "安全管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "安全管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 33,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ml0j6psb",
+      "id": "33",
+      "bbox": [
+        770,
+        311,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "设备管理",
+      "textPreview": "设备管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "设备管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "设备管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "设备管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 34,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1k7ixkrq",
+      "id": "34",
+      "bbox": [
+        980,
+        311,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "火工品管理",
+      "textPreview": "火工品管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "火工品管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "火工品管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "火工品管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 35,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/0jy14fa5",
+      "id": "35",
+      "bbox": [
+        350,
+        346,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "生产管理",
+      "textPreview": "生产管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "生产管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "生产管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "生产管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 36,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zip0va9k",
+      "id": "36",
+      "bbox": [
+        560,
+        346,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "机电管理",
+      "textPreview": "机电管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "机电管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "机电管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "机电管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 37,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/ehgj2psz",
+      "id": "37",
+      "bbox": [
+        770,
+        346,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "消防管理",
+      "textPreview": "消防管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "消防管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "消防管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "消防管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 38,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/dg7itkre",
+      "id": "38",
+      "bbox": [
+        980,
+        346,
+        198,
+        27
+      ],
+      "geometry": "rect",
+      "text": "应急管理",
+      "textPreview": "应急管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "应急管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "应急管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "应急管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 39,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/cfy10fat",
+      "id": "39",
+      "name": "layer-04",
+      "bbox": [
+        64,
+        395,
+        1152,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#FFFCF5",
+      "lineColor": "#D9E2EC",
+      "lineWidth": 1
+    },
+    {
+      "order": 40,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/s761kfmt",
+      "id": "40",
+      "name": "layer-accent-04",
+      "bbox": [
+        64,
+        395,
+        10,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#D19925",
+      "lineColor": "#D19925",
+      "lineWidth": 0
+    },
+    {
+      "order": 41,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t8fidkne",
+      "id": "41",
+      "bbox": [
+        96,
+        406,
+        40,
+        18
+      ],
+      "geometry": "rect",
+      "text": "04",
+      "textPreview": "04",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#D19925",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "04"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "04",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#D19925",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "04",
+              "fontSize": 13,
+              "color": "#D19925",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 42,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6lojip4n",
+      "id": "42",
+      "bbox": [
+        96,
+        428,
+        214,
+        28
+      ],
+      "geometry": "rect",
+      "text": "业务配置层",
+      "textPreview": "业务配置层",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#17304F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "业务配置层"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "业务配置层",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#17304F",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "业务配置层",
+              "fontSize": 22,
+              "color": "#17304F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 43,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/rmx0bu58",
+      "id": "43",
+      "bbox": [
+        320,
+        409,
+        1,
+        36
+      ],
+      "geometry": "rect",
+      "fillColor": "#D5E0EC",
+      "lineColor": "#D5E0EC",
+      "lineWidth": 0
+    },
+    {
+      "order": 44,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/gbq1ozmp",
+      "id": "44",
+      "bbox": [
+        350,
+        420,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "安全动态",
+      "textPreview": "安全动态",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "安全动态"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "安全动态",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "安全动态",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 45,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/1czih4na",
+      "id": "45",
+      "bbox": [
+        490,
+        420,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "工作表",
+      "textPreview": "工作表",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "工作表"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "工作表",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "工作表",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 46,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e9ojmp4z",
+      "id": "46",
+      "bbox": [
+        630,
+        420,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "任务配置",
+      "textPreview": "任务配置",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "任务配置"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "任务配置",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "任务配置",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 47,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/fah0fu5k",
+      "id": "47",
+      "bbox": [
+        770,
+        420,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "流程配置",
+      "textPreview": "流程配置",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "流程配置"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "流程配置",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "流程配置",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 48,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/wfmhcv6l",
+      "id": "48",
+      "bbox": [
+        910,
+        420,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "预警规则",
+      "textPreview": "预警规则",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "预警规则"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "预警规则",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "预警规则",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 49,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/hgvi50n6",
+      "id": "49",
+      "bbox": [
+        1050,
+        420,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "应用配置",
+      "textPreview": "应用配置",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "应用配置"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "应用配置",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "应用配置",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 50,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/zal4bypo",
+      "id": "50",
+      "name": "layer-05",
+      "bbox": [
+        64,
+        469,
+        1152,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#F7F9FB",
+      "lineColor": "#D9E2EC",
+      "lineWidth": 1
+    },
+    {
+      "order": 51,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/y9s3ido3",
+      "id": "51",
+      "name": "layer-accent-05",
+      "bbox": [
+        64,
+        469,
+        10,
+        64
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#5D6D7E",
+      "lineColor": "#5D6D7E",
+      "lineWidth": 0
+    },
+    {
+      "order": 52,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/lw3md87u",
+      "id": "52",
+      "bbox": [
+        96,
+        480,
+        40,
+        18
+      ],
+      "geometry": "rect",
+      "text": "05",
+      "textPreview": "05",
+      "resolvedFontSize": 13,
+      "resolvedTextStyle": {
+        "fontSize": 13,
+        "typeface": "+mn-lt",
+        "color": "#5D6D7E",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "05"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "05",
+          "resolvedTextStyle": {
+            "fontSize": 13,
+            "color": "#5D6D7E",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "05",
+              "fontSize": 13,
+              "color": "#5D6D7E",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 53,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/kbulk369",
+      "id": "53",
+      "bbox": [
+        96,
+        502,
+        214,
+        28
+      ],
+      "geometry": "rect",
+      "text": "系统治理层",
+      "textPreview": "系统治理层",
+      "resolvedFontSize": 22,
+      "resolvedTextStyle": {
+        "fontSize": 22,
+        "typeface": "+mn-lt",
+        "color": "#17304F",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "系统治理层"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "系统治理层",
+          "resolvedTextStyle": {
+            "fontSize": 22,
+            "color": "#17304F",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "系统治理层",
+              "fontSize": 22,
+              "color": "#17304F",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 54,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/b6147yps",
+      "id": "54",
+      "bbox": [
+        320,
+        483,
+        1,
+        36
+      ],
+      "geometry": "rect",
+      "fillColor": "#D5E0EC",
+      "lineColor": "#D5E0EC",
+      "lineWidth": 0
+    },
+    {
+      "order": 55,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/q5s3eto7",
+      "id": "55",
+      "bbox": [
+        350,
+        494,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "组织架构",
+      "textPreview": "组织架构",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "组织架构"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "组织架构",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "组织架构",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 56,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/x8jm987i",
+      "id": "56",
+      "bbox": [
+        490,
+        494,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "用户中心",
+      "textPreview": "用户中心",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "用户中心"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "用户中心",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "用户中心",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 57,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/c7alg36x",
+      "id": "57",
+      "bbox": [
+        630,
+        494,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "岗位管理",
+      "textPreview": "岗位管理",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "岗位管理"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "岗位管理",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "岗位管理",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 58,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/321k3epg",
+      "id": "58",
+      "bbox": [
+        770,
+        494,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "角色权限",
+      "textPreview": "角色权限",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "角色权限"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "角色权限",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "角色权限",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 59,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/2183at8v",
+      "id": "59",
+      "bbox": [
+        910,
+        494,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "菜单权限",
+      "textPreview": "菜单权限",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "菜单权限"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "菜单权限",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "菜单权限",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 60,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/6d8nm9s3",
+      "id": "60",
+      "bbox": [
+        1050,
+        494,
+        128,
+        27
+      ],
+      "geometry": "rect",
+      "text": "数据权限",
+      "textPreview": "数据权限",
+      "resolvedFontSize": 17,
+      "resolvedTextStyle": {
+        "fontSize": 17,
+        "typeface": "+mn-lt",
+        "color": "#243B53",
+        "bold": true,
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "数据权限"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "数据权限",
+          "resolvedTextStyle": {
+            "fontSize": 17,
+            "color": "#243B53",
+            "bold": true,
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "数据权限",
+              "fontSize": 17,
+              "color": "#243B53",
+              "bold": true,
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 61,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/reh4ve98",
+      "id": "61",
+      "name": "platform-foundation",
+      "bbox": [
+        64,
+        552,
+        1152,
+        60
+      ],
+      "geometry": "roundRect",
+      "fillColor": "#173B61",
+      "lineColor": "#173B61",
+      "lineWidth": 0
+    },
+    {
+      "order": 62,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/szq5ojat",
+      "id": "62",
+      "bbox": [
+        94,
+        569,
+        170,
+        26
+      ],
+      "geometry": "rect",
+      "text": "平台基础能力",
+      "textPreview": "平台基础能力",
+      "resolvedFontSize": 23,
+      "resolvedTextStyle": {
+        "fontSize": 23,
+        "typeface": "+mn-lt",
+        "color": "#FFFFFF",
+        "bold": true,
+        "alignment": "left",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "平台基础能力"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "平台基础能力",
+          "resolvedTextStyle": {
+            "fontSize": 23,
+            "color": "#FFFFFF",
+            "bold": true
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "平台基础能力",
+              "fontSize": 23,
+              "color": "#FFFFFF",
+              "bold": true
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 63,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/t0zmxore",
+      "id": "63",
+      "bbox": [
+        312,
+        571,
+        840,
+        23
+      ],
+      "geometry": "rect",
+      "text": "数据字典   ·   个人中心   ·   统一消息通知   ·   数据权限范围   ·   业务表单与历史数据",
+      "textPreview": "数据字典   ·   个人中心   ·   统一消息通知   ·   数据权限范围   ·   业务表单与历史数据",
+      "resolvedFontSize": 18,
+      "resolvedTextStyle": {
+        "fontSize": 18,
+        "typeface": "+mn-lt",
+        "color": "#D9EAF7",
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "数据字典   ·   个人中心   ·   统一消息通知   ·   数据权限范围   ·   业务表单与历史数据"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "数据字典   ·   个人中心   ·   统一消息通知   ·   数据权限范围   ·   业务表单与历史数据",
+          "resolvedTextStyle": {
+            "fontSize": 18,
+            "color": "#D9EAF7",
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "数据字典   ·   个人中心   ·   统一消息通知   ·   数据权限范围   ·   业务表单与历史数据",
+              "fontSize": 18,
+              "color": "#D9EAF7",
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    },
+    {
+      "order": 64,
+      "kind": "shape",
+      "scope": "slide",
+      "aid": "sh/e18nqtsz",
+      "id": "64",
+      "bbox": [
+        64,
+        653,
+        1152,
+        20
+      ],
+      "geometry": "rect",
+      "text": "工作台统一入口  |  业务协同闭环  |  安全生产数字化",
+      "textPreview": "工作台统一入口  |  业务协同闭环  |  安全生产数字化",
+      "resolvedFontSize": 14,
+      "resolvedTextStyle": {
+        "fontSize": 14,
+        "typeface": "+mn-lt",
+        "color": "#829AB1",
+        "alignment": "center",
+        "insets": {
+          "top": 4.8,
+          "right": 9.6,
+          "bottom": 4.8,
+          "left": 9.6
+        }
+      },
+      "textLayout": {
+        "lineCount": 1,
+        "lines": [
+          {
+            "index": 1,
+            "text": "工作台统一入口  |  业务协同闭环  |  安全生产数字化"
+          }
+        ]
+      },
+      "paragraphs": [
+        {
+          "index": 1,
+          "text": "工作台统一入口  |  业务协同闭环  |  安全生产数字化",
+          "resolvedTextStyle": {
+            "fontSize": 14,
+            "color": "#829AB1",
+            "alignment": "center"
+          },
+          "runs": [
+            {
+              "index": 1,
+              "text": "工作台统一入口  |  业务协同闭环  |  安全生产数字化",
+              "fontSize": 14,
+              "color": "#829AB1",
+              "alignment": "center"
+            }
+          ],
+          "marginLeft": 0
+        }
+      ],
+      "lineWidth": 0
+    }
+  ],
+  "composeRuns": []
+}

@@ -331,10 +331,10 @@ const processEntries = [
 
 const recentApps = [
   {
-    name: "设备管理",
+    name: "平巷凿岩作业岗位隐患排查表",
     time: "今天 10:26",
-    icon: Wrench24Regular,
-    tone: "orange",
+    icon: ShieldCheckmark24Regular,
+    tone: "green",
   },
   {
     name: "安全管理",
@@ -1900,19 +1900,29 @@ const preventionForms = [
   },
 ];
 
-function DualPreventionPage({ onReturn, onAction, onSwitchApplication }) {
+function DualPreventionPage({
+  onReturn,
+  onAction,
+  onSwitchApplication,
+  initialFormTitle = preventionForms[0].title,
+}) {
   const [selectedItem, setSelectedItem] = useState("岗位隐患排查清单");
-  const [activeForm, setActiveForm] = useState(false);
+  const [activeForm, setActiveForm] = useState(true);
+  const [selectedForm, setSelectedForm] = useState(initialFormTitle);
   const [submitted, setSubmitted] = useState(false);
+  const [inspectionTab, setInspectionTab] = useState("页面");
   const selectedLabel = selectedItem;
-  const openForm = () => {
+  const activeFormRecord = preventionForms.find((form) => form.title === selectedForm) ?? preventionForms[0];
+  const openForm = (form = preventionForms[0]) => {
+    setSelectedForm(form.title);
     setActiveForm(true);
     setSubmitted(false);
+    setInspectionTab("页面");
   };
   const submitForm = (event) => {
     event.preventDefault();
     setSubmitted(true);
-    onAction("岗位隐患排查表已提交");
+    onAction(`${activeFormRecord.title}已提交`);
   };
   return (
     <section
@@ -1948,23 +1958,53 @@ function DualPreventionPage({ onReturn, onAction, onSwitchApplication }) {
           )}
         </nav>
         <div className="prevention-submenu">
-          {preventionSubmenu.map((item) => (
-            <button
-              key={item}
-              className={selectedItem === item ? "selected" : ""}
-              onClick={() => setSelectedItem(item)}
-            >
-              <span>{item}</span>
-              {[
-                "隐患排查任务发布",
-                "隐患排查工作表",
-                "隐患整改通知单",
-                "隐患汇报",
-              ].includes(item) ? (
-                <ChevronRight24Regular />
-              ) : null}
-            </button>
-          ))}
+          {preventionSubmenu.map((item) =>
+            item === "岗位隐患排查清单" ? (
+              <div className="prevention-form-submenu" key={item}>
+                <button
+                  className={selectedItem === item ? "selected" : ""}
+                  onClick={() => {
+                    setSelectedItem(item);
+                    openForm();
+                  }}
+                >
+                  <span>{item}</span>
+                  <ChevronDown24Regular />
+                </button>
+                {preventionForms.map((form) => (
+                  <button
+                    key={form.title}
+                    className={selectedForm === form.title && activeForm ? "selected child" : "child"}
+                    onClick={() => {
+                      setSelectedItem(item);
+                      openForm(form);
+                    }}
+                  >
+                    <span>{form.title}</span>
+                  </button>
+                ))}
+              </div>
+            ) : (
+              <button
+                key={item}
+                className={selectedItem === item ? "selected" : ""}
+                onClick={() => {
+                  setSelectedItem(item);
+                  setActiveForm(false);
+                }}
+              >
+                <span>{item}</span>
+                {[
+                  "隐患排查任务发布",
+                  "隐患排查工作表",
+                  "隐患整改通知单",
+                  "隐患汇报",
+                ].includes(item) ? (
+                  <ChevronRight24Regular />
+                ) : null}
+              </button>
+            ),
+          )}
         </div>
         <nav className="prevention-nav prevention-nav-bottom">
           <button
@@ -2007,11 +2047,23 @@ function DualPreventionPage({ onReturn, onAction, onSwitchApplication }) {
               <ChevronRight24Regular />
               <strong id="prevention-page-title">在线填报</strong>
             </div>
+            <nav className="inspection-view-tabs" aria-label="表单视图">
+              {["页面", "数据"].map((tab) => (
+                <button
+                  key={tab}
+                  className={inspectionTab === tab ? "active" : ""}
+                  onClick={() => setInspectionTab(tab)}
+                >
+                  {tab}
+                </button>
+              ))}
+            </nav>
+            {inspectionTab === "页面" ? (
             <form className="inspection-form" onSubmit={submitForm}>
               <header className="inspection-form-header">
                 <div>
                   <p>岗位隐患排查</p>
-                  <h1 id="inspection-form-title">平巷凿岩作业岗位隐患排查表</h1>
+                  <h1 id="inspection-form-title">{activeFormRecord.title}</h1>
                   <span>请如实填写现场检查情况，带 * 的项目为必填项。</span>
                 </div>
                 <button
@@ -2154,6 +2206,30 @@ function DualPreventionPage({ onReturn, onAction, onSwitchApplication }) {
                 </div>
               </footer>
             </form>
+            ) : (
+              <section className="inspection-data-view" aria-label={`${activeFormRecord.title}历史数据`}>
+                <header>
+                  <div>
+                    <p>历史填报数据</p>
+                    <h2>{activeFormRecord.title}</h2>
+                  </div>
+                  <span>共 2 条记录</span>
+                </header>
+                <div className="inspection-data-scroll">
+                  <table>
+                    <thead>
+                      <tr>
+                        <th>填报人</th><th>检查日期</th><th>作业班次</th><th>作业地点</th><th>凿岩设备防护装置完好</th><th>作业面通风与照明符合要求</th><th>人员防护用品佩戴规范</th><th>隐患描述与整改建议</th><th>填报状态</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr><td>张宇</td><td>2026-07-29</td><td>早班</td><td>西翼 3# 平巷</td><td>正常</td><td>正常</td><td>正常</td><td>现场检查正常，无需整改。</td><td><i>已提交</i></td></tr>
+                      <tr><td>李明</td><td>2026-07-28</td><td>中班</td><td>西翼 2# 平巷</td><td>正常</td><td>发现问题</td><td>正常</td><td>照明灯具亮度不足，已通知机电班处理。</td><td><i>已复核</i></td></tr>
+                    </tbody>
+                  </table>
+                </div>
+              </section>
+            )}
           </section>
         ) : (
           <>
@@ -2167,34 +2243,11 @@ function DualPreventionPage({ onReturn, onAction, onSwitchApplication }) {
               <strong id="prevention-page-title">{selectedLabel}</strong>
             </div>
             <div className="prevention-strip" />
-            <section
-              className="prevention-list"
-              aria-labelledby="prevention-list-title"
-            >
+            <section className="prevention-list prevention-empty-content">
               <div className="prevention-list-heading">
-                <h2 id="prevention-list-title">全部</h2>
-                <span>共 {preventionForms.length} 个表单</span>
+                <h2>功能页面</h2>
               </div>
-              <div className="prevention-form-grid">
-                {preventionForms.map(
-                  ({ title, detail, icon: Icon, tone }, index) => (
-                    <button
-                      key={title}
-                      className="prevention-form-card"
-                      onClick={index === 0 ? openForm : () => onAction(title)}
-                    >
-                      <span className={`prevention-form-icon ${tone}`}>
-                        <Icon />
-                      </span>
-                      <span>
-                        <b>{title}</b>
-                        <small>{detail}</small>
-                      </span>
-                      <ChevronRight24Regular />
-                    </button>
-                  ),
-                )}
-              </div>
+              <p>请从左侧菜单选择需要处理的业务。</p>
             </section>
             <button className="prevention-back" onClick={onReturn}>
               返回工作台 <ArrowRight24Regular />
@@ -2312,12 +2365,7 @@ function MockApplicationPage({ app, onReturn, onAction, onSwitchApplication }) {
   );
 }
 
-function ActivityFeed({ selectedTab, onSelectTab, onOpen, onOpenAll }) {
-  const tabs = ["全部", "待我处理", "流程提醒", "业务动态"];
-  const visibleItems =
-    selectedTab === "全部"
-      ? feedItems
-      : feedItems.filter((item) => item.tab === selectedTab);
+function ActivityFeed({ onOpen, onOpenAll }) {
   return (
     <section className="activity-feed" aria-labelledby="activity-title">
       <div className="section-title">
@@ -2328,22 +2376,9 @@ function ActivityFeed({ selectedTab, onSelectTab, onOpen, onOpenAll }) {
           查看全部 <ArrowRight24Regular />
         </button>
       </div>
-      <div className="feed-tabs" role="tablist" aria-label="动态类型">
-        {tabs.map((tab) => (
-          <button
-            key={tab}
-            role="tab"
-            aria-selected={selectedTab === tab}
-            className={selectedTab === tab ? "selected" : ""}
-            onClick={() => onSelectTab(tab)}
-          >
-            {tab}
-          </button>
-        ))}
-      </div>
       <div className="feed-list">
-        {visibleItems.length ? (
-          visibleItems.map(
+        {feedItems.length ? (
+          feedItems.map(
             ({ person, tone, avatar, headline, detail, time, icon: Icon }) => (
               <button
                 className="feed-item"
@@ -2374,7 +2409,7 @@ function ActivityFeed({ selectedTab, onSelectTab, onOpen, onOpenAll }) {
   );
 }
 
-function CommandPanel({ onAction, onOpenTask, onOpenProcess }) {
+function CommandPanel({ onAction, onOpenTask, onOpenProcess, onOpenDynamics }) {
   return (
     <aside className="command-panel" aria-label="快捷操作">
       <p>快捷入口</p>
@@ -2401,7 +2436,7 @@ function CommandPanel({ onAction, onOpenTask, onOpenProcess }) {
         </div>
         <ArrowRight24Regular />
       </button>
-      <button className="command-secondary" onClick={() => onAction("发动态")}>
+      <button className="command-secondary" onClick={onOpenDynamics}>
         <span>
           <Chat24Regular />
         </span>
@@ -2783,14 +2818,87 @@ function DashboardPage() {
   );
 }
 
-function EmbeddedDynamicsPage() {
+function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
+  const [activeTab, setActiveTab] = useState(initialTab);
+  const [libraryTab, setLibraryTab] = useState("全部");
+  const [keyword, setKeyword] = useState("");
+  const dynamicNumbers = [
+    { category: "安全管理", tone: "blue", name: "安全检查动态号", favorite: true },
+    { category: "安全管理", tone: "blue", name: "隐患整改动态号", recent: true },
+    { category: "安全管理", tone: "blue", name: "班前会动态号" },
+    { category: "生产管理", tone: "gold", name: "生产日报动态号", favorite: true },
+    { category: "生产管理", tone: "gold", name: "现场交接动态号", recent: true },
+    { category: "生产管理", tone: "gold", name: "产量异常动态号" },
+    { category: "设备管理", tone: "red", name: "设备点检动态号" },
+    { category: "设备管理", tone: "red", name: "设备保养动态号", recent: true },
+    { category: "设备管理", tone: "red", name: "故障处置动态号" },
+  ];
+  const visibleDynamicNumbers = dynamicNumbers.filter(
+    (item) =>
+      (libraryTab === "全部" ||
+        (libraryTab === "我的收藏" && item.favorite) ||
+        (libraryTab === "最近使用" && item.recent)) &&
+      (!keyword.trim() || item.name.includes(keyword.trim())),
+  );
+
   return (
     <section className="embedded-dynamics-page" aria-label="动态">
-      <iframe
-        className="embedded-dynamics-frame"
-        src={`${prototypeBase}index.html`}
-        title="动态"
-      />
+      <nav className="embedded-dynamic-tabs" aria-label="动态页面">
+        {["动态", "发动态"].map((tab) => (
+          <button
+            key={tab}
+            className={activeTab === tab ? "active" : ""}
+            onClick={() => setActiveTab(tab)}
+          >
+            {tab}
+          </button>
+        ))}
+      </nav>
+      {activeTab === "动态" ? (
+        <iframe
+          className="embedded-dynamics-frame"
+          src={`${prototypeBase}index.html`}
+          title="动态"
+        />
+      ) : (
+        <section className="dynamic-publish-library" aria-label="发动态">
+          <header>
+            <div className="dynamic-publish-tabs" role="tablist" aria-label="动态号筛选">
+              {["全部", "我的收藏", "最近使用"].map((tab) => (
+                <button
+                  key={tab}
+                  role="tab"
+                  aria-selected={libraryTab === tab}
+                  className={libraryTab === tab ? "active" : ""}
+                  onClick={() => setLibraryTab(tab)}
+                >
+                  {tab}
+                </button>
+              ))}
+            </div>
+            <input
+              value={keyword}
+              onChange={(event) => setKeyword(event.target.value)}
+              placeholder="请输入动态号名称关键字"
+              aria-label="搜索动态号"
+            />
+          </header>
+          <div className="dynamic-publish-groups">
+            {["安全管理", "生产管理", "设备管理"].map((category) => {
+              const items = visibleDynamicNumbers.filter((item) => item.category === category);
+              const tone = dynamicNumbers.find((item) => item.category === category)?.tone;
+              return (
+                <section key={category} className={`dynamic-publish-group ${tone}`}>
+                  <h2><i />{category}<small>（{items.length}）</small></h2>
+                  {items.length ? items.map((item) => (
+                    <button key={item.name} onClick={() => onAction?.(`已选择${item.name}`)}>{item.name}</button>
+                  )) : <p>暂无动态号</p>}
+                </section>
+              );
+            })}
+          </div>
+        </section>
+      )}
     </section>
   );
 }
@@ -4367,6 +4475,10 @@ function RbacPage({ onAction }) {
   ];
   const flattenMenus = (nodes) =>
     nodes.flatMap((node) => [node.name, ...flattenMenus(node.children ?? [])]);
+  const leafMenus = (nodes) =>
+    nodes.flatMap((node) =>
+      node.children?.length ? leafMenus(node.children) : [node.name],
+    );
   const allMenus = flattenMenus(menuTree);
   const [dialog, setDialog] = useState(null);
   const [roleName, setRoleName] = useState("");
@@ -4374,10 +4486,9 @@ function RbacPage({ onAction }) {
   const [roleMenus, setRoleMenus] = useState(new Set(allMenus.slice(0, 10)));
   const [confirmRole, setConfirmRole] = useState(null);
   const [dataRole, setDataRole] = useState(null);
-  const [dataScope, setDataScope] = useState("自定义数据权限");
-  const [dataScopeIds, setDataScopeIds] = useState(new Set(["safety"]));
-  const [dataTreeExpanded, setDataTreeExpanded] = useState(true);
-  const [dataLinkage, setDataLinkage] = useState(true);
+  const [dataMenuScopes, setDataMenuScopes] = useState(() =>
+    Object.fromEntries(leafMenus(menuTree).map((name) => [name, "全部"])),
+  );
   const [assignRole, setAssignRole] = useState(null);
   const [assignOrganization, setAssignOrganization] = useState("group");
   const [selectedUserIds, setSelectedUserIds] = useState(["u-zhang"]);
@@ -4435,7 +4546,7 @@ function RbacPage({ onAction }) {
       organization: "equipment",
     },
   ];
-  const dataOrganizations = [
+  const dataPermissionOrganizations = [
     {
       id: "group",
       name: "华北矿业集团",
@@ -4460,11 +4571,15 @@ function RbacPage({ onAction }) {
       ],
     },
   ];
-  const dataOrganizationIds = (nodes) =>
-    nodes.flatMap((node) => [
-      node.id,
-      ...dataOrganizationIds(node.children ?? []),
-    ]);
+  const dataPermissionUsers = [
+    { id: "u-zhang", name: "张宇", department: "安全管理部", organization: "safety" },
+    { id: "u-zhao", name: "赵敏", department: "安全管理部", organization: "safety" },
+    { id: "u-li", name: "李明", department: "设备管理部", organization: "equipment" },
+    { id: "u-chen", name: "陈磊", department: "设备管理部", organization: "equipment" },
+    { id: "u-wang", name: "王强", department: "生产技术部", organization: "production" },
+    { id: "u-zhou", name: "周杰", department: "人力资源部", organization: "human" },
+    { id: "u-sun", name: "孙丽", department: "财务部", organization: "finance" },
+  ];
   const openCreate = () => {
     setRoleName("");
     setRoleStatus("启用");
@@ -4551,12 +4666,21 @@ function RbacPage({ onAction }) {
         (node.id === id ? node : findOrganizationNode(node.children ?? [], id)),
       null,
     );
+const organizationLeafIds = (node) =>
+    node.children?.length
+      ? node.children.flatMap(organizationLeafIds)
+      : [node.id];
   const selectedOrganizationNode = findOrganizationNode(
     assignmentOrganizations,
     assignOrganization,
   );
   const visibleAssignmentUsers = assignmentUsers.filter(
     (user) => user.organization === assignOrganization,
+  );
+  const selectedDataPermissionOrganizationIds =
+    dataRole?.dataPermissionOrganizationIds ?? [];
+  const visibleDataPermissionUsers = dataPermissionUsers.filter((user) =>
+    selectedDataPermissionOrganizationIds.includes(user.organization),
   );
   const selectedUsers = assignmentUsers.filter((user) =>
     selectedUserIds.includes(user.id),
@@ -4573,42 +4697,129 @@ function RbacPage({ onAction }) {
     setSelectedUserIds(["u-zhang"]);
   };
   const openDataPermission = (role) => {
-    setDataRole(role);
-    setDataScope("自定义数据权限");
-    setDataScopeIds(new Set(["safety"]));
-    setDataTreeExpanded(true);
-  };
-  const dataDescendants = (node) => [
-    node.id,
-    ...(node.children ?? []).flatMap(dataDescendants),
-  ];
-  const toggleDataScope = (node) =>
-    setDataScopeIds((current) => {
-      const next = new Set(current);
-      const ids = dataLinkage ? dataDescendants(node) : [node.id];
-      const selected = ids.every((id) => next.has(id));
-      ids.forEach((id) => (selected ? next.delete(id) : next.add(id)));
-      return next;
+    setDataRole({
+      ...role,
+      dataPermissionOrganizationIds: [
+        "safety",
+        "equipment",
+        "production",
+      ],
+      dataAuthorizedUserIds: dataPermissionUsers
+        .filter((user) => ["safety", "equipment", "production"].includes(user.organization))
+        .map((user) => user.id),
     });
-  const DataPermissionTree = ({ nodes }) => (
-    <ul className="data-permission-tree">
+    setDataMenuScopes(
+      Object.fromEntries(leafMenus(menuTree).map((name) => [name, "全部"])),
+    );
+  };
+  const toggleDataPermissionOrganization = (organization) => {
+    const organizationIds = organizationLeafIds(organization);
+    setDataRole((current) => ({
+      ...current,
+      dataPermissionOrganizationIds: (() => {
+        const selected = current.dataPermissionOrganizationIds;
+        const fullySelected = organizationIds.every((id) => selected.includes(id));
+        return fullySelected
+          ? selected.filter((id) => !organizationIds.includes(id))
+          : [...new Set([...selected, ...organizationIds])];
+      })(),
+      dataAuthorizedUserIds: (() => {
+        const selected = current.dataPermissionOrganizationIds;
+        const fullySelected = organizationIds.every((id) => selected.includes(id));
+        const nextOrganizationIds = fullySelected
+          ? selected.filter((id) => !organizationIds.includes(id))
+          : [...new Set([...selected, ...organizationIds])];
+        const visibleUserIds = dataPermissionUsers
+          .filter((user) => nextOrganizationIds.includes(user.organization))
+          .map((user) => user.id);
+        const addedUserIds = dataPermissionUsers
+          .filter((user) => organizationIds.includes(user.organization))
+          .map((user) => user.id);
+        return fullySelected
+          ? current.dataAuthorizedUserIds.filter((id) => visibleUserIds.includes(id))
+          : [
+              ...new Set([
+                ...current.dataAuthorizedUserIds.filter((id) =>
+                  visibleUserIds.includes(id),
+                ),
+                ...addedUserIds,
+              ]),
+            ];
+      })(),
+    }));
+  };
+  const toggleDataAuthorizedUser = (userId) =>
+    setDataRole((current) => ({
+      ...current,
+      dataAuthorizedUserIds: current.dataAuthorizedUserIds.includes(userId)
+        ? current.dataAuthorizedUserIds.filter((id) => id !== userId)
+        : [...current.dataAuthorizedUserIds, userId],
+    }));
+  const DataPermissionOrganizationTree = ({ nodes }) => (
+    <ul className="data-permission-organization-tree">
       {nodes.map((node) => (
         <li key={node.id}>
-          <label>
+          <label
+            className={
+              organizationLeafIds(node).some((id) =>
+                selectedDataPermissionOrganizationIds.includes(id),
+              )
+                ? "active"
+                : ""
+            }
+          >
             <input
               type="checkbox"
-              checked={dataScopeIds.has(node.id)}
-              onChange={() => toggleDataScope(node)}
+              checked={organizationLeafIds(node).every((id) =>
+                selectedDataPermissionOrganizationIds.includes(id),
+              )}
+              ref={(element) => {
+                if (!element) return;
+                const ids = organizationLeafIds(node);
+                const selectedCount = ids.filter((id) =>
+                  selectedDataPermissionOrganizationIds.includes(id),
+                ).length;
+                element.indeterminate =
+                  selectedCount > 0 && selectedCount < ids.length;
+              }}
+              onChange={() => toggleDataPermissionOrganization(node)}
             />
             <span>{node.name}</span>
           </label>
-          {dataTreeExpanded && node.children ? (
-            <DataPermissionTree nodes={node.children} />
+          {node.children ? (
+            <DataPermissionOrganizationTree nodes={node.children} />
           ) : null}
         </li>
       ))}
     </ul>
   );
+  const renderDataPermissionMenuTree = (nodes) =>
+    nodes.map((node) =>
+      node.children?.length ? (
+        <li className="data-permission-menu-group" key={node.name}>
+          <strong>{node.name}</strong>
+          <ul>{renderDataPermissionMenuTree(node.children)}</ul>
+        </li>
+      ) : (
+        <li className="data-permission-menu-leaf" key={node.name}>
+          <span>{node.name}</span>
+          <select
+            aria-label={`${node.name}数据权限范围`}
+            value={dataMenuScopes[node.name] ?? "全部"}
+            onChange={(event) =>
+              setDataMenuScopes((current) => ({
+                ...current,
+                [node.name]: event.target.value,
+              }))
+            }
+          >
+            <option>全部</option>
+            <option>本部门及以下</option>
+            <option>仅自己</option>
+          </select>
+        </li>
+      ),
+    );
   const deleteRole = () => {
     setRoles((current) => current.filter((item) => item.id !== confirmRole.id));
     onAction(`已删除角色：${confirmRole.name}`);
@@ -4757,69 +4968,95 @@ function RbacPage({ onAction }) {
               </button>
             </header>
             <div className="data-permission-body">
-              <div className="data-permission-form">
-                <label>
-                  <span>角色名称</span>
-                  <input value={dataRole.name} disabled />
-                </label>
-                <label>
-                  <span>权限范围</span>
-                  <select
-                    value={dataScope}
-                    onChange={(event) => setDataScope(event.target.value)}
-                  >
-                    <option>仅自己</option>
-                    <option>全部数据权限</option>
-                    <option>本部门及以下</option>
-                    <option>自定义数据权限</option>
-                  </select>
-                </label>
+              <div className="data-permission-role">
+                <span>角色名称</span>
+                <strong>{dataRole.name}</strong>
               </div>
-              {dataScope === "自定义数据权限" ? (
-                <>
-                  <div className="data-permission-tools">
-                    <div className="data-expand-control">
-                      <input
-                        type="checkbox"
-                        checked={dataTreeExpanded}
-                        onChange={(event) => setDataTreeExpanded(event.target.checked)}
-                      />
-                      <button
-                        type="button"
-                        className="data-tool-link"
-                        onClick={() => setDataTreeExpanded((current) => !current)}
-                      >
-                        {dataTreeExpanded ? "折叠全部" : "展开全部"}
-                      </button>
+              <div className="data-permission-workspace">
+                <section className="data-permission-subjects">
+                  <header>
+                    <div>
+                      <h3>被授权对象</h3>
+                      <p>选择组织后，对应人员将默认勾选</p>
                     </div>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={dataScopeIds.size === dataOrganizationIds(dataOrganizations).length}
-                        onChange={() =>
-                          setDataScopeIds((current) =>
-                            current.size === dataOrganizationIds(dataOrganizations).length
-                              ? new Set()
-                              : new Set(dataOrganizationIds(dataOrganizations)),
-                          )
-                        }
+                  </header>
+                  <div className="data-permission-subject-columns">
+                    <aside>
+                      <h4>组织架构</h4>
+                      <DataPermissionOrganizationTree
+                        nodes={dataPermissionOrganizations}
                       />
-                      全选/全不选
-                    </label>
-                    <label>
-                      <input
-                        type="checkbox"
-                        checked={dataLinkage}
-                        onChange={(event) => setDataLinkage(event.target.checked)}
-                      />
-                      父子联动
-                    </label>
+                    </aside>
+                    <section>
+                      <header>
+                        <h4>人员</h4>
+                        <label>
+                          <input
+                            type="checkbox"
+                            checked={
+                              Boolean(visibleDataPermissionUsers.length) &&
+                              visibleDataPermissionUsers.every((user) =>
+                                dataRole.dataAuthorizedUserIds.includes(user.id),
+                              )
+                            }
+                            onChange={() =>
+                              setDataRole((current) => {
+                                const visibleIds = visibleDataPermissionUsers.map(
+                                  (user) => user.id,
+                                );
+                                const allSelected = visibleIds.every((id) =>
+                                  current.dataAuthorizedUserIds.includes(id),
+                                );
+                                return {
+                                  ...current,
+                                  dataAuthorizedUserIds: allSelected
+                                    ? current.dataAuthorizedUserIds.filter(
+                                        (id) => !visibleIds.includes(id),
+                                      )
+                                    : [
+                                        ...new Set([
+                                          ...current.dataAuthorizedUserIds,
+                                          ...visibleIds,
+                                        ]),
+                                      ],
+                                };
+                              })
+                            }
+                          />
+                          全选
+                        </label>
+                      </header>
+                      <div className="data-authorized-user-list">
+                        {visibleDataPermissionUsers.map((user) => (
+                          <label key={user.id}>
+                            <input
+                              type="checkbox"
+                              checked={dataRole.dataAuthorizedUserIds.includes(user.id)}
+                              onChange={() => toggleDataAuthorizedUser(user.id)}
+                            />
+                            <span>
+                              <b>{user.name}</b>
+                              <small>{user.department}</small>
+                            </span>
+                          </label>
+                        ))}
+                      </div>
+                    </section>
                   </div>
-                  <section className="data-permission-panel">
-                    <DataPermissionTree nodes={dataOrganizations} />
-                  </section>
-                </>
-              ) : null}
+                </section>
+                <section className="data-permission-items">
+                  <header>
+                    <div>
+                      <h3>授权项</h3>
+                      <p>仅对没有下级菜单的功能配置数据权限</p>
+                    </div>
+                    <span>{leafMenus(menuTree).length} 项</span>
+                  </header>
+                  <div className="data-permission-menu-panel">
+                    <ul>{renderDataPermissionMenuTree(menuTree)}</ul>
+                  </div>
+                </section>
+              </div>
             </div>
             <footer>
               <button
@@ -6219,7 +6456,6 @@ function SettingsPage({ onAction, initialSelected = "安全动态" }) {
 function App() {
   const [activeNav, setActiveNav] = useState("工作台");
   const [activeQueue, setActiveQueue] = useState("task");
-  const [activityTab, setActivityTab] = useState("全部");
   const [dialog, setDialog] = useState(null);
   const [notice, setNotice] = useState("");
   const [openTabs, setOpenTabs] = useState(initialTabs);
@@ -6229,6 +6465,10 @@ function App() {
   );
   const [taskInitial, setTaskInitial] = useState("我的任务");
   const [processInitial, setProcessInitial] = useState("待审批");
+  const [dynamicsInitial, setDynamicsInitial] = useState("动态");
+  const [preventionInitial, setPreventionInitial] = useState(
+    preventionForms[0].title,
+  );
   const [settingsInitial, setSettingsInitial] = useState("安全动态");
   const [messages, setMessages] = useState(messageEntries);
   const [taskDetail, setTaskDetail] = useState(null);
@@ -6260,6 +6500,27 @@ function App() {
     });
   };
   const openApplication = (name) => {
+    if (name === preventionForms[0].title) {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      startTransition(() => {
+        setPreventionInitial(name);
+        setOpenTabs((current) =>
+          current.some((tab) => tab.id === "双重预防机制")
+            ? current
+            : [
+                ...current,
+                {
+                  id: "双重预防机制",
+                  label: "双重预防机制",
+                  icon: ShieldCheckmark24Regular,
+                },
+              ],
+        );
+        setActiveTab("双重预防机制");
+        setActiveNav("应用");
+      });
+      return;
+    }
     const targetName = name === "应用中心" ? "双重预防机制" : name;
     const app = apps.find((item) => item.name === targetName);
     if (!app) {
@@ -6344,9 +6605,10 @@ function App() {
       setActiveNav("看板");
     });
   };
-  const openSafetyDynamics = () => {
+  const openSafetyDynamics = (initialTab = "动态") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
+      setDynamicsInitial(initialTab);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "safety-dynamics")
           ? current
@@ -6504,7 +6766,11 @@ function App() {
                 onReturn={() => selectTab("workbench")}
               />
             ) : activeTab === "safety-dynamics" ? (
-              <EmbeddedDynamicsPage />
+              <EmbeddedDynamicsPage
+                key={dynamicsInitial}
+                initialTab={dynamicsInitial}
+                onAction={showNotice}
+              />
             ) : activeTab === "warnings" ? (
               <EmbeddedWarningsPage />
             ) : activeTab === "dashboard" ? (
@@ -6517,6 +6783,8 @@ function App() {
               />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
+                key={preventionInitial}
+                initialFormTitle={preventionInitial}
                 onReturn={() => selectTab("workbench")}
                 onAction={showNotice}
                 onSwitchApplication={openApplication}
@@ -6552,7 +6820,7 @@ function App() {
                     >
                     <div className="section-title priority-title">
                       <div>
-                        <h2 id="priority-title">今日待办</h2>
+                        <h2 id="priority-title">待办事项</h2>
                       </div>
                       <button
                         className="quiet-action"
@@ -6590,10 +6858,9 @@ function App() {
                       onAction={setDialog}
                       onOpenTask={() => openTasks("发布任务")}
                       onOpenProcess={() => openProcesses("发起流程")}
+                      onOpenDynamics={() => openSafetyDynamics("发动态")}
                     />
                     <ActivityFeed
-                      selectedTab={activityTab}
-                      onSelectTab={setActivityTab}
                       onOpen={showNotice}
                       onOpenAll={openSafetyDynamics}
                     />

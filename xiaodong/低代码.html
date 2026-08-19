@@ -526,7 +526,7 @@
     editScope:'creator', editDepts:[], editRoles:[],
     labelPos:'top', labelAlign:'left', labelWidth:'medium', formWidth:'standard',
     printable:true, showSubmitTime:true, dedupe:false,
-    views:[]
+    views:[{ id:'view_default', name:'默认视图', isDefault:true, listFields:[], queryFields:[], listButtons:['add','export'], formButtons:{submit:true,draft:true,reset:true}, dataVisible:'creator', dataDept:[] }]
   };
   let currentViewId = 'view_default';
   /* 视图：同一表单可有多个展示视图，分别挂到不同应用菜单，实现差异化呈现（列表/查询/按钮/数据可见均按视图独立） */
@@ -674,7 +674,7 @@
   function openForm(id){
     const f = SAMPLE_FORMS.find(x=>x.id===id);
     currentFormId = id;
-    formName=f.name; formConfig=JSON.parse(JSON.stringify(f.fc)); ensureViews(formConfig); currentViewId=(formConfig.views.find(v=>v.isDefault)||formConfig.views[0]).id;
+    formName=f.name; formConfig=JSON.parse(JSON.stringify(f.fc)); ensureViews({ fc: formConfig, fields }); currentViewId=(formConfig.views.find(v=>v.isDefault)||formConfig.views[0]).id;
     fields=JSON.parse(JSON.stringify(f.fields)); selectedId=null;
     document.getElementById('formNameInput').value = formName;
     applyFormWidth();
@@ -695,7 +695,7 @@
   function openFormData(id){
     const f=SAMPLE_FORMS.find(x=>x.id===id);
     if(!f){ alert('请先保存并选择表单'); return; }
-    ensureViews(f.fc);
+    ensureViews(f);
     const def=f.fc.views.find(v=>v.isDefault)||f.fc.views[0];
     window.__fdViewId=def.id;
     const viewOpts=f.fc.views.map(v=>`<option value="${v.id}">${v.name}${v.isDefault?'（默认）':''}</option>`).join('');
