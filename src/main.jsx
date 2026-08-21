@@ -5619,7 +5619,7 @@ const organizationLeafIds = (node) =>
       ) : null}
       {assignRole ? (
         <div
-          className="management-dialog-layer"
+          className="management-dialog-layer assign-user-dialog-layer"
           onMouseDown={() => setAssignRole(null)}
           role="presentation"
         >
