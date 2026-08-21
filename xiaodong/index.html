@@ -319,7 +319,7 @@ main { padding: 16px 28px 40px; }
 .share-pop .qr { width: 100%; height: 96px; border-radius: 8px; background: repeating-conic-gradient(#172437 0 25%, #fff 0 50%) 50% / 12px 12px; margin-top: 8px; border: 1px solid var(--line); }
 
 /* toast */
-.toast { position: fixed; z-index: 70; right: 28px; bottom: 28px; display: flex; align-items: center; gap: 8px; padding: 12px 15px; border-radius: 9px; color: var(--text); background: var(--surface); border: 1px solid var(--line); box-shadow: 0 14px 34px rgba(24, 51, 80, .17); font-size: 12.5px; font-weight: 600; }
+.toast { position: fixed; z-index: 70; top: 20px; left: 50%; display: flex; align-items: center; gap: 8px; padding: 12px 15px; border-radius: 9px; color: var(--text); background: var(--surface); border: 1px solid var(--line); box-shadow: 0 14px 34px rgba(24, 51, 80, .17); font-size: 12.5px; font-weight: 600; transform: translateX(-50%); }
 .toast svg { width: 17px; color: var(--ok); }
 
 /* ===== Sheet：二级页面（右侧抽屉 / 移动端底部页） ===== */
@@ -573,7 +573,7 @@ main { padding: 16px 28px 40px; }
   .lb-stage { grid-template-columns: 1fr; padding: 6px 12px; }
   .lb-stage .lb-nav { display: none; }
   .qr-box { width: 148px; height: 148px; }
-  .toast { right: 14px; left: 14px; bottom: 82px; justify-content: center; }
+  .toast { top: 14px; right: auto; left: 50%; bottom: auto; justify-content: center; transform: translateX(-50%); }
 }
 /* ===== 消息中心（独立列表页，区别于动态圈） ===== */
 .message-entry.on { background: var(--accent-soft); color: var(--accent); }
@@ -2703,7 +2703,7 @@ function toast(msg) {
   $('#toastText').textContent = msg;
   $('#toast').hidden = false;
   clearTimeout(toastTimer);
-  toastTimer = setTimeout(() => { $('#toast').hidden = true; }, 2200);
+  toastTimer = setTimeout(() => { $('#toast').hidden = true; }, 3000);
 }
 
 /* ============ View switching ============ */

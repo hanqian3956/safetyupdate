@@ -1139,7 +1139,7 @@ function TaskDetailPage({ task, onBack }) {
   );
 }
 
-function ProcessApprovalDialog({ process, onClose, onApprove }) {
+function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false }) {
   if (!process) return null;
   const logs = [
     {
@@ -1265,20 +1265,21 @@ function ProcessApprovalDialog({ process, onClose, onApprove }) {
           </section>
         </div>
         <footer>
-          <span>审批意见将同步写入流程日志。</span>
+          <span>{viewOnly ? "流程记录仅供查看。" : "审批意见将同步写入流程日志。"}</span>
           <div>
-            <button
-              className="process-reject"
-              onClick={() => onApprove("已退回")}
-            >
-              退回
-            </button>
+            {!viewOnly ? (
+              <button
+                className="process-reject"
+                onClick={() => onApprove("已退回")}
+              >
+                退回
+              </button>
+            ) : null}
             <button
               className="process-approve"
-              onClick={() => onApprove("已同意")}
+              onClick={viewOnly ? onClose : () => onApprove("已同意")}
             >
-              <CheckmarkCircle24Regular />
-              同意并提交
+              {viewOnly ? "关闭" : <><CheckmarkCircle24Regular /> 同意并提交</>}
             </button>
           </div>
         </footer>
@@ -1287,7 +1288,7 @@ function ProcessApprovalDialog({ process, onClose, onApprove }) {
   );
 }
 
-function ProcessListPage({ onReturn, onAction, initialFilter = "待审批" }) {
+function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   const [selectedProcess, setSelectedProcess] = useState(null);
   const [processFilter, setProcessFilter] = useState(initialFilter);
   const [processFilters, setProcessFilters] = useState({
@@ -1399,11 +1400,6 @@ function ProcessListPage({ onReturn, onAction, initialFilter = "待审批" }) {
   };
   return (
     <section className="process-list-page" aria-labelledby="process-list-title">
-      <div className="task-page-path">
-        <button onClick={onReturn}>工作台</button>
-        <ChevronRight24Regular />
-        <strong>流程</strong>
-      </div>
       <header className="task-list-header">
         <div>
           <p>流程中心</p>
@@ -1557,6 +1553,7 @@ function ProcessListPage({ onReturn, onAction, initialFilter = "待审批" }) {
         process={selectedProcess}
         onClose={() => setSelectedProcess(null)}
         onApprove={approve}
+        viewOnly={processFilter !== "待审批"}
       />
       {selectedTemplate ? (
         <div className="process-form-layer" onMouseDown={() => { setSelectedTemplate(null); setFlowchartDialog(false); }} role="presentation">
@@ -3997,7 +3994,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
   const [userName, setUserName] = useState("");
   const [userAccount, setUserAccount] = useState("");
   const [userPhone, setUserPhone] = useState("");
-  const [userPassword, setUserPassword] = useState("123456");
+  const [userPassword, setUserPassword] = useState("abc123");
   const [userOrganization, setUserOrganization] = useState("");
   const [userPositions, setUserPositions] = useState([]);
   const [userRoles, setUserRoles] = useState([]);
@@ -4011,6 +4008,11 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
   });
   const [notice, setNotice] = useState("");
   const importRef = useRef(null);
+  useEffect(() => {
+    if (!notice) return undefined;
+    const timer = window.setTimeout(() => setNotice(""), 3000);
+    return () => window.clearTimeout(timer);
+  }, [notice]);
   const organizationNodes = flattenOrganizationNodes(organizations);
   const selectedNode = organizationNodes.find(
     (node) => node.id === selectedOrganization,
@@ -4028,7 +4030,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
     setUserName("");
     setUserAccount("");
     setUserPhone("");
-    setUserPassword("123456");
+    setUserPassword("abc123");
     setUserOrganization(selectedOrganization || organizationNodes[0]?.id || "");
     setUserPositions([]);
     setUserRoles([]);
@@ -4041,7 +4043,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
     setUserName(user.name);
     setUserAccount(user.account);
     setUserPhone(user.phone === "未填写" ? "" : user.phone);
-    setUserPassword(user.password || "123456");
+    setUserPassword(user.password || "abc123");
     setUserOrganization(user.organizationId || organizationNodes[0]?.id || "");
     setUserPositions(user.positions || []);
     setUserRoles(user.roles || []);
@@ -4059,6 +4061,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
     const account = userAccount.trim();
     const errors = {
       name: name ? "" : "请输入用户名称",
+      phone: !userPhone || /^\d{11}$/.test(userPhone) ? "" : "请输入 11 位数字手机号",
       account: account ? "" : "请输入账号",
       password: userPassword.trim() ? "" : "请输入默认密码",
       organization: userOrganization ? "" : "请选择所属组织",
@@ -4126,6 +4129,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                 account,
                 name,
                 phone: phone || "未填写",
+                password: "abc123",
                 organizationId,
                 department: organizationPath(organizations, organizationId),
                 status: "启用",
@@ -4157,6 +4161,8 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
   const requestStatusToggle = (user) =>
     setConfirmAction({ type: "status", user });
   const requestDelete = (user) => setConfirmAction({ type: "delete", user });
+  const requestPasswordReset = (user) =>
+    setConfirmAction({ type: "reset-password", user });
   const requestCreateCancel = () => setConfirmAction({ type: "cancel-create" });
   const confirmUserAction = () => {
     if (confirmAction.type === "cancel-create") {
@@ -4167,6 +4173,15 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
       setNotice(
         `已${confirmAction.user.status === "启用" ? "停用" : "启用"}用户：${confirmAction.user.name}`,
       );
+    } else if (confirmAction.type === "reset-password") {
+      setUsers((current) =>
+        current.map((user) =>
+          user.id === confirmAction.user.id
+            ? { ...user, password: "abc123" }
+            : user,
+        ),
+      );
+      setNotice(`已将 ${confirmAction.user.name} 的密码重置为 abc123`);
     } else {
       removeUser(confirmAction.user.id);
     }
@@ -4332,20 +4347,11 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                           >
                             编辑
                           </button>
-                          <button
-                            onClick={() =>
-                              setNotice(`已打开 ${user.name} 的授权设置`)
-                            }
-                          >
-                            授权
-                          </button>
                           <button onClick={() => requestDelete(user)}>
                             删除
                           </button>
                           <button
-                            onClick={() =>
-                              setNotice(`已重置 ${user.name} 的密码`)
-                            }
+                            onClick={() => requestPasswordReset(user)}
                           >
                             重置密码
                           </button>
@@ -4404,9 +4410,10 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                   }}
                 >
                   <label className={userFieldErrors.name ? "field-error" : ""}>
-                    用户名称
+                    <span className="user-field-label"><i aria-hidden="true">*</i>用户名称</span>
                     <input
                       value={userName}
+                      maxLength={10}
                       onChange={(event) => {
                         setUserName(event.target.value);
                         clearUserFieldError("name");
@@ -4416,16 +4423,25 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                     />
                     {userFieldErrors.name ? <em>{userFieldErrors.name}</em> : null}
                   </label>
-                  <label>
+                  <label className={userFieldErrors.phone ? "field-error" : ""}>
                     手机号
                     <input
+                      type="tel"
                       value={userPhone}
-                      onChange={(event) => setUserPhone(event.target.value)}
+                      maxLength={11}
+                      inputMode="numeric"
+                      onChange={(event) => {
+                        setUserPhone(
+                          event.target.value.replace(/\D/g, "").slice(0, 11),
+                        );
+                        clearUserFieldError("phone");
+                      }}
                       placeholder="例如：13800000000"
                     />
+                    {userFieldErrors.phone ? <em>{userFieldErrors.phone}</em> : null}
                   </label>
                   <label className={userFieldErrors.account ? "field-error" : ""}>
-                    账号
+                    <span className="user-field-label"><i aria-hidden="true">*</i>账号</span>
                     <input
                       value={userAccount}
                       onChange={(event) => {
@@ -4575,6 +4591,8 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                   ? `确定取消${editingUser ? "编辑" : "新增"}用户吗？已填写的信息将不会保存。`
                   : confirmAction.type === "delete"
                   ? `确定删除用户“${confirmAction.user.name}”吗？删除后无法恢复。`
+                  : confirmAction.type === "reset-password"
+                  ? `确定将用户“${confirmAction.user.name}”的密码重置为默认密码 abc123 吗？`
                   : `确定${confirmAction.user.status === "启用" ? "停用" : "启用"}用户“${confirmAction.user.name}”吗？`}
               </p>
             </div>
@@ -4767,10 +4785,9 @@ function RbacPage({ onAction }) {
           name: "系统设置",
           children: [
             { name: "角色权限" },
-            { name: "用户中心" },
+            { name: "组织用户" },
             { name: "岗位管理" },
             { name: "字典管理" },
-            { name: "个人中心" },
           ],
         },
       ],
@@ -4820,10 +4837,9 @@ function RbacPage({ onAction }) {
     设备健康度: ["查看", "导出"],
     生产进度跟踪: ["查看", "导出"],
     角色权限: ["查看", "新增", "编辑", "删除", "分配用户", "数据权限"],
-    用户中心: ["查看", "新增", "编辑", "删除", "授权", "重置密码"],
+    组织用户: ["查看", "新增", "编辑", "删除", "重置密码"],
     岗位管理: ["查看", "新增", "编辑", "删除"],
     字典管理: ["查看", "新增", "编辑", "删除"],
-    个人中心: ["查看", "编辑资料", "修改密码", "退出登录"],
   };
   const createRolePermissionTree = (nodes, parents = []) =>
     nodes.map((node) => {
@@ -5128,6 +5144,13 @@ const organizationLeafIds = (node) =>
   const visibleAssignmentUsers = assignmentUsers.filter(
     (user) => user.organization === assignOrganization,
   );
+  const visibleAssignmentUserIds = visibleAssignmentUsers.map((user) => user.id);
+  const hasVisibleSelectedUsers = visibleAssignmentUserIds.some((id) =>
+    selectedUserIds.includes(id),
+  );
+  const allVisibleUsersSelected =
+    visibleAssignmentUserIds.length > 0 &&
+    visibleAssignmentUserIds.every((id) => selectedUserIds.includes(id));
   const selectedDataPermissionOrganizationIds =
     dataRole?.dataPermissionOrganizationIds ?? [];
   const visibleDataPermissionUsers = dataPermissionUsers.filter((user) =>
@@ -5141,6 +5164,14 @@ const organizationLeafIds = (node) =>
       current.includes(id)
         ? current.filter((item) => item !== id)
         : [...current, id],
+    );
+  const selectVisibleAssignedUsers = () =>
+    setSelectedUserIds((current) => [
+      ...new Set([...current, ...visibleAssignmentUserIds]),
+    ]);
+  const clearVisibleAssignedUsers = () =>
+    setSelectedUserIds((current) =>
+      current.filter((id) => !visibleAssignmentUserIds.includes(id)),
     );
   const openAssign = (role) => {
     setAssignRole(role);
@@ -5617,8 +5648,28 @@ const organizationLeafIds = (node) =>
               </aside>
               <section>
                 <header>
-                  {selectedOrganizationNode?.name || "人员"}{" "}
-                  <span>{visibleAssignmentUsers.length} 人</span>
+                  <div className="assign-user-list-heading">
+                    <b>{selectedOrganizationNode?.name || "人员"}</b>
+                    <span>{visibleAssignmentUsers.length} 人</span>
+                  </div>
+                  {visibleAssignmentUsers.length ? (
+                    <div className="assign-user-bulk-actions">
+                      <button
+                        type="button"
+                        onClick={selectVisibleAssignedUsers}
+                        disabled={allVisibleUsersSelected}
+                      >
+                        全选
+                      </button>
+                      <button
+                        type="button"
+                        onClick={clearVisibleAssignedUsers}
+                        disabled={!hasVisibleSelectedUsers}
+                      >
+                        全不选
+                      </button>
+                    </div>
+                  ) : null}
                 </header>
                 {visibleAssignmentUsers.length ? (
                   visibleAssignmentUsers.map((user) => (
@@ -6792,7 +6843,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
   const warningPageMenu = warningPageMenus.find(
     (entry) => entry.label === selected,
   );
-  const systemSettingsMenus = ["用户中心", "个人中心", "角色权限", "字典管理", "企业设置"];
+  const systemSettingsMenus = ["组织用户", "角色权限", "字典管理", "企业设置"];
   const item =
     settingsItems.find((entry) => entry.label === selected) ??
     worksheetMenu ??
@@ -6836,15 +6887,14 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
       ["任务执行人", "任务处理与反馈", "当前角色"],
       ["流程审批人", "审批与意见填写", "当前角色"],
     ],
-    用户中心: [
+    组织用户: [
       ["姓名", "张宇", "已认证"],
       ["所属部门", "安全管理部", "已同步"],
       ["通知方式", "站内消息、短信提醒", "已启用"],
     ],
   };
   const rows = rowsBySetting[selected] ?? [];
-  const isUserCenter = selected === "用户中心";
-  const isPersonalCenter = selected === "个人中心";
+  const isUserCenter = selected === "组织用户";
   const isRbac = selected === "角色权限";
   const isDynamicsSetting = selected === "安全动态";
   const isDictionarySetting = selected === "字典管理";
@@ -6974,7 +7024,6 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
         </aside>
         <div className="settings-content">
           {!isUserCenter &&
-          !isPersonalCenter &&
           !isRbac &&
           !isEnterpriseSetting &&
           !isDynamicsSetting &&
@@ -7043,8 +7092,6 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
               users={users}
               setUsers={setUsers}
             />
-          ) : isPersonalCenter ? (
-            <PersonalCenter onAction={onAction} />
           ) : isRbac ? (
             <RbacPage onAction={onAction} />
           ) : (
@@ -7227,6 +7274,119 @@ function LoginPage({ onLogin, branding }) {
   );
 }
 
+function InputLengthGuard() {
+  const [limitNotice, setLimitNotice] = useState("");
+  const noticeTimer = useRef(null);
+
+  useEffect(() => {
+    const ignoredInputTypes = new Set([
+      "button",
+      "checkbox",
+      "color",
+      "date",
+      "datetime-local",
+      "file",
+      "hidden",
+      "image",
+      "month",
+      "radio",
+      "range",
+      "reset",
+      "submit",
+      "time",
+      "week",
+    ]);
+    const isGuardedField = (element) =>
+      (element instanceof HTMLInputElement ||
+        element instanceof HTMLTextAreaElement) &&
+      !element.disabled &&
+      !element.readOnly &&
+      !(element instanceof HTMLInputElement &&
+        ignoredInputTypes.has(element.type));
+    const getDefaultLimit = (element) => {
+      if (element instanceof HTMLTextAreaElement) return 500;
+      if (element.type === "password") return 64;
+      if (element.type === "email") return 100;
+      if (element.type === "tel") return 20;
+      if (element.type === "number") return 12;
+      if (element.type === "url") return 200;
+      return 100;
+    };
+    const getLimit = (element) => {
+      const configuredLimit = element.getAttribute("maxlength");
+      if (configuredLimit !== null) {
+        const parsedLimit = Number(configuredLimit);
+        if (Number.isFinite(parsedLimit) && parsedLimit >= 0) {
+          return parsedLimit;
+        }
+      }
+      return getDefaultLimit(element);
+    };
+    const applyLimit = (element) => {
+      if (!isGuardedField(element)) return null;
+      const limit = getLimit(element);
+      if (!element.hasAttribute("maxlength")) {
+        element.setAttribute("maxlength", String(limit));
+      }
+      return limit;
+    };
+    const showLimitNotice = (limit) => {
+      setLimitNotice(`输入内容最多 ${limit} 个字符，超出部分未保存`);
+      window.clearTimeout(noticeTimer.current);
+      noticeTimer.current = window.setTimeout(() => setLimitNotice(""), 3000);
+    };
+    const guardInputLength = (event) => {
+      const element = event.target;
+      const limit = applyLimit(element);
+      if (limit === null) return;
+      if (element.value.length <= limit) return;
+
+      element.value = element.value.slice(0, limit);
+      showLimitNotice(limit);
+    };
+    const notifyBeforeExceeding = (event) => {
+      const element = event.target;
+      const limit = applyLimit(element);
+      if (limit === null || !event.data) return;
+      const selectionLength =
+        (element.selectionEnd ?? element.value.length) -
+        (element.selectionStart ?? element.value.length);
+      if (element.value.length - selectionLength + event.data.length > limit) {
+        showLimitNotice(limit);
+      }
+    };
+    const applyAddedFields = (node) => {
+      if (!(node instanceof HTMLElement)) return;
+      if (node.matches("input, textarea")) applyLimit(node);
+      node.querySelectorAll("input, textarea").forEach(applyLimit);
+    };
+    document.querySelectorAll("input, textarea").forEach(applyLimit);
+    const observer = new MutationObserver((mutations) => {
+      mutations.forEach((mutation) =>
+        mutation.addedNodes.forEach(applyAddedFields),
+      );
+    });
+    observer.observe(document.body, { childList: true, subtree: true });
+
+    document.addEventListener("input", guardInputLength, true);
+    document.addEventListener("beforeinput", notifyBeforeExceeding, true);
+    document.addEventListener("focusin", guardInputLength, true);
+    return () => {
+      document.removeEventListener("input", guardInputLength, true);
+      document.removeEventListener("beforeinput", notifyBeforeExceeding, true);
+      document.removeEventListener("focusin", guardInputLength, true);
+      observer.disconnect();
+      window.clearTimeout(noticeTimer.current);
+    };
+  }, []);
+
+  return limitNotice ? (
+    <div className="input-length-toast" role="status" aria-live="polite">
+      {limitNotice}
+    </div>
+  ) : null;
+}
+
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
   const [enterpriseBranding, setEnterpriseBranding] = useState(() => {
@@ -7245,6 +7405,7 @@ function App() {
   const [activeQueue, setActiveQueue] = useState("task");
   const [dialog, setDialog] = useState(null);
   const [notice, setNotice] = useState("");
+  const appNoticeTimer = useRef(null);
   const [openTabs, setOpenTabs] = useState(initialTabs);
   const [activeTab, setActiveTab] = useState("workbench");
   const [favoriteApps, setFavoriteApps] = useState(() =>
@@ -7268,7 +7429,8 @@ function App() {
   }, [enterpriseBranding]);
   const showNotice = (label) => {
     setNotice(`已选择 ${label}`);
-    window.setTimeout(() => setNotice(""), 2200);
+    window.clearTimeout(appNoticeTimer.current);
+    appNoticeTimer.current = window.setTimeout(() => setNotice(""), 3000);
   };
   const selectTab = (id) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -7283,6 +7445,8 @@ function App() {
               ? "流程"
               : id === "settings"
                 ? "设置"
+                : id === "personal-center"
+                  ? ""
                 : id === "dashboard"
                   ? "看板"
                   : id === "safety-dynamics"
@@ -7465,6 +7629,21 @@ function App() {
       setActiveNav("设置");
     });
   };
+  const openPersonalCenter = () => {
+    window.scrollTo({ top: 0, behavior: "smooth" });
+    startTransition(() => {
+      setOpenTabs((current) =>
+        current.some((tab) => tab.id === "personal-center")
+          ? current
+          : [
+              ...current,
+              { id: "personal-center", label: "个人中心", icon: People24Regular },
+            ],
+      );
+      setActiveTab("personal-center");
+      setActiveNav("");
+    });
+  };
   const markMessageRead = (id) =>
     setMessages((current) =>
       current.map((message) =>
@@ -7484,7 +7663,15 @@ function App() {
         const fallback =
           remainingTabs[Math.max(0, closingIndex - 1)] ?? initialTabs[0];
         setActiveTab(fallback.id);
-        setActiveNav(fallback.id === "workbench" ? "工作台" : "应用中心");
+        setActiveNav(
+          fallback.id === "workbench"
+            ? "工作台"
+            : fallback.id === "settings"
+              ? "设置"
+              : fallback.id === "personal-center"
+                ? ""
+                : "应用中心",
+        );
       }
     });
   };
@@ -7492,12 +7679,14 @@ function App() {
   if (!authenticated) {
     return (
       <FluentProvider theme={webLightTheme}>
+        <InputLengthGuard />
         <LoginPage branding={enterpriseBranding} onLogin={() => setAuthenticated(true)} />
       </FluentProvider>
     );
   }
   return (
     <FluentProvider theme={webLightTheme}>
+      <InputLengthGuard />
       <div className="workbench theme-light">
         <AppNav
           active={activeNav}
@@ -7543,7 +7732,7 @@ function App() {
             onSelect={selectTab}
             onClose={closeTab}
             onOpenMessages={openMessages}
-            onOpenPersonal={() => openSettings("个人中心")}
+            onOpenPersonal={openPersonalCenter}
             onLogout={() => setAuthenticated(false)}
           />
           <main>
@@ -7567,7 +7756,6 @@ function App() {
                 key={processInitial}
                 initialFilter={processInitial}
                 onAction={showNotice}
-                onReturn={() => selectTab("workbench")}
               />
             ) : activeTab === "safety-dynamics" ? (
               <EmbeddedDynamicsPage
@@ -7587,6 +7775,8 @@ function App() {
                 branding={enterpriseBranding}
                 onBrandingChange={setEnterpriseBranding}
               />
+            ) : activeTab === "personal-center" ? (
+              <PersonalCenter onAction={showNotice} />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
                 key={preventionInitial}
@@ -7606,13 +7796,7 @@ function App() {
                 <header className="workbench-welcome">
                   <div>
                     <h1>
-                      智慧应急安全管理平台欢迎您，
-                      <button
-                        className="workbench-user-link"
-                        onClick={() => openSettings("个人中心")}
-                      >
-                        张宇
-                      </button>
+                      智慧应急安全管理平台欢迎您，张宇
                     </h1>
                   </div>
                   <span>今日工作已更新</span>

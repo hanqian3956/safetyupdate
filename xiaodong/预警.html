@@ -2912,12 +2912,12 @@ function confirmForward(){
 // ====== 轻量 Toast ======
 function toast(type, msg){
   let wrap = document.getElementById('wbToastWrap');
-  if(!wrap){ wrap=document.createElement('div'); wrap.id='wbToastWrap'; wrap.style.cssText='position:fixed;top:20px;right:20px;z-index:99999;display:flex;flex-direction:column;gap:8px;'; document.body.appendChild(wrap); }
+  if(!wrap){ wrap=document.createElement('div'); wrap.id='wbToastWrap'; wrap.style.cssText='position:fixed;top:20px;left:50%;z-index:99999;display:flex;flex-direction:column;gap:8px;align-items:center;transform:translateX(-50%);'; document.body.appendChild(wrap); }
   const colors={success:'#2ba471',warning:'#e6a23c',info:'#0f6cbd',error:'#f5655b'};
   const t=document.createElement('div');
   t.textContent=msg; t.style.cssText='padding:10px 16px;border-radius:8px;color:#fff;font-size:13px;box-shadow:0 2px 12px rgba(23,36,55,.15);background:'+(colors[type]||'#0f6cbd')+';';
   wrap.appendChild(t);
-  setTimeout(function(){ t.style.transition='opacity .3s'; t.style.opacity='0'; setTimeout(function(){ t.remove(); },300); }, 1800);
+  setTimeout(function(){ t.style.transition='opacity .3s'; t.style.opacity='0'; setTimeout(function(){ t.remove(); },300); }, 3000);
 }
 
 // ====== Org Picker（通讯录及外部联系人 具体人员多选，处理人/通知人/超期提醒人共用）======
