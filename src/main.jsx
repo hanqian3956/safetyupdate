@@ -54,6 +54,7 @@ import "./organization-center.css";
 import "./user-management.css";
 import "./login.css";
 import "./enterprise-settings.css";
+import lowCodePrototypeHtml from "../xiaodong/新低代码.html?raw";
 
 use([
   BarChart,
@@ -3034,12 +3035,17 @@ function EmbeddedWarningsPage() {
 
 function EmbeddedLowCodePage({ module, view }) {
   const query = new URLSearchParams({ module, ...(view ? { view } : {}) });
+  const request = JSON.stringify({ module, view });
+  const srcDoc = lowCodePrototypeHtml.replace(
+    "<head>",
+    `<head><script>window.__hostLowCodeRequest = ${request};</script>`,
+  );
 
   return (
     <section className="settings-lowcode-embed" aria-label={module}>
       <iframe
         key={query.toString()}
-        src={`${prototypeBase}低代码.html?${query.toString()}`}
+        srcDoc={srcDoc}
         title="低代码平台"
       />
     </section>

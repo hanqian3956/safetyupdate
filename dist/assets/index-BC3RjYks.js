@@ -23,12 +23,4439 @@ Error generating stack: `+e.message+`
 
 `:`<br/>`,m=l.join(p);this._showOrMove(a,function(){this._updateContentNotChangedOnAxis(e,s)?this._updatePosition(a,d,i[0],i[1],this._tooltipContent,s):this._showTooltipContent(a,m,s,Math.random()+``,i[0],i[1],d,null,u)})},t.prototype._showSeriesItemTooltip=function(e,t,n){var r=this._ecModel,i=hu(t),a=i.seriesIndex,o=r.getSeriesByIndex(a),s=i.dataModel||o,c=i.dataIndex,l=i.dataType,u=s.getData(l),d=this._renderMode,f=e.positionDefault,p=jN([u.getItemModel(c),s,o&&(o.coordinateSystem||{}).model],this._tooltipModel,f?{position:f}:null),m=p.get(`trigger`);if(!(m!=null&&m!==`item`)){var h=s.getDataParams(c,l),g=new py;h.marker=g.makeTooltipMarker(`item`,qh(h.color),d);var _=mv(s.formatTooltip(c,!1,l)),v=p.get(`order`),y=p.get(`valueFormatter`),b=_.frag,x=b?iy(y?z({valueFormatter:y},b):b,g,d,v,r.get(`useUTC`),p.get(`textStyle`)):_.text,S=`item_`+s.name+`_`+c;this._showOrMove(p,function(){this._showTooltipContent(p,x,h,S,e.offsetX,e.offsetY,e.position,e.target,g)}),n({type:`showTip`,dataIndexInside:c,dataIndex:u.getRawIndex(c),seriesIndex:a,from:this.uid})}},t.prototype._showComponentItemTooltip=function(e,t,n){var r=this._renderMode===`html`,i=hu(t),a=i.tooltipConfig.option||{},o=a.encodeHTMLContent;if(W(a)){var s=a;a={content:s,formatter:s},o=!0}o&&r&&a.content&&(a=L(a),a.content=At(a.content));var c=[a],l=this._ecModel.getComponent(i.componentMainType,i.componentIndex);l&&c.push(l),c.push({formatter:a.content});var u=e.positionDefault,d=jN(c,this._tooltipModel,u?{position:u}:null),f=d.get(`content`),p=Math.random()+``,m=new py;this._showOrMove(d,function(){var n=L(d.get(`formatterParams`)||{});this._showTooltipContent(d,f,n,p,e.offsetX,e.offsetY,e.position,t,m)}),n({type:`showTip`,from:this.uid})},t.prototype._showTooltipContent=function(e,t,n,r,i,a,o,s,c){if(this._ticket=``,!(!e.get(`showContent`)||!e.get(`show`))){var l=this._tooltipContent;l.setEnterable(e.get(`enterable`));var u=e.get(`formatter`);o||=e.get(`position`);var d=t,f=this._getNearestPoint([i,a],n,e.get(`trigger`),e.get(`borderColor`),e.get(`defaultBorderColor`,!0)).color;if(u)if(W(u)){var p=e.ecModel.get(`useUTC`),m=H(n)?n[0]:n,h=m&&m.axisType&&m.axisType.indexOf(`time`)>=0;d=u,h&&(d=xh(m.axisValue,d,p)),d=Gh(d,n,!0)}else if(U(u)){var g=ye(function(t,r){t===this._ticket&&(l.setContent(r,c,e,f,o),this._updatePosition(e,o,i,a,l,n,s))},this);this._ticket=r,d=u(n,r,g)}else d=u;l.setContent(d,c,e,f,o),l.show(e,f),this._updatePosition(e,o,i,a,l,n,s)}},t.prototype._getNearestPoint=function(e,t,n,r,i){if(n===`axis`||H(t))return{color:r||i};if(!H(t))return{color:r||t.color||t.borderColor}},t.prototype._updatePosition=function(e,t,n,r,i,a,o){var s=this._api.getWidth(),c=this._api.getHeight();t||=e.get(`position`);var l=i.getSize(),u=e.get(`align`),d=e.get(`verticalAlign`),f=o&&o.getBoundingRect().clone();if(o&&f.applyTransform(o.transform),U(t)&&(t=t([n,r],a,i.el,f,{viewSize:[s,c],contentSize:l.slice()})),H(t))n=q(t[0],s),r=q(t[1],c);else if(G(t)){var p=t;p.width=l[0],p.height=l[1];var m=fg(p,{width:s,height:c});n=m.x,r=m.y,u=null,d=null}else if(W(t)&&o){var h=FN(t,f,l,e.get(`borderWidth`));n=h[0],r=h[1]}else{var h=NN(n,r,i,s,c,u?null:20,d?null:20);n=h[0],r=h[1]}if(u&&(n-=IN(u)?l[0]/2:u===`right`?l[0]:0),d&&(r-=IN(d)?l[1]/2:d===`bottom`?l[1]:0),cN(e)){var h=PN(n,r,i,s,c);n=h[0],r=h[1]}i.moveTo(n,r)},t.prototype._updateContentNotChangedOnAxis=function(e,t){var n=this._lastDataByCoordSys,r=this._cbParamsList,i=!!n&&n.length===e.length;return i&&B(n,function(n,a){var o=n.dataByAxis||[],s=(e[a]||{}).dataByAxis||[];i&&=o.length===s.length,i&&B(o,function(e,n){var a=s[n]||{},o=e.seriesDataIndices||[],c=a.seriesDataIndices||[];i=i&&e.value===a.value&&e.axisType===a.axisType&&e.axisId===a.axisId&&o.length===c.length,i&&B(o,function(e,t){var n=c[t];i=i&&e.seriesIndex===n.seriesIndex&&e.dataIndex===n.dataIndex}),r&&B(e.seriesDataIndices,function(e){var n=e.seriesIndex,a=t[n],o=r[n];a&&o&&o.data!==a.data&&(i=!1)})})}),this._lastDataByCoordSys=e,this._cbParamsList=t,!!i},t.prototype._hide=function(e){this._lastDataByCoordSys=null,this._cbParamsList=null,e({type:`hideTip`,from:this.uid})},t.prototype.dispose=function(e,t){x.node||!t.getDom()||(Hy(this,`_updatePosition`),this._tooltipContent.dispose(),UM(`itemTooltip`,t),this._tooltipContent=null,this._tooltipModel=null,this._lastDataByCoordSys=null,this._cbParamsList=null)},t.type=`tooltip`,t}(Dy);function jN(e,t,n){var r=t.ecModel,i;n?(i=new Pm(n,r,r),i=new Pm(t.option,i,r)):i=t;for(var a=e.length-1;a>=0;a--){var o=e[a];o&&(o instanceof Pm&&(o=o.get(`tooltip`,!0)),W(o)&&(o={formatter:o}),o&&(i=new Pm(o,i,r)))}return i}function MN(e,t){return e.dispatchAction||ye(t.dispatchAction,t)}function NN(e,t,n,r,i,a,o){var s=n.getSize(),c=s[0],l=s[1];return a!=null&&(e+c+a+2>r?e-=c+a:e+=a),o!=null&&(t+l+o>i?t-=l+o:t+=o),[e,t]}function PN(e,t,n,r,i){var a=n.getSize(),o=a[0],s=a[1];return e=Math.min(e+o,r)-o,t=Math.min(t+s,i)-s,e=Math.max(e,0),t=Math.max(t,0),[e,t]}function FN(e,t,n,r){var i=n[0],a=n[1],o=Math.ceil(Math.SQRT2*r)+8,s=0,c=0,l=t.width,u=t.height;switch(e){case`inside`:s=t.x+l/2-i/2,c=t.y+u/2-a/2;break;case`top`:s=t.x+l/2-i/2,c=t.y-a-o;break;case`bottom`:s=t.x+l/2-i/2,c=t.y+u+o;break;case`left`:s=t.x-i-o,c=t.y+u/2-a/2;break;case`right`:s=t.x+l+o,c=t.y+u/2-a/2}return[s,c]}function IN(e){return e===`center`||e===`middle`}function LN(e,t,n){var r=ls(e).queryOptionMap,i=r.keys()[0];if(!(!i||i===`series`)){var a=ds(t,i,r.get(i),{useDefault:!1,enableAll:!1,enableNone:!1}).models[0];if(a){var o=n.getViewOfComponentModel(a),s;if(o.group.traverse(function(t){var n=hu(t).tooltipConfig;if(n&&n.name===e.name)return s=t,!0}),s)return{componentMainType:i,componentIndex:a.componentIndex,el:s}}}}function RN(e){DE(iN),e.registerComponentModel(sN),e.registerComponentView(AN),e.registerAction({type:`showTip`,event:`showTip`,update:`tooltip:manuallyShowTip`},qe),e.registerAction({type:`hideTip`,event:`hideTip`,update:`tooltip:manuallyHideTip`},qe)}var zN=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n.layoutMode={type:`box`,ignoreSize:!0},n}return t.type=`title`,t.defaultOption={z:6,show:!0,text:``,target:`blank`,subtext:``,subtarget:`blank`,left:`center`,top:Y.size.m,backgroundColor:Y.color.transparent,borderColor:Y.color.primary,borderWidth:0,padding:5,itemGap:10,textStyle:{fontSize:18,fontWeight:`bold`,color:Y.color.primary},subtextStyle:{fontSize:12,color:Y.color.quaternary}},t}(bg),BN=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n}return t.prototype.render=function(e,t,n){if(this.group.removeAll(),e.get(`show`)){var r=this.group,i=e.getModel(`textStyle`),a=e.getModel(`subtextStyle`),o=e.get(`textAlign`),s=K(e.get(`textBaseline`),e.get(`textVerticalAlign`)),c=new tu({style:fm(i,{text:e.get(`text`),fill:i.getTextColor()},{disableBox:!0}),z2:10}),l=c.getBoundingRect(),u=e.get(`subtext`),d=new tu({style:fm(a,{text:u,fill:a.getTextColor(),y:l.height+e.get(`itemGap`),verticalAlign:`top`},{disableBox:!0}),z2:10}),f=e.get(`link`),p=e.get(`sublink`),m=e.get(`triggerEvent`,!0);c.silent=!f&&!m,d.silent=!p&&!m,f&&c.on(`click`,function(){Jh(f,`_`+e.get(`target`))}),p&&d.on(`click`,function(){Jh(p,`_`+e.get(`subtarget`))}),hu(c).eventData=hu(d).eventData=m?{componentType:`title`,componentIndex:e.componentIndex}:null,r.add(c),u&&r.add(d);var h=r.getBoundingRect(),g=e.getBoxLayoutParams();g.width=h.width,g.height=h.height;var _=fg(g,mg(e,n).refContainer,e.get(`padding`));o||(o=e.get(`left`)||e.get(`right`),o===`middle`&&(o=`center`),o===`right`?_.x+=_.width:o===`center`&&(_.x+=_.width/2)),s||(s=e.get(`top`)||e.get(`bottom`),s===`center`&&(s=`middle`),s===`bottom`?_.y+=_.height:s===`middle`&&(_.y+=_.height/2),s||=`top`),r.x=_.x,r.y=_.y,r.markRedraw();var v={align:o,verticalAlign:s};c.setStyle(v),d.setStyle(v),h=r.getBoundingRect();var y=_.margin,b=e.getItemStyle([`color`,`opacity`]);b.fill=e.get(`backgroundColor`);var x=new Xl({shape:{x:h.x-y[3],y:h.y-y[0],width:h.width+y[1]+y[3],height:h.height+y[0]+y[2],r:e.get(`borderRadius`)},style:b,subPixelOptimize:!0,silent:!0});r.add(x)}},t.type=`title`,t}(Dy);function VN(e){e.registerComponentModel(zN),e.registerComponentView(BN)}var HN=function(e,t){if(t===`all`)return{type:`all`,title:e.getLocaleModel().get([`legend`,`selector`,`all`])};if(t===`inverse`)return{type:`inverse`,title:e.getLocaleModel().get([`legend`,`selector`,`inverse`])}},UN=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n.layoutMode={type:`box`,ignoreSize:!0},n}return t.prototype.init=function(e,t,n){this.mergeDefaultAndTheme(e,n),e.selected=e.selected||{},this._updateSelector(e)},t.prototype.mergeOption=function(t,n){e.prototype.mergeOption.call(this,t,n),this._updateSelector(t)},t.prototype._updateSelector=function(e){var t=e.selector,n=this.ecModel;t===!0&&(t=e.selector=[`all`,`inverse`]),H(t)&&B(t,function(e,r){W(e)&&(e={type:e}),t[r]=R(e,HN(n,e.type))})},t.prototype.optionUpdated=function(){this._updateData(this.ecModel);var e=this._data;if(e[0]&&this.get(`selectedMode`)===`single`){for(var t=!1,n=0;n<e.length;n++){var r=e[n].get(`name`);if(this.isSelected(r)){this.select(r),t=!0;break}}!t&&this.select(e[0].get(`name`))}},t.prototype._updateData=function(e){var t=[],n=[];e.eachRawSeries(function(r){var i=r.name;n.push(i);var a;if(r.legendVisualProvider){var o=r.legendVisualProvider.getAllNames();e.isSeriesFiltered(r)||(n=n.concat(o)),o.length?t=t.concat(o):a=!0}else a=!0;a&&ts(r)&&t.push(r.name)}),this._availableNames=n;var r=this.get(`data`)||t,i=He(),a=V(r,function(e){return(W(e)||Se(e))&&(e={name:e}),i.get(e.name)?null:(i.set(e.name,!0),new Pm(e,this,this.ecModel))},this);this._data=he(a,function(e){return!!e})},t.prototype.getData=function(){return this._data},t.prototype.select=function(e){var t=this.option.selected;if(this.get(`selectedMode`)===`single`){var n=this._data;B(n,function(e){t[e.get(`name`)]=!1})}t[e]=!0},t.prototype.unSelect=function(e){this.get(`selectedMode`)!==`single`&&(this.option.selected[e]=!1)},t.prototype.toggleSelected=function(e){var t=this.option.selected;t.hasOwnProperty(e)||(t[e]=!0),this[t[e]?`unSelect`:`select`](e)},t.prototype.allSelect=function(){var e=this._data,t=this.option.selected;B(e,function(e){t[e.get(`name`,!0)]=!0})},t.prototype.inverseSelect=function(){var e=this._data,t=this.option.selected;B(e,function(e){var n=e.get(`name`,!0);t.hasOwnProperty(n)||(t[n]=!0),t[n]=!t[n]})},t.prototype.isSelected=function(e){var t=this.option.selected;return!(t.hasOwnProperty(e)&&!t[e])&&ue(this._availableNames,e)>=0},t.prototype.getOrient=function(){return this.get(`orient`)===`vertical`?{index:1,name:`vertical`}:{index:0,name:`horizontal`}},t.type=`legend.plain`,t.dependencies=[`series`],t.defaultOption={z:4,show:!0,orient:`horizontal`,left:`center`,bottom:Y.size.m,align:`auto`,backgroundColor:Y.color.transparent,borderColor:Y.color.border,borderRadius:0,borderWidth:0,padding:5,itemGap:8,itemWidth:25,itemHeight:14,symbolRotate:`inherit`,symbolKeepAspect:!0,inactiveColor:Y.color.disabled,inactiveBorderColor:Y.color.disabled,inactiveBorderWidth:`auto`,itemStyle:{color:`inherit`,opacity:`inherit`,borderColor:`inherit`,borderWidth:`auto`,borderCap:`inherit`,borderJoin:`inherit`,borderDashOffset:`inherit`,borderMiterLimit:`inherit`},lineStyle:{width:`auto`,color:`inherit`,inactiveColor:Y.color.disabled,inactiveWidth:2,opacity:`inherit`,type:`inherit`,cap:`inherit`,join:`inherit`,dashOffset:`inherit`,miterLimit:`inherit`},textStyle:{color:Y.color.secondary},selectedMode:!0,selector:!1,selectorLabel:{show:!0,borderRadius:10,padding:[3,5,3,5],fontSize:12,fontFamily:`sans-serif`,color:Y.color.tertiary,borderWidth:1,borderColor:Y.color.border},emphasis:{selectorLabel:{show:!0,color:Y.color.quaternary}},selectorPosition:`auto`,selectorItemGap:7,selectorButtonGap:10,tooltip:{show:!1},triggerEvent:!1},t}(bg),WN=be,GN=B,KN=La,qN=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n.newlineDisabled=!1,n}return t.prototype.init=function(){this.group.add(this._contentGroup=new KN),this.group.add(this._selectorGroup=new KN),this._isFirstRender=!0},t.prototype.getContentGroup=function(){return this._contentGroup},t.prototype.getSelectorGroup=function(){return this._selectorGroup},t.prototype.render=function(e,t,n){var r=this._isFirstRender;if(this._isFirstRender=!1,this.resetInner(),e.get(`show`,!0)){var i=e.get(`align`),a=e.get(`orient`);(!i||i===`auto`)&&(i=e.get(`left`)===`right`&&a===`vertical`?`right`:`left`);var o=e.get(`selector`,!0),s=e.get(`selectorPosition`,!0);o&&(!s||s===`auto`)&&(s=a===`horizontal`?`end`:`start`),this.renderInner(i,e,t,n,o,a,s);var c=mg(e,n).refContainer,l=e.getBoxLayoutParams(),u=e.get(`padding`),d=fg(l,c,u),f=this.layoutInner(e,i,d,r,o,s),p=fg(le({width:f.width,height:f.height},l),c,u);this.group.x=p.x-f.x,this.group.y=p.y-f.y,this.group.markRedraw(),this.group.add(this._backgroundEl=oN(f,e))}},t.prototype.resetInner=function(){this.getContentGroup().removeAll(),this._backgroundEl&&this.group.remove(this._backgroundEl),this.getSelectorGroup().removeAll()},t.prototype.renderInner=function(e,t,n,r,i,a,o){var s=this.getContentGroup(),c=He(),l=t.get(`selectedMode`),u=t.get(`triggerEvent`),d=[];n.eachRawSeries(function(e){!e.get(`legendHoverLink`)&&d.push(e.id)}),GN(t.getData(),function(i,a){var o=this,f=i.get(`name`);if(!this.newlineDisabled&&(f===``||f===`
 `)){var p=new KN;p.newline=!0,s.add(p);return}var m=n.getSeriesByName(f)[0];if(!c.get(f))if(m){var h=m.getData(),g=h.getVisual(`legendLineStyle`)||{},_=h.getVisual(`legendIcon`),v=h.getVisual(`style`),y=this._createItem(m,f,a,i,t,e,g,v,_,l,r);y.on(`click`,WN(XN,f,null,r,d)).on(`mouseover`,WN(ZN,m.name,null,r,d)).on(`mouseout`,WN(QN,m.name,null,r,d)),n.ssr&&y.eachChild(function(e){var t=hu(e);t.seriesIndex=m.seriesIndex,t.dataIndex=a,t.ssrType=`legend`}),u&&y.eachChild(function(e){o.packEventData(e,t,m,a,f)}),c.set(f,!0)}else n.eachRawSeries(function(o){var s=this;if(!c.get(f)&&o.legendVisualProvider){var p=o.legendVisualProvider;if(!p.containName(f))return;var m=p.indexOfName(f),h=p.getItemVisual(m,`style`),g=p.getItemVisual(m,`legendIcon`),_=Vr(h.fill);_&&_[3]===0&&(_[3]=.2,h=z(z({},h),{fill:qr(_,`rgba`)}));var v=this._createItem(o,f,a,i,t,e,{},h,g,l,r);v.on(`click`,WN(XN,null,f,r,d)).on(`mouseover`,WN(ZN,null,f,r,d)).on(`mouseout`,WN(QN,null,f,r,d)),n.ssr&&v.eachChild(function(e){var t=hu(e);t.seriesIndex=o.seriesIndex,t.dataIndex=a,t.ssrType=`legend`}),u&&v.eachChild(function(e){s.packEventData(e,t,o,a,f)}),c.set(f,!0)}},this)},this),i&&this._createSelector(i,t,r,a,o)},t.prototype.packEventData=function(e,t,n,r,i){var a={componentType:`legend`,componentIndex:t.componentIndex,dataIndex:r,value:i,seriesIndex:n.seriesIndex};hu(e).eventData=a},t.prototype._createSelector=function(e,t,n,r,i){var a=this.getSelectorGroup();GN(e,function(e){var r=e.type,i=new tu({style:{x:0,y:0,align:`center`,verticalAlign:`middle`},onclick:function(){n.dispatchAction({type:r===`all`?`legendAllSelect`:`legendInverseSelect`,legendId:t.id})}});a.add(i),um(i,{normal:t.getModel(`selectorLabel`),emphasis:t.getModel([`emphasis`,`selectorLabel`])},{defaultText:e.title}),Sd(i)})},t.prototype._createItem=function(e,t,n,r,i,a,o,s,c,l,u){var d=e.visualDrawType,f=i.get(`itemWidth`),p=i.get(`itemHeight`),m=i.isSelected(t),h=r.get(`symbolRotate`),g=r.get(`symbolKeepAspect`),_=r.get(`icon`);c=_||c||`roundRect`;var v=JN(c,r,o,s,d,m,u),y=new KN,b=r.getModel(`textStyle`);if(U(e.getLegendIcon)&&(!_||_===`inherit`))y.add(e.getLegendIcon({itemWidth:f,itemHeight:p,icon:c,iconRotate:h,itemStyle:v.itemStyle,lineStyle:v.lineStyle,symbolKeepAspect:g}));else{var x=_===`inherit`&&e.getData().getVisual(`symbol`)?h===`inherit`?e.getData().getVisual(`symbolRotate`):h:0;y.add(YN({itemWidth:f,itemHeight:p,icon:c,iconRotate:x,itemStyle:v.itemStyle,lineStyle:v.lineStyle,symbolKeepAspect:g}))}var S=a===`left`?f+5:-5,C=a,w=i.get(`formatter`),T=t;W(w)&&w?T=w.replace(`{name}`,t??``):U(w)&&(T=w(t));var E=m?b.getTextColor():r.get(`inactiveColor`);y.add(new tu({style:fm(b,{text:T,x:S,y:p/2,fill:E,align:C,verticalAlign:`middle`},{inheritColor:E})}));var D=new Xl({shape:y.getBoundingRect(),style:{fill:`transparent`}}),O=r.getModel(`tooltip`);return O.get(`show`)&&Kp({el:D,componentModel:i,itemName:t,itemTooltipOption:O.option}),y.add(D),y.eachChild(function(e){e.silent=!0}),D.silent=!l,this.getContentGroup().add(y),Sd(y),y.__legendDataIndex=n,y},t.prototype.layoutInner=function(e,t,n,r,i,a){var o=this.getContentGroup(),s=this.getSelectorGroup();cg(e.get(`orient`),o,e.get(`itemGap`),n.width,n.height);var c=o.getBoundingRect(),l=[-c.x,-c.y];if(s.markRedraw(),o.markRedraw(),i){cg(`horizontal`,s,e.get(`selectorItemGap`,!0));var u=s.getBoundingRect(),d=[-u.x,-u.y],f=e.get(`selectorButtonGap`,!0),p=e.getOrient().index,m=p===0?`width`:`height`,h=p===0?`height`:`width`,g=p===0?`y`:`x`;a===`end`?d[p]+=c[m]+f:l[p]+=u[m]+f,d[1-p]+=c[h]/2-u[h]/2,s.x=d[0],s.y=d[1],o.x=l[0],o.y=l[1];var _={x:0,y:0};return _[m]=c[m]+f+u[m],_[h]=Math.max(c[h],u[h]),_[g]=Math.min(0,u[g]+d[1-p]),_}else return o.x=l[0],o.y=l[1],this.group.getBoundingRect()},t.prototype.remove=function(){this.getContentGroup().removeAll(),this._isFirstRender=!0},t.type=`legend.plain`,t}(Dy);function JN(e,t,n,r,i,a,o){function s(e,t){e.lineWidth===`auto`&&(e.lineWidth=t.lineWidth>0?2:0),GN(e,function(n,r){e[r]===`inherit`&&(e[r]=t[r])})}var c=t.getModel(`itemStyle`),l=c.getItemStyle(),u=e.lastIndexOf(`empty`,0)===0?`fill`:`stroke`,d=c.getShallow(`decal`);l.decal=!d||d===`inherit`?r.decal:Bx(d,o),l.fill===`inherit`&&(l.fill=r[i]),l.stroke===`inherit`&&(l.stroke=r[u]),l.opacity===`inherit`&&(l.opacity=(i===`fill`?r:n).opacity),s(l,r);var f=t.getModel(`lineStyle`),p=f.getLineStyle();if(s(p,n),l.fill===`auto`&&(l.fill=r.fill),l.stroke===`auto`&&(l.stroke=r.fill),p.stroke===`auto`&&(p.stroke=r.fill),!a){var m=t.get(`inactiveBorderWidth`),h=l[u];l.lineWidth=m===`auto`?r.lineWidth>0&&h?2:0:l.lineWidth,l.fill=t.get(`inactiveColor`),l.stroke=t.get(`inactiveBorderColor`),p.stroke=f.get(`inactiveColor`),p.lineWidth=f.get(`inactiveWidth`)}return{itemStyle:l,lineStyle:p}}function YN(e){var t=e.icon||`roundRect`,n=Xb(t,0,0,e.itemWidth,e.itemHeight,e.itemStyle.fill,e.symbolKeepAspect);return n.setStyle(e.itemStyle),n.rotation=(e.iconRotate||0)*Math.PI/180,n.setOrigin([e.itemWidth/2,e.itemHeight/2]),t.indexOf(`empty`)>-1&&(n.style.stroke=n.style.fill,n.style.fill=Y.color.neutral00,n.style.lineWidth=2),n}function XN(e,t,n,r){QN(e,t,n,r),n.dispatchAction({type:`legendToggleSelect`,name:e??t}),ZN(e,t,n,r)}function ZN(e,t,n,r){n.usingTHL()||n.dispatchAction({type:`highlight`,seriesName:e,name:t,excludeSeriesId:r})}function QN(e,t,n,r){n.usingTHL()||n.dispatchAction({type:`downplay`,seriesName:e,name:t,excludeSeriesId:r})}function $N(e,t,n){var r=e===`allSelect`||e===`inverseSelect`,i={},a=[];n.eachComponent({mainType:`legend`,query:t},function(n){r?n[e]():n[e](t.name),eP(n,i),a.push(n.componentIndex)});var o={};return n.eachComponent(`legend`,function(e){B(i,function(t,n){e[t?`select`:`unSelect`](n)}),eP(e,o)}),r?{selected:o,legendIndex:a}:{name:t.name,selected:o}}function eP(e,t){var n=t||{};return B(e.getData(),function(t){var r=t.get(`name`);if(!(r===`
-`||r===``)){var i=e.isSelected(r);Ke(n,r)?n[r]=n[r]&&i:n[r]=i}}),n}function tP(e){e.registerAction(`legendToggleSelect`,`legendselectchanged`,be($N,`toggleSelected`)),e.registerAction(`legendAllSelect`,`legendselectall`,be($N,`allSelect`)),e.registerAction(`legendInverseSelect`,`legendinverseselect`,be($N,`inverseSelect`)),e.registerAction(`legendSelect`,`legendselected`,be($N,`select`)),e.registerAction(`legendUnSelect`,`legendunselected`,be($N,`unSelect`))}var nP=Ps(rP);function rP(e){var t=e.findComponents({mainType:`legend`});t&&t.length&&e.filterSeries(function(e){for(var n=0;n<t.length;n++)if(!t[n].isSelected(e.name))return!1;return!0})}function iP(e){e.registerComponentModel(UN),e.registerComponentView(qN),e.registerProcessor(e.PRIORITY.PROCESSOR.SERIES_FILTER,nP),e.registerSubTypeDefaulter(`legend`,function(){return`plain`}),tP(e)}var aP=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n}return t.prototype.setScrollDataIndex=function(e){this.option.scrollDataIndex=e},t.prototype.init=function(t,n,r){var i=_g(t);e.prototype.init.call(this,t,n,r),oP(this,t,i)},t.prototype.mergeOption=function(t,n){e.prototype.mergeOption.call(this,t,n),oP(this,this.option,t)},t.type=`legend.scroll`,t.defaultOption=zm(UN.defaultOption,{scrollDataIndex:0,pageButtonItemGap:5,pageButtonGap:null,pageButtonPosition:`end`,pageFormatter:`{current}/{total}`,pageIcons:{horizontal:[`M0,0L12,-10L12,10z`,`M0,0L-12,-10L-12,10z`],vertical:[`M0,0L20,0L10,-20z`,`M0,0L20,0L10,20z`]},pageIconColor:Y.color.accent50,pageIconInactiveColor:Y.color.accent10,pageIconSize:15,pageTextStyle:{color:Y.color.tertiary},animationDurationUpdate:800}),t}(UN);function oP(e,t,n){var r=e.getOrient(),i=[1,1];i[r.index]=0,gg(t,n,{type:`box`,ignoreSize:!!i})}var sP=La,cP=[`width`,`height`],lP=[`x`,`y`],uP=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n.newlineDisabled=!0,n._currentIndex=0,n}return t.prototype.init=function(){e.prototype.init.call(this),this.group.add(this._containerGroup=new sP),this._containerGroup.add(this.getContentGroup()),this.group.add(this._controllerGroup=new sP)},t.prototype.resetInner=function(){e.prototype.resetInner.call(this),this._controllerGroup.removeAll(),this._containerGroup.removeClipPath(),this._containerGroup.__rectSize=null},t.prototype.renderInner=function(t,n,r,i,a,o,s){var c=this;e.prototype.renderInner.call(this,t,n,r,i,a,o,s);var l=this._controllerGroup,u=n.get(`pageIconSize`,!0),d=H(u)?u:[u,u];p(`pagePrev`,0);var f=n.getModel(`pageTextStyle`);l.add(new tu({name:`pageText`,style:{text:`xx/xx`,fill:f.getTextColor(),font:f.getFont(),verticalAlign:`middle`,align:`center`},silent:!0})),p(`pageNext`,1);function p(e,t){var r=e+`DataIndex`,a=Rp(n.get(`pageIcons`,!0)[n.getOrient().name][t],{onclick:ye(c._pageGo,c,r,n,i)},{x:-d[0]/2,y:-d[1]/2,width:d[0],height:d[1]});a.name=e,l.add(a)}},t.prototype.layoutInner=function(e,t,n,r,i,a){var o=this.getSelectorGroup(),s=e.getOrient().index,c=cP[s],l=lP[s],u=cP[1-s],d=lP[1-s];i&&cg(`horizontal`,o,e.get(`selectorItemGap`,!0));var f=e.get(`selectorButtonGap`,!0),p=o.getBoundingRect(),m=[-p.x,-p.y],h=L(n);i&&(h[c]=n[c]-p[c]-f);var g=this._layoutContentAndController(e,r,h,s,c,u,d,l);if(i){if(a===`end`)m[s]+=g[c]+f;else{var _=p[c]+f;m[s]-=_,g[l]-=_}g[c]+=p[c]+f,m[1-s]+=g[d]+g[u]/2-p[u]/2,g[u]=Math.max(g[u],p[u]),g[d]=Math.min(g[d],p[d]+m[1-s]),o.x=m[0],o.y=m[1],o.markRedraw()}return g},t.prototype._layoutContentAndController=function(e,t,n,r,i,a,o,s){var c=this.getContentGroup(),l=this._containerGroup,u=this._controllerGroup;cg(e.get(`orient`),c,e.get(`itemGap`),r?n.width:null,r?null:n.height),cg(`horizontal`,u,e.get(`pageButtonItemGap`,!0));var d=c.getBoundingRect(),f=u.getBoundingRect(),p=this._showController=d[i]>n[i],m=[-d.x,-d.y];t||(m[r]=c[s]);var h=[0,0],g=[-f.x,-f.y],_=K(e.get(`pageButtonGap`,!0),e.get(`itemGap`,!0));p&&(e.get(`pageButtonPosition`,!0)===`end`?g[r]+=n[i]-f[i]:h[r]+=f[i]+_),g[1-r]+=d[a]/2-f[a]/2,c.setPosition(m),l.setPosition(h),u.setPosition(g);var v={x:0,y:0};if(v[i]=p?n[i]:d[i],v[a]=Math.max(d[a],f[a]),v[o]=Math.min(0,f[o]+g[1-r]),l.__rectSize=n[i],p){var y={x:0,y:0};y[i]=Math.max(n[i]-f[i]-_,0),y[a]=v[a],l.setClipPath(new Xl({shape:y})),l.__rectSize=y[i]}else u.eachChild(function(e){e.attr({invisible:!0,silent:!0})});var b=this._getPageInfo(e);return b.pageIndex!=null&&op(c,{x:b.contentPosition[0],y:b.contentPosition[1]},p?e:null),this._updatePageInfoView(e,b),v},t.prototype._pageGo=function(e,t,n){var r=this._getPageInfo(t)[e];r!=null&&n.dispatchAction({type:`legendScroll`,scrollDataIndex:r,legendId:t.id})},t.prototype._updatePageInfoView=function(e,t){var n=this._controllerGroup;B([`pagePrev`,`pageNext`],function(r){var i=t[r+`DataIndex`]!=null,a=n.childOfName(r);a&&(a.setStyle(`fill`,i?e.get(`pageIconColor`,!0):e.get(`pageIconInactiveColor`,!0)),a.cursor=i?`pointer`:`default`)});var r=n.childOfName(`pageText`),i=e.get(`pageFormatter`),a=t.pageIndex,o=a==null?0:a+1,s=t.pageCount;r&&i&&r.setStyle(`text`,W(i)?i.replace(`{current}`,o==null?``:o+``).replace(`{total}`,s==null?``:s+``):i({current:o,total:s}))},t.prototype._getPageInfo=function(e){var t=e.get(`scrollDataIndex`,!0),n=this.getContentGroup(),r=this._containerGroup.__rectSize,i=e.getOrient().index,a=cP[i],o=lP[i],s=this._findTargetItemIndex(t),c=n.children(),l=c[s],u=c.length,d=+!!u,f={contentPosition:[n.x,n.y],pageCount:d,pageIndex:d-1,pagePrevDataIndex:null,pageNextDataIndex:null};if(!l)return f;var p=v(l);f.contentPosition[i]=-p.s;for(var m=s+1,h=p,g=p,_=null;m<=u;++m)_=v(c[m]),(!_&&g.e>h.s+r||_&&!y(_,h.s))&&(h=g.i>h.i?g:_,h&&(f.pageNextDataIndex??=h.i,++f.pageCount)),g=_;for(var m=s-1,h=p,g=p,_=null;m>=-1;--m)_=v(c[m]),(!_||!y(g,_.s))&&h.i<g.i&&(g=h,f.pagePrevDataIndex??=h.i,++f.pageCount,++f.pageIndex),h=_;return f;function v(e){if(e){var t=e.getBoundingRect(),n=t[o]+e[o];return{s:n,e:n+t[a],i:e.__legendDataIndex}}}function y(e,t){return e.e>=t&&e.s<=t+r}},t.prototype._findTargetItemIndex=function(e){if(!this._showController)return 0;var t,n=this.getContentGroup(),r;return n.eachChild(function(n,i){var a=n.__legendDataIndex;r==null&&a!=null&&(r=i),a===e&&(t=i)}),t??r},t.type=`legend.scroll`,t}(qN);function dP(e){e.registerAction(`legendScroll`,`legendscroll`,function(e,t){var n=e.scrollDataIndex;n!=null&&t.eachComponent({mainType:`legend`,subType:`scroll`,query:e},function(e){e.setScrollDataIndex(n)})})}function fP(e){DE(iP),e.registerComponentModel(aP),e.registerComponentView(uP),dP(e)}function pP(e){DE(iP),DE(fP)}function mP(e,t,n){var r=k.createCanvas(),i=t.getWidth(),a=t.getHeight(),o=r.style;return o&&(o.position=`absolute`,o.left=`0`,o.top=`0`,o.width=i+`px`,o.height=a+`px`,r.setAttribute(`data-zr-dom-id`,e)),r.width=i*n,r.height=a*n,r}function hP(e){return!e.__cursors.get(0)}function gP(e){var t=e.__cursors.get(0);return{startIdx:t?t.startIdx:0,endIdx:t?t.endIdx:0}}var _P=function(e){Xe(t,e);function t(t,n,r){var i=e.call(this)||this;i.motionBlur=!1,i.lastFrameAlpha=.7,i.dpr=1,i.virtual=!1,i.config={},i.zlevel=0,i.zlevel2=0,i.maxRepaintRectCount=5,i.__dirty=!0,i.__firstTimePaint=!0,i.__prevIdx={startIdx:0,endIdx:0};var a;r||=Wi,typeof t==`string`?a=mP(t,n,r):G(t)&&(a=t,t=a.id),i.id=t,i.dom=a;var o=a.style;return o&&(Ge(a),a.onselectstart=function(){return!1},o.padding=`0`,o.margin=`0`,o.borderWidth=`0`),i.painter=n,i.dpr=r,i}return t.prototype.afterBrush=function(){this.__prevIdx=gP(this)},t.prototype.initContext=function(){this.ctx=this.dom.getContext(`2d`),this.ctx.dpr=this.dpr},t.prototype.setUnpainted=function(){this.__firstTimePaint=!0},t.prototype.createBackBuffer=function(){var e=this.dpr;this.domBack=mP(`back-`+this.id,this.painter,e),this.ctxBack=this.domBack.getContext(`2d`),e!==1&&this.ctxBack.scale(e,e)},t.prototype.createRepaintRects=function(e,t,n,r){if(this.__firstTimePaint)return this.__firstTimePaint=!1,null;var i=[],a=this.maxRepaintRectCount,o=!1,s=new hn(0,0,0,0);function c(e){if(!(!e.isFinite()||e.isZero()))if(i.length===0){var t=new hn(0,0,0,0);t.copy(e),i.push(t)}else{for(var n=!1,r=1/0,c=0,l=0;l<i.length;++l){var u=i[l];if(u.intersect(e)){var d=new hn(0,0,0,0);d.copy(u),d.union(e),i[l]=d,n=!0;break}else if(o){s.copy(e),s.union(u);var f=e.width*e.height,p=u.width*u.height,m=s.width*s.height-f-p;m<r&&(r=m,c=l)}}if(o&&(i[c].union(e),n=!0),!n){var t=new hn(0,0,0,0);t.copy(e),i.push(t)}o||=i.length>=a}}for(var l=gP(this),u=l.startIdx;u<l.endIdx;++u){var d=e[u];if(d){var f=d.shouldBePainted(n,r,!0,!0),p=d.__isRendered&&(d.__dirty&1||!f)?d.getPrevPaintRect():null;p&&c(p);var m=f&&(d.__dirty&1||!d.__isRendered)?d.getPaintRect():null;m&&c(m)}}for(var h=this.__prevIdx,u=h.startIdx;u<h.endIdx;++u){var d=t[u],f=d&&d.shouldBePainted(n,r,!0,!0);if(d&&(!f||!d.__zr)&&d.__isRendered){var p=d.getPrevPaintRect();p&&c(p)}}var g;do{g=!1;for(var u=0;u<i.length;){if(i[u].isZero()){i.splice(u,1);continue}for(var _=u+1;_<i.length;)i[u].intersect(i[_])?(g=!0,i[u].union(i[_]),i.splice(_,1)):_++;u++}}while(g);return this._paintRects=i,i},t.prototype.debugGetPaintRects=function(){return(this._paintRects||[]).slice()},t.prototype.resize=function(e,t){var n=this.dpr,r=this.dom,i=r.style,a=this.domBack;i&&(i.width=e+`px`,i.height=t+`px`),r.width=e*n,r.height=t*n,a&&(a.width=e*n,a.height=t*n,n!==1&&this.ctxBack.scale(n,n))},t.prototype.clear=function(e,t,n){var r=this.dom,i=this.ctx,a=r.width,o=r.height;t||=this.clearColor;var s=this.motionBlur&&!e,c=this.lastFrameAlpha,l=this.dpr,u=this;s&&(this.domBack||this.createBackBuffer(),this.ctxBack.globalCompositeOperation=`copy`,this.ctxBack.drawImage(r,0,0,a/l,o/l));var d=this.domBack;function f(e,n,r,a){if(i.clearRect(e,n,r,a),t&&t!==`transparent`){var o=void 0;Ee(t)?(o=(t.global||t.__width===r&&t.__height===a)&&t.__canvasGradient||nx(i,t,{x:0,y:0,width:r,height:a}),t.__canvasGradient=o,t.__width=r,t.__height=a):De(t)&&(t.scaleX=t.scaleX||l,t.scaleY=t.scaleY||l,o=mx(i,t,{dirty:function(){u.setUnpainted(),u.painter.refresh()}})),i.save(),i.fillStyle=o||t,i.fillRect(e,n,r,a),i.restore()}s&&(i.save(),i.globalAlpha=c,i.drawImage(d,e,n,r,a),i.restore())}!n||s?f(0,0,a,o):n.length&&B(n,function(e){f(e.x*l,e.y*l,e.width*l,e.height*l)})},t}(gt),vP=1e5,yP=314159,bP=void 0,xP=1,SP=2;function CP(e){return e?e.__builtin__?!0:!(typeof e.resize!=`function`||typeof e.refresh!=`function`):!1}function wP(e,t){var n=document.createElement(`div`);return n.style.cssText=[`position:relative`,`width:`+e+`px`,`height:`+t+`px`,`padding:0`,`margin:0`,`border-width:0`].join(`;`)+`;`,n}function TP(e,t,n,r){var i=new _P(e,t,t.dpr);return i.zlevel=n,i.zlevel2=r,i.__builtin__=!0,EP(i),i}function EP(e){e.__cursorStack=[],e.__cursors=He()}function DP(e){return e.startIdx=e.drawIdx=e.endIdx=e.endIdxNew=0,e.used=!1,e.first=e.last=NaN,e.notClearIdx=-1,e}function OP(e,t){var n=e.__cursors,r=+t;return n.get(r)||(e.__cursorStack.push(r),n.set(r,DP({key:r})))}function kP(e,t){for(var n=e.__cursorStack,r=0;r<n.length;r++)t(e.__cursors.get(n[r]))}function AP(e,t){var n=e.layers;return n[t]||(n[t]=[,,,])}function jP(e,t,n){for(var r=e.layerStack,i=0;i<r.length;i++){var a=r[i].zl,o=r[i].zl2,s=e.layers[a][o];(!n||(!(n&MP)||s.__builtin__)&&(!(n&NP)||!s.__builtin__)&&(!(n&PP)||s!==e.hoverlayer))&&t(s,a,o,i)}}var MP=1,NP=2,PP=4,FP=MP|PP,IP=function(){function e(e,t,n,r){this.type=`canvas`,this._prevDisplayList=[],this._layerConfig={},this._needsManuallyCompositing=!1,this.type=`canvas`,this._i={layerStack:[],layers:[]};var i=!e.nodeName||e.nodeName.toUpperCase()===`CANVAS`;if(this._opts=n=z({},n||{}),this.dpr=n.devicePixelRatio||Wi,this._singleCanvas=i,this.root=e,e.style&&(Ge(e),e.innerHTML=``),this.storage=t,this._prevDisplayList=[],i){var a=e,o=a.width,s=a.height;n.width!=null&&(o=n.width),n.height!=null&&(s=n.height),this.dpr=n.devicePixelRatio||1,a.width=o*this.dpr,a.height=s*this.dpr,this._width=o,this._height=s;var c=TP(a,this,yP,0);c.initContext(),this._insertLayer(c,yP,0,!0),this._domRoot=e}else{this._width=ax(e,0,n),this._height=ax(e,1,n);var l=this._domRoot=wP(this._width,this._height);e.appendChild(l)}}return e.prototype.getType=function(){return`canvas`},e.prototype.isSingleCanvas=function(){return this._singleCanvas},e.prototype.getViewportRoot=function(){return this._domRoot},e.prototype.getViewportRootOffset=function(){var e=this.getViewportRoot();if(e)return{offsetLeft:e.offsetLeft||0,offsetTop:e.offsetTop||0}},e.prototype.refresh=function(e){var t=e&&!G(e)?{paintAll:!!e}:e||{},n=K(t.refresh,!0),r=K(t.refreshHover,!1);if(r&&(this._hoverLayerDirty=SP),!n)return r&&this._paintHoverList(this.storage.getDisplayList(!1)),this;var i=this.storage.getDisplayList(!0);this._updateLayerStatus(i,t.paintAll),this._redrawId=Math.random();var a=this._prevDisplayList;this._paintList(i,a,this._redrawId);var o=this._backgroundColor;return jP(this._i,function(e,t,n,r){e.refresh&&e.refresh(r===0?o:null)},NP),this._opts.useDirtyRect&&(this._prevDisplayList=i.slice()),this},e.prototype._paintHoverList=function(e){var t=this._i.hoverlayer,n=this._hoverLayerDirty;if(this._hoverLayerDirty=bP,n!==bP&&(!t&&n===SP&&(t=this._i.hoverlayer=this._ensureLayer(vP)),t)){t.clear();for(var r={inHover:!0,viewWidth:this._width,viewHeight:this._height,beforeBrushParam:{}},i,a=0,o=e.length;a<o;a++){var s=e[a];if(s.__inHover){i||(i=t.ctx,i.save());var c=s.__hoverStyle,l=void 0;c&&(l=s.style,s.style=c),Px(i,s,r),c&&(s.style=l)}}i&&(Fx(i,r),i.restore())}},e.prototype.getHoverLayer=function(){return this._ensureLayer(vP)},e.prototype.paintOne=function(e,t){Nx(e,t)},e.prototype._paintList=function(e,t,n){if(this._redrawId===n){var r=this._doPaintList(e,t);if(this._needsManuallyCompositing&&this._compositeManually(),r)jP(this._i,function(e){e.afterBrush&&e.afterBrush()},FP),this._paintHoverList(e);else{var i=this;Yn(function(){i._paintList(e,t,n)})}}},e.prototype._compositeManually=function(){var e=this._ensureLayer(yP).ctx,t=this._domRoot.width,n=this._domRoot.height;e.clearRect(0,0,t,n),jP(this._i,function(r){r.virtual&&e.drawImage(r.dom,0,0,t,n)},MP)},e.prototype._doPaintList=function(e,t){var n=this,r=!0;return jP(this._i,function(i){var a=!1;if(kP(i,function(e){(e.drawIdx<e.endIdx||e.notClearIdx>=0)&&(a=!0)}),!(!a&&!i.__dirty)){var o=n._opts.useDirtyRect&&!hP(i)?i.createRepaintRects(e,t,n._width,n._height):null,s=n._i.layerStack[0],c=!0;if(i.__dirty){c=!1,i.__dirty=!1;var l=i.zlevel===s.zl&&i.zlevel2===s.zl2?n._backgroundColor:null;i.clear(!1,l,o)}kP(i,function(t){var a=n._paintPerCursor(i,t,e,o,c);r&&=a})}},FP),x.wxa&&jP(this._i,function(e){e&&e.ctx&&e.ctx.draw&&e.ctx.draw()}),r},e.prototype._paintPerCursor=function(e,t,n,r,i){var a=e.ctx;if(r)if(!r.length)t.drawIdx=t.endIdx;else for(var o=this.dpr,s=0;s<r.length;++s){var c=r[s];a.save(),a.beginPath(),a.rect(c.x*o,c.y*o,c.width*o,c.height*o),a.clip(),this._paintPerCursorInRect(e,t,n,c,i),a.restore()}else a.save(),this._paintPerCursorInRect(e,t,n,null,i),a.restore();return t.drawIdx>=t.endIdx},e.prototype._paintPerCursorInRect=function(e,t,n,r,i){for(var a={inHover:!1,allClipped:!1,prevEl:null,viewWidth:this._width,viewHeight:this._height,beforeBrushParam:{contentRetained:i}},o=e.ctx,s=hP(e),c=s&&k.getTime(),l=t.drawIdx,u=t.notClearIdx,d=u>=0?Math.min(u,l):l;d<t.endIdx;d++){var f=n[d];if(!(d<l&&!f.notClear)){if(f.__inHover&&(this._hoverLayerDirty=SP),r!=null){var p=f.getPaintRect();p&&p.intersect(r)&&(Px(o,f,a),f.setPrevPaintRect(p))}else Px(o,f,a);if(s&&k.getTime()-c>15){d++;break}}}Fx(o,a),t.drawIdx=Math.max(d,l)},e.prototype.getLayer=function(e,t){return this._ensureLayer(e,0,t)},e.prototype._ensureLayer=function(e,t,n){t||=0;var r=this._singleCanvas;r&&!this._needsManuallyCompositing&&(e=yP,t=0);var i=AP(this._i,e)[t];return i||(i=TP(`zr_`+e+`.`+t,this,e,t),this._layerConfig[e]&&R(i,this._layerConfig[e],!0),(n||r&&e!==yP)&&(i.virtual=!0),this._insertLayer(i,e,t,!1),i.initContext()),i},e.prototype.insertLayer=function(e,t){this._insertLayer(t,e,0,!1)},e.prototype._insertLayer=function(e,t,n,r){var i=this._i,a=i.layers,o=i.layerStack,s=this._domRoot,c=null;if(!(a[t]&&a[t][n])&&CP(e)){for(var l=o.length,u=0;u<l&&(o[u].zl<t||o[u].zl===t&&o[u].zl2<n);)u++;if(u>0&&(c=AP(i,o[u-1].zl)[o[u-1].zl2]),o.splice(u,0,{zl:t,zl2:n}),AP(i,t)[n]=e,!r&&!e.virtual)if(c){var d=c.dom;d.nextSibling?s.insertBefore(e.dom,d.nextSibling):s.appendChild(e.dom)}else s.firstChild?s.insertBefore(e.dom,s.firstChild):s.appendChild(e.dom);e.painter||=this}},e.prototype.eachLayer=function(e,t){return jP(this._i,function(n,r){e.call(t,n,r)})},e.prototype.eachBuiltinLayer=function(e,t){return jP(this._i,function(n,r){e.call(t,n,r)},MP)},e.prototype.eachOtherLayer=function(e,t){return jP(this._i,function(n,r){e.call(t,n,r)},NP)},e.prototype.getLayers=function(){var e={};return jP(this._i,function(t,n,r){e[t.id]=t}),e},e.prototype._updateLayerStatus=function(e,t){var n=this;if(n._singleCanvas)for(var r=1;r<e.length;r++){var i=e[r];if(i.zlevel!==e[r-1].zlevel||i.incremental){n._needsManuallyCompositing=!0;break}}jP(n._i,function(e){e.__dirty=!1,kP(e,function(e){e.used=!1,e.endIdxNew=0,e.notClearIdx=-1})},FP);for(var a,o=null,s=null,c=!1,l=0,u=e.length;l<u;l++){var i=e[l],d=i.zlevel,f=i.incremental,p=void 0;if(a!==d&&(a=d,c=!1),f?(c=!0,p=1):p=c?2:0,(!o||d!==o.zlevel||p!==o.zlevel2)&&(o=n._ensureLayer(d,p),s=null,!o.__builtin__)){se(`ZLevel `+d+` has been used by unknown layer `+o.id);continue}if((!s||f!==s.key)&&(s=OP(o,f),!s.used))if(s.used=!0,!t&&s.first===i.id){var m=l-s.startIdx;s.startIdx=l,s.drawIdx+=m,s.endIdx+=m}else o.__dirty=!0,s.first=i.id,s.startIdx=s.drawIdx=l,s.endIdx=l+1;s.endIdxNew=l+1,i.__dirty&1&&!i.__inHover&&((!f||!i.notClear&&l<s.drawIdx)&&(o.__dirty=!0),f&&i.notClear&&s.notClearIdx<0&&(s.notClearIdx=l))}jP(n._i,function(t){for(var r=t.__cursorStack,i=t.__cursors,a=r.length-1;a>=0;a--){var o=i.get(r[a]);if(!o.used)t.__dirty=!0,i.removeKey(r[a]),r.splice(a,1);else{var s=o.endIdxNew;(hP(t)?s<o.drawIdx:s!==o.endIdx||!s||e[s-1].id!==o.last)&&(t.__dirty=!0),o.endIdx=o.endIdxNew,o.last=s?e[s-1].id:NaN}}t.__dirty&&(kP(t,function(e){e.drawIdx=e.startIdx}),n._hoverLayerDirty===bP&&(n._hoverLayerDirty=xP))},FP)},e.prototype.clear=function(){return jP(this._i,function(e){e.clear(),EP(e)},MP),this},e.prototype.setBackgroundColor=function(e){this._backgroundColor=e,jP(this._i,function(e){e.setUnpainted()})},e.prototype.configLayer=function(e,t){if(t){var n=this._layerConfig;n[e]?R(n[e],t,!0):n[e]=t,jP(this._i,function(e,t){R(e,n[t],!0)})}},e.prototype.delLayer=function(e){for(var t=this._i.layerStack,n=this._i.layers,r=t.length-1;r>=0;r--){var i=t[r];if(i.zl===e){var a=n[e][i.zl2];if(a.__builtin__)continue;if(t.splice(r,1),n[e][i.zl2]=void 0,!a.virtual){var o=a.dom.parentNode;o&&o.removeChild(a.dom)}}}},e.prototype.resize=function(e,t){if(this._domRoot.style){var n=this._domRoot;n.style.display=`none`;var r=this._opts,i=this.root;e!=null&&(r.width=e),t!=null&&(r.height=t),e=ax(i,0,r),t=ax(i,1,r),n.style.display=``,(this._width!==e||t!==this._height)&&(n.style.width=e+`px`,n.style.height=t+`px`,jP(this._i,function(n){n.resize(e,t)}),this.refresh({paintAll:!0})),this._width=e,this._height=t}else{if(e==null||t==null)return;this._width=e,this._height=t,this._ensureLayer(yP).resize(e,t)}return this},e.prototype.clearLayer=function(e){B(this._i.layers[e],function(e){e&&!e.__builtin__&&e.clear()})},e.prototype.dispose=function(){this.root.innerHTML=``,this.root=this.storage=this._domRoot=this._i=null},e.prototype.getRenderedCanvas=function(e){if(e||={},this._singleCanvas&&!this._compositeManually)return this._i.layers[yP][0].dom;var t=new _P(`image`,this,e.pixelRatio||this.dpr);t.initContext(),t.clear(!1,e.backgroundColor||this._backgroundColor);var n=t.ctx;if(e.pixelRatio<=this.dpr){this.refresh();var r=t.dom.width,i=t.dom.height;jP(this._i,function(e){e.__builtin__?n.drawImage(e.dom,0,0,r,i):e.renderToCanvas&&(n.save(),e.renderToCanvas(n),n.restore())})}else{for(var a={inHover:!1,viewWidth:this._width,viewHeight:this._height,beforeBrushParam:{}},o=this.storage.getDisplayList(!0),s=0,c=o.length;s<c;s++){var l=o[s];Px(n,l,a)}Fx(n,a)}return t.dom},e.prototype.getWidth=function(){return this._width},e.prototype.getHeight=function(){return this._height},e}();function LP(e){e.registerPainter(`canvas`,IP)}var RP=typeof window>`u`?global:window,zP=`@griffel/`;function BP(e,t){return RP[Symbol.for(zP+e)]||(RP[Symbol.for(zP+e)]=t),RP[Symbol.for(zP+e)]}var VP=BP(`DEFINITION_LOOKUP_TABLE`,{}),HP=`data-make-styles-bucket`,UP=`data-priority`,WP=`data-container`;function GP(e){for(var t=0,n,r=0,i=e.length;i>=4;++r,i-=4)n=e.charCodeAt(r)&255|(e.charCodeAt(++r)&255)<<8|(e.charCodeAt(++r)&255)<<16|(e.charCodeAt(++r)&255)<<24,n=(n&65535)*1540483477+((n>>>16)*59797<<16),n^=n>>>24,t=(n&65535)*1540483477+((n>>>16)*59797<<16)^(t&65535)*1540483477+((t>>>16)*59797<<16);switch(i){case 3:t^=(e.charCodeAt(r+2)&255)<<16;case 2:t^=(e.charCodeAt(r+1)&255)<<8;case 1:t^=e.charCodeAt(r)&255,t=(t&65535)*1540483477+((t>>>16)*59797<<16)}return t^=t>>>13,t=(t&65535)*1540483477+((t>>>16)*59797<<16),((t^t>>>15)>>>0).toString(36)}function KP(e){let t=e.length;if(t===7)return e;for(let n=t;n<7;n++)e+=`0`;return e}function qP(e,t,n=[]){return`___`+KP(GP(e+t))}function JP(e,t){let n=``,r=``;for(let i in e){let a=e[i];if(a===0){r+=i+` `;continue}let o=Array.isArray(a),s=t===`rtl`?(o?a[1]:a)+` `:(o?a[0]:a)+` `;n+=s,r+=s}return[n.slice(0,-1),r.slice(0,-1)]}function YP(e,t){let n={};for(let r in e){let[i,a]=JP(e[r],t);if(a===``){n[r]=``;continue}let o=qP(a,t),s=o+(i===``?``:` `+i);VP[o]=[e[r],t],n[r]=s}return n}var XP={};function ZP(){let e=null,t=``,n=``,r=Array(arguments.length);for(let e=0;e<arguments.length;e++){let i=arguments[e];if(typeof i==`string`&&i!==``){let a=i.indexOf(`___`);if(a===-1)t+=i+` `;else{let o=i.substr(a,10);a>0&&(t+=i.slice(0,a)),n+=o,r[e]=o}}}if(n===``)return t.slice(0,-1);let i=XP[n];if(i!==void 0)return t+i;let a=[];for(let t=0;t<arguments.length;t++){let n=r[t];if(n){let t=VP[n];t&&(a.push(t[0]),e=t[1])}}let o=Object.assign.apply(Object,[{}].concat(a)),[s,c]=JP(o,e),l=qP(c,e,r),u=l+` `+s;return XP[n]=u,VP[l]=[o,e],t+u}function QP(e){return Array.isArray(e)?e:[e]}function $P(e,t,n,r){let i=[];if(r[HP]=t,r[UP]=String(n),e)for(let t in r)e.setAttribute(t,r[t]);function a(t){return e?.sheet?e.sheet.insertRule(t,e.sheet.cssRules.length):i.push(t)}return{elementAttributes:r,insertRule:a,element:e,bucketName:t,cssRules(){return e?.sheet?Array.from(e.sheet.cssRules).map(e=>e.cssText):i}}}var eF=[`r`,`d`,`l`,`v`,`w`,`f`,`i`,`h`,`a`,`s`,`k`,`t`,`m`,`c`,`x`].reduce((e,t,n)=>(e[t]=n,e),{});function tF(e,t,n){return e===`m`||e===`x`?e+t+n:e+n}function nF(e,t,n,r,i={}){let a=e===`m`,o=e===`x`,s=i.m,c=i.x,l=i.p??0,u=tF(e,c??s??`0`,l);if(!r.stylesheets[u]){let d=t&&t.createElement(`style`),f=$P(d,e,l,{...r.styleElementAttributes,...a&&{media:s},...o&&{"data-container":c}});r.stylesheets[u]=f,t?.head&&d&&t.head.insertBefore(d,iF(t,n,e,r,i))}return r.stylesheets[u]}function rF(e,t,n){return e.getAttribute(`data-make-styles-bucket`)===t?t===`m`?n.m===e.media:t!==`x`||n.x===e.getAttribute(WP):!1}function iF(e,t,n,r,i={}){let a=eF[n],o=i.m??``,s=i.x??``,c=i.p??0,l=e=>a-eF[e.getAttribute(HP)],u=e.head.querySelectorAll(`[${HP}]`);if(n===`m`||n===`x`){let t=e.head.querySelectorAll(`[${HP}="${n}"]`);t.length&&(u=t,l=n===`m`?e=>r.compareMediaQueries(o,e.media):e=>r.compareContainerQueries(s,e.getAttribute(`data-container`)??``))}let d=e=>rF(e,n,i)?c-Number(e.getAttribute(UP)):l(e),f=u.length,p=f-1;for(;p>=0;){let e=u.item(p);if(d(e)>0)return e.nextSibling;p--}return f>0?u.item(0):t?t.nextSibling:null}`${[`-moz-placeholder`,`-moz-focus-inner`,`-moz-focusring`,`-ms-input-placeholder`,`-moz-read-write`,`-moz-read-only`].join(`|`)}`;function aF(e,t){try{e.insertRule(t)}catch{}}var oF=0,sF=(e,t)=>e<t?-1:+(e>t);function cF(e=typeof document>`u`?void 0:document,t={}){let{classNameHashSalt:n,unstable_filterCSSRule:r,insertionPoint:i,styleElementAttributes:a,compareMediaQueries:o=sF,compareContainerQueries:s=o}=t,c={classNameHashSalt:n,insertionCache:{},stylesheets:{},styleElementAttributes:Object.freeze(a),compareMediaQueries:o,compareContainerQueries:s,id:`d${oF++}`,insertCSSRules(t){for(let n in t){let a=t[n];for(let t=0,o=a.length;t<o;t++){let[o,s]=QP(a[t]),l=nF(n,e,i||null,c,s);c.insertionCache[o]||(c.insertionCache[o]=n,r?r(o)&&aF(l,o):aF(l,o))}}}};return c}var lF=()=>{let e={};return function(t,n){e[t.id]===void 0&&(t.insertCSSRules(n),e[t.id]=!0)}};function uF(e,t,n=lF){let r=n(),i=null,a=null;function o(n){let{dir:o,renderer:s}=n,c=o===`ltr`;return c?i===null&&(i=YP(e,o)):a===null&&(a=YP(e,o)),r(s,t),c?i:a}return o}function dF(){return typeof window<`u`&&!!(window.document&&window.document.createElement)}var Z=l(d(),1),fF=Z.useInsertionEffect?Z.useInsertionEffect:void 0,pF=()=>{let e={};return function(t,n){if(fF&&dF()){fF(()=>{t.insertCSSRules(n)},[t,n]);return}e[t.id]===void 0&&(t.insertCSSRules(n),e[t.id]=!0)}},mF=o((e=>{var t=Symbol.for(`react.transitional.element`),n=Symbol.for(`react.fragment`);function r(e,n,r){var i=null;if(r!==void 0&&(i=``+r),n.key!==void 0&&(i=``+n.key),`key`in n)for(var a in r={},n)a!==`key`&&(r[a]=n[a]);else r=n;return n=r.ref,{$$typeof:t,type:e,key:i,ref:n===void 0?null:n,props:r}}e.Fragment=n,e.jsx=r,e.jsxs=r})),Q=l(o(((e,t)=>{t.exports=mF()}))(),1),hF=(0,Z.createContext)(cF());function gF(){return(0,Z.useContext)(hF)}var _F=(0,Z.createContext)(`ltr`),vF=({children:e,dir:t})=>(0,Q.jsx)(_F.Provider,{value:t,children:e});function yF(){return(0,Z.useContext)(_F)}function bF(e,t){let n=uF(e,t,pF);return function(){let e=yF(),t=gF();return n({dir:e,renderer:t})}}var xF={"<":`\\3C `,">":`\\3E `};function SF(e){return e.replace(/[<>]/g,e=>xF[e])}function CF(e,t){return t?`${e} { ${SF(Object.keys(t).reduce((e,n)=>`${e}--${n}: ${t[n]}; `,``))} }`:`${e} {}`}var wF=Symbol.for(`fui.slotRenderFunction`),TF=Symbol.for(`fui.slotElementType`),EF=Symbol.for(`fui.slotClassNameProp`);function DF(e,t){let{defaultProps:n,elementType:r}=t,i=OF(e),a={...n,...i,[TF]:r,[EF]:i?.className||n?.className};return i&&typeof i.children==`function`&&(a[wF]=i.children,a.children=n?.children),a}function OF(e){return typeof e==`string`||typeof e==`number`||kF(e)||Z.isValidElement(e)?{children:e}:e}var kF=e=>typeof e==`object`&&!!e&&Symbol.iterator in e;function AF(e){return!!e?.hasOwnProperty(TF)}var jF=(...e)=>{let t={};for(let n of e){let e=Array.isArray(n)?n:Object.keys(n);for(let n of e)t[n]=1}return t},MF=jF(`onAuxClick.onAnimationEnd.onAnimationStart.onCopy.onCut.onPaste.onCompositionEnd.onCompositionStart.onCompositionUpdate.onFocus.onFocusCapture.onBlur.onBlurCapture.onChange.onInput.onSubmit.onLoad.onError.onKeyDown.onKeyDownCapture.onKeyPress.onKeyUp.onAbort.onCanPlay.onCanPlayThrough.onDurationChange.onEmptied.onEncrypted.onEnded.onLoadedData.onLoadedMetadata.onLoadStart.onPause.onPlay.onPlaying.onProgress.onRateChange.onSeeked.onSeeking.onStalled.onSuspend.onTimeUpdate.onVolumeChange.onWaiting.onClick.onClickCapture.onContextMenu.onDoubleClick.onDrag.onDragEnd.onDragEnter.onDragExit.onDragLeave.onDragOver.onDragStart.onDrop.onMouseDown.onMouseDownCapture.onMouseEnter.onMouseLeave.onMouseMove.onMouseOut.onMouseOver.onMouseUp.onMouseUpCapture.onSelect.onTouchCancel.onTouchEnd.onTouchMove.onTouchStart.onScroll.onWheel.onPointerCancel.onPointerDown.onPointerEnter.onPointerLeave.onPointerMove.onPointerOut.onPointerOver.onPointerUp.onGotPointerCapture.onLostPointerCapture`.split(`.`)),NF=jF(jF([`accessKey`,`children`,`className`,`contentEditable`,`dir`,`draggable`,`hidden`,`htmlFor`,`id`,`lang`,`popover`,`focusgroup`,`focusgroupstart`,`ref`,`role`,`style`,`tabIndex`,`title`,`translate`,`spellCheck`,`name`]),MF,jF([`itemID`,`itemProp`,`itemRef`,`itemScope`,`itemType`])),PF=jF(NF,[`form`]),FF=jF(NF,[`height`,`loop`,`muted`,`preload`,`src`,`width`]),IF=jF(FF,[`poster`]),LF=jF(NF,[`start`]),RF=jF(NF,[`value`]),zF=jF(NF,[`download`,`href`,`hrefLang`,`media`,`referrerPolicy`,`rel`,`target`,`type`]),BF=jF(NF,[`dateTime`]),VF=jF(NF,[`autoFocus`,`disabled`,`form`,`formAction`,`formEncType`,`formMethod`,`formNoValidate`,`formTarget`,`popoverTarget`,`popoverTargetAction`,`type`,`value`]),HF=jF(VF,`accept.alt.autoCorrect.autoCapitalize.autoComplete.checked.dirname.form.height.inputMode.list.max.maxLength.min.minLength.multiple.pattern.placeholder.readOnly.required.src.step.size.type.value.width`.split(`.`)),UF=jF(VF,[`autoCapitalize`,`cols`,`dirname`,`form`,`maxLength`,`placeholder`,`readOnly`,`required`,`rows`,`wrap`]),WF=jF(VF,[`form`,`multiple`,`required`]),GF=jF(NF,[`selected`,`value`]),KF=jF(NF,[`cellPadding`,`cellSpacing`]),qF=NF,JF=jF(NF,[`colSpan`,`rowSpan`,`scope`]),YF=jF(NF,[`colSpan`,`headers`,`rowSpan`,`scope`]),XF=jF(NF,[`span`]),ZF=jF(NF,[`span`]),QF=jF(NF,[`disabled`,`form`]),$F=jF(NF,[`acceptCharset`,`action`,`encType`,`encType`,`method`,`noValidate`,`target`]),eI=jF(NF,[`allow`,`allowFullScreen`,`allowPaymentRequest`,`allowTransparency`,`csp`,`height`,`importance`,`referrerPolicy`,`sandbox`,`src`,`srcDoc`,`width`]),tI=jF(NF,[`alt`,`crossOrigin`,`height`,`src`,`srcSet`,`useMap`,`width`]),nI=jF(NF,[`open`,`onCancel`,`onClose`]);function rI(e,t,n){let r=Array.isArray(t),i={},a=Object.keys(e);for(let o of a)(!r&&t[o]||r&&t.indexOf(o)>=0||o.indexOf(`data-`)===0||o.indexOf(`aria-`)===0)&&(!n||n?.indexOf(o)===-1)&&(i[o]=e[o]);return i}var iI={label:PF,audio:FF,video:IF,ol:LF,li:RF,a:zF,button:VF,input:HF,textarea:UF,select:WF,option:GF,table:KF,tr:qF,th:JF,td:YF,colGroup:XF,col:ZF,fieldset:QF,form:$F,iframe:eI,img:tI,time:BF,dialog:nI};function aI(e,t,n){let r=e&&iI[e]||NF;return r.as=1,rI(t,r,n)}var oI=(e,t,n)=>aI(t.as??e,t,n),sI=Z.createContext(void 0),cI=sI.Provider,lI=Z.createContext(void 0).Provider,uI=Z.createContext(void 0).Provider,dI=Z.createContext(void 0),fI={targetDocument:typeof document==`object`?document:void 0,dir:`ltr`},pI=dI.Provider;function mI(){return Z.useContext(dI)??fI}var hI=Z.createContext(void 0),gI=hI.Provider;function _I(){return Z.useContext(hI)??{}}var vI=Z.createContext(void 0),yI=vI.Provider;function bI(){return typeof window<`u`&&!!(window.document&&window.document.createElement)}var xI={current:0},SI=Z.createContext(void 0);function CI(){return Z.useContext(SI)??xI}var wI=bI()?Z.useLayoutEffect:Z.useEffect,TI=Z.createContext(void 0);TI.Provider;function EI(){return Z.useContext(TI)||``}function DI(e=`fui-`,t){let n=CI(),r=EI(),i=Z.useId;if(i){let n=i(),a=Z.useMemo(()=>n.replace(/:/g,``),[n]);return t||`${r}${e}${a}`}return Z.useMemo(()=>t||`${r}${e}${++n.current}`,[r,e,t,n])}function OI(...e){let t=Z.useCallback(n=>{t.current=n;for(let t of e)typeof t==`function`?t(n):t&&(t.current=n)},[...e]);return t}function kI(e,t){let n=e;return!!(n!=null&&n.ownerDocument?.defaultView&&n instanceof n.ownerDocument.defaultView[t?.constructorName??`HTMLElement`])}function AI(e,t){return{...t,[TF]:e}}function jI(e,t){return function(n,r,i,a,o){return AF(r)?t(AI(n,r),null,i,a,o):AF(n)?t(n,r,i,a,o):e(n,r,i,a,o)}}function MI(e){let{as:t,[EF]:n,[TF]:r,[wF]:i,...a}=e,o=a,s=typeof r==`string`?t??r:r;return typeof s!=`string`&&t&&(o.as=t),{elementType:s,props:o,renderFunction:i}}var NI=Q,PI=(e,t,n)=>{let{elementType:r,renderFunction:i,props:a}=MI(e),o={...a,...t};return i?NI.jsx(Z.Fragment,{children:i(r,o)},n):NI.jsx(r,o,n)},FI=(e,t,n)=>{let{elementType:r,renderFunction:i,props:a}=MI(e),o={...a,...t};return i?NI.jsx(Z.Fragment,{children:i(r,{...o,children:NI.jsxs(Z.Fragment,{children:o.children},void 0)})},n):NI.jsxs(r,o,n)},II=jI(NI.jsx,PI),LI=jI(NI.jsxs,FI),RI=Z.createContext(void 0),zI={},BI=RI.Provider,VI=()=>Z.useContext(RI)??zI,HI=(e,t)=>II(pI,{value:t.provider,children:II(cI,{value:t.theme,children:II(lI,{value:t.themeClassName,children:II(yI,{value:t.customStyleHooks_unstable,children:II(uI,{value:t.tooltip,children:II(vF,{dir:t.textDirection,children:II(BI,{value:t.iconDirection,children:II(gI,{value:t.overrides_unstable,children:LI(e.root,{children:[bI()?null:II(`style`,{dangerouslySetInnerHTML:{__html:e.serverStyleProps.cssRule},...e.serverStyleProps.attributes}),e.root.children]})})})})})})})})}),UI=(e,t,n)=>{e.addEventListener(t,n,!0)},WI=(e,t,n)=>{e.removeEventListener(t,n,!0)},GI=`keyborg:focusin`,KI=`keyborg:focusout`,qI=0,JI=1,YI=2,XI=3;function ZI(e){let t=e.HTMLElement,n=t.prototype.focus,r=!1;return t.prototype.focus=function(){r=!0},e.document.createElement(`button`).focus(),t.prototype.focus=n,r}var QI=!1;function $I(e){let t=e,n=t.document,r=t.HTMLElement.prototype;QI||=ZI(t);let i=r.focus;if(i.__keyborgNativeFocus)return;r.focus=u;let a=new Set,o=e=>{let t=e.target;if(!t)return;let n=new CustomEvent(KI,{cancelable:!0,bubbles:!0,composed:!0,detail:{originalEvent:e}});t.dispatchEvent(n)},s=e=>{let t=e.target;if(!t)return;let n=e.composedPath()[0],r=new Set;for(;n;)n.nodeType===Node.DOCUMENT_FRAGMENT_NODE?(r.add(n),n=n.host):n=n.parentNode;for(let e of a){let t=e.deref();(!t||!r.has(t))&&(a.delete(e),t&&(WI(t,`focusin`,s),WI(t,`focusout`,o)))}c(t,e.relatedTarget||void 0)},c=(e,t,n)=>{let r=e.shadowRoot;if(r){for(let e of a)if(e.deref()===r)return;UI(r,`focusin`,s),UI(r,`focusout`,o),a.add(new WeakRef(r));return}let i={relatedTarget:t,originalEvent:n},c=new CustomEvent(GI,{cancelable:!0,bubbles:!0,composed:!0,detail:i});c.details=i,(QI||l[XI])&&(i.isFocusedProgrammatically=e===l[XI]?.deref(),l[XI]=void 0),e.dispatchEvent(c)},l=[s,o,a];t.__keyborgData=l,UI(n,`focusin`,s),UI(n,`focusout`,o);function u(){let e=t.__keyborgData;return e&&(e[XI]=new WeakRef(this)),i.apply(this,arguments)}let d=n.activeElement;for(;d&&d.shadowRoot;)c(d),d=d.shadowRoot.activeElement;u.__keyborgNativeFocus=i}function eL(e){let t=e,n=t.HTMLElement.prototype,r=n.focus.__keyborgNativeFocus,i=t.__keyborgData;if(i){let e=t.document;WI(e,`focusin`,i[qI]),WI(e,`focusout`,i[JI]);for(let e of i[YI]){let t=e.deref();t&&(WI(t,`focusin`,i[qI]),WI(t,`focusout`,i[JI]))}i[YI].clear(),delete t.__keyborgData}r&&(n.focus=r)}var tL=500,nL=0;function rL(e,t){let n=e,r=!1,i,a,o,s;t&&(t.triggerKeys?.length&&(o=new Set(t.triggerKeys)),t.dismissKeys?.length&&(s=new Set(t.dismissKeys)));let c=()=>{let e=n?.__keyborg?.refs;if(e)for(let t of Object.keys(e))e[t]._cb.forEach(e=>e(r))},l=e=>{r!==e&&(r=e,c())},u=e=>{if(e.key===`Tab`)return!0;let t=n?.document.activeElement,r=!o||o.has(e.keyCode),i=t&&(t.tagName===`INPUT`||t.tagName===`TEXTAREA`||t.isContentEditable);return r&&!i},d=e=>!!s?.has(e.keyCode),f=()=>{let e=n;if(!e)return;a&&=(e.clearTimeout(a),void 0);let t=e.document.activeElement;a=e.setTimeout(()=>{a=void 0;let n=e.document.activeElement;t&&n&&t===n&&l(!1)},tL)},p=e=>{if(i||r)return;let t=e.detail;t.relatedTarget&&(t.isFocusedProgrammatically||t.isFocusedProgrammatically===void 0||l(!0))},m=()=>{n&&(i&&n.clearTimeout(i),i=n.setTimeout(()=>{i=void 0},1e3)),l(!1)},h=e=>{e.buttons===0||e.clientX===0&&e.clientY===0&&e.screenX===0&&e.screenY===0||m()},g=e=>{r?d(e)&&f():u(e)&&l(!0)},_=e.document;return UI(_,GI,p),UI(_,`mousedown`,h),UI(e,`keydown`,g),UI(_,`touchstart`,m),UI(_,`touchend`,m),UI(_,`touchcancel`,m),$I(e),{dispose:()=>{if(!n)return;i&&=(n.clearTimeout(i),void 0),a&&=(n.clearTimeout(a),void 0),eL(n);let e=n.document;WI(e,GI,p),WI(e,`mousedown`,h),WI(n,`keydown`,g),WI(e,`touchstart`,m),WI(e,`touchend`,m),WI(e,`touchcancel`,m),n=void 0},get isNavigatingWithKeyboard(){return r},set isNavigatingWithKeyboard(e){l(e)}}}function iL(e,t){let n=e,r=`k`+ ++nL,i=n,a,o=[],s=n.__keyborg;a=s?s.core:rL(n,t);let c={isNavigatingWithKeyboard(){return!!a?.isNavigatingWithKeyboard},subscribe(e){o.push(e)},unsubscribe(e){let t=o.indexOf(e);t>=0&&o.splice(t,1)},setVal(e){a&&(a.isNavigatingWithKeyboard=e)},_cb:o,dispose(){let e=i?.__keyborg;e?.refs[r]&&(delete e.refs[r],Object.keys(e.refs).length===0&&(e.core.dispose(),delete i.__keyborg)),o.length=0,a=void 0,i=void 0}};return s?s.refs[r]=c:n.__keyborg={core:a,refs:{[r]:c}},c}function aL(e){e.dispose()}var oL=`data-fui-focus-visible`;function sL(e,t){if(cL(e))return()=>void 0;let n={current:void 0},r=iL(t);function i(e){r.isNavigatingWithKeyboard()&&kI(e)&&(n.current=e,e.setAttribute(oL,``))}function a(){n.current&&=(n.current.removeAttribute(oL),void 0)}r.subscribe(e=>{e?i(t.document.activeElement):a()});let o=e=>{a();let t=e.composedPath()[0];i(t)},s=t=>{(!t.relatedTarget||kI(t.relatedTarget)&&!e.contains(t.relatedTarget))&&a()};return e.addEventListener(GI,o),e.addEventListener(`focusout`,s),e.focusVisible=!0,e.contains(t.document.activeElement)&&i(t.document.activeElement),()=>{a(),e.removeEventListener(GI,o),e.removeEventListener(`focusout`,s),e.focusVisible=void 0,aL(r)}}function cL(e){return e?e.focusVisible?!0:cL(e?.parentElement):!1}function lL(e={}){let t=mI(),n=Z.useRef(null),r=e.targetDocument??t.targetDocument;return Z.useEffect(()=>{if(r?.defaultView&&n.current)return sL(n.current,r.defaultView)},[n,r]),n}var $={2:`#050505`,4:`#0a0a0a`,6:`#0f0f0f`,8:`#141414`,10:`#1a1a1a`,12:`#1f1f1f`,14:`#242424`,16:`#292929`,18:`#2e2e2e`,20:`#333333`,22:`#383838`,24:`#3d3d3d`,26:`#424242`,28:`#474747`,30:`#4d4d4d`,32:`#525252`,34:`#575757`,36:`#5c5c5c`,38:`#616161`,40:`#666666`,42:`#6b6b6b`,44:`#707070`,46:`#757575`,48:`#7a7a7a`,50:`#808080`,52:`#858585`,54:`#8a8a8a`,56:`#8f8f8f`,58:`#949494`,60:`#999999`,62:`#9e9e9e`,64:`#a3a3a3`,66:`#a8a8a8`,68:`#adadad`,70:`#b3b3b3`,72:`#b8b8b8`,74:`#bdbdbd`,76:`#c2c2c2`,78:`#c7c7c7`,80:`#cccccc`,82:`#d1d1d1`,84:`#d6d6d6`,86:`#dbdbdb`,88:`#e0e0e0`,90:`#e6e6e6`,92:`#ebebeb`,94:`#f0f0f0`,96:`#f5f5f5`,98:`#fafafa`,99:`#fcfcfc`},uL={5:`rgba(255, 255, 255, 0.05)`,10:`rgba(255, 255, 255, 0.1)`,20:`rgba(255, 255, 255, 0.2)`,30:`rgba(255, 255, 255, 0.3)`,40:`rgba(255, 255, 255, 0.4)`,50:`rgba(255, 255, 255, 0.5)`,60:`rgba(255, 255, 255, 0.6)`,70:`rgba(255, 255, 255, 0.7)`,80:`rgba(255, 255, 255, 0.8)`,90:`rgba(255, 255, 255, 0.9)`},dL={5:`rgba(0, 0, 0, 0.05)`,10:`rgba(0, 0, 0, 0.1)`,20:`rgba(0, 0, 0, 0.2)`,30:`rgba(0, 0, 0, 0.3)`,40:`rgba(0, 0, 0, 0.4)`,50:`rgba(0, 0, 0, 0.5)`,60:`rgba(0, 0, 0, 0.6)`,70:`rgba(0, 0, 0, 0.7)`,80:`rgba(0, 0, 0, 0.8)`,90:`rgba(0, 0, 0, 0.9)`},fL=`#ffffff`,pL=`#000000`,mL={shade50:`#130204`,shade40:`#230308`,shade30:`#420610`,shade20:`#590815`,shade10:`#690a19`,primary:`#750b1c`,tint10:`#861b2c`,tint20:`#962f3f`,tint30:`#ac4f5e`,tint40:`#d69ca5`,tint50:`#e9c7cd`,tint60:`#f9f0f2`},hL={shade50:`#200205`,shade40:`#3b0509`,shade30:`#6e0811`,shade20:`#960b18`,shade10:`#b10e1c`,primary:`#c50f1f`,tint10:`#cc2635`,tint20:`#d33f4c`,tint30:`#dc626d`,tint40:`#eeacb2`,tint50:`#f6d1d5`,tint60:`#fdf3f4`},gL={shade50:`#210809`,shade40:`#3f1011`,shade30:`#751d1f`,shade20:`#9f282b`,shade10:`#bc2f32`,primary:`#d13438`,tint10:`#d7494c`,tint20:`#dc5e62`,tint30:`#e37d80`,tint40:`#f1bbbc`,tint50:`#f8dadb`,tint60:`#fdf6f6`},_L={shade50:`#230900`,shade40:`#411200`,shade30:`#7a2101`,shade20:`#a62d01`,shade10:`#c43501`,primary:`#da3b01`,tint10:`#de501c`,tint20:`#e36537`,tint30:`#e9835e`,tint40:`#f4bfab`,tint50:`#f9dcd1`,tint60:`#fdf6f3`},vL={shade50:`#200d03`,shade40:`#3d1805`,shade30:`#712d09`,shade20:`#9a3d0c`,shade10:`#b6480e`,primary:`#ca5010`,tint10:`#d06228`,tint20:`#d77440`,tint30:`#df8e64`,tint40:`#efc4ad`,tint50:`#f7dfd2`,tint60:`#fdf7f4`},yL={shade50:`#271002`,shade40:`#4a1e04`,shade30:`#8a3707`,shade20:`#bc4b09`,shade10:`#de590b`,primary:`#f7630c`,tint10:`#f87528`,tint20:`#f98845`,tint30:`#faa06b`,tint40:`#fdcfb4`,tint50:`#fee5d7`,tint60:`#fff9f5`},bL={shade50:`#291600`,shade40:`#4d2a00`,shade30:`#8f4e00`,shade20:`#c26a00`,shade10:`#e67e00`,primary:`#ff8c00`,tint10:`#ff9a1f`,tint20:`#ffa83d`,tint30:`#ffba66`,tint40:`#ffddb3`,tint50:`#ffedd6`,tint60:`#fffaf5`},xL={shade50:`#251a00`,shade40:`#463100`,shade30:`#835b00`,shade20:`#b27c00`,shade10:`#d39300`,primary:`#eaa300`,tint10:`#edad1c`,tint20:`#efb839`,tint30:`#f2c661`,tint40:`#f9e2ae`,tint50:`#fcefd3`,tint60:`#fefbf4`},SL={shade50:`#282400`,shade40:`#4c4400`,shade30:`#817400`,shade20:`#c0ad00`,shade10:`#e4cc00`,primary:`#fde300`,tint10:`#fde61e`,tint20:`#fdea3d`,tint30:`#feee66`,tint40:`#fef7b2`,tint50:`#fffad6`,tint60:`#fffef5`},CL={shade50:`#1f1900`,shade40:`#3a2f00`,shade30:`#6c5700`,shade20:`#937700`,shade10:`#ae8c00`,primary:`#c19c00`,tint10:`#c8a718`,tint20:`#d0b232`,tint30:`#dac157`,tint40:`#ecdfa5`,tint50:`#f5eece`,tint60:`#fdfbf2`},wL={shade50:`#181202`,shade40:`#2e2103`,shade30:`#553e06`,shade20:`#745408`,shade10:`#89640a`,primary:`#986f0b`,tint10:`#a47d1e`,tint20:`#b18c34`,tint30:`#c1a256`,tint40:`#e0cea2`,tint50:`#efe4cb`,tint60:`#fbf8f2`},TL={shade50:`#170e07`,shade40:`#2b1a0e`,shade30:`#50301a`,shade20:`#6c4123`,shade10:`#804d29`,primary:`#8e562e`,tint10:`#9c663f`,tint20:`#a97652`,tint30:`#bb8f6f`,tint40:`#ddc3b0`,tint50:`#edded3`,tint60:`#faf7f4`},EL={shade50:`#0c1501`,shade40:`#162702`,shade30:`#294903`,shade20:`#376304`,shade10:`#427505`,primary:`#498205`,tint10:`#599116`,tint20:`#6ba02b`,tint30:`#85b44c`,tint40:`#bdd99b`,tint50:`#dbebc7`,tint60:`#f6faf0`},DL={shade50:`#002111`,shade40:`#003d20`,shade30:`#00723b`,shade20:`#009b51`,shade10:`#00b85f`,primary:`#00cc6a`,tint10:`#19d279`,tint20:`#34d889`,tint30:`#5ae0a0`,tint40:`#a8f0cd`,tint50:`#cff7e4`,tint60:`#f3fdf8`},OL={shade50:`#031a02`,shade40:`#063004`,shade30:`#0b5a08`,shade20:`#0e7a0b`,shade10:`#11910d`,primary:`#13a10e`,tint10:`#27ac22`,tint20:`#3db838`,tint30:`#5ec75a`,tint40:`#a7e3a5`,tint50:`#cef0cd`,tint60:`#f2fbf2`},kL={shade50:`#031403`,shade40:`#052505`,shade30:`#094509`,shade20:`#0c5e0c`,shade10:`#0e700e`,primary:`#107c10`,tint10:`#218c21`,tint20:`#359b35`,tint30:`#54b054`,tint40:`#9fd89f`,tint50:`#c9eac9`,tint60:`#f1faf1`},AL={shade50:`#021102`,shade40:`#032003`,shade30:`#063b06`,shade20:`#085108`,shade10:`#0a5f0a`,primary:`#0b6a0b`,tint10:`#1a7c1a`,tint20:`#2d8e2d`,tint30:`#4da64d`,tint40:`#9ad29a`,tint50:`#c6e7c6`,tint60:`#f0f9f0`},jL={shade50:`#001d1f`,shade40:`#00373a`,shade30:`#00666d`,shade20:`#008b94`,shade10:`#00a5af`,primary:`#00b7c3`,tint10:`#18bfca`,tint20:`#32c8d1`,tint30:`#58d3db`,tint40:`#a6e9ed`,tint50:`#cef3f5`,tint60:`#f2fcfd`},ML={shade50:`#001516`,shade40:`#012728`,shade30:`#02494c`,shade20:`#026467`,shade10:`#037679`,primary:`#038387`,tint10:`#159195`,tint20:`#2aa0a4`,tint30:`#4cb4b7`,tint40:`#9bd9db`,tint50:`#c7ebec`,tint60:`#f0fafa`},NL={shade50:`#000f12`,shade40:`#001b22`,shade30:`#00333f`,shade20:`#004555`,shade10:`#005265`,primary:`#005b70`,tint10:`#0f6c81`,tint20:`#237d92`,tint30:`#4496a9`,tint40:`#94c8d4`,tint50:`#c3e1e8`,tint60:`#eff7f9`},PL={shade50:`#001322`,shade40:`#002440`,shade30:`#004377`,shade20:`#005ba1`,shade10:`#006cbf`,primary:`#0078d4`,tint10:`#1a86d9`,tint20:`#3595de`,tint30:`#5caae5`,tint40:`#a9d3f2`,tint50:`#d0e7f8`,tint60:`#f3f9fd`},FL={shade50:`#000c16`,shade40:`#00172a`,shade30:`#002c4e`,shade20:`#003b6a`,shade10:`#00467e`,primary:`#004e8c`,tint10:`#125e9a`,tint20:`#286fa8`,tint30:`#4a89ba`,tint40:`#9abfdc`,tint50:`#c7dced`,tint60:`#f0f6fa`},IL={shade50:`#0d1126`,shade40:`#182047`,shade30:`#2c3c85`,shade20:`#3c51b4`,shade10:`#4760d5`,primary:`#4f6bed`,tint10:`#637cef`,tint20:`#778df1`,tint30:`#93a4f4`,tint40:`#c8d1fa`,tint50:`#e1e6fc`,tint60:`#f7f9fe`},LL={shade50:`#00061d`,shade40:`#000c36`,shade30:`#001665`,shade20:`#001e89`,shade10:`#0023a2`,primary:`#0027b4`,tint10:`#173bbd`,tint20:`#3050c6`,tint30:`#546fd2`,tint40:`#a3b2e8`,tint50:`#ccd5f3`,tint60:`#f2f4fc`},RL={shade50:`#120f25`,shade40:`#221d46`,shade30:`#3f3682`,shade20:`#5649b0`,shade10:`#6656d1`,primary:`#7160e8`,tint10:`#8172eb`,tint20:`#9184ee`,tint30:`#a79cf1`,tint40:`#d2ccf8`,tint50:`#e7e4fb`,tint60:`#f9f8fe`},zL={shade50:`#0f0717`,shade40:`#1c0e2b`,shade30:`#341a51`,shade20:`#46236e`,shade10:`#532982`,primary:`#5c2e91`,tint10:`#6b3f9e`,tint20:`#7c52ab`,tint30:`#9470bd`,tint40:`#c6b1de`,tint50:`#e0d3ed`,tint60:`#f7f4fb`},BL={shade50:`#160418`,shade40:`#29072e`,shade30:`#4c0d55`,shade20:`#671174`,shade10:`#7a1589`,primary:`#881798`,tint10:`#952aa4`,tint20:`#a33fb1`,tint30:`#b55fc1`,tint40:`#d9a7e0`,tint50:`#eaceef`,tint60:`#faf2fb`},VL={shade50:`#1f091d`,shade40:`#3a1136`,shade30:`#6d2064`,shade20:`#932b88`,shade10:`#af33a1`,primary:`#c239b3`,tint10:`#c94cbc`,tint20:`#d161c4`,tint30:`#da7ed0`,tint40:`#edbbe7`,tint50:`#f5daf2`,tint60:`#fdf5fc`},HL={shade50:`#1c0b1f`,shade40:`#35153a`,shade30:`#63276d`,shade20:`#863593`,shade10:`#9f3faf`,primary:`#b146c2`,tint10:`#ba58c9`,tint20:`#c36bd1`,tint30:`#cf87da`,tint40:`#e6bfed`,tint50:`#f2dcf5`,tint60:`#fcf6fd`},UL={shade50:`#24091b`,shade40:`#441232`,shade30:`#80215d`,shade20:`#ad2d7e`,shade10:`#cd3595`,primary:`#e43ba6`,tint10:`#e750b0`,tint20:`#ea66ba`,tint30:`#ef85c8`,tint40:`#f7c0e3`,tint50:`#fbddf0`,tint60:`#fef6fb`},WL={shade50:`#1f0013`,shade40:`#390024`,shade30:`#6b0043`,shade20:`#91005a`,shade10:`#ac006b`,primary:`#bf0077`,tint10:`#c71885`,tint20:`#ce3293`,tint30:`#d957a8`,tint40:`#eca5d1`,tint50:`#f5cee6`,tint60:`#fcf2f9`},GL={shade50:`#13000c`,shade40:`#240017`,shade30:`#43002b`,shade20:`#5a003b`,shade10:`#6b0045`,primary:`#77004d`,tint10:`#87105d`,tint20:`#98246f`,tint30:`#ad4589`,tint40:`#d696c0`,tint50:`#e9c4dc`,tint60:`#faf0f6`},KL={shade50:`#141313`,shade40:`#252323`,shade30:`#444241`,shade20:`#5d5958`,shade10:`#6e6968`,primary:`#7a7574`,tint10:`#8a8584`,tint20:`#9a9594`,tint30:`#afabaa`,tint40:`#d7d4d4`,tint50:`#eae8e8`,tint60:`#faf9f9`},qL={shade50:`#0f0e0e`,shade40:`#1c1b1a`,shade30:`#343231`,shade20:`#474443`,shade10:`#54514f`,primary:`#5d5a58`,tint10:`#706d6b`,tint20:`#84817e`,tint30:`#9e9b99`,tint40:`#cecccb`,tint50:`#e5e4e3`,tint60:`#f8f8f8`},JL={shade50:`#111314`,shade40:`#1f2426`,shade30:`#3b4447`,shade20:`#505c60`,shade10:`#5f6d71`,primary:`#69797e`,tint10:`#79898d`,tint20:`#89989d`,tint30:`#a0adb2`,tint40:`#cdd6d8`,tint50:`#e4e9ea`,tint60:`#f8f9fa`},YL={shade50:`#090a0b`,shade40:`#111315`,shade30:`#202427`,shade20:`#2b3135`,shade10:`#333a3f`,primary:`#394146`,tint10:`#4d565c`,tint20:`#626c72`,tint30:`#808a90`,tint40:`#bcc3c7`,tint50:`#dbdfe1`,tint60:`#f6f7f8`},XL={red:gL,green:kL,darkOrange:_L,yellow:SL,berry:VL,lightGreen:OL,marigold:xL},ZL={darkRed:mL,cranberry:hL,pumpkin:vL,peach:bL,gold:CL,brass:wL,brown:TL,forest:EL,seafoam:DL,darkGreen:AL,lightTeal:jL,teal:ML,steel:NL,blue:PL,royalBlue:FL,cornflower:IL,navy:LL,lavender:RL,purple:zL,grape:BL,lilac:HL,pink:UL,magenta:WL,plum:GL,beige:KL,mink:qL,platinum:JL,anchor:YL},QL={cranberry:hL,green:kL,orange:yL},$L=[`red`,`green`,`darkOrange`,`yellow`,`berry`,`lightGreen`,`marigold`],eR=`darkRed.cranberry.pumpkin.peach.gold.brass.brown.forest.seafoam.darkGreen.lightTeal.teal.steel.blue.royalBlue.cornflower.navy.lavender.purple.grape.lilac.pink.magenta.plum.beige.mink.platinum.anchor`.split(`.`),tR={success:`green`,warning:`orange`,danger:`cranberry`},nR=$L.reduce((e,t)=>{let n=t.slice(0,1).toUpperCase()+t.slice(1),r={[`colorPalette${n}Background1`]:XL[t].tint60,[`colorPalette${n}Background2`]:XL[t].tint40,[`colorPalette${n}Background3`]:XL[t].primary,[`colorPalette${n}Foreground1`]:XL[t].shade10,[`colorPalette${n}Foreground2`]:XL[t].shade30,[`colorPalette${n}Foreground3`]:XL[t].primary,[`colorPalette${n}BorderActive`]:XL[t].primary,[`colorPalette${n}Border1`]:XL[t].tint40,[`colorPalette${n}Border2`]:XL[t].primary};return Object.assign(e,r)},{});nR.colorPaletteYellowForeground1=XL.yellow.shade30,nR.colorPaletteRedForegroundInverted=XL.red.tint20,nR.colorPaletteGreenForegroundInverted=XL.green.tint20,nR.colorPaletteYellowForegroundInverted=XL.yellow.tint40;var rR=eR.reduce((e,t)=>{let n=t.slice(0,1).toUpperCase()+t.slice(1),r={[`colorPalette${n}Background2`]:ZL[t].tint40,[`colorPalette${n}Foreground2`]:ZL[t].shade30,[`colorPalette${n}BorderActive`]:ZL[t].primary};return Object.assign(e,r)},{}),iR={...nR,...rR},aR=Object.entries(tR).reduce((e,[t,n])=>{let r=t.slice(0,1).toUpperCase()+t.slice(1),i={[`colorStatus${r}Background1`]:QL[n].tint60,[`colorStatus${r}Background2`]:QL[n].tint40,[`colorStatus${r}Background3`]:QL[n].primary,[`colorStatus${r}Foreground1`]:QL[n].shade10,[`colorStatus${r}Foreground2`]:QL[n].shade30,[`colorStatus${r}Foreground3`]:QL[n].primary,[`colorStatus${r}ForegroundInverted`]:QL[n].tint30,[`colorStatus${r}BorderActive`]:QL[n].primary,[`colorStatus${r}Border1`]:QL[n].tint40,[`colorStatus${r}Border2`]:QL[n].primary};return Object.assign(e,i)},{});aR.colorStatusDangerBackground3Hover=QL[tR.danger].shade10,aR.colorStatusDangerBackground3Pressed=QL[tR.danger].shade20,aR.colorStatusWarningForeground1=QL[tR.warning].shade20,aR.colorStatusWarningForeground3=QL[tR.warning].shade20,aR.colorStatusWarningBorder2=QL[tR.warning].shade20;var oR=e=>({colorNeutralForeground1:$[14],colorNeutralForeground1Hover:$[14],colorNeutralForeground1Pressed:$[14],colorNeutralForeground1Selected:$[14],colorNeutralForeground2:$[26],colorNeutralForeground2Hover:$[14],colorNeutralForeground2Pressed:$[14],colorNeutralForeground2Selected:$[14],colorNeutralForeground2BrandHover:e[80],colorNeutralForeground2BrandPressed:e[70],colorNeutralForeground2BrandSelected:e[80],colorNeutralForeground3:$[38],colorNeutralForeground3Hover:$[26],colorNeutralForeground3Pressed:$[26],colorNeutralForeground3Selected:$[26],colorNeutralForeground3BrandHover:e[80],colorNeutralForeground3BrandPressed:e[70],colorNeutralForeground3BrandSelected:e[80],colorNeutralForeground4:$[44],colorNeutralForeground5:$[38],colorNeutralForeground5Hover:$[14],colorNeutralForeground5Pressed:$[14],colorNeutralForeground5Selected:$[14],colorNeutralForegroundDisabled:$[74],colorNeutralForegroundInvertedDisabled:uL[40],colorBrandForegroundLink:e[70],colorBrandForegroundLinkHover:e[60],colorBrandForegroundLinkPressed:e[40],colorBrandForegroundLinkSelected:e[70],colorNeutralForeground2Link:$[26],colorNeutralForeground2LinkHover:$[14],colorNeutralForeground2LinkPressed:$[14],colorNeutralForeground2LinkSelected:$[14],colorCompoundBrandForeground1:e[80],colorCompoundBrandForeground1Hover:e[70],colorCompoundBrandForeground1Pressed:e[60],colorBrandForeground1:e[80],colorBrandForeground2:e[70],colorBrandForeground2Hover:e[60],colorBrandForeground2Pressed:e[30],colorNeutralForeground1Static:$[14],colorNeutralForegroundStaticInverted:fL,colorNeutralForegroundInverted:fL,colorNeutralForegroundInvertedHover:fL,colorNeutralForegroundInvertedPressed:fL,colorNeutralForegroundInvertedSelected:fL,colorNeutralForegroundInverted2:fL,colorNeutralForegroundOnBrand:fL,colorNeutralForegroundInvertedLink:fL,colorNeutralForegroundInvertedLinkHover:fL,colorNeutralForegroundInvertedLinkPressed:fL,colorNeutralForegroundInvertedLinkSelected:fL,colorBrandForegroundInverted:e[100],colorBrandForegroundInvertedHover:e[110],colorBrandForegroundInvertedPressed:e[100],colorBrandForegroundOnLight:e[80],colorBrandForegroundOnLightHover:e[70],colorBrandForegroundOnLightPressed:e[50],colorBrandForegroundOnLightSelected:e[60],colorNeutralBackground1:fL,colorNeutralBackground1Hover:$[96],colorNeutralBackground1Pressed:$[88],colorNeutralBackground1Selected:$[92],colorNeutralBackground2:$[98],colorNeutralBackground2Hover:$[94],colorNeutralBackground2Pressed:$[86],colorNeutralBackground2Selected:$[90],colorNeutralBackground3:$[96],colorNeutralBackground3Hover:$[92],colorNeutralBackground3Pressed:$[84],colorNeutralBackground3Selected:$[88],colorNeutralBackground4:$[94],colorNeutralBackground4Hover:$[98],colorNeutralBackground4Pressed:$[96],colorNeutralBackground4Selected:fL,colorNeutralBackground5:$[92],colorNeutralBackground5Hover:$[96],colorNeutralBackground5Pressed:$[94],colorNeutralBackground5Selected:$[98],colorNeutralBackground6:$[90],colorNeutralBackground7:`#00000000`,colorNeutralBackground7Hover:$[92],colorNeutralBackground7Pressed:$[84],colorNeutralBackground7Selected:`#00000000`,colorNeutralBackground8:$[99],colorNeutralBackgroundInverted:$[16],colorNeutralBackgroundInvertedHover:$[24],colorNeutralBackgroundInvertedPressed:$[12],colorNeutralBackgroundInvertedSelected:$[22],colorNeutralBackgroundStatic:$[20],colorNeutralBackgroundAlpha:uL[50],colorNeutralBackgroundAlpha2:uL[80],colorSubtleBackground:`transparent`,colorSubtleBackgroundHover:$[96],colorSubtleBackgroundPressed:$[88],colorSubtleBackgroundSelected:$[92],colorSubtleBackgroundLightAlphaHover:uL[70],colorSubtleBackgroundLightAlphaPressed:uL[50],colorSubtleBackgroundLightAlphaSelected:`transparent`,colorSubtleBackgroundInverted:`transparent`,colorSubtleBackgroundInvertedHover:dL[10],colorSubtleBackgroundInvertedPressed:dL[30],colorSubtleBackgroundInvertedSelected:dL[20],colorTransparentBackground:`transparent`,colorTransparentBackgroundHover:`transparent`,colorTransparentBackgroundPressed:`transparent`,colorTransparentBackgroundSelected:`transparent`,colorNeutralBackgroundDisabled:$[94],colorNeutralBackgroundDisabled2:fL,colorNeutralBackgroundInvertedDisabled:uL[10],colorNeutralStencil1:$[90],colorNeutralStencil2:$[98],colorNeutralStencil1Alpha:dL[10],colorNeutralStencil2Alpha:dL[5],colorBackgroundOverlay:dL[40],colorScrollbarOverlay:dL[50],colorBrandBackground:e[80],colorBrandBackgroundHover:e[70],colorBrandBackgroundPressed:e[40],colorBrandBackgroundSelected:e[60],colorCompoundBrandBackground:e[80],colorCompoundBrandBackgroundHover:e[70],colorCompoundBrandBackgroundPressed:e[60],colorBrandBackgroundStatic:e[80],colorBrandBackground2:e[160],colorBrandBackground2Hover:e[150],colorBrandBackground2Pressed:e[130],colorBrandBackground3Static:e[60],colorBrandBackground4Static:e[40],colorBrandBackgroundInverted:fL,colorBrandBackgroundInvertedHover:e[160],colorBrandBackgroundInvertedPressed:e[140],colorBrandBackgroundInvertedSelected:e[150],colorNeutralCardBackground:$[98],colorNeutralCardBackgroundHover:fL,colorNeutralCardBackgroundPressed:$[96],colorNeutralCardBackgroundSelected:$[92],colorNeutralCardBackgroundDisabled:$[94],colorNeutralStrokeAccessible:$[38],colorNeutralStrokeAccessibleHover:$[34],colorNeutralStrokeAccessiblePressed:$[30],colorNeutralStrokeAccessibleSelected:e[80],colorNeutralStroke1:$[82],colorNeutralStroke1Hover:$[78],colorNeutralStroke1Pressed:$[70],colorNeutralStroke1Selected:$[74],colorNeutralStroke2:$[88],colorNeutralStroke3:$[94],colorNeutralStroke4:$[92],colorNeutralStroke4Hover:$[88],colorNeutralStroke4Pressed:$[84],colorNeutralStroke4Selected:$[92],colorNeutralStrokeSubtle:$[88],colorNeutralStrokeOnBrand:fL,colorNeutralStrokeOnBrand2:fL,colorNeutralStrokeOnBrand2Hover:fL,colorNeutralStrokeOnBrand2Pressed:fL,colorNeutralStrokeOnBrand2Selected:fL,colorBrandStroke1:e[80],colorBrandStroke2:e[140],colorBrandStroke2Hover:e[120],colorBrandStroke2Pressed:e[80],colorBrandStroke2Contrast:e[140],colorCompoundBrandStroke:e[80],colorCompoundBrandStrokeHover:e[70],colorCompoundBrandStrokePressed:e[60],colorNeutralStrokeDisabled:$[88],colorNeutralStrokeDisabled2:$[92],colorNeutralStrokeInvertedDisabled:uL[40],colorTransparentStroke:`transparent`,colorTransparentStrokeInteractive:`transparent`,colorTransparentStrokeDisabled:`transparent`,colorNeutralStrokeAlpha:dL[5],colorNeutralStrokeAlpha2:uL[20],colorStrokeFocus1:fL,colorStrokeFocus2:pL,colorNeutralShadowAmbient:`rgba(0,0,0,0.12)`,colorNeutralShadowKey:`rgba(0,0,0,0.14)`,colorNeutralShadowAmbientLighter:`rgba(0,0,0,0.06)`,colorNeutralShadowKeyLighter:`rgba(0,0,0,0.07)`,colorNeutralShadowAmbientDarker:`rgba(0,0,0,0.20)`,colorNeutralShadowKeyDarker:`rgba(0,0,0,0.24)`,colorBrandShadowAmbient:`rgba(0,0,0,0.30)`,colorBrandShadowKey:`rgba(0,0,0,0.25)`}),sR={borderRadiusNone:`0`,borderRadiusSmall:`2px`,borderRadiusMedium:`4px`,borderRadiusLarge:`6px`,borderRadiusXLarge:`8px`,borderRadius2XLarge:`12px`,borderRadius3XLarge:`16px`,borderRadius4XLarge:`24px`,borderRadius5XLarge:`32px`,borderRadius6XLarge:`40px`,borderRadiusCircular:`10000px`},cR={curveAccelerateMax:`cubic-bezier(0.9,0.1,1,0.2)`,curveAccelerateMid:`cubic-bezier(1,0,1,1)`,curveAccelerateMin:`cubic-bezier(0.8,0,0.78,1)`,curveDecelerateMax:`cubic-bezier(0.1,0.9,0.2,1)`,curveDecelerateMid:`cubic-bezier(0,0,0,1)`,curveDecelerateMin:`cubic-bezier(0.33,0,0.1,1)`,curveEasyEaseMax:`cubic-bezier(0.8,0,0.2,1)`,curveEasyEase:`cubic-bezier(0.33,0,0.67,1)`,curveLinear:`cubic-bezier(0,0,1,1)`},lR={durationUltraFast:`50ms`,durationFaster:`100ms`,durationFast:`150ms`,durationNormal:`200ms`,durationGentle:`250ms`,durationSlow:`300ms`,durationSlower:`400ms`,durationUltraSlow:`500ms`},uR={fontSizeBase100:`10px`,fontSizeBase200:`12px`,fontSizeBase300:`14px`,fontSizeBase400:`16px`,fontSizeBase500:`20px`,fontSizeBase600:`24px`,fontSizeHero700:`28px`,fontSizeHero800:`32px`,fontSizeHero900:`40px`,fontSizeHero1000:`68px`},dR={lineHeightBase100:`14px`,lineHeightBase200:`16px`,lineHeightBase300:`20px`,lineHeightBase400:`22px`,lineHeightBase500:`28px`,lineHeightBase600:`32px`,lineHeightHero700:`36px`,lineHeightHero800:`40px`,lineHeightHero900:`52px`,lineHeightHero1000:`92px`},fR={fontWeightRegular:400,fontWeightMedium:500,fontWeightSemibold:600,fontWeightBold:700},pR={fontFamilyBase:`'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif`,fontFamilyMonospace:`Consolas, 'Courier New', Courier, monospace`,fontFamilyNumeric:`Bahnschrift, 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif`},mR={none:`0`,xxs:`2px`,xs:`4px`,sNudge:`6px`,s:`8px`,mNudge:`10px`,m:`12px`,l:`16px`,xl:`20px`,xxl:`24px`,xxxl:`32px`},hR={spacingHorizontalNone:mR.none,spacingHorizontalXXS:mR.xxs,spacingHorizontalXS:mR.xs,spacingHorizontalSNudge:mR.sNudge,spacingHorizontalS:mR.s,spacingHorizontalMNudge:mR.mNudge,spacingHorizontalM:mR.m,spacingHorizontalL:mR.l,spacingHorizontalXL:mR.xl,spacingHorizontalXXL:mR.xxl,spacingHorizontalXXXL:mR.xxxl},gR={spacingVerticalNone:mR.none,spacingVerticalXXS:mR.xxs,spacingVerticalXS:mR.xs,spacingVerticalSNudge:mR.sNudge,spacingVerticalS:mR.s,spacingVerticalMNudge:mR.mNudge,spacingVerticalM:mR.m,spacingVerticalL:mR.l,spacingVerticalXL:mR.xl,spacingVerticalXXL:mR.xxl,spacingVerticalXXXL:mR.xxxl},_R={strokeWidthThin:`1px`,strokeWidthThick:`2px`,strokeWidthThicker:`3px`,strokeWidthThickest:`4px`};function vR(e,t,n=``){return{[`shadow2${n}`]:`0 0 2px ${e}, 0 1px 2px ${t}`,[`shadow4${n}`]:`0 0 2px ${e}, 0 2px 4px ${t}`,[`shadow8${n}`]:`0 0 2px ${e}, 0 4px 8px ${t}`,[`shadow16${n}`]:`0 0 2px ${e}, 0 8px 16px ${t}`,[`shadow28${n}`]:`0 0 8px ${e}, 0 14px 28px ${t}`,[`shadow64${n}`]:`0 0 8px ${e}, 0 32px 64px ${t}`}}var yR=(e=>{let t=oR(e);return{...sR,...uR,...dR,...pR,...fR,..._R,...hR,...gR,...lR,...cR,...t,...iR,...aR,...vR(t.colorNeutralShadowAmbient,t.colorNeutralShadowKey),...vR(t.colorBrandShadowAmbient,t.colorBrandShadowKey,`Brand`)}})({10:`#061724`,20:`#082338`,30:`#0a2e4a`,40:`#0c3b5e`,50:`#0e4775`,60:`#0f548c`,70:`#115ea3`,80:`#0f6cbd`,90:`#2886de`,100:`#479ef5`,110:`#62abf5`,120:`#77b7f7`,130:`#96c6fa`,140:`#b4d6fa`,150:`#cfe4fa`,160:`#ebf3fc`}),bR={root:`fui-FluentProvider`},xR=uF({root:{sj55zd:`f19n0e5`,De3pzq:`fxugw4r`,fsow6f:[`f1o700av`,`fes3tcz`],Bahqtrf:`fk6fouc`,Be2twd7:`fkhj508`,Bhrd7zp:`figsok6`,Bg96gwp:`f1i3iumi`}},{d:[`.f19n0e5{color:var(--colorNeutralForeground1);}`,`.fxugw4r{background-color:var(--colorNeutralBackground1);}`,`.f1o700av{text-align:left;}`,`.fes3tcz{text-align:right;}`,`.fk6fouc{font-family:var(--fontFamilyBase);}`,`.fkhj508{font-size:var(--fontSizeBase300);}`,`.figsok6{font-weight:var(--fontWeightRegular);}`,`.f1i3iumi{line-height:var(--lineHeightBase300);}`]}),SR=e=>{let t=gF(),n=xR({dir:e.dir,renderer:t});return e.root.className=ZP(bR.root,e.themeClassName,n.root,e.root.className),e},CR=Z.useInsertionEffect?Z.useInsertionEffect:wI,wR=(e,t)=>{if(!e?.head)return;let n=e.createElement(`style`);return Object.keys(t).forEach(e=>{n.setAttribute(e,t[e])}),e.head.appendChild(n),n},TR=(e,t)=>{let n=e.sheet;n&&(n.cssRules.length>0&&n.deleteRule(0),n.insertRule(t,0))},ER=e=>{let{targetDocument:t,theme:n,rendererAttributes:r}=e,i=Z.useRef(void 0),a=DI(bR.root),o=r,s=Z.useMemo(()=>CF(`.${a}`,n),[n,a]);return DR(t,a),CR(()=>{let e=t?.getElementById(a);return e?i.current=e:(i.current=wR(t,{...o,id:a}),i.current&&TR(i.current,s)),()=>{var e;(e=i.current)==null||e.remove()}},[a,t,s,o]),{styleTagId:a,rule:s}};function DR(e,t){Z.useState(()=>{if(!e)return;let n=e.getElementById(t);n&&e.head.append(n)})}var OR={},kR={},AR=(e,t)=>{let n=mI(),r=MR(),i=_I(),a=Z.useContext(vI)||OR,{applyStylesToPortals:o=!0,customStyleHooks_unstable:s,dir:c=n.dir,targetDocument:l=n.targetDocument,theme:u,overrides_unstable:d={}}=e,f=jR(r,u),p=jR(i,d),m=jR(a,s),h=gF(),{styleTagId:g,rule:_}=ER({theme:f,targetDocument:l,rendererAttributes:h.styleElementAttributes??kR});return{applyStylesToPortals:o,customStyleHooks_unstable:m,dir:c,targetDocument:l,theme:f,overrides_unstable:p,themeClassName:g,components:{root:`div`},root:DF(oI(`div`,{...e,dir:c,ref:OI(t,lL({targetDocument:l}))}),{elementType:`div`}),serverStyleProps:{cssRule:_,attributes:{...h.styleElementAttributes,id:g}}}};function jR(e,t){return e&&t?{...e,...t}:e||t}function MR(){return Z.useContext(sI)}function NR(e){let{applyStylesToPortals:t,customStyleHooks_unstable:n,dir:r,root:i,targetDocument:a,theme:o,themeClassName:s,overrides_unstable:c}=e,l=Z.useMemo(()=>({dir:r,targetDocument:a}),[r,a]),[u]=Z.useState(()=>({}));return{customStyleHooks_unstable:n,overrides_unstable:c,provider:l,textDirection:r,iconDirection:Z.useMemo(()=>({textDirection:r}),[r]),tooltip:u,theme:o,themeClassName:t?i.className:s}}var PR=Z.forwardRef((e,t)=>{let n=AR(e,t);return SR(n),HI(n,NR(n))});PR.displayName=`FluentProvider`;var FR=bF({root:{mc9l5x:`f1w7gpdv`,Bg96gwp:`fez10in`},rtl:{Bz10aip:`f13rod7r`}},{d:[`.f1w7gpdv{display:inline;}`,`.fez10in{line-height:0;}`,`.f13rod7r{transform:scaleX(-1);}`]}),IR=`fui-Icon`,LR=`data-fui-icon`,RR=(e,t)=>{let{filled:n,idPrefix:r,title:i,primaryFill:a=`currentColor`,...o}=e,s={...o,fill:a},c=VI(),l=!!(t?.flipInRtl&&c?.textDirection===`rtl`);return i&&(s[`aria-label`]=i),!s[`aria-label`]&&!s[`aria-labelledby`]?s[`aria-hidden`]=!0:s.role=`img`,s[LR]=``,{state:s,isRtlFlip:l}},zR=(e,t)=>{let n=FR(),{state:r,isRtlFlip:i}=RR(e,t);return r.className=ZP(n.root,i&&n.rtl,r.className),r},BR=bF({root:{B8gzw0y:`f1dd5bof`}},{m:[[`@media (forced-colors: active){.f1dd5bof{forced-color-adjust:auto;}}`,{m:`(forced-colors: active)`}]]}),VR=`url(#`,HR=(e,t,n)=>{let[r,i,...a]=e,o=i;if(n&&i){let e={};for(let t in i){let r=i[t];if(typeof r!=`string`)e[t]=r;else if(t===`id`)e[t]=n+r;else{let i=r.indexOf(VR);e[t]=i<0?r:r.slice(0,i+5)+n+r.slice(i+5)}}o=e}return Z.createElement(r,{...o,key:t},...a.map((e,t)=>HR(e,t,n)))},UR=e=>e===`1em`?`20`:e,WR=(e,t,n)=>typeof e!=`string`&&(t?.color||Array.isArray(e[0]))?e.map((e,t)=>HR(e,t,n)):void 0,GR=()=>void 0,KR=(e,t)=>{let n=WR(e,t);return n?function(r){return Z.useMemo(()=>r?WR(e,t,r):n,[r])}:GR},qR=(e,t,n)=>typeof t==`string`?Z.createElement(`svg`,{...e,dangerouslySetInnerHTML:{__html:t}}):n?Z.createElement(`svg`,e,...n):Z.createElement(`svg`,e,...t.map(t=>Z.createElement(`path`,{d:t,fill:e.fill}))),JR=(e,t,n,r)=>{let i=UR(t),a=KR(n,r),o=Z.forwardRef((e,o)=>{let s=BR(),c=zR(e,{flipInRtl:r?.flipInRtl}),l=a(e.idPrefix);return qR({...c,className:ZP(IR,c.className,s.root),ref:o,width:t,height:t,viewBox:`0 0 ${i} ${i}`,xmlns:`http://www.w3.org/2000/svg`},n,l)});return o.displayName=e,o},YR=JR(`DismissRegular`,`1em`,[`m4.09 4.22.06-.07a.5.5 0 0 1 .63-.06l.07.06L10 9.29l5.15-5.14a.5.5 0 0 1 .63-.06l.07.06c.18.17.2.44.06.63l-.06.07L10.71 10l5.14 5.15c.18.17.2.44.06.63l-.06.07a.5.5 0 0 1-.63.06l-.07-.06L10 10.71l-5.15 5.14a.5.5 0 0 1-.63.06l-.07-.06a.5.5 0 0 1-.06-.63l.06-.07L9.29 10 4.15 4.85a.5.5 0 0 1-.06-.63l.06-.07-.06.07Z`]),XR=JR(`CalendarLtr24Regular`,`24`,[`M17.75 3C19.55 3 21 4.46 21 6.25v11.5c0 1.8-1.46 3.25-3.25 3.25H6.25A3.25 3.25 0 0 1 3 17.75V6.25C3 4.45 4.46 3 6.25 3h11.5Zm1.75 5.5h-15v9.25c0 .97.78 1.75 1.75 1.75h11.5c.97 0 1.75-.78 1.75-1.75V8.5Zm-11.75 6a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm4.25 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm-4.25-4a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm4.25 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm4.25 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm1.5-6H6.25c-.97 0-1.75.78-1.75 1.75V7h15v-.75c0-.97-.78-1.75-1.75-1.75Z`]),ZR=JR(`DataBarVertical24Regular`,`24`,[`M5.75 3C6.99 3 8 4 8 5.25v13.5a2.25 2.25 0 1 1-4.5 0V5.25C3.5 4 4.5 3 5.75 3Zm6.5 4c1.24 0 2.25 1 2.25 2.25v9.5a2.25 2.25 0 1 1-4.5 0v-9.5C10 8 11 7 12.25 7Zm6.5 4c1.24 0 2.25 1 2.25 2.25v5.5a2.25 2.25 0 1 1-4.5 0v-5.5c0-1.24 1-2.25 2.25-2.25Zm-13-6.5a.75.75 0 0 0-.75.75v13.5a.75.75 0 0 0 1.5 0V5.25a.75.75 0 0 0-.75-.75Zm6.5 4a.75.75 0 0 0-.75.75v9.5a.75.75 0 0 0 1.5 0v-9.5a.75.75 0 0 0-.75-.75Zm6.5 4a.75.75 0 0 0-.75.75v5.5a.75.75 0 0 0 1.5 0v-5.5a.75.75 0 0 0-.75-.75Z`]),QR=JR(`DocumentText24Regular`,`24`,[`M8.75 11.5a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm0 2.75a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm0 2.75a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm4.84-14.41L19.4 8.4A2 2 0 0 1 20 9.83V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6.17c.52 0 1.05.22 1.42.59ZM18 20.5a.5.5 0 0 0 .5-.5V10H14a2 2 0 0 1-2-2V3.5H6a.5.5 0 0 0-.5.5v16c0 .27.22.5.5.5h12Zm-.62-12L13.5 4.62V8c0 .28.22.5.5.5h3.38Z`]),$R=JR(`Settings24Regular`,`24`,[`M12.01 2.25c.74 0 1.47.1 2.18.25.32.07.55.33.59.65l.17 1.53a1.38 1.38 0 0 0 1.92 1.11l1.4-.61c.3-.13.64-.06.85.17a9.8 9.8 0 0 1 2.2 3.8c.1.3 0 .63-.26.82l-1.25.92a1.38 1.38 0 0 0 0 2.22l1.25.92c.26.19.36.52.27.82a9.8 9.8 0 0 1-2.2 3.8.75.75 0 0 1-.85.17l-1.4-.62a1.38 1.38 0 0 0-1.93 1.12l-.17 1.52a.75.75 0 0 1-.58.65 9.52 9.52 0 0 1-4.4 0 .75.75 0 0 1-.57-.65l-.17-1.52a1.38 1.38 0 0 0-1.93-1.11l-1.4.62a.75.75 0 0 1-.85-.18 9.8 9.8 0 0 1-2.2-3.8c-.1-.3 0-.63.26-.82l1.25-.92a1.38 1.38 0 0 0 0-2.22l-1.24-.92a.75.75 0 0 1-.28-.82 9.8 9.8 0 0 1 2.2-3.8c.23-.23.57-.3.86-.17l1.4.62c.4.17.86.15 1.25-.08.38-.22.63-.6.68-1.04l.17-1.53a.75.75 0 0 1 .58-.65c.72-.16 1.45-.24 2.2-.25Zm0 1.5c-.45 0-.9.04-1.35.12l-.11.97a2.89 2.89 0 0 1-4.03 2.33l-.9-.4A8.3 8.3 0 0 0 4.29 9.1l.8.59a2.88 2.88 0 0 1 0 4.64l-.8.59a8.3 8.3 0 0 0 1.35 2.32l.9-.4a2.88 2.88 0 0 1 4.02 2.32l.1.99c.9.15 1.8.15 2.7 0l.1-.99a2.88 2.88 0 0 1 4.02-2.32l.9.4a8.3 8.3 0 0 0 1.35-2.32l-.8-.59a2.88 2.88 0 0 1 0-4.64l.8-.59a8.3 8.3 0 0 0-1.35-2.32l-.9.4a2.88 2.88 0 0 1-4.02-2.32l-.1-.98c-.45-.08-.9-.11-1.34-.12ZM12 8.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5Zm0 1.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z`]),ez=JR(`PersonClock24Regular`,`24`,[`M12.02 14c-.3.46-.53.97-.7 1.5H4.24a.75.75 0 0 0-.75.75v.58c0 .53.2 1.05.54 1.46C5.3 19.76 7.26 20.5 10 20.5c.6 0 1.16-.03 1.68-.1.25.49.55.95.91 1.36-.8.16-1.66.24-2.59.24-3.15 0-5.53-.9-7.1-2.74a3.75 3.75 0 0 1-.9-2.43v-.58C2 15 3.01 14 4.25 14h7.77ZM15 7A5 5 0 1 0 5 7a5 5 0 0 0 10 0ZM6.5 7a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0ZM23 17.5a5.5 5.5 0 1 0-11 0 5.5 5.5 0 0 0 11 0ZM17.5 14c.28 0 .5.22.5.5V17h2a.5.5 0 0 1 0 1h-2.5a.5.5 0 0 1-.5-.5v-3c0-.28.22-.5.5-.5Z`]),tz=JR(`Briefcase24Regular`,`24`,[`M13.75 2C14.99 2 16 3 16 4.25V6h2.75C20.55 6 22 7.46 22 9.25v8.5c0 1.8-1.46 3.25-3.25 3.25H5.25A3.25 3.25 0 0 1 2 17.75v-8.5C2 7.45 3.46 6 5.25 6H8V4.25C8 3.01 9 2 10.25 2h3.5Zm6.75 11.49c-.5.32-1.1.51-1.75.51H14a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1H5.25c-.64 0-1.24-.19-1.75-.51v4.26c0 .97.78 1.75 1.75 1.75h13.5c.97 0 1.75-.78 1.75-1.75v-4.26ZM5.25 7.5c-.97 0-1.75.78-1.75 1.75v1.5c0 .97.78 1.75 1.75 1.75H10V12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v.5h4.75c.97 0 1.75-.78 1.75-1.75v-1.5c0-.97-.78-1.75-1.75-1.75H5.25Zm5-4a.75.75 0 0 0-.75.75V6h5V4.25a.75.75 0 0 0-.75-.75h-3.5Z`]),nz=JR(`ApprovalsApp24Regular`,`24`,[`M11.78 1.72a.75.75 0 1 0-1.06 1.06L11.94 4a9 9 0 1 0 9.02 9.82.75.75 0 0 0-1.5-.13 7.5 7.5 0 1 1-7.52-8.19l-1.22 1.22a.75.75 0 0 0 1.06 1.06l2.5-2.5a.75.75 0 0 0 0-1.06l-2.5-2.5Zm4 8.5c.3.3.3.77 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 0 1 1.06-1.06l1.47 1.47 3.97-3.97c.3-.3.77-.3 1.06 0Z`]),rz=JR(`Apps24Regular`,`24`,[`m18.5 2.33 3.17 3.18c.88.88.88 2.3 0 3.18l-2.58 2.59A2.25 2.25 0 0 1 21 13.5v5.25C21 20 20 21 18.75 21H5.25C4.01 21 3 20 3 18.75V5.25C3 4.01 4 3 5.25 3h5.25c1.13 0 2.06.83 2.23 1.92l2.58-2.59c.88-.88 2.3-.88 3.18 0Zm-14 16.42c0 .41.34.75.75.75h6v-6.75H4.5v6Zm8.25.75h6c.41 0 .75-.34.75-.75V13.5a.75.75 0 0 0-.75-.75h-6v6.75Zm-2.25-15H5.25a.75.75 0 0 0-.75.75v6h6.75v-6a.75.75 0 0 0-.75-.75Zm2.25 4.81v1.94h1.94l-1.94-1.94Zm3.62-5.92L13.2 6.57c-.3.3-.3.77 0 1.06l3.18 3.18c.3.3.77.3 1.06 0l3.18-3.18c.3-.3.3-.77 0-1.06l-3.18-3.18a.75.75 0 0 0-1.06 0Z`]),iz=JR(`LineHorizontal320Regular`,`20`,[`M2 4.5c0-.28.22-.5.5-.5h15a.5.5 0 0 1 0 1h-15a.5.5 0 0 1-.5-.5Zm0 5c0-.28.22-.5.5-.5h15a.5.5 0 0 1 0 1h-15a.5.5 0 0 1-.5-.5Zm.5 4.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-15Z`]),az=JR(`Add24Regular`,`24`,[`M12 3.25c.41 0 .75.34.75.75v7.25H20a.75.75 0 0 1 0 1.5h-7.25V20a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5h7.25V4c0-.41.34-.75.75-.75Z`]),oz=JR(`Flowchart24Regular`,`24`,[`M5.25 3C4 3 3 4 3 5.25v2.5C3 9 4 10 5.25 10h.5v3.71c-.05.03-.1.07-.13.12l-2.8 2.79a1.25 1.25 0 0 0 0 1.77l2.8 2.79c.48.49 1.28.49 1.76 0l2.8-2.8.11-.13H14v.5C14 20 15.01 21 16.25 21h2.5c1.24 0 2.25-1 2.25-2.25v-2.5c0-1.24-1-2.25-2.25-2.25h-2.5C15.01 14 14 15 14 16.25v.5H10.3c-.03-.05-.07-.09-.12-.13l-2.79-2.8a1.26 1.26 0 0 0-.13-.11v-3.7h.5C9 10 10 9 10 7.74v-2.5C10 4 9 3 7.75 3h-2.5ZM4.5 5.25c0-.42.33-.75.75-.75h2.5c.42 0 .75.33.75.75v2.5c0 .42-.33.75-.75.75h-2.5a.75.75 0 0 1-.75-.75v-2.5ZM4.06 17.5l2.44-2.44 2.44 2.44-2.44 2.44-2.44-2.44Zm12.2-2h2.49c.41 0 .75.34.75.75v2.5c0 .42-.34.75-.75.75h-2.5a.75.75 0 0 1-.75-.75v-2.5c0-.41.34-.75.75-.75Z`]),sz=JR(`Edit24Regular`,`24`,[`M20.95 3.05a3.58 3.58 0 0 0-5.06 0L3.94 15c-.4.4-.7.92-.82 1.48l-1.1 4.6a.75.75 0 0 0 .9.9l4.6-1.1A3.1 3.1 0 0 0 9 20.07L20.95 8.11a3.58 3.58 0 0 0 0-5.06Zm-4 1.06a2.08 2.08 0 1 1 2.94 2.94l-.89.89L16.06 5l.9-.9ZM15 6.06 17.94 9l-10 10a1.6 1.6 0 0 1-.76.43l-3.42.8.82-3.4c.06-.3.21-.56.42-.77l10-10Z`]),cz=JR(`Flash24Regular`,`24`,[`M7.43 2.83C7.6 2.33 8.07 2 8.6 2h6.46c.85 0 1.45.84 1.18 1.65L14.8 8h3.96c1.1 0 1.67 1.33.9 2.12L8.59 21.54c-1.06 1.08-2.88.1-2.55-1.38l1.27-5.66-1.56-.01c-1.21 0-2.05-1.2-1.65-2.34l3.33-9.32Zm1.35.67-3.26 9.16c-.06.16.06.33.23.33l2.5.01a.75.75 0 0 1 .73.91L7.51 20.5 18.16 9.5h-4.41a.75.75 0 0 1-.71-.99L14.7 3.5H8.78Z`]),lz=JR(`Lightbulb24Regular`,`24`,[`M12 2c4 0 7.25 3.25 7.25 7.25 0 2.1-.9 4.02-2.66 5.74a.75.75 0 0 0-.18.27l-.03.1-1.13 4.9a2.25 2.25 0 0 1-2.02 1.73l-.17.01h-2.12c-.99 0-1.85-.65-2.14-1.58l-.05-.16-1.13-4.9a.75.75 0 0 0-.2-.37c-1.68-1.64-2.58-3.46-2.66-5.44l-.01-.3v-.24a7.25 7.25 0 0 1 7.25-7Zm2.12 16.5H9.88l.33 1.42c.07.3.33.53.63.57l.1.01h2.12c.31 0 .59-.2.7-.48l.03-.1.33-1.42ZM12 3.5a5.75 5.75 0 0 0-5.75 5.53v.5c.08 1.56.8 3.02 2.21 4.39.27.26.46.58.57.93l.05.17.46 1.98h4.92l.46-1.98c.08-.36.25-.69.5-.97l.12-.13c1.4-1.37 2.13-2.83 2.2-4.4l.01-.27v-.22A5.75 5.75 0 0 0 12 3.5Z`]),uz=JR(`ArrowRight24Regular`,`24`,[`M13.27 4.2a.75.75 0 0 0-1.04 1.1l6.25 5.95H3.75a.75.75 0 0 0 0 1.5h14.73l-6.25 5.95a.75.75 0 0 0 1.04 1.1l7.42-7.08a1 1 0 0 0 0-1.44L13.27 4.2Z`]),dz=JR(`ShieldCheckmark24Regular`,`24`,[`M3 5.75c0-.41.34-.75.75-.75 2.66 0 5.26-.94 7.8-2.85.27-.2.63-.2.9 0C14.99 4.05 17.59 5 20.25 5c.41 0 .75.34.75.75V11c0 .34-.01.67-.04 1a6.47 6.47 0 0 0-1.46-.69V6.48a14.36 14.36 0 0 1-7.5-2.8 14.36 14.36 0 0 1-7.5 2.8V11c0 4.15 2.33 7.22 7.13 9.28.26.56.6 1.07 1 1.52l-.36.15a.75.75 0 0 1-.54 0C5.96 19.68 3 16 3 11V5.75ZM23 17.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Zm-2.15-2.35a.5.5 0 0 0-.7 0l-3.65 3.64-1.65-1.64a.5.5 0 0 0-.7.7l2 2c.2.2.5.2.7 0l4-4a.5.5 0 0 0 0-.7Z`]),fz=JR(`Chat24Regular`,`24`,[`M12 2a10 10 0 1 1-4.59 18.89L3.6 21.96a1.25 1.25 0 0 1-1.54-1.54l1.06-3.83A10 10 0 0 1 12 2Zm0 1.5a8.5 8.5 0 0 0-7.43 12.64l.15.27-1.1 3.98 3.98-1.11.27.15A8.5 8.5 0 1 0 12 3.5ZM8.75 13h4.5a.75.75 0 0 1 .1 1.5h-4.6a.75.75 0 0 1-.1-1.5h4.6-4.5Zm0-3.5h6.5a.75.75 0 0 1 .1 1.5h-6.6a.75.75 0 0 1-.1-1.5h6.6-6.5Z`]),pz=JR(`CheckmarkCircle24Regular`,`24`,[`M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm-1.25 9.94 4.47-4.47a.75.75 0 0 1 1.13.98l-.07.08-5 5a.75.75 0 0 1-.98.07l-.08-.07-2.5-2.5a.75.75 0 0 1 .98-1.13l.08.07 1.97 1.97 4.47-4.47-4.47 4.47Z`]),mz=JR(`ChevronDown24Regular`,`24`,[`M4.22 8.47c.3-.3.77-.3 1.06 0L12 15.19l6.72-6.72a.75.75 0 1 1 1.06 1.06l-7.25 7.25c-.3.3-.77.3-1.06 0L4.22 9.53a.75.75 0 0 1 0-1.06Z`]),hz=JR(`ChevronRight24Regular`,`24`,[`M8.47 4.22c-.3.3-.3.77 0 1.06L15.19 12l-6.72 6.72a.75.75 0 1 0 1.06 1.06l7.25-7.25c.3-.3.3-.77 0-1.06L9.53 4.22a.75.75 0 0 0-1.06 0Z`]),gz=JR(`Wrench24Regular`,`24`,[`M11 7.5a5.5 5.5 0 0 1 7.66-5.06.75.75 0 0 1 .24 1.22L16.3 6.25l1.44 1.44 2.59-2.59a.75.75 0 0 1 1.22.24 5.49 5.49 0 0 1-6.35 7.5l-8.3 8.32a2.87 2.87 0 1 1-4.07-4.06l8.31-8.31c-.1-.42-.15-.85-.15-1.29Zm5.5-4a4 4 0 0 0-3.8 5.27c.1.27.03.57-.18.77L3.9 18.16a1.37 1.37 0 0 0 1.94 1.94l8.63-8.62c.2-.2.5-.27.76-.18a4 4 0 0 0 5.25-4.22l-1.85 1.85c-.48.48-1.28.48-1.76 0l-1.8-1.8a1.25 1.25 0 0 1 0-1.76l1.85-1.85a4.06 4.06 0 0 0-.42-.02Z`]),_z=JR(`Home24Regular`,`24`,[`M10.55 2.53c.84-.7 2.06-.7 2.9 0l6.75 5.7c.5.42.8 1.05.8 1.71v9.31c0 .97-.78 1.75-1.75 1.75h-3.5c-.97 0-1.75-.78-1.75-1.75v-5a.25.25 0 0 0-.25-.25h-3.5a.25.25 0 0 0-.25.25v5c0 .97-.78 1.75-1.75 1.75h-3.5C3.78 21 3 20.22 3 19.25v-9.3c0-.67.3-1.3.8-1.73l6.75-5.69Zm1.93 1.15a.75.75 0 0 0-.96 0l-6.75 5.7a.75.75 0 0 0-.27.56v9.31c0 .14.11.25.25.25h3.5c.14 0 .25-.1.25-.25v-5c0-.97.78-1.75 1.75-1.75h3.5c.97 0 1.75.78 1.75 1.75v5c0 .14.11.25.25.25h3.5c.14 0 .25-.1.25-.25v-9.3c0-.23-.1-.44-.27-.58l-6.75-5.7Z`]),vz=JR(`ReOrderDotsVertical24Regular`,`24`,[`M15.5 17a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm7-7a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm7-7a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z`]),yz=JR(`Toolbox24Regular`,`24`,[`M7 6.25V7H4.25C3.01 7 2 8 2 9.25v8.5C2 18.99 3 20 4.25 20h15.5c1.24 0 2.25-1.01 2.25-2.25v-8.5C22 8.01 21 7 19.75 7H17v-.75C17 5.01 16 4 14.75 4h-5.5C8.01 4 7 5.01 7 6.25Zm2.25-.75h5.5c.41 0 .75.34.75.75V7h-7v-.75c0-.41.34-.75.75-.75ZM7 8.5h12.75c.41 0 .75.34.75.75v2.25h-3v-.75a.75.75 0 0 0-1.5 0v.75H8v-.75a.75.75 0 0 0-1.5 0v.75h-3V9.25c0-.41.34-.75.75-.75H7Zm9 4.5v1.25a.75.75 0 0 0 1.5 0V13h3v4.75c0 .41-.34.75-.75.75H4.25a.75.75 0 0 1-.75-.75V13h3v1.25a.75.75 0 0 0 1.5 0V13h8Z`]),bz=JR(`ErrorCircle24Regular`,`24`,[`M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm0 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM12 7c.37 0 .69.28.74.65v4.6a.75.75 0 0 1-1.48.1l-.01-.1v-4.5c0-.41.33-.75.74-.75Z`]),xz=JR(`ClipboardTask24Regular`,`24`,[`M17.03 11.03a.75.75 0 1 0-1.06-1.06L11 14.94l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5c.3.3.77.3 1.06 0l5.5-5.5Zm-1.04-6.95A2.25 2.25 0 0 0 13.75 2h-3.5c-1.16 0-2.11.87-2.24 2H6.25C5.01 4 4 5 4 6.25v13.5C4 20.99 5 22 6.25 22h11.5c1.24 0 2.25-1 2.25-2.25V6.25C20 5.01 19 4 17.75 4h-1.76v.08Zm0 .02.01.15V4.1Zm-5.74 2.4h3.5c.78 0 1.47-.4 1.87-1h2.13c.41 0 .75.34.75.75v13.5c0 .41-.34.75-.75.75H6.25a.75.75 0 0 1-.75-.75V6.25c0-.41.34-.75.75-.75h2.13c.4.6 1.09 1 1.87 1Zm0-3h3.5a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 0 1 0-1.5Z`]),Sz=JR(`Delete24Regular`,`24`,[`M10 5h4a2 2 0 1 0-4 0ZM8.5 5a3.5 3.5 0 1 1 7 0h5.75a.75.75 0 0 1 0 1.5h-1.32l-1.17 12.11A3.75 3.75 0 0 1 15.03 22H8.97a3.75 3.75 0 0 1-3.73-3.39L4.07 6.5H2.75a.75.75 0 0 1 0-1.5H8.5Zm2 4.75a.75.75 0 0 0-1.5 0v7.5a.75.75 0 0 0 1.5 0v-7.5ZM14.25 9c.41 0 .75.34.75.75v7.5a.75.75 0 0 1-1.5 0v-7.5c0-.41.34-.75.75-.75Zm-7.52 9.47a2.25 2.25 0 0 0 2.24 2.03h6.06c1.15 0 2.12-.88 2.24-2.03L18.42 6.5H5.58l1.15 11.97Z`]),Cz=JR(`Fire24Regular`,`24`,[`M12.54 4.3c.32-.25.64-.44.93-.57.09 2.13 1.13 3.73 2.13 5.14l.27.38c1.08 1.52 2.01 2.82 2.11 4.54a6.86 6.86 0 0 1-1.33 4.83 5.43 5.43 0 0 1-4.4 1.88c-2.06 0-3.61-.53-4.7-1.42a5.83 5.83 0 0 1-1.98-3.87 5.56 5.56 0 0 1 .86-4l.32.6a2.2 2.2 0 0 0 2.9.96c1.3-.62 1.58-2.21 1.17-3.33a3.94 3.94 0 0 1-.11-2.7 5.32 5.32 0 0 1 1.83-2.45ZM6.16 9.31h-.01l-.01.02a1.94 1.94 0 0 0-.13.1c-.07.07-.18.16-.3.3-.24.24-.55.62-.83 1.12a7.06 7.06 0 0 0-.8 4.55c.27 2 1.1 3.67 2.53 4.83C8.02 21.4 9.94 22 12.25 22c2.39 0 4.3-.9 5.55-2.43a8.35 8.35 0 0 0 1.68-5.86c-.13-2.18-1.31-3.83-2.36-5.29l-.3-.42C15.68 6.4 14.78 4.9 15 2.83a.75.75 0 0 0-.75-.83c-.38 0-.82.12-1.24.3a6.82 6.82 0 0 0-3.72 3.96c-.49 1.4-.24 2.73.12 3.7.24.64-.02 1.27-.4 1.46a.7.7 0 0 1-.93-.31l-.81-1.54a.75.75 0 0 0-1.11-.25Z`]),wz=JR(`People24Regular`,`24`,[`M5.5 8a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0ZM8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm7.5 5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM17 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-2.75 13.04c.7.28 1.6.46 2.75.46 2.28 0 3.59-.7 4.3-1.56a3.14 3.14 0 0 0 .7-1.73v-.03c0-1.2-.97-2.18-2.18-2.18H14.1c.4.41.68.93.81 1.5h4.91a.68.68 0 0 1 .68.7l-.04.18c-.04.16-.13.38-.32.6C19.8 17.42 18.97 18 17 18c-.98 0-1.67-.15-2.17-.34-.1.4-.28.88-.58 1.38ZM4.25 14C3.01 14 2 15 2 16.25v.28a2.07 2.07 0 0 0 .01.2c.02.14.04.32.1.53.09.42.29.98.68 1.55C3.61 19.97 5.17 21 8 21s4.39-1.03 5.2-2.2a4.48 4.48 0 0 0 .8-2.27v-.28c0-1.24-1-2.25-2.25-2.25h-7.5Zm-.75 2.5v-.25c0-.41.34-.75.75-.75h7.5c.41 0 .75.34.75.75v.34l-.06.33c-.07.28-.2.65-.46 1.02-.5.71-1.56 1.56-3.98 1.56s-3.49-.85-3.98-1.56a2.99 2.99 0 0 1-.52-1.43Z`]),Tz=_();DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Ez=[{label:`工作台`,icon:_z},{label:`应用`,icon:rz},{label:`任务`,icon:xz},{label:`流程`,icon:oz},{label:`动态`,icon:dz},{label:`预警`,icon:bz},{label:`看板`,icon:ZR}],Dz=[{id:`home`,label:`首页`,icon:_z},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:dz},{id:`task`,label:`任务`,icon:xz},{id:`flow`,label:`流程`,icon:oz},{id:`warning`,label:`预警`,icon:bz},{id:`message`,label:`消息`,icon:fz},{id:`equipment`,label:`设备`,icon:gz},{id:`production`,label:`生产`,icon:yz},{id:`fire`,label:`消防`,icon:Cz},{id:`explosive`,label:`火工品`,icon:cz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:pz},{id:`people`,label:`人员`,icon:wz},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:vz},{id:`idea`,label:`提示`,icon:lz},{id:`edit`,label:`编辑`,icon:sz},{id:`delete`,label:`删除`,icon:Sz},{id:`arrow`,label:`前往`,icon:uz}];function Oz({name:e=`apps`,className:t}){return(0,Q.jsx)(Dz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var kz=`./xiaodong/`,Az=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:fz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:xz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:bz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],jz=[{name:`双重预防机制`,description:`风险与隐患`,icon:dz},{name:`安全管理`,description:`检查与整改`,icon:bz},{name:`设备管理`,description:`点检与维修`,icon:gz},{name:`火工品管理`,description:`领用与追溯`,icon:cz},{name:`生产管理`,description:`计划与日报`,icon:yz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Cz},{name:`应急管理`,description:`预案与响应`,icon:lz}],Mz=[`系统管理员`,`安全管理员`,`任务执行人`,`数据查看员`],Nz=[`安全管理员`,`设备工程师`,`生产主管`],Pz=[{id:`workbench`,label:`工作台`,icon:_z,pinned:!0}],Fz=[{id:`msg-1`,source:`任务`,type:`执行提醒`,sender:`陈伟`,time:`今天 10:12`,title:`完成设备点检复核`,content:`3 号球磨机点检任务已完成，请确认复核结果。`,attachment:`任务表单`,formKind:`task`,read:!1,icon:xz,tone:`blue`},{id:`msg-2`,source:`流程`,type:`待你审批`,sender:`系统通知`,time:`今天 09:38`,title:`矿山应急照明设备采购申请`,content:`该流程已流转至你，请在今天内完成审批。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`预警`,type:`超期提醒`,sender:`安环部`,time:`昨天 16:45`,title:`南区排水泵隐患整改复查`,content:`整改期限临近，请及时查看现场复查情况。`,attachment:`预警处置表单`,formKind:`warning`,read:!1,icon:bz,tone:`red`},{id:`msg-4`,source:`任务`,type:`任务分派`,sender:`李明`,time:`昨天 14:20`,title:`平巷凿岩作业隐患排查任务`,content:`你已被添加为执行人，请按要求完成岗位检查。`,attachment:`任务表单`,formKind:`task`,read:!1,icon:dz,tone:`green`},{id:`msg-5`,source:`系统`,type:`系统通知`,sender:`系统通知`,time:`7 月 28 日 09:16`,title:`生产日报已同步完成`,content:`南区生产日报数据已归档，可进入生产管理查看。`,attachment:`系统通知`,formKind:`system`,read:!0,icon:pz,tone:`blue`}],Iz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`待审批`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`李明`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`待审批`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`设备平台主管审批`,approver:`刘海`,status:`审批中`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`孙宁`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0}],Lz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:dz,tone:`green`},{name:`安全管理`,time:`昨天 16:40`,icon:bz,tone:`green`},{name:`生产管理`,time:`7 月 25 日`,icon:yz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:dz,tone:`violet`}],Rz=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:pz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:xz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:gz}];function zz({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function Bz({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Ez.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)(zz,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function Vz({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o}){let[s,c]=(0,Z.useState)(!1);return(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":s,onClick:()=>c(e=>!e),children:`张`}),s?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{c(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{c(!1),o()},children:`退出登录`})]}):null]})]})}function Hz({message:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e.formKind;return(0,Q.jsx)(`div`,{className:`message-dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`message-form-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`message-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`message-dialog-close`,"aria-label":`关闭消息表单`,onClick:t,children:(0,Q.jsx)(YR,{})}),(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:{task:`任务表单`,approval:`审批流表单`,warning:`预警处置表单`,system:`消息详情`}[i]}),(0,Q.jsx)(`h2`,{id:`message-form-title`,children:e.title}),(0,Q.jsx)(`p`,{children:e.content})]}),n?(0,Q.jsxs)(`div`,{className:`message-submit-success`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`h3`,{children:`已完成处理`}),(0,Q.jsx)(`p`,{children:`当前为演示状态，提交内容已记录在本次会话中。`}),(0,Q.jsx)(`button`,{onClick:t,children:`关闭`})]}):i===`task`?(0,Q.jsxs)(`form`,{onSubmit:e=>{e.preventDefault(),r(!0)},children:[(0,Q.jsxs)(`div`,{className:`message-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`任务名称`,(0,Q.jsx)(`input`,{defaultValue:e.title,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`执行人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`截止时间`,(0,Q.jsx)(`input`,{type:`date`,defaultValue:`2026-07-30`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`任务状态`,(0,Q.jsxs)(`select`,{defaultValue:`已完成`,children:[(0,Q.jsx)(`option`,{children:`待处理`}),(0,Q.jsx)(`option`,{children:`处理中`}),(0,Q.jsx)(`option`,{children:`已完成`})]})]})]}),(0,Q.jsxs)(`label`,{className:`message-form-wide`,children:[`执行说明`,(0,Q.jsx)(`textarea`,{rows:`3`,defaultValue:`现场点检已完成，等待复核确认。`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`message-form-primary`,type:`submit`,children:`确认任务`})]})]}):i===`approval`?(0,Q.jsxs)(`form`,{onSubmit:e=>{e.preventDefault(),r(!0)},children:[(0,Q.jsxs)(`div`,{className:`approval-summary`,children:[(0,Q.jsxs)(`span`,{children:[`申请人`,(0,Q.jsx)(`b`,{children:`机电管理部`})]}),(0,Q.jsxs)(`span`,{children:[`申请金额`,(0,Q.jsx)(`b`,{children:`￥28,600.00`})]}),(0,Q.jsxs)(`span`,{children:[`当前节点`,(0,Q.jsx)(`b`,{children:`张宇审批`})]})]}),(0,Q.jsxs)(`label`,{className:`message-form-wide`,children:[`审批意见`,(0,Q.jsx)(`textarea`,{rows:`4`,placeholder:`请输入审批意见`,required:!0})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:t,children:`退回`}),(0,Q.jsx)(`button`,{className:`message-form-primary`,type:`submit`,children:`同意并提交`})]})]}):i===`warning`?(0,Q.jsxs)(`form`,{onSubmit:e=>{e.preventDefault(),r(!0)},children:[(0,Q.jsxs)(`div`,{className:`warning-summary`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`预警等级`}),(0,Q.jsx)(`strong`,{children:`重要`})]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`预警位置`}),`南区排水泵房`]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`触发时间`}),`昨天 16:45`]})]}),(0,Q.jsxs)(`label`,{className:`message-form-wide`,children:[`处置措施`,(0,Q.jsx)(`textarea`,{rows:`4`,placeholder:`填写现场核查情况与处置措施`,required:!0})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:t,children:`暂不处理`}),(0,Q.jsx)(`button`,{className:`message-form-primary`,type:`submit`,children:`确认处置`})]})]}):(0,Q.jsxs)(`div`,{className:`message-submit-success`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`h3`,{children:`消息已阅读`}),(0,Q.jsx)(`p`,{children:`该消息不包含需要处理的业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`关闭`})]})]})})}function Uz({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r}){let[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(`全部`),[c,l]=(0,Z.useState)(`未读`),[u,d]=(0,Z.useState)(null),f=e.filter(e=>(i===`全部`||e.source===i)&&(o===`全部`||e.type===o)&&(c===`全部`||(c===`未读`?!e.read:e.read))),p=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,p,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:p===0,children:[(0,Q.jsx)(pz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:i,onChange:e=>a(e.target.value),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`系统`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsxs)(`select`,{value:o,onChange:e=>s(e.target.value),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`执行提醒`}),(0,Q.jsx)(`option`,{children:`待你审批`}),(0,Q.jsx)(`option`,{children:`超期提醒`}),(0,Q.jsx)(`option`,{children:`任务分派`}),(0,Q.jsx)(`option`,{children:`系统通知`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:c,onChange:e=>l(e.target.value),children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:f.length?f.map(e=>{let{id:n,source:r,type:i,sender:a,time:o,title:s,content:c,attachment:l,read:u,icon:f,tone:p}=e;return(0,Q.jsxs)(`button`,{className:u?`message-row read`:`message-row`,onClick:()=>{t(n),d(e)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${p}`,children:(0,Q.jsx)(f,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:a}),(0,Q.jsx)(`time`,{children:o}),u?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsxs)(`strong`,{children:[(0,Q.jsxs)(`em`,{children:[r,` · `,i]}),s]}),(0,Q.jsx)(`p`,{children:c}),(0,Q.jsxs)(`small`,{className:`message-attachment`,children:[(0,Q.jsx)(xz,{}),l]})]}),(0,Q.jsx)(uz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(Hz,{message:u,onClose:()=>d(null)},u?.id)]})}function Wz({process:e,onClose:t,onApprove:n,viewOnly:r=!1}){if(!e)return null;let i=[{time:e.initiatedAt,title:`流程已发起`,detail:`${e.initiator} 提交了${e.name}。`,state:`done`},{time:`今天 09:25`,title:`资料完整性校验通过`,detail:`系统已完成表单与附件校验。`,state:`done`},{time:`当前`,title:e.currentNode,detail:`等待 ${e.approver} 审批。`,state:`current`}],a=[`发起申请`,`部门负责人`,`安全审核`,`归档完成`];return(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程审批`}),(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`span`,{className:e.status===`待审批`?`process-status pending`:`process-status`,children:e.status})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:t,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body`,children:[(0,Q.jsxs)(`section`,{className:`process-dialog-section`,children:[(0,Q.jsx)(`h3`,{children:`流程关键信息`}),(0,Q.jsxs)(`div`,{className:`process-info-grid`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`发起人`}),e.initiator]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`发起时间`}),e.initiatedAt]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`所属部门`}),e.department]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`当前节点`}),e.currentNode]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`审批人`}),e.approver]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`申请金额`}),e.amount]})]})]}),(0,Q.jsxs)(`section`,{className:`process-dialog-section`,children:[(0,Q.jsx)(`h3`,{children:`审批流程图`}),(0,Q.jsx)(`div`,{className:`process-flowchart`,"aria-label":`审批流程图`,children:a.map((e,t)=>(0,Q.jsxs)(`div`,{className:t<2?`flow-node done`:t===2?`flow-node active`:`flow-node`,children:[(0,Q.jsx)(`span`,{children:t+1}),(0,Q.jsx)(`b`,{children:e}),t<a.length-1?(0,Q.jsx)(`i`,{}):null]},e))})]}),(0,Q.jsxs)(`section`,{className:`process-dialog-section process-log-section`,children:[(0,Q.jsx)(`h3`,{children:`审批日志`}),(0,Q.jsx)(`ol`,{children:i.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`time`,{children:e.time}),(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`p`,{children:e.detail})]})]},e.title))})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:r?`流程记录仅供查看。`:`审批意见将同步写入流程日志。`}),(0,Q.jsxs)(`div`,{children:[r?null:(0,Q.jsx)(`button`,{className:`process-reject`,onClick:()=>n(`已退回`),children:`退回`}),(0,Q.jsx)(`button`,{className:`process-approve`,onClick:r?t:()=>n(`已同意`),children:r?`关闭`:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(pz,{}),` 同意并提交`]})})]})]})]})})}function Gz({onAction:e,initialFilter:t=`待审批`}){let[n,r]=(0,Z.useState)(null),[i,a]=(0,Z.useState)(t),[o,s]=(0,Z.useState)({number:``,title:``,type:``,status:``}),[c,l]=(0,Z.useState)(`全部`),[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(null),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),v=[{category:`人资管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,tone:`red`,name:`材料采购流程`}],y={待审批:{filters:[`number`,`title`,`type`],columns:[`number`,`title`,`type`,`initiator`,`urgency`,`arrivalAt`]},已审批:{filters:[`number`,`type`],columns:[`number`,`title`,`type`,`initiator`,`urgency`,`arrivalAt`,`completedAt`,`duration`,`result`]},抄送给我:{filters:[`number`,`title`],columns:[`number`,`title`,`type`,`initiator`,`urgency`,`sentAt`,`endedAt`,`status`]},我发起的:{filters:[`number`,`status`],columns:[`number`,`title`,`type`,`urgency`,`currentNode`,`initiatedAt`,`endedAt`,`duration`,`status`]}},b={number:`流程编号`,title:`标题`,type:`流程类型`,initiator:`发起人`,urgency:`紧急程度`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},x=e=>i===`已审批`&&e===`title`?`流程标题`:i===`已审批`&&e===`arrivalAt`?`任务到达时间`:b[e],S=y[i],C=v.filter(e=>(c===`全部`||c===`我的收藏`&&e.favorite||c===`最近使用`&&e.recent)&&(!u.trim()||e.name.includes(u.trim()))),w=e=>({number:`LC-2026-${e.id.replace(`flow-`,`0`)}`,title:e.name,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,urgency:e.urgency,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?`同意`:`-`,sentAt:e.initiatedAt,endedAt:e.status===`审批中`?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),T=Iz.filter(e=>{let t=i===`待审批`&&e.status===`待审批`&&e.approver===`张宇`||i===`已审批`&&e.handledByMe||i===`抄送给我`&&e.ccToMe||i===`我发起的`&&e.startedByMe,n=w(e);return t&&(!o.number||n.number.includes(o.number))&&(!o.title||n.title.includes(o.title))&&(!o.type||n.type===o.type)&&(!o.status||n.status===o.status)}),E=t=>{e(`${n.name}${t}`),r(null)};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsxs)(`header`,{className:`task-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(`发起流程`),children:[(0,Q.jsx)(az,{}),`发起流程`]})]}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(y)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))})}),i===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":c===e,className:c===e?`active`:``,onClick:()=>l(e),children:e},e))}),(0,Q.jsx)(`input`,{value:u,onChange:e=>d(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=C.filter(t=>t.category===e),n=v.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsx)(`button`,{onClick:()=>{p(e),h(!1),_(!1)},children:e.name},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[S.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:o.number,onChange:e=>s(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,S.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`标题`}),(0,Q.jsx)(`input`,{value:o.title,onChange:e=>s(t=>({...t,title:e.target.value})),placeholder:`请输入标题`})]}):null,S.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:o.type,onChange:e=>s(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,S.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:o.status,onChange:e=>s(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>s({number:``,title:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${S.columns.length+1}, minmax(105px, 1fr))`},children:[S.columns.map(e=>(0,Q.jsx)(`span`,{children:x(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),T.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${S.columns.length+1}, minmax(105px, 1fr))`},children:[S.columns.map(t=>{let n=w(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>r(e),children:n},t):t===`status`||t===`urgency`||t===`result`?(0,Q.jsx)(`i`,{className:n===`待审批`||n===`紧急`?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>r(e),children:[(0,Q.jsx)(nz,{}),i===`待审批`?`审批`:`查看`]})]},e.id)),T.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(Wz,{process:n,onClose:()=>r(null),onApprove:E,viewOnly:i!==`待审批`}),f?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:()=>{p(null),_(!1)},role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`process-form-dialog${m?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),e(`已发起流程：${f.name}`),p(null),_(!1)},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`发起流程`}),(0,Q.jsx)(`h2`,{children:f.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>_(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>h(e=>!e),children:m?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:()=>{p(null),_(!1)},children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{defaultValue:f.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{defaultValue:`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`紧急程度`,(0,Q.jsxs)(`select`,{defaultValue:`常规`,children:[(0,Q.jsx)(`option`,{children:`常规`}),(0,Q.jsx)(`option`,{children:`紧急`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>{p(null),_(!1)},children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:`发起流程`})]})]})]})}):null,f&&g?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>_(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:f.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>_(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function Kz({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(uz,{})]})})}function qz({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>jz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>jz.find(t=>t.name===e)).filter(Boolean),...jz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(uz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(uz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(vz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function Jz({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Lz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(uz,{})]},t))})]})}function Yz({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(jz.find(t=>t.name===e)??jz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(mz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:jz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(pz,{}):null]},n))}):null]})}var Xz=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:dz,nested:!0},{label:`隐患排查治理`,icon:bz,expanded:!0}],Zz=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],Qz=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:dz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:xz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:dz,tone:`lime`}];function $z({onAction:e,onSwitchApplication:t,initialFormTitle:n=Qz[0].title}){let[r,i]=(0,Z.useState)(`岗位隐患排查清单`),[a,o]=(0,Z.useState)(!1),[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(`页面`),p=r,m=Qz.find(e=>e.title===s)??Qz[0],h=(e=Qz[0])=>{c(e.title),o(!0),u(!1),f(`页面`)};return(0,Q.jsxs)(`section`,{className:`prevention-page`,"aria-labelledby":`prevention-page-title`,children:[(0,Q.jsxs)(`aside`,{className:`prevention-sidebar`,"aria-label":`双重预防机制功能导航`,children:[(0,Q.jsx)(Yz,{currentName:`双重预防机制`,onSelect:t}),(0,Q.jsx)(`nav`,{className:`prevention-nav`,children:Xz.map(({label:t,icon:n,nested:r,expanded:i})=>(0,Q.jsxs)(`button`,{className:i?`prevention-nav-item expanded`:`prevention-nav-item`,onClick:()=>e(t),children:[(0,Q.jsx)(n,{}),(0,Q.jsx)(`span`,{children:t}),r?(0,Q.jsx)(hz,{}):i?(0,Q.jsx)(mz,{}):null]},t))}),(0,Q.jsx)(`div`,{className:`prevention-submenu`,children:Zz.map(e=>(0,Q.jsxs)(`button`,{className:r===e?`selected`:``,onClick:()=>{i(e),o(!1)},children:[(0,Q.jsx)(`span`,{children:e}),[`隐患排查任务发布`,`隐患排查工作表`,`隐患整改通知单`,`隐患汇报`].includes(e)?(0,Q.jsx)(hz,{}):null]},e))}),(0,Q.jsxs)(`nav`,{className:`prevention-nav prevention-nav-bottom`,children:[(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险告知卡`),children:[(0,Q.jsx)(QR,{}),(0,Q.jsx)(`span`,{children:`风险告知卡`}),(0,Q.jsx)(hz,{})]}),(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险四色图`),children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`风险四色图`}),(0,Q.jsx)(hz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`prevention-content`,children:a?(0,Q.jsxs)(`section`,{className:`inspection-form-view`,"aria-labelledby":`inspection-form-title`,children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:`隐患排查治理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`button`,{onClick:()=>{o(!1),u(!1)},children:`岗位隐患排查清单`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:`在线填报`})]}),(0,Q.jsx)(`nav`,{className:`inspection-view-tabs`,"aria-label":`表单视图`,children:[`页面`,`数据`].map(e=>(0,Q.jsx)(`button`,{className:d===e?`active`:``,onClick:()=>f(e),children:e},e))}),d===`页面`?(0,Q.jsxs)(`form`,{className:`inspection-form`,onSubmit:t=>{t.preventDefault(),u(!0),e(`${m.title}已提交`)},children:[(0,Q.jsxs)(`header`,{className:`inspection-form-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`岗位隐患排查`}),(0,Q.jsx)(`h1`,{id:`inspection-form-title`,children:m.title}),(0,Q.jsx)(`span`,{children:`请如实填写现场检查情况，带 * 的项目为必填项。`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`form-back`,onClick:()=>{o(!1),u(!1)},children:`返回清单`})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`填报信息`}),(0,Q.jsxs)(`div`,{className:`form-fields`,children:[(0,Q.jsxs)(`label`,{children:[`填报人 *`,(0,Q.jsx)(`input`,{name:`reporter`,defaultValue:`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`检查日期 *`,(0,Q.jsx)(`input`,{name:`inspectionDate`,type:`date`,defaultValue:`2026-07-29`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`作业班次 *`,(0,Q.jsxs)(`select`,{name:`shift`,defaultValue:`早班`,required:!0,children:[(0,Q.jsx)(`option`,{children:`早班`}),(0,Q.jsx)(`option`,{children:`中班`}),(0,Q.jsx)(`option`,{children:`夜班`})]})]}),(0,Q.jsxs)(`label`,{children:[`作业地点 *`,(0,Q.jsx)(`input`,{name:`location`,placeholder:`例如：西翼 3# 平巷`,required:!0})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`现场检查`}),(0,Q.jsxs)(`div`,{className:`inspection-items`,children:[(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`凿岩设备防护装置完好`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`normal`,required:!0}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`作业面通风与照明符合要求`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`normal`,required:!0}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`人员防护用品佩戴规范`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`normal`,required:!0}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`issue`}),` `,`发现问题`]})]})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`问题说明`}),(0,Q.jsxs)(`label`,{className:`wide-field`,children:[`隐患描述与整改建议`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`3`,placeholder:`如发现隐患，请填写具体位置、问题描述及建议措施。`})]})]}),(0,Q.jsxs)(`footer`,{className:`form-actions`,children:[l?(0,Q.jsxs)(`span`,{className:`submit-status`,children:[(0,Q.jsx)(pz,{}),` 已提交，等待负责人复核`]}):(0,Q.jsx)(`span`,{children:`填写完成后可直接提交至隐患排查记录。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`form-secondary`,onClick:()=>{o(!1),u(!1)},children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`form-primary`,children:`提交排查表`})]})]})]}):(0,Q.jsxs)(`section`,{className:`inspection-data-view`,"aria-label":`${m.title}历史数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`历史填报数据`}),(0,Q.jsx)(`h2`,{children:m.title})]}),(0,Q.jsx)(`span`,{children:`共 2 条记录`})]}),(0,Q.jsx)(`div`,{className:`inspection-data-scroll`,children:(0,Q.jsxs)(`table`,{children:[(0,Q.jsx)(`thead`,{children:(0,Q.jsxs)(`tr`,{children:[(0,Q.jsx)(`th`,{children:`填报人`}),(0,Q.jsx)(`th`,{children:`检查日期`}),(0,Q.jsx)(`th`,{children:`作业班次`}),(0,Q.jsx)(`th`,{children:`作业地点`}),(0,Q.jsx)(`th`,{children:`凿岩设备防护装置完好`}),(0,Q.jsx)(`th`,{children:`作业面通风与照明符合要求`}),(0,Q.jsx)(`th`,{children:`人员防护用品佩戴规范`}),(0,Q.jsx)(`th`,{children:`隐患描述与整改建议`}),(0,Q.jsx)(`th`,{children:`填报状态`})]})}),(0,Q.jsxs)(`tbody`,{children:[(0,Q.jsxs)(`tr`,{children:[(0,Q.jsx)(`td`,{children:`张宇`}),(0,Q.jsx)(`td`,{children:`2026-07-29`}),(0,Q.jsx)(`td`,{children:`早班`}),(0,Q.jsx)(`td`,{children:`西翼 3# 平巷`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`现场检查正常，无需整改。`}),(0,Q.jsx)(`td`,{children:(0,Q.jsx)(`i`,{children:`已提交`})})]}),(0,Q.jsxs)(`tr`,{children:[(0,Q.jsx)(`td`,{children:`李明`}),(0,Q.jsx)(`td`,{children:`2026-07-28`}),(0,Q.jsx)(`td`,{children:`中班`}),(0,Q.jsx)(`td`,{children:`西翼 2# 平巷`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`发现问题`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`照明灯具亮度不足，已通知机电班处理。`}),(0,Q.jsx)(`td`,{children:(0,Q.jsx)(`i`,{children:`已复核`})})]})]})]})})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`button`,{onClick:()=>i(`隐患排查治理`),children:`隐患排查治理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:p})]}),(0,Q.jsx)(`div`,{className:`prevention-strip`}),r===`岗位隐患排查清单`?(0,Q.jsxs)(`section`,{className:`prevention-list prevention-menu-catalog`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`全部`})}),(0,Q.jsx)(`div`,{className:`prevention-catalog-grid`,children:Qz.map(({title:e,icon:t,tone:n})=>(0,Q.jsxs)(`button`,{type:`button`,className:`prevention-catalog-card`,onClick:()=>h({title:e}),children:[(0,Q.jsx)(`span`,{className:`prevention-form-icon ${n}`,children:(0,Q.jsx)(t,{})}),(0,Q.jsx)(`b`,{children:e})]},e))})]}):(0,Q.jsxs)(`section`,{className:`prevention-list prevention-empty-content`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`功能页面`})}),(0,Q.jsx)(`p`,{children:`请从左侧菜单选择需要处理的业务。`})]})]})})]})}function eB({app:e,onReturn:t,onAction:n,onSwitchApplication:r}){let i=e.icon,a=[`核对今日${e.name}记录`,`完成本周${e.description}复核`,`查看待处理异常提醒`];return(0,Q.jsxs)(`section`,{className:`mock-app-page`,"aria-labelledby":`mock-app-title`,children:[(0,Q.jsxs)(`aside`,{className:`mock-app-sidebar`,"aria-label":`${e.name}功能导航`,children:[(0,Q.jsx)(Yz,{currentName:e.name,onSelect:r}),(0,Q.jsxs)(`nav`,{children:[(0,Q.jsxs)(`button`,{className:`mock-nav-item active`,children:[(0,Q.jsx)(_z,{}),`应用概览`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}待办`),children:[(0,Q.jsx)(xz,{}),`待办处理`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}记录`),children:[(0,Q.jsx)(QR,{}),`业务记录`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}统计`),children:[(0,Q.jsx)(ZR,{}),`数据统计`]})]})]}),(0,Q.jsxs)(`div`,{className:`mock-app-content`,children:[(0,Q.jsxs)(`div`,{className:`mock-app-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`应用中心`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{children:e.name})]}),(0,Q.jsxs)(`header`,{className:`mock-app-header`,children:[(0,Q.jsx)(`span`,{className:`mock-app-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h1`,{id:`mock-app-title`,children:[e.name,`工作台`]}),(0,Q.jsx)(`p`,{children:`示例业务页面，数据仅用于界面演示。`})]}),(0,Q.jsxs)(`button`,{className:`mock-primary-action`,onClick:()=>n(`新建${e.name}记录`),children:[(0,Q.jsx)(az,{}),`新建记录`]})]}),(0,Q.jsxs)(`section`,{className:`mock-metrics`,"aria-label":`${e.name}概览`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`待处理`}),(0,Q.jsx)(`b`,{children:`6`}),(0,Q.jsx)(`small`,{children:`需你跟进`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`今日记录`}),(0,Q.jsx)(`b`,{children:`14`}),(0,Q.jsx)(`small`,{children:`已同步更新`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`异常提醒`}),(0,Q.jsx)(`b`,{children:`2`}),(0,Q.jsx)(`small`,{children:`等待复核`})]})]}),(0,Q.jsxs)(`section`,{className:`mock-work-list`,"aria-labelledby":`mock-work-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`mock-work-title`,children:`待处理事项`}),(0,Q.jsxs)(`button`,{onClick:()=>n(`${e.name}全部事项`),children:[`查看全部 `,(0,Q.jsx)(uz,{})]})]}),a.map((e,t)=>(0,Q.jsxs)(`button`,{onClick:()=>n(e),children:[(0,Q.jsx)(`span`,{className:`mock-row-icon tone-${t}`,children:(0,Q.jsx)(xz,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsx)(`small`,{children:t===0?`今天需完成`:`已分配给你`})]}),(0,Q.jsx)(uz,{})]},e))]}),(0,Q.jsxs)(`button`,{className:`prevention-back`,onClick:t,children:[`返回工作台 `,(0,Q.jsx)(uz,{})]})]})]})}function tB({onOpen:e,onOpenAll:t}){return(0,Q.jsxs)(`section`,{className:`activity-feed`,"aria-labelledby":`activity-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`activity-title`,children:`动态`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:t,children:[`查看全部 `,(0,Q.jsx)(uz,{})]})]}),(0,Q.jsx)(`div`,{className:`feed-list`,children:Rz.length?Rz.map(({person:t,tone:n,avatar:r,headline:i,detail:a,time:o,icon:s})=>(0,Q.jsxs)(`button`,{className:`feed-item`,onClick:()=>e(i),children:[(0,Q.jsx)(`span`,{className:`feed-avatar ${n}`,children:r}),(0,Q.jsxs)(`span`,{className:`feed-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`strong`,{children:i})]}),(0,Q.jsx)(`p`,{children:a}),(0,Q.jsx)(`time`,{children:o})]}),(0,Q.jsx)(s,{className:`feed-icon`})]},i)):(0,Q.jsxs)(`div`,{className:`empty-feed`,children:[(0,Q.jsx)(iz,{}),(0,Q.jsx)(`p`,{children:`这一类动态已全部处理。`})]})})]})}function nB({onAction:e,onOpenTask:t,onOpenProcess:n,onOpenDynamics:r}){return(0,Q.jsxs)(`aside`,{className:`command-panel`,"aria-label":`快捷操作`,children:[(0,Q.jsx)(`p`,{children:`快捷入口`}),(0,Q.jsxs)(`button`,{className:`command-primary`,onClick:t,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(az,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起任务`}),(0,Q.jsx)(`small`,{children:`交办或跟进一项工作`})]}),(0,Q.jsx)(uz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:n,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(oz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起流程`}),(0,Q.jsx)(`small`,{children:`提交一次审批或申请`})]}),(0,Q.jsx)(uz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:r,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(fz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发动态`}),(0,Q.jsx)(`small`,{children:`发布一条安全工作动态`})]}),(0,Q.jsx)(uz,{})]})]})}function rB({title:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e===`发起任务`;return(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`action-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`dialog-close`,"aria-label":`关闭`,onClick:t,children:`×`}),n?(0,Q.jsxs)(`div`,{className:`dialog-success`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`h2`,{children:`已准备好继续`}),(0,Q.jsx)(`p`,{children:`这是工作台演示状态，实际接入后将在此进入对应业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`完成`})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`快速创建`}),(0,Q.jsx)(`h2`,{id:`action-dialog-title`,children:e}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:i?`填写最小必要信息，将工作直接交给相应负责人。`:`从授权模板中选择流程，减少重复填写。`}),(0,Q.jsxs)(`label`,{children:[i?`任务名称`:`流程模板`,(0,Q.jsx)(`input`,{autoFocus:!0,placeholder:i?`例如：完成现场安全检查`:`例如：选择设备检修申请`})]}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{className:`secondary-button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`primary-button`,onClick:()=>r(!0),children:`继续`})]})]})]})})}var iB=[{id:`safety`,name:`安全风险总览`,description:`风险等级、隐患整改与作业预警的综合视图`,metrics:[[`今日检查`,`28`,`较昨日 +4`],[`待整改隐患`,`16`,`4 项临近逾期`],[`高风险作业`,`3`,`均在监控中`],[`整改完成率`,`86%`,`本月累计`]],charts:[`risk`,`rectification`,`sources`,`trend`]},{id:`device`,name:`设备运行态势`,description:`关键设备运行状态、点检执行与故障分布`,metrics:[[`设备总数`,`248`,`当前在线 243`],[`待点检`,`12`,`今日需完成`],[`异常设备`,`5`,`等待处理`],[`设备完好率`,`97.8%`,`较上月 +0.6%`]],charts:[`device`,`trend`,`sources`,`risk`]},{id:`production`,name:`生产进度跟踪`,description:`产量计划、班组进度与生产指标完成情况`,metrics:[[`本月产量`,`12.6 万吨`,`计划完成 91%`],[`今日进尺`,`186 米`,`较计划 +12 米`],[`作业班组`,`8`,`全部已开工`],[`生产达成率`,`94%`,`较上周 +3%`]],charts:[`progress`,`trend`,`device`,`rectification`]},{id:`emergency`,name:`应急管理看板`,description:`应急物资、演练计划和预案执行情况`,metrics:[[`应急物资`,`356`,`库存充足`],[`本月演练`,`4`,`已完成 3 项`],[`应急预案`,`18`,`均为有效版本`],[`响应及时率`,`100%`,`本季度累计`]],charts:[`sources`,`progress`,`risk`,`trend`]}];function aB({type:e}){let t=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let n=t.current;if(!n)return;let r=oC(n),i={axisLine:{lineStyle:{color:`#dce4ec`}},axisLabel:{color:`#7b8998`,fontSize:10},splitLine:{lineStyle:{color:`#eef2f6`}}},a={risk:{title:{text:`风险等级分布`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},legend:{bottom:8,textStyle:{fontSize:10,color:`#7b8998`}},series:[{type:`pie`,radius:[`42%`,`66%`],center:[`50%`,`51%`],label:{show:!1},data:[{value:4,name:`重大`,itemStyle:{color:`#d95745`}},{value:12,name:`较大`,itemStyle:{color:`#e89b3e`}},{value:31,name:`一般`,itemStyle:{color:`#3c98d3`}},{value:47,name:`低风险`,itemStyle:{color:`#5bb287`}}]}]},rectification:{title:{text:`隐患整改闭环`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:16,top:49,bottom:26},xAxis:{type:`category`,data:[`一车间`,`二车间`,`南区`,`北区`,`选矿`],...i},yAxis:{type:`value`,...i},series:[{type:`bar`,barWidth:15,itemStyle:{color:`#1779ba`,borderRadius:[3,3,0,0]},data:[16,22,13,18,25]},{type:`bar`,barWidth:15,itemStyle:{color:`#a9d8c3`,borderRadius:[3,3,0,0]},data:[12,18,10,15,21]}]},sources:{title:{text:`问题来源占比`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},series:[{type:`pie`,radius:`62%`,center:[`50%`,`55%`],label:{formatter:`{b}
-{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function oB(){let[e,t]=(0,Z.useState)(`safety`),n=iB.find(t=>t.id===e)??iB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:iB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(hz,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(mz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(aB,{type:e})},`${n.id}-${e}`))})]})]})})}function sB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(`iframe`,{className:`embedded-dynamics-frame`,src:`${kz}index.html`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function cB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`},{label:`人员明细`,view:`view-personnel`}],[n,r]=(0,Z.useState)(e),i=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsx)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label))}),(0,Q.jsx)(`iframe`,{className:`embedded-tasks-frame`,src:`${kz}任务.html?view=${i.view}`,title:i.label},i.view)]})}function lB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`},{label:`预警统计`,view:`warning-stats-aggr`}],[t,n]=(0,Z.useState)(`预警任务`),r=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsx)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label))}),(0,Q.jsx)(`iframe`,{className:`embedded-warnings-frame`,src:`${kz}预警.html?view=${r.view}`,title:r.label},r.view)]})}function uB({module:e,view:t}){let n=new URLSearchParams({module:e,...t?{view:t}:{}});return(0,Q.jsx)(`section`,{className:`settings-lowcode-embed`,"aria-label":e,children:(0,Q.jsx)(`iframe`,{src:`${kz}低代码.html?${n.toString()}`,title:`低代码平台`},n.toString())})}var dB=[{id:`task`,label:`待执行任务`,count:4,tone:`blue`,icon:xz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,count:3,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`机电管理部`,deadline:`今天内处理`,owner:`王建国`,note:`当前节点：部门负责人审批`,action:`去审批`},{title:`南区 2# 采场动火作业申请`,source:`生产管理部`,deadline:`今天 15:00 前`,owner:`李明`,note:`当前节点：安全管理部审批`,action:`去审批`},{title:`碎矿车间停机检修计划`,source:`设备管理部`,deadline:`明天 09:00 前`,owner:`赵磊`,note:`当前节点：设备平台主管审批`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,count:3,tone:`red`,icon:bz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`}]}];function fB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let[r,i]=(0,Z.useState)(`all`),a=r===`all`?dB:dB.filter(e=>e.id===r),o=dB.reduce((e,t)=>e+t.count,0),s=r=>{r.id===`task`?e():r.id===`approval`?t():n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsxs)(`nav`,{className:`todo-filter-tabs`,"aria-label":`待办分类`,children:[(0,Q.jsxs)(`button`,{className:r===`all`?`active`:``,onClick:()=>i(`all`),children:[`全部 `,(0,Q.jsx)(`b`,{children:o})]}),dB.map(e=>(0,Q.jsxs)(`button`,{className:r===e.id?`active`:``,onClick:()=>i(e.id),children:[e.label,(0,Q.jsx)(`b`,{className:`todo-tab-badge`,"aria-label":`${e.count} 项未处理`,children:e.count})]},e.id))]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:a.map(e=>{let t=e.icon;return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.count,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>s(e),children:[`查看全部 `,(0,Q.jsx)(uz,{})]})]}),(0,Q.jsx)(`div`,{children:e.items.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>s(e),children:[t.action,(0,Q.jsx)(uz,{})]})]},t.title))})]},e.id)})})]})}var pB=[{label:`安全动态`,icon:dz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:xz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:oz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:bz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function mB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:mB(e.children,t,n)})}function hB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:hB(e.children,t,n)})}function gB(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:gB(e.children,t)}))}function _B(e){return e.flatMap(e=>[e,..._B(e.children)])}function vB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(vB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function yB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(`尚未建立组织架构，可手动新增或导入模板。`),_=(0,Z.useRef)(null),v=e.length>0,y=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),b=p?n.filter(e=>e.organizationId===p):n,x=l,S=()=>{let t=r?.mode===`child`||r?.mode===`edit`?r.node.id:e[0]?.id??``;m(t),f(!0)},C=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:p===e.id?`active`:``,onClick:()=>m(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(C,{nodes:e.children}):null]},e.id))}),w=()=>{let e=URL.createObjectURL(new Blob([`﻿组织名称,上级组织
+`||r===``)){var i=e.isSelected(r);Ke(n,r)?n[r]=n[r]&&i:n[r]=i}}),n}function tP(e){e.registerAction(`legendToggleSelect`,`legendselectchanged`,be($N,`toggleSelected`)),e.registerAction(`legendAllSelect`,`legendselectall`,be($N,`allSelect`)),e.registerAction(`legendInverseSelect`,`legendinverseselect`,be($N,`inverseSelect`)),e.registerAction(`legendSelect`,`legendselected`,be($N,`select`)),e.registerAction(`legendUnSelect`,`legendunselected`,be($N,`unSelect`))}var nP=Ps(rP);function rP(e){var t=e.findComponents({mainType:`legend`});t&&t.length&&e.filterSeries(function(e){for(var n=0;n<t.length;n++)if(!t[n].isSelected(e.name))return!1;return!0})}function iP(e){e.registerComponentModel(UN),e.registerComponentView(qN),e.registerProcessor(e.PRIORITY.PROCESSOR.SERIES_FILTER,nP),e.registerSubTypeDefaulter(`legend`,function(){return`plain`}),tP(e)}var aP=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n}return t.prototype.setScrollDataIndex=function(e){this.option.scrollDataIndex=e},t.prototype.init=function(t,n,r){var i=_g(t);e.prototype.init.call(this,t,n,r),oP(this,t,i)},t.prototype.mergeOption=function(t,n){e.prototype.mergeOption.call(this,t,n),oP(this,this.option,t)},t.type=`legend.scroll`,t.defaultOption=zm(UN.defaultOption,{scrollDataIndex:0,pageButtonItemGap:5,pageButtonGap:null,pageButtonPosition:`end`,pageFormatter:`{current}/{total}`,pageIcons:{horizontal:[`M0,0L12,-10L12,10z`,`M0,0L-12,-10L-12,10z`],vertical:[`M0,0L20,0L10,-20z`,`M0,0L20,0L10,20z`]},pageIconColor:Y.color.accent50,pageIconInactiveColor:Y.color.accent10,pageIconSize:15,pageTextStyle:{color:Y.color.tertiary},animationDurationUpdate:800}),t}(UN);function oP(e,t,n){var r=e.getOrient(),i=[1,1];i[r.index]=0,gg(t,n,{type:`box`,ignoreSize:!!i})}var sP=La,cP=[`width`,`height`],lP=[`x`,`y`],uP=function(e){y(t,e);function t(){var n=e!==null&&e.apply(this,arguments)||this;return n.type=t.type,n.newlineDisabled=!0,n._currentIndex=0,n}return t.prototype.init=function(){e.prototype.init.call(this),this.group.add(this._containerGroup=new sP),this._containerGroup.add(this.getContentGroup()),this.group.add(this._controllerGroup=new sP)},t.prototype.resetInner=function(){e.prototype.resetInner.call(this),this._controllerGroup.removeAll(),this._containerGroup.removeClipPath(),this._containerGroup.__rectSize=null},t.prototype.renderInner=function(t,n,r,i,a,o,s){var c=this;e.prototype.renderInner.call(this,t,n,r,i,a,o,s);var l=this._controllerGroup,u=n.get(`pageIconSize`,!0),d=H(u)?u:[u,u];p(`pagePrev`,0);var f=n.getModel(`pageTextStyle`);l.add(new tu({name:`pageText`,style:{text:`xx/xx`,fill:f.getTextColor(),font:f.getFont(),verticalAlign:`middle`,align:`center`},silent:!0})),p(`pageNext`,1);function p(e,t){var r=e+`DataIndex`,a=Rp(n.get(`pageIcons`,!0)[n.getOrient().name][t],{onclick:ye(c._pageGo,c,r,n,i)},{x:-d[0]/2,y:-d[1]/2,width:d[0],height:d[1]});a.name=e,l.add(a)}},t.prototype.layoutInner=function(e,t,n,r,i,a){var o=this.getSelectorGroup(),s=e.getOrient().index,c=cP[s],l=lP[s],u=cP[1-s],d=lP[1-s];i&&cg(`horizontal`,o,e.get(`selectorItemGap`,!0));var f=e.get(`selectorButtonGap`,!0),p=o.getBoundingRect(),m=[-p.x,-p.y],h=L(n);i&&(h[c]=n[c]-p[c]-f);var g=this._layoutContentAndController(e,r,h,s,c,u,d,l);if(i){if(a===`end`)m[s]+=g[c]+f;else{var _=p[c]+f;m[s]-=_,g[l]-=_}g[c]+=p[c]+f,m[1-s]+=g[d]+g[u]/2-p[u]/2,g[u]=Math.max(g[u],p[u]),g[d]=Math.min(g[d],p[d]+m[1-s]),o.x=m[0],o.y=m[1],o.markRedraw()}return g},t.prototype._layoutContentAndController=function(e,t,n,r,i,a,o,s){var c=this.getContentGroup(),l=this._containerGroup,u=this._controllerGroup;cg(e.get(`orient`),c,e.get(`itemGap`),r?n.width:null,r?null:n.height),cg(`horizontal`,u,e.get(`pageButtonItemGap`,!0));var d=c.getBoundingRect(),f=u.getBoundingRect(),p=this._showController=d[i]>n[i],m=[-d.x,-d.y];t||(m[r]=c[s]);var h=[0,0],g=[-f.x,-f.y],_=K(e.get(`pageButtonGap`,!0),e.get(`itemGap`,!0));p&&(e.get(`pageButtonPosition`,!0)===`end`?g[r]+=n[i]-f[i]:h[r]+=f[i]+_),g[1-r]+=d[a]/2-f[a]/2,c.setPosition(m),l.setPosition(h),u.setPosition(g);var v={x:0,y:0};if(v[i]=p?n[i]:d[i],v[a]=Math.max(d[a],f[a]),v[o]=Math.min(0,f[o]+g[1-r]),l.__rectSize=n[i],p){var y={x:0,y:0};y[i]=Math.max(n[i]-f[i]-_,0),y[a]=v[a],l.setClipPath(new Xl({shape:y})),l.__rectSize=y[i]}else u.eachChild(function(e){e.attr({invisible:!0,silent:!0})});var b=this._getPageInfo(e);return b.pageIndex!=null&&op(c,{x:b.contentPosition[0],y:b.contentPosition[1]},p?e:null),this._updatePageInfoView(e,b),v},t.prototype._pageGo=function(e,t,n){var r=this._getPageInfo(t)[e];r!=null&&n.dispatchAction({type:`legendScroll`,scrollDataIndex:r,legendId:t.id})},t.prototype._updatePageInfoView=function(e,t){var n=this._controllerGroup;B([`pagePrev`,`pageNext`],function(r){var i=t[r+`DataIndex`]!=null,a=n.childOfName(r);a&&(a.setStyle(`fill`,i?e.get(`pageIconColor`,!0):e.get(`pageIconInactiveColor`,!0)),a.cursor=i?`pointer`:`default`)});var r=n.childOfName(`pageText`),i=e.get(`pageFormatter`),a=t.pageIndex,o=a==null?0:a+1,s=t.pageCount;r&&i&&r.setStyle(`text`,W(i)?i.replace(`{current}`,o==null?``:o+``).replace(`{total}`,s==null?``:s+``):i({current:o,total:s}))},t.prototype._getPageInfo=function(e){var t=e.get(`scrollDataIndex`,!0),n=this.getContentGroup(),r=this._containerGroup.__rectSize,i=e.getOrient().index,a=cP[i],o=lP[i],s=this._findTargetItemIndex(t),c=n.children(),l=c[s],u=c.length,d=+!!u,f={contentPosition:[n.x,n.y],pageCount:d,pageIndex:d-1,pagePrevDataIndex:null,pageNextDataIndex:null};if(!l)return f;var p=v(l);f.contentPosition[i]=-p.s;for(var m=s+1,h=p,g=p,_=null;m<=u;++m)_=v(c[m]),(!_&&g.e>h.s+r||_&&!y(_,h.s))&&(h=g.i>h.i?g:_,h&&(f.pageNextDataIndex??=h.i,++f.pageCount)),g=_;for(var m=s-1,h=p,g=p,_=null;m>=-1;--m)_=v(c[m]),(!_||!y(g,_.s))&&h.i<g.i&&(g=h,f.pagePrevDataIndex??=h.i,++f.pageCount,++f.pageIndex),h=_;return f;function v(e){if(e){var t=e.getBoundingRect(),n=t[o]+e[o];return{s:n,e:n+t[a],i:e.__legendDataIndex}}}function y(e,t){return e.e>=t&&e.s<=t+r}},t.prototype._findTargetItemIndex=function(e){if(!this._showController)return 0;var t,n=this.getContentGroup(),r;return n.eachChild(function(n,i){var a=n.__legendDataIndex;r==null&&a!=null&&(r=i),a===e&&(t=i)}),t??r},t.type=`legend.scroll`,t}(qN);function dP(e){e.registerAction(`legendScroll`,`legendscroll`,function(e,t){var n=e.scrollDataIndex;n!=null&&t.eachComponent({mainType:`legend`,subType:`scroll`,query:e},function(e){e.setScrollDataIndex(n)})})}function fP(e){DE(iP),e.registerComponentModel(aP),e.registerComponentView(uP),dP(e)}function pP(e){DE(iP),DE(fP)}function mP(e,t,n){var r=k.createCanvas(),i=t.getWidth(),a=t.getHeight(),o=r.style;return o&&(o.position=`absolute`,o.left=`0`,o.top=`0`,o.width=i+`px`,o.height=a+`px`,r.setAttribute(`data-zr-dom-id`,e)),r.width=i*n,r.height=a*n,r}function hP(e){return!e.__cursors.get(0)}function gP(e){var t=e.__cursors.get(0);return{startIdx:t?t.startIdx:0,endIdx:t?t.endIdx:0}}var _P=function(e){Xe(t,e);function t(t,n,r){var i=e.call(this)||this;i.motionBlur=!1,i.lastFrameAlpha=.7,i.dpr=1,i.virtual=!1,i.config={},i.zlevel=0,i.zlevel2=0,i.maxRepaintRectCount=5,i.__dirty=!0,i.__firstTimePaint=!0,i.__prevIdx={startIdx:0,endIdx:0};var a;r||=Wi,typeof t==`string`?a=mP(t,n,r):G(t)&&(a=t,t=a.id),i.id=t,i.dom=a;var o=a.style;return o&&(Ge(a),a.onselectstart=function(){return!1},o.padding=`0`,o.margin=`0`,o.borderWidth=`0`),i.painter=n,i.dpr=r,i}return t.prototype.afterBrush=function(){this.__prevIdx=gP(this)},t.prototype.initContext=function(){this.ctx=this.dom.getContext(`2d`),this.ctx.dpr=this.dpr},t.prototype.setUnpainted=function(){this.__firstTimePaint=!0},t.prototype.createBackBuffer=function(){var e=this.dpr;this.domBack=mP(`back-`+this.id,this.painter,e),this.ctxBack=this.domBack.getContext(`2d`),e!==1&&this.ctxBack.scale(e,e)},t.prototype.createRepaintRects=function(e,t,n,r){if(this.__firstTimePaint)return this.__firstTimePaint=!1,null;var i=[],a=this.maxRepaintRectCount,o=!1,s=new hn(0,0,0,0);function c(e){if(!(!e.isFinite()||e.isZero()))if(i.length===0){var t=new hn(0,0,0,0);t.copy(e),i.push(t)}else{for(var n=!1,r=1/0,c=0,l=0;l<i.length;++l){var u=i[l];if(u.intersect(e)){var d=new hn(0,0,0,0);d.copy(u),d.union(e),i[l]=d,n=!0;break}else if(o){s.copy(e),s.union(u);var f=e.width*e.height,p=u.width*u.height,m=s.width*s.height-f-p;m<r&&(r=m,c=l)}}if(o&&(i[c].union(e),n=!0),!n){var t=new hn(0,0,0,0);t.copy(e),i.push(t)}o||=i.length>=a}}for(var l=gP(this),u=l.startIdx;u<l.endIdx;++u){var d=e[u];if(d){var f=d.shouldBePainted(n,r,!0,!0),p=d.__isRendered&&(d.__dirty&1||!f)?d.getPrevPaintRect():null;p&&c(p);var m=f&&(d.__dirty&1||!d.__isRendered)?d.getPaintRect():null;m&&c(m)}}for(var h=this.__prevIdx,u=h.startIdx;u<h.endIdx;++u){var d=t[u],f=d&&d.shouldBePainted(n,r,!0,!0);if(d&&(!f||!d.__zr)&&d.__isRendered){var p=d.getPrevPaintRect();p&&c(p)}}var g;do{g=!1;for(var u=0;u<i.length;){if(i[u].isZero()){i.splice(u,1);continue}for(var _=u+1;_<i.length;)i[u].intersect(i[_])?(g=!0,i[u].union(i[_]),i.splice(_,1)):_++;u++}}while(g);return this._paintRects=i,i},t.prototype.debugGetPaintRects=function(){return(this._paintRects||[]).slice()},t.prototype.resize=function(e,t){var n=this.dpr,r=this.dom,i=r.style,a=this.domBack;i&&(i.width=e+`px`,i.height=t+`px`),r.width=e*n,r.height=t*n,a&&(a.width=e*n,a.height=t*n,n!==1&&this.ctxBack.scale(n,n))},t.prototype.clear=function(e,t,n){var r=this.dom,i=this.ctx,a=r.width,o=r.height;t||=this.clearColor;var s=this.motionBlur&&!e,c=this.lastFrameAlpha,l=this.dpr,u=this;s&&(this.domBack||this.createBackBuffer(),this.ctxBack.globalCompositeOperation=`copy`,this.ctxBack.drawImage(r,0,0,a/l,o/l));var d=this.domBack;function f(e,n,r,a){if(i.clearRect(e,n,r,a),t&&t!==`transparent`){var o=void 0;Ee(t)?(o=(t.global||t.__width===r&&t.__height===a)&&t.__canvasGradient||nx(i,t,{x:0,y:0,width:r,height:a}),t.__canvasGradient=o,t.__width=r,t.__height=a):De(t)&&(t.scaleX=t.scaleX||l,t.scaleY=t.scaleY||l,o=mx(i,t,{dirty:function(){u.setUnpainted(),u.painter.refresh()}})),i.save(),i.fillStyle=o||t,i.fillRect(e,n,r,a),i.restore()}s&&(i.save(),i.globalAlpha=c,i.drawImage(d,e,n,r,a),i.restore())}!n||s?f(0,0,a,o):n.length&&B(n,function(e){f(e.x*l,e.y*l,e.width*l,e.height*l)})},t}(gt),vP=1e5,yP=314159,bP=void 0,xP=1,SP=2;function CP(e){return e?e.__builtin__?!0:!(typeof e.resize!=`function`||typeof e.refresh!=`function`):!1}function wP(e,t){var n=document.createElement(`div`);return n.style.cssText=[`position:relative`,`width:`+e+`px`,`height:`+t+`px`,`padding:0`,`margin:0`,`border-width:0`].join(`;`)+`;`,n}function TP(e,t,n,r){var i=new _P(e,t,t.dpr);return i.zlevel=n,i.zlevel2=r,i.__builtin__=!0,EP(i),i}function EP(e){e.__cursorStack=[],e.__cursors=He()}function DP(e){return e.startIdx=e.drawIdx=e.endIdx=e.endIdxNew=0,e.used=!1,e.first=e.last=NaN,e.notClearIdx=-1,e}function OP(e,t){var n=e.__cursors,r=+t;return n.get(r)||(e.__cursorStack.push(r),n.set(r,DP({key:r})))}function kP(e,t){for(var n=e.__cursorStack,r=0;r<n.length;r++)t(e.__cursors.get(n[r]))}function AP(e,t){var n=e.layers;return n[t]||(n[t]=[,,,])}function jP(e,t,n){for(var r=e.layerStack,i=0;i<r.length;i++){var a=r[i].zl,o=r[i].zl2,s=e.layers[a][o];(!n||(!(n&MP)||s.__builtin__)&&(!(n&NP)||!s.__builtin__)&&(!(n&PP)||s!==e.hoverlayer))&&t(s,a,o,i)}}var MP=1,NP=2,PP=4,FP=MP|PP,IP=function(){function e(e,t,n,r){this.type=`canvas`,this._prevDisplayList=[],this._layerConfig={},this._needsManuallyCompositing=!1,this.type=`canvas`,this._i={layerStack:[],layers:[]};var i=!e.nodeName||e.nodeName.toUpperCase()===`CANVAS`;if(this._opts=n=z({},n||{}),this.dpr=n.devicePixelRatio||Wi,this._singleCanvas=i,this.root=e,e.style&&(Ge(e),e.innerHTML=``),this.storage=t,this._prevDisplayList=[],i){var a=e,o=a.width,s=a.height;n.width!=null&&(o=n.width),n.height!=null&&(s=n.height),this.dpr=n.devicePixelRatio||1,a.width=o*this.dpr,a.height=s*this.dpr,this._width=o,this._height=s;var c=TP(a,this,yP,0);c.initContext(),this._insertLayer(c,yP,0,!0),this._domRoot=e}else{this._width=ax(e,0,n),this._height=ax(e,1,n);var l=this._domRoot=wP(this._width,this._height);e.appendChild(l)}}return e.prototype.getType=function(){return`canvas`},e.prototype.isSingleCanvas=function(){return this._singleCanvas},e.prototype.getViewportRoot=function(){return this._domRoot},e.prototype.getViewportRootOffset=function(){var e=this.getViewportRoot();if(e)return{offsetLeft:e.offsetLeft||0,offsetTop:e.offsetTop||0}},e.prototype.refresh=function(e){var t=e&&!G(e)?{paintAll:!!e}:e||{},n=K(t.refresh,!0),r=K(t.refreshHover,!1);if(r&&(this._hoverLayerDirty=SP),!n)return r&&this._paintHoverList(this.storage.getDisplayList(!1)),this;var i=this.storage.getDisplayList(!0);this._updateLayerStatus(i,t.paintAll),this._redrawId=Math.random();var a=this._prevDisplayList;this._paintList(i,a,this._redrawId);var o=this._backgroundColor;return jP(this._i,function(e,t,n,r){e.refresh&&e.refresh(r===0?o:null)},NP),this._opts.useDirtyRect&&(this._prevDisplayList=i.slice()),this},e.prototype._paintHoverList=function(e){var t=this._i.hoverlayer,n=this._hoverLayerDirty;if(this._hoverLayerDirty=bP,n!==bP&&(!t&&n===SP&&(t=this._i.hoverlayer=this._ensureLayer(vP)),t)){t.clear();for(var r={inHover:!0,viewWidth:this._width,viewHeight:this._height,beforeBrushParam:{}},i,a=0,o=e.length;a<o;a++){var s=e[a];if(s.__inHover){i||(i=t.ctx,i.save());var c=s.__hoverStyle,l=void 0;c&&(l=s.style,s.style=c),Px(i,s,r),c&&(s.style=l)}}i&&(Fx(i,r),i.restore())}},e.prototype.getHoverLayer=function(){return this._ensureLayer(vP)},e.prototype.paintOne=function(e,t){Nx(e,t)},e.prototype._paintList=function(e,t,n){if(this._redrawId===n){var r=this._doPaintList(e,t);if(this._needsManuallyCompositing&&this._compositeManually(),r)jP(this._i,function(e){e.afterBrush&&e.afterBrush()},FP),this._paintHoverList(e);else{var i=this;Yn(function(){i._paintList(e,t,n)})}}},e.prototype._compositeManually=function(){var e=this._ensureLayer(yP).ctx,t=this._domRoot.width,n=this._domRoot.height;e.clearRect(0,0,t,n),jP(this._i,function(r){r.virtual&&e.drawImage(r.dom,0,0,t,n)},MP)},e.prototype._doPaintList=function(e,t){var n=this,r=!0;return jP(this._i,function(i){var a=!1;if(kP(i,function(e){(e.drawIdx<e.endIdx||e.notClearIdx>=0)&&(a=!0)}),!(!a&&!i.__dirty)){var o=n._opts.useDirtyRect&&!hP(i)?i.createRepaintRects(e,t,n._width,n._height):null,s=n._i.layerStack[0],c=!0;if(i.__dirty){c=!1,i.__dirty=!1;var l=i.zlevel===s.zl&&i.zlevel2===s.zl2?n._backgroundColor:null;i.clear(!1,l,o)}kP(i,function(t){var a=n._paintPerCursor(i,t,e,o,c);r&&=a})}},FP),x.wxa&&jP(this._i,function(e){e&&e.ctx&&e.ctx.draw&&e.ctx.draw()}),r},e.prototype._paintPerCursor=function(e,t,n,r,i){var a=e.ctx;if(r)if(!r.length)t.drawIdx=t.endIdx;else for(var o=this.dpr,s=0;s<r.length;++s){var c=r[s];a.save(),a.beginPath(),a.rect(c.x*o,c.y*o,c.width*o,c.height*o),a.clip(),this._paintPerCursorInRect(e,t,n,c,i),a.restore()}else a.save(),this._paintPerCursorInRect(e,t,n,null,i),a.restore();return t.drawIdx>=t.endIdx},e.prototype._paintPerCursorInRect=function(e,t,n,r,i){for(var a={inHover:!1,allClipped:!1,prevEl:null,viewWidth:this._width,viewHeight:this._height,beforeBrushParam:{contentRetained:i}},o=e.ctx,s=hP(e),c=s&&k.getTime(),l=t.drawIdx,u=t.notClearIdx,d=u>=0?Math.min(u,l):l;d<t.endIdx;d++){var f=n[d];if(!(d<l&&!f.notClear)){if(f.__inHover&&(this._hoverLayerDirty=SP),r!=null){var p=f.getPaintRect();p&&p.intersect(r)&&(Px(o,f,a),f.setPrevPaintRect(p))}else Px(o,f,a);if(s&&k.getTime()-c>15){d++;break}}}Fx(o,a),t.drawIdx=Math.max(d,l)},e.prototype.getLayer=function(e,t){return this._ensureLayer(e,0,t)},e.prototype._ensureLayer=function(e,t,n){t||=0;var r=this._singleCanvas;r&&!this._needsManuallyCompositing&&(e=yP,t=0);var i=AP(this._i,e)[t];return i||(i=TP(`zr_`+e+`.`+t,this,e,t),this._layerConfig[e]&&R(i,this._layerConfig[e],!0),(n||r&&e!==yP)&&(i.virtual=!0),this._insertLayer(i,e,t,!1),i.initContext()),i},e.prototype.insertLayer=function(e,t){this._insertLayer(t,e,0,!1)},e.prototype._insertLayer=function(e,t,n,r){var i=this._i,a=i.layers,o=i.layerStack,s=this._domRoot,c=null;if(!(a[t]&&a[t][n])&&CP(e)){for(var l=o.length,u=0;u<l&&(o[u].zl<t||o[u].zl===t&&o[u].zl2<n);)u++;if(u>0&&(c=AP(i,o[u-1].zl)[o[u-1].zl2]),o.splice(u,0,{zl:t,zl2:n}),AP(i,t)[n]=e,!r&&!e.virtual)if(c){var d=c.dom;d.nextSibling?s.insertBefore(e.dom,d.nextSibling):s.appendChild(e.dom)}else s.firstChild?s.insertBefore(e.dom,s.firstChild):s.appendChild(e.dom);e.painter||=this}},e.prototype.eachLayer=function(e,t){return jP(this._i,function(n,r){e.call(t,n,r)})},e.prototype.eachBuiltinLayer=function(e,t){return jP(this._i,function(n,r){e.call(t,n,r)},MP)},e.prototype.eachOtherLayer=function(e,t){return jP(this._i,function(n,r){e.call(t,n,r)},NP)},e.prototype.getLayers=function(){var e={};return jP(this._i,function(t,n,r){e[t.id]=t}),e},e.prototype._updateLayerStatus=function(e,t){var n=this;if(n._singleCanvas)for(var r=1;r<e.length;r++){var i=e[r];if(i.zlevel!==e[r-1].zlevel||i.incremental){n._needsManuallyCompositing=!0;break}}jP(n._i,function(e){e.__dirty=!1,kP(e,function(e){e.used=!1,e.endIdxNew=0,e.notClearIdx=-1})},FP);for(var a,o=null,s=null,c=!1,l=0,u=e.length;l<u;l++){var i=e[l],d=i.zlevel,f=i.incremental,p=void 0;if(a!==d&&(a=d,c=!1),f?(c=!0,p=1):p=c?2:0,(!o||d!==o.zlevel||p!==o.zlevel2)&&(o=n._ensureLayer(d,p),s=null,!o.__builtin__)){se(`ZLevel `+d+` has been used by unknown layer `+o.id);continue}if((!s||f!==s.key)&&(s=OP(o,f),!s.used))if(s.used=!0,!t&&s.first===i.id){var m=l-s.startIdx;s.startIdx=l,s.drawIdx+=m,s.endIdx+=m}else o.__dirty=!0,s.first=i.id,s.startIdx=s.drawIdx=l,s.endIdx=l+1;s.endIdxNew=l+1,i.__dirty&1&&!i.__inHover&&((!f||!i.notClear&&l<s.drawIdx)&&(o.__dirty=!0),f&&i.notClear&&s.notClearIdx<0&&(s.notClearIdx=l))}jP(n._i,function(t){for(var r=t.__cursorStack,i=t.__cursors,a=r.length-1;a>=0;a--){var o=i.get(r[a]);if(!o.used)t.__dirty=!0,i.removeKey(r[a]),r.splice(a,1);else{var s=o.endIdxNew;(hP(t)?s<o.drawIdx:s!==o.endIdx||!s||e[s-1].id!==o.last)&&(t.__dirty=!0),o.endIdx=o.endIdxNew,o.last=s?e[s-1].id:NaN}}t.__dirty&&(kP(t,function(e){e.drawIdx=e.startIdx}),n._hoverLayerDirty===bP&&(n._hoverLayerDirty=xP))},FP)},e.prototype.clear=function(){return jP(this._i,function(e){e.clear(),EP(e)},MP),this},e.prototype.setBackgroundColor=function(e){this._backgroundColor=e,jP(this._i,function(e){e.setUnpainted()})},e.prototype.configLayer=function(e,t){if(t){var n=this._layerConfig;n[e]?R(n[e],t,!0):n[e]=t,jP(this._i,function(e,t){R(e,n[t],!0)})}},e.prototype.delLayer=function(e){for(var t=this._i.layerStack,n=this._i.layers,r=t.length-1;r>=0;r--){var i=t[r];if(i.zl===e){var a=n[e][i.zl2];if(a.__builtin__)continue;if(t.splice(r,1),n[e][i.zl2]=void 0,!a.virtual){var o=a.dom.parentNode;o&&o.removeChild(a.dom)}}}},e.prototype.resize=function(e,t){if(this._domRoot.style){var n=this._domRoot;n.style.display=`none`;var r=this._opts,i=this.root;e!=null&&(r.width=e),t!=null&&(r.height=t),e=ax(i,0,r),t=ax(i,1,r),n.style.display=``,(this._width!==e||t!==this._height)&&(n.style.width=e+`px`,n.style.height=t+`px`,jP(this._i,function(n){n.resize(e,t)}),this.refresh({paintAll:!0})),this._width=e,this._height=t}else{if(e==null||t==null)return;this._width=e,this._height=t,this._ensureLayer(yP).resize(e,t)}return this},e.prototype.clearLayer=function(e){B(this._i.layers[e],function(e){e&&!e.__builtin__&&e.clear()})},e.prototype.dispose=function(){this.root.innerHTML=``,this.root=this.storage=this._domRoot=this._i=null},e.prototype.getRenderedCanvas=function(e){if(e||={},this._singleCanvas&&!this._compositeManually)return this._i.layers[yP][0].dom;var t=new _P(`image`,this,e.pixelRatio||this.dpr);t.initContext(),t.clear(!1,e.backgroundColor||this._backgroundColor);var n=t.ctx;if(e.pixelRatio<=this.dpr){this.refresh();var r=t.dom.width,i=t.dom.height;jP(this._i,function(e){e.__builtin__?n.drawImage(e.dom,0,0,r,i):e.renderToCanvas&&(n.save(),e.renderToCanvas(n),n.restore())})}else{for(var a={inHover:!1,viewWidth:this._width,viewHeight:this._height,beforeBrushParam:{}},o=this.storage.getDisplayList(!0),s=0,c=o.length;s<c;s++){var l=o[s];Px(n,l,a)}Fx(n,a)}return t.dom},e.prototype.getWidth=function(){return this._width},e.prototype.getHeight=function(){return this._height},e}();function LP(e){e.registerPainter(`canvas`,IP)}var RP=typeof window>`u`?global:window,zP=`@griffel/`;function BP(e,t){return RP[Symbol.for(zP+e)]||(RP[Symbol.for(zP+e)]=t),RP[Symbol.for(zP+e)]}var VP=BP(`DEFINITION_LOOKUP_TABLE`,{}),HP=`data-make-styles-bucket`,UP=`data-priority`,WP=`data-container`;function GP(e){for(var t=0,n,r=0,i=e.length;i>=4;++r,i-=4)n=e.charCodeAt(r)&255|(e.charCodeAt(++r)&255)<<8|(e.charCodeAt(++r)&255)<<16|(e.charCodeAt(++r)&255)<<24,n=(n&65535)*1540483477+((n>>>16)*59797<<16),n^=n>>>24,t=(n&65535)*1540483477+((n>>>16)*59797<<16)^(t&65535)*1540483477+((t>>>16)*59797<<16);switch(i){case 3:t^=(e.charCodeAt(r+2)&255)<<16;case 2:t^=(e.charCodeAt(r+1)&255)<<8;case 1:t^=e.charCodeAt(r)&255,t=(t&65535)*1540483477+((t>>>16)*59797<<16)}return t^=t>>>13,t=(t&65535)*1540483477+((t>>>16)*59797<<16),((t^t>>>15)>>>0).toString(36)}function KP(e){let t=e.length;if(t===7)return e;for(let n=t;n<7;n++)e+=`0`;return e}function qP(e,t,n=[]){return`___`+KP(GP(e+t))}function JP(e,t){let n=``,r=``;for(let i in e){let a=e[i];if(a===0){r+=i+` `;continue}let o=Array.isArray(a),s=t===`rtl`?(o?a[1]:a)+` `:(o?a[0]:a)+` `;n+=s,r+=s}return[n.slice(0,-1),r.slice(0,-1)]}function YP(e,t){let n={};for(let r in e){let[i,a]=JP(e[r],t);if(a===``){n[r]=``;continue}let o=qP(a,t),s=o+(i===``?``:` `+i);VP[o]=[e[r],t],n[r]=s}return n}var XP={};function ZP(){let e=null,t=``,n=``,r=Array(arguments.length);for(let e=0;e<arguments.length;e++){let i=arguments[e];if(typeof i==`string`&&i!==``){let a=i.indexOf(`___`);if(a===-1)t+=i+` `;else{let o=i.substr(a,10);a>0&&(t+=i.slice(0,a)),n+=o,r[e]=o}}}if(n===``)return t.slice(0,-1);let i=XP[n];if(i!==void 0)return t+i;let a=[];for(let t=0;t<arguments.length;t++){let n=r[t];if(n){let t=VP[n];t&&(a.push(t[0]),e=t[1])}}let o=Object.assign.apply(Object,[{}].concat(a)),[s,c]=JP(o,e),l=qP(c,e,r),u=l+` `+s;return XP[n]=u,VP[l]=[o,e],t+u}function QP(e){return Array.isArray(e)?e:[e]}function $P(e,t,n,r){let i=[];if(r[HP]=t,r[UP]=String(n),e)for(let t in r)e.setAttribute(t,r[t]);function a(t){return e?.sheet?e.sheet.insertRule(t,e.sheet.cssRules.length):i.push(t)}return{elementAttributes:r,insertRule:a,element:e,bucketName:t,cssRules(){return e?.sheet?Array.from(e.sheet.cssRules).map(e=>e.cssText):i}}}var eF=[`r`,`d`,`l`,`v`,`w`,`f`,`i`,`h`,`a`,`s`,`k`,`t`,`m`,`c`,`x`].reduce((e,t,n)=>(e[t]=n,e),{});function tF(e,t,n){return e===`m`||e===`x`?e+t+n:e+n}function nF(e,t,n,r,i={}){let a=e===`m`,o=e===`x`,s=i.m,c=i.x,l=i.p??0,u=tF(e,c??s??`0`,l);if(!r.stylesheets[u]){let d=t&&t.createElement(`style`),f=$P(d,e,l,{...r.styleElementAttributes,...a&&{media:s},...o&&{"data-container":c}});r.stylesheets[u]=f,t?.head&&d&&t.head.insertBefore(d,iF(t,n,e,r,i))}return r.stylesheets[u]}function rF(e,t,n){return e.getAttribute(`data-make-styles-bucket`)===t?t===`m`?n.m===e.media:t!==`x`||n.x===e.getAttribute(WP):!1}function iF(e,t,n,r,i={}){let a=eF[n],o=i.m??``,s=i.x??``,c=i.p??0,l=e=>a-eF[e.getAttribute(HP)],u=e.head.querySelectorAll(`[${HP}]`);if(n===`m`||n===`x`){let t=e.head.querySelectorAll(`[${HP}="${n}"]`);t.length&&(u=t,l=n===`m`?e=>r.compareMediaQueries(o,e.media):e=>r.compareContainerQueries(s,e.getAttribute(`data-container`)??``))}let d=e=>rF(e,n,i)?c-Number(e.getAttribute(UP)):l(e),f=u.length,p=f-1;for(;p>=0;){let e=u.item(p);if(d(e)>0)return e.nextSibling;p--}return f>0?u.item(0):t?t.nextSibling:null}`${[`-moz-placeholder`,`-moz-focus-inner`,`-moz-focusring`,`-ms-input-placeholder`,`-moz-read-write`,`-moz-read-only`].join(`|`)}`;function aF(e,t){try{e.insertRule(t)}catch{}}var oF=0,sF=(e,t)=>e<t?-1:+(e>t);function cF(e=typeof document>`u`?void 0:document,t={}){let{classNameHashSalt:n,unstable_filterCSSRule:r,insertionPoint:i,styleElementAttributes:a,compareMediaQueries:o=sF,compareContainerQueries:s=o}=t,c={classNameHashSalt:n,insertionCache:{},stylesheets:{},styleElementAttributes:Object.freeze(a),compareMediaQueries:o,compareContainerQueries:s,id:`d${oF++}`,insertCSSRules(t){for(let n in t){let a=t[n];for(let t=0,o=a.length;t<o;t++){let[o,s]=QP(a[t]),l=nF(n,e,i||null,c,s);c.insertionCache[o]||(c.insertionCache[o]=n,r?r(o)&&aF(l,o):aF(l,o))}}}};return c}var lF=()=>{let e={};return function(t,n){e[t.id]===void 0&&(t.insertCSSRules(n),e[t.id]=!0)}};function uF(e,t,n=lF){let r=n(),i=null,a=null;function o(n){let{dir:o,renderer:s}=n,c=o===`ltr`;return c?i===null&&(i=YP(e,o)):a===null&&(a=YP(e,o)),r(s,t),c?i:a}return o}function dF(){return typeof window<`u`&&!!(window.document&&window.document.createElement)}var Z=l(d(),1),fF=Z.useInsertionEffect?Z.useInsertionEffect:void 0,pF=()=>{let e={};return function(t,n){if(fF&&dF()){fF(()=>{t.insertCSSRules(n)},[t,n]);return}e[t.id]===void 0&&(t.insertCSSRules(n),e[t.id]=!0)}},mF=o((e=>{var t=Symbol.for(`react.transitional.element`),n=Symbol.for(`react.fragment`);function r(e,n,r){var i=null;if(r!==void 0&&(i=``+r),n.key!==void 0&&(i=``+n.key),`key`in n)for(var a in r={},n)a!==`key`&&(r[a]=n[a]);else r=n;return n=r.ref,{$$typeof:t,type:e,key:i,ref:n===void 0?null:n,props:r}}e.Fragment=n,e.jsx=r,e.jsxs=r})),Q=l(o(((e,t)=>{t.exports=mF()}))(),1),hF=(0,Z.createContext)(cF());function gF(){return(0,Z.useContext)(hF)}var _F=(0,Z.createContext)(`ltr`),vF=({children:e,dir:t})=>(0,Q.jsx)(_F.Provider,{value:t,children:e});function yF(){return(0,Z.useContext)(_F)}function bF(e,t){let n=uF(e,t,pF);return function(){let e=yF(),t=gF();return n({dir:e,renderer:t})}}var xF={"<":`\\3C `,">":`\\3E `};function SF(e){return e.replace(/[<>]/g,e=>xF[e])}function CF(e,t){return t?`${e} { ${SF(Object.keys(t).reduce((e,n)=>`${e}--${n}: ${t[n]}; `,``))} }`:`${e} {}`}var wF=Symbol.for(`fui.slotRenderFunction`),TF=Symbol.for(`fui.slotElementType`),EF=Symbol.for(`fui.slotClassNameProp`);function DF(e,t){let{defaultProps:n,elementType:r}=t,i=OF(e),a={...n,...i,[TF]:r,[EF]:i?.className||n?.className};return i&&typeof i.children==`function`&&(a[wF]=i.children,a.children=n?.children),a}function OF(e){return typeof e==`string`||typeof e==`number`||kF(e)||Z.isValidElement(e)?{children:e}:e}var kF=e=>typeof e==`object`&&!!e&&Symbol.iterator in e;function AF(e){return!!e?.hasOwnProperty(TF)}var jF=(...e)=>{let t={};for(let n of e){let e=Array.isArray(n)?n:Object.keys(n);for(let n of e)t[n]=1}return t},MF=jF(`onAuxClick.onAnimationEnd.onAnimationStart.onCopy.onCut.onPaste.onCompositionEnd.onCompositionStart.onCompositionUpdate.onFocus.onFocusCapture.onBlur.onBlurCapture.onChange.onInput.onSubmit.onLoad.onError.onKeyDown.onKeyDownCapture.onKeyPress.onKeyUp.onAbort.onCanPlay.onCanPlayThrough.onDurationChange.onEmptied.onEncrypted.onEnded.onLoadedData.onLoadedMetadata.onLoadStart.onPause.onPlay.onPlaying.onProgress.onRateChange.onSeeked.onSeeking.onStalled.onSuspend.onTimeUpdate.onVolumeChange.onWaiting.onClick.onClickCapture.onContextMenu.onDoubleClick.onDrag.onDragEnd.onDragEnter.onDragExit.onDragLeave.onDragOver.onDragStart.onDrop.onMouseDown.onMouseDownCapture.onMouseEnter.onMouseLeave.onMouseMove.onMouseOut.onMouseOver.onMouseUp.onMouseUpCapture.onSelect.onTouchCancel.onTouchEnd.onTouchMove.onTouchStart.onScroll.onWheel.onPointerCancel.onPointerDown.onPointerEnter.onPointerLeave.onPointerMove.onPointerOut.onPointerOver.onPointerUp.onGotPointerCapture.onLostPointerCapture`.split(`.`)),NF=jF(jF([`accessKey`,`children`,`className`,`contentEditable`,`dir`,`draggable`,`hidden`,`htmlFor`,`id`,`lang`,`popover`,`focusgroup`,`focusgroupstart`,`ref`,`role`,`style`,`tabIndex`,`title`,`translate`,`spellCheck`,`name`]),MF,jF([`itemID`,`itemProp`,`itemRef`,`itemScope`,`itemType`])),PF=jF(NF,[`form`]),FF=jF(NF,[`height`,`loop`,`muted`,`preload`,`src`,`width`]),IF=jF(FF,[`poster`]),LF=jF(NF,[`start`]),RF=jF(NF,[`value`]),zF=jF(NF,[`download`,`href`,`hrefLang`,`media`,`referrerPolicy`,`rel`,`target`,`type`]),BF=jF(NF,[`dateTime`]),VF=jF(NF,[`autoFocus`,`disabled`,`form`,`formAction`,`formEncType`,`formMethod`,`formNoValidate`,`formTarget`,`popoverTarget`,`popoverTargetAction`,`type`,`value`]),HF=jF(VF,`accept.alt.autoCorrect.autoCapitalize.autoComplete.checked.dirname.form.height.inputMode.list.max.maxLength.min.minLength.multiple.pattern.placeholder.readOnly.required.src.step.size.type.value.width`.split(`.`)),UF=jF(VF,[`autoCapitalize`,`cols`,`dirname`,`form`,`maxLength`,`placeholder`,`readOnly`,`required`,`rows`,`wrap`]),WF=jF(VF,[`form`,`multiple`,`required`]),GF=jF(NF,[`selected`,`value`]),KF=jF(NF,[`cellPadding`,`cellSpacing`]),qF=NF,JF=jF(NF,[`colSpan`,`rowSpan`,`scope`]),YF=jF(NF,[`colSpan`,`headers`,`rowSpan`,`scope`]),XF=jF(NF,[`span`]),ZF=jF(NF,[`span`]),QF=jF(NF,[`disabled`,`form`]),$F=jF(NF,[`acceptCharset`,`action`,`encType`,`encType`,`method`,`noValidate`,`target`]),eI=jF(NF,[`allow`,`allowFullScreen`,`allowPaymentRequest`,`allowTransparency`,`csp`,`height`,`importance`,`referrerPolicy`,`sandbox`,`src`,`srcDoc`,`width`]),tI=jF(NF,[`alt`,`crossOrigin`,`height`,`src`,`srcSet`,`useMap`,`width`]),nI=jF(NF,[`open`,`onCancel`,`onClose`]);function rI(e,t,n){let r=Array.isArray(t),i={},a=Object.keys(e);for(let o of a)(!r&&t[o]||r&&t.indexOf(o)>=0||o.indexOf(`data-`)===0||o.indexOf(`aria-`)===0)&&(!n||n?.indexOf(o)===-1)&&(i[o]=e[o]);return i}var iI={label:PF,audio:FF,video:IF,ol:LF,li:RF,a:zF,button:VF,input:HF,textarea:UF,select:WF,option:GF,table:KF,tr:qF,th:JF,td:YF,colGroup:XF,col:ZF,fieldset:QF,form:$F,iframe:eI,img:tI,time:BF,dialog:nI};function aI(e,t,n){let r=e&&iI[e]||NF;return r.as=1,rI(t,r,n)}var oI=(e,t,n)=>aI(t.as??e,t,n),sI=Z.createContext(void 0),cI=sI.Provider,lI=Z.createContext(void 0).Provider,uI=Z.createContext(void 0).Provider,dI=Z.createContext(void 0),fI={targetDocument:typeof document==`object`?document:void 0,dir:`ltr`},pI=dI.Provider;function mI(){return Z.useContext(dI)??fI}var hI=Z.createContext(void 0),gI=hI.Provider;function _I(){return Z.useContext(hI)??{}}var vI=Z.createContext(void 0),yI=vI.Provider;function bI(){return typeof window<`u`&&!!(window.document&&window.document.createElement)}var xI={current:0},SI=Z.createContext(void 0);function CI(){return Z.useContext(SI)??xI}var wI=bI()?Z.useLayoutEffect:Z.useEffect,TI=Z.createContext(void 0);TI.Provider;function EI(){return Z.useContext(TI)||``}function DI(e=`fui-`,t){let n=CI(),r=EI(),i=Z.useId;if(i){let n=i(),a=Z.useMemo(()=>n.replace(/:/g,``),[n]);return t||`${r}${e}${a}`}return Z.useMemo(()=>t||`${r}${e}${++n.current}`,[r,e,t,n])}function OI(...e){let t=Z.useCallback(n=>{t.current=n;for(let t of e)typeof t==`function`?t(n):t&&(t.current=n)},[...e]);return t}function kI(e,t){let n=e;return!!(n!=null&&n.ownerDocument?.defaultView&&n instanceof n.ownerDocument.defaultView[t?.constructorName??`HTMLElement`])}function AI(e,t){return{...t,[TF]:e}}function jI(e,t){return function(n,r,i,a,o){return AF(r)?t(AI(n,r),null,i,a,o):AF(n)?t(n,r,i,a,o):e(n,r,i,a,o)}}function MI(e){let{as:t,[EF]:n,[TF]:r,[wF]:i,...a}=e,o=a,s=typeof r==`string`?t??r:r;return typeof s!=`string`&&t&&(o.as=t),{elementType:s,props:o,renderFunction:i}}var NI=Q,PI=(e,t,n)=>{let{elementType:r,renderFunction:i,props:a}=MI(e),o={...a,...t};return i?NI.jsx(Z.Fragment,{children:i(r,o)},n):NI.jsx(r,o,n)},FI=(e,t,n)=>{let{elementType:r,renderFunction:i,props:a}=MI(e),o={...a,...t};return i?NI.jsx(Z.Fragment,{children:i(r,{...o,children:NI.jsxs(Z.Fragment,{children:o.children},void 0)})},n):NI.jsxs(r,o,n)},II=jI(NI.jsx,PI),LI=jI(NI.jsxs,FI),RI=Z.createContext(void 0),zI={},BI=RI.Provider,VI=()=>Z.useContext(RI)??zI,HI=(e,t)=>II(pI,{value:t.provider,children:II(cI,{value:t.theme,children:II(lI,{value:t.themeClassName,children:II(yI,{value:t.customStyleHooks_unstable,children:II(uI,{value:t.tooltip,children:II(vF,{dir:t.textDirection,children:II(BI,{value:t.iconDirection,children:II(gI,{value:t.overrides_unstable,children:LI(e.root,{children:[bI()?null:II(`style`,{dangerouslySetInnerHTML:{__html:e.serverStyleProps.cssRule},...e.serverStyleProps.attributes}),e.root.children]})})})})})})})})}),UI=(e,t,n)=>{e.addEventListener(t,n,!0)},WI=(e,t,n)=>{e.removeEventListener(t,n,!0)},GI=`keyborg:focusin`,KI=`keyborg:focusout`,qI=0,JI=1,YI=2,XI=3;function ZI(e){let t=e.HTMLElement,n=t.prototype.focus,r=!1;return t.prototype.focus=function(){r=!0},e.document.createElement(`button`).focus(),t.prototype.focus=n,r}var QI=!1;function $I(e){let t=e,n=t.document,r=t.HTMLElement.prototype;QI||=ZI(t);let i=r.focus;if(i.__keyborgNativeFocus)return;r.focus=u;let a=new Set,o=e=>{let t=e.target;if(!t)return;let n=new CustomEvent(KI,{cancelable:!0,bubbles:!0,composed:!0,detail:{originalEvent:e}});t.dispatchEvent(n)},s=e=>{let t=e.target;if(!t)return;let n=e.composedPath()[0],r=new Set;for(;n;)n.nodeType===Node.DOCUMENT_FRAGMENT_NODE?(r.add(n),n=n.host):n=n.parentNode;for(let e of a){let t=e.deref();(!t||!r.has(t))&&(a.delete(e),t&&(WI(t,`focusin`,s),WI(t,`focusout`,o)))}c(t,e.relatedTarget||void 0)},c=(e,t,n)=>{let r=e.shadowRoot;if(r){for(let e of a)if(e.deref()===r)return;UI(r,`focusin`,s),UI(r,`focusout`,o),a.add(new WeakRef(r));return}let i={relatedTarget:t,originalEvent:n},c=new CustomEvent(GI,{cancelable:!0,bubbles:!0,composed:!0,detail:i});c.details=i,(QI||l[XI])&&(i.isFocusedProgrammatically=e===l[XI]?.deref(),l[XI]=void 0),e.dispatchEvent(c)},l=[s,o,a];t.__keyborgData=l,UI(n,`focusin`,s),UI(n,`focusout`,o);function u(){let e=t.__keyborgData;return e&&(e[XI]=new WeakRef(this)),i.apply(this,arguments)}let d=n.activeElement;for(;d&&d.shadowRoot;)c(d),d=d.shadowRoot.activeElement;u.__keyborgNativeFocus=i}function eL(e){let t=e,n=t.HTMLElement.prototype,r=n.focus.__keyborgNativeFocus,i=t.__keyborgData;if(i){let e=t.document;WI(e,`focusin`,i[qI]),WI(e,`focusout`,i[JI]);for(let e of i[YI]){let t=e.deref();t&&(WI(t,`focusin`,i[qI]),WI(t,`focusout`,i[JI]))}i[YI].clear(),delete t.__keyborgData}r&&(n.focus=r)}var tL=500,nL=0;function rL(e,t){let n=e,r=!1,i,a,o,s;t&&(t.triggerKeys?.length&&(o=new Set(t.triggerKeys)),t.dismissKeys?.length&&(s=new Set(t.dismissKeys)));let c=()=>{let e=n?.__keyborg?.refs;if(e)for(let t of Object.keys(e))e[t]._cb.forEach(e=>e(r))},l=e=>{r!==e&&(r=e,c())},u=e=>{if(e.key===`Tab`)return!0;let t=n?.document.activeElement,r=!o||o.has(e.keyCode),i=t&&(t.tagName===`INPUT`||t.tagName===`TEXTAREA`||t.isContentEditable);return r&&!i},d=e=>!!s?.has(e.keyCode),f=()=>{let e=n;if(!e)return;a&&=(e.clearTimeout(a),void 0);let t=e.document.activeElement;a=e.setTimeout(()=>{a=void 0;let n=e.document.activeElement;t&&n&&t===n&&l(!1)},tL)},p=e=>{if(i||r)return;let t=e.detail;t.relatedTarget&&(t.isFocusedProgrammatically||t.isFocusedProgrammatically===void 0||l(!0))},m=()=>{n&&(i&&n.clearTimeout(i),i=n.setTimeout(()=>{i=void 0},1e3)),l(!1)},h=e=>{e.buttons===0||e.clientX===0&&e.clientY===0&&e.screenX===0&&e.screenY===0||m()},g=e=>{r?d(e)&&f():u(e)&&l(!0)},_=e.document;return UI(_,GI,p),UI(_,`mousedown`,h),UI(e,`keydown`,g),UI(_,`touchstart`,m),UI(_,`touchend`,m),UI(_,`touchcancel`,m),$I(e),{dispose:()=>{if(!n)return;i&&=(n.clearTimeout(i),void 0),a&&=(n.clearTimeout(a),void 0),eL(n);let e=n.document;WI(e,GI,p),WI(e,`mousedown`,h),WI(n,`keydown`,g),WI(e,`touchstart`,m),WI(e,`touchend`,m),WI(e,`touchcancel`,m),n=void 0},get isNavigatingWithKeyboard(){return r},set isNavigatingWithKeyboard(e){l(e)}}}function iL(e,t){let n=e,r=`k`+ ++nL,i=n,a,o=[],s=n.__keyborg;a=s?s.core:rL(n,t);let c={isNavigatingWithKeyboard(){return!!a?.isNavigatingWithKeyboard},subscribe(e){o.push(e)},unsubscribe(e){let t=o.indexOf(e);t>=0&&o.splice(t,1)},setVal(e){a&&(a.isNavigatingWithKeyboard=e)},_cb:o,dispose(){let e=i?.__keyborg;e?.refs[r]&&(delete e.refs[r],Object.keys(e.refs).length===0&&(e.core.dispose(),delete i.__keyborg)),o.length=0,a=void 0,i=void 0}};return s?s.refs[r]=c:n.__keyborg={core:a,refs:{[r]:c}},c}function aL(e){e.dispose()}var oL=`data-fui-focus-visible`;function sL(e,t){if(cL(e))return()=>void 0;let n={current:void 0},r=iL(t);function i(e){r.isNavigatingWithKeyboard()&&kI(e)&&(n.current=e,e.setAttribute(oL,``))}function a(){n.current&&=(n.current.removeAttribute(oL),void 0)}r.subscribe(e=>{e?i(t.document.activeElement):a()});let o=e=>{a();let t=e.composedPath()[0];i(t)},s=t=>{(!t.relatedTarget||kI(t.relatedTarget)&&!e.contains(t.relatedTarget))&&a()};return e.addEventListener(GI,o),e.addEventListener(`focusout`,s),e.focusVisible=!0,e.contains(t.document.activeElement)&&i(t.document.activeElement),()=>{a(),e.removeEventListener(GI,o),e.removeEventListener(`focusout`,s),e.focusVisible=void 0,aL(r)}}function cL(e){return e?e.focusVisible?!0:cL(e?.parentElement):!1}function lL(e={}){let t=mI(),n=Z.useRef(null),r=e.targetDocument??t.targetDocument;return Z.useEffect(()=>{if(r?.defaultView&&n.current)return sL(n.current,r.defaultView)},[n,r]),n}var $={2:`#050505`,4:`#0a0a0a`,6:`#0f0f0f`,8:`#141414`,10:`#1a1a1a`,12:`#1f1f1f`,14:`#242424`,16:`#292929`,18:`#2e2e2e`,20:`#333333`,22:`#383838`,24:`#3d3d3d`,26:`#424242`,28:`#474747`,30:`#4d4d4d`,32:`#525252`,34:`#575757`,36:`#5c5c5c`,38:`#616161`,40:`#666666`,42:`#6b6b6b`,44:`#707070`,46:`#757575`,48:`#7a7a7a`,50:`#808080`,52:`#858585`,54:`#8a8a8a`,56:`#8f8f8f`,58:`#949494`,60:`#999999`,62:`#9e9e9e`,64:`#a3a3a3`,66:`#a8a8a8`,68:`#adadad`,70:`#b3b3b3`,72:`#b8b8b8`,74:`#bdbdbd`,76:`#c2c2c2`,78:`#c7c7c7`,80:`#cccccc`,82:`#d1d1d1`,84:`#d6d6d6`,86:`#dbdbdb`,88:`#e0e0e0`,90:`#e6e6e6`,92:`#ebebeb`,94:`#f0f0f0`,96:`#f5f5f5`,98:`#fafafa`,99:`#fcfcfc`},uL={5:`rgba(255, 255, 255, 0.05)`,10:`rgba(255, 255, 255, 0.1)`,20:`rgba(255, 255, 255, 0.2)`,30:`rgba(255, 255, 255, 0.3)`,40:`rgba(255, 255, 255, 0.4)`,50:`rgba(255, 255, 255, 0.5)`,60:`rgba(255, 255, 255, 0.6)`,70:`rgba(255, 255, 255, 0.7)`,80:`rgba(255, 255, 255, 0.8)`,90:`rgba(255, 255, 255, 0.9)`},dL={5:`rgba(0, 0, 0, 0.05)`,10:`rgba(0, 0, 0, 0.1)`,20:`rgba(0, 0, 0, 0.2)`,30:`rgba(0, 0, 0, 0.3)`,40:`rgba(0, 0, 0, 0.4)`,50:`rgba(0, 0, 0, 0.5)`,60:`rgba(0, 0, 0, 0.6)`,70:`rgba(0, 0, 0, 0.7)`,80:`rgba(0, 0, 0, 0.8)`,90:`rgba(0, 0, 0, 0.9)`},fL=`#ffffff`,pL=`#000000`,mL={shade50:`#130204`,shade40:`#230308`,shade30:`#420610`,shade20:`#590815`,shade10:`#690a19`,primary:`#750b1c`,tint10:`#861b2c`,tint20:`#962f3f`,tint30:`#ac4f5e`,tint40:`#d69ca5`,tint50:`#e9c7cd`,tint60:`#f9f0f2`},hL={shade50:`#200205`,shade40:`#3b0509`,shade30:`#6e0811`,shade20:`#960b18`,shade10:`#b10e1c`,primary:`#c50f1f`,tint10:`#cc2635`,tint20:`#d33f4c`,tint30:`#dc626d`,tint40:`#eeacb2`,tint50:`#f6d1d5`,tint60:`#fdf3f4`},gL={shade50:`#210809`,shade40:`#3f1011`,shade30:`#751d1f`,shade20:`#9f282b`,shade10:`#bc2f32`,primary:`#d13438`,tint10:`#d7494c`,tint20:`#dc5e62`,tint30:`#e37d80`,tint40:`#f1bbbc`,tint50:`#f8dadb`,tint60:`#fdf6f6`},_L={shade50:`#230900`,shade40:`#411200`,shade30:`#7a2101`,shade20:`#a62d01`,shade10:`#c43501`,primary:`#da3b01`,tint10:`#de501c`,tint20:`#e36537`,tint30:`#e9835e`,tint40:`#f4bfab`,tint50:`#f9dcd1`,tint60:`#fdf6f3`},vL={shade50:`#200d03`,shade40:`#3d1805`,shade30:`#712d09`,shade20:`#9a3d0c`,shade10:`#b6480e`,primary:`#ca5010`,tint10:`#d06228`,tint20:`#d77440`,tint30:`#df8e64`,tint40:`#efc4ad`,tint50:`#f7dfd2`,tint60:`#fdf7f4`},yL={shade50:`#271002`,shade40:`#4a1e04`,shade30:`#8a3707`,shade20:`#bc4b09`,shade10:`#de590b`,primary:`#f7630c`,tint10:`#f87528`,tint20:`#f98845`,tint30:`#faa06b`,tint40:`#fdcfb4`,tint50:`#fee5d7`,tint60:`#fff9f5`},bL={shade50:`#291600`,shade40:`#4d2a00`,shade30:`#8f4e00`,shade20:`#c26a00`,shade10:`#e67e00`,primary:`#ff8c00`,tint10:`#ff9a1f`,tint20:`#ffa83d`,tint30:`#ffba66`,tint40:`#ffddb3`,tint50:`#ffedd6`,tint60:`#fffaf5`},xL={shade50:`#251a00`,shade40:`#463100`,shade30:`#835b00`,shade20:`#b27c00`,shade10:`#d39300`,primary:`#eaa300`,tint10:`#edad1c`,tint20:`#efb839`,tint30:`#f2c661`,tint40:`#f9e2ae`,tint50:`#fcefd3`,tint60:`#fefbf4`},SL={shade50:`#282400`,shade40:`#4c4400`,shade30:`#817400`,shade20:`#c0ad00`,shade10:`#e4cc00`,primary:`#fde300`,tint10:`#fde61e`,tint20:`#fdea3d`,tint30:`#feee66`,tint40:`#fef7b2`,tint50:`#fffad6`,tint60:`#fffef5`},CL={shade50:`#1f1900`,shade40:`#3a2f00`,shade30:`#6c5700`,shade20:`#937700`,shade10:`#ae8c00`,primary:`#c19c00`,tint10:`#c8a718`,tint20:`#d0b232`,tint30:`#dac157`,tint40:`#ecdfa5`,tint50:`#f5eece`,tint60:`#fdfbf2`},wL={shade50:`#181202`,shade40:`#2e2103`,shade30:`#553e06`,shade20:`#745408`,shade10:`#89640a`,primary:`#986f0b`,tint10:`#a47d1e`,tint20:`#b18c34`,tint30:`#c1a256`,tint40:`#e0cea2`,tint50:`#efe4cb`,tint60:`#fbf8f2`},TL={shade50:`#170e07`,shade40:`#2b1a0e`,shade30:`#50301a`,shade20:`#6c4123`,shade10:`#804d29`,primary:`#8e562e`,tint10:`#9c663f`,tint20:`#a97652`,tint30:`#bb8f6f`,tint40:`#ddc3b0`,tint50:`#edded3`,tint60:`#faf7f4`},EL={shade50:`#0c1501`,shade40:`#162702`,shade30:`#294903`,shade20:`#376304`,shade10:`#427505`,primary:`#498205`,tint10:`#599116`,tint20:`#6ba02b`,tint30:`#85b44c`,tint40:`#bdd99b`,tint50:`#dbebc7`,tint60:`#f6faf0`},DL={shade50:`#002111`,shade40:`#003d20`,shade30:`#00723b`,shade20:`#009b51`,shade10:`#00b85f`,primary:`#00cc6a`,tint10:`#19d279`,tint20:`#34d889`,tint30:`#5ae0a0`,tint40:`#a8f0cd`,tint50:`#cff7e4`,tint60:`#f3fdf8`},OL={shade50:`#031a02`,shade40:`#063004`,shade30:`#0b5a08`,shade20:`#0e7a0b`,shade10:`#11910d`,primary:`#13a10e`,tint10:`#27ac22`,tint20:`#3db838`,tint30:`#5ec75a`,tint40:`#a7e3a5`,tint50:`#cef0cd`,tint60:`#f2fbf2`},kL={shade50:`#031403`,shade40:`#052505`,shade30:`#094509`,shade20:`#0c5e0c`,shade10:`#0e700e`,primary:`#107c10`,tint10:`#218c21`,tint20:`#359b35`,tint30:`#54b054`,tint40:`#9fd89f`,tint50:`#c9eac9`,tint60:`#f1faf1`},AL={shade50:`#021102`,shade40:`#032003`,shade30:`#063b06`,shade20:`#085108`,shade10:`#0a5f0a`,primary:`#0b6a0b`,tint10:`#1a7c1a`,tint20:`#2d8e2d`,tint30:`#4da64d`,tint40:`#9ad29a`,tint50:`#c6e7c6`,tint60:`#f0f9f0`},jL={shade50:`#001d1f`,shade40:`#00373a`,shade30:`#00666d`,shade20:`#008b94`,shade10:`#00a5af`,primary:`#00b7c3`,tint10:`#18bfca`,tint20:`#32c8d1`,tint30:`#58d3db`,tint40:`#a6e9ed`,tint50:`#cef3f5`,tint60:`#f2fcfd`},ML={shade50:`#001516`,shade40:`#012728`,shade30:`#02494c`,shade20:`#026467`,shade10:`#037679`,primary:`#038387`,tint10:`#159195`,tint20:`#2aa0a4`,tint30:`#4cb4b7`,tint40:`#9bd9db`,tint50:`#c7ebec`,tint60:`#f0fafa`},NL={shade50:`#000f12`,shade40:`#001b22`,shade30:`#00333f`,shade20:`#004555`,shade10:`#005265`,primary:`#005b70`,tint10:`#0f6c81`,tint20:`#237d92`,tint30:`#4496a9`,tint40:`#94c8d4`,tint50:`#c3e1e8`,tint60:`#eff7f9`},PL={shade50:`#001322`,shade40:`#002440`,shade30:`#004377`,shade20:`#005ba1`,shade10:`#006cbf`,primary:`#0078d4`,tint10:`#1a86d9`,tint20:`#3595de`,tint30:`#5caae5`,tint40:`#a9d3f2`,tint50:`#d0e7f8`,tint60:`#f3f9fd`},FL={shade50:`#000c16`,shade40:`#00172a`,shade30:`#002c4e`,shade20:`#003b6a`,shade10:`#00467e`,primary:`#004e8c`,tint10:`#125e9a`,tint20:`#286fa8`,tint30:`#4a89ba`,tint40:`#9abfdc`,tint50:`#c7dced`,tint60:`#f0f6fa`},IL={shade50:`#0d1126`,shade40:`#182047`,shade30:`#2c3c85`,shade20:`#3c51b4`,shade10:`#4760d5`,primary:`#4f6bed`,tint10:`#637cef`,tint20:`#778df1`,tint30:`#93a4f4`,tint40:`#c8d1fa`,tint50:`#e1e6fc`,tint60:`#f7f9fe`},LL={shade50:`#00061d`,shade40:`#000c36`,shade30:`#001665`,shade20:`#001e89`,shade10:`#0023a2`,primary:`#0027b4`,tint10:`#173bbd`,tint20:`#3050c6`,tint30:`#546fd2`,tint40:`#a3b2e8`,tint50:`#ccd5f3`,tint60:`#f2f4fc`},RL={shade50:`#120f25`,shade40:`#221d46`,shade30:`#3f3682`,shade20:`#5649b0`,shade10:`#6656d1`,primary:`#7160e8`,tint10:`#8172eb`,tint20:`#9184ee`,tint30:`#a79cf1`,tint40:`#d2ccf8`,tint50:`#e7e4fb`,tint60:`#f9f8fe`},zL={shade50:`#0f0717`,shade40:`#1c0e2b`,shade30:`#341a51`,shade20:`#46236e`,shade10:`#532982`,primary:`#5c2e91`,tint10:`#6b3f9e`,tint20:`#7c52ab`,tint30:`#9470bd`,tint40:`#c6b1de`,tint50:`#e0d3ed`,tint60:`#f7f4fb`},BL={shade50:`#160418`,shade40:`#29072e`,shade30:`#4c0d55`,shade20:`#671174`,shade10:`#7a1589`,primary:`#881798`,tint10:`#952aa4`,tint20:`#a33fb1`,tint30:`#b55fc1`,tint40:`#d9a7e0`,tint50:`#eaceef`,tint60:`#faf2fb`},VL={shade50:`#1f091d`,shade40:`#3a1136`,shade30:`#6d2064`,shade20:`#932b88`,shade10:`#af33a1`,primary:`#c239b3`,tint10:`#c94cbc`,tint20:`#d161c4`,tint30:`#da7ed0`,tint40:`#edbbe7`,tint50:`#f5daf2`,tint60:`#fdf5fc`},HL={shade50:`#1c0b1f`,shade40:`#35153a`,shade30:`#63276d`,shade20:`#863593`,shade10:`#9f3faf`,primary:`#b146c2`,tint10:`#ba58c9`,tint20:`#c36bd1`,tint30:`#cf87da`,tint40:`#e6bfed`,tint50:`#f2dcf5`,tint60:`#fcf6fd`},UL={shade50:`#24091b`,shade40:`#441232`,shade30:`#80215d`,shade20:`#ad2d7e`,shade10:`#cd3595`,primary:`#e43ba6`,tint10:`#e750b0`,tint20:`#ea66ba`,tint30:`#ef85c8`,tint40:`#f7c0e3`,tint50:`#fbddf0`,tint60:`#fef6fb`},WL={shade50:`#1f0013`,shade40:`#390024`,shade30:`#6b0043`,shade20:`#91005a`,shade10:`#ac006b`,primary:`#bf0077`,tint10:`#c71885`,tint20:`#ce3293`,tint30:`#d957a8`,tint40:`#eca5d1`,tint50:`#f5cee6`,tint60:`#fcf2f9`},GL={shade50:`#13000c`,shade40:`#240017`,shade30:`#43002b`,shade20:`#5a003b`,shade10:`#6b0045`,primary:`#77004d`,tint10:`#87105d`,tint20:`#98246f`,tint30:`#ad4589`,tint40:`#d696c0`,tint50:`#e9c4dc`,tint60:`#faf0f6`},KL={shade50:`#141313`,shade40:`#252323`,shade30:`#444241`,shade20:`#5d5958`,shade10:`#6e6968`,primary:`#7a7574`,tint10:`#8a8584`,tint20:`#9a9594`,tint30:`#afabaa`,tint40:`#d7d4d4`,tint50:`#eae8e8`,tint60:`#faf9f9`},qL={shade50:`#0f0e0e`,shade40:`#1c1b1a`,shade30:`#343231`,shade20:`#474443`,shade10:`#54514f`,primary:`#5d5a58`,tint10:`#706d6b`,tint20:`#84817e`,tint30:`#9e9b99`,tint40:`#cecccb`,tint50:`#e5e4e3`,tint60:`#f8f8f8`},JL={shade50:`#111314`,shade40:`#1f2426`,shade30:`#3b4447`,shade20:`#505c60`,shade10:`#5f6d71`,primary:`#69797e`,tint10:`#79898d`,tint20:`#89989d`,tint30:`#a0adb2`,tint40:`#cdd6d8`,tint50:`#e4e9ea`,tint60:`#f8f9fa`},YL={shade50:`#090a0b`,shade40:`#111315`,shade30:`#202427`,shade20:`#2b3135`,shade10:`#333a3f`,primary:`#394146`,tint10:`#4d565c`,tint20:`#626c72`,tint30:`#808a90`,tint40:`#bcc3c7`,tint50:`#dbdfe1`,tint60:`#f6f7f8`},XL={red:gL,green:kL,darkOrange:_L,yellow:SL,berry:VL,lightGreen:OL,marigold:xL},ZL={darkRed:mL,cranberry:hL,pumpkin:vL,peach:bL,gold:CL,brass:wL,brown:TL,forest:EL,seafoam:DL,darkGreen:AL,lightTeal:jL,teal:ML,steel:NL,blue:PL,royalBlue:FL,cornflower:IL,navy:LL,lavender:RL,purple:zL,grape:BL,lilac:HL,pink:UL,magenta:WL,plum:GL,beige:KL,mink:qL,platinum:JL,anchor:YL},QL={cranberry:hL,green:kL,orange:yL},$L=[`red`,`green`,`darkOrange`,`yellow`,`berry`,`lightGreen`,`marigold`],eR=`darkRed.cranberry.pumpkin.peach.gold.brass.brown.forest.seafoam.darkGreen.lightTeal.teal.steel.blue.royalBlue.cornflower.navy.lavender.purple.grape.lilac.pink.magenta.plum.beige.mink.platinum.anchor`.split(`.`),tR={success:`green`,warning:`orange`,danger:`cranberry`},nR=$L.reduce((e,t)=>{let n=t.slice(0,1).toUpperCase()+t.slice(1),r={[`colorPalette${n}Background1`]:XL[t].tint60,[`colorPalette${n}Background2`]:XL[t].tint40,[`colorPalette${n}Background3`]:XL[t].primary,[`colorPalette${n}Foreground1`]:XL[t].shade10,[`colorPalette${n}Foreground2`]:XL[t].shade30,[`colorPalette${n}Foreground3`]:XL[t].primary,[`colorPalette${n}BorderActive`]:XL[t].primary,[`colorPalette${n}Border1`]:XL[t].tint40,[`colorPalette${n}Border2`]:XL[t].primary};return Object.assign(e,r)},{});nR.colorPaletteYellowForeground1=XL.yellow.shade30,nR.colorPaletteRedForegroundInverted=XL.red.tint20,nR.colorPaletteGreenForegroundInverted=XL.green.tint20,nR.colorPaletteYellowForegroundInverted=XL.yellow.tint40;var rR=eR.reduce((e,t)=>{let n=t.slice(0,1).toUpperCase()+t.slice(1),r={[`colorPalette${n}Background2`]:ZL[t].tint40,[`colorPalette${n}Foreground2`]:ZL[t].shade30,[`colorPalette${n}BorderActive`]:ZL[t].primary};return Object.assign(e,r)},{}),iR={...nR,...rR},aR=Object.entries(tR).reduce((e,[t,n])=>{let r=t.slice(0,1).toUpperCase()+t.slice(1),i={[`colorStatus${r}Background1`]:QL[n].tint60,[`colorStatus${r}Background2`]:QL[n].tint40,[`colorStatus${r}Background3`]:QL[n].primary,[`colorStatus${r}Foreground1`]:QL[n].shade10,[`colorStatus${r}Foreground2`]:QL[n].shade30,[`colorStatus${r}Foreground3`]:QL[n].primary,[`colorStatus${r}ForegroundInverted`]:QL[n].tint30,[`colorStatus${r}BorderActive`]:QL[n].primary,[`colorStatus${r}Border1`]:QL[n].tint40,[`colorStatus${r}Border2`]:QL[n].primary};return Object.assign(e,i)},{});aR.colorStatusDangerBackground3Hover=QL[tR.danger].shade10,aR.colorStatusDangerBackground3Pressed=QL[tR.danger].shade20,aR.colorStatusWarningForeground1=QL[tR.warning].shade20,aR.colorStatusWarningForeground3=QL[tR.warning].shade20,aR.colorStatusWarningBorder2=QL[tR.warning].shade20;var oR=e=>({colorNeutralForeground1:$[14],colorNeutralForeground1Hover:$[14],colorNeutralForeground1Pressed:$[14],colorNeutralForeground1Selected:$[14],colorNeutralForeground2:$[26],colorNeutralForeground2Hover:$[14],colorNeutralForeground2Pressed:$[14],colorNeutralForeground2Selected:$[14],colorNeutralForeground2BrandHover:e[80],colorNeutralForeground2BrandPressed:e[70],colorNeutralForeground2BrandSelected:e[80],colorNeutralForeground3:$[38],colorNeutralForeground3Hover:$[26],colorNeutralForeground3Pressed:$[26],colorNeutralForeground3Selected:$[26],colorNeutralForeground3BrandHover:e[80],colorNeutralForeground3BrandPressed:e[70],colorNeutralForeground3BrandSelected:e[80],colorNeutralForeground4:$[44],colorNeutralForeground5:$[38],colorNeutralForeground5Hover:$[14],colorNeutralForeground5Pressed:$[14],colorNeutralForeground5Selected:$[14],colorNeutralForegroundDisabled:$[74],colorNeutralForegroundInvertedDisabled:uL[40],colorBrandForegroundLink:e[70],colorBrandForegroundLinkHover:e[60],colorBrandForegroundLinkPressed:e[40],colorBrandForegroundLinkSelected:e[70],colorNeutralForeground2Link:$[26],colorNeutralForeground2LinkHover:$[14],colorNeutralForeground2LinkPressed:$[14],colorNeutralForeground2LinkSelected:$[14],colorCompoundBrandForeground1:e[80],colorCompoundBrandForeground1Hover:e[70],colorCompoundBrandForeground1Pressed:e[60],colorBrandForeground1:e[80],colorBrandForeground2:e[70],colorBrandForeground2Hover:e[60],colorBrandForeground2Pressed:e[30],colorNeutralForeground1Static:$[14],colorNeutralForegroundStaticInverted:fL,colorNeutralForegroundInverted:fL,colorNeutralForegroundInvertedHover:fL,colorNeutralForegroundInvertedPressed:fL,colorNeutralForegroundInvertedSelected:fL,colorNeutralForegroundInverted2:fL,colorNeutralForegroundOnBrand:fL,colorNeutralForegroundInvertedLink:fL,colorNeutralForegroundInvertedLinkHover:fL,colorNeutralForegroundInvertedLinkPressed:fL,colorNeutralForegroundInvertedLinkSelected:fL,colorBrandForegroundInverted:e[100],colorBrandForegroundInvertedHover:e[110],colorBrandForegroundInvertedPressed:e[100],colorBrandForegroundOnLight:e[80],colorBrandForegroundOnLightHover:e[70],colorBrandForegroundOnLightPressed:e[50],colorBrandForegroundOnLightSelected:e[60],colorNeutralBackground1:fL,colorNeutralBackground1Hover:$[96],colorNeutralBackground1Pressed:$[88],colorNeutralBackground1Selected:$[92],colorNeutralBackground2:$[98],colorNeutralBackground2Hover:$[94],colorNeutralBackground2Pressed:$[86],colorNeutralBackground2Selected:$[90],colorNeutralBackground3:$[96],colorNeutralBackground3Hover:$[92],colorNeutralBackground3Pressed:$[84],colorNeutralBackground3Selected:$[88],colorNeutralBackground4:$[94],colorNeutralBackground4Hover:$[98],colorNeutralBackground4Pressed:$[96],colorNeutralBackground4Selected:fL,colorNeutralBackground5:$[92],colorNeutralBackground5Hover:$[96],colorNeutralBackground5Pressed:$[94],colorNeutralBackground5Selected:$[98],colorNeutralBackground6:$[90],colorNeutralBackground7:`#00000000`,colorNeutralBackground7Hover:$[92],colorNeutralBackground7Pressed:$[84],colorNeutralBackground7Selected:`#00000000`,colorNeutralBackground8:$[99],colorNeutralBackgroundInverted:$[16],colorNeutralBackgroundInvertedHover:$[24],colorNeutralBackgroundInvertedPressed:$[12],colorNeutralBackgroundInvertedSelected:$[22],colorNeutralBackgroundStatic:$[20],colorNeutralBackgroundAlpha:uL[50],colorNeutralBackgroundAlpha2:uL[80],colorSubtleBackground:`transparent`,colorSubtleBackgroundHover:$[96],colorSubtleBackgroundPressed:$[88],colorSubtleBackgroundSelected:$[92],colorSubtleBackgroundLightAlphaHover:uL[70],colorSubtleBackgroundLightAlphaPressed:uL[50],colorSubtleBackgroundLightAlphaSelected:`transparent`,colorSubtleBackgroundInverted:`transparent`,colorSubtleBackgroundInvertedHover:dL[10],colorSubtleBackgroundInvertedPressed:dL[30],colorSubtleBackgroundInvertedSelected:dL[20],colorTransparentBackground:`transparent`,colorTransparentBackgroundHover:`transparent`,colorTransparentBackgroundPressed:`transparent`,colorTransparentBackgroundSelected:`transparent`,colorNeutralBackgroundDisabled:$[94],colorNeutralBackgroundDisabled2:fL,colorNeutralBackgroundInvertedDisabled:uL[10],colorNeutralStencil1:$[90],colorNeutralStencil2:$[98],colorNeutralStencil1Alpha:dL[10],colorNeutralStencil2Alpha:dL[5],colorBackgroundOverlay:dL[40],colorScrollbarOverlay:dL[50],colorBrandBackground:e[80],colorBrandBackgroundHover:e[70],colorBrandBackgroundPressed:e[40],colorBrandBackgroundSelected:e[60],colorCompoundBrandBackground:e[80],colorCompoundBrandBackgroundHover:e[70],colorCompoundBrandBackgroundPressed:e[60],colorBrandBackgroundStatic:e[80],colorBrandBackground2:e[160],colorBrandBackground2Hover:e[150],colorBrandBackground2Pressed:e[130],colorBrandBackground3Static:e[60],colorBrandBackground4Static:e[40],colorBrandBackgroundInverted:fL,colorBrandBackgroundInvertedHover:e[160],colorBrandBackgroundInvertedPressed:e[140],colorBrandBackgroundInvertedSelected:e[150],colorNeutralCardBackground:$[98],colorNeutralCardBackgroundHover:fL,colorNeutralCardBackgroundPressed:$[96],colorNeutralCardBackgroundSelected:$[92],colorNeutralCardBackgroundDisabled:$[94],colorNeutralStrokeAccessible:$[38],colorNeutralStrokeAccessibleHover:$[34],colorNeutralStrokeAccessiblePressed:$[30],colorNeutralStrokeAccessibleSelected:e[80],colorNeutralStroke1:$[82],colorNeutralStroke1Hover:$[78],colorNeutralStroke1Pressed:$[70],colorNeutralStroke1Selected:$[74],colorNeutralStroke2:$[88],colorNeutralStroke3:$[94],colorNeutralStroke4:$[92],colorNeutralStroke4Hover:$[88],colorNeutralStroke4Pressed:$[84],colorNeutralStroke4Selected:$[92],colorNeutralStrokeSubtle:$[88],colorNeutralStrokeOnBrand:fL,colorNeutralStrokeOnBrand2:fL,colorNeutralStrokeOnBrand2Hover:fL,colorNeutralStrokeOnBrand2Pressed:fL,colorNeutralStrokeOnBrand2Selected:fL,colorBrandStroke1:e[80],colorBrandStroke2:e[140],colorBrandStroke2Hover:e[120],colorBrandStroke2Pressed:e[80],colorBrandStroke2Contrast:e[140],colorCompoundBrandStroke:e[80],colorCompoundBrandStrokeHover:e[70],colorCompoundBrandStrokePressed:e[60],colorNeutralStrokeDisabled:$[88],colorNeutralStrokeDisabled2:$[92],colorNeutralStrokeInvertedDisabled:uL[40],colorTransparentStroke:`transparent`,colorTransparentStrokeInteractive:`transparent`,colorTransparentStrokeDisabled:`transparent`,colorNeutralStrokeAlpha:dL[5],colorNeutralStrokeAlpha2:uL[20],colorStrokeFocus1:fL,colorStrokeFocus2:pL,colorNeutralShadowAmbient:`rgba(0,0,0,0.12)`,colorNeutralShadowKey:`rgba(0,0,0,0.14)`,colorNeutralShadowAmbientLighter:`rgba(0,0,0,0.06)`,colorNeutralShadowKeyLighter:`rgba(0,0,0,0.07)`,colorNeutralShadowAmbientDarker:`rgba(0,0,0,0.20)`,colorNeutralShadowKeyDarker:`rgba(0,0,0,0.24)`,colorBrandShadowAmbient:`rgba(0,0,0,0.30)`,colorBrandShadowKey:`rgba(0,0,0,0.25)`}),sR={borderRadiusNone:`0`,borderRadiusSmall:`2px`,borderRadiusMedium:`4px`,borderRadiusLarge:`6px`,borderRadiusXLarge:`8px`,borderRadius2XLarge:`12px`,borderRadius3XLarge:`16px`,borderRadius4XLarge:`24px`,borderRadius5XLarge:`32px`,borderRadius6XLarge:`40px`,borderRadiusCircular:`10000px`},cR={curveAccelerateMax:`cubic-bezier(0.9,0.1,1,0.2)`,curveAccelerateMid:`cubic-bezier(1,0,1,1)`,curveAccelerateMin:`cubic-bezier(0.8,0,0.78,1)`,curveDecelerateMax:`cubic-bezier(0.1,0.9,0.2,1)`,curveDecelerateMid:`cubic-bezier(0,0,0,1)`,curveDecelerateMin:`cubic-bezier(0.33,0,0.1,1)`,curveEasyEaseMax:`cubic-bezier(0.8,0,0.2,1)`,curveEasyEase:`cubic-bezier(0.33,0,0.67,1)`,curveLinear:`cubic-bezier(0,0,1,1)`},lR={durationUltraFast:`50ms`,durationFaster:`100ms`,durationFast:`150ms`,durationNormal:`200ms`,durationGentle:`250ms`,durationSlow:`300ms`,durationSlower:`400ms`,durationUltraSlow:`500ms`},uR={fontSizeBase100:`10px`,fontSizeBase200:`12px`,fontSizeBase300:`14px`,fontSizeBase400:`16px`,fontSizeBase500:`20px`,fontSizeBase600:`24px`,fontSizeHero700:`28px`,fontSizeHero800:`32px`,fontSizeHero900:`40px`,fontSizeHero1000:`68px`},dR={lineHeightBase100:`14px`,lineHeightBase200:`16px`,lineHeightBase300:`20px`,lineHeightBase400:`22px`,lineHeightBase500:`28px`,lineHeightBase600:`32px`,lineHeightHero700:`36px`,lineHeightHero800:`40px`,lineHeightHero900:`52px`,lineHeightHero1000:`92px`},fR={fontWeightRegular:400,fontWeightMedium:500,fontWeightSemibold:600,fontWeightBold:700},pR={fontFamilyBase:`'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif`,fontFamilyMonospace:`Consolas, 'Courier New', Courier, monospace`,fontFamilyNumeric:`Bahnschrift, 'Segoe UI', 'Segoe UI Web (West European)', -apple-system, BlinkMacSystemFont, Roboto, 'Helvetica Neue', sans-serif`},mR={none:`0`,xxs:`2px`,xs:`4px`,sNudge:`6px`,s:`8px`,mNudge:`10px`,m:`12px`,l:`16px`,xl:`20px`,xxl:`24px`,xxxl:`32px`},hR={spacingHorizontalNone:mR.none,spacingHorizontalXXS:mR.xxs,spacingHorizontalXS:mR.xs,spacingHorizontalSNudge:mR.sNudge,spacingHorizontalS:mR.s,spacingHorizontalMNudge:mR.mNudge,spacingHorizontalM:mR.m,spacingHorizontalL:mR.l,spacingHorizontalXL:mR.xl,spacingHorizontalXXL:mR.xxl,spacingHorizontalXXXL:mR.xxxl},gR={spacingVerticalNone:mR.none,spacingVerticalXXS:mR.xxs,spacingVerticalXS:mR.xs,spacingVerticalSNudge:mR.sNudge,spacingVerticalS:mR.s,spacingVerticalMNudge:mR.mNudge,spacingVerticalM:mR.m,spacingVerticalL:mR.l,spacingVerticalXL:mR.xl,spacingVerticalXXL:mR.xxl,spacingVerticalXXXL:mR.xxxl},_R={strokeWidthThin:`1px`,strokeWidthThick:`2px`,strokeWidthThicker:`3px`,strokeWidthThickest:`4px`};function vR(e,t,n=``){return{[`shadow2${n}`]:`0 0 2px ${e}, 0 1px 2px ${t}`,[`shadow4${n}`]:`0 0 2px ${e}, 0 2px 4px ${t}`,[`shadow8${n}`]:`0 0 2px ${e}, 0 4px 8px ${t}`,[`shadow16${n}`]:`0 0 2px ${e}, 0 8px 16px ${t}`,[`shadow28${n}`]:`0 0 8px ${e}, 0 14px 28px ${t}`,[`shadow64${n}`]:`0 0 8px ${e}, 0 32px 64px ${t}`}}var yR=(e=>{let t=oR(e);return{...sR,...uR,...dR,...pR,...fR,..._R,...hR,...gR,...lR,...cR,...t,...iR,...aR,...vR(t.colorNeutralShadowAmbient,t.colorNeutralShadowKey),...vR(t.colorBrandShadowAmbient,t.colorBrandShadowKey,`Brand`)}})({10:`#061724`,20:`#082338`,30:`#0a2e4a`,40:`#0c3b5e`,50:`#0e4775`,60:`#0f548c`,70:`#115ea3`,80:`#0f6cbd`,90:`#2886de`,100:`#479ef5`,110:`#62abf5`,120:`#77b7f7`,130:`#96c6fa`,140:`#b4d6fa`,150:`#cfe4fa`,160:`#ebf3fc`}),bR={root:`fui-FluentProvider`},xR=uF({root:{sj55zd:`f19n0e5`,De3pzq:`fxugw4r`,fsow6f:[`f1o700av`,`fes3tcz`],Bahqtrf:`fk6fouc`,Be2twd7:`fkhj508`,Bhrd7zp:`figsok6`,Bg96gwp:`f1i3iumi`}},{d:[`.f19n0e5{color:var(--colorNeutralForeground1);}`,`.fxugw4r{background-color:var(--colorNeutralBackground1);}`,`.f1o700av{text-align:left;}`,`.fes3tcz{text-align:right;}`,`.fk6fouc{font-family:var(--fontFamilyBase);}`,`.fkhj508{font-size:var(--fontSizeBase300);}`,`.figsok6{font-weight:var(--fontWeightRegular);}`,`.f1i3iumi{line-height:var(--lineHeightBase300);}`]}),SR=e=>{let t=gF(),n=xR({dir:e.dir,renderer:t});return e.root.className=ZP(bR.root,e.themeClassName,n.root,e.root.className),e},CR=Z.useInsertionEffect?Z.useInsertionEffect:wI,wR=(e,t)=>{if(!e?.head)return;let n=e.createElement(`style`);return Object.keys(t).forEach(e=>{n.setAttribute(e,t[e])}),e.head.appendChild(n),n},TR=(e,t)=>{let n=e.sheet;n&&(n.cssRules.length>0&&n.deleteRule(0),n.insertRule(t,0))},ER=e=>{let{targetDocument:t,theme:n,rendererAttributes:r}=e,i=Z.useRef(void 0),a=DI(bR.root),o=r,s=Z.useMemo(()=>CF(`.${a}`,n),[n,a]);return DR(t,a),CR(()=>{let e=t?.getElementById(a);return e?i.current=e:(i.current=wR(t,{...o,id:a}),i.current&&TR(i.current,s)),()=>{var e;(e=i.current)==null||e.remove()}},[a,t,s,o]),{styleTagId:a,rule:s}};function DR(e,t){Z.useState(()=>{if(!e)return;let n=e.getElementById(t);n&&e.head.append(n)})}var OR={},kR={},AR=(e,t)=>{let n=mI(),r=MR(),i=_I(),a=Z.useContext(vI)||OR,{applyStylesToPortals:o=!0,customStyleHooks_unstable:s,dir:c=n.dir,targetDocument:l=n.targetDocument,theme:u,overrides_unstable:d={}}=e,f=jR(r,u),p=jR(i,d),m=jR(a,s),h=gF(),{styleTagId:g,rule:_}=ER({theme:f,targetDocument:l,rendererAttributes:h.styleElementAttributes??kR});return{applyStylesToPortals:o,customStyleHooks_unstable:m,dir:c,targetDocument:l,theme:f,overrides_unstable:p,themeClassName:g,components:{root:`div`},root:DF(oI(`div`,{...e,dir:c,ref:OI(t,lL({targetDocument:l}))}),{elementType:`div`}),serverStyleProps:{cssRule:_,attributes:{...h.styleElementAttributes,id:g}}}};function jR(e,t){return e&&t?{...e,...t}:e||t}function MR(){return Z.useContext(sI)}function NR(e){let{applyStylesToPortals:t,customStyleHooks_unstable:n,dir:r,root:i,targetDocument:a,theme:o,themeClassName:s,overrides_unstable:c}=e,l=Z.useMemo(()=>({dir:r,targetDocument:a}),[r,a]),[u]=Z.useState(()=>({}));return{customStyleHooks_unstable:n,overrides_unstable:c,provider:l,textDirection:r,iconDirection:Z.useMemo(()=>({textDirection:r}),[r]),tooltip:u,theme:o,themeClassName:t?i.className:s}}var PR=Z.forwardRef((e,t)=>{let n=AR(e,t);return SR(n),HI(n,NR(n))});PR.displayName=`FluentProvider`;var FR=bF({root:{mc9l5x:`f1w7gpdv`,Bg96gwp:`fez10in`},rtl:{Bz10aip:`f13rod7r`}},{d:[`.f1w7gpdv{display:inline;}`,`.fez10in{line-height:0;}`,`.f13rod7r{transform:scaleX(-1);}`]}),IR=`fui-Icon`,LR=`data-fui-icon`,RR=(e,t)=>{let{filled:n,idPrefix:r,title:i,primaryFill:a=`currentColor`,...o}=e,s={...o,fill:a},c=VI(),l=!!(t?.flipInRtl&&c?.textDirection===`rtl`);return i&&(s[`aria-label`]=i),!s[`aria-label`]&&!s[`aria-labelledby`]?s[`aria-hidden`]=!0:s.role=`img`,s[LR]=``,{state:s,isRtlFlip:l}},zR=(e,t)=>{let n=FR(),{state:r,isRtlFlip:i}=RR(e,t);return r.className=ZP(n.root,i&&n.rtl,r.className),r},BR=bF({root:{B8gzw0y:`f1dd5bof`}},{m:[[`@media (forced-colors: active){.f1dd5bof{forced-color-adjust:auto;}}`,{m:`(forced-colors: active)`}]]}),VR=`url(#`,HR=(e,t,n)=>{let[r,i,...a]=e,o=i;if(n&&i){let e={};for(let t in i){let r=i[t];if(typeof r!=`string`)e[t]=r;else if(t===`id`)e[t]=n+r;else{let i=r.indexOf(VR);e[t]=i<0?r:r.slice(0,i+5)+n+r.slice(i+5)}}o=e}return Z.createElement(r,{...o,key:t},...a.map((e,t)=>HR(e,t,n)))},UR=e=>e===`1em`?`20`:e,WR=(e,t,n)=>typeof e!=`string`&&(t?.color||Array.isArray(e[0]))?e.map((e,t)=>HR(e,t,n)):void 0,GR=()=>void 0,KR=(e,t)=>{let n=WR(e,t);return n?function(r){return Z.useMemo(()=>r?WR(e,t,r):n,[r])}:GR},qR=(e,t,n)=>typeof t==`string`?Z.createElement(`svg`,{...e,dangerouslySetInnerHTML:{__html:t}}):n?Z.createElement(`svg`,e,...n):Z.createElement(`svg`,e,...t.map(t=>Z.createElement(`path`,{d:t,fill:e.fill}))),JR=(e,t,n,r)=>{let i=UR(t),a=KR(n,r),o=Z.forwardRef((e,o)=>{let s=BR(),c=zR(e,{flipInRtl:r?.flipInRtl}),l=a(e.idPrefix);return qR({...c,className:ZP(IR,c.className,s.root),ref:o,width:t,height:t,viewBox:`0 0 ${i} ${i}`,xmlns:`http://www.w3.org/2000/svg`},n,l)});return o.displayName=e,o},YR=JR(`DismissRegular`,`1em`,[`m4.09 4.22.06-.07a.5.5 0 0 1 .63-.06l.07.06L10 9.29l5.15-5.14a.5.5 0 0 1 .63-.06l.07.06c.18.17.2.44.06.63l-.06.07L10.71 10l5.14 5.15c.18.17.2.44.06.63l-.06.07a.5.5 0 0 1-.63.06l-.07-.06L10 10.71l-5.15 5.14a.5.5 0 0 1-.63.06l-.07-.06a.5.5 0 0 1-.06-.63l.06-.07L9.29 10 4.15 4.85a.5.5 0 0 1-.06-.63l.06-.07-.06.07Z`]),XR=JR(`CalendarLtr24Regular`,`24`,[`M17.75 3C19.55 3 21 4.46 21 6.25v11.5c0 1.8-1.46 3.25-3.25 3.25H6.25A3.25 3.25 0 0 1 3 17.75V6.25C3 4.45 4.46 3 6.25 3h11.5Zm1.75 5.5h-15v9.25c0 .97.78 1.75 1.75 1.75h11.5c.97 0 1.75-.78 1.75-1.75V8.5Zm-11.75 6a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm4.25 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm-4.25-4a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm4.25 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm4.25 0a1.25 1.25 0 1 1 0 2.5 1.25 1.25 0 0 1 0-2.5Zm1.5-6H6.25c-.97 0-1.75.78-1.75 1.75V7h15v-.75c0-.97-.78-1.75-1.75-1.75Z`]),ZR=JR(`DataBarVertical24Regular`,`24`,[`M5.75 3C6.99 3 8 4 8 5.25v13.5a2.25 2.25 0 1 1-4.5 0V5.25C3.5 4 4.5 3 5.75 3Zm6.5 4c1.24 0 2.25 1 2.25 2.25v9.5a2.25 2.25 0 1 1-4.5 0v-9.5C10 8 11 7 12.25 7Zm6.5 4c1.24 0 2.25 1 2.25 2.25v5.5a2.25 2.25 0 1 1-4.5 0v-5.5c0-1.24 1-2.25 2.25-2.25Zm-13-6.5a.75.75 0 0 0-.75.75v13.5a.75.75 0 0 0 1.5 0V5.25a.75.75 0 0 0-.75-.75Zm6.5 4a.75.75 0 0 0-.75.75v9.5a.75.75 0 0 0 1.5 0v-9.5a.75.75 0 0 0-.75-.75Zm6.5 4a.75.75 0 0 0-.75.75v5.5a.75.75 0 0 0 1.5 0v-5.5a.75.75 0 0 0-.75-.75Z`]),QR=JR(`DocumentText24Regular`,`24`,[`M8.75 11.5a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm0 2.75a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm0 2.75a.75.75 0 0 0 0 1.5h6.5a.75.75 0 0 0 0-1.5h-6.5Zm4.84-14.41L19.4 8.4A2 2 0 0 1 20 9.83V20a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V4c0-1.1.9-2 2-2h6.17c.52 0 1.05.22 1.42.59ZM18 20.5a.5.5 0 0 0 .5-.5V10H14a2 2 0 0 1-2-2V3.5H6a.5.5 0 0 0-.5.5v16c0 .27.22.5.5.5h12Zm-.62-12L13.5 4.62V8c0 .28.22.5.5.5h3.38Z`]),$R=JR(`Settings24Regular`,`24`,[`M12.01 2.25c.74 0 1.47.1 2.18.25.32.07.55.33.59.65l.17 1.53a1.38 1.38 0 0 0 1.92 1.11l1.4-.61c.3-.13.64-.06.85.17a9.8 9.8 0 0 1 2.2 3.8c.1.3 0 .63-.26.82l-1.25.92a1.38 1.38 0 0 0 0 2.22l1.25.92c.26.19.36.52.27.82a9.8 9.8 0 0 1-2.2 3.8.75.75 0 0 1-.85.17l-1.4-.62a1.38 1.38 0 0 0-1.93 1.12l-.17 1.52a.75.75 0 0 1-.58.65 9.52 9.52 0 0 1-4.4 0 .75.75 0 0 1-.57-.65l-.17-1.52a1.38 1.38 0 0 0-1.93-1.11l-1.4.62a.75.75 0 0 1-.85-.18 9.8 9.8 0 0 1-2.2-3.8c-.1-.3 0-.63.26-.82l1.25-.92a1.38 1.38 0 0 0 0-2.22l-1.24-.92a.75.75 0 0 1-.28-.82 9.8 9.8 0 0 1 2.2-3.8c.23-.23.57-.3.86-.17l1.4.62c.4.17.86.15 1.25-.08.38-.22.63-.6.68-1.04l.17-1.53a.75.75 0 0 1 .58-.65c.72-.16 1.45-.24 2.2-.25Zm0 1.5c-.45 0-.9.04-1.35.12l-.11.97a2.89 2.89 0 0 1-4.03 2.33l-.9-.4A8.3 8.3 0 0 0 4.29 9.1l.8.59a2.88 2.88 0 0 1 0 4.64l-.8.59a8.3 8.3 0 0 0 1.35 2.32l.9-.4a2.88 2.88 0 0 1 4.02 2.32l.1.99c.9.15 1.8.15 2.7 0l.1-.99a2.88 2.88 0 0 1 4.02-2.32l.9.4a8.3 8.3 0 0 0 1.35-2.32l-.8-.59a2.88 2.88 0 0 1 0-4.64l.8-.59a8.3 8.3 0 0 0-1.35-2.32l-.9.4a2.88 2.88 0 0 1-4.02-2.32l-.1-.98c-.45-.08-.9-.11-1.34-.12ZM12 8.25a3.75 3.75 0 1 1 0 7.5 3.75 3.75 0 0 1 0-7.5Zm0 1.5a2.25 2.25 0 1 0 0 4.5 2.25 2.25 0 0 0 0-4.5Z`]),ez=JR(`PersonClock24Regular`,`24`,[`M12.02 14c-.3.46-.53.97-.7 1.5H4.24a.75.75 0 0 0-.75.75v.58c0 .53.2 1.05.54 1.46C5.3 19.76 7.26 20.5 10 20.5c.6 0 1.16-.03 1.68-.1.25.49.55.95.91 1.36-.8.16-1.66.24-2.59.24-3.15 0-5.53-.9-7.1-2.74a3.75 3.75 0 0 1-.9-2.43v-.58C2 15 3.01 14 4.25 14h7.77ZM15 7A5 5 0 1 0 5 7a5 5 0 0 0 10 0ZM6.5 7a3.5 3.5 0 1 1 7 0 3.5 3.5 0 0 1-7 0ZM23 17.5a5.5 5.5 0 1 0-11 0 5.5 5.5 0 0 0 11 0ZM17.5 14c.28 0 .5.22.5.5V17h2a.5.5 0 0 1 0 1h-2.5a.5.5 0 0 1-.5-.5v-3c0-.28.22-.5.5-.5Z`]),tz=JR(`Briefcase24Regular`,`24`,[`M13.75 2C14.99 2 16 3 16 4.25V6h2.75C20.55 6 22 7.46 22 9.25v8.5c0 1.8-1.46 3.25-3.25 3.25H5.25A3.25 3.25 0 0 1 2 17.75v-8.5C2 7.45 3.46 6 5.25 6H8V4.25C8 3.01 9 2 10.25 2h3.5Zm6.75 11.49c-.5.32-1.1.51-1.75.51H14a1 1 0 0 1-1 1h-2a1 1 0 0 1-1-1H5.25c-.64 0-1.24-.19-1.75-.51v4.26c0 .97.78 1.75 1.75 1.75h13.5c.97 0 1.75-.78 1.75-1.75v-4.26ZM5.25 7.5c-.97 0-1.75.78-1.75 1.75v1.5c0 .97.78 1.75 1.75 1.75H10V12a1 1 0 0 1 1-1h2a1 1 0 0 1 1 1v.5h4.75c.97 0 1.75-.78 1.75-1.75v-1.5c0-.97-.78-1.75-1.75-1.75H5.25Zm5-4a.75.75 0 0 0-.75.75V6h5V4.25a.75.75 0 0 0-.75-.75h-3.5Z`]),nz=JR(`ApprovalsApp24Regular`,`24`,[`M11.78 1.72a.75.75 0 1 0-1.06 1.06L11.94 4a9 9 0 1 0 9.02 9.82.75.75 0 0 0-1.5-.13 7.5 7.5 0 1 1-7.52-8.19l-1.22 1.22a.75.75 0 0 0 1.06 1.06l2.5-2.5a.75.75 0 0 0 0-1.06l-2.5-2.5Zm4 8.5c.3.3.3.77 0 1.06l-4.5 4.5a.75.75 0 0 1-1.06 0l-2-2a.75.75 0 0 1 1.06-1.06l1.47 1.47 3.97-3.97c.3-.3.77-.3 1.06 0Z`]),rz=JR(`Apps24Regular`,`24`,[`m18.5 2.33 3.17 3.18c.88.88.88 2.3 0 3.18l-2.58 2.59A2.25 2.25 0 0 1 21 13.5v5.25C21 20 20 21 18.75 21H5.25C4.01 21 3 20 3 18.75V5.25C3 4.01 4 3 5.25 3h5.25c1.13 0 2.06.83 2.23 1.92l2.58-2.59c.88-.88 2.3-.88 3.18 0Zm-14 16.42c0 .41.34.75.75.75h6v-6.75H4.5v6Zm8.25.75h6c.41 0 .75-.34.75-.75V13.5a.75.75 0 0 0-.75-.75h-6v6.75Zm-2.25-15H5.25a.75.75 0 0 0-.75.75v6h6.75v-6a.75.75 0 0 0-.75-.75Zm2.25 4.81v1.94h1.94l-1.94-1.94Zm3.62-5.92L13.2 6.57c-.3.3-.3.77 0 1.06l3.18 3.18c.3.3.77.3 1.06 0l3.18-3.18c.3-.3.3-.77 0-1.06l-3.18-3.18a.75.75 0 0 0-1.06 0Z`]),iz=JR(`LineHorizontal320Regular`,`20`,[`M2 4.5c0-.28.22-.5.5-.5h15a.5.5 0 0 1 0 1h-15a.5.5 0 0 1-.5-.5Zm0 5c0-.28.22-.5.5-.5h15a.5.5 0 0 1 0 1h-15a.5.5 0 0 1-.5-.5Zm.5 4.5a.5.5 0 0 0 0 1h15a.5.5 0 0 0 0-1h-15Z`]),az=JR(`Add24Regular`,`24`,[`M12 3.25c.41 0 .75.34.75.75v7.25H20a.75.75 0 0 1 0 1.5h-7.25V20a.75.75 0 0 1-1.5 0v-7.25H4a.75.75 0 0 1 0-1.5h7.25V4c0-.41.34-.75.75-.75Z`]),oz=JR(`Flowchart24Regular`,`24`,[`M5.25 3C4 3 3 4 3 5.25v2.5C3 9 4 10 5.25 10h.5v3.71c-.05.03-.1.07-.13.12l-2.8 2.79a1.25 1.25 0 0 0 0 1.77l2.8 2.79c.48.49 1.28.49 1.76 0l2.8-2.8.11-.13H14v.5C14 20 15.01 21 16.25 21h2.5c1.24 0 2.25-1 2.25-2.25v-2.5c0-1.24-1-2.25-2.25-2.25h-2.5C15.01 14 14 15 14 16.25v.5H10.3c-.03-.05-.07-.09-.12-.13l-2.79-2.8a1.26 1.26 0 0 0-.13-.11v-3.7h.5C9 10 10 9 10 7.74v-2.5C10 4 9 3 7.75 3h-2.5ZM4.5 5.25c0-.42.33-.75.75-.75h2.5c.42 0 .75.33.75.75v2.5c0 .42-.33.75-.75.75h-2.5a.75.75 0 0 1-.75-.75v-2.5ZM4.06 17.5l2.44-2.44 2.44 2.44-2.44 2.44-2.44-2.44Zm12.2-2h2.49c.41 0 .75.34.75.75v2.5c0 .42-.34.75-.75.75h-2.5a.75.75 0 0 1-.75-.75v-2.5c0-.41.34-.75.75-.75Z`]),sz=JR(`Edit24Regular`,`24`,[`M20.95 3.05a3.58 3.58 0 0 0-5.06 0L3.94 15c-.4.4-.7.92-.82 1.48l-1.1 4.6a.75.75 0 0 0 .9.9l4.6-1.1A3.1 3.1 0 0 0 9 20.07L20.95 8.11a3.58 3.58 0 0 0 0-5.06Zm-4 1.06a2.08 2.08 0 1 1 2.94 2.94l-.89.89L16.06 5l.9-.9ZM15 6.06 17.94 9l-10 10a1.6 1.6 0 0 1-.76.43l-3.42.8.82-3.4c.06-.3.21-.56.42-.77l10-10Z`]),cz=JR(`Flash24Regular`,`24`,[`M7.43 2.83C7.6 2.33 8.07 2 8.6 2h6.46c.85 0 1.45.84 1.18 1.65L14.8 8h3.96c1.1 0 1.67 1.33.9 2.12L8.59 21.54c-1.06 1.08-2.88.1-2.55-1.38l1.27-5.66-1.56-.01c-1.21 0-2.05-1.2-1.65-2.34l3.33-9.32Zm1.35.67-3.26 9.16c-.06.16.06.33.23.33l2.5.01a.75.75 0 0 1 .73.91L7.51 20.5 18.16 9.5h-4.41a.75.75 0 0 1-.71-.99L14.7 3.5H8.78Z`]),lz=JR(`Lightbulb24Regular`,`24`,[`M12 2c4 0 7.25 3.25 7.25 7.25 0 2.1-.9 4.02-2.66 5.74a.75.75 0 0 0-.18.27l-.03.1-1.13 4.9a2.25 2.25 0 0 1-2.02 1.73l-.17.01h-2.12c-.99 0-1.85-.65-2.14-1.58l-.05-.16-1.13-4.9a.75.75 0 0 0-.2-.37c-1.68-1.64-2.58-3.46-2.66-5.44l-.01-.3v-.24a7.25 7.25 0 0 1 7.25-7Zm2.12 16.5H9.88l.33 1.42c.07.3.33.53.63.57l.1.01h2.12c.31 0 .59-.2.7-.48l.03-.1.33-1.42ZM12 3.5a5.75 5.75 0 0 0-5.75 5.53v.5c.08 1.56.8 3.02 2.21 4.39.27.26.46.58.57.93l.05.17.46 1.98h4.92l.46-1.98c.08-.36.25-.69.5-.97l.12-.13c1.4-1.37 2.13-2.83 2.2-4.4l.01-.27v-.22A5.75 5.75 0 0 0 12 3.5Z`]),uz=JR(`ArrowRight24Regular`,`24`,[`M13.27 4.2a.75.75 0 0 0-1.04 1.1l6.25 5.95H3.75a.75.75 0 0 0 0 1.5h14.73l-6.25 5.95a.75.75 0 0 0 1.04 1.1l7.42-7.08a1 1 0 0 0 0-1.44L13.27 4.2Z`]),dz=JR(`ShieldCheckmark24Regular`,`24`,[`M3 5.75c0-.41.34-.75.75-.75 2.66 0 5.26-.94 7.8-2.85.27-.2.63-.2.9 0C14.99 4.05 17.59 5 20.25 5c.41 0 .75.34.75.75V11c0 .34-.01.67-.04 1a6.47 6.47 0 0 0-1.46-.69V6.48a14.36 14.36 0 0 1-7.5-2.8 14.36 14.36 0 0 1-7.5 2.8V11c0 4.15 2.33 7.22 7.13 9.28.26.56.6 1.07 1 1.52l-.36.15a.75.75 0 0 1-.54 0C5.96 19.68 3 16 3 11V5.75ZM23 17.5a5.5 5.5 0 1 1-11 0 5.5 5.5 0 0 1 11 0Zm-2.15-2.35a.5.5 0 0 0-.7 0l-3.65 3.64-1.65-1.64a.5.5 0 0 0-.7.7l2 2c.2.2.5.2.7 0l4-4a.5.5 0 0 0 0-.7Z`]),fz=JR(`Chat24Regular`,`24`,[`M12 2a10 10 0 1 1-4.59 18.89L3.6 21.96a1.25 1.25 0 0 1-1.54-1.54l1.06-3.83A10 10 0 0 1 12 2Zm0 1.5a8.5 8.5 0 0 0-7.43 12.64l.15.27-1.1 3.98 3.98-1.11.27.15A8.5 8.5 0 1 0 12 3.5ZM8.75 13h4.5a.75.75 0 0 1 .1 1.5h-4.6a.75.75 0 0 1-.1-1.5h4.6-4.5Zm0-3.5h6.5a.75.75 0 0 1 .1 1.5h-6.6a.75.75 0 0 1-.1-1.5h6.6-6.5Z`]),pz=JR(`CheckmarkCircle24Regular`,`24`,[`M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm-1.25 9.94 4.47-4.47a.75.75 0 0 1 1.13.98l-.07.08-5 5a.75.75 0 0 1-.98.07l-.08-.07-2.5-2.5a.75.75 0 0 1 .98-1.13l.08.07 1.97 1.97 4.47-4.47-4.47 4.47Z`]),mz=JR(`ChevronDown24Regular`,`24`,[`M4.22 8.47c.3-.3.77-.3 1.06 0L12 15.19l6.72-6.72a.75.75 0 1 1 1.06 1.06l-7.25 7.25c-.3.3-.77.3-1.06 0L4.22 9.53a.75.75 0 0 1 0-1.06Z`]),hz=JR(`ChevronRight24Regular`,`24`,[`M8.47 4.22c-.3.3-.3.77 0 1.06L15.19 12l-6.72 6.72a.75.75 0 1 0 1.06 1.06l7.25-7.25c.3-.3.3-.77 0-1.06L9.53 4.22a.75.75 0 0 0-1.06 0Z`]),gz=JR(`Wrench24Regular`,`24`,[`M11 7.5a5.5 5.5 0 0 1 7.66-5.06.75.75 0 0 1 .24 1.22L16.3 6.25l1.44 1.44 2.59-2.59a.75.75 0 0 1 1.22.24 5.49 5.49 0 0 1-6.35 7.5l-8.3 8.32a2.87 2.87 0 1 1-4.07-4.06l8.31-8.31c-.1-.42-.15-.85-.15-1.29Zm5.5-4a4 4 0 0 0-3.8 5.27c.1.27.03.57-.18.77L3.9 18.16a1.37 1.37 0 0 0 1.94 1.94l8.63-8.62c.2-.2.5-.27.76-.18a4 4 0 0 0 5.25-4.22l-1.85 1.85c-.48.48-1.28.48-1.76 0l-1.8-1.8a1.25 1.25 0 0 1 0-1.76l1.85-1.85a4.06 4.06 0 0 0-.42-.02Z`]),_z=JR(`Home24Regular`,`24`,[`M10.55 2.53c.84-.7 2.06-.7 2.9 0l6.75 5.7c.5.42.8 1.05.8 1.71v9.31c0 .97-.78 1.75-1.75 1.75h-3.5c-.97 0-1.75-.78-1.75-1.75v-5a.25.25 0 0 0-.25-.25h-3.5a.25.25 0 0 0-.25.25v5c0 .97-.78 1.75-1.75 1.75h-3.5C3.78 21 3 20.22 3 19.25v-9.3c0-.67.3-1.3.8-1.73l6.75-5.69Zm1.93 1.15a.75.75 0 0 0-.96 0l-6.75 5.7a.75.75 0 0 0-.27.56v9.31c0 .14.11.25.25.25h3.5c.14 0 .25-.1.25-.25v-5c0-.97.78-1.75 1.75-1.75h3.5c.97 0 1.75.78 1.75 1.75v5c0 .14.11.25.25.25h3.5c.14 0 .25-.1.25-.25v-9.3c0-.23-.1-.44-.27-.58l-6.75-5.7Z`]),vz=JR(`ReOrderDotsVertical24Regular`,`24`,[`M15.5 17a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm7-7a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm7-7a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Zm-7 0a1.5 1.5 0 1 1 0 3 1.5 1.5 0 0 1 0-3Z`]),yz=JR(`Toolbox24Regular`,`24`,[`M7 6.25V7H4.25C3.01 7 2 8 2 9.25v8.5C2 18.99 3 20 4.25 20h15.5c1.24 0 2.25-1.01 2.25-2.25v-8.5C22 8.01 21 7 19.75 7H17v-.75C17 5.01 16 4 14.75 4h-5.5C8.01 4 7 5.01 7 6.25Zm2.25-.75h5.5c.41 0 .75.34.75.75V7h-7v-.75c0-.41.34-.75.75-.75ZM7 8.5h12.75c.41 0 .75.34.75.75v2.25h-3v-.75a.75.75 0 0 0-1.5 0v.75H8v-.75a.75.75 0 0 0-1.5 0v.75h-3V9.25c0-.41.34-.75.75-.75H7Zm9 4.5v1.25a.75.75 0 0 0 1.5 0V13h3v4.75c0 .41-.34.75-.75.75H4.25a.75.75 0 0 1-.75-.75V13h3v1.25a.75.75 0 0 0 1.5 0V13h8Z`]),bz=JR(`ErrorCircle24Regular`,`24`,[`M12 2a10 10 0 1 1 0 20 10 10 0 0 1 0-20Zm0 1.5a8.5 8.5 0 1 0 0 17 8.5 8.5 0 0 0 0-17Zm0 11a1 1 0 1 1 0 2 1 1 0 0 1 0-2ZM12 7c.37 0 .69.28.74.65v4.6a.75.75 0 0 1-1.48.1l-.01-.1v-4.5c0-.41.33-.75.74-.75Z`]),xz=JR(`ClipboardTask24Regular`,`24`,[`M17.03 11.03a.75.75 0 1 0-1.06-1.06L11 14.94l-1.97-1.97a.75.75 0 0 0-1.06 1.06l2.5 2.5c.3.3.77.3 1.06 0l5.5-5.5Zm-1.04-6.95A2.25 2.25 0 0 0 13.75 2h-3.5c-1.16 0-2.11.87-2.24 2H6.25C5.01 4 4 5 4 6.25v13.5C4 20.99 5 22 6.25 22h11.5c1.24 0 2.25-1 2.25-2.25V6.25C20 5.01 19 4 17.75 4h-1.76v.08Zm0 .02.01.15V4.1Zm-5.74 2.4h3.5c.78 0 1.47-.4 1.87-1h2.13c.41 0 .75.34.75.75v13.5c0 .41-.34.75-.75.75H6.25a.75.75 0 0 1-.75-.75V6.25c0-.41.34-.75.75-.75h2.13c.4.6 1.09 1 1.87 1Zm0-3h3.5a.75.75 0 0 1 0 1.5h-3.5a.75.75 0 0 1 0-1.5Z`]),Sz=JR(`Delete24Regular`,`24`,[`M10 5h4a2 2 0 1 0-4 0ZM8.5 5a3.5 3.5 0 1 1 7 0h5.75a.75.75 0 0 1 0 1.5h-1.32l-1.17 12.11A3.75 3.75 0 0 1 15.03 22H8.97a3.75 3.75 0 0 1-3.73-3.39L4.07 6.5H2.75a.75.75 0 0 1 0-1.5H8.5Zm2 4.75a.75.75 0 0 0-1.5 0v7.5a.75.75 0 0 0 1.5 0v-7.5ZM14.25 9c.41 0 .75.34.75.75v7.5a.75.75 0 0 1-1.5 0v-7.5c0-.41.34-.75.75-.75Zm-7.52 9.47a2.25 2.25 0 0 0 2.24 2.03h6.06c1.15 0 2.12-.88 2.24-2.03L18.42 6.5H5.58l1.15 11.97Z`]),Cz=JR(`Fire24Regular`,`24`,[`M12.54 4.3c.32-.25.64-.44.93-.57.09 2.13 1.13 3.73 2.13 5.14l.27.38c1.08 1.52 2.01 2.82 2.11 4.54a6.86 6.86 0 0 1-1.33 4.83 5.43 5.43 0 0 1-4.4 1.88c-2.06 0-3.61-.53-4.7-1.42a5.83 5.83 0 0 1-1.98-3.87 5.56 5.56 0 0 1 .86-4l.32.6a2.2 2.2 0 0 0 2.9.96c1.3-.62 1.58-2.21 1.17-3.33a3.94 3.94 0 0 1-.11-2.7 5.32 5.32 0 0 1 1.83-2.45ZM6.16 9.31h-.01l-.01.02a1.94 1.94 0 0 0-.13.1c-.07.07-.18.16-.3.3-.24.24-.55.62-.83 1.12a7.06 7.06 0 0 0-.8 4.55c.27 2 1.1 3.67 2.53 4.83C8.02 21.4 9.94 22 12.25 22c2.39 0 4.3-.9 5.55-2.43a8.35 8.35 0 0 0 1.68-5.86c-.13-2.18-1.31-3.83-2.36-5.29l-.3-.42C15.68 6.4 14.78 4.9 15 2.83a.75.75 0 0 0-.75-.83c-.38 0-.82.12-1.24.3a6.82 6.82 0 0 0-3.72 3.96c-.49 1.4-.24 2.73.12 3.7.24.64-.02 1.27-.4 1.46a.7.7 0 0 1-.93-.31l-.81-1.54a.75.75 0 0 0-1.11-.25Z`]),wz=JR(`People24Regular`,`24`,[`M5.5 8a2.5 2.5 0 1 1 5 0 2.5 2.5 0 0 1-5 0ZM8 4a4 4 0 1 0 0 8 4 4 0 0 0 0-8Zm7.5 5a1.5 1.5 0 1 1 3 0 1.5 1.5 0 0 1-3 0ZM17 6a3 3 0 1 0 0 6 3 3 0 0 0 0-6Zm-2.75 13.04c.7.28 1.6.46 2.75.46 2.28 0 3.59-.7 4.3-1.56a3.14 3.14 0 0 0 .7-1.73v-.03c0-1.2-.97-2.18-2.18-2.18H14.1c.4.41.68.93.81 1.5h4.91a.68.68 0 0 1 .68.7l-.04.18c-.04.16-.13.38-.32.6C19.8 17.42 18.97 18 17 18c-.98 0-1.67-.15-2.17-.34-.1.4-.28.88-.58 1.38ZM4.25 14C3.01 14 2 15 2 16.25v.28a2.07 2.07 0 0 0 .01.2c.02.14.04.32.1.53.09.42.29.98.68 1.55C3.61 19.97 5.17 21 8 21s4.39-1.03 5.2-2.2a4.48 4.48 0 0 0 .8-2.27v-.28c0-1.24-1-2.25-2.25-2.25h-7.5Zm-.75 2.5v-.25c0-.41.34-.75.75-.75h7.5c.41 0 .75.34.75.75v.34l-.06.33c-.07.28-.2.65-.46 1.02-.5.71-1.56 1.56-3.98 1.56s-3.49-.85-3.98-1.56a2.99 2.99 0 0 1-.52-1.43Z`]),Tz=_(),Ez=`<!DOCTYPE html>\r
+<html lang="zh-CN">\r
+<head>\r
+<meta charset="UTF-8">\r
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\r
+<title>低代码原型设计</title>\r
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\r
+<style>\r
+  html,body{height:100%;margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI","PingFang SC","Microsoft YaHei",sans-serif;}\r
+  body{display:flex;flex-direction:column;}\r
+  #topbar{display:none!important;}
+  .topnav-item{padding:6px 16px;border-radius:6px;font-size:13px;cursor:pointer;transition:.15s;color:#aeb9c7;}\r
+  .topnav-item:hover{background:#283242;color:#fff;}\r
+  .topnav-item.active{background:#165DFF;color:#fff;}\r
+  #stage{flex:1;position:relative;overflow:hidden;}\r
+  .mod-frame{position:absolute;inset:0;width:100%;height:100%;border:none;display:none;}\r
+</style>\r
+</head>\r
+<body>\r
+  <div id="topbar">\r
+    <i class="fas fa-cubes" style="color:#165DFF;margin-right:8px;"></i>\r
+    <div class="topnav-item active" data-mod="form" onclick="switchModule('form')">工作表单</div>\r
+    <div class="topnav-item" data-mod="flow" onclick="switchModule('flow')">流程中心</div>\r
+    <div class="topnav-item" data-mod="app" onclick="switchModule('app')">应用中心</div>\r
+  </div>\r
+  <div id="stage">\r
+    <iframe id="iframe-form" class="mod-frame"></iframe>\r
+    <iframe id="iframe-flow" class="mod-frame"></iframe>\r
+    <iframe id="iframe-app" class="mod-frame"></iframe>\r
+    <iframe id="iframe-user" class="mod-frame"></iframe>\r
+    <iframe id="iframe-tenant" class="mod-frame"></iframe>\r
+  </div>\r
+\r
+<script type="text/plain" id="mod-form-full">\r
+<!DOCTYPE html>\r
+<html lang="zh-CN">\r
+<head>\r
+  <meta charset="UTF-8">\r
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">\r
+  <title>低代码平台原型</title>\r
+  <script src="https://cdn.tailwindcss.com">___SCEND___\r
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\r
+  <style>\r
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, "PingFang SC", "Microsoft YaHei", sans-serif; overflow: hidden; }\r
+    ::-webkit-scrollbar { width: 6px; height: 6px; }\r
+    ::-webkit-scrollbar-track { background: #F5F7FA; }\r
+    ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }\r
+    ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }\r
+\r
+    .proto-element { position: relative; transition: all 0.2s ease; border-radius: 8px; }\r
+    .proto-element:hover { box-shadow: 0 0 0 2px #165DFF, 0 4px 12px rgba(22,93,255,0.15); background-color: rgba(22,93,255,0.03); }\r
+    .proto-element.active-highlight { box-shadow: 0 0 0 2px #165DFF, 0 4px 12px rgba(22,93,255,0.2); background-color: rgba(22,93,255,0.05); }\r
+    .proto-desc { transition: all 0.2s ease; border-radius: 8px; border: 1px solid #fde68a; background-color: #fffbeb; }\r
+    .proto-desc:hover { background-color: #fef3c7; border-color: #f59e0b; }\r
+    .proto-desc.active-highlight { background-color: #fde68a; border-color: #d97706; }\r
+\r
+    #connections { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }\r
+    .connection-line { fill: none; stroke: #165DFF; stroke-width: 2; opacity: 0.6; transition: all 0.2s ease; }\r
+    .connection-line.active { stroke-width: 3; opacity: 1; }\r
+    .connection-label { fill: #fff; font-size: 12px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }\r
+    .connection-label-bg { fill: #165DFF; }\r
+\r
+    .ctrl-item { cursor: grab; user-select: none; transition: all .15s; }\r
+    .ctrl-item:active { cursor: grabbing; }\r
+    .ctrl-item:hover { border-color: #165DFF !important; color: #165DFF; background: #f0f5ff; }\r
+    .field-card { transition: box-shadow .15s, border-color .15s; cursor: grab; }\r
+    .field-card:active { cursor: grabbing; }\r
+    .field-card:hover { border-color: #165DFF; }\r
+    .field-card.selected { border-color: #165DFF; box-shadow: 0 0 0 2px rgba(22,93,255,.15); }\r
+    .field-card.drop-before { box-shadow: inset 0 3px 0 #165DFF; }\r
+    .field-card.drop-after  { box-shadow: inset 0 -3px 0 #165DFF; }\r
+    .canvas-dragover { background: #eef4ff; }\r
+    .btn-click:active { transform: scale(0.96); }\r
+    .form-input:focus { border-color: #165DFF; box-shadow: 0 0 0 3px rgba(22,93,255,0.1); outline: none; }\r
+\r
+    .cfg-sec { font-size:12px; font-weight:600; color:#374151; margin:14px 0 8px; padding:6px 8px; background:#f3f4f6; border-radius:6px; cursor:pointer; display:flex; align-items:center; justify-content:space-between; user-select:none; }\r
+    .cfg-sec::after { content:'▼'; font-size:10px; color:#9ca3af; transition:transform .2s; }\r
+    .cfg-sec.collapsed::after { transform:rotate(-90deg); }\r
+    .cfg-sec-body { overflow:hidden; transition:max-height .25s ease; }\r
+    .cfg-logic { font-size:11.5px; color:#475569; margin-top:6px; line-height:1.55; background:#F0F5FF; border-left:3px solid #165DFF; padding:6px 9px; border-radius:0 6px 6px 0; display:flex; gap:6px; align-items:flex-start; }\r
+    .cfg-logic i { color:#165DFF; font-size:10px; margin-top:3px; flex:none; }\r
+    .cfg-logic-block { background:#FFF7E6; border:1px solid #FFD591; border-radius:8px; padding:9px 11px; margin:2px 0 12px; }\r
+    .cfg-logic-title { font-size:11px; font-weight:600; color:#D48806; margin-bottom:4px; display:flex; align-items:center; gap:5px; }\r
+    .cfg-logic-body { font-size:11.5px; color:#8C6A2F; line-height:1.6; }\r
+    .cfg-logic-body b { color:#614B1E; }\r
+    .subform-table-wrap { border:1px solid #e5e7eb; border-radius:6px; overflow:hidden; background:#fff; }\r
+    .subform-table-wrap.subform-dragover, .field-card.subform-dragover { border-color:#165DFF; box-shadow:0 0 0 2px rgba(22,93,255,.3); background:#f0f5ff; }\r
+    .subform-col-row { cursor:grab; }\r
+    .subform-col-row.dragging { opacity:.4; }\r
+    .subform-col-row.drop-target { box-shadow:inset 0 2px 0 #165DFF; }\r
+    .cfg-info { font-size:11px; color:#6b7280; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:8px 10px; line-height:1.5; }\r
+    .cfg-info i { color:#165DFF; }\r
+\r
+    .label-cell { display:inline-block; background:#f9fafb; border:1px dashed #e5e7eb; border-radius:4px; padding:4px 6px; margin:-4px 0; line-height:1.4; }\r
+    .label-cell.auto { background:transparent; border-style:dotted; }\r
+\r
+    .modal-overlay { transition: opacity .25s ease; }\r
+    .modal-content { transition: transform .25s ease, opacity .25s ease; }\r
+    .modal-hidden { opacity: 0; pointer-events: none; }\r
+    .modal-hidden .modal-content { transform: scale(.95); opacity: 0; }\r
+\r
+    .formula-layout { display:flex; height:420px; overflow:hidden; }\r
+    .formula-sidebar { width:230px; border-right:1px solid #e5e7eb; overflow-y:auto; background:#fafafa; }\r
+    .formula-main { flex:1; display:flex; flex-direction:column; padding:16px; }\r
+    .formula-tip { background:#fff7ed; border:1px solid #fed7aa; color:#9a3412; padding:8px 12px; font-size:12px; border-radius:6px; margin-bottom:12px; }\r
+    .formula-input { flex:1; border:1px solid #e5e7eb; border-radius:6px; padding:12px; font-family:"SFMono-Regular", Consolas, "Liberation Mono", Menlo, monospace; font-size:14px; resize:none; line-height:1.6; }\r
+    .formula-input:focus { border-color:#165DFF; box-shadow:0 0 0 3px rgba(22,93,255,0.1); outline:none; }\r
+    .linkage-row { display:flex; align-items:center; gap:8px; margin-bottom:10px; flex-wrap:wrap; }\r
+    .linkage-row .form-input { flex:1; min-width:120px; }\r
+\r
+    @media (max-width: 768px) {\r
+      #app { flex-direction: column; }\r
+      #left-panel { width: 100% !important; height: 60vh; }\r
+      #divider { display: none; }\r
+      #right-panel { width: 100% !important; height: 40vh; border-top: 1px solid #e5e7eb; }\r
+      #connections { display: none; }\r
+      .mobile-toggle-btn { display: flex !important; }\r
+    }\r
+    .mobile-toggle-btn { display: none; position: fixed; bottom: 20px; right: 20px; z-index: 100; width: 48px; height: 48px; border-radius: 50%; background: #165DFF; color: white; align-items: center; justify-content: center; box-shadow: 0 4px 12px rgba(22,93,255,0.3); cursor: pointer; border: none; }\r
+    [hidden] { display: none !important; }\r
+\r
+    /* 左侧导航菜单 */\r
+    .menu-item { display:flex; align-items:center; gap:10px; padding:9px 12px; border-radius:8px; font-size:13px; color:#C5CDD9; cursor:pointer; user-select:none; transition:all .15s; }\r
+    .menu-item i { width:16px; text-align:center; }\r
+    .menu-item:hover:not(.disabled) { background:rgba(255,255,255,.08); color:#fff; }\r
+    .menu-item.active { background:#165DFF; color:#fff; }\r
+    .menu-item.active i { color:#fff; }\r
+    .menu-item.disabled { opacity:.45; cursor:not-allowed; }\r
+    .menu-item em { font-style:normal; }\r
+    .menu-item.proto-element.active-highlight { box-shadow:0 0 0 2px #F59E0B, 0 4px 12px rgba(245,158,11,.25); background:#165DFF; }\r
+    /* 状态药丸 / 横幅 */\r
+    .status-pill, .version-pill { transition:all .2s; }
+    #stateBanner { transition:all .2s; }
+
+    /* The host system provides navigation and context for the embedded form. */
+    #appMenu, #right-panel, #mobileToggle, #connections { display:none !important; }
+    #left-panel { width:100% !important; }
+  </style>\r
+</head>\r
+<body class="bg-gray-50">\r
+\r
+  <button class="mobile-toggle-btn" id="mobileToggle" onclick="toggleMobileView()"><i class="fas fa-info"></i></button>\r
+\r
+  <div id="app" class="flex h-screen relative">\r
+\r
+    <!-- ============ 产品侧（菜单 + 内容），占 80% ============ -->\r
+    <div id="left-panel" class="flex" style="width:80%">\r
+\r
+      <!-- 左侧导航菜单 -->\r
+      <aside id="appMenu" class="bg-[#0E1B33] text-gray-300 flex flex-col relative z-10" style="width:208px;flex:none">\r
+        <div class="px-4 py-4 border-b border-white/10 flex items-center gap-2">\r
+          <div class="w-8 h-8 bg-[#165DFF] rounded-lg flex items-center justify-center text-white"><i class="fas fa-cube"></i></div>\r
+          <div><div class="text-white font-semibold text-sm leading-tight">低代码平台</div><div class="text-[10px] text-gray-400">Light Code</div></div>\r
+        </div>\r
+        <div class="px-3 py-3 flex-1 overflow-y-auto">\r
+          <div class="text-[10px] uppercase tracking-wider text-gray-500 mb-2 px-2">应用 · 行政办公</div>\r
+          <div class="menu-item active"><i class="fas fa-file-signature"></i><span>工作表单</span></div>\r
+          <div class="menu-item" onclick="parent.postMessage({type:'switch',mod:'flow'},'*')"><i class="fas fa-project-diagram"></i><span>流程中心</span></div>\r
+          <div class="menu-item" onclick="parent.postMessage({type:'switch',mod:'app'},'*')"><i class="fas fa-th-large"></i><span>应用中心</span></div>\r
+        </div>\r
+        <div class="px-3 py-3 border-t border-white/10">\r
+          <div class="menu-item"><i class="fas fa-cog"></i><span>平台设置</span></div>\r
+          <div class="flex items-center gap-2 px-2 py-1.5 mt-1 text-xs text-gray-400"><i class="fas fa-user-circle"></i> 产品同学</div>\r
+        </div>\r
+      </aside>\r
+\r
+      <!-- 内容主区 -->\r
+      <div id="mainCol" class="flex-1 flex flex-col min-w-0 relative">\r
+      <!-- 顶部导航 -->\r
+      <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between sticky top-0 z-20">\r
+        <div class="flex items-center gap-3">\r
+          <h1 class="text-lg font-semibold text-gray-800">工作表单</h1>\r
+          <span class="text-gray-300">/</span><span id="crumbView" class="text-sm text-gray-500">表单列表</span>\r
+        </div>\r
+        <div class="flex items-center gap-3">\r
+          <div class="flex bg-gray-100 rounded-lg p-0.5 text-sm">\r
+            <button id="tabList" onclick="showView('list')" class="px-3 py-1.5 rounded-md font-medium seg bg-white text-[#165DFF] shadow-sm btn-click">表单列表</button>\r
+            <button id="tabDesign" onclick="showView('designer')" class="px-3 py-1.5 rounded-md font-medium seg text-gray-500 btn-click">表单设计器</button>\r
+          </div>\r
+        </div>\r
+      </header>\r
+      <div id="scrollArea" class="flex-1 overflow-y-auto relative">\r
+\r
+      <!-- ===================== 视图一：表单列表 ===================== -->\r
+      <section id="listView" class="p-6">\r
+        <div class="flex items-center justify-between mb-6">\r
+          <div>\r
+            <h2 class="text-xl font-bold text-gray-800">表单列表</h2>\r
+            <p class="text-sm text-gray-500 mt-1">展示当前应用下创建的全部表单，点击任意表单可进入设计器编辑</p>\r
+          </div>\r
+          <div class="proto-element" data-proto-id="1">\r
+            <button onclick="createForm()" class="bg-[#165DFF] hover:bg-blue-600 text-white px-4 py-2 rounded-lg text-sm font-medium flex items-center gap-2 btn-click transition-colors"><i class="fas fa-plus"></i> 创建表单</button>\r
+          </div>\r
+        </div>\r
+        <div class="bg-white rounded-lg border border-gray-200 p-4 mb-4 flex items-center gap-3 flex-wrap">\r
+          <input type="text" placeholder="搜索表单名称" class="form-input border border-gray-300 rounded-lg px-3 py-2 text-sm w-64">\r
+          <select class="form-input border border-gray-300 rounded-lg px-3 py-2 text-sm"><option>全部分类</option><option>人事</option><option>财务</option><option>行政</option></select>\r
+          <button class="bg-gray-100 hover:bg-gray-200 text-gray-700 px-4 py-2 rounded-lg text-sm btn-click"><i class="fas fa-search mr-1"></i> 查询</button>\r
+        </div>\r
+        <div class="proto-element bg-white rounded-lg border border-gray-200 overflow-hidden" data-proto-id="1">\r
+          <table class="w-full text-sm">\r
+            <thead><tr class="text-left text-gray-500 bg-[#F5F7FA]">\r
+              <th class="px-4 py-3 font-semibold">表单名称</th><th class="px-4 py-3 font-semibold">分类</th>\r
+              <th class="px-4 py-3 font-semibold">引用数</th><th class="px-4 py-3 font-semibold">状态</th>\r
+              <th class="px-4 py-3 font-semibold">创建人</th><th class="px-4 py-3 font-semibold">创建时间</th><th class="px-4 py-3 font-semibold text-center">操作</th>\r
+            </tr></thead>\r
+            <tbody id="formTableBody"></tbody>\r
+          </table>\r
+          <div class="flex items-center justify-between px-4 py-3 border-t border-gray-200">\r
+            <span class="text-sm text-gray-500" id="formCount"></span>\r
+            <div class="flex items-center gap-1">\r
+              <button class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-500 btn-click">上一页</button>\r
+              <button class="px-3 py-1 bg-[#165DFF] text-white rounded text-sm">1</button>\r
+              <button class="px-3 py-1 border border-gray-300 rounded text-sm text-gray-500 btn-click">下一页</button>\r
+            </div>\r
+          </div>\r
+        </div>\r
+      </section>\r
+\r
+      <!-- ===================== 视图二：表单设计器 ===================== -->\r
+      <section id="designerView" class="flex" style="height: calc(100vh - 56px)" hidden>\r
+        <!-- 左：控件面板 -->\r
+        <aside class="bg-white border-r border-gray-200 overflow-y-auto" style="width:220px;flex:none">\r
+          <div class="px-4 py-3 border-b border-gray-100">\r
+            <div class="text-xs font-semibold text-gray-400 uppercase tracking-wider">控件库</div>\r
+            <div class="text-[11px] text-gray-400 mt-1">拖拽或点击控件加入画布</div>\r
+          </div>\r
+          <div class="proto-element p-3 space-y-4" data-proto-id="2" id="palette">\r
+            <div><div class="text-xs font-semibold text-gray-500 mb-2 px-1"><i class="fas fa-shapes mr-1 text-[#165DFF]"></i>基础控件</div><div class="space-y-1.5" id="grpBasic"></div></div>\r
+            <div><div class="text-xs font-semibold text-gray-500 mb-2 px-1"><i class="fas fa-list-ul mr-1 text-[#165DFF]"></i>选择控件</div><div class="space-y-1.5" id="grpSelect"></div></div>\r
+            <div><div class="text-xs font-semibold text-gray-500 mb-2 px-1"><i class="fas fa-layer-group mr-1 text-[#165DFF]"></i>高级控件</div><div class="space-y-1.5" id="grpAdvanced"></div></div>\r
+            <div><div class="text-xs font-semibold text-gray-500 mb-2 px-1"><i class="fas fa-briefcase mr-1 text-[#165DFF]"></i>业务控件</div><div class="space-y-1.5" id="grpBiz"></div></div>\r
+          </div>\r
+        </aside>\r
+\r
+        <!-- 中：画布 -->\r
+        <main class="flex-1 overflow-y-auto bg-[#F5F7FA] p-6" id="canvasScroll">\r
+          <div class="mx-auto" id="canvasMaxWrap">\r
+      <div class="bg-white rounded-t-lg border border-b-0 border-gray-200 px-5 py-3 flex items-center justify-between gap-3">\r
+        <!-- 左侧：表单名称 + 状态 + 版本 -->\r
+        <div class="flex items-center gap-3 min-w-0 flex-1">\r
+          <input id="formNameInput" class="text-lg font-bold text-gray-800 border-none focus:ring-0 bg-transparent min-w-0" style="width:100%;max-width:220px" value="未命名表单" oninput="onFormNameChange()">\r
+          <span id="statusPill" class="status-pill px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 whitespace-nowrap">草稿</span>\r
+          <span id="versionPill" class="version-pill px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500 whitespace-nowrap">v0</span>\r
+        </div>\r
+\r
+        <!-- 右侧：工具组 + 主操作组 -->\r
+        <div class="flex items-center gap-2 flex-shrink-0">\r
+          <!-- 工具组：预览 / Schema / 版本 -->\r
+          <div class="flex items-center bg-gray-50 rounded-lg p-0.5 border border-gray-100 flex-shrink-0">\r
+            <button onclick="previewForm()" class="px-2 py-1.5 text-xs text-gray-600 hover:text-[#165DFF] hover:bg-white rounded-md btn-click flex items-center gap-1" title="运行态预览">\r
+              <i class="fas fa-eye"></i><span>预览</span>\r
+            </button>\r
+            <button onclick="showSchema()" class="px-2 py-1.5 text-xs text-gray-600 hover:text-[#165DFF] hover:bg-white rounded-md btn-click flex items-center gap-1" title="查看 JSON Schema">\r
+              <i class="fas fa-code"></i><span>Schema</span>\r
+            </button>\r
+            <button onclick="showVersions()" data-proto-id="8" class="px-2 py-1.5 text-xs text-gray-600 hover:text-[#165DFF] hover:bg-white rounded-md btn-click flex items-center gap-1" title="版本历史与表锁定">\r
+              <i class="fas fa-history"></i><span>版本</span>\r
+            </button>\r
+            <button onclick="if(currentFormId)openFormData(currentFormId);else alert('请先保存并选择表单');" class="px-2 py-1.5 text-xs text-gray-600 hover:text-[#165DFF] hover:bg-white rounded-md btn-click flex items-center gap-1" title="查看本表单提交数据">\r
+              <i class="fas fa-table"></i><span>数据</span>\r
+            </button>\r
+          </div>\r
+\r
+          <div class="w-px h-5 bg-gray-200 mx-0.5 flex-shrink-0"></div>\r
+\r
+          <!-- 主操作组：保存 + 发布/下架 -->\r
+          <button onclick="saveForm()" class="px-3 py-1.5 rounded-md text-xs font-medium btn-click border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 hover:text-[#165DFF] flex-shrink-0">\r
+            <i class="fas fa-save mr-1"></i>保存\r
+          </button>\r
+          <button id="publishBtn" onclick="publishForm()" data-proto-id="7" class="px-3 py-1.5 rounded-md text-xs font-medium btn-click bg-[#165DFF] hover:bg-blue-600 text-white shadow-sm flex-shrink-0">\r
+            <i class="fas fa-rocket mr-1"></i>发布\r
+          </button>\r
+          <button id="unpublishBtn" onclick="unpublishForm()" class="hidden px-3 py-1.5 rounded-md text-xs font-medium btn-click bg-white border border-red-200 text-red-600 hover:bg-red-50 hover:text-red-700 flex-shrink-0">\r
+            <i class="fas fa-eye-slash mr-1"></i>下架\r
+          </button>\r
+        </div>\r
+      </div>\r
+      <div id="stateBanner" class="px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200 bg-blue-50 text-blue-700" style="display:none"></div>\r
+            <div class="proto-element bg-white border border-gray-200 rounded-b-lg p-5 min-h-[440px]" data-proto-id="3" id="canvas"\r
+                 ondragover="onCanvasDragOver(event)" ondragleave="onCanvasDragLeave(event)" ondrop="onCanvasDrop(event)" onclick="onCanvasClick(event)">\r
+              <div id="canvasFields" style="display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:start"></div>\r
+              <div id="canvasEmpty" class="text-center text-gray-400 text-sm py-20">\r
+                <i class="fas fa-arrow-left text-2xl mb-2 block"></i>从左侧拖拽控件到此处开始搭建表单\r
+              </div>\r
+              <div class="mt-4 text-center text-[11px] text-gray-300"><i class="fas fa-arrows-alt mr-1"></i>提示：拖动字段卡片可调整顺序；点击空白处可配置表单</div>\r
+            </div>\r
+          </div>\r
+        </main>\r
+\r
+        <!-- 右：配置面板 -->\r
+        <aside class="bg-white border-l border-gray-200 overflow-y-auto" style="width:330px;flex:none">\r
+          <div class="px-4 py-3 border-b border-gray-100">\r
+            <div class="flex items-center gap-2 mb-2">\r
+              <i class="fas fa-sliders-h text-[#165DFF]"></i><span class="text-sm font-semibold text-gray-700">配置面板</span>\r
+              <span id="cfgContext" class="ml-auto text-[11px] text-gray-400"></span>\r
+            </div>\r
+            <div id="cfgTabs" class="flex bg-gray-100 rounded-lg p-0.5 text-xs">\r
+              <button id="tabCfgForm" onclick="onFormTabClick()" class="flex-1 px-2 py-1.5 rounded-md font-medium btn-click">表单配置</button>\r
+            </div>\r
+          </div>\r
+          <div class="proto-element p-4" data-proto-id="4" id="configPanel">\r
+            <div id="configBody"></div>\r
+          </div>\r
+        </aside>\r
+      </section>\r
+      </div><!-- /scrollArea -->\r
+    </div><!-- /mainCol -->\r
+  </div><!-- /left-panel -->\r
+\r
+    <div id="divider" class="w-px bg-gray-300"></div>\r
+\r
+    <!-- ============ 右 20%：备注逻辑 ============ -->\r
+    <div id="right-panel" class="overflow-y-auto bg-amber-50 border-l-2 border-dashed border-amber-300" style="width:20%">\r
+      <div class="p-4">\r
+        <div class="mb-4 p-3 bg-amber-100 border border-amber-300 rounded-lg">\r
+          <div class="flex items-center gap-2 mb-1">\r
+            <span class="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded uppercase tracking-wide">Notes</span>\r
+            <span class="text-xs font-semibold text-amber-800">备注逻辑</span>\r
+          </div>\r
+          <p class="text-[11px] text-amber-700 leading-relaxed">界面背后完整的产品/技术逻辑。悬停左侧对应区域可高亮连线。</p>\r
+        </div>\r
+        <div class="flex items-center gap-2 mb-4 pb-3 border-b border-amber-200">\r
+          <i class="fas fa-map-signs text-amber-600"></i><h2 class="text-sm font-bold text-amber-900">逻辑说明</h2>\r
+        </div>\r
+        <div class="space-y-3">\r
+          <div class="proto-desc p-3" data-proto-id="1">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">1</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">列表 → 创建 / 编辑</h3>\r
+              <p class="text-xs text-gray-500 mt-1">表单资产列表：<b>创建</b>新建空白表单，<b>点击行</b>携带 Schema 进入编辑，多表单相互独立。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="2">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">2</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">控件库分类</h3>\r
+                <p class="text-xs text-gray-500 mt-1">控件分<b>基础/选择/高级/业务</b>四组，拖入画布实例化为<b>字段</b>；本期实现单行文本、下拉单选、子表单、成员四类。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="3">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">3</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">画布：排序 & 宽度占位</h3>\r
+                <p class="text-xs text-gray-500 mt-1">12 栅格布局，<b>拖动卡片改顺序</b>、宽度定占位；<b>切换画布宽度即时可视</b>。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="4">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">4</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">配置面板：仅「基础信息」+「列表与交互」</h3>\r
+                <p class="text-xs text-gray-500 mt-1">单一<b>表单配置</b>面板仅保留<b>一·基础信息</b>与<b>二·列表与交互</b>两项；选中字段下钻<b>控件配置</b>（通用配置+专属配置，<b>字段名自动生成、不可手改</b>）。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-400 text-white rounded-full text-xs font-bold flex items-center justify-center">5</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">通用配置 + 默认值多源</h3>\r
+                <p class="text-xs text-gray-500 mt-1">控件<b>通用配置</b>统一；默认值支持<b>手动、公式、当前用户、当前日期、数据联动</b>多源。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-400 text-white rounded-full text-xs font-bold flex items-center justify-center">6</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">显示条件 = 条件构造器</h3>\r
+                <p class="text-xs text-gray-500 mt-1">选「满足条件时显示」展开<b>条件构造器</b>（多条件+且/或），不满足则运行态隐藏字段。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="7">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">7</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">表单状态机：草稿 ↔ 已发布</h3>\r
+                <p class="text-xs text-gray-500 mt-1"><b>草稿↔已发布</b>状态机：发布快照锁定版本全员可提交，下架保留历史数据，改后需再发布生效。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="8">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">8</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">版本管理 + 表锁定</h3>\r
+                <p class="text-xs text-gray-500 mt-1">每次发布生成<b>不可变版本</b>（可点击<b>查看</b>在画布上展示该版本字段结构）；<b>恢复并发布</b>以该版本内容重新上线、版本号不变；<b>表锁定</b>按提交时 schema 渲染历史数据，改版不扰乱在途流程。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="9">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">9</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">本次修订结论</h3>\r
+                <p class="text-xs text-gray-500 mt-1">①列表「字段数」改<b>引用数</b>，点开看引用明细；新增<b>创建人/创建时间</b>列。②<b>被引用表单禁止删除</b>。③创建页右侧隐藏「表单配置」字样。④字段名<b>自动生成、置灰不可改</b>（规则见控件配置）。⑤下拉勾「可搜索」后<b>预览呈可输入过滤框</b>；移除「允许自定义选项」。⑥<b>子表单列由左侧拖入生成</b>（不再右侧按钮），并移除最小/最大行数、允许增删行。⑦<b>发布校验同名唯一</b>。</p></div></div>\r
+          </div>\r
+        </div>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <svg id="connections" class="absolute top-0 left-0 w-full h-full pointer-events-none"></svg>\r
+\r
+  <!-- 预览 -->\r
+  <div id="previewModal" class="modal-overlay modal-hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden" style="max-height:85vh;overflow-y:auto">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">\r
+        <h3 class="text-lg font-semibold text-gray-800" id="previewTitle">表单预览</h3>\r
+        <button onclick="closeModal('previewModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-5" id="previewBody"></div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50" id="previewBtns"></div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- Schema -->\r
+  <div id="schemaModal" class="modal-overlay modal-hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden" style="max-height:85vh;overflow-y:auto">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">\r
+        <h3 class="text-lg font-semibold text-gray-800"><i class="fas fa-code mr-2 text-[#165DFF]"></i>表单 Schema（设计态契约）</h3>\r
+        <button onclick="closeModal('schemaModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-5"><pre id="schemaBody" class="text-xs bg-gray-900 text-green-300 rounded-lg p-4 overflow-x-auto whitespace-pre"></pre></div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- 版本历史 + 表锁定 -->\r
+  <div id="versionsModal" class="modal-overlay modal-hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden" style="max-height:85vh;overflow-y:auto">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">\r
+        <h3 class="text-lg font-semibold text-gray-800"><i class="fas fa-history mr-2 text-[#165DFF]"></i>版本历史与表锁定</h3>\r
+        <button onclick="closeModal('versionsModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-5">\r
+        <div id="versionList" class="space-y-3"></div>\r
+        <div class="mt-5 p-3 rounded-lg bg-[#F0F5FF] border-l-4 border-[#165DFF]">\r
+          <div class="text-xs font-semibold text-[#165DFF] mb-1"><i class="fas fa-lock mr-1"></i>表锁定（版本锁定）逻辑</div>\r
+          <p class="text-xs text-gray-600 leading-relaxed">每条提交数据落库时记录<b>提交时刻的表单版本号</b>。即使表单后续改版，历史数据始终按「提交时的 schema」渲染与导出，字段映射不会错乱。已发布版本的字段结构被<b>锁定</b>：编辑仅生成「待发布草稿」，不会影响线上版本与在途流程实例。</p>\r
+          <p class="text-xs text-gray-600 leading-relaxed mt-2"><i class="fas fa-eye mr-1"></i><b>查看与恢复：</b>历史版本可点击「查看」在设计器画布上直接展示该版本的字段结构（只读）；点击「恢复并发布」以该版本内容重新上线，版本号保持不变（不新增版本号）。</p>\r
+        </div>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- 引用情况 -->\r
+  <div id="refsModal" class="modal-overlay modal-hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden" style="max-height:85vh;overflow-y:auto">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">\r
+        <h3 class="text-lg font-semibold text-gray-800"><i class="fas fa-link mr-2 text-[#165DFF]"></i>引用情况</h3>\r
+        <button onclick="closeModal('refsModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-5" id="refsBody"></div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- 公式编辑器 -->\r
+  <div id="formulaModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-3xl mx-4 overflow-hidden" style="max-height:90vh;overflow-y:auto">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">\r
+        <h3 class="text-lg font-semibold text-gray-800"><i class="fas fa-function mr-2 text-[#165DFF]"></i>公式编辑</h3>\r
+        <button onclick="closeFormula()" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="formula-layout">\r
+        <!-- 左侧字段与函数 -->\r
+        <div class="formula-sidebar py-4">\r
+          <div class="px-4 mb-4">\r
+            <div class="text-xs font-semibold text-gray-500 mb-2">当前表单中的单元格</div>\r
+            <div id="fmFields" class="space-y-1"></div>\r
+          </div>\r
+          <div class="px-4">\r
+            <div class="text-xs font-semibold text-gray-500 mb-2">函数库</div>\r
+            <div id="fmFuncs" class="space-y-1"></div>\r
+          </div>\r
+        </div>\r
+        <!-- 右侧编辑区 -->\r
+        <div class="formula-main">\r
+          <div class="formula-tip"><i class="fas fa-exclamation-circle mr-1"></i>Tips：包含文本类型字段做加法运算时，只是字符串顺序连接，如："2+2=22"；如需加法运算，请添加 VALUE 转换类型表达式。</div>\r
+          <div class="mb-2 text-sm text-gray-600"><span id="fmTargetName">单行文本</span> =</div>\r
+          <textarea id="fmInput" class="formula-input" placeholder="从左侧选择字段名和函数，或输入函数"></textarea>\r
+          <div class="mt-3 bg-gray-50 border border-gray-200 rounded-md p-3 text-xs text-gray-600 space-y-1">\r
+            <div><i class="fas fa-info-circle text-[#165DFF] mr-1"></i>请从左侧面板选择字段名和函数，或输入函数</div>\r
+            <div><i class="fas fa-info-circle text-[#165DFF] mr-1"></i>支持英文运算符模式下的基础运算</div>\r
+            <div><i class="fas fa-info-circle text-[#165DFF] mr-1"></i>公式编辑示例：SUM(基本工资,加班工资)</div>\r
+          </div>\r
+        </div>\r
+      </div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">\r
+        <button onclick="closeFormula()" class="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 btn-click">取消</button>\r
+        <button onclick="saveFormula()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- 数据联动 -->\r
+  <div id="linkageModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-xl mx-4 overflow-hidden" style="max-height:90vh;overflow-y:auto">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200 sticky top-0 bg-white z-10">\r
+        <h3 class="text-lg font-semibold text-gray-800">数据联动</h3>\r
+        <button onclick="closeLinkage()" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-5 space-y-5">\r
+        <div>\r
+          <label class="block text-xs font-medium text-gray-600 mb-1">数据关联表</label>\r
+          <select id="lkForm" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\r
+            <option value="">请选择数据库/表单</option>\r
+          </select>\r
+          <div class="cfg-logic">选择要取数的关联表单；运行态会按下方匹配条件到该表中查找对应记录。</div>\r
+        </div>\r
+        <div>\r
+          <label class="block text-xs font-medium text-gray-600 mb-1">联动条件</label>\r
+          <div id="lkConditions" class="space-y-2"></div>\r
+          <button onclick="addLinkageCond()" class="text-[#165DFF] text-xs btn-click mt-2"><i class="fas fa-plus mr-1"></i>添加条件</button>\r
+        </div>\r
+        <div>\r
+          <label class="block text-xs font-medium text-gray-600 mb-1">联动显示</label>\r
+          <div class="linkage-row">\r
+            <span class="text-sm text-gray-700">当前字段</span>\r
+            <span class="text-sm text-gray-400">联动显示为</span>\r
+            <select id="lkReturn" class="form-input border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\r
+              <option value="">请选择关联表字段</option>\r
+            </select>\r
+            <span class="text-sm text-gray-500">的对应值</span>\r
+          </div>\r
+          <div class="cfg-logic">满足条件时，把关联表指定字段的值作为本字段默认值；实现跨表单数据自动带出。</div>\r
+        </div>\r
+        <div id="lkPreview" class="cfg-info">请先选择数据关联表并配置匹配条件。</div>\r
+      </div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">\r
+        <button onclick="closeLinkage()" class="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 btn-click">取消</button>\r
+        <button onclick="saveLinkage()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <script>\r
+  /* ===================== 控件定义 ===================== */\r
+  const CONTROL_DEFS = {\r
+    text:    { group:'basic',    icon:'fa-font',         label:'单行文本', fnPrefix:'text',  defaults:()=>({placeholder:'请输入',defaultValue:'',defaultType:'manual',maxLength:50,minLength:0,format:'none',password:false,trim:true,errMsg:'',linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''}}) },\r
+    select:  { group:'select',   icon:'fa-caret-down',   label:'下拉单选', fnPrefix:'select', defaults:()=>({placeholder:'请选择',searchable:false,allowCustom:false,defaultValue:'',defaultType:'manual',source:'static',apiUrl:'',dictKey:'',options:[{label:'选项一',value:'opt1'},{label:'选项二',value:'opt2'}]}) },\r
+    subform: { group:'advanced', icon:'fa-table',        label:'子表单',   fnPrefix:'subform', defaults:()=>({minRows:0,maxRows:10,allowAdd:true,showSummary:false,defaultValue:'',defaultType:'manual',subFields:[{label:'明细名称',type:'text'},{label:'金额',type:'number'}]}) },\r
+    member:  { group:'biz',      icon:'fa-user-friends', label:'成员',     fnPrefix:'member', defaults:()=>({multi:false,range:'all',depts:[],roles:[],defaultValue:'',defaultType:'manual',includeDept:false}) },\r
+  };\r
+  const GROUP_MAP = { basic:'grpBasic', select:'grpSelect', advanced:'grpAdvanced', biz:'grpBiz' };\r
+  /* 子表单列类型标签（列类型由拖入的控件决定，不可在面板中更改） */\r
+  const SUB_TYPE_LABEL = { text:'文本', number:'数字', date:'日期', select:'下拉', member:'成员' };\r
+\r
+  const SPAN_OPTS = [['12','整行(100%)'],['6','1/2 行(50%)'],['4','1/3 行(33%)'],['3','1/4 行(25%)']];\r
+  const LABEL_W = { narrow:'80px', medium:'110px', wide:'140px', auto:'auto' };\r
+  const LW_OPTS = [['inherit','继承表单级'],['auto','自动'],['narrow','窄 (80px)'],['medium','中 (110px)'],['wide','宽 (140px)']];\r
+  const FORMATS = { none:'无', phone:'手机号', email:'邮箱', idcard:'身份证', number:'数字', letter:'字母', chinese:'中文' };\r
+  const DEFAULT_TYPES = [['manual','手动填写'],['formula','公式编辑'],['currentUser','当前用户'],['today','当前日期'],['linkage','数据联动']];\r
+  const DEPTS = ['产品部','研发部','市场部','财务部','人事部','行政部','销售部'];\r
+  const ROLES = ['管理员','部门负责人','普通员工','财务审核','HRBP','审批人'];\r
+  // 可供数据联动选择的关联表单（演示数据）\r
+  const LINKAGE_FORMS = [\r
+    { id:'dept_info', name:'部门信息表', fields:[{field:'dept_name',label:'部门名称'},{field:'dept_leader',label:'部门负责人'},{field:'leader_phone',label:'负责人电话'}] },\r
+    { id:'user_info', name:'员工档案表', fields:[{field:'user_name',label:'姓名'},{field:'user_phone',label:'手机号'},{field:'user_email',label:'邮箱'}] },\r
+    { id:'project_info', name:'项目信息表', fields:[{field:'project_code',label:'项目编号'},{field:'project_name',label:'项目名称'},{field:'pm_name',label:'项目经理'}] },\r
+  ];\r
+\r
+  let uid = 1;\r
+  const nid = () => 'f' + (uid++);\r
+  // 字段名自动生成：取标题做英文规范化（小写、空格/连字符→下划线、仅保留 a-z0-9_）；若标题全为中文/符号则回退到控件类型前缀；同表单内重名自动追加序号。创建时一次性生成并锁定，用户不可修改。\r
+  function genFieldName(label, type){\r
+    let base = (label||'').toString().trim().toLowerCase().replace(/[\\s\\-]+/g,'_').replace(/[^a-z0-9_]/g,'');\r
+    if(!base) base = (CONTROL_DEFS[type] && CONTROL_DEFS[type].fnPrefix) || 'field';\r
+    let name = base, i = 1;\r
+    while(fields.some(f=>f.fieldName===name)) name = base + '_' + (i++);\r
+    return name;\r
+  }\r
+  const getField = id => fields.find(x=>x.id===id);\r
+  const fieldLabel = fn => { const f=fields.find(x=>x.fieldName===fn); return f?f.label:fn; };\r
+\r
+  /* ===================== 表单级配置（完整） ===================== */\r
+  let formName = '未命名表单';\r
+  let formConfig = {\r
+    name:'', desc:'', icon:'fa-file-alt', category:'未分类',\r
+    submitScope:'all', submitDepts:[], submitRoles:[],\r
+    allowDraft:true, allowMultiple:false, afterSubmit:'tip', afterUrl:'',\r
+    editScope:'creator', editDepts:[], editRoles:[],\r
+    labelPos:'top', labelAlign:'left', labelWidth:'medium', formWidth:'standard',\r
+    printable:true, showSubmitTime:true, dedupe:false,\r
+    views:[]\r
+  };\r
+  let currentViewId = 'view_default';\r
+  /* 视图：同一表单可有多个展示视图，分别挂到不同应用菜单，实现差异化呈现（列表/查询/按钮/数据可见均按视图独立） */\r
+  function currentView(){ return (formConfig.views&&formConfig.views.find(v=>v.id===currentViewId)) || (formConfig.views&&formConfig.views[0]) || { id:'__default__', name:'默认视图', isDefault:true, listFields:[], queryFields:[], listButtons:['add','export'], formButtons:{submit:true,draft:true,reset:true}, dataVisible:'creator', dataDept:[] }; }\r
+  function ensureViews(f){\r
+    const fc=f.fc; if(!fc.views||!fc.views.length){\r
+      const allFields=(f.fields||[]).map(x=>({field:x.fieldName,label:x.label,sortable:false}));\r
+      fc.views=[{ id:'view_default', name:'默认视图', isDefault:true,\r
+        listFields:(fc.listFields&&fc.listFields.length)?fc.listFields:allFields,\r
+        queryFields:fc.queryFields||[], listButtons:fc.listButtons||['add','export'],\r
+        formButtons:fc.formButtons||{submit:true,draft:true,reset:true},\r
+        dataVisible:fc.dataVisible||'creator', dataDept:fc.dataDept||[] }];\r
+    }\r
+    delete fc.listFields; delete fc.queryFields; delete fc.listButtons; delete fc.formButtons; delete fc.dataVisible; delete fc.dataDept;\r
+  }\r
+  function dvLabel(v){ return ({creator:'仅创建人',dept:'同部门',deptSub:'同部门及下级',all:'全部数据',rule:'按规则过滤'})[v]||v; }\r
+\r
+  let fields = [];\r
+  let selectedId = null;\r
+  let currentFormId = null;\r
+  let formViewingVersion = null; /* 非空=设计器处于历史版本只读查看态（存版本号） */\r
+  let isCreating = false; /* 是否处于「创建表单」流程（进入创建页时隐藏右侧标签与上下文字样） */\r
+  let rightTab = 'config'; /* 右面板一级切换：'config'=表单配置 / 'view'=视图管理（独立大模块） */\r
+  let cfgCollapsed = { common:false, specific:false };\r
+\r
+  const SAMPLE_FORMS = [\r
+    { id:'form1', name:'请假申请单', status:'已发布', updatedAt:'2026-08-01', cat:'人事', creator:'王敏', createdAt:'2026-06-10',\r
+      refs:[{type:'应用菜单',name:'行政办公 / 请假申请'},{type:'流程任务',name:'请假审批流程 · 发起节点'}],\r
+      fc:{ name:'请假申请单', desc:'员工请假申请', icon:'fa-umbrella-beach', category:'人事', submitScope:'all', submitDepts:[], submitRoles:[], allowDraft:true, allowMultiple:false, afterSubmit:'tip', afterUrl:'', dataVisible:'dept', dataDept:['研发部','产品部'], editScope:'creator', editDepts:[], editRoles:[], labelPos:'top', labelAlign:'left', labelWidth:'medium', formWidth:'standard', printable:true, showSubmitTime:true, dedupe:true },\r
+      fields:[\r
+        { id:nid(), type:'select', label:'请假类型', fieldName:'leave_type', span:6, required:true, source:'static', options:[{label:'事假',value:'a'},{label:'病假',value:'b'},{label:'年假',value:'c'}], defaultValue:'a', defaultType:'manual', helpText:'请按实际假别选择' },\r
+        { id:nid(), type:'text', label:'请假事由', fieldName:'reason', span:12, placeholder:'请说明请假原因', required:true, maxLength:200, defaultValue:'', defaultType:'manual', linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''} },\r
+        { id:nid(), type:'member', label:'审批人', fieldName:'approver', span:6, required:true, range:'all', depts:[], roles:[], defaultValue:'', defaultType:'manual', includeDept:false },\r
+      ]},\r
+    { id:'form2', name:'费用报销单', status:'草稿', updatedAt:'2026-07-28', cat:'财务', creator:'李娜', createdAt:'2026-07-15',\r
+      refs:[{type:'应用菜单',name:'财务中心 / 费用报销'},{type:'流程任务',name:'报销审批流程 · 报销单'}],\r
+      fc:{ name:'费用报销单', desc:'日常费用报销', icon:'fa-receipt', category:'财务', submitScope:'all', submitDepts:[], submitRoles:[], allowDraft:true, allowMultiple:true, afterSubmit:'tip', afterUrl:'', dataVisible:'creator', dataDept:[], editScope:'creator', editDepts:[], editRoles:[], labelPos:'top', labelAlign:'left', labelWidth:'medium', formWidth:'standard', printable:true, showSubmitTime:true, dedupe:false },\r
+      fields:[\r
+        { id:nid(), type:'select', label:'报销类型', fieldName:'exp_type', span:6, source:'static', options:[{label:'差旅',value:'1'},{label:'招待',value:'2'}] },\r
+        { id:nid(), type:'subform', label:'费用明细', fieldName:'details', span:12, maxRows:20, allowAdd:true, subFields:[{label:'项目',type:'text'},{label:'金额',type:'number'}] },\r
+        { id:nid(), type:'member', label:'报销人', fieldName:'applicant', span:6, range:'all', depts:[], roles:[] },\r
+      ]},\r
+    { id:'form3', name:'员工信息登记', status:'已发布', updatedAt:'2026-07-20', cat:'人事', creator:'张涛', createdAt:'2026-05-22',\r
+      refs:[{type:'应用菜单',name:'人事 / 员工档案'},{type:'流程任务',name:'入职流程 · 信息登记'}],\r
+      fc:{ name:'员工信息登记', desc:'新员工入职登记', icon:'fa-id-card', category:'人事', submitScope:'dept', submitDepts:['人事部'], submitRoles:[], allowDraft:false, allowMultiple:false, afterSubmit:'reset', afterUrl:'', dataVisible:'all', dataDept:[], editScope:'role', editDepts:[], editRoles:['管理员','HRBP'], labelPos:'left', labelAlign:'right', labelWidth:'wide', formWidth:'standard', printable:true, showSubmitTime:false, dedupe:true },\r
+      fields:[\r
+        { id:nid(), type:'text', label:'姓名', fieldName:'name', span:6, required:true, maxLength:20, defaultValue:'', defaultType:'manual', linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''} },\r
+        { id:nid(), type:'member', label:'所属部门', fieldName:'dept', span:6, range:'all', depts:[], roles:[], includeDept:true, defaultValue:'', defaultType:'manual' },\r
+        { id:nid(), type:'text', label:'紧急联系人', fieldName:'contact', span:12, placeholder:'姓名+电话', defaultValue:'', defaultType:'manual', linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''} },\r
+      ]},\r
+  ];\r
+\r
+  SAMPLE_FORMS.forEach(f=>ensureViews(f));\r
+  /* 表单提交数据（设计者自查用 mock） */\r
+  const SAMPLE_SUBMISSIONS = {\r
+    form1: [\r
+      { id:'D1', submitter:'张伟', time:'2026-08-03 09:12', status:'已通过', vals:{ leave_type:'年假', reason:'家庭旅行', approver:'李强' } },\r
+      { id:'D2', submitter:'刘洋', time:'2026-08-04 14:30', status:'审批中', vals:{ leave_type:'病假', reason:'感冒发烧', approver:'李强' } },\r
+      { id:'D3', submitter:'陈静', time:'2026-08-05 10:05', status:'已通过', vals:{ leave_type:'事假', reason:'办理证件', approver:'李强' } }\r
+    ],\r
+    form2: [\r
+      { id:'D4', submitter:'王芳', time:'2026-08-02 11:20', status:'草稿', vals:{ exp_type:'差旅', details:'北京出差住宿', applicant:'王芳' } }\r
+    ],\r
+    form3: [\r
+      { id:'D5', submitter:'赵磊', time:'2026-07-25 16:40', status:'已通过', vals:{ name:'赵磊', dept:'研发部', contact:'孙莉 13800001111' } }\r
+    ]\r
+  };\r
+\r
+  /* ===================== 视图切换 ===================== */\r
+  function showView(v){\r
+    const isList = v==='list';\r
+    document.getElementById('listView').hidden = !isList;\r
+    document.getElementById('designerView').hidden = isList;\r
+    document.getElementById('tabList').className = 'px-3 py-1.5 rounded-md font-medium seg '+(isList?'bg-white text-[#165DFF] shadow-sm':'text-gray-500')+' btn-click';\r
+    document.getElementById('tabDesign').className = 'px-3 py-1.5 rounded-md font-medium seg '+(!isList?'bg-white text-[#165DFF] shadow-sm':'text-gray-500')+' btn-click';\r
+    const crumb=document.getElementById('crumbView'); if(crumb) crumb.textContent = isList?'表单列表':'表单设计器';\r
+    setTimeout(drawConnections, 60);\r
+  }\r
+\r
+  /* ===================== 状态 / 版本 辅助 ===================== */\r
+  function currentForm(){ return currentFormId ? SAMPLE_FORMS.find(x=>x.id===currentFormId) : null; }\r
+  function todayStr(){ const d=new Date(); const p=n=>(''+n).padStart(2,'0'); return d.getFullYear()+'-'+p(d.getMonth()+1)+'-'+p(d.getDate()); }\r
+  function statusInfo(f){\r
+    if(f.status==='已发布') return { label:'已发布 v'+f.version, cls:'bg-green-100 text-green-600' };\r
+    if(f.version>0) return { label:'草稿（已下架）', cls:'bg-gray-200 text-gray-600' };\r
+    return { label:'草稿（未发布）', cls:'bg-amber-100 text-amber-600' };\r
+  }\r
+  /* 根据当前表单状态刷新设计器顶部状态药丸 / 版本 / 发布·下架按钮 / 横幅 */\r
+  function refreshDesignerChrome(){\r
+    const pill=document.getElementById('statusPill'), vp=document.getElementById('versionPill');\r
+    const pub=document.getElementById('publishBtn'), unp=document.getElementById('unpublishBtn'), banner=document.getElementById('stateBanner');\r
+    if(!pill) return;\r
+    if(formViewingVersion) return; /* 历史版本查看态：保持只读横幅，不覆盖 */\r
+    const f=currentForm();\r
+    if(!f){\r
+      pill.textContent='草稿（未保存）'; pill.className='status-pill px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 whitespace-nowrap';\r
+      vp.textContent='v0'; vp.className='version-pill px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500 whitespace-nowrap';\r
+      pub.classList.remove('hidden'); unp.classList.add('hidden'); banner.style.display='none';\r
+      pub.innerHTML='<i class="fas fa-rocket mr-1"></i>发布'; return;\r
+    }\r
+    const si=statusInfo(f);\r
+    pill.textContent=si.label; pill.className='status-pill px-2 py-0.5 rounded-full text-xs font-medium whitespace-nowrap '+si.cls;\r
+    vp.textContent='v'+f.version;\r
+    const published = f.status==='已发布';\r
+    pub.classList.toggle('hidden', published && !f.hasUnpublished);\r
+    unp.classList.toggle('hidden', !published);\r
+    pub.innerHTML = (published && f.hasUnpublished) ? '<i class="fas fa-rocket mr-1"></i>发布新版本' : '<i class="fas fa-rocket mr-1"></i>发布';\r
+    if(published && f.hasUnpublished){\r
+      banner.style.display='flex';\r
+      banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200 bg-amber-50 text-amber-700';\r
+      banner.innerHTML='<i class="fas fa-exclamation-triangle"></i> 本表单已发布（线上 <b>v'+f.version+'</b>），当前为<b>待发布修改</b>。点击「发布」生成 <b>v'+(f.version+1)+'</b> 并生效，已提交数据不受影响。';\r
+    } else if(!published && f.version>0){\r
+      banner.style.display='flex';\r
+      banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200 bg-gray-50 text-gray-600';\r
+      banner.innerHTML='<i class="fas fa-eye-slash"></i> 表单已下架，当前为<b>草稿</b>，不再接收提交；历史数据（v1…v'+f.version+'）保留可查。点击「发布」可重新上线为新版本。';\r
+    } else { banner.style.display='none'; banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200'; banner.innerHTML=''; }\r
+  }\r
+\r
+  /* ===================== 列表 ===================== */\r
+  function renderFormTable(){\r
+    const tb = document.getElementById('formTableBody');\r
+    tb.innerHTML = SAMPLE_FORMS.map(f=>{\r
+      const si=statusInfo(f);\r
+      const actions = \`\r
+        <button class="text-[#165DFF] hover:text-blue-700 text-sm font-medium btn-click" onclick="event.stopPropagation();openForm('\${f.id}')"><i class="fas fa-edit mr-1"></i>编辑</button>\r
+        <button class="text-[#165DFF] hover:text-blue-700 text-sm font-medium btn-click ml-3" onclick="event.stopPropagation();openFormData('\${f.id}')"><i class="fas fa-table mr-1"></i>数据</button>\r
+        \${f.status==='已发布'\r
+          ? \`<button class="text-gray-500 hover:text-gray-700 text-sm font-medium btn-click ml-3" onclick="event.stopPropagation();listUnpublish('\${f.id}')"><i class="fas fa-eye-slash mr-1"></i>下架</button>\`\r
+          : \`<button class="text-green-600 hover:text-green-700 text-sm font-medium btn-click ml-3" onclick="event.stopPropagation();listPublish('\${f.id}')"><i class="fas fa-rocket mr-1"></i>发布</button>\`}\r
+        \${f.status==='草稿' ? \`<button class="text-red-500 hover:text-red-700 text-sm font-medium btn-click ml-3" onclick="event.stopPropagation();deleteForm('\${f.id}')"><i class="fas fa-trash mr-1"></i>删除</button>\` : ''}\`;\r
+      return \`<tr class="border-t border-gray-100 hover:bg-[#165DFF]/5 cursor-pointer" onclick="openForm('\${f.id}')">\r
+        <td class="px-4 py-3 font-medium text-gray-800"><i class="fas \${f.fc.icon} text-[#165DFF] mr-1.5"></i>\${f.name}</td>\r
+        <td class="px-4 py-3"><span class="tag px-2 py-0.5 rounded text-xs bg-gray-100 text-gray-600">\${f.cat}</span></td>\r
+        <td class="px-4 py-3 text-gray-600"><button class="text-[#165DFF] hover:underline font-medium btn-click" onclick="event.stopPropagation();showRefs('\${f.id}')"><i class="fas fa-link mr-1 text-xs"></i>\${f.refs?f.refs.length:0}</button></td>\r
+        <td class="px-4 py-3"><span class="tag px-2 py-0.5 rounded text-xs \${si.cls}">\${si.label}</span>\${f.hasUnpublished?' <span class="tag px-1.5 py-0.5 rounded text-[10px] bg-amber-100 text-amber-600">待发布</span>':''}</td>\r
+        <td class="px-4 py-3 text-gray-500">\${f.creator||'—'}</td>\r
+        <td class="px-4 py-3 text-gray-500">\${f.createdAt||f.updatedAt||'—'}</td>\r
+        <td class="px-4 py-3 text-center whitespace-nowrap">\${actions}</td>\r
+      </tr>\`;\r
+    }).join('');\r
+    document.getElementById('formCount').textContent = \`共 \${SAMPLE_FORMS.length} 条记录\`;\r
+  }\r
+  function createForm(){\r
+    formName='未命名表单'; currentFormId=null; isCreating=true; formViewingVersion=null;\r
+    formConfig = { name:'', desc:'', icon:'fa-file-alt', category:'未分类', visibleScope:'all', visibleDepts:[], visibleRoles:[], allowMultiple:false, afterSubmit:'tip', afterUrl:'', labelPos:'top', labelAlign:'left', labelWidth:'medium', formWidth:'standard', printable:true, showSubmitTime:true, dedupe:false,\r
+      views:[{ id:'view_default', name:'默认视图', isDefault:true, listFields:null, queryFields:[], listButtons:['add','export'], formButtons:{submit:true,draft:true,reset:true}, dataVisible:'creator', dataDept:[] }] };\r
+    currentViewId='view_default';\r
+    fields=[]; selectedId=null;\r
+    document.getElementById('formNameInput').value = formName;\r
+    showView('designer'); renderCanvas(); renderConfig(); refreshDesignerChrome();\r
+  }\r
+  function openForm(id){\r
+    const f = SAMPLE_FORMS.find(x=>x.id===id);\r
+    currentFormId = id; isCreating=false; formViewingVersion=null;\r
+    formName=f.name; formConfig=JSON.parse(JSON.stringify(f.fc)); ensureViews({fc:formConfig}); currentViewId=(formConfig.views.find(v=>v.isDefault)||formConfig.views[0]).id;\r
+    fields=JSON.parse(JSON.stringify(f.fields)); selectedId=null;\r
+    document.getElementById('formNameInput').value = formName;\r
+    applyFormWidth();\r
+    showView('designer'); renderCanvas(); renderConfig(); refreshDesignerChrome();\r
+  }\r
+  /* 列表行快捷操作 */\r
+  function listPublish(id){ openForm(id); publishForm(); }\r
+  function listUnpublish(id){ const f=SAMPLE_FORMS.find(x=>x.id===id); if(f&&f.status==='已发布'){ f.status='草稿'; f.hasUnpublished=false; renderFormTable(); } }\r
+  function deleteForm(id){\r
+    const idx=SAMPLE_FORMS.findIndex(x=>x.id===id); if(idx<0) return;\r
+    const f=SAMPLE_FORMS[idx];\r
+    if(f.refs && f.refs.length){\r
+      alert('该表单已被引用（'+f.refs.length+' 处），不可删除。\\n请先解除以下引用后再操作：\\n'+f.refs.map(r=>'· '+r.type+'：'+r.name).join('\\n'));\r
+      return;\r
+    }\r
+    if(!confirm('确定要删除草稿表单「'+f.name+'」吗？\\n删除后该草稿表单将不可恢复。')) return;\r
+    SAMPLE_FORMS.splice(idx,1); renderFormTable();\r
+  }\r
+  /* 引用情况弹窗 */\r
+  function showRefs(id){\r
+    const f=SAMPLE_FORMS.find(x=>x.id===id); if(!f) return;\r
+    const refs=f.refs||[];\r
+    const body=document.getElementById('refsBody');\r
+    if(!refs.length){ body.innerHTML='<p class="text-sm text-gray-500">该表单暂无被任何应用菜单或流程任务引用。</p>'; }\r
+    else {\r
+      body.innerHTML = '<p class="text-sm text-gray-500 mb-3">表单「'+f.name+'」当前被以下 '+refs.length+' 处引用：</p>'+\r
+        '<div class="space-y-2">'+refs.map(r=>{\r
+          const icon = r.type==='应用菜单' ? 'fa-th-large' : 'fa-project-diagram';\r
+          return '<div class="flex items-center gap-3 border border-gray-200 rounded-lg px-3 py-2"><i class="fas '+icon+' text-[#165DFF]"></i><div><div class="text-xs text-gray-400">'+r.type+'</div><div class="text-sm text-gray-800">'+r.name+'</div></div></div>';\r
+        }).join('')+'</div>';\r
+    }\r
+    openModal('refsModal');\r
+  }\r
+\r
+  /* ===================== 表单数据自查（设计端） ===================== */\r
+  /* ===================== 表单数据自查（设计端，按视图预览） ===================== */\r
+  function openFormData(id){\r
+    const f=SAMPLE_FORMS.find(x=>x.id===id);\r
+    if(!f){ alert('请先保存并选择表单'); return; }\r
+    ensureViews({fc:f.fc});\r
+    const def=f.fc.views.find(v=>v.isDefault)||f.fc.views[0];\r
+    window.__fdViewId=def.id;\r
+    const viewOpts=f.fc.views.map(v=>\`<option value="\${v.id}">\${v.name}\${v.isDefault?'（默认）':''}</option>\`).join('');\r
+    const subs=(SAMPLE_SUBMISSIONS[id]||[]);\r
+    const html='<div id="fdOverlay" class="fixed inset-0 z-[200] flex bg-black/30" onclick="if(event.target===this)closeFormData()">'+\r
+      '<div class="ml-auto w-[920px] max-w-[96vw] h-full bg-white shadow-xl flex flex-col" onclick="event.stopPropagation()">'+\r
+        '<div class="flex items-center justify-between px-5 py-3 border-b border-gray-200">'+\r
+          '<div><div class="text-sm text-gray-400">表单数据 · 设计者自查</div><div class="text-base font-semibold text-gray-800"><i class="fas '+f.fc.icon+' text-[#165DFF] mr-1.5"></i>'+f.name+'（共 '+subs.length+' 条提交）</div></div>'+\r
+          '<div class="flex items-center gap-2">'+\r
+            '<label class="text-xs text-gray-500">预览视图</label>'+\r
+            '<select id="fdView" onchange="window.__fdViewId=this.value;buildFdToolbar(\\''+id+'\\');renderFormData(\\''+id+'\\')" class="form-input border border-gray-300 rounded-md px-2 py-1 text-sm">'+viewOpts+'</select>'+\r
+            '<button onclick="exportFormData(\\''+id+'\\')" class="px-3 py-1.5 text-xs rounded-md border border-gray-300 text-gray-600 hover:text-[#165DFF] hover:bg-gray-50 btn-click"><i class="fas fa-download mr-1"></i>导出</button>'+\r
+            '<button onclick="closeFormData()" class="w-8 h-8 rounded-md text-gray-400 hover:bg-gray-100 btn-click"><i class="fas fa-times"></i></button>'+\r
+          '</div>'+\r
+        '</div>'+\r
+        '<div id="fdToolbar" class="px-5 py-3 border-b border-gray-100 flex items-center gap-2 flex-wrap bg-gray-50"></div>'+\r
+        '<div class="flex-1 overflow-y-auto"><table class="w-full text-sm"><thead><tr id="fdHead" class="bg-gray-50 text-left text-gray-500 sticky top-0"></tr></thead><tbody id="fdBody"></tbody></table></div>'+\r
+      '</div></div>';\r
+    document.body.insertAdjacentHTML('beforeend', html);\r
+    document.getElementById('fdView').value=def.id;\r
+    buildFdToolbar(id); renderFormData(id);\r
+  }\r
+  function buildFdToolbar(id){\r
+    const f=SAMPLE_FORMS.find(x=>x.id===id); if(!f) return;\r
+    const fcv=f.fc.views.find(v=>v.id===window.__fdViewId)||f.fc.views.find(v=>v.isDefault)||f.fc.views[0];\r
+    const defs=(fcv.listFields&&fcv.listFields.length)?fcv.listFields:(fields||[]).map(x=>({field:x.fieldName,label:x.label,sortable:false}));\r
+    const cols=defs.map(x=>({key:x.field,label:x.label,sortable:!!x.sortable}));\r
+    const qfs=(fcv.queryFields||[]).map(x=>({field:x.field,label:x.label,mode:x.mode||'like'}));\r
+    const lb=(fcv.listButtons||['add','export']);\r
+    const BTN={add:['新增','plus'],import:['导入','upload'],export:['导出','download'],batchDelete:['批量删除','trash']};\r
+    const listBtnsHtml=lb.map(b=>\`<button onclick="alert('\${BTN[b][0]}（演示）')" class="px-3 py-1.5 text-xs rounded-md border border-gray-300 text-gray-600 hover:text-[#165DFF] hover:bg-gray-50 btn-click"><i class="fas fa-\${BTN[b][1]} mr-1"></i>\${BTN[b][0]}</button>\`).join('');\r
+    const qctrls=qfs.map(q=>\`<input id="fdq_\${q.field}" oninput="renderFormData('\${id}')" placeholder="按\${q.label}" class="form-input border border-gray-300 rounded-lg px-3 py-1.5 text-sm w-44">\`).join('');\r
+    const toolbar=document.getElementById('fdToolbar'); if(!toolbar) return;\r
+    toolbar.innerHTML=listBtnsHtml+\r
+      '<input id="fdSearch" oninput="renderFormData(\\''+id+'\\')" placeholder="搜索提交人/内容" class="form-input border border-gray-300 rounded-lg px-3 py-1.5 text-sm w-56">'+\r
+      (qfs.length?'<span class="text-gray-300">|</span>'+qctrls:'')+\r
+      '<select id="fdStatus" onchange="renderFormData(\\''+id+'\\')" class="form-input border border-gray-300 rounded-lg px-3 py-1.5 text-sm"><option value="">全部状态</option><option>已通过</option><option>审批中</option><option>草稿</option><option>已驳回</option></select>'+\r
+      '<span class="text-xs text-gray-400 ml-1">视图「'+fcv.name+'」：列表字段 '+cols.length+' 项 · 查询条件 '+qfs.length+' 项 · 数据可见「'+dvLabel(f.fc.visibleScope||'all')+'」</span>';\r
+  }\r
+  function renderFormData(id){\r
+    const f=SAMPLE_FORMS.find(x=>x.id===id); const subs=(SAMPLE_SUBMISSIONS[id]||[]);\r
+    const fcv=f.fc.views.find(v=>v.id===window.__fdViewId)||f.fc.views.find(v=>v.isDefault)||f.fc.views[0];\r
+    const defs=(fcv.listFields&&fcv.listFields.length)?fcv.listFields:(fields||[]).map(x=>({field:x.fieldName,label:x.label,sortable:false}));\r
+    const cols=defs.map(x=>({key:x.field,label:x.label,sortable:!!x.sortable}));\r
+    const qfs=(fcv.queryFields||[]).map(x=>({field:x.field,label:x.label,mode:x.mode||'like'}));\r
+    const kw=(document.getElementById('fdSearch')?document.getElementById('fdSearch').value:'').trim();\r
+    const st=document.getElementById('fdStatus')?document.getElementById('fdStatus').value:'';\r
+    const qvals=qfs.map(q=>({q, v:(document.getElementById('fdq_'+q.field)?document.getElementById('fdq_'+q.field).value:'').trim()}));\r
+    const rows=subs.filter(s=>{\r
+      if(kw && !(s.submitter.indexOf(kw)>=0||JSON.stringify(s.vals).indexOf(kw)>=0)) return false;\r
+      if(st && s.status!==st) return false;\r
+      for(const it of qvals){ if(!it.v) continue; const fv=String(s.vals[it.q.field]==null?'':s.vals[it.q.field]); if(fv.indexOf(it.v)<0) return false; }\r
+      return true;\r
+    });\r
+    const headCols=cols.map(c=>\`<th class="px-3 py-2 font-medium">\${c.label}\${c.sortable?' <i class="fas fa-sort text-gray-300 ml-0.5"></i>':''}</th>\`).join('');\r
+    const head=document.getElementById('fdHead'); if(head) head.innerHTML=headCols+'<th class="px-3 py-2 font-medium">提交人</th><th class="px-3 py-2 font-medium">提交时间</th><th class="px-3 py-2 font-medium">状态</th>';\r
+    const stl=function(s){return ({'已通过':'bg-green-100 text-green-600','审批中':'bg-blue-100 text-blue-600','草稿':'bg-gray-100 text-gray-500','已驳回':'bg-red-100 text-red-600'})[s.status]||'bg-gray-100 text-gray-500';};\r
+    const body=document.getElementById('fdBody'); if(!body) return;\r
+    body.innerHTML = rows.length? rows.map(function(s){\r
+      const cells=cols.map(function(c){var v=s.vals[c.key];return '<td class="px-3 py-2 text-gray-700">'+(v!==undefined&&v!==''?v:'<span class="text-gray-300">—</span>')+'</td>';}).join('');\r
+      return '<tr class="border-t border-gray-100 hover:bg-[#165DFF]/5 cursor-pointer" onclick="showFormDetail(\\''+id+'\\',\\''+s.id+'\\')">'+cells+\r
+        '<td class="px-3 py-2 text-gray-600">'+s.submitter+'</td>'+\r
+        '<td class="px-3 py-2 text-gray-400">'+s.time+'</td>'+\r
+        '<td class="px-3 py-2"><span class="tag px-2 py-0.5 rounded text-xs '+stl(s.status)+'">'+s.status+'</span></td>'+\r
+      '</tr>';\r
+    }).join('') : '<tr><td colspan="'+(cols.length+3)+'" class="px-3 py-8 text-center text-gray-400">没有符合条件的提交</td></tr>';\r
+  }\r
+  function showFormDetail(id,sid){\r
+    const f=SAMPLE_FORMS.find(x=>x.id===id); const s=(SAMPLE_SUBMISSIONS[id]||[]).find(x=>x.id===sid); if(!s) return;\r
+    const rows=f.fields.map(x=>'<div class="flex py-2 border-b border-gray-100"><span class="w-32 text-gray-400 text-sm flex-none">'+x.label+'</span><span class="text-gray-800 text-sm">'+(s.vals[x.fieldName]||'—')+'</span></div>').join('');\r
+    const html='<div id="fdDetail" class="fixed inset-0 z-[210] flex items-center justify-center bg-black/30" onclick="if(event.target===this)closeFormDetail()">'+\r
+      '<div class="bg-white rounded-lg shadow-xl w-[460px] max-w-[92vw]">'+\r
+        '<div class="flex items-center justify-between px-5 py-3 border-b border-gray-200"><div class="font-semibold text-gray-800">提交详情 · '+s.id+'</div><button onclick="closeFormDetail()" class="w-8 h-8 rounded-md text-gray-400 hover:bg-gray-100 btn-click"><i class="fas fa-times"></i></button></div>'+\r
+        '<div class="px-5 py-3">'+rows+'<div class="flex py-2 border-b border-gray-100"><span class="w-32 text-gray-400 text-sm flex-none">提交人</span><span class="text-gray-800 text-sm">'+s.submitter+'</span></div><div class="flex py-2"><span class="w-32 text-gray-400 text-sm flex-none">提交时间</span><span class="text-gray-800 text-sm">'+s.time+'</span></div></div>'+\r
+        '<div class="px-5 py-3 border-t border-gray-200 flex justify-end"><button onclick="closeFormDetail()" class="px-3 py-1.5 text-sm rounded-md bg-gray-100 text-gray-600 btn-click">关闭</button></div>'+\r
+      '</div></div>';\r
+    document.body.insertAdjacentHTML('beforeend', html);\r
+  }\r
+  function closeFormDetail(){ const e=document.getElementById('fdDetail'); if(e) e.remove(); }\r
+  function exportFormData(id){ const n=(SAMPLE_SUBMISSIONS[id]||[]).length; alert('导出「'+(SAMPLE_FORMS.find(x=>x.id===id).name)+'」的 '+n+' 条提交数据为 Excel（原型演示）'); }\r
+  function closeFormData(){ const e=document.getElementById('fdOverlay'); if(e) e.remove(); }\r
+\r
+  /* ===================== 控件面板 ===================== */\r
+  function renderPalette(){\r
+    const groups = { basic:[], select:[], advanced:[], biz:[] };\r
+    Object.entries(CONTROL_DEFS).forEach(([t,d])=>groups[d.group].push(t));\r
+    Object.entries(groups).forEach(([g,types])=>{\r
+      document.getElementById(GROUP_MAP[g]).innerHTML = types.map(t=>{\r
+        const d=CONTROL_DEFS[t];\r
+        return \`<div class="ctrl-item flex items-center gap-2 px-3 py-2 rounded-md border border-gray-200 bg-white text-sm text-gray-700"\r
+                     draggable="true" data-type="\${t}" ondragstart="onCtrlDragStart(event,'\${t}')" onclick="addFieldAt('\${t}')">\r
+                  <i class="fas \${d.icon} text-[#165DFF] w-4 text-center"></i><span>\${d.label}</span></div>\`;\r
+      }).join('');\r
+    });\r
+  }\r
+\r
+  /* ===================== 字段增删 / 排序 ===================== */\r
+  function addFieldAt(type, index){\r
+    const d=CONTROL_DEFS[type];\r
+    const f=Object.assign({ id:nid(), type, label:d.label, fieldName:genFieldName(d.label,type), span:12, required:false, helpText:'', visible:{mode:'always',logic:'and',conditions:[{field:'',op:'eq',value:''}]} }, d.defaults());\r
+    let idx = (index==null)?fields.length:index;\r
+    if(idx<0) idx=0; if(idx>fields.length) idx=fields.length;\r
+    fields.splice(idx,0,f); selectedId=f.id;\r
+    renderCanvas(); renderConfig();\r
+  }\r
+  function moveField(id, toIndex){\r
+    const from = fields.findIndex(f=>f.id===id); if(from<0) return;\r
+    const [item]=fields.splice(from,1);\r
+    let idx=toIndex; if(idx>from) idx--;\r
+    if(idx<0) idx=0; if(idx>fields.length) idx=fields.length;\r
+    fields.splice(idx,0,item); selectedId=id;\r
+    renderCanvas(); renderConfig();\r
+  }\r
+  function deleteField(id){ fields=fields.filter(f=>f.id!==id); if(selectedId===id) selectedId=null; renderCanvas(); renderConfig(); }\r
+  function selectField(id){ selectedId=id; renderCanvas(); renderConfig(); }\r
+  function deselectField(){ selectedId=null; renderCanvas(); renderConfig(); }\r
+\r
+  /* ===================== 拖拽（新增 + 排序） ===================== */\r
+  let dragPayload=null, dropIndex=null;\r
+  function onCtrlDragStart(e,type){ dragPayload={kind:'new',type}; e.dataTransfer.effectAllowed='copy'; e.dataTransfer.setData('text/plain',type); }\r
+  function onFieldDragStart(e,id){ dragPayload={kind:'move',id}; e.dataTransfer.effectAllowed='move'; e.dataTransfer.setData('text/plain',id); }\r
+  function onCanvasDragOver(e){\r
+    if(formViewingVersion) return;\r
+    e.preventDefault();\r
+    if(e.dataTransfer) e.dataTransfer.dropEffect='copy';\r
+    document.querySelectorAll('.field-card').forEach(c=>c.classList.remove('drop-before','drop-after'));\r
+    document.querySelectorAll('.subform-dragover').forEach(s=>s.classList.remove('subform-dragover'));\r
+    // 拖入子表单区域：高亮整个子表单卡片并新增为「列」，不再落到顶层字段\r
+    const subEl=e.target.closest('[data-subform]');\r
+    if(subEl && dragPayload && dragPayload.kind==='new' && dragPayload.type!=='subform'){\r
+      const card=subEl.closest('.field-card')||subEl;\r
+      card.classList.add('subform-dragover'); dropIndex=fields.length; return;\r
+    }\r
+    const card=e.target.closest('.field-card');\r
+    if(card){\r
+      const r=card.getBoundingClientRect();\r
+      const after = e.clientY > r.top + r.height/2;\r
+      card.classList.add(after?'drop-after':'drop-before');\r
+      const idx=fields.findIndex(f=>f.id===card.dataset.id);\r
+      dropIndex = after ? idx+1 : idx;\r
+    } else { dropIndex = fields.length; }\r
+    document.getElementById('canvas').classList.add('canvas-dragover');\r
+  }\r
+  function onCanvasDragLeave(e){ document.querySelectorAll('.field-card').forEach(c=>c.classList.remove('drop-before','drop-after')); document.querySelectorAll('.subform-dragover').forEach(s=>s.classList.remove('subform-dragover')); document.getElementById('canvas').classList.remove('canvas-dragover'); }\r
+  function onCanvasDrop(e){\r
+    if(formViewingVersion) return;\r
+    e.preventDefault();\r
+    document.querySelectorAll('.field-card').forEach(c=>c.classList.remove('drop-before','drop-after'));\r
+    document.querySelectorAll('.subform-dragover').forEach(s=>s.classList.remove('subform-dragover'));\r
+    document.getElementById('canvas').classList.remove('canvas-dragover');\r
+    const p=dragPayload; dragPayload=null;\r
+    if(!p) return;\r
+    // 落入子表单区域：作为一列追加（拖入的控件类型即该列类型）\r
+    const subEl=e.target.closest('[data-subform]');\r
+    if(subEl && p.kind==='new' && p.type!=='subform'){ addSubFromType(subEl.dataset.subform, p.type); dropIndex=null; return; }\r
+    if(p.kind==='new') addFieldAt(p.type, dropIndex==null?fields.length:dropIndex);\r
+    else if(p.kind==='move') moveField(p.id, dropIndex==null?fields.length:dropIndex);\r
+    dropIndex=null;\r
+  }\r
+  /* 子表单：从左侧控件库拖入，新增为子表单的一列（由画布级 onCanvasDragOver/onCanvasDrop 统一处理，见上方） */\r
+  function addSubFromType(fid, type){\r
+    const f=fields.find(x=>x.id===fid); if(!f) return;\r
+    const labelMap={text:'文本列',number:'数字列',date:'日期列',select:'下拉列',member:'成员列'};\r
+    const colType = (type==='subform') ? 'text' : type;   // 子表单内不再嵌套子表单，降级为文本列\r
+    f.subFields.push({ label:labelMap[type]||'列', type:colType });\r
+    renderCanvas(); renderConfig();\r
+  }\r
+  function onCanvasClick(e){ if(formViewingVersion) return; const card=e.target.closest('.field-card'); if(card) selectField(card.dataset.id); else deselectField(); }\r
+\r
+  /* ===================== 默认值展示计算 ===================== */\r
+  function defaultDisplay(f){\r
+    const t=f.defaultType||'manual';\r
+    if(t==='manual') return f.defaultValue||'';\r
+    if(t==='currentUser') return '👤 当前登录人';\r
+    if(t==='today') return new Date().toISOString().slice(0,10);\r
+    if(t==='formula') return 'ƒ '+(f.defaultValue||'公式');\r
+    if(t==='linkage'){\r
+      const lk=f.linkage||{};\r
+      if(!lk.formId) return '⛓ 数据联动（未配置）';\r
+      const fm=LINKAGE_FORMS.find(x=>x.id===lk.formId);\r
+      const rf=(fm&&fm.fields.find(x=>x.field===lk.returnField))||{};\r
+      return '⛓ 联动：'+(fm?fm.name:'未知表')+' · '+(rf.label||'未选返回值');\r
+    }\r
+    return '';\r
+  }\r
+\r
+  /* ===================== 公式编辑器 ===================== */\r
+  const FUNC_CATEGORIES = [\r
+    { name:'数学函数', funcs:['SUM()','AVG()','MAX()','MIN()','ROUND()','ABS()'] },\r
+    { name:'文本函数', funcs:['CONCAT()','LEFT()','RIGHT()','LEN()','REPLACE()'] },\r
+    { name:'日期函数', funcs:['TODAY()','NOW()','YEAR()','MONTH()','DAY()','DATEDIF()'] },\r
+    { name:'逻辑函数', funcs:['IF()','AND()','OR()','NOT()'] },\r
+  ];\r
+  function openFormula(){\r
+    const f=getField(selectedId); if(!f) return;\r
+    document.getElementById('fmTargetName').textContent = f.label || '当前字段';\r
+    const ta=document.getElementById('fmInput');\r
+    ta.value = (f.defaultValue && f.defaultValue.startsWith('=')) ? f.defaultValue : '='+(f.defaultValue||'');\r
+    document.getElementById('fmFields').innerHTML = fields.filter(x=>x.id!==f.id).map(x=>{\r
+      return \`<div class="text-xs text-gray-600 hover:text-[#165DFF] hover:bg-blue-50 rounded px-2 py-1.5 cursor-pointer truncate" onclick="insertAtFormula('{\${x.fieldName}}')" title="\${x.label}"><i class="fas fa-database text-[10px] mr-1 text-gray-400"></i>\${x.label}</div>\`;\r
+    }).join('') || '<div class="text-xs text-gray-400 px-2">（暂无其他字段）</div>';\r
+    document.getElementById('fmFuncs').innerHTML = FUNC_CATEGORIES.map(cat=>\`\r
+      <div class="mb-2">\r
+        <div class="text-[11px] font-semibold text-gray-500 px-2 py-1">\${cat.name}</div>\r
+        \${cat.funcs.map(fn=>\`<div class="text-xs text-gray-600 hover:text-[#165DFF] hover:bg-blue-50 rounded px-2 py-1 cursor-pointer font-mono" onclick="insertAtFormula('\${fn}')">\${fn}</div>\`).join('')}\r
+      </div>\`).join('');\r
+    openModal('formulaModal');\r
+    ta.focus();\r
+  }\r
+  function insertAtFormula(txt){\r
+    const el=document.getElementById('fmInput'); const s=el.selectionStart||el.value.length, e=el.selectionEnd||s;\r
+    el.value=el.value.slice(0,s)+txt+el.value.slice(e); el.focus();\r
+    if(el.setSelectionRange) el.setSelectionRange(s+txt.length, s+txt.length);\r
+  }\r
+  function saveFormula(){\r
+    const f=getField(selectedId); if(!f) return;\r
+    f.defaultValue=document.getElementById('fmInput').value.trim();\r
+    closeFormula(); renderConfig(); renderCanvas();\r
+  }\r
+  function closeFormula(){ closeModal('formulaModal'); }\r
+\r
+  /* ===================== 数据联动 ===================== */\r
+  function openLinkage(){\r
+    const f=getField(selectedId); if(!f) return;\r
+    const lk=f.linkage||{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''};\r
+    // 初始化弹窗\r
+    const formSel=document.getElementById('lkForm');\r
+    formSel.innerHTML = '<option value="">请选择数据库/表单</option>' + LINKAGE_FORMS.map(x=>\`<option value="\${x.id}" \${lk.formId===x.id?'selected':''}>\${x.name}</option>\`).join('');\r
+    renderLinkageConditions(lk);\r
+    renderLinkageReturn(lk);\r
+    updateLinkagePreview();\r
+    openModal('linkageModal');\r
+  }\r
+  function renderLinkageConditions(lk){\r
+    const wrap=document.getElementById('lkConditions');\r
+    const conds=lk.conditions||[];\r
+    wrap.innerHTML = conds.map((c,i)=>{\r
+      const localOpts = fields.filter(x=>x.id!==selectedId).map(x=>\`<option value="\${x.fieldName}" \${c.localField===x.fieldName?'selected':''}>\${x.label}</option>\`).join('') || '<option value="">（无）</option>';\r
+      const refForm = LINKAGE_FORMS.find(x=>x.id===lk.formId);\r
+      const refOpts = refForm ? refForm.fields.map(x=>\`<option value="\${x.field}" \${c.refField===x.field?'selected':''}>\${x.label}</option>\`).join('') : '<option value="">（请先选关联表）</option>';\r
+      return \`<div class="linkage-row">\r
+        <select id="lk_local_\${i}" class="form-input" onchange="onLinkageChange()">\${localOpts}</select>\r
+        <span class="text-sm text-gray-500">值等于</span>\r
+        <select id="lk_ref_\${i}" class="form-input" onchange="onLinkageChange()">\${refOpts}</select>\r
+        <span class="text-sm text-gray-500">的值时</span>\r
+        \${conds.length>1?\`<button class="text-gray-400 hover:text-red-500 btn-click" onclick="removeLinkageCond(\${i})"><i class="fas fa-times"></i></button>\`:''}\r
+      </div>\`;\r
+    }).join('');\r
+  }\r
+  function renderLinkageReturn(lk){\r
+    const sel=document.getElementById('lkReturn');\r
+    const refForm = LINKAGE_FORMS.find(x=>x.id===lk.formId);\r
+    sel.innerHTML = '<option value="">请选择关联表字段</option>' + (refForm?refForm.fields.map(x=>\`<option value="\${x.field}" \${lk.returnField===x.field?'selected':''}>\${x.label}</option>\`).join(''):'');\r
+  }\r
+  function readLinkageFromUI(){\r
+    const f=getField(selectedId); if(!f) return;\r
+    const lk=f.linkage||{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''};\r
+    lk.formId = document.getElementById('lkForm').value;\r
+    const fm = LINKAGE_FORMS.find(x=>x.id===lk.formId);\r
+    lk.formName = fm?fm.name:'';\r
+    lk.conditions = (lk.conditions||[]).map((c,i)=>({\r
+      localField: document.getElementById('lk_local_'+i)?.value || '',\r
+      refField: document.getElementById('lk_ref_'+i)?.value || ''\r
+    }));\r
+    lk.returnField = document.getElementById('lkReturn').value;\r
+    f.linkage=lk;\r
+    return lk;\r
+  }\r
+  function onLinkageChange(){\r
+    const lk=readLinkageFromUI();\r
+    // 切换关联表后，条件中的关联字段选项需要重置\r
+    renderLinkageConditions(lk);\r
+    renderLinkageReturn(lk);\r
+    updateLinkagePreview();\r
+  }\r
+  function addLinkageCond(){\r
+    const f=getField(selectedId); if(!f) return;\r
+    const lk=f.linkage||{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''};\r
+    lk.conditions.push({localField:'',refField:''});\r
+    renderLinkageConditions(lk);\r
+    updateLinkagePreview();\r
+  }\r
+  function removeLinkageCond(i){\r
+    const f=getField(selectedId); if(!f) return;\r
+    const lk=f.linkage||{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''};\r
+    lk.conditions.splice(i,1);\r
+    renderLinkageConditions(lk);\r
+    updateLinkagePreview();\r
+  }\r
+  function updateLinkagePreview(){\r
+    const f=getField(selectedId); if(!f) return;\r
+    const lk=f.linkage||{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''};\r
+    const fm=LINKAGE_FORMS.find(x=>x.id===lk.formId);\r
+    const rf=fm?fm.fields.find(x=>x.field===lk.returnField):null;\r
+    const conds=lk.conditions.map(c=>{\r
+      const local=fieldLabel(c.localField)||'当前字段';\r
+      const ref=fm?((fm.fields.find(x=>x.field===c.refField)||{}).label||'关联字段'):'关联字段';\r
+      return \`「\${local}」=「\${ref}」\`;\r
+    }).join(' 且 ');\r
+    const html = !fm ? '请先选择数据关联表并配置匹配条件。'\r
+      : \`联动预览：当 \${conds||'（无条件）'} 时，本字段自动显示 <b>\${fm.name}</b> 中 <b>\${rf?rf.label:'未选择字段'}</b> 的对应值。\`;\r
+    document.getElementById('lkPreview').innerHTML = html;\r
+  }\r
+  function saveLinkage(){\r
+    readLinkageFromUI();\r
+    closeLinkage(); renderConfig(); renderCanvas();\r
+  }\r
+  function closeLinkage(){ closeModal('linkageModal'); }\r
+  document.getElementById('lkForm').onchange = onLinkageChange;\r
+\r
+  /* ===================== 画布渲染（12栅格 + 标签布局） ===================== */\r
+  function renderCanvas(){\r
+    const wrap=document.getElementById('canvasFields');\r
+    const empty=document.getElementById('canvasEmpty');\r
+    if(formViewingVersion){\r
+      const s=snapshotFormView();\r
+      if(s){ renderSnapshotCanvas(s, wrap, empty); return; }\r
+    }\r
+    if(fields.length===0){ empty.style.display='block'; wrap.innerHTML=''; return; }\r
+    empty.style.display='none';\r
+    wrap.innerHTML = fields.map(f=>fieldCardHTML(f)).join('');\r
+  }\r
+  /* 历史版本查看态：用快照字段结构渲染只读画布（不污染当前 fields） */\r
+  function renderSnapshotCanvas(s, wrap, empty){\r
+    const list=s.fields||[];\r
+    empty.style.display = list.length?'none':'block';\r
+    if(!list.length){ wrap.innerHTML=''; return; }\r
+    const labelPos=(s.fc&&s.fc.labelPos)||'top';\r
+    wrap.innerHTML = list.map(f=>{\r
+      const td=(CONTROL_DEFS[f.type]||{label:f.type||'字段',icon:'fa-pen'});\r
+      const req=f.required?'<span class="text-red-500 ml-0.5">*</span>':'';\r
+      const help=f.helpText?\`<div class="text-[11px] text-gray-400 mt-1">\${f.helpText}</div>\`:'';\r
+      const preview=previewHTML(f);\r
+      const lbl = labelPos==='left'\r
+        ? \`<div class="flex items-start gap-3 pointer-events-none"><label class="label-cell text-sm font-medium text-gray-700" style="width:120px;flex:none;text-align:left;padding-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">\${f.label}\${req}</label><div class="flex-1 min-w-0">\${preview}\${help}</div></div>\`\r
+        : \`<div class="pointer-events-none"><label class="block text-sm font-medium text-gray-700 mb-1">\${f.label}\${req}</label><div>\${preview}\${help}</div></div>\`;\r
+      return \`<div class="field-card bg-white border border-gray-200 rounded-lg p-4" style="grid-column: span \${f.span||12}">\r
+        <div class="flex items-center justify-between mb-2">\r
+          <div class="text-[11px] text-gray-400 border border-gray-200 rounded px-1.5 py-0.5"><i class="fas \${td.icon} text-[#165DFF] mr-1"></i>\${td.label}</div>\r
+          <span class="text-[10px] text-gray-300"><i class="fas fa-lock mr-1"></i>历史版本·只读</span>\r
+        </div>\r
+        \${lbl}\r
+      </div>\`;\r
+    }).join('');\r
+  }\r
+  function snapshotFormView(){\r
+    const f=currentForm();\r
+    return formViewingVersion ? ((f&&f.versions||[]).find(v=>v.version===formViewingVersion)||null) : null;\r
+  }\r
+  function previewHTML(f){\r
+    if(f.type==='text'){\r
+      const fmt = f.format&&f.format!=='none' ? \`（\${FORMATS[f.format]}）\` : '';\r
+      return \`<input disabled placeholder="\${f.placeholder||''}" class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm bg-gray-50 text-gray-400" value="\${defaultDisplay(f)}"><span class="text-[11px] text-gray-300">\${fmt}</span>\`;\r
+    } else if(f.type==='select'){\r
+      let ph = f.placeholder||'请选择';\r
+      const dt=f.defaultType||'manual';\r
+      if(dt==='manual' && f.defaultValue){ const o=(f.options||[]).find(o=>o.value===f.defaultValue); ph=o?o.label:f.defaultValue; }\r
+      else if(dt==='currentUser') ph='当前登录人';\r
+      else if(dt==='today') ph=new Date().toISOString().slice(0,10);\r
+      else if(dt==='linkage') ph=defaultDisplay(f);\r
+      const opts=(f.options||[]).map(o=>\`<option \${o.value===f.defaultValue?'selected':''}>\${o.label}</option>\`).join('');\r
+      const srcTag = f.source==='dict'?'<span class="text-[11px] text-[#165DFF] ml-1">字典</span>':f.source==='api'?'<span class="text-[11px] text-[#165DFF] ml-1">API</span>':'';\r
+      return \`<select disabled class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm bg-gray-50 text-gray-400">\${opts||\`<option>\${ph}</option>\`}</select>\${srcTag}\`;\r
+    } else if(f.type==='subform'){\r
+      const subs=(f.subFields||[]);\r
+      const SUB_TL={text:'文本',number:'数字',date:'日期',select:'下拉',member:'成员'};\r
+      const cols=subs.map(s=>\`<th class="px-2 py-1.5 text-left font-medium text-gray-600 border-b border-gray-200 whitespace-nowrap">\${s.label} <span class="text-[10px] font-normal text-gray-400">\${SUB_TL[s.type]||s.type}</span></th>\`).join('')+'<th class="w-7 border-b border-gray-200"></th>';\r
+      const sampleRow=subs.map(s=>{ const ph=s.type==='number'?'0.00':(s.type==='date'?'年/月/日':'请填写'); return \`<td class="px-2 py-1.5 border-t border-gray-100"><input disabled placeholder="\${ph}" class="w-full border border-gray-200 rounded px-2 py-1 text-xs bg-gray-50 text-gray-400"></td>\`;}).join('')+'<td class="px-2 py-1.5 border-t border-gray-100 text-center"><i class="fas fa-trash-alt text-gray-300"></i></td>';\r
+      const sumRow = f.showSummary ? \`<tfoot><tr class="bg-[#F0F5FF]"><td class="px-2 py-1.5 text-xs font-semibold text-[#165DFF] border-t border-gray-200 whitespace-nowrap">合计</td>\${subs.map(s=>s.type==='number'?'<td class="px-2 py-1.5 text-xs text-[#165DFF] border-t border-gray-200 font-semibold">Σ 自动求和</td>':'<td class="border-t border-gray-200"></td>').join('')}<td class="border-t border-gray-200"></td></tr></tfoot>\` : '';\r
+      const foot = subs.length\r
+        ? \`<div class="p-2 bg-gray-50 border-t text-center flex items-center justify-center gap-3"><button class="text-[#165DFF] text-xs btn-click"><i class="fas fa-plus mr-1"></i>添加一行</button><span class="text-[11px] text-[#165DFF]"><i class="fas fa-hand-pointer mr-1"></i>拖左侧控件到此表即可新增一列</span></div>\`\r
+        : \`<div class="p-3 bg-blue-50/60 border-t border-dashed border-[#165DFF] text-center text-[11px] text-[#165DFF]"><i class="fas fa-hand-pointer mr-1"></i>从左侧控件库拖拽控件到此处，新增为子表单的一列</div>\`;\r
+      return \`<div class="subform-table-wrap" data-subform="\${f.id}"><table class="w-full text-xs"><thead class="bg-gray-100">\${cols}</thead><tbody>\${sampleRow}</tbody>\${sumRow}</table>\${foot}</div>\`;\r
+    } else if(f.type==='member'){\r
+      let ph='请选择成员';\r
+      const dt=f.defaultType||'manual';\r
+      if(dt==='currentUser') ph='当前登录人';\r
+      else if(dt==='linkage') ph=defaultDisplay(f);\r
+      const scope = f.range==='all'?'全部成员':(f.range==='dept'?((f.depts||[]).join('/')||'指定部门'):((f.roles||[]).join('/')||'指定角色'));\r
+      return \`<div class="border border-gray-200 rounded-md px-3 py-2 text-sm bg-gray-50 text-gray-400 flex items-center gap-2"><i class="fas fa-user-plus text-[#165DFF]"></i> \${ph}\${f.multi?'（可多选）':''}<span class="ml-auto text-xs">\${scope}\${f.includeDept?' · 含部门':''}</span></div>\`;\r
+    }\r
+    return '';\r
+  }\r
+  function fieldCardHTML(f){\r
+    const sel = f.id===selectedId ? 'selected' : '';\r
+    const typeLabel = CONTROL_DEFS[f.type].label;\r
+    const drag = \`draggable="true" data-id="\${f.id}" ondragstart="onFieldDragStart(event,'\${f.id}')"\`;\r
+    const subAttr = (f.type==='subform') ? \` data-subform="\${f.id}"\` : '';\r
+    const lp = f.labelPos || formConfig.labelPos;\r
+    const la = f.labelAlign || formConfig.labelAlign;\r
+    const lwKey = f.labelWidth || 'inherit';\r
+    const lw = lwKey==='inherit' ? formConfig.labelWidth : lwKey;\r
+    const req = f.required ? '<span class="text-red-500 ml-0.5">*</span>' : '';\r
+    const help = f.helpText ? \`<div class="text-[11px] text-gray-400 mt-1">\${f.helpText}</div>\` : '';\r
+    const preview = previewHTML(f);\r
+    let layoutWrap;\r
+    if(lp==='left'){\r
+      const lwStyle = lw==='auto' ? 'width:auto;flex:none;' : \`width:\${LABEL_W[lw]};flex:none;\`;\r
+      const lbl = \`<label class="label-cell text-sm font-medium text-gray-700 \${lw==='auto'?'auto':''}" style="\${lwStyle}text-align:\${la};padding-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">\${f.label}\${req}</label>\`;\r
+      layoutWrap = \`<div class="flex items-start gap-3 pointer-events-none">\${lbl}<div class="flex-1 min-w-0">\${preview}\${help}</div></div>\`;\r
+    } else {\r
+      const lbl = \`<label class="block text-sm font-medium text-gray-700 mb-1" style="text-align:\${la}">\${f.label}\${req}</label>\`;\r
+      layoutWrap = \`<div class="pointer-events-none">\${lbl}<div>\${preview}\${help}</div></div>\`;\r
+    }\r
+    return \`<div class="field-card group bg-white border border-gray-200 rounded-lg p-4 \${sel}" style="grid-column: span \${f.span||12}" \${drag}\${subAttr}>\r
+        <div class="flex items-center justify-between mb-2">\r
+          <div class="text-[11px] text-gray-400 border border-gray-200 rounded px-1.5 py-0.5"><i class="fas \${CONTROL_DEFS[f.type].icon} text-[#165DFF] mr-1"></i>\${typeLabel}</div>\r
+          <div class="flex items-center gap-2 text-gray-400" onclick="event.stopPropagation()">\r
+            <button class="hover:text-red-500 btn-click opacity-0 group-hover:opacity-100 transition" title="删除" onclick="deleteField('\${f.id}')"><i class="fas fa-trash"></i></button>\r
+          </div>\r
+        </div>\r
+        \${layoutWrap}\r
+      </div>\`;\r
+  }\r
+\r
+  /* ===================== 配置面板 ===================== */\r
+  const inp = (v)=>\`class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" value="\${v==null?'':v}"\`;\r
+  function sec(t, key){\r
+    const collapsed = key && cfgCollapsed[key];\r
+    return \`<div class="cfg-sec \${collapsed?'collapsed':''}" onclick="toggleSection('\${key}',this)">\${t}</div><div class="cfg-sec-body" id="sec_\${key}" style="\${collapsed?'max-height:0;':'max-height:2000px;'}">\`;\r
+  }\r
+  function secEnd(){ return '</div>'; }\r
+  function toggleSection(key,el){\r
+    cfgCollapsed[key] = !cfgCollapsed[key];\r
+    el.classList.toggle('collapsed', cfgCollapsed[key]);\r
+    const body=document.getElementById('sec_'+key);\r
+    body.style.maxHeight = cfgCollapsed[key] ? '0' : '2000px';\r
+  }\r
+  const row = (label, ctrl, logic)=>\`<div class="mb-3.5"><label class="block text-xs font-medium text-gray-600 mb-1">\${label}</label>\${ctrl}\${logic?\`<div class="cfg-logic"><i class="fas fa-info-circle"></i><span>\${logic}</span></div>\`:''}</div>\`;\r
+  const sw = (id, checked, logic)=>\`<label class="flex items-center gap-2 cursor-pointer text-sm text-gray-700"><input id="\${id}" type="checkbox" \${checked?'checked':''} class="rounded text-[#165DFF]"> \${logic||''}</label>\`;\r
+  const info = (html)=>\`<div class="cfg-info mb-3.5"><i class="fas fa-info-circle mr-1"></i>\${html}</div>\`;\r
+  function chipsHTML(arrAccessor, selected, kind){\r
+    const list = kind==='dept'?DEPTS:ROLES;\r
+    return \`<div class="flex flex-wrap gap-1.5">\`+list.map(v=>{\r
+      const on = (selected||[]).includes(v);\r
+      return \`<span class="px-2 py-1 rounded-md text-xs cursor-pointer border \${on?'bg-[#165DFF] text-white border-[#165DFF]':'bg-white text-gray-600 border-gray-200'}" onclick="chipToggle(\${arrAccessor},'\${v}',this)">\${v}</span>\`;\r
+    }).join('')+\`</div>\`;\r
+  }\r
+  function chipToggle(arr, val, el){\r
+    const i=arr.indexOf(val);\r
+    if(i>=0) arr.splice(i,1); else arr.push(val);\r
+    const on=arr.includes(val);\r
+    el.className=\`px-2 py-1 rounded-md text-xs cursor-pointer border \${on?'bg-[#165DFF] text-white border-[#165DFF]':'bg-white text-gray-600 border-gray-200'}\`;\r
+  }\r
+\r
+  /* ---- 数据可见范围：默认范围 + 按角色覆盖（规则仅含数据条件，角色由覆盖层指定） ---- */\r
+  const VIS_OPTS=[['creator','仅创建人'],['dept','同部门'],['deptSub','同部门及下级'],['all','全部数据'],['rule','自定义规则（引用登录人属性）']];\r
+  const LOGIN_ATTRS=[['role','登录人.角色'],['region','登录人.区域'],['dept','登录人.部门']];\r
+  const RULE_OPS=[['=','='],['≠','≠'],['包含','包含']];\r
+  function loginAttrOpts(sel){\r
+    return LOGIN_ATTRS.map(a=>\`<option value="\${a[0]}" \${sel===a[0]?'selected':''}>\${a[1]}</option>\`).join('');\r
+  }\r
+  function ruleOpOpts(sel){ return RULE_OPS.map(o=>\`<option value="\${o[0]}" \${sel===o[0]?'selected':''}>\${o[1]}</option>\`).join(''); }\r
+  function fieldOptsHTML(sel){\r
+    const flds=(typeof fields!=='undefined'&&fields)?fields:[];\r
+    if(!flds.length) return '<option value="">（无可用字段）</option>';\r
+    return flds.map(f=>{ const v=f.fieldName||f.name||''; const l=f.label||v; return v?\`<option value="\${v}" \${sel===v?'selected':''}>\${l}</option>\`:''; }).join('');\r
+  }\r
+  function dvRuleCfg(key,c){ if(!c.visibleRulesMap) c.visibleRulesMap={}; if(!c.visibleRulesMap[key]) c.visibleRulesMap[key]={dataLogic:'and',data:[{field:'',op:'=',valType:'value',val:''}],fallback:'none'}; return c.visibleRulesMap[key]; }\r
+  function dvRuleFor(key, c){\r
+    const cfg=dvRuleCfg(key,c);\r
+    const dataLogic=cfg.dataLogic||'and';\r
+    let data='';\r
+    (cfg.data||[]).forEach(function(cond,j){\r
+      const right = cond.valType==='login'\r
+        ? \`<select onchange="dvValAttr('\${key}',\${j},this.value)" class="form-input w-32 text-xs py-1">\${loginAttrOpts(cond.valAttr)}</select>\`\r
+        : \`<input oninput="dvVal('\${key}',\${j},this.value)" value="\${cond.val||''}" placeholder="如：红河区 / 华东区" class="form-input w-32 text-xs py-1">\`;\r
+      data += \`<div class="flex items-center gap-1.5 mb-1.5 flex-wrap">\`\r
+        + (j>0?\`<span class="text-xs px-1.5 py-0.5 rounded bg-gray-200 text-gray-600 whitespace-nowrap">\${dataLogic==='and'?'且':'或'}</span>\`:\`<span class="text-xs text-gray-400 whitespace-nowrap">条件</span>\`)\r
+        + \`<select onchange="dvField('\${key}',\${j},this.value)" class="form-input w-32 text-xs py-1">\${fieldOptsHTML(cond.field)}</select>\`\r
+        + \`<select onchange="dvOp('\${key}',\${j},this.value)" class="form-input w-16 text-xs py-1">\${ruleOpOpts(cond.op)}</select>\`\r
+        + \`<select onchange="dvValType('\${key}',\${j},this.value)" class="form-input w-24 text-xs py-1"><option value="value" \${cond.valType!=='login'?'selected':''}>值</option><option value="login" \${cond.valType==='login'?'selected':''}>登录人属性</option></select>\`\r
+        + right\r
+        + \`<button onclick="dvCondDel('\${key}',\${j})" class="text-gray-400 hover:text-red-500 text-xs btn-click" title="删除条件"><i class="fas fa-times"></i></button>\`\r
+        + \`</div>\`;\r
+    });\r
+    const fb = \`<div class="flex items-center gap-2 mt-1 text-xs text-gray-500">兜底（该范围数据均不满足下列数据条件时）：<select onchange="dvFallback('\${key}',this.value)" class="form-input w-32 text-xs py-1"><option value=value \${cfg.fallback==='none'?'selected':''}>不可见</option><option value="creator" \${cfg.fallback==='creator'?'selected':''}>仅创建人</option><option value="all" \${cfg.fallback==='all'?'selected':''}>全部可见</option></select></div>\`;\r
+    return \`<div class="border rounded-md p-2 mt-1 bg-gray-50">\`\r
+      + \`<div class="text-xs text-gray-500 mb-1">仅可见满足以下<b>数据条件</b>的行：</div>\`\r
+      + data\r
+      + \`<button onclick="dvCondAdd('\${key}')" class="text-xs text-[#165DFF] btn-click"><i class="fas fa-plus"></i> 添加数据条件</button>\`\r
+      + \`<div class="flex items-center gap-2 mt-1 mb-1"><span class="text-xs text-gray-500">数据条件间关系</span><select onchange="dvLogic('\${key}',this.value)" class="form-input w-32 text-xs py-1"><option value="and" \${dataLogic==='and'?'selected':''}>且（全部满足）</option><option value="or" \${dataLogic==='or'?'selected':''}>或（任一满足）</option></select></div>\`\r
+      + fb\r
+      + \`</div>\`\r
+      + info(\`示例：字段[区域] = 华东区 → 仅看华东区数据。依赖登录人在角色 / 部门主数据上携带「区域」维度；多条件可组合「且 / 或」。\`);\r
+  }\r
+  function dvCondAdd(key){ dvRuleCfg(key,formConfig).data.push({field:'',op:'=',valType:'value',val:''}); renderConfig(); }\r
+  function dvCondDel(key,j){ dvRuleCfg(key,formConfig).data.splice(j,1); renderConfig(); }\r
+  function dvField(key,j,v){ dvRuleCfg(key,formConfig).data[j].field=v; }\r
+  function dvOp(key,j,v){ dvRuleCfg(key,formConfig).data[j].op=v; }\r
+  function dvValType(key,j,v){ const d=dvRuleCfg(key,formConfig).data[j]; d.valType=v; if(v==='login'&&!d.valAttr)d.valAttr='region'; renderConfig(); }\r
+  function dvVal(key,j,v){ dvRuleCfg(key,formConfig).data[j].val=v; }\r
+  function dvValAttr(key,j,v){ dvRuleCfg(key,formConfig).data[j].valAttr=v; }\r
+  function dvLogic(key,v){ dvRuleCfg(key,formConfig).dataLogic=v; renderConfig(); }\r
+  function dvFallback(key,v){ dvRuleCfg(key,formConfig).fallback=v; }\r
+  const ROLE_GROUPS=[{name:'管理层',roles:['管理员','部门负责人']},{name:'业务岗',roles:['普通员工','财务审核','HRBP','审批人']}];\r
+  let dvCurrentRole='__global__';\r
+  let dvCollapsed={};\r
+  function dvIsConf(c,r){ return r==='__global__' ? true : !!(c.visibleRoles && c.visibleRoles[r]); }\r
+  function dvNode(key,label,active,isGlobal,conf){\r
+    let dot = isGlobal ? '<span class="w-2 h-2 rounded-full bg-[#EF9F27] inline-block mr-1"></span>'\r
+             : conf ? '<span class="w-2 h-2 rounded-full bg-[#165DFF] inline-block mr-1"></span>'\r
+             : '<span class="w-2 h-2 rounded-full border border-gray-300 inline-block mr-1"></span>';\r
+    return \`<div class="flex items-center \${active?'bg-[#E8F3FF]':'hover:bg-gray-50'} rounded px-1 py-1 cursor-pointer text-sm \${active?'text-[#165DFF] font-medium':'text-gray-700'}" onclick="dvSelectRole('\${key}')"><span class="pl-3"></span>\${dot}\${label}</div>\`;\r
+  }\r
+  function dvTree(c){\r
+    let t='';\r
+    t += dvNode('__global__','全局默认（所有角色）', dvCurrentRole==='__global__', true, true);\r
+    ROLE_GROUPS.forEach(function(g){\r
+      const open = !dvCollapsed[g.name];\r
+      t += \`<div class="flex items-center gap-1 px-1 py-1 cursor-pointer select-none" onclick="dvToggleGroup('\${g.name}')"><span class="text-gray-400 text-xs w-3">\${open?'\\u25BE':'\\u25B8'}</span><span class="text-xs font-medium text-gray-600">\${g.name}</span></div>\`;\r
+      if(open){ g.roles.forEach(function(r){ t += dvNode(r, r, dvCurrentRole===r, false, dvIsConf(c,r)); }); }\r
+    });\r
+    return t;\r
+  }\r
+  function dvSelectRole(r){ dvCurrentRole=r; renderConfig(); }\r
+  function dvToggleGroup(g){ dvCollapsed[g]=!dvCollapsed[g]; renderConfig(); }\r
+  function dvScopeSelect(tab, c){\r
+    const isRole = tab!=='__global__';\r
+    let val = isRole ? ((c.visibleRoles&&c.visibleRoles[tab])||'__inherit__') : (c.visibleDefault||'all');\r
+    const opts = (isRole?\`<option value="__inherit__" \${val==='__inherit__'?'selected':''}>继承全局</option>\`:'')\r
+      + VIS_OPTS.map(o=>\`<option value="\${o[0]}" \${val===o[0]?'selected':''}>\${o[1]}</option>\`).join('');\r
+    let html = \`<select onchange="dvSetScope('\${tab}',this.value)" class="form-input border border-gray-300 rounded-md px-2 py-1 text-xs w-full">\${opts}</select>\`;\r
+    if(val==='rule') html += isRole ? dvRuleFor(tab, c) : dvRuleFor('__default__', c);\r
+    html += info(isRole ? '选「继承全局」即套用全局默认范围；需特殊范围时单独选择，并可编写自定义规则（可引用登录人属性，如各区督导组只看本地区）。' : '对所有角色生效的默认数据范围；切到具体角色可逐个覆盖。多条件可组合「且 / 或」。');\r
+    return html;\r
+  }\r
+  function dvSetScope(tab, val){\r
+    const c=formConfig;\r
+    if(tab==='__global__'){ c.visibleDefault=val; }\r
+    else { if(!c.visibleRoles) c.visibleRoles={}; if(val==='__inherit__') delete c.visibleRoles[tab]; else c.visibleRoles[tab]=val; }\r
+    renderConfig();\r
+  }\r
+\r
+\r
+  function renderConfig(){\r
+    const body=document.getElementById('configBody');\r
+    const ctx=document.getElementById('cfgContext');\r
+    setCfgTabStyle();\r
+    if(formViewingVersion){\r
+      const s=snapshotFormView();\r
+      ctx.textContent='历史版本·只读';\r
+      body.innerHTML=\`\r
+        <div class="cfg-info"><i class="fas fa-eye mr-1"></i>当前画布展示的是历史版本 <b>v\${formViewingVersion}</b> 的字段结构（只读），共 <b>\${s&&s.fields?s.fields.length:0}</b> 个字段，发布人为 \${s?(s.publisher||'系统'):''} · \${s?s.time||'—':''}。点击下方按钮返回编辑当前表单。</div>\r
+        <button onclick="exitFormVersionView()" class="mt-3 w-full px-3 py-2 rounded-md text-xs font-medium btn-click bg-[#165DFF] text-white hover:bg-blue-600"><i class="fas fa-arrow-left mr-1"></i>返回编辑</button>\`;\r
+      return;\r
+    }\r
+    if(!selectedId){\r
+      if(!isCreating) ctx.textContent='表单配置'; else ctx.textContent='';\r
+      renderFormConfig(body); return;\r
+    }\r
+    const f=fields.find(x=>x.id===selectedId);\r
+    ctx.textContent = isCreating ? '' : '控件：'+f.label;\r
+    let html = \`<div class="mb-3 pb-3 border-b border-gray-100 flex items-center gap-2 text-sm font-semibold text-gray-700"><i class="fas \${CONTROL_DEFS[f.type].icon} text-[#165DFF]"></i>\${CONTROL_DEFS[f.type].label} · 字段配置</div>\`;\r
+    html += renderCommon(f);\r
+    html += renderSpecific(f);\r
+    body.innerHTML = html;\r
+    bindFieldEvents(f);\r
+  }\r
+  function setRightTab(t){ rightTab=t; if(t==='view') selectedId=null; renderConfig(); }\r
+  // 表单配置标签：处于字段下钻态时点击返回表单根配置，否则进入表单配置模块\r
+  function onFormTabClick(){ if(rightTab==='config' && selectedId){ deselectField(); } else { setRightTab('config'); } }\r
+  function setCfgTabStyle(){\r
+    const a='bg-white text-[#165DFF] shadow-sm font-semibold', b='text-gray-500 hover:text-[#165DFF]';\r
+    const tf=document.getElementById('tabCfgForm');\r
+    const tabs=document.getElementById('cfgTabs');\r
+    // 创建表单流程中：隐藏右侧「表单配置 / 控件配置」标签与「控件：xxx」上下文字样，保持面板简洁\r
+    if(isCreating){ if(tabs) tabs.style.display='none'; return; }\r
+    if(tabs) tabs.style.display='';\r
+    // 选中控件时，顶部标签由「表单配置」下钻为「控件配置」；视图管理不再作为独立 tab，已整合进表单配置面板\r
+    if(tf){ tf.textContent=(rightTab==='config'&&selectedId)?'控件配置':'表单配置'; tf.className='flex-1 px-2 py-1.5 rounded-md font-medium btn-click '+(rightTab==='config'?a:b); }\r
+  }\r
+\r
+  /* 默认值逻辑详解（按当前选择的方式动态说明取值链路） */\r
+  function defaultValueLogicBox(f){\r
+    const dt=f.defaultType||'manual';\r
+    const name=(DEFAULT_TYPES.find(x=>x[0]===dt)||[,''])[1];\r
+    const map={\r
+      manual:'<b>手动填写</b>：打开表单时直接填入设计态预设的固定值（文本或默认选项）。提交时原样保存到数据库，适用于固定说明文案、高频默认选项等。',\r
+      formula:'<b>公式编辑</b>：运行态在<b>打开表单</b>以及<b>被引用的字段发生变化</b>时，按公式实时计算并填入结果。支持跨字段引用与函数（SUM / IF / COUNT / CONCAT 等）。系统只存储<b>计算结果</b>、不存储公式本身，从而保证每次打开数据一致、避免脏值。',\r
+      currentUser:'<b>当前用户</b>：由系统在运行态自动注入<b>当前登录用户</b>的身份（姓名/工号），用户不可编辑、无需填写。常用于「申请人 / 负责人 / 填报人」等写死为登录人的字段。',\r
+      today:'<b>当前日期</b>：由系统在运行态注入<b>打开表单当天的日期</b>，用于自动记录「申请日期 / 创建日期」，避免用户手填误差。',\r
+      linkage:'<b>数据联动</b>：打开表单时，依据下方配置的条件到<b>关联表</b>中查询记录，把命中记录的指定字段值作为本字段默认值自动带出（例如选「部门」后自动带出「部门负责人」）。若条件未匹配到记录，字段留空、需用户手动补充。'\r
+    };\r
+    return \`<div class="cfg-logic-block"><div class="cfg-logic-title"><i class="fas fa-lightbulb"></i>默认值逻辑说明 · \${name}</div><div class="cfg-logic-body">\${map[dt]||''}</div></div>\`;\r
+  }\r
+\r
+  /* 通用配置（所有控件共有） */\r
+  function renderCommon(f){\r
+    let h = sec('通用配置（所有控件共有）','common');\r
+    h += row('标题', \`<input id="cfg_label" \${inp(f.label)}>\`, '字段在表单上显示的名称，运行态展示给用户。');\r
+    h += row('字段名（API 标识·自动生成）', \`<input id="cfg_field" value="\${f.fieldName}" disabled class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm bg-gray-100 text-gray-500 cursor-not-allowed">\`, '<b>自动生成规则：</b>取「标题」做英文规范化（转小写、空格/连字符→下划线、仅保留 a–z / 0–9 / _）；标题全为中文或符号时回退为控件类型前缀（单行文本=text、下拉单选=select、子表单=subform、成员=member 等）；同表单内重名自动追加序号（如 name、name_2）。字段名在创建字段时一次性生成并锁定，<b>不可手动修改</b>，以保证与提交数据 / 接口稳定对应。');\r
+    h += row('字段宽度（单元格长度）', \`<select id="cfg_span" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\${SPAN_OPTS.map(o=>\`<option value="\${o[0]}" \${(f.span||12)==o[0]?'selected':''}>\${o[1]}</option>\`).join('')}</select>\`, '基于 12 栅格系统决定该字段横向占位（整行/1/2/1/3/1/4），实现不同字段并排布局，提升空间利用率。');\r
+    h += row('标签位置', \`<select id="cfg_lpos" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="top" \${(f.labelPos||formConfig.labelPos)==='top'?'selected':''}>标题在上</option><option value="left" \${(f.labelPos||formConfig.labelPos)==='left'?'selected':''}>标题在左</option></select>\`, '字段标题相对输入框的位置；不设置时继承表单级「标签位置」。切换后画布即时呈现上下/左右两种版式。');\r
+    h += row('标签对齐', \`<select id="cfg_lalign" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="left" \${(f.labelAlign||formConfig.labelAlign)==='left'?'selected':''}>左对齐</option><option value="right" \${(f.labelAlign||formConfig.labelAlign)==='right'?'selected':''}>右对齐</option></select>\`, '标签文字对齐方式；标题在左时常用右对齐更整齐。切换即时反映在画布。');\r
+    h += row('必填', sw('cfg_req', f.required, '提交时该项不能为空，否则拦截提交并提示。'), '控制字段是否必填校验。');\r
+    // 默认值（多来源）\r
+    h += row('默认值方式', \`<select id="cfg_dtype" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\${DEFAULT_TYPES.map(o=>\`<option value="\${o[0]}" \${(f.defaultType||'manual')===o[0]?'selected':''}>\${o[1]}</option>\`).join('')}</select>\`, '选择默认值来源；不同方式对应不同取值逻辑，运行态打开表单时按此自动带入，减少重复录入。');\r
+    const dt=f.defaultType||'manual';\r
+    if(dt==='manual'){\r
+      if(f.type==='select'){\r
+        const osel=(f.options||[]).map(o=>\`<option value="\${o.value}" \${f.defaultValue===o.value?'selected':''}>\${o.label}</option>\`).join('');\r
+        h += row('默认选项', \`<select id="cfg_dval" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\${osel||'<option value="">（暂无选项）</option>'}</select>\`, '打开表单时默认选中该项（按存储值），常用于高频选项预置。');\r
+      } else {\r
+        h += row('手动默认值', \`<input id="cfg_dval" \${inp(f.defaultValue)}>\`, '打开表单时自动填入的固定值（如固定说明文案）。');\r
+      }\r
+    } else if(dt==='formula'){\r
+      h += row('公式', \`<div class="flex gap-2"><input id="cfg_dval" \${inp(f.defaultValue)} class="form-input flex-1 border border-gray-300 rounded-md px-2.5 py-1.5 text-sm font-mono" placeholder="如 =SUM(金额)" readonly><button class="px-2.5 bg-[#165DFF] text-white rounded-md text-xs whitespace-nowrap btn-click" onclick="openFormula()"><i class="fas fa-function mr-1"></i>公式编辑</button></div>\`, '通过公式计算得到默认值，支持字段引用与函数（SUM/IF/COUNT 等）。点击「公式编辑」打开可视化弹窗：左侧面板选择字段与函数分类，中间输入公式，底部含提示与示例。');\r
+    } else if(dt==='currentUser'){\r
+      h += info('运行态将自动填入<b>当前登录用户</b>，无需手动维护（常用于「申请人/负责人」类字段）。');\r
+    } else if(dt==='today'){\r
+      h += info(\`运行态将自动填入<b>打开表单当天的日期</b>（示例：\${new Date().toISOString().slice(0,10)}）。\`);\r
+    } else if(dt==='linkage'){\r
+      const lk=f.linkage||{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''};\r
+      const fm=LINKAGE_FORMS.find(x=>x.id===lk.formId);\r
+      const rf=fm?fm.fields.find(x=>x.field===lk.returnField):null;\r
+      const summary = !fm ? '未配置' : \`\${fm.name} · \${rf?rf.label:'未选返回值'} · \${lk.conditions.length}个条件\`;\r
+      h += row('数据联动', \`<div class="flex gap-2"><input class="form-input flex-1 border border-gray-300 rounded-md px-2.5 py-1.5 text-sm bg-gray-50" value="\${summary}" readonly><button class="px-2.5 bg-[#165DFF] text-white rounded-md text-xs whitespace-nowrap btn-click" onclick="openLinkage()"><i class="fas fa-link mr-1"></i>配置</button></div>\`, '按条件从其他表单/数据库查找记录，并取指定字段作为默认值。点击「配置」打开数据联动弹窗：先选关联表，再设匹配条件，最后选返回值。');\r
+    }\r
+    h += defaultValueLogicBox(f);\r
+    h += row('帮助说明', \`<input id="cfg_help" \${inp(f.helpText)}>\`, '显示在字段下方的灰色提示文字，用于解释填写要求，不参与提交数据。');\r
+    // 显示条件（条件构造器）\r
+    h += row('显示条件（动态显隐）', renderVisible(f.visible), '运行态根据规则动态显示/隐藏本字段：选「满足条件时显示」后展开条件行，不满足时字段自动隐藏，实现动态表单。');\r
+    h += row('只读', sw('cfg_ro', f.readonly, '勾选后运行态不可编辑，仅展示值。'), '字段仅展示、不可修改（如系统自动带出的值）。');\r
+    h += secEnd();\r
+    return h;\r
+  }\r
+  function renderVisible(v){\r
+    v = v||{mode:'always',logic:'and',conditions:[{field:'',op:'eq',value:''}]};\r
+    const fieldOpts = fields.filter(f=>f.id!==selectedId).map(f=>\`<option value="\${f.fieldName}" \${v.conditions[0]&&v.conditions[0].field===f.fieldName?'selected':''}>\${f.label}</option>\`).join('') || '<option value="">（暂无其他字段）</option>';\r
+    const modeSel = \`<select id="cfg_vmode" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm mb-2"><option value="always" \${v.mode==='always'?'selected':''}>始终显示</option><option value="when" \${v.mode==='when'?'selected':''}>满足条件时显示</option></select>\`;\r
+    if(v.mode!=='when') return modeSel;\r
+    const logicSel = \`<select id="cfg_vlogic" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm mb-2"><option value="and" \${v.logic==='and'?'selected':''}>且（全部满足）</option><option value="or" \${v.logic==='or'?'selected':''}>或（满足其一）</option></select>\`;\r
+    const conds = (v.conditions||[]).map((c,i)=>{\r
+      const fsel = fields.filter(f=>f.id!==selectedId).map(f=>\`<option value="\${f.fieldName}" \${c.field===f.fieldName?'selected':''}>\${f.label}</option>\`).join('') || '<option value="">（无）</option>';\r
+      return \`<div class="flex items-center gap-1.5 mb-1.5">\r
+        <select id="cfg_vfield_\${i}" class="form-input flex-1 border border-gray-300 rounded-md px-2 py-1 text-sm">\${fsel}</select>\r
+        <select id="cfg_vop_\${i}" class="form-input border border-gray-300 rounded-md px-2 py-1 text-sm"><option value="eq" \${c.op==='eq'?'selected':''}>等于</option><option value="ne" \${c.op==='ne'?'selected':''}>不等于</option><option value="contains" \${c.op==='contains'?'selected':''}>包含</option></select>\r
+        <input id="cfg_vval_\${i}" class="form-input flex-1 border border-gray-300 rounded-md px-2 py-1 text-sm" value="\${c.value||''}" placeholder="值">\r
+        \${v.conditions.length>1?\`<button class="text-gray-400 hover:text-red-500 btn-click" onclick="removeVisibleCond(\${i})"><i class="fas fa-times"></i></button>\`:''}\r
+      </div>\`;\r
+    }).join('');\r
+    return modeSel + logicSel + conds + \`<button onclick="addVisibleCond()" class="text-[#165DFF] text-xs btn-click mt-1"><i class="fas fa-plus mr-1"></i>添加条件</button>\`;\r
+  }\r
+  function addVisibleCond(){ const f=fields.find(x=>x.id===selectedId); f.visible.conditions.push({field:'',op:'eq',value:''}); renderConfig(); }\r
+  function removeVisibleCond(i){ const f=fields.find(x=>x.id===selectedId); f.visible.conditions.splice(i,1); renderConfig(); }\r
+\r
+  /* 专属配置（按类型） */\r
+  function renderSpecific(f){\r
+    let h = sec('专属配置（'+CONTROL_DEFS[f.type].label+'）','specific');\r
+    if(f.type==='text'){\r
+      const fmts=Object.entries(FORMATS).map(([k,v])=>\`<option value="\${k}" \${f.format===k?'selected':''}>\${v}</option>\`).join('');\r
+      h += row('输入格式（校验）', \`<select id="cfg_fmt" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\${fmts}</select>\`, '限制输入内容类型；提交时按规则校验，不通过则拦截并提示（如手机号必须 11 位数字）。');\r
+      h += row('最大长度', \`<input id="cfg_max" type="number" \${inp(f.maxLength)}>\`, '允许输入的最大字符数，超出无法继续输入，防止超长脏数据。');\r
+      h += row('最小长度', \`<input id="cfg_min" type="number" \${inp(f.minLength)}>\`, '低于该长度则校验不通过（如身份证必须 18 位）。');\r
+      h += row('密码模式', sw('cfg_pwd', f.password, '输入内容以圆点掩码显示。'), '适用于敏感文本输入（如密钥、密码）。');\r
+      h += row('自动去除首尾空格', sw('cfg_trim', f.trim, '提交前自动清理用户输入的首尾空格。'), '默认开启，避免「 张三 」这类脏数据。');\r
+      h += row('校验失败提示', \`<input id="cfg_err" \${inp(f.errMsg)}>\`, '校验不通过时展示的自定义文案，留空则用默认提示，提升友好度。');\r
+    } else if(f.type==='select'){\r
+      const optRows=(f.options||[]).map((o,i)=>\`<div class="flex items-center gap-1.5 mb-1.5"><input class="form-input flex-1 border border-gray-300 rounded-md px-2 py-1 text-sm" value="\${o.label}" oninput="updateOption(\${i},this.value)"><button class="text-gray-400 hover:text-red-500 btn-click" onclick="removeOption(\${i})"><i class="fas fa-times"></i></button></div>\`).join('');\r
+      h += row('选项来源', \`<select id="cfg_src" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="static" \${f.source==='static'?'selected':''}>静态录入</option><option value="dict" \${f.source==='dict'?'selected':''}>数据字典</option><option value="api" \${f.source==='api'?'selected':''}>远程 API</option></select>\`, '选项数据来源：静态为设计态固定；数据字典/API 为运行态动态拉取（对接集成能力）。');\r
+      if(f.source==='dict'){\r
+        h += row('数据字典', \`<select id="cfg_dict" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="region" \${f.dictKey==='region'?'selected':''}>行政区划</option><option value="industry" \${f.dictKey==='industry'?'selected':''}>行业分类</option><option value="bank" \${f.dictKey==='bank'?'selected':''}>银行列表</option></select>\`, '选择平台内置或企业自定义的数据字典，运行态选项从该字典动态加载，保证全平台口径一致。');\r
+      } else if(f.source==='api'){\r
+        h += row('接口地址', \`<input id="cfg_api" \${inp(f.apiUrl)} class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" placeholder="https://api.example.com/options">\`, '运行态从此接口拉取选项，需返回 {label,value} 数组；常用于对接第三方系统枚举。');\r
+        h += \`<div class="mb-3.5"><button onclick="alert('测试连接（演示）')" class="text-xs text-[#165DFF] btn-click"><i class="fas fa-plug mr-1"></i>测试连接</button><div class="cfg-logic">配置后将展示返回字段映射，确保接口字段与 label/value 对应。</div></div>\`;\r
+      }\r
+      h += \`<div class="mb-3.5"><label class="block text-xs font-medium text-gray-600 mb-1">选项列表</label>\${optRows}<button onclick="addOption()" class="text-[#165DFF] text-xs btn-click"><i class="fas fa-plus mr-1"></i>添加选项</button><div class="cfg-logic">每个选项含「显示名(label)」与「存储值(value)」，value 参与数据提交与流程条件判断。</div></div>\`;\r
+      h += row('可搜索', sw('cfg_search', f.searchable, '选项超过一定数量时可输入关键字过滤。'), '选项较多时开启，预览/运行态将渲染为「可输入过滤的下拉选择框」，输入关键字即时筛选项；关闭则为普通下拉。');\r
+    } else if(f.type==='subform'){\r
+      h += \`<div class="cfg-logic-block" style="margin-top:0"><div class="cfg-logic-title"><i class="fas fa-table"></i>子表单的作用与场景</div><div class="cfg-logic-body">子表单用于承载<b>「一对多」明细</b>：一笔主数据下挂多条结构相同的子记录（如一张报销单下的多条费用明细、一个订单下的多个商品）。每个<b>子字段</b>相当于一条独立字段，整体以<b>二维数组</b>存储，便于后续按行统计、汇总及在流程节点中做条件判断。<br>典型场景：① 费用报销 / 采购申请的明细清单 ② 订单中的商品行 ③ 家庭成员 / 紧急联系人 ④ 考勤 / 课时记录。当某条主信息需要重复结构的数据时，就用子表单，而不是在主表单堆 N 个相同字段。</div></div>\`;\r
+      const subs=(f.subFields||[]).map((s,i)=>\`<div class="subform-col-row flex items-center gap-1.5 mb-1.5 p-1 rounded border border-gray-200 bg-white" draggable="true" data-col="\${i}" ondragstart="onSubColDragStart(event,'\${f.id}',\${i})" ondragover="onSubColDragOver(event)" ondrop="onSubColDrop(event,'\${f.id}',\${i})" ondragend="this.classList.remove('dragging');document.querySelectorAll('.subform-col-row').forEach(r=>r.classList.remove('drop-target'))"><i class="fas fa-grip-vertical text-gray-300 cursor-grab"></i><span class="text-[10px] text-gray-400 w-8 flex-none text-center">\${SUB_TYPE_LABEL[s.type]||s.type}</span><input class="form-input flex-1 border border-gray-300 rounded-md px-2 py-1 text-sm" value="\${s.label}" oninput="updateSub(\${i},this.value)"><button class="text-gray-400 hover:text-red-500 btn-click" onclick="removeSub(\${i})" title="删除该列"><i class="fas fa-times"></i></button></div>\`).join('');\r
+      h += \`<div class="mb-3.5"><label class="block text-xs font-medium text-gray-600 mb-1">子表单列（类型由拖入控件决定，不可改）</label>\${subs}<div class="cfg-logic"><i class="fas fa-info-circle"></i><span><b>新增列</b>：从左侧控件库拖控件到画布中的子表单区域，松手即成一列（列类型＝拖入控件类型，表头标「文本/数字/日期/下拉/成员」）。<b>排序</b>：在本列表中拖动每行（⠿ 手柄）调整列顺序；<b>删除</b>：点 ✕。列类型不可在此修改，需换类型时删除后重新拖入对应控件。</span></div></div>\`;\r
+      h += row('显示汇总行', sw('cfg_sum', f.showSummary, '在子表单底部增加「合计」行，对所有「数字」类型子字段自动求和。'), '开启后，画布表格底部立即出现蓝色合计行（标「Σ 自动求和」），运行态随用户录入实时累加。文本 / 日期列不参与汇总。');\r
+    } else if(f.type==='member'){\r
+      h += row('选择范围', \`<select id="cfg_range" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="all" \${f.range==='all'?'selected':''}>全部成员</option><option value="dept" \${f.range==='dept'?'selected':''}>指定部门</option><option value="role" \${f.range==='role'?'selected':''}>指定角色</option></select>\`, '限定可选成员的范围；选部门/角色时需勾选具体对象（对接组织架构集成）。切换后画布即时显示范围摘要。');\r
+      if(f.range==='dept'){\r
+        h += row('指定部门', chipsHTML(\`getField('\${f.id}').depts\`, f.depts, 'dept'), '仅可从所选部门中选择成员；点击标签切换选中，画布范围摘要同步更新。');\r
+      } else if(f.range==='role'){\r
+        h += row('指定角色', chipsHTML(\`getField('\${f.id}').roles\`, f.roles, 'role'), '仅可从所选角色中选择成员；点击标签切换选中，画布范围摘要同步更新。');\r
+      }\r
+      h += row('多选', sw('cfg_multi', f.multi, '可同时选择多名成员，存储为数组。'), '如「抄送人」「会签人」场景。');\r
+      h += row('包含部门信息', sw('cfg_idept', f.includeDept, '返回值同时携带部门字段。'), '流程节点可按部门做条件分支。');\r
+    }\r
+    h += secEnd();\r
+    return h;\r
+  }\r
+\r
+  /* 字段事件绑定 */\r
+  function bindFieldEvents(f){\r
+    const g=id=>document.getElementById(id);\r
+    const relabel=()=>renderCanvas();\r
+    if(!f.visible) f.visible={mode:'always',logic:'and',conditions:[]};   // 兼容示例字段（可能无 visible 属性）\r
+    if(g('cfg_label')) g('cfg_label').oninput=e=>{f.label=e.target.value;relabel();};\r
+    if(g('cfg_span')) g('cfg_span').onchange=e=>{f.span=+e.target.value;relabel();};\r
+    if(g('cfg_lpos')) g('cfg_lpos').onchange=e=>{f.labelPos=e.target.value;relabel();};\r
+    if(g('cfg_lalign')) g('cfg_lalign').onchange=e=>{f.labelAlign=e.target.value;relabel();};\r
+    if(g('cfg_lw')) g('cfg_lw').onchange=e=>{f.labelWidth=e.target.value;relabel();};\r
+    if(g('cfg_req')) g('cfg_req').onchange=e=>{f.required=e.target.checked;relabel();};\r
+    // 默认值\r
+    if(g('cfg_dtype')) g('cfg_dtype').onchange=e=>{f.defaultType=e.target.value;renderConfig();};\r
+    if(g('cfg_dval')) g('cfg_dval').oninput=e=>{f.defaultValue=e.target.value;relabel();};\r
+    if(g('cfg_help')) g('cfg_help').oninput=e=>{f.helpText=e.target.value;relabel();};\r
+    if(g('cfg_ro')) g('cfg_ro').onchange=e=>{f.readonly=e.target.checked;};\r
+    if(g('cfg_print')) g('cfg_print').onchange=e=>{f.printShow=e.target.checked;};\r
+    // 显示条件\r
+    if(g('cfg_vmode')) g('cfg_vmode').onchange=e=>{f.visible.mode=e.target.value;renderConfig();};\r
+    if(g('cfg_vlogic')) g('cfg_vlogic').onchange=e=>{f.visible.logic=e.target.value;};\r
+    (f.visible.conditions||[]).forEach((c,i)=>{\r
+      if(g('cfg_vfield_'+i)) g('cfg_vfield_'+i).onchange=e=>{f.visible.conditions[i].field=e.target.value;};\r
+      if(g('cfg_vop_'+i)) g('cfg_vop_'+i).onchange=e=>{f.visible.conditions[i].op=e.target.value;};\r
+      if(g('cfg_vval_'+i)) g('cfg_vval_'+i).oninput=e=>{f.visible.conditions[i].value=e.target.value;};\r
+    });\r
+    // text\r
+    if(g('cfg_fmt')) g('cfg_fmt').onchange=e=>{f.format=e.target.value;};\r
+    if(g('cfg_max')) g('cfg_max').oninput=e=>{f.maxLength=+e.target.value;};\r
+    if(g('cfg_min')) g('cfg_min').oninput=e=>{f.minLength=+e.target.value;};\r
+    if(g('cfg_pwd')) g('cfg_pwd').onchange=e=>{f.password=e.target.checked;};\r
+    if(g('cfg_trim')) g('cfg_trim').onchange=e=>{f.trim=e.target.checked;};\r
+    if(g('cfg_err')) g('cfg_err').oninput=e=>{f.errMsg=e.target.value;};\r
+    // select\r
+    if(g('cfg_src')) g('cfg_src').onchange=e=>{f.source=e.target.value;renderConfig();};\r
+    if(g('cfg_dict')) g('cfg_dict').onchange=e=>{f.dictKey=e.target.value;};\r
+    if(g('cfg_api')) g('cfg_api').oninput=e=>{f.apiUrl=e.target.value;};\r
+    if(g('cfg_search')) g('cfg_search').onchange=e=>{f.searchable=e.target.checked;};\r
+    // subform\r
+    if(g('cfg_minr')) g('cfg_minr').oninput=e=>{f.minRows=+e.target.value;};\r
+    if(g('cfg_maxr')) g('cfg_maxr').oninput=e=>{f.maxRows=+e.target.value;};\r
+    if(g('cfg_allow')) g('cfg_allow').onchange=e=>{f.allowAdd=e.target.checked;relabel();};\r
+    if(g('cfg_sum')) g('cfg_sum').onchange=e=>{f.showSummary=e.target.checked;relabel();};\r
+    // member\r
+    if(g('cfg_range')) g('cfg_range').onchange=e=>{f.range=e.target.value;relabel();renderConfig();};\r
+    if(g('cfg_multi')) g('cfg_multi').onchange=e=>{f.multi=e.target.checked;relabel();};\r
+    if(g('cfg_idept')) g('cfg_idept').onchange=e=>{f.includeDept=e.target.checked;relabel();};\r
+  }\r
+  function addOption(){ const f=fields.find(x=>x.id===selectedId); f.options.push({label:'新选项',value:'opt'+(f.options.length+1)}); renderConfig(); renderCanvas(); }\r
+  function removeOption(i){ const f=fields.find(x=>x.id===selectedId); f.options.splice(i,1); renderConfig(); renderCanvas(); }\r
+  function updateOption(i,v){ const f=fields.find(x=>x.id===selectedId); f.options[i].label=v; renderCanvas(); }\r
+  function removeSub(i){ const f=fields.find(x=>x.id===selectedId); f.subFields.splice(i,1); renderConfig(); renderCanvas(); }\r
+  function updateSub(i,v){ const f=fields.find(x=>x.id===selectedId); f.subFields[i].label=v; renderCanvas(); }\r
+  /* 右侧面板子表单列：整行拖动调整顺序（类型不可改，由拖入控件决定） */\r
+  let subColDrag=null;\r
+  function onSubColDragStart(e, fid, i){ subColDrag={fid, i}; e.currentTarget.classList.add('dragging'); }\r
+  function onSubColDragOver(e){ const row=e.currentTarget; if(!subColDrag) return; e.preventDefault(); row.classList.add('drop-target'); }\r
+  function onSubColDrop(e, fid, i){\r
+    e.preventDefault();\r
+    document.querySelectorAll('.subform-col-row').forEach(r=>r.classList.remove('drop-target','dragging'));\r
+    if(!subColDrag || subColDrag.fid!==fid){ subColDrag=null; return; }\r
+    const f=fields.find(x=>x.id===fid); if(!f) { subColDrag=null; return; }\r
+    const from=subColDrag.i, to=i;\r
+    if(from===to){ subColDrag=null; return; }\r
+    const [item]=f.subFields.splice(from,1);\r
+    f.subFields.splice(to,0,item);\r
+    subColDrag=null; renderConfig(); renderCanvas();\r
+  }\r
+\r
+  /* ===================== 表单级配置（完整，无关联流程） ===================== */\r
+  /* ---- 列数据权限（字段级）---- 角色视角：全局默认 + 角色差异覆盖 + 批量 ---- */\r
+  var fpCurrentRole='global';   // 当前编辑的角色视图：'global' | 角色名\r
+  var fpCollapsed={};           // 角色组展开/折叠状态（key=组名）\r
+  const FP_MODES=[['edit','可编辑'],['readonly','只读'],['hidden','隐藏']];\r
+  function fpEffMode(c, fn, view){\r
+    if(view==='global') return (c.colGlobal&&c.colGlobal[fn])||'edit';\r
+    if(c.colRoles && c.colRoles[view] && c.colRoles[view][fn]) return c.colRoles[view][fn];\r
+    return (c.colGlobal&&c.colGlobal[fn])||'edit';\r
+  }\r
+  function fpIsOverridden(c, fn, view){\r
+    return view!=='global' && !!(c.colRoles && c.colRoles[view] && c.colRoles[view][fn]);\r
+  }\r
+  function fpIsConf(c,r){ return r==='global' ? !!(c.colGlobal&&Object.keys(c.colGlobal).length) : !!(c.colRoles&&c.colRoles[r]&&Object.keys(c.colRoles[r]||{}).length); }\r
+  function fpNode(key,label,active,isGlobal,conf){\r
+    let dot = isGlobal ? '<span class="w-2 h-2 rounded-full bg-[#EF9F27] inline-block mr-1"></span>'\r
+             : conf ? '<span class="w-2 h-2 rounded-full bg-[#165DFF] inline-block mr-1"></span>'\r
+             : '<span class="w-2 h-2 rounded-full border border-gray-300 inline-block mr-1"></span>';\r
+    return \`<div class="flex items-center \${active?'bg-[#E8F3FF]':'hover:bg-gray-50'} rounded px-1 py-1 cursor-pointer text-sm \${active?'text-[#165DFF] font-medium':'text-gray-700'}" onclick="fpSelectRole('\${key}')"><span class="pl-3"></span>\${dot}\${label}</div>\`;\r
+  }\r
+  function fpTree(c){\r
+    let t='';\r
+    t += fpNode('global','全局默认（所有角色）', fpCurrentRole==='global', true, fpIsConf(c,'global'));\r
+    ROLE_GROUPS.forEach(function(g){\r
+      const open = !fpCollapsed[g.name];\r
+      t += \`<div class="flex items-center gap-1 px-1 py-1 cursor-pointer select-none" onclick="fpToggleGroup('\${g.name}')"><span class="text-gray-400 text-xs w-3">\${open?'\\u25BE':'\\u25B8'}</span><span class="text-xs font-medium text-gray-600">\${g.name}</span></div>\`;\r
+      if(open){ g.roles.forEach(function(r){ t += fpNode(r, r, fpCurrentRole===r, false, fpIsConf(c,r)); }); }\r
+    });\r
+    return t;\r
+  }\r
+  function fpPanel(c){\r
+    if(!fields || !fields.length) return info('当前表单还没有字段，请先在画布添加字段，再回来配置列数据权限。');\r
+    const allFields = fields.filter(function(f){ return f.fieldName||f.name; });\r
+    if(!c.colGlobal) c.colGlobal={};\r
+    if(!c.colRoles) c.colRoles={};\r
+    const view = fpCurrentRole;\r
+    const roles = (typeof ROLES!=='undefined'?ROLES:[]);\r
+    const batch = '<div class="flex items-center gap-2 my-2 text-xs flex-wrap">'\r
+      +'<span class="text-gray-500">批量设置：</span>'\r
+      +'<select onchange="if(this.value){ fpAll(this.value); }" class="form-input border border-gray-300 rounded-md px-2 py-1 text-xs">'\r
+      +'<option value="">请选择…</option>'\r
+      +'<option value="edit">全部可编辑</option>'\r
+      +'<option value="readonly">全部只读</option>'\r
+      +'<option value="hidden">全部隐藏</option>'\r
+      +'</select>'\r
+      +'<span class="text-gray-400">（作用于当前视图：全局默认=全员基准，具体角色=该角色覆盖）</span>'\r
+      +'</div>';\r
+    const header = '<th class="text-left font-medium text-gray-500 text-xs py-1 pr-3 border-b border-gray-200">字段</th>'\r
+      +FP_MODES.map(function(m){return '<th class="text-center font-medium text-gray-500 text-xs py-1 px-3 border-b border-gray-200">'+m[1]+'</th>';}).join('');\r
+    const rows = allFields.map(function(f){\r
+      const fn=f.fieldName||f.name; const label=f.label||fn;\r
+      const cells = FP_MODES.map(function(m){\r
+        const mode=fpEffMode(c, fn, view);\r
+        const inherited = view!=='global' && !fpIsOverridden(c, fn, view);\r
+        const on = mode===m[0];\r
+        return '<td class="text-center '+(on?'bg-[#E8F3FF]':'')+' '+(inherited?'opacity-50':'')+'"><span class="cursor-pointer select-none text-base '+(on?'text-[#165DFF]':'text-gray-400')+'" onclick="fpSetMode(\\'+fn+\\',\\'+m[0]+\\')">'+(on?'\\u2611':'\\u2610')+'</span></td>';\r
+      }).join('');\r
+      let tag='';\r
+      if(view!=='global'){ tag = fpIsOverridden(c, fn, view) ? '<span class="text-[11px] text-[#165DFF] ml-1">覆盖</span>' : '<span class="text-[11px] text-gray-400 ml-1">继承</span>'; }\r
+      return '<tr><td class="py-1 pr-3 text-sm text-gray-700">'+label+tag+'</td>'+cells+'</tr>';\r
+    }).join('');\r
+    const grid='<table class="w-full"><thead><tr>'+header+'</tr></thead><tbody>'+rows+'</tbody></table>';\r
+    const note = info('列数据权限与「三、数据可见范围」（行级）互补：行级决定能否看到这一<b>行</b>，列级决定能否看清这一<b>列</b>。先配「全局默认」（全员基准），切到具体角色只改差异字段（其余继承）。顶部下拉可对本视图全部字段一次性套用模式。左侧角色树中，蓝点=已自定义配置，橙点=全局默认基准，空心=继承默认。');\r
+    const tree = fpTree(c);\r
+    return \`<div class="flex gap-3 items-start">\`\r
+      + \`<div class="w-44 shrink-0 border rounded-md p-2 bg-gray-50 max-h-80 overflow-auto">\${tree}</div>\`\r
+      + \`<div class="flex-1 min-w-0">\${batch+grid+note}</div>\`\r
+      + \`</div>\`;\r
+  }\r
+  function fpSelectRole(r){ fpCurrentRole=r; renderConfig(); }\r
+  function fpToggleGroup(name){ if(fpCollapsed[name]) delete fpCollapsed[name]; else fpCollapsed[name]=true; renderConfig(); }\r
+  function fpSetMode(fn, mode){\r
+    const c=formConfig; const view=fpCurrentRole||'global';\r
+    if(view==='global'){ if(!c.colGlobal) c.colGlobal={}; c.colGlobal[fn]=mode; }\r
+    else { if(!c.colRoles) c.colRoles={}; if(!c.colRoles[view]) c.colRoles[view]={}; c.colRoles[view][fn]=mode; }\r
+    renderConfig();\r
+  }\r
+  function fpAll(mode){\r
+    const c=formConfig; const view=fpCurrentRole||'global';\r
+    const allFields=(fields||[]).filter(function(f){return f.fieldName||f.name;}).map(function(f){return f.fieldName||f.name;});\r
+    if(view==='global'){ if(!c.colGlobal) c.colGlobal={}; allFields.forEach(function(fn){ c.colGlobal[fn]=mode; }); }\r
+    else { if(!c.colRoles) c.colRoles={}; if(!c.colRoles[view]) c.colRoles[view]={}; allFields.forEach(function(fn){ c.colRoles[view][fn]=mode; }); }\r
+    renderConfig();\r
+  }\r
+\r
+  function renderFormConfig(body){\r
+    const c=formConfig;\r
+    const cv=currentView();\r
+    let h = \`<div class="mb-3 pb-3 border-b border-gray-100 flex items-center gap-2 text-sm font-semibold text-gray-700"><i class="fas fa-cog text-[#165DFF]"></i>表单配置</div>\`;\r
+    h += sec('一、基础信息','form_basic');\r
+    h += row('表单名称', \`<input id="fc_name" \${inp(c.name)}>\`, '该表单的显示名称，出现在列表与运行态顶部。');\r
+    h += row('表单描述', \`<textarea id="fc_desc" rows="2" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm resize-none">\${c.desc||''}</textarea>\`, '运行态表单顶部展示的说明文字，帮助用户理解用途。');\r
+    h += row('表单图标', \`<select id="fc_icon" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="fa-file-alt" \${c.icon==='fa-file-alt'?'selected':''}>📄 通用文件</option><option value="fa-umbrella-beach" \${c.icon==='fa-umbrella-beach'?'selected':''}>🌴 请假</option><option value="fa-receipt" \${c.icon==='fa-receipt'?'selected':''}>🧾 报销</option><option value="fa-id-card" \${c.icon==='fa-id-card'?'selected':''}>🪪 登记</option></select>\`, '列表与入口处展示的图标，便于区分业务。');\r
+    h += row('表单分类', \`<select id="fc_cat" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option>未分类</option><option>人事</option><option>财务</option><option>行政</option></select>\`, '用于列表分组与权限批量管理。');\r
+    h += secEnd();\r
+\r
+    // 表单设置仅保留「一、基本信息」与「二、列表与交互」两块；二（提交设置）/三（数据可见范围）/四（字段权限）/五（展示设置）已移除\r
+\r
+    // 第二大项：列表与交互（列表配置 / 查询配置 / 按钮配置）；不再有独立「视图管理」入口，也不再支持新建视图与数据可见范围\r
+    h += \`<div class="mt-5 pt-4 border-t border-gray-100 mb-3 pb-3 flex items-center gap-2 text-sm font-semibold text-gray-700"><i class="fas fa-table text-[#165DFF]"></i>二、列表与交互</div>\`;\r
+    h += sec('列表配置','form_list'); h += listConfigHTML(currentView()); h += secEnd();\r
+    h += sec('查询配置','form_query'); h += queryConfigHTML(currentView()); h += secEnd();\r
+    h += sec('按钮配置','form_buttons'); h += buttonConfigHTML(currentView()); h += secEnd();\r
+\r
+    body.innerHTML = h;\r
+    bindFormEvents();\r
+  }\r
+  /* ===================== 列表 / 查询 / 按钮 配置 ===================== */\r
+  const QUERY_MODES=[['like','包含'],['eq','精确'],['range','区间'],['date','日期']];\r
+  const LIST_BTN_DEFS=[['add','新增'],['import','导入'],['export','导出'],['batchDelete','批量删除']];\r
+  const ROW_BTN_DEFS=[['edit','修改'],['delete','删除']];\r
+  function listFieldDefs(c){\r
+    if(!c.listFields || !c.listFields.length) c.listFields = (fields||[]).map(f=>({field:f.fieldName,label:f.label,sortable:false}));\r
+    return c.listFields;\r
+  }\r
+  function listConfigHTML(c){\r
+    const defs=listFieldDefs(c);\r
+    if(!fields.length) return info('当前表单还没有字段，请先在画布添加字段，再回来配置列表展示。');\r
+    const rows = fields.map(f=>{\r
+      const idx=defs.findIndex(d=>d.field===f.fieldName);\r
+      const shown=idx>=0; const sortable=shown?defs[idx].sortable:false;\r
+      const up=shown?\`<button class="text-gray-400 hover:text-[#165DFF] btn-click text-xs px-1" \${idx===0?'disabled style="opacity:.3"':''} onclick="moveListField('\${f.fieldName}',-1)"><i class="fas fa-arrow-up"></i></button>\`:'';\r
+      const down=shown?\`<button class="text-gray-400 hover:text-[#165DFF] btn-click text-xs px-1" \${idx===defs.length-1?'disabled style="opacity:.3"':''} onclick="moveListField('\${f.fieldName}',1)"><i class="fas fa-arrow-down"></i></button>\`:'';\r
+      const sortChk=shown?\`<label class="flex items-center gap-1 text-xs text-gray-400 ml-1"><input type="checkbox" \${sortable?'checked':''} onchange="setListSortable('\${f.fieldName}',this.checked)" class="rounded text-[#165DFF]">可排序</label>\`:'';\r
+      return \`<div class="flex items-center gap-2 mb-1.5 text-sm"><input type="checkbox" \${shown?'checked':''} onchange="toggleListField('\${f.fieldName}','\${f.label}',this.checked)" class="rounded text-[#165DFF]"><span class="flex-1 text-gray-700">\${f.label}</span>\${up}\${down}\${sortChk}</div>\`;\r
+    }).join('');\r
+    return \`<div class="mb-2">\${rows}</div><div class="cfg-logic"><i class="fas fa-info-circle"></i><span>勾选字段即出现在运行态数据列表；用 ▲▼ 调整列左右顺序；「可排序」开启后该列支持点击排序。未勾选字段仅在提交详情中可见。</span></div>\`;\r
+  }\r
+  function toggleListField(field,label,checked){\r
+    const c=currentView(); if(!c.listFields) c.listFields=[];\r
+    const i=c.listFields.findIndex(d=>d.field===field);\r
+    if(checked && i<0) c.listFields.push({field,label,sortable:false});\r
+    else if(!checked && i>=0) c.listFields.splice(i,1);\r
+    renderConfig();\r
+  }\r
+  function moveListField(field,dir){\r
+    const c=currentView(); const a=c.listFields; if(!a) return; const i=a.findIndex(d=>d.field===field); const j=i+dir;\r
+    if(i<0||j<0||j>=a.length) return; const t=a[i];a[i]=a[j];a[j]=t; renderConfig();\r
+  }\r
+  function setListSortable(field,checked){ const c=currentView(); const d=c.listFields&&c.listFields.find(x=>x.field===field); if(d) d.sortable=checked; }\r
+  function queryConfigHTML(c){\r
+    if(!fields.length) return info('当前表单还没有字段，请先在画布添加字段，再回来配置查询条件。');\r
+    const qfs=c.queryFields||[];\r
+    const rows=fields.map(f=>{\r
+      const qf=qfs.find(x=>x.field===f.fieldName); const on=!!qf; const mode=qf?qf.mode:'like';\r
+      const modeSel=on?\`<select onchange="setQueryMode('\${f.fieldName}',this.value)" class="form-input border border-gray-300 rounded-md px-2 py-1 text-xs">\${QUERY_MODES.map(m=>\`<option value="\${m[0]}" \${mode===m[0]?'selected':''}>\${m[1]}</option>\`).join('')}</select>\`:'';\r
+      return \`<div class="flex items-center gap-2 mb-1.5 text-sm"><input type="checkbox" \${on?'checked':''} onchange="toggleQueryField('\${f.fieldName}','\${f.label}',this.checked)" class="rounded text-[#165DFF]"><span class="flex-1 text-gray-700">\${f.label}</span>\${modeSel}</div>\`;\r
+    }).join('');\r
+    return \`<div class="mb-2">\${rows}</div><div class="cfg-logic"><i class="fas fa-info-circle"></i><span>勾选字段即作为运行态数据列表的查询条件；「查询方式」决定匹配规则（包含/精确/区间/日期）。</span></div>\`;\r
+  }\r
+  function toggleQueryField(field,label,checked){\r
+    const c=currentView(); if(!c.queryFields) c.queryFields=[];\r
+    const i=c.queryFields.findIndex(x=>x.field===field);\r
+    if(checked && i<0) c.queryFields.push({field,label,mode:'like'});\r
+    else if(!checked && i>=0) c.queryFields.splice(i,1);\r
+    renderConfig();\r
+  }\r
+  function setQueryMode(field,mode){ const c=currentView(); const q=c.queryFields&&c.queryFields.find(x=>x.field===field); if(q) q.mode=mode; }\r
+  function buttonConfigHTML(c){\r
+    const lb=c.listButtons||['add','export'];\r
+    const rb=c.rowButtons||['edit','delete'];\r
+    const fb=c.formButtons||{submit:true,draft:true,reset:true};\r
+    const listBtns=LIST_BTN_DEFS.map(b=>\`<label class="flex items-center gap-2 text-sm text-gray-700 mb-1.5"><input type="checkbox" \${(lb.includes(b[0]))?'checked':''} onchange="toggleListBtn('\${b[0]}',this.checked)" class="rounded text-[#165DFF]"> \${b[1]}</label>\`).join('');\r
+    const rowBtns=ROW_BTN_DEFS.map(b=>\`<label class="flex items-center gap-2 text-sm text-gray-700 mb-1.5"><input type="checkbox" \${(rb.includes(b[0]))?'checked':''} onchange="toggleRowBtn('\${b[0]}',this.checked)" class="rounded text-[#165DFF]"> \${b[1]}</label>\`).join('');\r
+    const formBtns=\`\r
+      <label class="flex items-center gap-2 text-sm text-gray-700 mb-1.5"><input type="checkbox" \${fb.submit?'checked':''} onchange="currentView().formButtons.submit=this.checked" class="rounded text-[#165DFF]"> 提交</label>\r
+      <label class="flex items-center gap-2 text-sm text-gray-700 mb-1.5"><input type="checkbox" \${fb.draft?'checked':''} onchange="currentView().formButtons.draft=this.checked" class="rounded text-[#165DFF]"> 保存草稿</label>\r
+      <label class="flex items-center gap-2 text-sm text-gray-700 mb-1.5"><input type="checkbox" \${fb.reset?'checked':''} onchange="currentView().formButtons.reset=this.checked" class="rounded text-[#165DFF]"> 取消</label>\`;\r
+    return \`<div class="mb-2"><div class="text-xs font-semibold text-gray-500 mb-1">列表按钮（数据列表上方工具栏）</div>\${listBtns}</div>\`+\r
+      \`<div class="mb-2"><div class="text-xs font-semibold text-gray-500 mb-1">行操作按钮（每条数据的操作）</div>\${rowBtns}</div>\`+\r
+      \`<div class="mb-2"><div class="text-xs font-semibold text-gray-500 mb-1">表单按钮（填写页底部）</div>\${formBtns}</div>\`+\r
+      \`<div class="cfg-logic"><i class="fas fa-info-circle"></i><span>「提交 / 保存草稿 / 取消」均为<b>可选项</b>，按业务勾选是否出现在填写页底部（取消用于关闭当前填写页、不保存）。「修改 / 删除」按钮决定每条数据能否被操作，具体<b>哪些角色能用</b>由角色权限中的按钮权限授权（如仅创建人可改）。</span></div>\`;\r
+  }\r
+  function toggleListBtn(key,checked){ const c=currentView(); if(!c.listButtons) c.listButtons=['add','export']; if(checked&&!c.listButtons.includes(key)) c.listButtons.push(key); else if(!checked) c.listButtons=c.listButtons.filter(x=>x!==key); }\r
+  function toggleRowBtn(key,checked){ const c=currentView(); if(!c.rowButtons) c.rowButtons=['edit','delete']; if(checked&&!c.rowButtons.includes(key)) c.rowButtons.push(key); else if(!checked) c.rowButtons=c.rowButtons.filter(x=>x!==key); }\r
+\r
+  function bindFormEvents(){\r
+    const g=id=>document.getElementById(id); const c=formConfig;\r
+    if(g('fc_name')) g('fc_name').oninput=e=>{c.name=e.target.value; formName=c.name; document.getElementById('formNameInput').value=c.name;};\r
+    if(g('fc_desc')) g('fc_desc').oninput=e=>{c.desc=e.target.value;};\r
+    if(g('fc_icon')) g('fc_icon').onchange=e=>{c.icon=e.target.value;};\r
+    if(g('fc_cat')) g('fc_cat').onchange=e=>{c.category=e.target.value;};\r
+    if(g('fc_multi')) g('fc_multi').onchange=e=>{c.allowMultiple=e.target.checked;};\r
+    if(g('fc_after')) g('fc_after').onchange=e=>{c.afterSubmit=e.target.value; renderConfig();};\r
+    if(g('fc_afterurl')) g('fc_afterurl').oninput=e=>{c.afterUrl=e.target.value;};\r
+    if(g('fc_colperm')) g('fc_colperm').onchange=e=>{ formConfig.colPermEnabled=e.target.checked; renderConfig(); };\r
+    if(g('fv_dvis')) g('fv_dvis').onchange=e=>{ currentView().dataVisible=e.target.value; renderConfig(); };\r
+    if(g('fv_name')) g('fv_name').oninput=e=>{ currentView().name=e.target.value; };\r
+\r
+    if(g('fc_lpos')) g('fc_lpos').onchange=e=>{c.labelPos=e.target.value; renderCanvas();};\r
+    if(g('fc_lalign')) g('fc_lalign').onchange=e=>{c.labelAlign=e.target.value; renderCanvas();};\r
+    if(g('fc_lw')) g('fc_lw').onchange=e=>{c.labelWidth=e.target.value; renderCanvas();};\r
+    if(g('fc_fw')) g('fc_fw').onchange=e=>{c.formWidth=e.target.value; applyFormWidth();};\r
+    if(g('fc_print')) g('fc_print').onchange=e=>{c.printable=e.target.checked;};\r
+    if(g('fc_stime')) g('fc_stime').onchange=e=>{c.showSubmitTime=e.target.checked;};\r
+    if(g('fc_dedupe')) g('fc_dedupe').onchange=e=>{c.dedupe=e.target.checked;};\r
+  }\r
+  function applyFormWidth(){\r
+    const map={narrow:'520px',standard:'680px',wide:'860px'};\r
+    document.getElementById('canvasMaxWrap').style.maxWidth = map[formConfig.formWidth]||'680px';\r
+  }\r
+\r
+  /* ===================== 顶部 & 保存 / 发布 / 下架 ===================== */\r
+  function onFormNameChange(){ formName=document.getElementById('formNameInput').value; formConfig.name=formName; }\r
+  /* 保存：持久化当前设计。\r
+     草稿 → 仍保持草稿；已发布 → 标记为「待发布修改」（线上版本不变，黄条提示）。\r
+     新表单（未入列表）→ 首次保存即写入列表，状态为草稿 v0。 */\r
+  function saveForm(){\r
+    let f=currentForm();\r
+    if(!f){\r
+      const id='form'+Date.now();\r
+      f={ id, name:formName||'未命名表单', status:'草稿', version:0, publishedAt:'', publishedBy:'', hasUnpublished:false,\r
+          updatedAt:todayStr(), cat:formConfig.category||'未分类',\r
+          creator:'产品同学', createdAt:todayStr(), refs:[],\r
+          fc:JSON.parse(JSON.stringify(formConfig)), fields:JSON.parse(JSON.stringify(fields)), versions:[] };\r
+      SAMPLE_FORMS.unshift(f); currentFormId=id;\r
+    } else {\r
+      f.name=formName; f.fc=JSON.parse(JSON.stringify(formConfig)); f.fields=JSON.parse(JSON.stringify(fields));\r
+      f.updatedAt=todayStr(); f.cat=formConfig.category||'未分类';\r
+      if(f.status==='已发布') f.hasUnpublished=true;   // 线上版本保持不变，仅标记有未发布修改\r
+    }\r
+    isCreating=false;\r
+    renderFormTable(); refreshDesignerChrome();\r
+    const isPublished = f.status==='已发布';\r
+    alert('已保存「'+(formName||'未命名表单')+'」\\n'+(isPublished?'（已发布表单：修改已存为待发布草稿，发布后生效）':'（状态：草稿，未被他人提交）'));\r
+  }\r
+  /* 发布：版本 +1，快照当前设计为线上锁定版本，状态变「已发布」 */\r
+  function publishForm(){\r
+    const name=(formName||'').trim();\r
+    if(!name){ alert('请先填写表单名称，再发布。'); return; }\r
+    const dup=SAMPLE_FORMS.find(x=>x.name.trim()===name && x.id!==currentFormId);\r
+    if(dup){ alert('已存在同名表单「'+name+'」（'+(dup.status||'')+'），表单名称需唯一，请修改名称后再发布。'); return; }\r
+    let f=currentForm();\r
+    if(!f){ saveForm(); f=currentForm(); }              // 未保存过则先落库再发布\r
+    if(!f) return;\r
+    f.version = (f.version||0)+1;\r
+    f.status='已发布'; f.publishedAt=todayStr(); f.publishedBy='产品同学'; f.hasUnpublished=false;\r
+    f.fc=JSON.parse(JSON.stringify(formConfig)); f.fields=JSON.parse(JSON.stringify(fields)); f.updatedAt=todayStr();\r
+    if(!f.versions) f.versions=[];\r
+    f.versions.push({ version:f.version, time:f.publishedAt, publisher:f.publishedBy,\r
+                      note: f.version===1?'首次发布，锁定该版本 schema':'基于 v'+(f.version-1)+' 的修改发布',\r
+                      name:f.name, cat:f.cat, icon:f.fc.icon,\r
+                      fields:JSON.parse(JSON.stringify(f.fields)), fc:JSON.parse(JSON.stringify(f.fc)) });\r
+    renderFormTable(); refreshDesignerChrome();\r
+    alert('发布成功！当前线上版本 v'+f.version+'，表单已可被全员提交。\\n（该版本 schema 已锁定，历史数据按版本渲染）');\r
+  }\r
+  /* 下架：状态回退草稿（已下架），停止接收提交，保留历史数据 */\r
+  function unpublishForm(){\r
+    const f=currentForm(); if(!f) return;\r
+    f.status='草稿'; f.hasUnpublished=false;\r
+    renderFormTable(); refreshDesignerChrome();\r
+    alert('已下架。表单停止接收提交；历史数据（至 v'+f.version+'）保留可查。\\n如需重新上线，点击「发布」生成新版本。');\r
+  }\r
+  /* 版本历史弹窗 */\r
+  function showVersions(){\r
+    const f=currentForm();\r
+    const wrap=document.getElementById('versionList');\r
+    const vers = f ? (f.versions||[]).slice().sort((a,b)=>b.version-a.version) : [];\r
+    if(vers.length===0){\r
+      wrap.innerHTML='<div class="text-sm text-gray-400 text-center py-6">暂无发布版本。点击「发布」后会生成 v1 并锁定该版本结构。</div>';\r
+    } else {\r
+      wrap.innerHTML = vers.map(v=>{\r
+        const cur = v.version===f.version && f.status==='已发布';\r
+        const hasSnap = !!(v.fields && v.fc);\r
+        return \`<div class="border border-gray-200 rounded-lg p-3 \${cur?'ring-2 ring-[#165DFF] border-[#165DFF]':''}">\r
+          <div class="flex items-center justify-between">\r
+            <span class="font-semibold text-gray-800">v\${v.version} \${cur?'<span class="ml-1 px-1.5 py-0.5 rounded text-[10px] bg-green-100 text-green-600">当前线上</span>':''}</span>\r
+            <span class="text-xs text-gray-400">\${v.time} · \${v.publisher}</span>\r
+          </div>\r
+          <div class="text-xs text-gray-500 mt-1">\${v.note||''}\${hasSnap?\` · \${v.fields.length} 个字段\`:''}</div>\r
+          <div class="flex items-center justify-between mt-2">\r
+            <span class="text-[11px] text-gray-400"><i class="fas fa-lock mr-1"></i>该版本 schema 已锁定，提交数据按此版本渲染</span>\r
+            \${cur?'':\`<span class="flex gap-2">\r
+              <button onclick="viewFormVersion(\${v.version})" class="px-2.5 py-1 rounded-md text-xs btn-click border border-gray-300 text-gray-600 hover:border-[#165DFF] hover:text-[#165DFF]"><i class="fas fa-eye mr-1"></i>查看</button>\r
+              <button onclick="restoreFormVersion(\${v.version})" class="px-2.5 py-1 rounded-md text-xs btn-click border border-[#165DFF] text-[#165DFF] hover:bg-blue-50"><i class="fas fa-rotate-left mr-1"></i>恢复并发布</button>\r
+            </span>\`}\r
+          </div>\r
+        </div>\`;\r
+      }).join('');\r
+    }\r
+    openModal('versionsModal');\r
+  }\r
+  /* 查看历史版本：在设计器画布上直接展示该版本的字段结构（只读） */\r
+  function viewFormVersion(v){\r
+    const f=currentForm(); if(!f) return;\r
+    const s=(f.versions||[]).find(x=>x.version===v); if(!s) return;\r
+    if(!s.fields || !s.fc){ alert('该历史版本未保存结构快照，无法预览。'); return; }\r
+    formViewingVersion=v; selectedId=null;\r
+    closeModal('versionsModal');\r
+    const banner=document.getElementById('stateBanner');\r
+    banner.style.display='flex';\r
+    banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200 bg-blue-50 text-blue-700';\r
+    banner.innerHTML='<i class="fas fa-eye"></i> 正在查看历史版本 <b>v'+v+'</b>（只读 · '+(s.publisher||'系统')+' · '+(s.time||'—')+'）<button onclick="exitFormVersionView()" class="ml-auto px-2.5 py-1 rounded-md text-[11px] font-medium bg-[#165DFF] text-white hover:bg-blue-600 btn-click">返回编辑</button>';\r
+    renderCanvas(); renderConfig();\r
+  }\r
+  function exitFormVersionView(){\r
+    formViewingVersion=null; selectedId=null;\r
+    renderCanvas(); renderConfig(); refreshDesignerChrome();\r
+  }\r
+  /* 恢复历史版本：以该版本内容覆盖当前表单并重新发布，版本号不变 */\r
+  function restoreFormVersion(v){\r
+    const f=currentForm(); if(!f) return;\r
+    const s=(f.versions||[]).find(x=>x.version===v); if(!s) return;\r
+    if(!s.fields || !s.fc){ alert('该历史版本未保存结构快照，无法恢复。'); return; }\r
+    if(!confirm('确认恢复历史版本 v'+v+'？\\n将把当前表单内容替换为该版本内容并重新发布，版本号保持 v'+v+'，不生成新版本。')) return;\r
+    f.name=s.name||f.name; f.cat=s.cat||f.cat; f.icon=s.icon||f.icon;\r
+    f.fc=JSON.parse(JSON.stringify(s.fc)); f.fields=JSON.parse(JSON.stringify(s.fields));\r
+    f.version=v; f.status='已发布'; f.hasUnpublished=false;\r
+    f.publishedAt=s.time||f.publishedAt; f.publishedBy=s.publisher||f.publishedBy; f.updatedAt=todayStr();\r
+    formName=f.name; formConfig=JSON.parse(JSON.stringify(f.fc)); ensureViews({fc:formConfig});\r
+    fields=JSON.parse(JSON.stringify(f.fields)); selectedId=null; formViewingVersion=null;\r
+    currentViewId=(formConfig.views.find(x=>x.isDefault)||formConfig.views[0]).id;\r
+    document.getElementById('formNameInput').value=formName;\r
+    applyFormWidth();\r
+    closeModal('versionsModal');\r
+    renderFormTable(); renderCanvas(); renderConfig(); refreshDesignerChrome();\r
+    alert('已恢复历史版本 v'+v+' 并重新发布（版本号保持 v'+v+'，不新增版本号）');\r
+  }\r
+\r
+  /* ===================== 预览态子表单（可增删行 + 实时汇总） ===================== */\r
+  const previewSubRows = {};\r
+  function previewSubform(f){\r
+    const fid=f.id;\r
+    if(!previewSubRows[fid]){\r
+      const n=(f.minRows&&f.minRows>0)?f.minRows:1;\r
+      previewSubRows[fid]=Array.from({length:n},()=>(f.subFields||[]).map(()=>''));\r
+    }\r
+    const sf=f.subFields||[];\r
+    const head=sf.map(s=>\`<th class="px-3 py-2 text-left text-xs font-medium text-gray-600">\${s.label}\${s.type==='number'?' <span class="font-normal text-gray-400">数字</span>':''}</th>\`).join('')+'<th class="w-8"></th>';\r
+    return \`<div class="subprev border border-gray-200 rounded-md overflow-hidden" id="subprev_\${fid}">\r
+      <table class="w-full text-sm"><thead class="bg-gray-50">\${head}</thead>\r
+      <tbody id="subbody_\${fid}">\${subRowsHTML(f)}</tbody>\r
+      \${f.showSummary?\`<tfoot id="subfoot_\${fid}">\${subFootHTML(f)}</tfoot>\`:''}\r
+      </table>\r
+      <div class="px-3 py-2 text-xs flex items-center gap-3 bg-gray-50 border-t">\r
+        <button class="text-[#165DFF] btn-click" onclick="subAddRow('\${fid}')"><i class="fas fa-plus mr-1"></i>添加一行</button>\r
+        \${f.allowAdd?'':\`<span class="text-gray-400">（已锁定增删，固定 \${previewSubRows[fid].length} 行）</span>\`}\r
+        \${f.maxRows?\`<span class="text-gray-400 ml-auto">最多 \${f.maxRows} 行</span>\`:''}\r
+      </div>\r
+    </div>\`;\r
+  }\r
+  function subRowsHTML(f){\r
+    const rows=previewSubRows[f.id]||[];\r
+    const sf=f.subFields||[];\r
+    return rows.map((row,ri)=>\`<tr>\${sf.map((s,ci)=>{\r
+      const ph=s.type==='number'?'0.00':(s.type==='date'?'年/月/日':'请输入');\r
+      const t=s.type==='date'?'date':(s.type==='number'?'number':'text');\r
+      return \`<td class="px-3 py-2 border-t"><input type="\${t}" value="\${row[ci]||''}" placeholder="\${ph}" data-r="\${ri}" data-c="\${ci}" oninput="subOnInput('\${f.id}',this)" class="w-full border border-gray-200 rounded px-2 py-1 text-sm"></td>\`;\r
+    }).join('')}<td class="px-3 py-2 border-t text-center"><button class="text-gray-400 hover:text-red-500 btn-click" onclick="subDelRow('\${f.id}',\${ri})"><i class="fas fa-trash-alt"></i></button></td></tr>\`).join('');\r
+  }\r
+  function subFootHTML(f){\r
+    const sf=f.subFields||[];\r
+    const lead=sf.findIndex(s=>s.type!=='number'); const li=lead<0?0:lead;\r
+    const cells=sf.map((s,ci)=>{\r
+      if(s.type!=='number') return ci===li?\`<td class="px-3 py-2 text-xs font-semibold text-[#165DFF] border-t border-gray-200 bg-[#F0F5FF]">合计</td>\`:\`<td class="border-t border-gray-200 bg-[#F0F5FF]"></td>\`;\r
+      return \`<td class="px-3 py-2 text-xs font-semibold text-[#165DFF] border-t border-gray-200 bg-[#F0F5FF]" id="subsum_\${f.id}_\${ci}">0</td>\`;\r
+    }).join('')+'<td class="border-t border-gray-200 bg-[#F0F5FF]"></td>';\r
+    return \`<tr>\${cells}</tr>\`;\r
+  }\r
+  function subAddRow(fid){ const f=fields.find(x=>x.id===fid); if(!f) return; const rows=previewSubRows[fid]||(previewSubRows[fid]=[]); if(f.maxRows&&rows.length>=f.maxRows) return; rows.push((f.subFields||[]).map(()=>'')); subRebuild(fid); }\r
+  function subDelRow(fid,ri){ const f=fields.find(x=>x.id===fid); if(!f) return; const rows=previewSubRows[fid]||[]; if(f.minRows&&rows.length<=f.minRows) return; rows.splice(ri,1); subRebuild(fid); }\r
+  function subOnInput(fid,el){ const f=fields.find(x=>x.id===fid); if(!f) return; const r=+el.dataset.r,c=+el.dataset.c; previewSubRows[fid][r][c]=el.value; subRecalc(fid); }\r
+  function subRecalc(fid){ const f=fields.find(x=>x.id===fid); if(!f||!f.showSummary) return; (f.subFields||[]).forEach((s,ci)=>{ if(s.type!=='number') return; const sum=previewSubRows[fid].reduce((a,row)=>a+(parseFloat(row[ci])||0),0); const cell=document.getElementById('subsum_'+fid+'_'+ci); if(cell) cell.textContent=sum.toFixed(2).replace(/\\.00$/,''); }); }\r
+  function subRebuild(fid){ const f=fields.find(x=>x.id===fid); if(!f) return; const body=document.getElementById('subbody_'+fid); if(body) body.innerHTML=subRowsHTML(f); subRecalc(fid); }\r
+\r
+  /* ===================== 预览 / Schema ===================== */\r
+  function previewForm(){\r
+    document.getElementById('previewTitle').textContent = formName + ' · 预览';\r
+    for(const k in previewSubRows) delete previewSubRows[k];\r
+    const body=document.getElementById('previewBody');\r
+    if(fields.length===0){ body.innerHTML='<p class="text-sm text-gray-400">画布暂无字段，请先添加控件。</p>'; }\r
+    else body.innerHTML = (formConfig.desc?\`<p class="text-sm text-gray-500 mb-4">\${formConfig.desc}</p>\`:'') + fields.map(f=>{\r
+      const lp = f.labelPos || formConfig.labelPos;\r
+      const la = f.labelAlign || formConfig.labelAlign;\r
+      const lwKey = f.labelWidth==='inherit'||!f.labelWidth ? formConfig.labelWidth : f.labelWidth;\r
+      let c='';\r
+      if(f.type==='text') c=\`<input class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="\${f.placeholder||''}" value="\${defaultDisplay(f)}">\`;\r
+      else if(f.type==='select'){\r
+        let ph=f.placeholder||'请选择'; const dt=f.defaultType||'manual';\r
+        let defLabel='';\r
+        if(dt==='manual'&&f.defaultValue){const o=(f.options||[]).find(o=>o.value===f.defaultValue);defLabel=o?o.label:f.defaultValue;}\r
+        else if(dt==='currentUser')defLabel='当前登录人'; else if(dt==='today')defLabel=new Date().toISOString().slice(0,10); else if(dt==='linkage')defLabel=defaultDisplay(f);\r
+        if(f.searchable){\r
+          c=\`<div class="relative" onfocusin="previewShowSelect('\${f.fieldName}')" onfocusout="setTimeout(()=>previewHideSelect('\${f.fieldName}'),150)">\r
+            <div class="flex items-center border border-gray-300 rounded-md px-3 py-2 text-sm bg-white">\r
+              <i class="fas fa-search text-gray-400 mr-2"></i>\r
+              <input id="ps_\${f.fieldName}" class="flex-1 outline-none text-sm" placeholder="\${ph}" value="\${defLabel}" oninput="previewFilterSelect(this,'\${f.fieldName}')">\r
+            </div>\r
+            <div id="pslist_\${f.fieldName}" class="absolute z-10 mt-1 w-full bg-white border border-gray-200 rounded-md shadow-lg max-h-40 overflow-auto" style="display:none">\r
+              \${(f.options||[]).map(o=>\`<div class="px-3 py-1.5 text-sm hover:bg-blue-50 cursor-pointer" data-val="\${o.label}" onclick="previewPickSelect('\${f.fieldName}','\${(o.label||'').replace(/'/g,'')}')">\${o.label}</div>\`).join('')}\r
+            </div>\r
+          </div>\`;\r
+        } else {\r
+          c=\`<select class="w-full border border-gray-300 rounded-md px-3 py-2 text-sm"><option>请选择</option>\${(f.options||[]).map(o=>\`<option \${o.value===f.defaultValue?'selected':''}>\${o.label}</option>\`).join('')}</select>\`;\r
+        }\r
+      }\r
+      else if(f.type==='subform'){\r
+        c=previewSubform(f);\r
+      } else if(f.type==='member'){\r
+        let ph='请选择成员'; const dt=f.defaultType||'manual';\r
+        if(dt==='currentUser')ph='当前登录人'; else if(dt==='linkage')ph=defaultDisplay(f);\r
+        const scope=f.range==='all'?'全部成员':(f.range==='dept'?((f.depts||[]).join('/')||'指定部门'):((f.roles||[]).join('/')||'指定角色'));\r
+        c=\`<div class="border border-gray-300 rounded-md px-3 py-2 text-sm flex items-center gap-2 cursor-pointer"><i class="fas fa-user-plus text-[#165DFF]"></i> 选择成员（\${scope}）</div>\`;\r
+      }\r
+      let label;\r
+      if(lp==='left'){\r
+        const lwStyle = lwKey==='auto' ? 'width:auto;flex:none;' : \`width:\${LABEL_W[lwKey]};flex:none;\`;\r
+        label = \`<label class="label-cell text-sm font-medium text-gray-700 \${lwKey==='auto'?'auto':''}" style="\${lwStyle}text-align:\${la};padding-top:7px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis">\${f.label}\${(f.required?'<span class="text-red-500 ml-0.5">*</span>':'')}</label>\`;\r
+      } else {\r
+        label = \`<label class="block text-sm font-medium text-gray-700 mb-1" style="text-align:\${la}">\${f.label}\${(f.required?'<span class="text-red-500 ml-0.5">*</span>':'')}</label>\`;\r
+      }\r
+      const wrap = lp==='left' ? \`<div class="flex items-start gap-3">\${label}<div class="flex-1 min-w-0">\${c}\${f.helpText?\`<div class="text-[11px] text-gray-400 mt-1">\${f.helpText}</div>\`:''}</div></div>\` : \`<div>\${label}<div>\${c}\${f.helpText?\`<div class="text-[11px] text-gray-400 mt-1">\${f.helpText}</div>\`:''}</div></div>\`;\r
+      return \`<div class="mb-4">\${wrap}</div>\`;\r
+    }).join('');\r
+    const fb=currentView().formButtons||{submit:true,draft:true,reset:true};\r
+    let btns='';\r
+    if(fb.draft) btns+='<button class="px-4 py-2 border border-gray-300 text-gray-600 text-sm rounded-lg btn-click" onclick="closeModal(\\'previewModal\\')">保存草稿</button>';\r
+    if(fb.reset) btns+='<button class="px-4 py-2 border border-gray-300 text-gray-600 text-sm rounded-lg btn-click" onclick="closeModal(\\'previewModal\\')">取消</button>';\r
+    if(fb.submit) btns+='<button class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click" onclick="alert(\\'提交成功（演示）\\')">提交</button>';\r
+    document.getElementById('previewBtns').innerHTML = btns || '<span class="text-xs text-gray-400">未配置任何表单按钮</span>';\r
+    openModal('previewModal');\r
+  }\r
+  // 预览态：下拉单选「可搜索」效果（可输入关键字即时过滤 + 点选回填）\r
+  function previewShowSelect(fn){ const l=document.getElementById('pslist_'+fn); if(l) l.style.display=''; }\r
+  function previewHideSelect(fn){ const l=document.getElementById('pslist_'+fn); if(l) l.style.display='none'; }\r
+  function previewFilterSelect(input, fn){\r
+    const l=document.getElementById('pslist_'+fn); if(!l) return;\r
+    const q=input.value.trim().toLowerCase();\r
+    l.querySelectorAll('div[data-val]').forEach(d=>{ d.style.display = d.getAttribute('data-val').toLowerCase().includes(q) ? '' : 'none'; });\r
+  }\r
+  function previewPickSelect(fn, label){\r
+    const i=document.getElementById('ps_'+fn); if(i) i.value=label;\r
+    previewHideSelect(fn);\r
+  }\r
+  function showSchema(){\r
+    const schema = {\r
+      formName, version:1, config: formConfig,\r
+      fields: fields.map(f=>{\r
+        const base={ field:f.fieldName, label:f.label, type:f.type, span:f.span||12, required:!!f.required, helpText:f.helpText||'',\r
+          visible:f.visible||{mode:'always',logic:'and',conditions:[]}, readonly:!!f.readonly, printShow:f.printShow!==false,\r
+          defaultType:f.defaultType||'manual', defaultValue:f.defaultValue||'', linkage:f.linkage||{formId:'',formName:'',conditions:[],returnField:''} };\r
+        if(f.type==='text') Object.assign(base,{placeholder:f.placeholder,maxLength:f.maxLength,minLength:f.minLength,format:f.format,password:!!f.password,trim:!!f.trim});\r
+        if(f.type==='select') Object.assign(base,{source:f.source,apiUrl:f.apiUrl||'',dictKey:f.dictKey||'',options:f.options,searchable:!!f.searchable,allowCustom:!!f.allowCustom});\r
+        if(f.type==='subform') Object.assign(base,{minRows:f.minRows,maxRows:f.maxRows,allowAdd:!!f.allowAdd,showSummary:!!f.showSummary,subFields:f.subFields});\r
+        if(f.type==='member') Object.assign(base,{range:f.range,depts:f.depts||[],roles:f.roles||[],multi:!!f.multi,includeDept:!!f.includeDept});\r
+        return base;\r
+      })\r
+    };\r
+    document.getElementById('schemaBody').textContent = JSON.stringify(schema,null,2);\r
+    openModal('schemaModal');\r
+  }\r
+\r
+  /* ===================== 模态 ===================== */\r
+  function openModal(id){ document.getElementById(id).classList.remove('modal-hidden'); }\r
+  function closeModal(id){ document.getElementById(id).classList.add('modal-hidden'); }\r
+  document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.add('modal-hidden'); }));\r
+\r
+  /* ===================== 连线 ===================== */\r
+  const svg=document.getElementById('connections'); const connections=[];\r
+  function drawConnections(){\r
+    svg.innerHTML=''; connections.length=0;\r
+    document.querySelectorAll('.proto-element[data-proto-id]').forEach(leftEl=>{\r
+      const pid=leftEl.getAttribute('data-proto-id');\r
+      const rightEl=document.querySelector(\`.proto-desc[data-proto-id="\${pid}"]\`); if(!rightEl) return;\r
+      const lr=leftEl.getBoundingClientRect(), rr=rightEl.getBoundingClientRect(), sr=svg.getBoundingClientRect();\r
+      if(!lr.width||!lr.height||!rr.width) return;\r
+      const x1=lr.right-sr.left, y1=lr.top+lr.height/2-sr.top, x2=rr.left-sr.left, y2=rr.top+rr.height/2-sr.top, cx=x1+(x2-x1)*0.5;\r
+      const path=document.createElementNS('http://www.w3.org/2000/svg','path');\r
+      path.setAttribute('d',\`M \${x1} \${y1} C \${cx} \${y1}, \${cx} \${y2}, \${x2} \${y2}\`);\r
+      path.setAttribute('class','connection-line'); path.setAttribute('data-proto-id',pid); svg.appendChild(path);\r
+      const mx=(x1+x2)/2, my=(y1+y2)/2;\r
+      const bg=document.createElementNS('http://www.w3.org/2000/svg','circle'); bg.setAttribute('cx',mx); bg.setAttribute('cy',my); bg.setAttribute('r',11); bg.setAttribute('class','connection-label-bg'); svg.appendChild(bg);\r
+      const tx=document.createElementNS('http://www.w3.org/2000/svg','text'); tx.setAttribute('x',mx); tx.setAttribute('y',my); tx.setAttribute('dy','0.05em'); tx.setAttribute('class','connection-label'); tx.textContent=pid; svg.appendChild(tx);\r
+      connections.push({pid,path,leftEl,rightEl});\r
+    });\r
+  }\r
+  function highlight(pid,on){ const c=connections.find(x=>x.pid===pid); if(!c) return; c.path.classList.toggle('active',on); c.leftEl.classList.toggle('active-highlight',on); c.rightEl.classList.toggle('active-highlight',on); }\r
+  function bindHover(){\r
+    document.querySelectorAll('.proto-element[data-proto-id]').forEach(el=>{ el.addEventListener('mouseenter',()=>highlight(el.getAttribute('data-proto-id'),true)); el.addEventListener('mouseleave',()=>highlight(el.getAttribute('data-proto-id'),false)); });\r
+    document.querySelectorAll('.proto-desc[data-proto-id]').forEach(el=>{ el.addEventListener('mouseenter',()=>highlight(el.getAttribute('data-proto-id'),true)); el.addEventListener('mouseleave',()=>highlight(el.getAttribute('data-proto-id'),false)); });\r
+  }\r
+  let mobileDesc=false;\r
+  function toggleMobileView(){ mobileDesc=!mobileDesc; const lp=document.getElementById('left-panel'), rp=document.getElementById('right-panel'), b=document.getElementById('mobileToggle'); if(mobileDesc){ lp.style.display='none'; rp.style.height='100vh'; b.innerHTML='<i class="fas fa-desktop"></i>'; } else { lp.style.display=''; rp.style.height=''; b.innerHTML='<i class="fas fa-info"></i>'; } }\r
+\r
+  /* ===================== 初始化 ===================== */\r
+  function init(){\r
+    // 规范化：为示例表单补齐 版本 / 发布信息 / 版本历史\r
+    SAMPLE_FORMS.forEach(f=>{\r
+      if(f.version==null) f.version = (f.status==='已发布')?1:0;\r
+      if(f.publishedAt==null) f.publishedAt = (f.status==='已发布')?f.updatedAt:'';\r
+      if(f.publishedBy==null) f.publishedBy = (f.status==='已发布')?'系统':'';\r
+      if(f.hasUnpublished==null) f.hasUnpublished=false;\r
+      if(!f.versions) f.versions = (f.status==='已发布')\r
+        ? [{version:1, time:f.publishedAt||f.updatedAt, publisher:f.publishedBy||'系统', note:'首次发布，锁定该版本 schema',\r
+            name:f.name, cat:f.cat, icon:(f.fc&&f.fc.icon)||'fa-file-alt',\r
+            fields:JSON.parse(JSON.stringify(f.fields||[])), fc:JSON.parse(JSON.stringify(f.fc))}]\r
+        : [];\r
+    });\r
+    renderFormTable(); renderPalette(); applyFormWidth(); renderCanvas(); renderConfig(); drawConnections(); bindHover();\r
+  }\r
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(init,120));\r
+  let rt; window.addEventListener('resize',()=>{ clearTimeout(rt); rt=setTimeout(init,150); });\r
+  document.getElementById('left-panel').addEventListener('scroll',()=>requestAnimationFrame(drawConnections));\r
+  document.getElementById('right-panel').addEventListener('scroll',()=>requestAnimationFrame(drawConnections));\r
+  ___SCEND___\r
+</body>\r
+</html>\r
+<\/script>\r
+<script type="text/plain" id="mod-flow-full">\r
+<!DOCTYPE html>\r
+<html lang="zh-CN">\r
+<head>\r
+  <meta charset="UTF-8">\r
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">\r
+  <title>低代码平台原型 · 流程中心</title>\r
+  <script src="https://cdn.tailwindcss.com">___SCEND___\r
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">\r
+  <style>\r
+    body { font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif; overflow: hidden; }\r
+    ::-webkit-scrollbar { width: 6px; height: 6px; }\r
+    ::-webkit-scrollbar-track { background: #F5F7FA; }\r
+    ::-webkit-scrollbar-thumb { background: #c1c1c1; border-radius: 3px; }\r
+    ::-webkit-scrollbar-thumb:hover { background: #a8a8a8; }\r
+\r
+    .proto-element { position: relative; transition: all 0.2s ease; border-radius: 6px; }\r
+    .proto-element:hover { box-shadow: 0 0 0 2px #165DFF, 0 4px 12px rgba(22,93,255,0.15); }\r
+    .proto-element.active-highlight { box-shadow: 0 0 0 2px #165DFF, 0 4px 12px rgba(22,93,255,0.2); background-color: rgba(22,93,255,0.05); }\r
+\r
+    .proto-desc { transition: all 0.2s ease; border-radius: 6px; border: 1px solid #fde68a; background-color: #fffbeb; }\r
+    .proto-desc:hover { background-color: #fef3c7; border-color: #f59e0b; box-shadow: 0 2px 8px rgba(245,158,11,0.15); }\r
+    .proto-desc.active-highlight { background-color: #fde68a; border-color: #d97706; box-shadow: 0 2px 8px rgba(245,158,11,0.25); }\r
+\r
+    #connections { position: absolute; top: 0; left: 0; width: 100%; height: 100%; pointer-events: none; z-index: 50; }\r
+    .connection-line { fill: none; stroke: #165DFF; stroke-width: 2; opacity: 0.6; transition: all 0.2s ease; }\r
+    .connection-line.active { stroke-width: 3; opacity: 1; }\r
+    .connection-label { fill: #fff; font-size: 12px; font-weight: bold; text-anchor: middle; dominant-baseline: central; }\r
+    .connection-label-bg { fill: #165DFF; }\r
+\r
+    .sidebar-menu-item { transition: all 0.2s; cursor: pointer; }\r
+    .sidebar-menu-item:hover { background-color: rgba(22,93,255,0.08); color: #165DFF; }\r
+    .sidebar-menu-item.active { background-color: rgba(22,93,255,0.12); color: #165DFF; border-right: 3px solid #165DFF; }\r
+\r
+    .tag { display: inline-flex; align-items: center; padding: 2px 8px; border-radius: 4px; font-size: 12px; font-weight: 500; }\r
+    .tag-blue { background-color: rgba(22,93,255,0.1); color: #165DFF; }\r
+    .tag-green { background-color: rgba(0,180,42,0.1); color: #00B42A; }\r
+    .tag-gray { background-color: #F5F7FA; color: #666; }\r
+    .tag-orange { background-color: rgba(245,158,11,0.12); color: #d97706; }\r
+    .tag-purple { background-color: rgba(124,92,255,0.12); color: #7c5cff; }\r
+\r
+    .modal-overlay { transition: opacity 0.3s ease; }\r
+    .modal-content { transition: transform 0.3s ease, opacity 0.3s ease; }\r
+    .modal-hidden { opacity: 0; pointer-events: none; }\r
+    .modal-hidden .modal-content { transform: scale(0.95); opacity: 0; }\r
+\r
+    .btn-click:active { transform: scale(0.96); }\r
+    .form-input:focus { border-color: #165DFF; box-shadow: 0 0 0 3px rgba(22,93,255,0.1); outline: none; }\r
+\r
+    /* ===== 流程节点卡片（绝对定位，可拖动） ===== */\r
+    .node-card { position:absolute; width:210px; border:2px solid #e5e7eb; background:#fff; border-radius:12px; padding:12px 14px; cursor:grab; transition:border-color .15s, box-shadow .15s; pointer-events:auto; user-select:none; }\r
+    .node-card:hover { border-color:#9db8ff; }\r
+    .node-card.sel { border-color:#165DFF; box-shadow:0 0 0 3px rgba(22,93,255,0.15); }\r
+    .node-start, .node-end { width:180px; margin:0; text-align:center; border-radius:999px; }\r
+    .node-start { background:#165DFF; color:#fff; border-color:#165DFF; }\r
+    .node-end { background:#00B42A; color:#fff; border-color:#00B42A; }\r
+    .node-approval { border-left:4px solid #165DFF; }\r
+    .node-cc { border-left:4px solid #7c5cff; }\r
+    .node-del { position:absolute; top:-9px; right:-9px; width:20px; height:20px; border-radius:50%; background:#fff; border:1px solid #fca5a5; color:#ef4444; font-size:11px; display:none; align-items:center; justify-content:center; }\r
+    .node-card:hover .node-del { display:flex; }\r
+\r
+    /* 连接点 */\r
+    .port { position:absolute; width:12px; height:12px; border-radius:50%; background:#fff; border:2px solid #165DFF; left:50%; transform:translateX(-50%); z-index:15; cursor:crosshair; transition:all .15s; }\r
+    .port:hover { background:#165DFF; transform:translateX(-50%) scale(1.2); }\r
+    .port.in { top:-7px; }\r
+    .port.out { bottom:-7px; }\r
+    .node-end .port.in { border-color:#00B42A; }\r
+    .node-start .port.out { border-color:#fff; background:#165DFF; }\r
+    .node-start .port.out:hover { background:#fff; }\r
+    .node-dragging { cursor:grabbing; opacity:.9; }\r
+\r
+    /* ===== 画布与连线（SVG） ===== */\r
+    #flowCanvas { position:relative; overflow:hidden; min-width:640px; }\r
+    #edgesSvg { position:absolute; inset:0; width:100%; height:100%; pointer-events:none; z-index:5; }\r
+    #nodeLayer { position:absolute; inset:0; z-index:10; pointer-events:none; }\r
+    #edgeLabelLayer { position:absolute; inset:0; pointer-events:none; z-index:12; }\r
+    .edge-hit { fill:none; stroke:transparent; stroke-width:14; pointer-events:stroke; cursor:pointer; }\r
+    .edge-path { fill:none; stroke:#165DFF; stroke-width:2; opacity:.6; transition:stroke .15s; }\r
+    .edge-path.sel { stroke-width:3; opacity:1; }\r
+    .edge-path.else { stroke:#7c5cff; }\r
+    .edge-bend { fill:#fff; stroke:#165DFF; stroke-width:2; cursor:move; pointer-events:all; }\r
+    .edge-lbl { position:absolute; transform:translate(-50%,-50%); white-space:nowrap; font-size:11px; padding:3px 10px; border-radius:999px; border:1px dashed #cbd5e1; background:#fff; color:#64748b; cursor:pointer; transition:all .15s; box-shadow:0 1px 3px rgba(0,0,0,.06); pointer-events:auto; }\r
+    .edge-lbl:hover { border-color:#165DFF; color:#165DFF; }\r
+    .edge-lbl.has { border-style:solid; border-color:#f59e0b; color:#d97706; background:#fffbeb; }\r
+    .edge-lbl.else { border-style:solid; border-color:#7c5cff; color:#7c5cff; background:#f5f3ff; }\r
+    .edge-lbl.warn { border-style:solid; border-color:#ef4444; color:#ef4444; background:#fef2f2; }\r
+    .edge-lbl.sel { background:#165DFF; color:#fff; border-color:#165DFF; }\r
+\r
+    /* ===== 配置面板 ===== */\r
+    .cfg-logic { font-size:11px; color:#6b7280; margin-top:4px; line-height:1.5; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:6px 8px; }\r
+    .cfg-info { font-size:11px; color:#6b7280; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:8px 10px; line-height:1.5; margin-top:6px; }\r
+    .cfg-sec { margin-top:14px; border-top:1px dashed #e5e7eb; padding-top:12px; }\r
+    .cfg-sec-h { font-size:12px; font-weight:700; color:#334155; margin-bottom:8px; display:flex; align-items:center; gap:6px; }\r
+    .cfg-sec-h::before { content:""; width:3px; height:13px; background:#165DFF; border-radius:2px; display:inline-block; }\r
+    .cfg-tabs { gap:2px; }\r
+    .cfg-tab { flex:1; padding:8px 6px; font-size:12px; font-weight:600; color:#64748b; border-bottom:2px solid transparent; transition:all .15s; white-space:nowrap; }\r
+    .cfg-tab:hover { color:#165DFF; }\r
+    .cfg-tab.on { color:#165DFF; border-bottom-color:#165DFF; background:rgba(22,93,255,0.04); }\r
+    .cfg-warn { font-size:11px; color:#b45309; background:#fffbeb; border:1px solid #fcd34d; border-radius:6px; padding:6px 8px; line-height:1.5; margin-top:8px; }\r
+\r
+    .status-pill { font-weight:600; }\r
+    .version-pill { font-weight:600; }\r
+\r
+    .tool-pill { display:inline-flex; align-items:center; gap:6px; padding:6px 12px; border-radius:8px; border:1px solid #e5e7eb; background:#fff; color:#374151; font-size:12px; font-weight:500; cursor:grab; box-shadow:0 1px 2px rgba(0,0,0,.04); transition:all .15s; }\r
+    .tool-pill:hover { border-color:#165DFF; color:#165DFF; box-shadow:0 2px 6px rgba(22,93,255,.1); }\r
+    .tool-pill.approval { border-left:3px solid #165DFF; }\r
+    .tool-pill.cc { border-left:3px solid #7c5cff; }\r
+    .tool-pill.dragging { opacity:.7; }\r
+\r
+    /* 节点复制按钮 */\r
+    .node-copy { position:absolute; top:-9px; left:-9px; width:20px; height:20px; border-radius:50%; background:#fff; border:1px solid #9db8ff; color:#165DFF; font-size:10px; display:none; align-items:center; justify-content:center; z-index:3; }\r
+    .node-card:hover .node-copy { display:flex; }\r
+    .node-copy:hover { background:#165DFF; color:#fff; }\r
+\r
+    /* 组织架构选人面板 */\r
+    .org-dept-head { user-select:none; }\r
+    .org-cb, .org-mb { width:14px; height:14px; accent-color:#165DFF; cursor:pointer; flex-shrink:0; }\r
+    .org-dept, .org-dept-children { margin-top:1px; }\r
+\r
+    [hidden] { display: none !important; }
+
+    /* The host system provides navigation and context for the embedded flow. */
+    #left-panel > aside, #right-panel, #mobileToggle, #connections { display:none !important; }
+    #left-panel { width:100% !important; }
+  </style>\r
+</head>\r
+<body class="bg-gray-50">\r
+\r
+  <button class="mobile-toggle-btn" id="mobileToggle" onclick="toggleMobileView()"><i class="fas fa-info"></i></button>\r
+\r
+  <div id="app" class="flex h-screen relative">\r
+\r
+    <!-- ============ 左 80%：产品界面 ============ -->\r
+    <div id="left-panel" class="flex" style="width:80%">\r
+\r
+      <!-- 左侧导航菜单 -->\r
+      <aside class="w-56 bg-white border-r border-gray-200 flex-shrink-0">\r
+        <div class="h-14 flex items-center gap-2 px-4 border-b border-gray-200">\r
+          <div class="w-8 h-8 bg-[#165DFF] rounded-lg flex items-center justify-center text-white"><i class="fas fa-cube"></i></div>\r
+          <div><div class="text-white font-semibold text-sm leading-tight" style="color:#1f2937">低代码平台</div><div class="text-[10px] text-gray-400">Light Code</div></div>\r
+        </div>\r
+        <nav class="py-4">\r
+          <div class="px-4 mb-2 text-xs font-semibold text-gray-400 uppercase tracking-wider">应用中心</div>\r
+          <div class="sidebar-menu-item px-4 py-2.5 flex items-center gap-3 text-gray-700" onclick="parent.postMessage({type:'switch',mod:'form'},'*')">\r
+            <i class="fas fa-file-signature w-5 text-center"></i><span class="text-sm">工作表单</span>\r
+          </div>\r
+          <div class="sidebar-menu-item active px-4 py-2.5 flex items-center gap-3 text-gray-700" style="border-right:3px solid #165DFF;background:rgba(22,93,255,0.12);color:#165DFF">\r
+            <i class="fas fa-sitemap w-5 text-center"></i><span class="text-sm">流程中心</span>\r
+          </div>\r
+          <div class="sidebar-menu-item px-4 py-2.5 flex items-center gap-3 text-gray-700" onclick="parent.postMessage({type:'switch',mod:'app'},'*')">\r
+            <i class="fas fa-th-large w-5 text-center"></i><span class="text-sm">应用中心</span>\r
+          </div>\r
+        </nav>\r
+      </aside>\r
+\r
+      <!-- 主内容 -->\r
+      <div class="flex-1 flex flex-col min-w-0 bg-gray-50">\r
+\r
+        <!-- ===== 流程列表视图 ===== -->\r
+        <section id="listView" class="flex-1 flex flex-col min-h-0">\r
+          <header class="bg-white border-b border-gray-200 px-6 py-3 flex items-center justify-between flex-shrink-0">\r
+            <div class="flex items-center gap-3">\r
+              <h1 class="text-lg font-semibold text-gray-800">流程中心</h1>\r
+              <div class="flex bg-gray-100 rounded-lg p-0.5 text-sm ml-1">\r
+                <button id="ftList" onclick="showView('list')" class="px-3 py-1.5 rounded-md font-medium seg bg-white text-[#165DFF] shadow-sm btn-click">流程列表</button>\r
+                <button id="ftMonitor" onclick="showView('monitor')" class="px-3 py-1.5 rounded-md font-medium seg text-gray-500 btn-click">实例监控</button>\r
+              </div>\r
+            </div>\r
+            <div class="proto-element" data-proto-id="1">\r
+              <button onclick="openNewFlow()" class="bg-[#165DFF] hover:bg-blue-600 text-white px-3.5 py-1.5 rounded-md text-sm font-medium btn-click"><i class="fas fa-plus mr-1"></i>新建流程</button>\r
+            </div>\r
+          </header>\r
+          <div class="flex-1 overflow-y-auto p-6">\r
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">\r
+              <table class="w-full text-sm">\r
+                <thead><tr class="bg-gray-50 text-left text-gray-500">\r
+                  <th class="px-4 py-3 font-medium">流程名称</th><th class="px-4 py-3 font-medium">关联表单</th>\r
+                  <th class="px-4 py-3 font-medium">节点数</th><th class="px-4 py-3 font-medium">状态</th>\r
+                  <th class="px-4 py-3 font-medium">版本</th><th class="px-4 py-3 font-medium">创建人</th><th class="px-4 py-3 font-medium">创建时间</th><th class="px-4 py-3 text-center font-medium">操作</th>\r
+                </tr></thead>\r
+                <tbody id="flowTableBody"></tbody>\r
+              </table>\r
+            </div>\r
+          </div>\r
+        </section>\r
+\r
+        <!-- ===== 流程实例监控视图 ===== -->\r
+        <section id="monitorView" class="flex-1 flex flex-col min-h-0" hidden>\r
+          <div class="px-6 py-4 flex items-center justify-between border-b border-gray-200 bg-white">\r
+            <div>\r
+              <div class="flex items-center gap-2 mb-2">\r
+                <div class="flex bg-gray-100 rounded-lg p-0.5 text-sm">\r
+                  <button id="mtList" onclick="showView('list')" class="px-3 py-1.5 rounded-md font-medium seg text-gray-500 btn-click">流程列表</button>\r
+                  <button id="mtMonitor" onclick="showView('monitor')" class="px-3 py-1.5 rounded-md font-medium seg bg-white text-[#165DFF] shadow-sm btn-click">实例监控</button>\r
+                </div>\r
+              </div>\r
+              <h2 class="text-base font-semibold text-gray-800">流程实例监控</h2>\r
+              <p class="text-xs text-gray-500 mt-0.5">跨应用查看所有流程实例，支持筛选与流转追踪（管理员视角）</p>\r
+            </div>\r
+            <div class="flex items-center gap-2">\r
+              <select id="instApp" onchange="renderInstanceMonitor()" class="form-input border border-gray-300 rounded-lg px-3 py-1.5 text-sm"><option value="">全部应用</option><option>人事管理系统</option><option>财务费用系统</option></select>\r
+              <select id="instStatus" onchange="renderInstanceMonitor()" class="form-input border border-gray-300 rounded-lg px-3 py-1.5 text-sm"><option value="">全部状态</option><option>审批中</option><option>已通过</option><option>草稿</option><option>已驳回</option><option>已撤回</option></select>\r
+              <input id="instSearch" oninput="renderInstanceMonitor()" placeholder="搜索流程/发起人" class="form-input border border-gray-300 rounded-lg px-3 py-1.5 text-sm w-48">\r
+            </div>\r
+          </div>\r
+          <div class="flex-1 overflow-y-auto p-6">\r
+            <div class="bg-white rounded-lg border border-gray-200 overflow-hidden">\r
+              <table class="w-full text-sm">\r
+                <thead><tr class="bg-gray-50 text-left text-gray-500"><th class="px-4 py-3 font-medium">实例ID</th><th class="px-4 py-3 font-medium">流程</th><th class="px-4 py-3 font-medium">所属应用</th><th class="px-4 py-3 font-medium">发起人</th><th class="px-4 py-3 font-medium">发起时间</th><th class="px-4 py-3 font-medium">状态</th><th class="px-4 py-3 font-medium">当前节点</th></tr></thead>\r
+                <tbody id="instBody"></tbody>\r
+              </table>\r
+              <div class="px-4 py-3 border-t border-gray-200"><span class="text-sm text-gray-500" id="instCount"></span></div>\r
+            </div>\r
+          </div>\r
+        </section>\r
+\r
+        <!-- ===== 流程设计器视图 ===== -->\r
+        <section id="designerView" class="flex-1 flex flex-col min-h-0" hidden>\r
+          <header class="bg-white border-b border-gray-200 px-5 py-2.5 flex items-center justify-between flex-shrink-0 gap-3">\r
+            <div class="flex items-center gap-3 min-w-0 flex-1">\r
+              <a onclick="showView('list')" class="text-gray-400 hover:text-[#165DFF] cursor-pointer btn-click" title="返回列表"><i class="fas fa-arrow-left"></i></a>\r
+              <input id="flowNameInput" class="text-base font-bold text-gray-800 border-none focus:ring-0 bg-transparent" style="width:100%;max-width:240px" value="未命名流程" oninput="onFlowNameChange()">\r
+              <span id="statusPill" class="status-pill px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700 whitespace-nowrap">草稿</span>\r
+              <span id="versionPill" class="version-pill px-2 py-0.5 rounded-full text-xs font-medium bg-gray-100 text-gray-500 whitespace-nowrap">v0</span>\r
+            </div>\r
+            <div class="flex items-center gap-2 flex-shrink-0">\r
+              <span class="text-xs text-gray-400 hidden sm:inline">绑定表单：<b id="bindFormName" class="text-gray-600"></b></span>\r
+              <div class="w-px h-5 bg-gray-200 mx-0.5"></div>\r
+              <button onclick="saveFlow()" class="px-3 py-1.5 rounded-md text-xs font-medium btn-click border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 hover:text-[#165DFF]">保存</button>\r
+              <button id="publishBtn" onclick="publishFlow()" data-proto-id="6" class="px-3 py-1.5 rounded-md text-xs font-medium btn-click bg-[#165DFF] hover:bg-blue-600 text-white shadow-sm">发布</button>\r
+              <button id="unpublishBtn" onclick="unpublishFlow()" class="hidden px-3 py-1.5 rounded-md text-xs font-medium btn-click bg-white border border-red-200 text-red-600 hover:bg-red-50">下架</button>\r
+              <button onclick="showVersions()" data-proto-id="7" class="px-3 py-1.5 rounded-md text-xs font-medium btn-click border border-gray-300 text-gray-700 bg-white hover:bg-gray-50 hover:text-[#165DFF]">版本</button>\r
+            </div>\r
+          </header>\r
+          <div id="stateBanner" class="px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200" style="display:none"></div>\r
+\r
+          <!-- 画布（≈80%）+ 节点配置（≈20%） -->\r
+          <div class="flex-1 flex min-h-0">\r
+            <main id="flowScroll" class="flex-1 overflow-y-auto bg-[#F5F7FA] relative" onclick="onFlowCanvasClick(event)">\r
+              <div class="sticky top-0 z-20 flex items-center gap-3 bg-white/95 backdrop-blur border-b border-gray-200 px-6 py-2.5 flex-wrap shadow-sm">\r
+                <span class="text-xs font-medium text-gray-500">拖拽添加节点：</span>\r
+                <div class="tool-pill approval" draggable="true" ondragstart="dragTool(event,'approval')" ondragend="dragToolEnd(event)"><i class="fas fa-check text-[#165DFF]"></i>审批节点</div>\r
+                <div class="tool-pill cc" draggable="true" ondragstart="dragTool(event,'cc')" ondragend="dragToolEnd(event)"><i class="fas fa-paper-plane text-[#7c5cff]"></i>抄送节点</div>\r
+                <span class="text-[11px] text-gray-400">拖到画布任意位置释放；从节点下方连接点拖拽到另一节点上方连接点即可连线；点击连线配置流转条件</span>\r
+              </div>\r
+              <div class="p-8">\r
+                <div id="flowCanvas" class="proto-element mx-auto bg-white border border-dashed border-gray-300 rounded-lg relative" data-proto-id="2" style="width:100%; max-width:920px; min-height:640px; height:640px;" ondragover="allowDrop(event)" ondrop="dropTool(event)">\r
+                  <div class="proto-element" data-proto-id="4" style="position:absolute; top:6px; right:8px; width:10px; height:10px; opacity:0; pointer-events:none; z-index:2"></div>\r
+                  <svg id="edgesSvg"></svg>\r
+                  <div id="nodeLayer"></div>\r
+                  <div id="edgeLabelLayer"></div>\r
+                </div>\r
+                <div class="mt-4 text-center text-[11px] text-gray-400" data-proto-id="5"><i class="fas fa-hand-pointer mr-1"></i>点击空白配置整个流程；点击节点编辑节点；从节点<b>下方连接点</b>拖拽到另一节点<b>上方连接点</b>画线；点击连线设置流转条件或按 Delete 删除</div>\r
+              </div>\r
+            </main>\r
+\r
+            <aside id="configPanel" data-proto-id="3" class="proto-element w-[300px] flex-shrink-0 bg-white border-l border-gray-200 overflow-y-auto">\r
+              <div id="configBody" class="p-4"></div>\r
+            </aside>\r
+          </div>\r
+        </section>\r
+\r
+      </div>\r
+    </div>\r
+\r
+    <div id="divider" class="w-px bg-gray-300"></div>\r
+\r
+    <!-- ============ 右 20%：逻辑说明 ============ -->\r
+    <div id="right-panel" class="overflow-y-auto bg-amber-50 border-l-2 border-dashed border-amber-300" style="width:20%">\r
+      <div class="p-4">\r
+        <div class="mb-4 p-3 bg-amber-100 border border-amber-300 rounded-lg">\r
+          <div class="flex items-center gap-2 mb-1">\r
+            <span class="px-2 py-0.5 bg-amber-500 text-white text-[10px] font-bold rounded uppercase tracking-wide">Prototype</span>\r
+            <span class="text-xs font-semibold text-amber-800">逻辑说明</span>\r
+          </div>\r
+          <p class="text-[11px] text-amber-700 leading-relaxed">悬停左侧对应区域可高亮连线。流程中心与工作表单一对一绑定。</p>\r
+        </div>\r
+        <div class="flex items-center gap-2 mb-4 pb-3 border-b border-amber-200">\r
+          <i class="fas fa-map-signs text-amber-600"></i><h2 class="text-sm font-bold text-amber-900">功能说明</h2>\r
+        </div>\r
+        <div class="space-y-3">\r
+          <div class="proto-desc p-3" data-proto-id="1">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">1</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">流程列表 → 新建 / 绑定表单</h3>\r
+                <p class="text-xs text-gray-500 mt-1">流程资产列表：<b>新建</b>需先绑定<b>工作表单</b>（一对一、可搜索）；行内可<b>编辑/发布/复制</b>（一键克隆整套流程）。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="2">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">2</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">流程画布：自由绘制</h3>\r
+                <p class="text-xs text-gray-500 mt-1"><b>自由绘制</b>画布：拖拽节点入库、拖动调位置，从下连接点拖到上连接点连线；点连线设条件、Delete 删除。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="3">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">3</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">节点配置面板（分 Tab）</h3>\r
+                <p class="text-xs text-gray-500 mt-1">节点配置分 Tab：发起（范围/字段权限）、审批（审批人/字段权限/时限/操作设置）、抄送（抄送设置/字段权限）；发起/审批/抄送均支持<b>字段权限</b>控制；审批人/抄送人来源（角色/岗位/部门）均用<b>弹窗</b>选择，不逐一罗列；<b>依次审批</b>可调整审批顺序；<b>抄送为终止节点</b>，其后只能接「流程结束」；操作含<b>提交/驳回/转办/加签</b>；节点可复制。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="4">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">4</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">流转条件（点连线 → 右侧）</h3>\r
+                <p class="text-xs text-gray-500 mt-1">点连线设<b>流转条件</b>：自定义「且/或」条件（满足才进该线）或 <b>else 兜底</b>；每条连接线均需配置流转条件或设为 else，不再提供「始终流转」简单选项。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="5">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">5</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">流程级配置（点空白）</h3>\r
+                <p class="text-xs text-gray-500 mt-1">点空白配<b>流程属性</b>：名称/描述/<b>图标（弹窗图标库）</b>/允许撤回（时限可选手小时或天），与节点配置分层。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="6">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">6</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">状态机：草稿 ↔ 已发布</h3>\r
+                <p class="text-xs text-gray-500 mt-1"><b>草稿↔已发布</b>状态机：发布快照锁定版本全员可发起，下架保留历史数据，改后需再发布生效。</p></div></div>\r
+          </div>\r
+          <div class="proto-desc p-3" data-proto-id="7">\r
+            <div class="flex items-start gap-2"><span class="flex-shrink-0 w-6 h-6 bg-amber-500 text-white rounded-full text-xs font-bold flex items-center justify-center">7</span>\r
+              <div><h3 class="text-sm font-semibold text-gray-800">版本管理 + 流程锁定</h3>\r
+                <p class="text-xs text-gray-500 mt-1">每次发布生成<b>不可变版本</b>（可点击<b>查看</b>在画布上展示历史版本节点结构）；<b>恢复并发布</b>以该版本内容重新上线、版本号不变；<b>流程锁定</b>按发起时版本渲染在途单据，改版不影响在途。</p></div></div>\r
+          </div>\r
+        </div>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <svg id="connections" class="absolute top-0 left-0 w-full h-full pointer-events-none"></svg>\r
+\r
+  <!-- ========== 新建流程：选择表单 ========== -->\r
+  <div id="newFlowModal" class="modal-overlay modal-hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
+        <h3 class="text-lg font-semibold text-gray-800">新建流程</h3>\r
+        <button onclick="closeModal('newFlowModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-5">\r
+        <p class="text-xs text-gray-500 mb-3">请选择本流程关联的工作表单（建立 1:1 绑定关系，流程将加载该表单作为审批数据）：</p>\r
+        <div class="relative mb-3">\r
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>\r
+          <input id="formSearchInput" type="text" class="form-input w-full border border-gray-300 rounded-lg pl-8 pr-3 py-2 text-sm" placeholder="搜索表单名称..." oninput="filterFormPickList()">\r
+        </div>\r
+        <div id="formPickList" class="space-y-2 max-h-72 overflow-y-auto pr-1"></div>\r
+        <div id="formPickEmpty" class="hidden text-xs text-gray-400 text-center py-4">未找到匹配的表单</div>\r
+      </div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">\r
+        <button onclick="closeModal('newFlowModal')" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 btn-click">取消</button>\r
+        <button onclick="confirmNewFlow()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- ========== 版本历史 ========== -->\r
+  <div id="versionsModal" class="modal-overlay modal-hidden fixed inset-0 z-[60] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
+        <h3 class="text-lg font-semibold text-gray-800">版本历史与流程锁定</h3>\r
+        <button onclick="closeModal('versionsModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-5">\r
+        <div id="versionList" class="space-y-2"></div>\r
+        <div class="cfg-info mt-4"><i class="fas fa-lock mr-1"></i><b>流程锁定：</b>在途流程实例锁定其发起时的流程版本，后续改版不影响在途单据；已发布版本的节点结构与表单绑定被锁定，编辑仅产生「待发布草稿」，避免改版导致在途单错乱。</div>\r
+        <div class="cfg-info mt-2"><i class="fas fa-eye mr-1"></i><b>查看与恢复：</b>历史版本可点击「查看」在画布上直接展示该版本的节点结构（只读）；点击「恢复并发布」以该版本内容重新上线，版本号保持不变（不新增版本号）。</div>\r
+      </div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">\r
+        <button onclick="closeModal('versionsModal')" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 btn-click">关闭</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- ========== 组织架构选人 ========== -->\r
+  <div id="memberPickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden flex flex-col" style="max-height:82vh">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
+        <h3 class="text-lg font-semibold text-gray-800">选择成员（按组织架构）</h3>\r
+        <button onclick="closeModal('memberPickerModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-4 border-b border-gray-100">\r
+        <div class="relative">\r
+          <i class="fas fa-search absolute left-3 top-1/2 -translate-y-1/2 text-gray-400 text-xs"></i>\r
+          <input id="pickerSearch" type="text" class="form-input w-full border border-gray-300 rounded-lg pl-8 pr-3 py-2 text-sm" placeholder="搜索姓名 / 工号，如「张三」" oninput="pickerQuery=this.value;renderMemberPicker()">\r
+        </div>\r
+      </div>\r
+      <div id="pickerTree" class="flex-1 overflow-y-auto px-6 py-3"></div>\r
+      <div class="border-t border-gray-100 px-6 py-3 flex items-end gap-3">\r
+        <div class="flex-1 min-w-0">\r
+          <div class="text-xs text-gray-400 mb-1">已选 <span id="pickerSelCount" class="font-semibold text-[#165DFF]">0</span> 人</div>\r
+          <div id="pickerSelChips" class="flex flex-wrap gap-1.5 max-h-16 overflow-y-auto"></div>\r
+        </div>\r
+        <button onclick="closeModal('memberPickerModal')" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 btn-click">取消</button>\r
+        <button onclick="confirmMemberPicker()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- ========== 组织架构选部门 ========== -->\r
+  <div id="deptPickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-2xl mx-4 overflow-hidden flex flex-col" style="max-height:82vh">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
+        <h3 class="text-lg font-semibold text-gray-800">选择部门（按组织架构）</h3>\r
+        <button onclick="closeModal('deptPickerModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div id="deptPickerTree" class="flex-1 overflow-y-auto px-6 py-3"></div>\r
+      <div class="border-t border-gray-100 px-6 py-3 flex items-end gap-3">\r
+        <div class="flex-1 min-w-0">\r
+          <div class="text-xs text-gray-400 mb-1">已选 <span id="deptPickerSelCount" class="font-semibold text-[#165DFF]">0</span> 个部门</div>\r
+          <div id="deptPickerSelChips" class="flex flex-wrap gap-1.5 max-h-16 overflow-y-auto"></div>\r
+        </div>\r
+        <button onclick="closeModal('deptPickerModal')" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 btn-click">取消</button>\r
+        <button onclick="confirmDeptPicker()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- ========== 选择岗位 ========== -->\r
+  <div id="postPickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
+        <h3 class="text-lg font-semibold text-gray-800">选择岗位</h3>\r
+        <button onclick="closeModal('postPickerModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-4">\r
+        <div class="text-[11px] text-gray-400 mb-2">勾选本节点适用的岗位，同一岗位可由多人担任。</div>\r
+        <div id="postPickerList" class="space-y-1 max-h-72 overflow-y-auto"></div>\r
+      </div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">\r
+        <button onclick="closeModal('postPickerModal')" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 btn-click">取消</button>\r
+        <button onclick="confirmPostPicker()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- ========== 选择角色 ========== -->\r
+  <div id="rolePickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
+        <h3 class="text-lg font-semibold text-gray-800">选择角色</h3>\r
+        <button onclick="closeModal('rolePickerModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div class="px-6 py-4">\r
+        <div class="text-[11px] text-gray-400 mb-2">勾选本节点适用的角色，同一角色可由多人担任。</div>\r
+        <div id="rolePickerList" class="space-y-1 max-h-72 overflow-y-auto"></div>\r
+      </div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">\r
+        <button onclick="closeModal('rolePickerModal')" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 btn-click">取消</button>\r
+        <button onclick="confirmRolePicker()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- ========== 图标库 ========== -->\r
+  <div id="iconPickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">\r
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
+        <h3 class="text-lg font-semibold text-gray-800">选择流程图标</h3>\r
+        <button onclick="closeModal('iconPickerModal')" class="text-gray-400 hover:text-gray-600 btn-click"><i class="fas fa-times"></i></button>\r
+      </div>\r
+      <div id="iconPickerGrid" class="grid grid-cols-4 gap-2 px-6 py-4 max-h-80 overflow-y-auto"></div>\r
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">\r
+        <button onclick="closeModal('iconPickerModal')" class="px-4 py-2 text-sm text-gray-600 hover:text-gray-800 btn-click">取消</button>\r
+      </div>\r
+    </div>\r
+  </div>\r
+\r
+  <script>\r
+  /* ===================== 数据 ===================== */\r
+  const FORMS = [\r
+    { id:'f1', name:'请假申请单', icon:'fa-plane', fields:[{fieldName:'leaveType',label:'请假类型'},{fieldName:'days',label:'请假天数'},{fieldName:'reason',label:'请假事由'}] },\r
+    { id:'f2', name:'费用报销单', icon:'fa-money-bill-wave', fields:[{fieldName:'amount',label:'报销金额'},{fieldName:'costType',label:'费用类型'},{fieldName:'remark',label:'备注'}] },\r
+    { id:'f3', name:'员工信息登记', icon:'fa-id-card', fields:[{fieldName:'dept',label:'部门'},{fieldName:'level',label:'职级'},{fieldName:'member',label:'员工'}] }\r
+  ];\r
+  const MEMBERS=['张三(产品)','李四(研发)','王五(HR)','赵六(财务)','钱七(总监)'];\r
+  const ROLES=['产品','研发','HR','财务','部门总监','CEO'];\r
+  const DEPTS=['产品部','研发部','财务部','人事部','市场部'];\r
+  const POSTS=['产品经理','产品运营','研发工程师','测试工程师','HRBP','财务专员','部门总监','前端开发','后端开发'];\r
+  // 组织架构（演示用；真实环境为千人级，按部门/小组逐层展开 + 姓名搜索筛选）\r
+  const ORG=[\r
+    { name:'产品部', children:[\r
+      { name:'产品设计组', members:['张三(产品)','吴磊(产品)','陈思(产品)'] },\r
+      { name:'产品运营组', members:['周明(产品)','林芳(产品)'] }\r
+    ]},\r
+    { name:'研发部', children:[\r
+      { name:'前端组', members:['李四(研发)','钱七(总监)','孙浩(研发)'] },\r
+      { name:'后端组', members:['王磊(研发)','刘洋(研发)','赵敏(研发)'] }\r
+    ]},\r
+    { name:'财务部', children:[\r
+      { name:'会计组', members:['赵六(财务)','钱多(财务)'] },\r
+      { name:'出纳组', members:['孙莉(财务)'] }\r
+    ]},\r
+    { name:'人事部', children:[\r
+      { name:'招聘组', members:['王五(HR)','冯洁(HR)'] },\r
+      { name:'薪酬组', members:['褚明(HR)','卫红(HR)'] }\r
+    ]},\r
+    { name:'市场部', children:[\r
+      { name:'品牌组', members:['蒋雯(市场)','韩雷(市场)'] },\r
+      { name:'渠道组', members:['沈刚(市场)'] }\r
+    ]}\r
+  ];\r
+  let orgExpand={}, pickerSel=new Set(), pickerQuery='', pickerField='members';\r
+  let deptExpand={}, pickerDeptSel=new Set(), pickerDeptField='';\r
+  let pickerPostSel=new Set(), pickerPostField='';\r
+  function orgInitExpand(){ ORG.forEach(d=>orgExpand[d.name]=true); }\r
+  function FORM(id){ return FORMS.find(f=>f.id===id); }\r
+  function FORM_FIELDS(id){ const f=FORM(id); return f?f.fields:[]; }\r
+\r
+  function nodeStart(){ return { id:'n_'+Date.now()+'_s', type:'start', name:'发起人', initiatorScope:'all', initiatorDepts:[], initiatorRoles:[], initiatorMembers:[], fieldPerm:{}, x:0, y:0 }; }\r
+  function nodeApproval(){ return { id:'n_'+Date.now()+'_a', type:'approval', name:'审批', approverType:'initiator', members:[], roles:[], depts:[], posts:[], fieldRef:'', level:1, mode:'or', fieldPerm:{}, timeoutEnabled:false, timeoutHours:24, timeoutUnit:'hour', timeoutAction:'notify', opinion:'required', allowReject:true, rejectTo:'initiator', allowTransfer:true, allowAddSign:true, allowSubmit:true, x:0, y:0 }; }\r
+  function nodeCC(){ return { id:'n_'+Date.now()+'_c', type:'cc', name:'抄送', ccType:'member', members:[], roles:[], depts:[], posts:[], content:'link', notify:['site'], fieldPerm:{}, x:0, y:0 }; }\r
+  function nodeEnd(){ return { id:'n_'+Date.now()+'_e', type:'end', name:'流程结束', endAction:'archive', webhook:'', webhookMethod:'POST', webhookHeaders:'', x:0, y:0 }; }\r
+\r
+  function autoLayout(nodes){\r
+    const cx=355, gapY=140;\r
+    nodes.forEach((n,i)=>{ n.x=cx; n.y=20+i*gapY; });\r
+  }\r
+\r
+  let FLOWS = [\r
+    { id:'p1', name:'请假审批流程', formId:'f1', status:'已发布', version:2, hasUnpublished:false, publishedAt:'2026-07-20', publishedBy:'产品同学',\r
+      desc:'员工请假线上审批', icon:'fa-plane', allowRecall:true, recallHours:24, recallUnit:'hour', viewScope:'all', viewRoles:[], creator:'产品同学', createdAt:'2026-07-18', printable:true, codeRule:'QJ-{yyyyMMdd}-{0000}',\r
+      versions:[ (()=>{ const n1=nodeStart(), n2=nodeApproval(), n3=nodeEnd(); n2.name='直属主管审批'; n2.approverType='initiator_manager'; n2.level=1;\r
+        return { v:1, publishedAt:'2026-07-10', publishedBy:'产品同学', name:'请假审批流程', desc:'员工请假线上审批', icon:'fa-plane', formId:'f1', allowRecall:true, recallHours:24, recallUnit:'hour', nodes:[n1,n2,n3], edges:[\r
+          { id:'e_p1v1a', from:n1.id, to:n2.id, mode:'always', logic:'and', conditions:[] },\r
+          { id:'e_p1v1b', from:n2.id, to:n3.id, mode:'always', logic:'and', conditions:[] } ] }; })(),\r
+        (()=>{ const n1=nodeStart(); n1.initiatorScope='all';\r
+          const n2=nodeApproval(); n2.name='直属主管审批'; n2.approverType='initiator_manager'; n2.level=1;\r
+          const n3=nodeApproval(); n3.name='部门总监审批'; n3.approverType='role'; n3.roles=['部门总监']; n3.mode='or';\r
+          const n4=nodeCC(); n4.name='通知HR'; n4.ccType='member'; n4.members=['王五(HR)'];\r
+          const n5=nodeEnd();\r
+          return { v:2, publishedAt:'2026-07-20', publishedBy:'产品同学', name:'请假审批流程', desc:'员工请假线上审批', icon:'fa-plane', formId:'f1', allowRecall:true, recallHours:24, recallUnit:'hour', nodes:[n1,n2,n3,n4,n5], edges:[\r
+            { id:'e_p1v2a', from:n1.id, to:n2.id, mode:'always', logic:'and', conditions:[] },\r
+            { id:'e_p1v2b', from:n2.id, to:n3.id, mode:'always', logic:'and', conditions:[] },\r
+            { id:'e_p1v2c', from:n3.id, to:n4.id, mode:'always', logic:'and', conditions:[] },\r
+            { id:'e_p1v2d', from:n4.id, to:n5.id, mode:'always', logic:'and', conditions:[] } ] }; })()\r
+      ],\r
+      nodes:[ (()=>{const n=nodeStart();n.initiatorScope='all';return n;})(),\r
+              (()=>{const n=nodeApproval();n.name='直属主管审批';n.approverType='initiator_manager';n.level=1;return n;})(),\r
+              (()=>{const n=nodeApproval();n.name='部门总监审批';n.approverType='role';n.roles=['部门总监'];n.mode='or';return n;})(),\r
+              (()=>{const n=nodeCC();n.name='通知HR';n.ccType='member';n.members=['王五(HR)'];return n;})(),\r
+              nodeEnd() ] },\r
+    { id:'p2', name:'报销审批流程', formId:'f2', status:'草稿', version:0, hasUnpublished:false,\r
+      desc:'费用报销审批', icon:'fa-money-bill-wave', allowRecall:true, recallHours:48, recallUnit:'hour', viewScope:'role', viewRoles:['财务'], creator:'财务同学', createdAt:'2026-07-25', printable:true, codeRule:'BX-{yyyyMMdd}-{0000}', versions:[],\r
+      nodes:[ (()=>{const n=nodeStart();return n;})(),\r
+              (()=>{const n=nodeApproval();n.name='财务审批';n.approverType='role';n.roles=['财务'];return n;})(),\r
+              nodeEnd() ] }\r
+  ];\r
+  // 初始化边：示例流程保持简单线性\r
+  FLOWS.forEach(f=>{\r
+    if(!f.edges){\r
+      f.edges=[];\r
+      for(let i=0;i<f.nodes.length-1;i++){\r
+        f.edges.push({ id:'e_'+f.nodes[i].id+'_'+f.nodes[i+1].id, from:f.nodes[i].id, to:f.nodes[i+1].id, mode:'always', logic:'and', conditions:[] });\r
+      }\r
+    }\r
+    autoLayout(f.nodes);\r
+  });\r
+\r
+  /* 流程实例（设计/监控端 mock，跨应用） */\r
+  const FLOW_INSTANCES = [\r
+    { id:'I1', flowId:'p1', flowName:'请假审批流程', appName:'人事管理系统', initiator:'张伟', startTime:'2026-08-05 09:12', status:'审批中', currentNode:'直属主管审批', nodes:['开始','直属主管审批','部门总监审批','通知HR','结束'], currentIdx:1,\r
+      steps:[ {node:'开始',actor:'张伟',action:'提交',time:'2026-08-05 09:12',comment:''}, {node:'直属主管审批',actor:'李强',action:'审批中',time:'—',comment:''} ] },\r
+    { id:'I2', flowId:'p1', flowName:'请假审批流程', appName:'人事管理系统', initiator:'刘洋', startTime:'2026-08-04 14:30', status:'已通过', currentNode:'结束', nodes:['开始','直属主管审批','部门总监审批','通知HR','结束'], currentIdx:4,\r
+      steps:[ {node:'开始',actor:'刘洋',action:'提交',time:'2026-08-04 14:30'}, {node:'直属主管审批',actor:'李强',action:'通过',time:'2026-08-04 15:10'}, {node:'部门总监审批',actor:'陈总',action:'通过',time:'2026-08-04 17:00'}, {node:'通知HR',actor:'王五(HR)',action:'抄送',time:'2026-08-04 17:01'}, {node:'结束',actor:'系统',action:'完成',time:'2026-08-04 17:01'} ] },\r
+    { id:'I3', flowId:'p2', flowName:'报销审批流程', appName:'财务费用系统', initiator:'王芳', startTime:'2026-08-03 11:20', status:'草稿', currentNode:'开始', nodes:['开始','财务审批','结束'], currentIdx:0, steps:[] }\r
+  ];\r
+\r
+  /* ===================== 状态 ===================== */\r
+  let currentView='list', currentFlowId=null, selectedNodeId=null, selectedEdgeId=null, cfgTab='base', pickedFormId='f1';\r
+  let viewingVersion=null; // 非空=画布处于历史版本只读查看态（存版本号）\r
+  let drawingEdge=null; // {from, el}\r
+\r
+  function currentFlow(){ return FLOWS.find(x=>x.id===currentFlowId); }\r
+  function g(id){ return document.getElementById(id); }\r
+  function getEdge(id){ const f=currentFlow(); return f?f.edges.find(e=>e.id===id):null; }\r
+  function getOutgoing(id){ const f=currentFlow(); return f.edges.filter(e=>e.from===id); }\r
+  function getIncoming(id){ const f=currentFlow(); return f.edges.filter(e=>e.to===id); }\r
+\r
+  /* ===================== 视图切换 ===================== */\r
+  function showView(v){\r
+    currentView=v;\r
+    g('listView').hidden = (v!=='list');\r
+    g('designerView').hidden = (v!=='designer');\r
+    g('monitorView').hidden = (v!=='monitor');\r
+    var setSeg=function(id,on){var el=document.getElementById(id); if(!el)return; el.className='px-3 py-1.5 rounded-md font-medium seg '+((on)?'bg-white text-[#165DFF] shadow-sm':'text-gray-500')+' btn-click';};\r
+    setSeg('ftList', v==='list'); setSeg('ftMonitor', v==='monitor');\r
+    setSeg('mtList', v==='list'); setSeg('mtMonitor', v==='monitor');\r
+    if(v==='monitor') renderInstanceMonitor();\r
+    setTimeout(drawNodeEdges, 60);\r
+  }\r
+\r
+  /* ===================== 列表 ===================== */\r
+  function renderFlowTable(){\r
+    g('flowTableBody').innerHTML = FLOWS.map(f=>{\r
+      const fc=FORM(f.formId);\r
+      const st = f.status==='已发布'\r
+        ? (f.hasUnpublished?'<span class="tag tag-orange">待发布</span>':'<span class="tag tag-green">已发布</span>')\r
+        : '<span class="tag tag-gray">草稿</span>';\r
+      return \`<tr class="border-t border-gray-100 hover:bg-[#165DFF]/5 cursor-pointer" onclick="openFlow('\${f.id}')">\r
+        <td class="px-4 py-3 font-medium text-gray-800"><i class="fas \${fc?fc.icon:'fa-file'} text-[#165DFF] mr-1.5"></i>\${f.name}</td>\r
+        <td class="px-4 py-3 text-gray-600">\${fc?fc.name:'—'}</td>\r
+        <td class="px-4 py-3 text-gray-600">\${f.nodes.length}</td>\r
+        <td class="px-4 py-3">\${st}</td>\r
+        <td class="px-4 py-3 text-gray-500">v\${f.version}</td>\r
+        <td class="px-4 py-3 text-gray-600">\${f.creator||'—'}</td>\r
+        <td class="px-4 py-3 text-gray-500">\${f.createdAt||'—'}</td>\r
+        <td class="px-4 py-3 text-center">\r
+          <button class="text-[#165DFF] hover:text-blue-700 text-sm font-medium btn-click" onclick="event.stopPropagation();openFlow('\${f.id}')"><i class="fas fa-edit mr-1"></i>编辑</button>\r
+          \${f.status==='已发布'?'<button class="text-gray-500 hover:text-red-600 text-sm btn-click ml-3" onclick="event.stopPropagation();unpublishFlow(\\''+f.id+'\\')"><i class="fas fa-eye-slash mr-1"></i>下架</button>':'<button class="text-gray-500 hover:text-[#165DFF] text-sm btn-click ml-3" onclick="event.stopPropagation();quickPublish(\\''+f.id+'\\')"><i class="fas fa-rocket mr-1"></i>发布</button>'}\r
+          <button class="text-gray-500 hover:text-[#165DFF] text-sm btn-click ml-3" onclick="event.stopPropagation();copyFlow('\${f.id}')"><i class="fas fa-copy mr-1"></i>复制</button>\r
+          \${f.status==='草稿'?'<button class="text-red-500 hover:text-red-700 text-sm btn-click ml-3" onclick="event.stopPropagation();deleteFlow(\\''+f.id+'\\')"><i class="fas fa-trash mr-1"></i>删除</button>':''}\r
+        </td></tr>\`;\r
+    }).join('');\r
+  }\r
+  function deleteFlow(id){\r
+    const idx=FLOWS.findIndex(x=>x.id===id); if(idx<0) return;\r
+    const f=FLOWS[idx];\r
+    if(!confirm('确定要删除草稿流程「'+f.name+'」吗？\\n删除后该草稿流程将不可恢复。')) return;\r
+    FLOWS.splice(idx,1); renderFlowTable();\r
+  }\r
+\r
+  /* ===================== 流程实例监控（设计端） ===================== */\r
+  function renderInstanceMonitor(){\r
+    const tb=document.getElementById('instBody'); if(!tb) return;\r
+    const kw=(document.getElementById('instSearch')?document.getElementById('instSearch').value:'').trim();\r
+    const st=document.getElementById('instStatus')?document.getElementById('instStatus').value:'';\r
+    const app=document.getElementById('instApp')?document.getElementById('instApp').value:'';\r
+    const rows=FLOW_INSTANCES.filter(function(s){return (!kw||(s.flowName.indexOf(kw)>=0||s.initiator.indexOf(kw)>=0))&&(!st||s.status===st)&&(!app||s.appName===app);});\r
+    tb.innerHTML = rows.length? rows.map(function(s){\r
+      return '<tr class="border-t border-gray-100 hover:bg-[#165DFF]/5 cursor-pointer" onclick="showInstance(\\''+s.id+'\\')">'+\r
+        '<td class="px-4 py-3 font-medium text-gray-800">'+s.id+'</td>'+\r
+        '<td class="px-4 py-3">'+s.flowName+'</td>'+\r
+        '<td class="px-4 py-3 text-gray-600">'+s.appName+'</td>'+\r
+        '<td class="px-4 py-3 text-gray-600">'+s.initiator+'</td>'+\r
+        '<td class="px-4 py-3 text-gray-400">'+s.startTime+'</td>'+\r
+        '<td class="px-4 py-3"><span class="tag px-2 py-0.5 rounded text-xs '+instStatusCls(s.status)+'">'+s.status+'</span></td>'+\r
+        '<td class="px-4 py-3 text-gray-500">'+s.currentNode+'</td>'+\r
+      '</tr>';\r
+    }).join('') : '<tr><td colspan="7" class="px-4 py-8 text-center text-gray-400">没有流程实例</td></tr>';\r
+    const cnt=document.getElementById('instCount'); if(cnt) cnt.textContent='共 '+rows.length+' 条实例';\r
+  }\r
+  function instStatusCls(s){return ({'审批中':'bg-blue-100 text-blue-600','已通过':'bg-green-100 text-green-600','草稿':'bg-gray-100 text-gray-500','已驳回':'bg-red-100 text-red-600','已撤回':'bg-amber-100 text-amber-600'})[s]||'bg-gray-100 text-gray-500';}\r
+  function showInstance(id){\r
+    const s=FLOW_INSTANCES.find(function(x){return x.id===id;}); if(!s) return;\r
+    let timeline='';\r
+    for(let i=0;i<s.nodes.length;i++){\r
+      const active=(i===s.currentIdx), done=(i<s.currentIdx);\r
+      const dot=active?'bg-[#165DFF]':(done?'bg-green-500':'bg-gray-300');\r
+      const line=(i<s.nodes.length-1)?'<div class="w-px h-6 '+(done?'bg-green-400':'bg-gray-200')+' mx-auto"></div>':'';\r
+      timeline+='<div class="flex items-start gap-3"><div class="flex flex-col items-center"><div class="w-3 h-3 rounded-full '+dot+' mt-1.5"></div>'+line+'</div><div class="pb-4"><div class="text-sm '+(active?'font-semibold text-[#165DFF]':'text-gray-700')+'">'+s.nodes[i]+(active?' <span class="text-[11px] text-[#165DFF]">（当前）</span>':'')+'</div></div></div>';\r
+    }\r
+    const html='<div id="instDetail" class="fixed inset-0 z-[210] flex bg-black/30" onclick="if(event.target===this)closeInstance()">'+\r
+      '<div class="ml-auto w-[560px] max-w-[95vw] h-full bg-white shadow-xl flex flex-col" onclick="event.stopPropagation()">'+\r
+        '<div class="flex items-center justify-between px-5 py-3 border-b border-gray-200"><div><div class="text-sm text-gray-400">流程实例 · '+s.id+'</div><div class="text-base font-semibold text-gray-800">'+s.flowName+'</div></div><button onclick="closeInstance()" class="w-8 h-8 rounded-md text-gray-400 hover:bg-gray-100 btn-click"><i class="fas fa-times"></i></button></div>'+\r
+        '<div class="px-5 py-3 border-b border-gray-100 grid grid-cols-2 gap-y-1 text-sm">'+\r
+          '<div class="text-gray-400">所属应用</div><div class="text-gray-800">'+s.appName+'</div>'+\r
+          '<div class="text-gray-400">发起人</div><div class="text-gray-800">'+s.initiator+'</div>'+\r
+          '<div class="text-gray-400">发起时间</div><div class="text-gray-800">'+s.startTime+'</div>'+\r
+          '<div class="text-gray-400">状态</div><div><span class="tag px-2 py-0.5 rounded text-xs '+instStatusCls(s.status)+'">'+s.status+'</span></div>'+\r
+        '</div>'+\r
+        '<div class="px-5 py-3 border-b border-gray-100"><div class="text-xs font-semibold text-gray-400 uppercase mb-2">流转轨迹</div><div>'+timeline+'</div></div>'+\r
+        '<div class="px-5 py-3 mt-auto border-t border-gray-200 flex gap-2">'+\r
+          '<button onclick="alert(\\'已向当前审批人发送催办提醒（原型演示）\\');closeInstance()" class="px-3 py-1.5 text-sm rounded-md border border-gray-300 text-gray-600 hover:text-[#165DFF] hover:bg-gray-50 btn-click">催办</button>'+\r
+          '<button onclick="alert(\\'已打开转办面板（原型演示）\\');closeInstance()" class="px-3 py-1.5 text-sm rounded-md border border-gray-300 text-gray-600 hover:text-[#165DFF] hover:bg-gray-50 btn-click">转办</button>'+\r
+          '<button onclick="alert(\\'已撤回该流程实例（原型演示）\\');closeInstance()" class="px-3 py-1.5 text-sm rounded-md border border-gray-300 text-red-500 hover:bg-red-50 btn-click">撤回</button>'+\r
+        '</div>'+\r
+      '</div></div>';\r
+    document.body.insertAdjacentHTML('beforeend', html);\r
+  }\r
+  function closeInstance(){ const e=document.getElementById('instDetail'); if(e) e.remove(); }\r
+\r
+  /* ===================== 新建流程：选表单 ===================== */\r
+  function openNewFlow(){\r
+    pickedFormId = FORMS[0].id;\r
+    const s = g('formSearchInput'); if(s) s.value='';\r
+    renderFormPickList('');\r
+    openModal('newFlowModal');\r
+  }\r
+  function renderFormPickList(query){\r
+    const q = (query||'').trim().toLowerCase();\r
+    const items = FORMS.filter(f=>f.name.toLowerCase().includes(q));\r
+    g('formPickList').innerHTML = items.map(f=>\`\r
+      <label class="flex items-center gap-3 p-3 border rounded-lg cursor-pointer hover:border-[#165DFF] \${f.id===pickedFormId?'border-[#165DFF] bg-blue-50':'border-gray-200'}" onclick="pickForm('\${f.id}')">\r
+        <i class="fas \${f.icon} text-[#165DFF]"></i>\r
+        <div class="flex-1"><div class="text-sm font-medium text-gray-800">\${f.name}</div><div class="text-xs text-gray-400">\${f.fields.length} 个字段</div></div>\r
+        <input type="radio" name="pickForm" \${f.id===pickedFormId?'checked':''} class="text-[#165DFF]">\r
+      </label>\`).join('');\r
+    g('formPickEmpty').classList.toggle('hidden', items.length>0);\r
+  }\r
+  function pickForm(id){ pickedFormId=id; filterFormPickList(); }\r
+  function filterFormPickList(){ renderFormPickList(g('formSearchInput').value); }\r
+  function confirmNewFlow(){\r
+    const id='p_'+Date.now();\r
+    const flow={ id, name:'未命名流程', formId:pickedFormId, status:'草稿', version:0, hasUnpublished:false,\r
+      desc:'', icon:FORM(pickedFormId).icon, allowRecall:true, recallHours:24, recallUnit:'hour', viewScope:'all', viewRoles:[], printable:true, codeRule:'', versions:[],\r
+      nodes:[ nodeStart(), nodeEnd() ] };\r
+    flow.edges=[{ id:'e_'+Date.now(), from:flow.nodes[0].id, to:flow.nodes[1].id, mode:'always', logic:'and', conditions:[] }];\r
+    autoLayout(flow.nodes);\r
+    FLOWS.push(flow);\r
+    closeModal('newFlowModal');\r
+    openFlow(id);\r
+  }\r
+\r
+  /* ===================== 打开流程 ===================== */\r
+  function openFlow(id){\r
+    currentFlowId=id; selectedNodeId=null; selectedEdgeId=null; viewingVersion=null;\r
+    const f=currentFlow();\r
+    g('flowNameInput').value=f.name;\r
+    g('bindFormName').textContent = FORM(f.formId).name;\r
+    showView('designer'); updateHeader(); renderCanvas(); renderConfig();\r
+  }\r
+  function onFlowNameChange(){ const f=currentFlow(); if(f){ f.name=g('flowNameInput').value; } }\r
+\r
+  /* ===================== 工具条拖拽添加节点 ===================== */\r
+  function dragTool(ev,type){\r
+    ev.dataTransfer.setData('type', type);\r
+    ev.target.classList.add('dragging');\r
+  }\r
+  function dragToolEnd(ev){ ev.target.classList.remove('dragging'); }\r
+  function allowDrop(ev){ ev.preventDefault(); }\r
+  function dropTool(ev){\r
+    ev.preventDefault();\r
+    const type=ev.dataTransfer.getData('type');\r
+    if(type!=='approval' && type!=='cc') return;\r
+    const canvas=g('flowCanvas');\r
+    const cr=canvas.getBoundingClientRect();\r
+    const x=Math.max(20, Math.min(ev.clientX-cr.left-105, canvas.clientWidth-230));\r
+    const y=Math.max(20, Math.min(ev.clientY-cr.top-30, canvas.clientHeight-70));\r
+    const n=type==='approval'?nodeApproval():nodeCC();\r
+    n.x=x; n.y=y;\r
+    currentFlow().nodes.push(n);\r
+    selectedNodeId=n.id; selectedEdgeId=null;\r
+    renderCanvas(); renderConfig();\r
+  }\r
+\r
+  /* ===================== 画布渲染 ===================== */\r
+  function snapshotOfView(){ const f=currentFlow(); return viewingVersion ? ((f.versions||[]).find(s=>s.v===viewingVersion)||null) : null; }\r
+  function renderCanvas(){\r
+    const f=snapshotOfView() || currentFlow(); if(!f) return;\r
+    const layer=g('nodeLayer');\r
+    let html='';\r
+    f.nodes.forEach((n,i)=>{ html += nodeHTML(n, i); });\r
+    layer.innerHTML=html;\r
+    const ll=g('edgeLabelLayer');\r
+    ll.innerHTML = f.edges.map(e=>edgeLabelHTML(e)).join('');\r
+    // 自适应画布高度\r
+    let maxY=0; f.nodes.forEach(n=>{ if((n.y||0)>maxY) maxY=n.y; });\r
+    const need = maxY + 170;\r
+    g('flowCanvas').style.height = Math.max(640, need) + 'px';\r
+    setTimeout(()=>{ drawNodeEdges(); }, 0);\r
+    setTimeout(()=>{ if(!viewingVersion) updateHeader(); },0);\r
+  }\r
+\r
+  function nodeHTML(n, i){\r
+    const sel = n.id===selectedNodeId ? 'sel':'';\r
+    const x = n.x||0, y = n.y||0;\r
+    const style = \`position:absolute; left:\${x}px; top:\${y}px;\`;\r
+    const viewOnly = !!viewingVersion;\r
+    const evAttrs = viewOnly ? '' : \`onmousedown="startNodeDrag(event,'\${n.id}')" onclick="selectNode('\${n.id}');event.stopPropagation()"\`;\r
+    const portIn = (!viewOnly && n.type!=='start') ? \`<div class="port in" data-nid="\${n.id}" onmousedown="startConnect(event,'\${n.id}','in')"></div>\` : '';\r
+    const portOut = (!viewOnly && n.type!=='end' && n.type!=='cc') ? \`<div class="port out" data-nid="\${n.id}" onmousedown="startConnect(event,'\${n.id}','out')"></div>\` : '';\r
+    const copyBtn = viewOnly ? '' : \`<button class="node-copy" onmousedown="event.stopPropagation();event.preventDefault();" onclick="copyNode('\${n.id}');event.stopPropagation()" title="复制节点"><i class="fas fa-copy"></i></button>\`;\r
+    const delBtn = viewOnly ? '' : \`<button class="node-del" onmousedown="event.stopPropagation();event.preventDefault();" onclick="delNode('\${n.id}');event.stopPropagation()"><i class="fas fa-times"></i></button>\`;\r
+    if(n.type==='start'){\r
+      return \`<div id="node-\${n.id}" class="node-card node-start \${sel}" style="\${style}" \${evAttrs}>\${portIn}<i class="fas fa-play mr-1"></i>\${n.name}\${portOut}</div>\`;\r
+    }\r
+    if(n.type==='end'){\r
+      return \`<div id="node-\${n.id}" class="node-card node-end \${sel}" style="\${style}" \${evAttrs}>\${portIn}<i class="fas fa-flag-checkered mr-1"></i>\${n.name}\${portOut}</div>\`;\r
+    }\r
+    if(n.type==='approval'){\r
+      let who = approverText(n);\r
+      return \`<div id="node-\${n.id}" class="node-card node-approval \${sel}" style="\${style}" \${evAttrs}>\r
+        \${portIn}\${copyBtn}\${delBtn}\r
+        <div class="flex items-center gap-2 mb-1"><span class="w-6 h-6 rounded bg-[#165DFF]/10 text-[#165DFF] flex items-center justify-center text-xs"><i class="fas fa-check"></i></span><span class="text-sm font-semibold text-gray-800">\${n.name}</span></div>\r
+        <div class="text-xs text-gray-500"><i class="fas fa-user-check mr-1"></i>\${who}</div>\r
+        <div class="text-xs text-gray-400 mt-0.5">\${modeText(n.mode)}</div>\${portOut}</div>\`;\r
+    }\r
+    if(n.type==='cc'){\r
+      let who = ccText(n);\r
+      return \`<div id="node-\${n.id}" class="node-card node-cc \${sel}" style="\${style}" \${evAttrs}>\r
+        \${portIn}\${copyBtn}\${delBtn}\r
+        <div class="flex items-center gap-2 mb-1"><span class="w-6 h-6 rounded bg-[#7c5cff]/10 text-[#7c5cff] flex items-center justify-center text-xs"><i class="fas fa-paper-plane"></i></span><span class="text-sm font-semibold text-gray-800">\${n.name}</span></div>\r
+        <div class="text-xs text-gray-500"><i class="fas fa-users mr-1"></i>\${who}</div>\${portOut}</div>\`;\r
+    }\r
+    return '';\r
+  }\r
+\r
+  function approverText(n){\r
+    switch(n.approverType){\r
+      case 'initiator': return '发起人本人';\r
+      case 'initiator_manager': return '发起人直属主管';\r
+      case 'manager_level': return '第 '+n.level+' 级主管';\r
+      case 'member': return n.members.length? (n.members.length>3? '已选 '+n.members.length+' 人' : n.members.join('、')) : '未指定成员';\r
+      case 'role': return (n.roles.join('、')||'未指定角色')+'（角色）';\r
+      case 'dept_head': return (n.depts.join('、')||'未指定部门')+' 主管';\r
+      case 'field': return '表单字段：'+(n.fieldRef||'未选择');\r
+      case 'post': return '指定岗位：'+(n.posts.join('、')||'未选择岗位');\r
+    }\r
+    return '未配置';\r
+  }\r
+  function modeText(m){ return m==='and'?'会签（全部通过）':m==='seq'?'依次审批':'或签（一人通过）'; }\r
+  function ccText(n){\r
+    if(n.ccType==='member') return n.members.length? (n.members.length>3? '已选 '+n.members.length+' 人' : n.members.join('、')) : '未指定成员';\r
+    if(n.ccType==='role') return (n.roles.join('、')||'未指定角色')+'（角色）';\r
+    if(n.ccType==='dept') return (n.depts.join('、')||'未指定部门')+'（部门）';\r
+    if(n.ccType==='post') return (n.posts.join('、')||'未指定岗位')+'（岗位）';\r
+    return '未配置';\r
+  }\r
+\r
+  function selectNode(id){ selectedNodeId=id; selectedEdgeId=null; cfgTab='base'; renderCanvas(); renderConfig(); }\r
+  function selectEdge(eid){ selectedEdgeId=eid; selectedNodeId=null; cfgTab='base'; renderCanvas(); renderConfig(); }\r
+  function onFlowCanvasClick(e){\r
+    const t=e.target;\r
+    if(t.id==='nodeLayer'||t.id==='flowCanvas'||t.id==='edgeLabelLayer'||t.id==='edgesSvg'||t.id==='flowScroll'){\r
+      selectedNodeId=null; selectedEdgeId=null; renderCanvas(); renderConfig();\r
+    }\r
+  }\r
+  function delNode(id){\r
+    const f=currentFlow(); const i=f.nodes.findIndex(n=>n.id===id); if(i<0) return;\r
+    f.nodes.splice(i,1);\r
+    f.edges = f.edges.filter(e=>e.from!==id && e.to!==id);\r
+    if(selectedNodeId===id) selectedNodeId=null;\r
+    if(selectedEdgeId && !getEdge(selectedEdgeId)) selectedEdgeId=null;\r
+    renderCanvas(); renderConfig();\r
+  }\r
+  function copyNode(id){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===id); if(!n) return;\r
+    const c=JSON.parse(JSON.stringify(n));\r
+    c.id='n_'+Date.now()+'_'+Math.random().toString(36).slice(2,5);\r
+    c.x=(n.x||0)+40; c.y=(n.y||0)+40;\r
+    c.name=n.name+' 副本';\r
+    f.nodes.push(c);\r
+    selectedNodeId=c.id; selectedEdgeId=null;\r
+    renderCanvas(); renderConfig();\r
+  }\r
+\r
+  /* ===================== 手动连线：从 out 端口拖到 in 端口 ===================== */\r
+  function startConnect(e,nid,kind){\r
+    if(kind==='in') return; // 只能从下连到上\r
+    e.preventDefault(); e.stopPropagation();\r
+    const f=currentFlow();\r
+    drawingEdge={ from:nid, startX:e.clientX, startY:e.clientY };\r
+    document.addEventListener('mousemove', drawTempEdge);\r
+    document.addEventListener('mouseup', endConnect);\r
+  }\r
+  function drawTempEdge(ev){\r
+    if(!drawingEdge) return;\r
+    const svg=g('edgesSvg');\r
+    // 清掉旧的临时线\r
+    let tmp=svg.querySelector('#tempEdge'); if(tmp) tmp.remove();\r
+    const canvas=g('flowCanvas'); const cr=canvas.getBoundingClientRect();\r
+    const fromEl=g('node-'+drawingEdge.from); if(!fromEl) return;\r
+    const ar=fromEl.getBoundingClientRect();\r
+    const sx=ar.left+ar.width/2-cr.left, sy=ar.bottom-cr.top;\r
+    const tx=ev.clientX-cr.left, ty=ev.clientY-cr.top;\r
+    const path=document.createElementNS('http://www.w3.org/2000/svg','path');\r
+    const d=\`M \${sx} \${sy} C \${sx} \${sy+60}, \${tx} \${ty-60}, \${tx} \${ty}\`;\r
+    path.setAttribute('d',d); path.setAttribute('id','tempEdge'); path.setAttribute('stroke','#165DFF'); path.setAttribute('stroke-width','2'); path.setAttribute('stroke-dasharray','5,3'); path.setAttribute('fill','none'); svg.appendChild(path);\r
+  }\r
+  function endConnect(ev){\r
+    document.removeEventListener('mousemove', drawTempEdge);\r
+    document.removeEventListener('mouseup', endConnect);\r
+    const tmp=g('edgesSvg').querySelector('#tempEdge'); if(tmp) tmp.remove();\r
+    if(!drawingEdge) return;\r
+    // 查找落点是否在 in 端口上\r
+    const t=ev.target;\r
+    if(t.classList && t.classList.contains('port') && t.classList.contains('in')){\r
+      const toId=t.getAttribute('data-nid');\r
+      if(toId && toId!==drawingEdge.from){\r
+        const f=currentFlow();\r
+        // 避免重复连接或自连\r
+        const exists=f.edges.some(e=>e.from===drawingEdge.from && e.to===toId);\r
+        const fromNode=f.nodes.find(x=>x.id===drawingEdge.from);\r
+        const toNode=f.nodes.find(x=>x.id===toId);\r
+        if(fromNode && fromNode.type==='cc' && (!toNode || toNode.type!=='end')){\r
+          alert('抄送节点为流程终止节点，其后只能连接「流程结束」节点。');\r
+        } else if(!exists){\r
+          f.edges.push({ id:'e_'+Date.now(), from:drawingEdge.from, to:toId, mode:'always', logic:'and', conditions:[] });\r
+          selectedEdgeId=f.edges[f.edges.length-1].id; selectedNodeId=null;\r
+          renderCanvas(); renderConfig();\r
+        }\r
+      }\r
+    }\r
+    drawingEdge=null;\r
+  }\r
+\r
+  /* ===================== 节点拖动 ===================== */\r
+  function startNodeDrag(e, id){\r
+    if(e.button!==0) return;\r
+    if(e.target.closest('.node-del') || e.target.closest('.port')) return;\r
+    e.preventDefault();\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===id); if(!n) return;\r
+    const canvas=g('flowCanvas');\r
+    const startX=e.clientX, startY=e.clientY, ox=n.x||0, oy=n.y||0;\r
+    const el=g('node-'+id); if(el) el.classList.add('node-dragging');\r
+    selectNode(id);\r
+    function mv(ev){\r
+      let nx = ox + (ev.clientX-startX);\r
+      let ny = oy + (ev.clientY-startY);\r
+      nx=Math.max(0,Math.min(nx, canvas.clientWidth-210));\r
+      ny=Math.max(0,Math.min(ny, canvas.clientHeight-90));\r
+      n.x=nx; n.y=ny;\r
+      const el=g('node-'+id); if(el){ el.style.left=nx+'px'; el.style.top=ny+'px'; }\r
+      drawNodeEdges();\r
+    }\r
+    function up(){ document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up); const el=g('node-'+id); if(el) el.classList.remove('node-dragging'); }\r
+    document.addEventListener('mousemove',mv); document.addEventListener('mouseup',up);\r
+  }\r
+  function startBendDrag(e, eid){\r
+    e.preventDefault(); e.stopPropagation();\r
+    const f=currentFlow(); const ed=f.edges.find(x=>x.id===eid); if(!ed) return;\r
+    const canvas=g('flowCanvas');\r
+    function mv(ev){ const cr=canvas.getBoundingClientRect(); ed.bend={x:ev.clientX-cr.left, y:ev.clientY-cr.top}; drawNodeEdges(); }\r
+    function up(){ document.removeEventListener('mousemove',mv); document.removeEventListener('mouseup',up); }\r
+    document.addEventListener('mousemove',mv); document.addEventListener('mouseup',up);\r
+  }\r
+\r
+  /* ===================== SVG 连线绘制 ===================== */\r
+  const SVGNS='http://www.w3.org/2000/svg';\r
+  function cubicPoint(x0,y0,x1,y1,x2,y2,x3,y3,t){\r
+    const mt=1-t;\r
+    const a=mt*mt*mt, b=3*mt*mt*t, c=3*mt*t*t, d=t*t*t;\r
+    return { x:a*x0+b*x1+c*x2+d*x3, y:a*y0+b*y1+c*y2+d*y3 };\r
+  }\r
+  function drawNodeEdges(){\r
+    const svg=g('edgesSvg'); if(!svg) return;\r
+    const f=snapshotOfView() || currentFlow(); if(!f) return;\r
+    // 保留临时线\r
+    const tmp=svg.querySelector('#tempEdge');\r
+    svg.innerHTML='';\r
+    if(tmp) svg.appendChild(tmp);\r
+    const canvas=g('flowCanvas'); const cr=canvas.getBoundingClientRect();\r
+    f.edges.forEach(e=>{\r
+      const a=g('node-'+e.from), b=g('node-'+e.to); if(!a||!b) return;\r
+      const ar=a.getBoundingClientRect(), br=b.getBoundingClientRect();\r
+      const sx=ar.left+ar.width/2-cr.left, sy=ar.bottom-cr.top;\r
+      const tx=br.left+br.width/2-cr.left, ty=br.top-cr.top;\r
+      let c1x=sx, c1y=sy+70, c2x=tx, c2y=ty-70;\r
+      if(e.bend){ c1x=e.bend.x;c1y=e.bend.y;c2x=e.bend.x;c2y=e.bend.y; }\r
+      const d=\`M \${sx} \${sy} C \${c1x} \${c1y}, \${c2x} \${c2y}, \${tx} \${ty}\`;\r
+      const hit=document.createElementNS(SVGNS,'path'); hit.setAttribute('d',d); hit.setAttribute('class','edge-hit'); hit.setAttribute('data-eid',e.id); hit.onclick=(ev)=>{ev.stopPropagation(); selectEdge(e.id);}; svg.appendChild(hit);\r
+      const p=document.createElementNS(SVGNS,'path'); p.setAttribute('d',d); p.setAttribute('class','edge-path'+(e.id===selectedEdgeId?' sel':'')+(e.mode==='else'?' else':'')); svg.appendChild(p);\r
+      // 箭头\r
+      const arrow=document.createElementNS(SVGNS,'polygon');\r
+      const ang=Math.atan2(ty-c2y, tx-c2x);\r
+      const arrLen=8;\r
+      const ax1=tx-arrLen*Math.cos(ang-Math.PI/6), ay1=ty-arrLen*Math.sin(ang-Math.PI/6);\r
+      const ax2=tx-arrLen*Math.cos(ang+Math.PI/6), ay2=ty-arrLen*Math.sin(ang+Math.PI/6);\r
+      arrow.setAttribute('points',\`\${tx},\${ty} \${ax1},\${ay1} \${ax2},\${ay2}\`);\r
+      arrow.setAttribute('fill', e.mode==='else'?'#7c5cff':'#165DFF');\r
+      arrow.setAttribute('opacity', e.id===selectedEdgeId?'1':'.6');\r
+      svg.appendChild(arrow);\r
+      // 中点控制点\r
+      if(e.id===selectedEdgeId || e.mode==='else' || e.mode==='condition'){\r
+        const mid=cubicPoint(sx,sy,c1x,c1y,c2x,c2y,tx,ty,0.5);\r
+        const h=document.createElementNS(SVGNS,'circle'); h.setAttribute('cx',mid.x);h.setAttribute('cy',mid.y);h.setAttribute('r',5);h.setAttribute('class','edge-bend');h.setAttribute('data-eid',e.id);h.onmousedown=(ev)=>{ev.stopPropagation();startBendDrag(ev,e.id);}; svg.appendChild(h);\r
+      }\r
+      const mid=cubicPoint(sx,sy,c1x,c1y,c2x,c2y,tx,ty,0.5); e._mx=mid.x; e._my=mid.y;\r
+    });\r
+    f.edges.forEach(e=>{\r
+      const lb=g('elabel-'+e.id); if(lb && e._mx!=null){ lb.style.left=e._mx+'px'; lb.style.top=e._my+'px'; }\r
+    });\r
+  }\r
+  function edgeLabelHTML(e){\r
+    const sel = e.id===selectedEdgeId ? 'sel':'';\r
+    const viewOnly = !!viewingVersion;\r
+    const clickAttr = viewOnly ? '' : \`onclick="selectEdge('\${e.id}');event.stopPropagation()"\`;\r
+    if(e.mode==='else'){\r
+      return \`<button id="elabel-\${e.id}" class="edge-lbl else \${sel}" \${clickAttr} title="else：其他分支条件都不满足时走此线"><i class="fas fa-code-branch mr-1"></i>else 条件</button>\`;\r
+    }\r
+    if(e.mode==='condition' && e.conditions.length){\r
+      return \`<button id="elabel-\${e.id}" class="edge-lbl has \${sel}" \${clickAttr} title="点击编辑流转条件"><i class="fas fa-filter mr-1"></i>\${condSummaryOf(e)}</button>\`;\r
+    }\r
+    if(e.mode==='condition'){\r
+      return \`<button id="elabel-\${e.id}" class="edge-lbl warn \${sel}" \${clickAttr} title="该分支尚未配置条件"><i class="fas fa-exclamation-circle mr-1"></i>条件待配置</button>\`;\r
+    }\r
+    return \`<button id="elabel-\${e.id}" class="edge-lbl \${sel}" \${clickAttr} title="点击设置流转条件"><i class="fas fa-long-arrow-alt-right mr-1"></i>始终流转</button>\`;\r
+  }\r
+\r
+  /* ===================== 配置面板 ===================== */\r
+  const inp=(v)=>\`value="\${v===undefined||v===null?'':v}"\`;\r
+  const row=(label, ctrl, logic)=>\`<div class="mb-3.5"><label class="block text-xs font-medium text-gray-600 mb-1">\${label}</label>\${ctrl}\${logic?\`<div class="cfg-logic"><i class="fas fa-info-circle mr-1"></i>\${logic}</div>\`:''}</div>\`;\r
+  const sw=(id,val)=>\`<label class="flex items-center gap-2 cursor-pointer"><input type="checkbox" id="\${id}" \${val?'checked':''} class="rounded text-[#165DFF] w-4 h-4"> <span class="text-xs text-gray-600">启用</span></label>\`;\r
+  const info=(t)=>\`<div class="cfg-info"><i class="fas fa-lightbulb mr-1"></i>\${t}</div>\`;\r
+  function select(id, opts, val){ return \`<select id="\${id}" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\`+opts.map(o=>\`<option value="\${o[0]}" \${val===o[0]?'selected':''}>\${o[1]}</option>\`).join('')+\`</select>\`; }\r
+  function chipsHTML(options, selected, kind){\r
+    return \`<div class="flex flex-wrap gap-1.5">\`+options.map(o=>\`<button type="button" onclick="toggleChip('\${kind}','\${o}')" class="px-2 py-1 rounded-full text-xs border \${selected.includes(o)?'bg-[#165DFF] text-white border-[#165DFF]':'bg-white text-gray-600 border-gray-300 hover:border-[#165DFF]'} btn-click">\${o}</button>\`).join('')+\`</div>\`;\r
+  }\r
+  function toggleChip(kind, val){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    const key = kind==='member'?'members':kind==='role'?'roles':'depts';\r
+    const arr=n[key]; const i=arr.indexOf(val); if(i>=0) arr.splice(i,1); else arr.push(val);\r
+    renderConfig();\r
+  }\r
+\r
+  /* ===================== 组织架构选人 ===================== */\r
+  function esc(s){ return (s||'').replace(/\\\\/g,'\\\\\\\\').replace(/'/g,"\\\\'"); }\r
+  function memberPickerBlock(n, label, field){\r
+    const arr = n[field]||[];\r
+    const chips = arr.length\r
+      ? arr.map(m=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${esc(m)}<button onclick="removePickedMember('\${field}','\${esc(m)}')" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>\`).join('')\r
+      : '<span class="text-[11px] text-gray-400">尚未选择成员</span>';\r
+    const ctrl = \`\r
+      <button onclick="openMemberPicker('\${field}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md text-sm text-gray-600 hover:border-[#165DFF] hover:text-[#165DFF] btn-click">\r
+        <i class="fas fa-sitemap"></i> 从组织架构选择\${arr.length?\`（已选 \${arr.length} 人）\`:''}\r
+      </button>\r
+      <div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div>\`;\r
+    return row(label, ctrl, '按部门/小组逐层展开组织架构勾选成员；顶部可搜索姓名快速筛选。支持千人规模，不逐一罗列。');\r
+  }\r
+  function removePickedMember(field, m){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    n[field] = (n[field]||[]).filter(x=>x!==m); renderConfig(); renderCanvas();\r
+  }\r
+  function openMemberPicker(field){\r
+    pickerField=field;\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    pickerSel = new Set(n[field]||[]);\r
+    pickerQuery=''; const se=g('pickerSearch'); if(se) se.value='';\r
+    renderMemberPicker(); openModal('memberPickerModal');\r
+  }\r
+  function confirmMemberPicker(){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId);\r
+    if(n){ n[pickerField] = [...pickerSel]; }\r
+    closeModal('memberPickerModal'); renderConfig(); renderCanvas();\r
+  }\r
+  function orgAllMembers(dept){ let r=[...(dept.members||[])]; (dept.children||[]).forEach(c=>r=r.concat(orgAllMembers(c))); return r; }\r
+  function findDept(path){ const parts=path.split('/'); let list=ORG, cur=null; for(const p of parts){ cur=list.find(d=>d.name===p); if(!cur) return null; list=cur.children||[]; } return cur; }\r
+  function toggleOrg(path){ orgExpand[path]=!orgExpand[path]; renderMemberPicker(); }\r
+  function toggleOrgDept(path, checked){ const d=findDept(path); if(!d) return; orgAllMembers(d).forEach(m=>{ if(checked) pickerSel.add(m); else pickerSel.delete(m); }); renderMemberPicker(); }\r
+  function togglePickerMember(m){ if(pickerSel.has(m)) pickerSel.delete(m); else pickerSel.add(m); renderMemberPicker(); }\r
+  function memberRowHTML(m, depth){\r
+    const indent = 8 + depth*16;\r
+    return \`<div class="flex items-center gap-2 py-1 px-2 rounded hover:bg-gray-50" style="margin-left:\${indent}px">\r
+      <input type="checkbox" class="org-mb" \${pickerSel.has(m)?'checked':''} onchange="togglePickerMember('\${esc(m)}')">\r
+      <span class="text-sm text-gray-700"><i class="fas fa-user text-gray-300 mr-1.5"></i>\${esc(m)}</span>\r
+    </div>\`;\r
+  }\r
+  function deptBlock(dept, path, all, depth, inner, expanded){\r
+    const selCount = all.filter(m=>pickerSel.has(m)).length;\r
+    const allSel = all.length && selCount===all.length;\r
+    const someSel = selCount>0 && !allSel;\r
+    const hasChildren = inner && inner.trim().length>0;\r
+    const indent = 8 + depth*16;\r
+    const caret = hasChildren ? \`<i class="fas \${expanded?'fa-chevron-down':'fa-chevron-right'} text-gray-400 text-[10px] w-3" onclick="toggleOrg('\${path}')"></i>\` : \`<span class="w-3 inline-block"></span>\`;\r
+    let h = \`<div class="org-dept">\r
+      <div class="org-dept-head flex items-center gap-2 py-1.5 px-2 rounded hover:bg-gray-50">\r
+        \${caret}\r
+        <input type="checkbox" class="org-cb" \${allSel?'checked':''} \${someSel?'data-indet="1"':''} onchange="toggleOrgDept('\${path}',this.checked)">\r
+        <span class="text-sm font-medium text-gray-700 flex-1 cursor-pointer" onclick="toggleOrg('\${path}')">\${dept.name} <span class="text-[11px] text-gray-400">(\${all.length})</span></span>\r
+      </div>\`;\r
+    if(expanded && hasChildren){ h += \`<div class="org-dept-children">\${inner}</div>\`; }\r
+    h += \`</div>\`;\r
+    return h;\r
+  }\r
+  function orgDeptHTML(dept, path, q, depth){\r
+    const all=orgAllMembers(dept);\r
+    if(q){\r
+      const hit = all.filter(m=>m.toLowerCase().includes(q));\r
+      if(!hit.length) return '';\r
+      const inner = hit.map(m=>memberRowHTML(m, depth+1)).join('');\r
+      return deptBlock(dept, path, all, depth, inner, true);\r
+    }\r
+    const expanded = orgExpand[path]!==false;\r
+    let inner='';\r
+    (dept.children||[]).forEach(c=>{ const p=path+'/'+c.name; inner+=orgDeptHTML(c,p,q,depth+1); });\r
+    (dept.members||[]).forEach(m=>{ inner+=memberRowHTML(m, depth+1); });\r
+    if(!inner.trim()) return '';\r
+    return deptBlock(dept, path, all, depth, inner, expanded);\r
+  }\r
+  function renderMemberPicker(){\r
+    const q=(pickerQuery||'').trim().toLowerCase();\r
+    let html='';\r
+    ORG.forEach(d=>{ html += orgDeptHTML(d, d.name, q, 0); });\r
+    g('pickerTree').innerHTML = html || '<div class="text-xs text-gray-400 p-4">无匹配成员</div>';\r
+    g('pickerTree').querySelectorAll('[data-indet="1"]').forEach(el=>el.indeterminate=true);\r
+    const selArr=[...pickerSel];\r
+    g('pickerSelCount').textContent = selArr.length;\r
+    g('pickerSelChips').innerHTML = selArr.length\r
+      ? selArr.map(m=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${esc(m)}<button onclick="togglePickerMember('\${esc(m)}')" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>\`).join('')\r
+      : '<span class="text-[11px] text-gray-400">尚未选择</span>';\r
+  }\r
+\r
+  /* ---- 组织架构选部门 ---- */\r
+  function deptAllSubNames(dept){ let r=[dept.name]; (dept.children||[]).forEach(c=> r=r.concat(deptAllSubNames(c))); return r; }\r
+  function deptPickerBlock(n, label, field){\r
+    const arr = n[field]||[];\r
+    const chips = arr.length\r
+      ? arr.map(d=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${esc(d)}<button onclick="removePickedDept('\${field}','\${esc(d)}')" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>\`).join('')\r
+      : '<span class="text-[11px] text-gray-400">尚未选择部门</span>';\r
+    const ctrl = \`\r
+      <button onclick="openDeptPicker('\${field}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md text-sm text-gray-600 hover:border-[#165DFF] hover:text-[#165DFF] btn-click">\r
+        <i class="fas fa-sitemap"></i> 从组织架构选择部门\${arr.length?\`（已选 \${arr.length} 个）\`:''}\r
+      </button>\r
+      <div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div>\`;\r
+    return row(label, ctrl, '按组织架构逐层展开部门勾选，支持千人规模，不逐一罗列。');\r
+  }\r
+  function removePickedDept(field, d){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    n[field] = (n[field]||[]).filter(x=>x!==d); renderConfig(); renderCanvas();\r
+  }\r
+  function openDeptPicker(field){\r
+    pickerDeptField=field;\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    pickerDeptSel = new Set(n[field]||[]);\r
+    renderDeptPicker(); openModal('deptPickerModal');\r
+  }\r
+  function confirmDeptPicker(){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId);\r
+    if(n){ n[pickerDeptField] = [...pickerDeptSel]; }\r
+    closeModal('deptPickerModal'); renderConfig(); renderCanvas();\r
+  }\r
+  function toggleDeptExpand(path){ deptExpand[path]=!deptExpand[path]; renderDeptPicker(); }\r
+  function toggleDeptSel(path, checked){\r
+    const d=findDept(path); if(!d) return;\r
+    const names=deptAllSubNames(d);\r
+    names.forEach(nm=>{ if(checked) pickerDeptSel.add(nm); else pickerDeptSel.delete(nm); });\r
+    renderDeptPicker();\r
+  }\r
+  function toggleDeptSelByName(nm){ if(pickerDeptSel.has(nm)) pickerDeptSel.delete(nm); else pickerDeptSel.add(nm); renderDeptPicker(); }\r
+  function deptTreeNode(dept, path, depth){\r
+    const allSub = deptAllSubNames(dept);\r
+    const selAll = allSub.length && allSub.every(d=>pickerDeptSel.has(d));\r
+    const someSel = allSub.some(d=>pickerDeptSel.has(d)) && !selAll;\r
+    const expanded = deptExpand[path]!==false;\r
+    const caret = (dept.children&&dept.children.length) ? \`<i class="fas \${expanded?'fa-chevron-down':'fa-chevron-right'} text-gray-400 text-[10px] w-3 cursor-pointer" onclick="toggleDeptExpand('\${path}')"></i>\` : \`<span class="w-3 inline-block"></span>\`;\r
+    let h = \`<div class="org-dept">\r
+      <div class="org-dept-head flex items-center gap-2 py-1.5 px-2 rounded hover:bg-gray-50">\r
+        \${caret}\r
+        <input type="checkbox" class="org-cb" \${selAll?'checked':''} \${someSel?'data-indet="1"':''} onchange="toggleDeptSel('\${path}',this.checked)">\r
+        <span class="text-sm font-medium text-gray-700 flex-1 cursor-pointer" onclick="toggleDeptExpand('\${path}')">\${dept.name} <span class="text-[11px] text-gray-400">(\${allSub.length})</span></span>\r
+      </div>\`;\r
+    if(expanded && dept.children && dept.children.length){\r
+      let inner='';\r
+      dept.children.forEach(c=> inner+=deptTreeNode(c, path+'/'+c.name, depth+1));\r
+      h += \`<div class="org-dept-children">\${inner}</div>\`;\r
+    }\r
+    h += \`</div>\`;\r
+    return h;\r
+  }\r
+  function renderDeptPicker(){\r
+    let html='';\r
+    ORG.forEach(d=>{ html += deptTreeNode(d, d.name, 0); });\r
+    g('deptPickerTree').innerHTML = html || '<div class="text-xs text-gray-400 p-4">无部门</div>';\r
+    g('deptPickerTree').querySelectorAll('[data-indet="1"]').forEach(el=>el.indeterminate=true);\r
+    const selArr=[...pickerDeptSel];\r
+    g('deptPickerSelCount').textContent = selArr.length;\r
+    g('deptPickerSelChips').innerHTML = selArr.length\r
+      ? selArr.map(m=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${esc(m)}<button onclick="toggleDeptSelByName('\${esc(m)}')" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>\`).join('')\r
+      : '<span class="text-[11px] text-gray-400">尚未选择</span>';\r
+  }\r
+\r
+  /* ---- 选择岗位 ---- */\r
+  function postPickerBlock(n, label, field){\r
+    const arr = n[field]||[];\r
+    const chips = arr.length\r
+      ? arr.map(p=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${esc(p)}<button onclick="removePickedPost('\${field}','\${esc(p)}')" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>\`).join('')\r
+      : '<span class="text-[11px] text-gray-400">尚未选择岗位</span>';\r
+    const ctrl = \`\r
+      <button onclick="openPostPicker('\${field}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md text-sm text-gray-600 hover:border-[#165DFF] hover:text-[#165DFF] btn-click">\r
+        <i class="fas fa-briefcase"></i> 选择岗位\${arr.length?\`（已选 \${arr.length} 个）\`:''}\r
+      </button>\r
+      <div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div>\`;\r
+    return row(label, ctrl, '选择具体岗位作为审批人/抄送人；同一岗位可由多人担任。');\r
+  }\r
+  function removePickedPost(field, p){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    n[field] = (n[field]||[]).filter(x=>x!==p); renderConfig(); renderCanvas();\r
+  }\r
+  function openPostPicker(field){\r
+    pickerPostField=field;\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    pickerPostSel = new Set(n[field]||[]);\r
+    renderPostPicker(); openModal('postPickerModal');\r
+  }\r
+  function confirmPostPicker(){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId);\r
+    if(n){ n[pickerPostField] = [...pickerPostSel]; }\r
+    closeModal('postPickerModal'); renderConfig(); renderCanvas();\r
+  }\r
+  function togglePost(p){ if(pickerPostSel.has(p)) pickerPostSel.delete(p); else pickerPostSel.add(p); renderPostPicker(); }\r
+  function renderPostPicker(){\r
+    g('postPickerList').innerHTML = POSTS.map(p=>\`<label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 cursor-pointer">\r
+      <input type="checkbox" class="org-cb" \${pickerPostSel.has(p)?'checked':''} onchange="togglePost('\${esc(p)}')">\r
+      <span class="text-sm text-gray-700">\${esc(p)}</span>\r
+    </label>\`).join('');\r
+  }\r
+\r
+  /* ---- 选择角色（弹窗，与岗位/部门一致，避免平铺） ---- */\r
+  let pickerRoleSel=new Set(), pickerRoleField='';\r
+  function rolePickerBlock(n, label, field){\r
+    const arr = n[field]||[];\r
+    const chips = arr.length\r
+      ? arr.map(r=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${esc(r)}<button onclick="removePickedRole('\${field}','\${esc(r)}')" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>\`).join('')\r
+      : '<span class="text-[11px] text-gray-400">尚未选择角色</span>';\r
+    const ctrl = \`\r
+      <button onclick="openRolePicker('\${field}')" class="w-full flex items-center justify-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md text-sm text-gray-600 hover:border-[#165DFF] hover:text-[#165DFF] btn-click">\r
+        <i class="fas fa-user-tag"></i> 选择角色\${arr.length?\`（已选 \${arr.length} 个）\`:''}\r
+      </button>\r
+      <div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div>\`;\r
+    return row(label, ctrl, '弹窗勾选角色，同一角色可由多人担任；角色较多时支持滚动浏览，不逐一罗列。');\r
+  }\r
+  function removePickedRole(field, r){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    n[field] = (n[field]||[]).filter(x=>x!==r); renderConfig(); renderCanvas();\r
+  }\r
+  function openRolePicker(field){\r
+    pickerRoleField=field;\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    pickerRoleSel = new Set(n[field]||[]);\r
+    renderRolePicker(); openModal('rolePickerModal');\r
+  }\r
+  function confirmRolePicker(){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId);\r
+    if(n){ n[pickerRoleField] = [...pickerRoleSel]; }\r
+    closeModal('rolePickerModal'); renderConfig(); renderCanvas();\r
+  }\r
+  function toggleRole(r){ if(pickerRoleSel.has(r)) pickerRoleSel.delete(r); else pickerRoleSel.add(r); renderRolePicker(); }\r
+  function renderRolePicker(){\r
+    g('rolePickerList').innerHTML = ROLES.map(r=>\`<label class="flex items-center gap-2 px-2 py-1.5 rounded hover:bg-gray-50 cursor-pointer">\r
+      <input type="checkbox" class="org-cb" \${pickerRoleSel.has(r)?'checked':''} onchange="toggleRole('\${esc(r)}')">\r
+      <span class="text-sm text-gray-700">\${esc(r)}</span>\r
+    </label>\`).join('');\r
+  }\r
+\r
+  function renderConfig(){\r
+    const f=currentFlow(); if(!f){ g('configBody').innerHTML=''; return; }\r
+    if(viewingVersion){\r
+      const s=snapshotOfView();\r
+      g('configBody').innerHTML = \`\r
+        <div class="flex items-center gap-2 mb-3"><i class="fas fa-eye text-[#165DFF]"></i><h3 class="text-sm font-bold text-gray-800">历史版本查看</h3></div>\r
+        <div class="cfg-info"><i class="fas fa-info-circle mr-1"></i>当前画布展示的是历史版本 <b>v\${s?s.v:''}</b> 的节点结构（只读），发布人为 \${s?(s.publishedBy||'系统'):''} · \${s?s.publishedAt||'—':''}。点击下方按钮返回编辑当前流程。</div>\r
+        <button onclick="exitVersionView()" class="mt-3 w-full px-3 py-2 rounded-md text-xs font-medium btn-click bg-[#165DFF] text-white hover:bg-blue-600"><i class="fas fa-arrow-left mr-1"></i>返回编辑</button>\`;\r
+      return;\r
+    }\r
+    if(selectedEdgeId){ renderEdgeConfig(f); return; }\r
+    const n = selectedNodeId ? f.nodes.find(x=>x.id===selectedNodeId) : null;\r
+    if(!n){ renderFlowConfig(f); return; }\r
+    if(n.type==='start') renderStart(f,n);\r
+    else if(n.type==='approval') renderApproval(f,n);\r
+    else if(n.type==='cc') renderCC(f,n);\r
+    else if(n.type==='end') renderEnd(f,n);\r
+    bindConfig();\r
+  }\r
+  function tabsHTML(current, tabs){\r
+    return \`<div class="cfg-tabs flex mb-3 border-b border-gray-200">\`+tabs.map(t=>\`<button onclick="setCfgTab('\${t[0]}')" class="cfg-tab \${current===t[0]?'on':''}">\${t[1]}</button>\`).join('')+\`</div>\`;\r
+  }\r
+  function setCfgTab(t){ cfgTab=t; renderConfig(); }\r
+\r
+  /* ---- 流程级配置（点空白） ---- */\r
+  const ICON_LIST=[['fa-plane','飞机'],['fa-money-bill-wave','报销'],['fa-id-card','登记'],['fa-file-signature','通用'],['fa-suitcase','差旅'],['fa-truck','物流'],['fa-box-open','采购'],['fa-file-invoice','发票'],['fa-heart','关怀'],['fa-utensils','餐补'],['fa-tools','维修'],['fa-shield','安全'],['fa-graduation-cap','培训'],['fa-briefcase','入职'],['fa-gift','福利'],['fa-calendar-check','考勤']];\r
+  function iconRow(f){\r
+    const cur=ICON_LIST.find(x=>x[0]===f.icon);\r
+    return row('流程图标', \`<button onclick="openIconPicker()" class="w-full flex items-center gap-3 px-3 py-2 border border-dashed border-gray-300 rounded-md text-sm text-gray-700 hover:border-[#165DFF] hover:text-[#165DFF] btn-click">\r
+      <i class="fas \${f.icon||'fa-file-signature'} text-[#165DFF]"></i><span>\${cur?cur[1]:'选择图标'}</span><span class="ml-auto text-gray-400"><i class="fas fa-chevron-right"></i></span>\r
+    </button>\`, '流程在列表与发起入口处的标识，点击弹出图标库选择。');\r
+  }\r
+  function openIconPicker(){ renderIconPicker(); openModal('iconPickerModal'); }\r
+  function renderIconPicker(){\r
+    g('iconPickerGrid').innerHTML = ICON_LIST.map(x=>{\r
+      const on = currentFlow() && currentFlow().icon===x[0];\r
+      return \`<button onclick="pickIcon('\${x[0]}')" class="flex flex-col items-center gap-1.5 py-3 rounded-lg border \${on?'border-[#165DFF] bg-blue-50 text-[#165DFF]':'border-gray-200 hover:border-[#165DFF] text-gray-600'} btn-click">\r
+        <i class="fas \${x[0]} text-lg"></i><span class="text-[11px]">\${x[1]}</span>\r
+      </button>\`;\r
+    }).join('');\r
+  }\r
+  function pickIcon(name){\r
+    const f=currentFlow(); if(f){ f.icon=name; }\r
+    closeModal('iconPickerModal'); renderConfig(); renderFlowTable();\r
+  }\r
+  function renderFlowConfig(f){\r
+    g('configBody').innerHTML = \`\r
+      <div class="flex items-center gap-2 mb-3"><i class="fas fa-cog text-[#165DFF]"></i><h3 class="text-sm font-bold text-gray-800">流程属性</h3></div>\r
+      \${row('流程名称', \`<input id="fc_name" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(f.name)}>\`, '流程的显示名称，出现在发起入口与待办列表。')}\r
+      \${row('关联表单', \`<div class="flex items-center gap-2 px-2.5 py-1.5 border border-gray-200 rounded-md bg-gray-50 text-sm text-gray-600"><i class="fas \${FORM(f.formId).icon} text-[#165DFF]"></i>\${FORM(f.formId).name}<span class="text-[11px] text-gray-400 ml-auto">1:1 绑定</span></div>\`, '流程与表单一对一绑定，一经发布锁定；表单字段用于审批人、字段权限与流转条件。')}\r
+      \${row('流程描述', \`<textarea id="fc_desc" rows="2" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm resize-none" placeholder="如：员工请假线上审批">\${f.desc||''}</textarea>\`, '对流程用途的补充说明，便于协作者理解。')}\r
+      \${iconRow(f)}\r
+      <div class="cfg-sec">\r
+        <div class="cfg-sec-h">提交设置</div>\r
+        \${row('允许撤回', sw('fc_recall', f.allowRecall), '发起人在流程结束前可撤回单据，常用于填错重提。')}\r
+        \${f.allowRecall?row('撤回时限', \`<div class="flex items-center gap-2"><input id="fc_recallh" type="number" class="form-input w-20 border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(f.recallHours)}><select id="fc_recallu" class="form-input border border-gray-300 rounded-md px-2 py-1.5 text-sm"><option value="hour" \${f.recallUnit==='hour'?'selected':''}>小时</option><option value="day" \${f.recallUnit==='day'?'selected':''}>天</option></select></div>\`, '超过此时长后不可撤回，防止已审批节点被推翻。'):''}\r
+      </div>\`;\r
+    bindFlowConfig();\r
+  }\r
+\r
+  /* ---- 发起节点 ---- */\r
+  function renderStart(f,n){\r
+    const head = \`<div class="flex items-center gap-2 mb-3"><span class="w-6 h-6 rounded bg-[#165DFF] text-white flex items-center justify-center text-xs"><i class="fas fa-play"></i></span><h3 class="text-sm font-bold text-gray-800">发起节点</h3></div>\r
+      \${row('节点名称', \`<input id="n_name" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(n.name)}>\`, '流程起点名称，通常为「发起人」。')}\`;\r
+    const tabs = tabsHTML(cfgTab, [['base','发起范围'],['perm','字段权限']]);\r
+    let body='';\r
+    if(cfgTab==='perm'){\r
+      body = fieldPermMatrix(f,n);\r
+    } else {\r
+      body = \`\r
+        \${row('发起人范围', select('n_scope',[['all','所有人'],['dept','指定部门'],['role','指定角色'],['member','指定成员']], n.initiatorScope), '限定谁能发起本流程。例如报销仅财务可发起，避免无关人员误提。')}\r
+        \${n.initiatorScope==='dept'?deptPickerBlock(n, '指定部门', 'initiatorDepts'):''}\r
+        \${n.initiatorScope==='role'?rolePickerBlock(n, '指定角色', 'initiatorRoles'):''}\r
+        \${n.initiatorScope==='member'?memberPickerBlock(n, '指定成员', 'initiatorMembers'):''}\r
+        \${info('发起节点是流程起点，自动记录<b>发起人</b>与<b>发起时间</b>，并加载绑定的工作表单供填写。发起人在本节点仅可填写/查看下方「字段权限」中授权的字段。')}\`;\r
+    }\r
+    g('configBody').innerHTML = head + tabs + body;\r
+    bindCommon(n);\r
+  }\r
+\r
+  /* ---- 审批节点（分 tab 页） ---- */\r
+  function renderApproval(f,n){\r
+    const head = \`<div class="flex items-center gap-2 mb-3"><span class="w-6 h-6 rounded bg-[#165DFF]/10 text-[#165DFF] flex items-center justify-center text-xs"><i class="fas fa-check"></i></span><h3 class="text-sm font-bold text-gray-800">审批节点</h3></div>\r
+      \${row('节点名称', \`<input id="n_name" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(n.name)}>\`, '该审批节点的显示名称，出现在流程进度与待办中。')}\`;\r
+    const tabs = tabsHTML(cfgTab, [['base','审批人'],['perm','字段权限'],['timeout','时限超时'],['action','操作设置']]);\r
+    let body='';\r
+    if(cfgTab==='perm'){\r
+      body = fieldPermMatrix(f,n);\r
+    } else if(cfgTab==='timeout'){\r
+      body = \`\r
+        \${row('启用时限', sw('n_timeout', n.timeoutEnabled), '开启后若审批人在规定时长内未处理，则触发超时提醒，避免流程卡死。')}\r
+        \${n.timeoutEnabled?row('时限', \`<div class="flex items-center gap-2"><input id="n_th" type="number" class="form-input w-20 border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(n.timeoutHours)}><select id="n_tunit" class="form-input border border-gray-300 rounded-md px-2 py-1.5 text-sm"><option value="hour" \${n.timeoutUnit==='hour'?'selected':''}>小时</option><option value="day" \${n.timeoutUnit==='day'?'selected':''}>天</option></select></div>\`, '未在此时长内审批则触发超时提醒。'):''}\r
+        \${n.timeoutEnabled?row('超时动作', select('n_tact',[['notify','发送站内消息提醒']], n.timeoutAction), '超时后系统自动执行的动作；当前仅提供站内消息提醒，下拉形式便于后续扩展其他动作。'):''}\r
+        \${info('时限用于约束审批人处理时效，超时后自动发送站内消息提醒，避免流程停滞在某一节点。')}\`;\r
+    } else if(cfgTab==='action'){\r
+      body = \`\r
+        \${row('审批意见', select('n_opinion',[['required','必填'],['optional','选填'],['none','不显示']], n.opinion), '控制审批人是否必须填写审批意见，便于留痕与追溯。')}\r
+        <div class="cfg-sec"><div class="cfg-sec-h">节点可执行的操作</div>\r
+          \${row('允许提交', sw('n_submit', n.allowSubmit), '开启后审批人可「提交」单据至下一节点（常用于先补充意见/附件再送出）；关闭则审批通过即自动流转。')}\r
+          \${row('允许驳回', sw('n_reject', n.allowReject), '开启后审批人可「驳回」单据。驳回将单据退回至下方目标，常用于资料不全打回修改。')}\r
+          \${n.allowReject?row('驳回至', select('n_rejectto',[['initiator','发起人'],['prev','上一节点']], n.rejectTo), '驳回后单据退回的位置：发起人（重填）或上一审批节点（补审）。'):''}\r
+          \${row('允许转办', sw('n_transfer', n.allowTransfer), '开启后审批人可将审批权「转办」给指定他人，原审批人不再处理，适用于出差/代审。')}\r
+          \${row('允许加签', sw('n_addsign', n.allowAddSign), '开启后审批人可在自己前后「加签」其他人共同审批，灵活扩充临时审批人。')}\r
+          \${info('提交 / 驳回 / 转办 / 加签是审批人在运行态可执行的动作，在此处配置「是否允许 + 目标/范围」，未开启则运行态按钮隐藏。')}\r
+        </div>\`;\r
+    } else {\r
+      body = \`\r
+        \${row('审批人来源', select('n_atype',[['initiator','发起人本人'],['manager_level','连续多级主管'],['member','指定成员'],['role','指定角色'],['dept_head','部门主管'],['field','表单成员字段'],['post','指定岗位']], n.approverType), '决定本节点由谁审批。主管类适配标准汇报线；指定成员/角色/岗位适合固定审批人；表单字段实现按数据动态带出。')}\r
+        \${n.approverType==='member'?memberPickerBlock(n, '指定成员', 'members'):''}\r
+        \${n.approverType==='post'?postPickerBlock(n, '指定岗位', 'posts'):''}\r
+        \${n.approverType==='role'?rolePickerBlock(n, '指定角色', 'roles'):''}\r
+        \${n.approverType==='dept_head'?deptPickerBlock(n, '部门', 'depts'):''}\r
+        \${n.approverType==='field'?row('成员字段', select('n_field', FORM_FIELDS(f.formId).map(x=>[x.fieldName,x.label]).concat([['','— 无成员字段 —']]), n.fieldRef||''), '取表单中「成员」控件的填写值作为审批人，实现按单据数据动态指定审批人。'):''}\r
+        \${n.approverType==='manager_level'?row('主管层级', \`<input id="n_level" type="number" min="1" class="form-input w-20 border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(n.level)}>\`, '第几级主管：1=直属主管，2=主管的主管，用于多级审批链。'):''}\r
+        \${row('审批方式', select('n_mode',[['and','会签（所有人通过）'],['or','或签（一人通过）'],['seq','依次审批']], n.mode), '多人审批时的通过规则：会签需全部同意；或签任一人同意即可；依次按顺序逐个审批，顺序可在下方调整。')}\r
+        \${n.mode==='seq'?seqBlock(n):''}\r
+        \${info('审批人 + 审批方式共同决定「谁审、怎么过」。方式仅在多人/多级时生效。')}\`;\r
+    }\r
+    g('configBody').innerHTML = head + tabs + body;\r
+    bindCommon(n); bindApproval(n);\r
+  }\r
+  function fieldPermMatrix(f,n){\r
+    const fields=FORM_FIELDS(f.formId);\r
+    if(!fields.length) return '<div class="cfg-logic">（当前表单无字段）</div>';\r
+    const seg=(name,val)=>\`<div class="inline-flex rounded-md overflow-hidden border border-gray-200 text-[11px]">\`+[['edit','可编辑'],['read','只读'],['hide','隐藏']].map(o=>\`<button onclick="setFieldPerm('\${name}','\${o[0]}')" class="px-2 py-1 \${val===o[0]?'bg-[#165DFF] text-white':'bg-white text-gray-500 hover:bg-gray-50'} btn-click">\${o[1]}</button>\`).join('')+\`</div>\`;\r
+    const rows=fields.map(fl=>{\r
+      const v=n.fieldPerm[fl.fieldName]||'edit';\r
+      return \`<tr class="border-b border-gray-100"><td class="py-1.5 pr-2 text-xs text-gray-700">\${fl.label}</td><td class="py-1.5 text-right">\${seg(fl.fieldName, v)}</td></tr>\`;\r
+    }).join('');\r
+    return \`\r
+      <div class="flex items-center justify-between mb-2">\r
+        <span class="text-[11px] text-gray-500">字段权限（审批人本节点可见/可改范围）</span>\r
+        <select onchange="bulkFieldPerm(this.value)" class="text-[11px] border border-gray-300 rounded px-1.5 py-1 text-gray-600">\r
+          <option value="">批量设置…</option><option value="edit">全部可编辑</option><option value="read">全部只读</option><option value="hide">全部隐藏</option>\r
+        </select>\r
+      </div>\r
+      <div class="border border-gray-100 rounded-lg overflow-hidden">\r
+        <table class="w-full"><tbody>\${rows}</tbody></table>\r
+      </div>\r
+      <div class="cfg-logic mt-2"><i class="fas fa-info-circle mr-1"></i><b>可编辑</b>可改、<b>只读</b>仅看、<b>隐藏</b>不可见。常用于让主管看全部但只能改特定字段；批量设置可快速统一，再个别调整。</div>\`;\r
+  }\r
+  function setFieldPerm(name, val){\r
+    const f=currentFlow(); if(!f) return; const n=f.nodes.find(x=>x.id===selectedNodeId);\r
+    if(n){ n.fieldPerm[name]=val; renderConfig(); }\r
+  }\r
+  function bulkFieldPerm(v){\r
+    const f=currentFlow(); if(!f||!v) return; const n=f.nodes.find(x=>x.id===selectedNodeId);\r
+    if(n){ FORM_FIELDS(f.formId).forEach(fl=>n.fieldPerm[fl.fieldName]=v); renderConfig(); }\r
+  }\r
+\r
+  /* ---- 抄送节点（分 tab 页） ---- */\r
+  function renderCC(f,n){\r
+    const head = \`<div class="flex items-center gap-2 mb-3"><span class="w-6 h-6 rounded bg-[#7c5cff]/10 text-[#7c5cff] flex items-center justify-center text-xs"><i class="fas fa-paper-plane"></i></span><h3 class="text-sm font-bold text-gray-800">抄送节点</h3></div>\r
+      \${row('节点名称', \`<input id="n_name" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(n.name)}>\`, '抄送节点名称，如「通知HR」。')}\`;\r
+    const tabs = tabsHTML(cfgTab, [['base','抄送设置'],['perm','字段权限']]);\r
+    let body='';\r
+    if(cfgTab==='perm'){\r
+      body = fieldPermMatrix(f,n);\r
+    } else {\r
+      body = \`\r
+        \${row('抄送人类型', select('n_ctype',[['member','指定成员'],['role','指定角色'],['dept','指定部门'],['post','指定岗位']], n.ccType), '被抄送人仅接收知会，不参与审批、不影响流转。')}\r
+        \${n.ccType==='member'?memberPickerBlock(n, '指定成员', 'members'):''}\r
+        \${n.ccType==='role'?rolePickerBlock(n, '指定角色', 'roles'):''}\r
+        \${n.ccType==='dept'?deptPickerBlock(n, '指定部门', 'depts'):''}\r
+        \${n.ccType==='post'?postPickerBlock(n, '指定岗位', 'posts'):''}\r
+        \${info('抄送人类型决定「抄送给谁」；在「字段权限」中配置抄送人可见/可改的字段范围。')}\`;\r
+    }\r
+    g('configBody').innerHTML = head + tabs + body;\r
+    bindCommon(n); bindCC(n);\r
+  }\r
+\r
+  /* ---- 结束节点 ---- */\r
+  function renderEnd(f,n){\r
+    g('configBody').innerHTML = \`\r
+      <div class="flex items-center gap-2 mb-3"><span class="w-6 h-6 rounded bg-[#00B42A] text-white flex items-center justify-center text-xs"><i class="fas fa-flag-checkered"></i></span><h3 class="text-sm font-bold text-gray-800">结束节点</h3></div>\r
+      \${row('节点名称', \`<input id="n_name" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(n.name)}>\`, '流程终点名称。')}\r
+      \${row('结束动作', select('n_end',[['archive','归档'],['notify','通知发起人'],['webhook','触发Webhook']], n.endAction), '流程正常结束后的系统动作：归档留痕、或通知发起人、或回调外部系统。')}\r
+      \${n.endAction==='webhook'?\`\r
+        \${row('回调地址', \`<input id="n_webhook" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" placeholder="https://" \${inp(n.webhook)}>\`, '流程结束时系统向该地址发送单据数据（回调目标）。')}\r
+        \${row('请求方式', select('n_wmethod',[['POST','POST'],['GET','GET']], n.webhookMethod), '调用回调地址使用的 HTTP 方法，默认 POST 携带 JSON 数据。')}\r
+        \${row('请求头（JSON）', \`<textarea id="n_wheaders" rows="2" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm resize-none font-mono" placeholder='如 {"Authorization":"Bearer xxx"}'>\${n.webhookHeaders||''}</textarea>\`, '可选：自定义请求头，用于鉴权或指定 Content-Type。')}\r
+        \${info('流程结束归档时触发回调，发送单据数据至上述地址；失败自动重试 3 次。')}\r
+      \`:''}\r
+      \${info('结束节点表示审批链路完成，实例进入「已结束」终态，不再流转。')}\`;\r
+    bindCommon(n); bindEnd(n);\r
+  }\r
+  function bindEnd(n){\r
+    const ed=g('n_end'); if(ed) ed.onchange=e=>{ n.endAction=e.target.value; renderConfig(); };\r
+    const wh=g('n_webhook'); if(wh) wh.oninput=e=>{ n.webhook=e.target.value; };\r
+    const wm=g('n_wmethod'); if(wm) wm.onchange=e=>{ n.webhookMethod=e.target.value; };\r
+    const whd=g('n_wheaders'); if(whd) whd.oninput=e=>{ n.webhookHeaders=e.target.value; };\r
+  }\r
+\r
+  /* ===================== 配置事件绑定 ===================== */\r
+  function bindCommon(n){\r
+    const nameEl=g('n_name'); if(nameEl) nameEl.oninput=e=>{ n.name=e.target.value; renderCanvas(); };\r
+    const sc=g('n_scope'); if(sc) sc.onchange=e=>{ n.initiatorScope=e.target.value; cfgTab='base'; renderStart(currentFlow(), n); };\r
+  }\r
+  function bindFlowConfig(){\r
+    const f=currentFlow();\r
+    const set=(id,key,parse)=>{ const el=g(id); if(el) el.onchange=e=>{ f[key]=parse?parse(e.target.value):e.target.value; renderConfig(); }; };\r
+    const setNum=(id,key)=>{ const el=g(id); if(el) el.oninput=e=>{ f[key]=Number(e.target.value); }; };\r
+    set('fc_name','name');\r
+    const d=g('fc_desc'); if(d) d.oninput=e=>f.desc=e.target.value;\r
+    const fc=g('fc_recall'); if(fc) fc.onchange=e=>{ f.allowRecall=e.target.checked; renderConfig(); };\r
+    setNum('fc_recallh','recallHours');\r
+    const fru=g('fc_recallu'); if(fru) fru.onchange=e=>{ f.recallUnit=e.target.value; };\r
+  }\r
+  function bindApproval(n){\r
+    const f=currentFlow();\r
+    const at=g('n_atype'); if(at) at.onchange=e=>{ n.approverType=e.target.value; renderConfig(); };\r
+    const fl=g('n_field'); if(fl) fl.onchange=e=>{ n.fieldRef=e.target.value; };\r
+    const lv=g('n_level'); if(lv) lv.oninput=e=>{ n.level=Number(e.target.value)||1; };\r
+    const mo=g('n_mode'); if(mo) mo.onchange=e=>{ n.mode=e.target.value; renderCanvas(); };\r
+    const to=g('n_timeout'); if(to) to.onchange=e=>{ n.timeoutEnabled=e.target.checked; renderConfig(); };\r
+    const th=g('n_th'); if(th) th.oninput=e=>{ n.timeoutHours=Number(e.target.value)||24; };\r
+    const tu=g('n_tunit'); if(tu) tu.onchange=e=>{ n.timeoutUnit=e.target.value; };\r
+    const ta=g('n_tact'); if(ta) ta.onchange=e=>{ n.timeoutAction=e.target.value; };\r
+    const op=g('n_opinion'); if(op) op.onchange=e=>{ n.opinion=e.target.value; };\r
+    const sb=g('n_submit'); if(sb) sb.onchange=e=>{ n.allowSubmit=e.target.checked; };\r
+    const rj=g('n_reject'); if(rj) rj.onchange=e=>{ n.allowReject=e.target.checked; renderConfig(); };\r
+    const rjt=g('n_rejectto'); if(rjt) rjt.onchange=e=>{ n.rejectTo=e.target.value; };\r
+    const tr=g('n_transfer'); if(tr) tr.onchange=e=>{ n.allowTransfer=e.target.checked; };\r
+    const as=g('n_addsign'); if(as) as.onchange=e=>{ n.allowAddSign=e.target.checked; };\r
+  }\r
+\r
+  /* ---- 依次审批顺序 ---- */\r
+  function seqKeyOf(type){ return ({member:'members',role:'roles',post:'posts',dept_head:'depts'})[type]||null; }\r
+  function seqBlock(n){\r
+    const key=seqKeyOf(n.approverType);\r
+    if(!key) return info('当前审批人来源为单审批对象，无需设置顺序；依次审批自动按所选审批人逐个处理。');\r
+    const arr=n[key]||[];\r
+    if(!arr.length) return info('尚未选择审批人，请先在上方指定审批人，再设置依次审批顺序。');\r
+    if(arr.length<2) return row('审批顺序', '<div class="cfg-logic">当前仅 1 个审批人，无需排序。</div>', '');\r
+    const rows=arr.map((it,i)=>\`<div class="flex items-center gap-2 mb-1">\r
+      <span class="w-5 h-5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px] flex items-center justify-center font-semibold">\${i+1}</span>\r
+      <span class="flex-1 text-xs text-gray-700">\${esc(it)}</span>\r
+      <button onclick="moveSeq(\${i},-1)" \${i===0?'disabled':''} class="w-6 h-6 text-gray-400 hover:text-[#165DFF] btn-click \${i===0?'opacity-30':''}"><i class="fas fa-chevron-up"></i></button>\r
+      <button onclick="moveSeq(\${i},1)" \${i===arr.length-1?'disabled':''} class="w-6 h-6 text-gray-400 hover:text-[#165DFF] btn-click \${i===arr.length-1?'opacity-30':''}"><i class="fas fa-chevron-down"></i></button>\r
+    </div>\`).join('');\r
+    return row('审批顺序', rows, '依次审批将按下述顺序逐个审批，可通过上下箭头调整顺序。');\r
+  }\r
+  function moveSeq(i,dir){\r
+    const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;\r
+    const key=seqKeyOf(n.approverType); if(!key) return;\r
+    const arr=n[key]||[]; const j=i+dir; if(j<0||j>=arr.length) return;\r
+    const t=arr[i]; arr[i]=arr[j]; arr[j]=t;\r
+    renderConfig();\r
+  }\r
+\r
+  function bindCC(n){\r
+    const ct=g('n_ctype'); if(ct) ct.onchange=e=>{ n.ccType=e.target.value; renderConfig(); };\r
+  }\r
+  function bindConfig(){ /* 分派由各 render 调用具体 bind */ }\r
+\r
+  /* ===================== 流转条件（参考图：自定义条件 / else） ===================== */\r
+  const OPS=[['eq','等于'],['ne','不等于'],['gt','大于'],['lt','小于'],['gte','大于等于'],['lte','小于等于'],['contains','包含'],['empty','为空'],['notempty','不为空']];\r
+  function condSummaryOf(c){\r
+    const fs=FORM_FIELDS(currentFlow().formId);\r
+    const label=x=>{ const f=fs.find(y=>y.fieldName===x); return f?f.label:x; };\r
+    const opT=o=>{ const m=OPS.find(y=>y[0]===o); return m?m[1]:o; };\r
+    return c.conditions.map(cd=>\`\${label(cd.field)}\${opT(cd.op)}\${cd.val||''}\`).join(c.logic==='and'?'且':'或');\r
+  }\r
+\r
+  function renderEdgeConfig(f){\r
+    const eid=selectedEdgeId; const e=getEdge(eid); if(!e) return;\r
+    const src=f.nodes.find(x=>x.id===e.from), tgt=f.nodes.find(x=>x.id===e.to);\r
+    const outs=getOutgoing(e.from);\r
+    const hasElseElsewhere = outs.some(o=>o.id!==e.id && o.mode==='else');\r
+    const h = \`\r
+      <div class="flex items-center gap-2 mb-3"><i class="fas fa-share text-[#165DFF]"></i><h3 class="text-sm font-bold text-gray-800">节点连接线</h3></div>\r
+      <div class="mb-3 text-[11px] text-gray-500"><b>\${src?src.name:'?'}</b> → <b>\${tgt?tgt.name:'?'}</b></div>\r
+      <div class="cfg-sec" style="margin-top:0;border-top:none;padding-top:0">\r
+        <div class="cfg-sec-h">数据流转条件</div>\r
+        \${row('条件模式', select('edge_mode',[\r
+          ['condition','使用自定义流转条件'],\r
+          ['else','使用 else 条件']\r
+        ], e.mode), '自定义流转条件：满足下方条件的数据才进入这条连接线下的节点；else 条件：当同源其他线的条件都不满足时走此线（兜底）。每一条连接线均需配置流转条件或设为 else。')}\r
+        <div class="cfg-logic mb-3"><i class="fas fa-info-circle mr-1"></i>\${e.mode==='else'?'当其他分支条件都不满足时，数据会走这一条 else 连线。':'添加后，满足流转条件的数据，才会进入这条连接线下的节点。'}</div>\r
+        \${e.mode==='condition'?\`\r
+          <div class="mb-2 text-xs text-gray-600">符合以下 \${select('edge_logic',[['and','所有'],['or','任一']], e.logic)} 流转条件的数据</div>\r
+          \${e.conditions.length?e.conditions.map((cd,i)=>edgeRowHTML(cd,i)).join(''):'<div class="cfg-logic">尚未添加条件，可点击下方按钮新增。</div>'}\r
+          <button onclick="edgeAddRow()" class="mt-2 text-[#165DFF] text-xs btn-click"><i class="fas fa-plus mr-1"></i>添加流转条件</button>\r
+          <div class="cfg-info mt-2">\${edgePreview()}</div>\r
+        \`:''}\r
+        \${e.mode==='else'?\`<div class="cfg-info"><i class="fas fa-code-branch mr-1"></i>本分支为 <b>else 默认分支</b>：当「\${src?src.name:''}」的其他流出分支条件都不满足时自动走此线，无需配置条件。</div>\`:''}\r
+      </div>\`;\r
+    g('configBody').innerHTML=h;\r
+    bindEdgeConfig(e);\r
+  }\r
+  function edgeRowHTML(cd,i){\r
+    const fields=FORM_FIELDS(currentFlow().formId);\r
+    const fopts = fields.length? fields.map(fl=>\`<option value="\${fl.fieldName}" \${cd.field===fl.fieldName?'selected':''}>\${fl.label}</option>\`).join('') : '<option value="">（无字段）</option>';\r
+    const oopts = OPS.map(o=>\`<option value="\${o[0]}" \${cd.op===o[0]?'selected':''}>\${o[1]}</option>\`).join('');\r
+    const hide = (cd.op==='empty'||cd.op==='notempty');\r
+    return \`<div class="flex items-center gap-1.5 mb-2">\r
+      <select onchange="updEdgeCond(\${i},'field',this.value)" class="form-input border border-gray-300 rounded px-2 py-1 text-xs flex-1">\${fopts}</select>\r
+      <select onchange="updEdgeCond(\${i},'op',this.value)" class="form-input border border-gray-300 rounded px-2 py-1 text-xs w-24">\${oopts}</select>\r
+      <input oninput="updEdgeCond(\${i},'val',this.value)" value="\${cd.val||''}" \${hide?'disabled':''} class="form-input border border-gray-300 rounded px-2 py-1 text-xs w-20" placeholder="值">\r
+      <button onclick="edgeDelRow(\${i})" class="text-gray-400 hover:text-red-500 btn-click"><i class="fas fa-times"></i></button>\r
+    </div>\`;\r
+  }\r
+  function edgeAddRow(){ const e=getEdge(selectedEdgeId); e.conditions.push({field:'',op:'eq',val:''}); renderEdgeConfig(currentFlow()); }\r
+  function edgeDelRow(i){ const e=getEdge(selectedEdgeId); e.conditions.splice(i,1); renderEdgeConfig(currentFlow()); }\r
+  function updEdgeCond(i,key,val){ const e=getEdge(selectedEdgeId); e.conditions[i][key]=val; if(key==='op'){ renderEdgeConfig(currentFlow()); } else { const p=g('configBody').querySelector('.cfg-info'); if(p) p.innerHTML=edgePreview(); } }\r
+  function edgePreview(){\r
+    const e=getEdge(selectedEdgeId); if(!e||!e.conditions.length) return '（未配置条件，默认直接流转）';\r
+    const fs=FORM_FIELDS(currentFlow().formId);\r
+    const label=x=>{ const f=fs.find(y=>y.fieldName===x); return f?f.label:x; };\r
+    const opT=o=>{ const m=OPS.find(y=>y[0]===o); return m?m[1]:o; };\r
+    const parts=e.conditions.map(cd=>\`\${label(cd.field)} \${opT(cd.op)} \${cd.val||'?'}\`);\r
+    return (e.logic==='and'?'且：':'或：') + parts.join(e.logic==='and'?' ， ':' 或 ');\r
+  }\r
+  function edgeApply(){ renderCanvas(); }\r
+  function edgeClear(){ const e=getEdge(selectedEdgeId); if(e){ e.mode='always'; e.logic='and'; e.conditions=[]; renderEdgeConfig(currentFlow()); renderCanvas(); } }\r
+  function delEdge(eid){\r
+    const f=currentFlow(); const e=getEdge(eid); if(!e) return;\r
+    f.edges=f.edges.filter(x=>x.id!==eid);\r
+    selectedEdgeId=null; renderCanvas(); renderConfig();\r
+  }\r
+  function bindEdgeConfig(e){\r
+    const el=getEdge(selectedEdgeId);\r
+    const m=g('edge_mode'); if(m) m.onchange=()=>{\r
+      const val=g('edge_mode').value;\r
+      if(val==='else'){\r
+        // 取消其他同源线的 else\r
+        getOutgoing(el.from).forEach(o=>{ if(o.id!==el.id && o.mode==='else') o.mode='always'; });\r
+      }\r
+      el.mode=val;\r
+      renderEdgeConfig(currentFlow()); renderCanvas();\r
+    };\r
+    const l=g('edge_logic'); if(l) l.onchange=()=>{ el.logic=g('edge_logic').value; renderEdgeConfig(currentFlow()); };\r
+  }\r
+\r
+  /* 键盘 Delete 删除选中的连线 */\r
+  document.addEventListener('keydown', e=>{\r
+    if((e.key==='Delete' || e.key==='Backspace') && selectedEdgeId){ delEdge(selectedEdgeId); }\r
+  });\r
+\r
+  /* ===================== 顶部 & 保存/发布 ===================== */\r
+  function statusInfo(f){\r
+    if(f.status==='已发布') return f.hasUnpublished\r
+      ? { label:'待发布', cls:'px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700' }\r
+      : { label:'已发布', cls:'px-2 py-0.5 rounded-full text-xs font-medium bg-green-100 text-green-600' };\r
+    return { label:(f.version>0?'草稿（已下架）':'草稿'), cls:'px-2 py-0.5 rounded-full text-xs font-medium bg-amber-100 text-amber-700' };\r
+  }\r
+  function updateHeader(){\r
+    const f=currentFlow(); if(!f) return;\r
+    const pill=g('statusPill'), vp=g('versionPill'), pub=g('publishBtn'), unp=g('unpublishBtn'), banner=g('stateBanner');\r
+    const si=statusInfo(f);\r
+    pill.textContent=si.label; pill.className='status-pill '+si.cls;\r
+    vp.textContent='v'+f.version;\r
+    const published=f.status==='已发布';\r
+    pub.classList.toggle('hidden', published && !f.hasUnpublished);\r
+    unp.classList.toggle('hidden', !published);\r
+    pub.innerHTML = (published && f.hasUnpublished) ? '<i class="fas fa-rocket mr-1"></i>发布新版本' : '<i class="fas fa-rocket mr-1"></i>发布';\r
+    if(published && f.hasUnpublished){\r
+      banner.style.display='flex'; banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200 bg-amber-50 text-amber-700';\r
+      banner.innerHTML='<i class="fas fa-exclamation-triangle"></i> 本流程已发布（线上 <b>v'+f.version+'</b>），当前为<b>待发布修改</b>。点击「发布」生成 <b>v'+(f.version+1)+'</b> 并生效，在途单据不受影响。';\r
+    } else if(!published && f.version>0){\r
+      banner.style.display='flex'; banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200 bg-gray-50 text-gray-600';\r
+      banner.innerHTML='<i class="fas fa-eye-slash"></i> 流程已下架，当前为<b>草稿</b>，不再接收发起；历史数据（v1…v'+f.version+'）保留可查。点击「发布」可重新上线为新版本。';\r
+    } else { banner.style.display='none'; banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200'; banner.innerHTML=''; }\r
+  }\r
+  function saveFlow(){\r
+    const f=currentFlow(); if(!f) return;\r
+    if(f.status!=='已发布'){ f.status='草稿'; if(f.version===0) f.version=0; }\r
+    else { f.hasUnpublished=true; }\r
+    f.publishedAt=f.publishedAt||'—';\r
+    updateHeader(); renderFlowTable();\r
+    alert('已保存流程「'+f.name+'」\\n共 '+f.nodes.length+' 个节点（演示）');\r
+  }\r
+  function snapshotOf(f){\r
+    return { v:f.version, publishedAt:f.publishedAt, publishedBy:f.publishedBy, name:f.name, desc:f.desc, icon:f.icon, formId:f.formId,\r
+      allowRecall:f.allowRecall, recallHours:f.recallHours, recallUnit:f.recallUnit,\r
+      nodes:JSON.parse(JSON.stringify(f.nodes)), edges:JSON.parse(JSON.stringify(f.edges)) };\r
+  }\r
+  function publishFlow(){\r
+    const f=currentFlow(); if(!f) return;\r
+    const maxV=(f.versions&&f.versions.length)?Math.max.apply(null, f.versions.map(s=>s.v)):(f.version||0);\r
+    if(!confirm('确认发布流程「'+f.name+'」？\\n将生成 v'+(maxV+1)+' 并作为线上锁定版本。')) return;\r
+    f.version=maxV+1; f.status='已发布'; f.hasUnpublished=false; f.publishedAt=new Date().toISOString().slice(0,10); f.publishedBy='产品同学';\r
+    if(!f.versions) f.versions=[];\r
+    f.versions.push(snapshotOf(f));\r
+    updateHeader(); renderFlowTable(); renderCanvas();\r
+    alert('已发布：'+f.name+' v'+f.version+'（线上锁定版本生效）');\r
+  }\r
+  function unpublishFlow(id){\r
+    const f = id?FLOWS.find(x=>x.id===id):currentFlow(); if(!f) return;\r
+    if(!confirm('确认下架流程「'+f.name+'」？\\n下架后停止接收发起，历史数据保留。')) return;\r
+    f.status='草稿'; f.hasUnpublished=false;\r
+    if(currentFlowId===f.id) updateHeader();\r
+    renderFlowTable();\r
+  }\r
+  function quickPublish(id){ const f=FLOWS.find(x=>x.id===id); if(!f) return; currentFlowId=id; publishFlow(); }\r
+  function copyFlow(id){\r
+    const f=FLOWS.find(x=>x.id===id); if(!f) return;\r
+    const idMap={};\r
+    const newNodes=f.nodes.map(n=>{ const c=JSON.parse(JSON.stringify(n)); const nid='n_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); idMap[n.id]=nid; c.id=nid; return c; });\r
+    const newEdges=f.edges.map(e=>{ const c=JSON.parse(JSON.stringify(e)); c.id='e_'+Date.now()+'_'+Math.random().toString(36).slice(2,6); c.from=idMap[e.from]; c.to=idMap[e.to]; c.bend=undefined; return c; });\r
+    const nf=JSON.parse(JSON.stringify(f));\r
+    nf.id='p_'+Date.now(); nf.name=f.name+' 副本'; nf.status='草稿'; nf.version=0; nf.hasUnpublished=false; nf.publishedAt='—'; nf.versions=[]; nf.nodes=newNodes; nf.edges=newEdges;\r
+    FLOWS.push(nf); renderFlowTable();\r
+  }\r
+\r
+  /* ===================== 版本历史 ===================== */\r
+  function showVersions(){\r
+    const f=currentFlow(); if(!f) return;\r
+    const vers=(f.versions&&f.versions.length)?f.versions.slice().sort((a,b)=>b.v-a.v):[];\r
+    let list=vers.map(s=>{\r
+      const cur = s.v===f.version && f.status==='已发布';\r
+      return \`<div class="flex items-center gap-3 p-3 border rounded-lg \${cur?'border-[#165DFF] bg-blue-50':'border-gray-200'}">\r
+        <span class="px-2 py-0.5 rounded-full text-xs font-medium \${cur?'bg-[#165DFF] text-white':'bg-gray-100 text-gray-500'}">v\${s.v}</span>\r
+        <div class="flex-1 min-w-0"><div class="text-sm text-gray-800">\${cur?'线上版本（当前生效）':'历史版本'}</div><div class="text-xs text-gray-400">\${s.publishedBy||'系统'} · \${s.publishedAt||'—'} · \${s.nodes?s.nodes.length:0} 个节点</div></div>\r
+        \${cur?'<span class="text-xs text-[#165DFF]"><i class="fas fa-lock mr-1"></i>已锁定</span>':\r
+          \`<button onclick="viewVersion(\${s.v})" class="px-3 py-1 rounded-md text-xs btn-click border border-gray-300 text-gray-600 hover:border-[#165DFF] hover:text-[#165DFF]"><i class="fas fa-eye mr-1"></i>查看</button>\r
+           <button onclick="restoreVersion(\${s.v})" class="px-3 py-1 rounded-md text-xs btn-click border border-[#165DFF] text-[#165DFF] hover:bg-blue-50"><i class="fas fa-rotate-left mr-1"></i>恢复并发布</button>\`}\r
+      </div>\`;\r
+    }).join('');\r
+    if(!vers.length) list='<div class="text-xs text-gray-400 p-2">尚未发布，暂无版本记录。</div>';\r
+    g('versionList').innerHTML=list;\r
+    openModal('versionsModal');\r
+  }\r
+  function viewVersion(v){\r
+    const f=currentFlow(); if(!f) return;\r
+    const s=(f.versions||[]).find(x=>x.v===v); if(!s) return;\r
+    // 直接把画布切换为该历史版本的节点结构（只读）\r
+    viewingVersion=v; selectedNodeId=null; selectedEdgeId=null;\r
+    closeModal('versionsModal');\r
+    const banner=g('stateBanner');\r
+    banner.style.display='flex'; banner.className='px-5 py-2 text-xs flex items-center gap-2 border-b border-gray-200 bg-blue-50 text-blue-700';\r
+    banner.innerHTML='<i class="fas fa-eye"></i> 正在查看历史版本 <b>v'+v+'</b>（只读 · '+(s.publishedBy||'系统')+' · '+(s.publishedAt||'—')+'）<button onclick="exitVersionView()" class="ml-auto px-2.5 py-1 rounded-md text-[11px] font-medium bg-[#165DFF] text-white hover:bg-blue-600 btn-click">返回编辑</button>';\r
+    renderCanvas(); renderConfig();\r
+  }\r
+  function exitVersionView(){\r
+    viewingVersion=null; selectedNodeId=null; selectedEdgeId=null;\r
+    renderCanvas(); renderConfig(); updateHeader();\r
+  }\r
+  function restoreVersion(v){\r
+    const f=currentFlow(); if(!f) return;\r
+    const s=(f.versions||[]).find(x=>x.v===v); if(!s) return;\r
+    if(!confirm('确认恢复历史版本 v'+v+'？\\n将把当前流程内容替换为该版本内容并重新发布，版本号保持 v'+v+'，不生成新版本。')) return;\r
+    f.name=s.name; f.desc=s.desc; f.icon=s.icon; f.formId=s.formId;\r
+    f.allowRecall=s.allowRecall; f.recallHours=s.recallHours; f.recallUnit=s.recallUnit;\r
+    f.nodes=JSON.parse(JSON.stringify(s.nodes)); f.edges=JSON.parse(JSON.stringify(s.edges));\r
+    f.version=v; f.status='已发布'; f.hasUnpublished=false;\r
+    f.publishedAt=s.publishedAt; f.publishedBy=s.publishedBy;\r
+    selectedNodeId=null; selectedEdgeId=null;\r
+    closeModal('versionsModal');\r
+    updateHeader(); renderFlowTable(); renderCanvas(); renderConfig();\r
+    alert('已恢复历史版本 v'+v+' 并重新发布（版本号保持 v'+v+'，不新增版本号）');\r
+  }\r
+\r
+  /* ===================== 模态框 ===================== */\r
+  function openModal(id){ g(id).classList.remove('modal-hidden'); }\r
+  function closeModal(id){ g(id).classList.add('modal-hidden'); }\r
+  document.querySelectorAll('.modal-overlay').forEach(o=>o.addEventListener('click',e=>{ if(e.target===o) o.classList.add('modal-hidden'); }));\r
+\r
+  /* ===================== 逻辑说明高亮连线 ===================== */\r
+  const svg0=document.getElementById('connections');\r
+  function drawConnections(){\r
+    svg0.innerHTML='';\r
+    document.querySelectorAll('.proto-element[data-proto-id]').forEach(leftEl=>{\r
+      const pid=leftEl.getAttribute('data-proto-id');\r
+      const rightEl=document.querySelector('.proto-desc[data-proto-id="'+pid+'"]'); if(!rightEl) return;\r
+      const lr=leftEl.getBoundingClientRect(), rr=rightEl.getBoundingClientRect(), sr=svg0.getBoundingClientRect();\r
+      if(lr.width===0||rr.width===0) return;\r
+      const x1=lr.right-sr.left, y1=lr.top+lr.height/2-sr.top;\r
+      const x2=rr.left-sr.left, y2=rr.top+rr.height/2-sr.top;\r
+      const cx=x1+(x2-x1)*0.5;\r
+      const p=document.createElementNS('http://www.w3.org/2000/svg','path');\r
+      p.setAttribute('d',\`M \${x1} \${y1} C \${cx} \${y1}, \${cx} \${y2}, \${x2} \${y2}\`);\r
+      p.setAttribute('class','connection-line'); p.setAttribute('data-proto-id',pid); svg0.appendChild(p);\r
+      const mx=(x1+x2)/2, my=(y1+y2)/2;\r
+      const bg=document.createElementNS('http://www.w3.org/2000/svg','circle');\r
+      bg.setAttribute('cx',mx); bg.setAttribute('cy',my); bg.setAttribute('r',11); bg.setAttribute('class','connection-label-bg'); svg0.appendChild(bg);\r
+      const t=document.createElementNS('http://www.w3.org/2000/svg','text');\r
+      t.setAttribute('x',mx); t.setAttribute('y',my); t.setAttribute('dy','0.05em'); t.setAttribute('class','connection-label'); t.textContent=pid; svg0.appendChild(t);\r
+    });\r
+  }\r
+  function highlight(pid,active){\r
+    document.querySelectorAll('.connection-line[data-proto-id="'+pid+'"]').forEach(p=>p.classList.toggle('active',active));\r
+    const l=document.querySelector('.proto-element[data-proto-id="'+pid+'"]'); if(l) l.classList.toggle('active-highlight',active);\r
+    const r=document.querySelector('.proto-desc[data-proto-id="'+pid+'"]'); if(r) r.classList.toggle('active-highlight',active);\r
+  }\r
+  function bindHover(){\r
+    document.querySelectorAll('.proto-element[data-proto-id]').forEach(el=>{ const p=el.getAttribute('data-proto-id'); el.addEventListener('mouseenter',()=>highlight(p,true)); el.addEventListener('mouseleave',()=>highlight(p,false)); });\r
+    document.querySelectorAll('.proto-desc[data-proto-id]').forEach(el=>{ const p=el.getAttribute('data-proto-id'); el.addEventListener('mouseenter',()=>highlight(p,true)); el.addEventListener('mouseleave',()=>highlight(p,false)); });\r
+  }\r
+\r
+  /* ===================== 移动端 ===================== */\r
+  let mobileShowDesc=false;\r
+  function toggleMobileView(){ mobileShowDesc=!mobileShowDesc; const lp=g('left-panel'),rp=g('right-panel'),b=g('mobileToggle'); if(mobileShowDesc){ lp.style.display='none'; rp.style.height='100vh'; b.innerHTML='<i class="fas fa-desktop"></i>'; } else { lp.style.display=''; rp.style.height=''; b.innerHTML='<i class="fas fa-info"></i>'; } }\r
+\r
+  /* ===================== 初始化 ===================== */\r
+  function init(){\r
+    orgInitExpand();\r
+    renderFlowTable(); renderCanvas();\r
+    drawConnections(); bindHover();\r
+    document.getElementById('left-panel').addEventListener('scroll',()=>requestAnimationFrame(drawConnections));\r
+    document.getElementById('right-panel').addEventListener('scroll',()=>requestAnimationFrame(drawConnections));\r
+  }\r
+  document.addEventListener('DOMContentLoaded',()=>setTimeout(init,100));\r
+  let rz; window.addEventListener('resize',()=>{ clearTimeout(rz); rz=setTimeout(()=>{ drawConnections(); drawNodeEdges(); },150); });\r
+  ___SCEND___\r
+</body>\r
+</html>\r
+\r
+<\/script>\r
+<script type="text/plain" id="mod-gov-full">\r
+<!DOCTYPE html>\r
+<html lang="zh-CN">\r
+<head>\r
+<meta charset="UTF-8">\r
+<meta name="viewport" content="width=device-width, initial-scale=1.0">\r
+<title>租户管理后台原型</title>\r
+<script src="https://cdn.tailwindcss.com">___SCEND___\r
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">\r
+<style>\r
+  body{font-family:-apple-system,"PingFang SC","Microsoft YaHei",sans-serif;background:#f5f7fa;color:#1f2329;}\r
+  .sidebar,#notes{display:none!important;}
+  .nav-item{padding:11px 18px;font-size:13px;color:#4e5969;cursor:pointer;border-left:3px solid transparent;display:flex;align-items:center;gap:9px;}\r
+  .nav-item:hover{background:#f7f8fa;}\r
+  .nav-item.active{background:#eff4ff;color:#165DFF;border-left-color:#165DFF;font-weight:600;}\r
+  .card{background:#fff;border:1px solid #eaecef;border-radius:10px;}\r
+  .btn{padding:6px 14px;border-radius:7px;font-size:13px;cursor:pointer;border:1px solid transparent;}\r
+  .btn-primary{background:#165DFF;color:#fff;}\r
+  .btn-primary:hover{background:#0e4fd6;}\r
+  .btn-ghost{background:#fff;border:1px solid #d9dee5;color:#4e5969;}\r
+  .btn-ghost:hover{background:#f2f3f5;}\r
+  .tab{padding:8px 14px;font-size:13px;color:#4e5969;cursor:pointer;border-bottom:2px solid transparent;}\r
+  .tab.active{color:#165DFF;border-bottom-color:#165DFF;font-weight:600;}\r
+  .field{margin-bottom:12px;}\r
+  .field label{display:block;font-size:12px;color:#86909c;margin-bottom:4px;}\r
+  .field input,.field textarea,.field select{width:100%;border:1px solid #d9dee5;border-radius:7px;padding:7px 10px;font-size:13px;outline:none;}\r
+  .field input:focus,.field textarea:focus,.field select:focus{border-color:#165DFF;}\r
+  .field input:disabled{background:#f7f8fa;color:#86909c;}\r
+  .icon-box{width:38px;height:38px;border-radius:9px;display:inline-flex;align-items:center;justify-content:center;font-size:18px;}\r
+  .chip{display:inline-flex;align-items:center;gap:5px;background:#f2f3f5;color:#1f2329;border-radius:20px;padding:3px 10px;font-size:12px;margin:3px 4px 0 0;}\r
+  .chip i{cursor:pointer;color:#86909c;font-style:normal;}\r
+  .chip i:hover{color:#f53f3f;}\r
+  .tree-node{font-size:13px;}\r
+  .picker-row{padding:7px 10px;border:1px solid #eaecef;border-radius:7px;font-size:13px;cursor:pointer;margin-bottom:6px;}\r
+  .picker-row:hover{background:#eff4ff;border-color:#165DFF;}\r
+  .note-card{background:#fffbe6;border:1px solid #ffe58f;border-radius:8px;padding:10px 12px;font-size:12px;color:#614700;margin-bottom:10px;line-height:1.6;}\r
+  .note-num{display:inline-block;width:18px;height:18px;line-height:18px;text-align:center;background:#faad14;color:#fff;border-radius:50%;font-size:11px;margin-right:6px;}\r
+  .modal-mask{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:50;}\r
+  .modal-box{background:#fff;border-radius:12px;padding:20px;width:440px;max-width:92vw;max-height:86vh;overflow:auto;}\r
+  .acl-row{display:flex;align-items:center;gap:10px;padding:8px 0;border-top:1px solid #f2f3f5;}\r
+  .picker-row.am-sel{border-color:#165DFF;background:#eff4ff;}\r
+  .app-icon-mask{position:fixed;inset:0;background:rgba(0,0,0,.35);display:flex;align-items:center;justify-content:center;z-index:60;}\r
+  .app-icon-box{background:#fff;border-radius:12px;padding:18px;width:460px;max-width:92vw;max-height:84vh;overflow:auto;}\r
+  .app-icon-grid{display:grid;grid-template-columns:repeat(6,1fr);gap:8px;}\r
+  .app-icon-item{display:flex;flex-direction:column;align-items:center;gap:5px;padding:10px 4px;border:1px solid #eaecef;border-radius:9px;cursor:pointer;color:#4e5969;}\r
+  .app-icon-item:hover{border-color:#165DFF;color:#165DFF;background:#f7faff;}\r
+  .app-icon-item.on{border-color:#165DFF;background:#eff4ff;color:#165DFF;}\r
+</style>\r
+</head>\r
+<body>\r
+<div class="flex h-screen">\r
+  <!-- 侧边导航 -->\r
+  <div class="sidebar flex flex-col">\r
+    <div class="px-4 py-4 border-b border-gray-100">\r
+      <div class="font-bold text-[15px] text-gray-800">租户管理后台</div>\r
+      <div class="text-[11px] text-gray-400 mt-1">租户管理员控制台</div>\r
+    </div>\r
+    <div class="py-2 flex-1">\r
+      <div class="nav-item active" data-m="app" onclick="switchModule('app')"><i class="fas fa-th-large"></i>应用中心</div>\r
+    </div>\r
+    <div class="px-4 py-3 border-t border-gray-100 text-[11px] text-gray-400">\r
+      <div><i class="fas fa-building mr-1"></i>当前租户：<b class="text-gray-600">星辰科技</b></div>\r
+      <div class="mt-1"><i class="fas fa-user-circle mr-1"></i>账号：tenant_admin</div>\r
+    </div>\r
+  </div>\r
+\r
+  <!-- 主内容 -->\r
+  <div class="flex-1 overflow-auto p-6">\r
+    <div id="main"></div>\r
+  </div>\r
+\r
+  <!-- 右侧逻辑备注 -->\r
+  <div class="w-72 bg-[#fafafa] border-l border-gray-100 p-4 overflow-auto" id="notes"></div>\r
+</div>\r
+<div id="modal"></div>\r
+\r
+<!-- 图标库弹窗（创建 / 编辑应用时选择图标） -->\r
+<div id="appIconModal" class="app-icon-mask" style="display:none" onclick="if(event.target===this)closeAppIconPicker()">\r
+  <div class="app-icon-box">\r
+    <div class="flex items-center justify-between mb-3"><div class="font-bold">选择应用图标</div><button class="text-gray-400 hover:text-gray-600" onclick="closeAppIconPicker()"><i class="fas fa-times"></i></button></div>\r
+    <div class="app-icon-grid" id="appIconGrid"></div>\r
+    <div class="flex justify-end gap-2 mt-4"><button class="btn btn-ghost" onclick="closeAppIconPicker()">取消</button><button class="btn btn-primary" onclick="confirmAppIcon()">确定</button></div>\r
+  </div>\r
+</div>\r
+\r
+<script>\r
+/* ===================== 数据模型 ===================== */\r
+const TENANT={id:'t1',name:'星辰科技'};\r
+const tenantName=id=>id===TENANT.id?TENANT.name:id;\r
+\r
+// 组织架构（部门 → 小组 → 成员）\r
+let DEPTS=[\r
+  {id:'d1',name:'研发中心',type:'dept',parentId:null},\r
+  {id:'d1g1',name:'后端组',type:'group',parentId:'d1'},\r
+  {id:'d1g2',name:'前端组',type:'group',parentId:'d1'},\r
+  {id:'d2',name:'财务部',type:'dept',parentId:null},\r
+  {id:'d3',name:'人事行政部',type:'dept',parentId:null},\r
+];\r
+let MEMBERS=[\r
+  {id:'m1',name:'张伟',deptId:'d1g1',title:'工程师'},\r
+  {id:'m2',name:'李娜',deptId:'d1g2',title:'工程师'},\r
+  {id:'m3',name:'王芳',deptId:'d2',title:'财务主管'},\r
+  {id:'m4',name:'刘洋',deptId:'d2',title:'会计'},\r
+  {id:'m5',name:'陈静',deptId:'d3',title:'行政经理'},\r
+  {id:'m6',name:'赵磊',deptId:'d1g1',title:'架构师'},\r
+];\r
+\r
+// 表单设计器 / 流程中心 / 任务中心 产物（挂载素材；status=published 为已发布可选）\r
+let FORMS=[\r
+  {id:'f1',name:'请假申请单',cat:'审批',status:'published',views:[{id:'v_f1_d',name:'默认视图',isDefault:true}]},\r
+  {id:'f2',name:'报销单',cat:'审批',status:'published',views:[\r
+    {id:'v_f2_d',name:'默认视图',isDefault:true},\r
+    {id:'v_f2_fin',name:'财务视图',isDefault:false},\r
+    {id:'v_f2_staff',name:'员工自助视图',isDefault:false}\r
+  ]},\r
+  {id:'f3',name:'入职登记表',cat:'登记',status:'published',views:[{id:'v_f3_d',name:'默认视图',isDefault:true}]},\r
+  {id:'f4',name:'员工通讯录查询',cat:'查询',status:'published',views:[{id:'v_f4_d',name:'默认视图',isDefault:true}]},\r
+  {id:'f5',name:'绩效评估表',cat:'审批',status:'draft',views:[{id:'v_f5_d',name:'默认视图',isDefault:true}]}\r
+];\r
+let FLOWS=[\r
+  {id:'p1',name:'请假审批流程',cat:'人事',status:'published'},\r
+  {id:'p2',name:'报销审批流程',cat:'财务',status:'published'},\r
+  {id:'p3',name:'出差申请审批',cat:'行政',status:'published'}\r
+];\r
+let TASKS=[\r
+  {id:'t1',name:'我的待办',cat:'待办',desc:'待我审批 / 处理的单据'},\r
+  {id:'t2',name:'我发起的',cat:'发起',desc:'我发起的流程与单据'},\r
+  {id:'t3',name:'抄送我的',cat:'知会',desc:'抄送给我的单据'}\r
+];\r
+\r
+// 应用（自动归属当前租户；图标来自图标库，仅存图标名）\r
+let APPS=[\r
+  {id:'a1',name:'企业OA系统',icon:{name:'fa-building'},tenantId:'t1',desc:'办公自动化门户',status:'published',menus:[\r
+    {id:'am1',name:'人事',type:'folder',children:[\r
+      {id:'am1a',name:'请假申请单',type:'form',refId:'f1',roleIds:null},\r
+      {id:'am1b',name:'请假审批',type:'flow',refId:'p1',roleIds:['r2']},\r
+    ]},\r
+    {id:'am2',name:'财务',type:'folder',children:[\r
+      {id:'am2a',name:'报销单',type:'form',refId:'f2',roleIds:null},\r
+      {id:'am2b',name:'报销审批',type:'flow',refId:'p2',roleIds:['r3']},\r
+    ]},\r
+  ]},\r
+  {id:'a2',name:'项目管理系统',icon:{name:'fa-tasks'},tenantId:'t1',desc:'研发项目协作',status:'draft',menus:[\r
+    {id:'bm1',name:'项目看板',type:'folder',children:[\r
+      {id:'bm1a',name:'研发任务',type:'form',refId:'f3',roleIds:null},\r
+      {id:'bm1b',name:'我的待办',type:'task',refId:'t1',roleIds:null},\r
+    ]},\r
+  ]},\r
+];\r
+\r
+// 角色体系：角色组 → 角色（含用户、可分配应用）\r
+let ROLE_GROUPS=[\r
+  {id:'g1',name:'职能角色',roles:[\r
+    {id:'r1',name:'普通员工',memberIds:['m1','m2','m6','m4'],appIds:['a1']},\r
+    {id:'r2',name:'部门主管',memberIds:['m3','m5'],appIds:['a1']},\r
+  ]},\r
+  {id:'g2',name:'财务角色',roles:[\r
+    {id:'r3',name:'财务专员',memberIds:['m3','m4'],appIds:['a1']},\r
+  ]},\r
+];\r
+\r
+/* ===================== 工具函数 ===================== */\r
+const uid=p=>(p||'id')+Math.random().toString(36).slice(2,8);\r
+const memberName=id=>{const m=MEMBERS.find(x=>x.id===id);return m?m.name:id;};\r
+const deptName=id=>{const d=DEPTS.find(x=>x.id===id);return d?d.name:id;};\r
+const appName=id=>{const a=APPS.find(x=>x.id===id);return a?a.name:id;};\r
+const groupName=id=>{const g=ROLE_GROUPS.find(x=>x.id===id);return g?g.name:id;};\r
+function roleById(id){for(const g of ROLE_GROUPS){const r=g.roles.find(x=>x.id===id);if(r)return r;}return null;}\r
+function findGroupOf(roleId){const g=ROLE_GROUPS.find(g=>g.roles.some(r=>r.id===roleId));return g?g.id:null;}\r
+function allRoles(){let r=[];ROLE_GROUPS.forEach(g=>r.push(...g.roles));return r;}\r
+function countMenus(menus){let n=0;menus.forEach(m=>{if(m.type==='folder')n+=countMenus(m.children);else n++;});return n;}\r
+function findMenu(a,id,list){list=list||a.menus;for(const m of list){if(m.id===id)return m;if(m.children){const f=findMenu(a,id,m.children);if(f)return f;}}return null;}\r
+function findParent(a,id,list){list=list||a.menus;for(const m of list){if(m.children){if(m.children.some(c=>c.id===id))return m;const f=findParent(a,id,m.children);if(f)return f;}}return null;}\r
+\r
+/* ===================== 全局状态 ===================== */\r
+let state={module:'app',appId:null,appTab:'menu',deptId:null,roleId:null,rpTab:'roles',roleAppRoleId:null,menuAppId:'a1',roleShowPerm:false,previewMenuId:null};\r
+\r
+/* ===================== 渲染入口 ===================== */\r
+function switchModule(m){state.module=m;if(m!=='app')state.appId=null;render();}\r
+function render(){\r
+  document.querySelectorAll('.nav-item').forEach(n=>n.classList.toggle('active',n.dataset.m===state.module));\r
+  const main=document.getElementById('main');\r
+  if(state.module==='app') main.innerHTML=state.appId?renderAppEditor():renderAppList();\r
+  else if(state.module==='user') main.innerHTML=renderUsers();\r
+  else if(state.module==='role') main.innerHTML=renderRolePerm();\r
+  renderNotes();\r
+}\r
+\r
+/* ===================== 模块一：应用中心 ===================== */\r
+function renderAppList(){\r
+  return \`<div>\r
+    <div class="flex items-center justify-between mb-4">\r
+      <div><h2 class="text-lg font-bold">应用中心</h2><p class="text-[12px] text-gray-500">创建应用并挂载菜单；此处仅做应用创建与菜单挂载，不涉及权限配置。</p></div>\r
+      <button class="btn btn-primary" onclick="openCreateApp()"><i class="fas fa-plus mr-1"></i>创建应用</button>\r
+    </div>\r
+    <div class="grid grid-cols-2 gap-4">\r
+      \${APPS.map(a=>\`<div class="card p-4 cursor-pointer hover:shadow-md" onclick="openApp('\${a.id}')">\r
+        <div class="flex items-center gap-3 mb-2">\r
+          <span class="icon-box" style="background:#165DFF22;color:#165DFF"><i class="fas \${a.icon.name||'fa-th-large'}"></i></span>\r
+          <div><div class="font-bold">\${a.name}</div><div class="text-[11px] text-gray-400">\${a.desc||'—'}</div></div>\r
+          <span class="ml-auto text-[11px] px-2 py-0.5 rounded \${a.status==='published'?'bg-green-100 text-green-600':'bg-gray-100 text-gray-400'}">\${a.status==='published'?'已发布':'草稿'}</span>\r
+        </div>\r
+        <div class="text-[12px] text-gray-500">菜单数：\${countMenus(a.menus)}</div>\r
+      </div>\`).join('')}\r
+    </div>\r
+  </div>\`;\r
+}\r
+function openApp(id){state.appId=id;render();}\r
+function renderAppEditor(){\r
+  const a=APPS.find(x=>x.id===state.appId);\r
+  const tab=state.appTab||'menu';\r
+  return \`<div>\r
+    <div class="flex items-center gap-2 mb-3 text-[12px] text-gray-400"><a onclick="state.appId=null;render()" class="cursor-pointer hover:text-[#165DFF]">应用中心</a> / <span class="text-gray-700">\${a.name}</span></div>\r
+    <div class="flex items-center gap-3 mb-3">\r
+      <span class="icon-box text-xl" style="background:#165DFF22;color:#165DFF"><i class="fas \${a.icon.name||'fa-th-large'}"></i></span>\r
+      <div><div class="font-bold text-lg">\${a.name}</div><div class="text-[11px] text-gray-400">应用中心 · 菜单与信息配置</div></div>\r
+    </div>\r
+    <div class="flex gap-1 border-b border-gray-100 mb-4">\r
+      <div class="tab \${tab==='menu'?'active':''}" onclick="state.appTab='menu';render()">菜单管理</div>\r
+      <div class="tab \${tab==='info'?'active':''}" onclick="state.appTab='info';render()">基本信息</div>\r
+    </div>\r
+    \${tab==='menu'?renderAppMenuTab(a):renderAppInfoTab(a)}\r
+  </div>\`;\r
+}\r
+function renderAppMenuTab(a){\r
+  return \`<div>\r
+    <div class="flex items-center gap-2 mb-3">\r
+      <button class="btn btn-ghost text-[12px]" onclick="addMenuGroup(null)"><i class="fas fa-folder-plus mr-1"></i>新建分组</button>\r
+      <button class="btn btn-primary text-[12px]" onclick="openAddMenu('\${a.id}',null)"><i class="fas fa-plus mr-1"></i>添加菜单</button>\r
+      <button class="btn btn-ghost text-[12px] ml-auto" onclick="previewApp('\${a.id}')"><i class="fas fa-eye mr-1"></i>预览应用</button>\r
+    </div>\r
+    <div class="border rounded-lg p-3 bg-gray-50/50 min-h-[80px]">\${menuTree(a,a.menus)}</div>\r
+    <p class="text-[11px] text-gray-400 mt-2">提示：<b>分组</b>用于归类菜单，可在分组下继续<b>新建子分组</b>或<b>添加菜单</b>；<b>菜单</b>为叶子节点，其下不能再加子菜单。拖拽可调整顺序与层级。挂载<b>表单</b>后运行态自动生成「数据列表」视图，挂载<b>流程</b>后自动生成「发起 / 待办 / 我发起的」入口，挂载<b>任务</b>指向任务中心（均由平台按应用生成，设计时无需逐个配置）。</p>\r
+  </div>\`;\r
+}\r
+function addMenuGroup(parentId){\r
+  const name=prompt(parentId?'子分组名称':'分组名称'); if(!name)return;\r
+  const a=APPS.find(x=>x.id===state.appId); if(!a)return;\r
+  const node={id:uid('am'),name,type:'folder',children:[]};\r
+  if(parentId){ const p=findMenu(a,parentId); if(!p)return; p.children=p.children||[]; p.children.push(node); }\r
+  else a.menus.push(node);\r
+  render();\r
+}\r
+function menuTree(a,menus){\r
+  if(!menus.length) return '<div class="text-[12px] text-gray-400 py-2">暂无菜单，点击「添加菜单」挂载。</div>';\r
+  return menus.map(m=>{\r
+    if(m.type==='folder'){\r
+      return \`<div class="tree-node" draggable="true" ondragstart="dragMenu('\${a.id}','\${m.id}')" ondragover="event.preventDefault()" ondrop="dropMenu('\${a.id}','\${m.id}')">\r
+        <div class="flex items-center gap-2 py-1">\r
+          <i class="fas fa-grip-vertical text-gray-300 mr-1 cursor-move"></i>\r
+          <i class="fas fa-folder text-amber-500"></i><span class="font-medium">\${m.name}</span>\r
+          <span class="text-[11px] text-gray-400">分组</span>\r
+          <span class="ml-2 text-[11px] text-[#165DFF] cursor-pointer" onclick="addMenuGroup('\${m.id}')">+子分组</span>\r
+          <span class="text-[11px] text-[#165DFF] cursor-pointer" onclick="openAddMenu('\${a.id}','\${m.id}')">+菜单</span>\r
+          <span class="text-[11px] text-red-400 cursor-pointer ml-1" onclick="delMenu('\${a.id}','\${m.id}')">删除</span>\r
+        </div>\r
+        <div class="pl-5">\${menuTree(a,m.children)}</div>\r
+      </div>\`;\r
+    }\r
+    const ref=(m.type==='form'?FORMS:m.type==='flow'?FLOWS:TASKS).find(x=>x.id===m.refId);\r
+    const icon=m.type==='form'?'file-alt':(m.type==='flow'?'project-diagram':'clipboard-list');\r
+    const tag=m.type==='form'?'表单':(m.type==='flow'?'流程':'任务');\r
+    return \`<div class="tree-node" draggable="true" ondragstart="dragMenu('\${a.id}','\${m.id}')" ondragover="event.preventDefault()" ondrop="dropMenu('\${a.id}','\${m.id}')">\r
+      <div class="flex items-center gap-2 py-1">\r
+        <i class="fas fa-grip-vertical text-gray-300 mr-1 cursor-move"></i>\r
+        <i class="fas fa-\${icon} text-[#165DFF]"></i>\r
+        <span>\${m.name}</span>\r
+        <span class="text-[11px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">\${tag}\${ref?' · '+ref.name:''}</span>\r
+        <span class="text-[11px] text-red-400 cursor-pointer ml-1" onclick="delMenu('\${a.id}','\${m.id}')">删除</span>\r
+      </div>\r
+      \${(m.children&&m.children.length)?\`<div class="pl-5">\${menuTree(a,m.children)}</div>\`:''}\r
+    </div>\`;\r
+  }).join('');\r
+}\r
+/* 添加菜单向导：先填名称 → 选类型（表单/流程/任务） → 从已发布素材中多选 */\r
+const ADD_MENU_TYPES={form:{label:'表单',list:()=>FORMS},flow:{label:'流程',list:()=>FLOWS},task:{label:'任务',list:()=>TASKS}};\r
+let _addm={appId:null,parentId:null,name:'',type:'form',query:'',cat:'',sel:[]};\r
+function openAddMenu(appId,parentId){ _addm={appId,parentId,name:'',type:'form',query:'',cat:'',sel:[]}; renderAddMenu(); }\r
+function addMenuAssets(type){ return ADD_MENU_TYPES[type].list().filter(x=>!x.status||x.status==='published'); }\r
+function renderAddMenu(){\r
+  const meta=ADD_MENU_TYPES[_addm.type];\r
+  let items=addMenuAssets(_addm.type);\r
+  const q=_addm.query.trim().toLowerCase();\r
+  if(q) items=items.filter(x=>x.name.toLowerCase().includes(q));\r
+  if(_addm.cat) items=items.filter(x=>x.cat===_addm.cat);\r
+  const cats=[...new Set(addMenuAssets(_addm.type).map(x=>x.cat).filter(Boolean))];\r
+  const rows=items.map(x=>{\r
+    const on=_addm.sel.includes(x.id);\r
+    return \`<div class="picker-row \${on?'am-sel':''}" onclick="pickAddMenu('\${x.id}')">\r
+    <div class="flex items-center gap-2">\r
+      <input type="checkbox" class="am-cb" \${on?'checked':''} onclick="event.stopPropagation()" onchange="pickAddMenu('\${x.id}')">\r
+      <span class="flex-1">\${x.name}</span>\r
+      \${x.cat?\`<span class="text-[11px] px-1.5 py-0.5 rounded bg-gray-100 text-gray-500">\${x.cat}</span>\`:''}\r
+      \${on?'<i class="fas fa-check text-[#165DFF]"></i>':''}\r
+    </div>\r
+    \${x.desc?\`<div class="text-[11px] text-gray-400 mt-0.5 pl-6">\${x.desc}</div>\`:''}\r
+  </div>\`;\r
+  }).join('') || '<div class="text-[12px] text-gray-400 py-2">没有匹配的已发布素材</div>';\r
+  openModal(\`<div class="font-bold mb-3">添加菜单\${_addm.parentId?'（到分组）':''}</div>\r
+    <div class="field"><label>菜单名称</label><input id="am_name" value="\${_addm.name}" placeholder="单选时可自定义；多选时每个菜单以素材名命名" oninput="amName(this.value)"></div>\r
+    <div class="field"><label>菜单类型</label><select id="am_type" onchange="amType(this.value)">\r
+      <option value="form" \${_addm.type==='form'?'selected':''}>表单</option>\r
+      <option value="flow" \${_addm.type==='flow'?'selected':''}>流程</option>\r
+      <option value="task" \${_addm.type==='task'?'selected':''}>任务</option>\r
+    </select></div>\r
+    <div class="field"><label>选择\${meta.label}（已发布，可多选）</label>\r
+      <div class="flex gap-2 mb-2">\r
+        <input placeholder="搜索名称…" value="\${_addm.query}" oninput="amQuery(this.value)" style="flex:1;min-width:0">\r
+        \${cats.length?\`<select onchange="amCat(this.value)" style="width:auto"><option value="">全部类型</option>\${cats.map(c=>\`<option value="\${c}" \${_addm.cat===c?'selected':''}>\${c}</option>\`).join('')}</select>\`:''}\r
+      </div>\r
+      <div class="max-h-56 overflow-auto space-y-1 border rounded p-1">\${rows}</div>\r
+      <div class="text-[11px] text-gray-400 mt-1.5">已选 <b class="text-[#165DFF]">\${_addm.sel.length}</b> 项：每个素材将生成一个菜单；点击行或勾选复选框均可选中/取消。</div>\r
+    </div>\r
+    <div class="flex justify-end gap-2 mt-3"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="doAddMenu()">确定添加（\${_addm.sel.length}）</button></div>\`);\r
+}\r
+function amName(v){_addm.name=v;}\r
+function amType(v){_addm.type=v;_addm.query='';_addm.cat='';_addm.sel=[];renderAddMenu();}\r
+function amQuery(v){_addm.query=v;renderAddMenu();}\r
+function amCat(v){_addm.cat=v;renderAddMenu();}\r
+function pickAddMenu(id){const i=_addm.sel.indexOf(id);if(i>=0)_addm.sel.splice(i,1);else _addm.sel.push(id);renderAddMenu();}\r
+function doAddMenu(){\r
+  const a=APPS.find(x=>x.id===_addm.appId); if(!a)return;\r
+  if(!_addm.sel.length){alert('请至少选择一个'+(ADD_MENU_TYPES[_addm.type].label));return;}\r
+  const custom=_addm.name.trim();\r
+  const single=_addm.sel.length===1;\r
+  let parent=null;\r
+  if(_addm.parentId){ parent=findMenu(a,_addm.parentId); if(!parent){closeModal();return;} }\r
+  _addm.sel.forEach(refId=>{\r
+    const ref=ADD_MENU_TYPES[_addm.type].list().find(x=>x.id===refId); if(!ref)return;\r
+    const node={id:uid('am'),name:(single&&custom?custom:ref.name),type:_addm.type,refId:ref.id,roleIds:null};\r
+    if(_addm.type==='form'&&ref.views&&ref.views.length){ node.viewId=ref.views[0].id; node.viewName=ref.views[0].name; }\r
+    if(parent){ parent.children=parent.children||[]; parent.children.push(node); }\r
+    else a.menus.push(node);\r
+  });\r
+  closeModal(); render();\r
+}\r
+\r
+/* 拖拽排序：菜单可在树内调整顺序/层级 */\r
+let _drag=null;\r
+function dragMenu(appId,id){_drag={appId,id};}\r
+function dropMenu(appId,targetId){\r
+  if(!_drag||_drag.id===targetId)return;\r
+  const a=APPS.find(x=>x.id===appId);\r
+  const dragged=findMenu(a,_drag.id);if(!dragged)return;\r
+  if(dragged.type==='folder'&&isDescendant(dragged,targetId))return;\r
+  detachMenu(a,_drag.id);\r
+  const tgt=findMenu(a,targetId);\r
+  if(tgt.type==='folder'){tgt.children=tgt.children||[];tgt.children.push(dragged);}\r
+  else{const p=findParent(a,targetId);const arr=p?p.children:a.menus;const idx=arr.findIndex(x=>x.id===targetId);arr.splice(idx+1,0,dragged);}\r
+  _drag=null;render();\r
+}\r
+function detachMenu(a,id,list){list=list||a.menus;for(let i=0;i<list.length;i++){if(list[i].id===id){list.splice(i,1);return;}if(list[i].children)detachMenu(a,id,list[i].children);}}\r
+function isDescendant(folder,id,list){list=list||folder.children;if(!list)return false;for(const c of list){if(c.id===id)return true;if(c.children&&isDescendant(c,id,c.children))return true;}return false;}\r
+\r
+/* 预览应用 */\r
+function previewApp(appId){\r
+  const a=APPS.find(x=>x.id===appId);\r
+  if(!state.previewMenuId){const lf=firstLeaf(a.menus);state.previewMenuId=lf?lf.id:null;}\r
+  const leaf=state.previewMenuId?findMenu(a,state.previewMenuId):null;\r
+  const content=leaf?\`<div class="p-1">\r
+      <div class="text-[12px] text-gray-400 mb-1">\${leaf.type==='form'?'工作表单'+(leaf.viewName?' · 视图：'+leaf.viewName:''):(leaf.type==='flow'?'流程':'任务中心')}</div>\r
+      <div class="text-xl font-bold mb-3">\${leaf.name}</div>\r
+      <div class="border rounded-lg p-6 bg-gray-50 text-center text-gray-400 text-[13px]">此处为「\${leaf.name}」的运行态页面，实际由对应模块渲染；原型中仅作占位展示。</div>\r
+    </div>\`:'<div class="text-gray-400 text-center py-10">该应用暂无菜单</div>';\r
+  const body=\`<div class="flex" style="height:66vh">\r
+    <div class="w-56 border-r p-3 overflow-auto bg-gray-50">\r
+      <div class="text-[12px] font-semibold text-gray-500 mb-2">\${a.name} · 菜单</div>\r
+      \${previewMenuList(a,a.menus)}\r
+    </div>\r
+    <div class="flex-1 p-5 overflow-auto">\${content}</div>\r
+  </div>\`;\r
+  openPreviewModal(\`<div class="flex items-center justify-between mb-2"><h3 class="text-base font-semibold">应用预览 · \${a.name}</h3><button class="text-gray-400 hover:text-gray-600" onclick="closeModal();state.previewMenuId=null"><i class="fas fa-times"></i></button></div>\${body}\`);\r
+}\r
+function firstLeaf(menus){for(const m of menus){if(m.type!=='folder')return m;if(m.children){const f=firstLeaf(m.children);if(f)return f;}}return null;}\r
+function previewMenuList(a,menus){\r
+  return menus.map(m=>{\r
+    if(m.type==='folder')return \`<div class="mb-1"><div class="text-[12px] font-medium text-gray-500 py-0.5"><i class="fas fa-folder text-amber-500 mr-1"></i>\${m.name}</div><div class="pl-3">\${previewMenuList(a,m.children)}</div></div>\`;\r
+    const on=state.previewMenuId===m.id;\r
+    const vtag=(m.type==='form'&&m.viewName&&m.viewName!=='默认视图')?\`<span class="text-[10px] text-gray-400 ml-1">· \${m.viewName}</span>\`:'';\r
+    const icon=m.type==='form'?'file-alt':(m.type==='flow'?'project-diagram':'clipboard-list');\r
+    return \`<div class="flex items-center gap-2 text-[13px] py-1 px-1 rounded cursor-pointer \${on?'bg-[#eff4ff] text-[#165DFF]':'hover:bg-gray-100'}" onclick="state.previewMenuId='\${m.id}';previewApp('\${a.id}')"><i class="fas fa-\${icon}"></i>\${m.name}\${vtag}</div>\`;\r
+  }).join('');\r
+}\r
+function openPreviewModal(html){\r
+  document.getElementById('modal').innerHTML=\`<div class="modal-mask" onclick="if(event.target===this)closeModal()"><div style="background:#fff;border-radius:12px;width:820px;max-width:94vw;max-height:90vh;overflow:auto;box-shadow:0 10px 40px rgba(0,0,0,.2)"><div style="padding:16px 20px">\${html}</div></div></div>\`;\r
+}\r
+function delMenu(appId,id){\r
+  if(!confirm('确认删除该菜单？删除后其下子菜单一并移除。'))return;\r
+  const a=APPS.find(x=>x.id===appId);\r
+  const p=findParent(a,id);\r
+  if(p)p.children=p.children.filter(c=>c.id!==id);else a.menus=a.menus.filter(m=>m.id!==id);\r
+  render();\r
+}\r
+/* 图标库（应用图标，fa 图标集） */\r
+const APP_ICONS=[['fa-building','企业'],['fa-briefcase','办公'],['fa-th-large','门户'],['fa-plane','差旅'],['fa-money-bill-wave','报销'],['fa-id-card','人事'],['fa-project-diagram','流程'],['fa-clipboard-list','任务'],['fa-box-open','采购'],['fa-truck','物流'],['fa-file-invoice','发票'],['fa-chart-line','报表'],['fa-suitcase','行政'],['fa-shield','安全'],['fa-gift','福利'],['fa-graduation-cap','培训']];\r
+let _appIcon='fa-building';\r
+function openAppIconPicker(){\r
+  renderAppIconPicker(); document.getElementById('appIconModal').style.display='flex';\r
+}\r
+function renderAppIconPicker(){\r
+  document.getElementById('appIconGrid').innerHTML=APP_ICONS.map(x=>\`<div class="app-icon-item \${_appIcon===x[0]?'on':''}" onclick="pickAppIcon('\${x[0]}')"><i class="fas \${x[0]} text-lg"></i><span class="text-[11px]">\${x[1]}</span></div>\`).join('');\r
+}\r
+function pickAppIcon(name){_appIcon=name;renderAppIconPicker();}\r
+function confirmAppIcon(){document.getElementById('appIconModal').style.display='none';}\r
+function closeAppIconPicker(){document.getElementById('appIconModal').style.display='none';}\r
+function openCreateApp(){\r
+  _appIcon='fa-building';\r
+  openModal(\`<div class="font-bold mb-3">创建应用</div>\r
+   <div class="field"><label>应用名称</label><input id="ca_name" placeholder="如：企业OA系统"></div>\r
+   <div class="field"><label>图标</label><div class="flex items-center gap-2"><button class="btn btn-ghost" onclick="openAppIconPicker()"><i class="fas \${_appIcon} text-[#165DFF] mr-1"></i><span id="ca_icon_name">\${APP_ICONS.find(x=>x[0]===_appIcon)?APP_ICONS.find(x=>x[0]===_appIcon)[1]:'选择图标'}</span></button></div><div class="text-[11px] text-gray-400 mt-1">点击从图标库选择。</div></div>\r
+   <div class="field"><label>描述</label><textarea id="ca_desc" rows="2"></textarea></div>\r
+   <div class="flex justify-end gap-2 mt-3"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="doCreateApp()">创建</button></div>\`);\r
+}\r
+function doCreateApp(){\r
+  const name=document.getElementById('ca_name').value.trim();if(!name){alert('请填写应用名称');return;}\r
+  APPS.push({id:uid('a'),name,icon:{name:_appIcon},tenantId:TENANT.id,desc:document.getElementById('ca_desc').value,status:'draft',menus:[]});\r
+  closeModal();render();\r
+}\r
+function renderAppInfoTab(a){\r
+  _appIcon=a.icon.name||'fa-building';\r
+  const iconMeta=APP_ICONS.find(x=>x[0]===_appIcon);\r
+  return \`<div class="max-w-xl card p-5 space-y-4">\r
+    <div class="field"><label>应用名称</label><input id="ai_name" value="\${a.name}"></div>\r
+    <div class="field"><label>图标</label><div class="flex items-center gap-2"><button class="btn btn-ghost" onclick="openAppIconPicker()"><i class="fas \${_appIcon} text-[#165DFF] mr-1"></i><span id="ai_icon_name">\${iconMeta?iconMeta[1]:'选择图标'}</span></button></div><div class="text-[11px] text-gray-400 mt-1">点击从图标库选择。</div></div>\r
+    <div class="field"><label>描述</label><textarea id="ai_desc" rows="3">\${a.desc||''}</textarea></div>\r
+    <div class="flex gap-6 text-[12px] text-gray-500 pt-2 border-t border-gray-100">\r
+      <span>状态：<b class="\${a.status==='published'?'text-green-600':'text-gray-400'}">\${a.status==='published'?'已发布':'草稿'}</b></span>\r
+      <span>菜单数：\${countMenus(a.menus)}</span>\r
+    </div>\r
+    <div class="flex gap-2"><button class="btn btn-primary" onclick="saveAppInfo('\${a.id}')">保存</button>\r
+      <button class="btn btn-ghost" onclick="togglePublish('\${a.id}')">\${a.status==='published'?'下架':'发布'}</button></div>\r
+    <p class="text-[11px] text-gray-400">权限不在此处配置；应用与菜单的可见范围由权限策略统一分配。</p>\r
+  </div>\`;\r
+}\r
+function saveAppInfo(id){const a=APPS.find(x=>x.id===id);a.name=document.getElementById('ai_name').value;a.icon.name=_appIcon;a.desc=document.getElementById('ai_desc').value;render();}\r
+function togglePublish(id){const a=APPS.find(x=>x.id===id);a.status=a.status==='published'?'draft':'published';render();}\r
+\r
+/* ===================== 模块二：用户管理 ===================== */\r
+function renderUsers(){\r
+  const tree=deptTree();\r
+  const members=state.deptId?MEMBERS.filter(m=>m.deptId===state.deptId):MEMBERS;\r
+  return \`<div>\r
+    <div class="mb-3"><h2 class="text-lg font-bold">用户管理</h2><p class="text-[12px] text-gray-500">租户管理员在此导入/维护用户，并维护组织架构（部门 → 小组 → 成员）。用户全租户共用，只建一次。</p></div>\r
+    <div class="flex gap-4">\r
+      <div class="w-64 card p-3">\r
+        <div class="flex items-center justify-between mb-2"><span class="font-semibold text-[13px]">组织架构</span><button class="text-[11px] text-[#165DFF]" onclick="addDept(null)">+ 部门</button></div>\r
+        <div class="text-[12px] font-medium text-gray-700 mb-1"><i class="fas fa-building text-gray-400 mr-1"></i>\${TENANT.name}</div>\r
+        \${tree}\r
+      </div>\r
+      <div class="flex-1 card p-4">\r
+        <div class="flex items-center justify-between mb-3">\r
+          <div class="text-[13px] font-semibold">\${state.deptId?deptName(state.deptId)+' 成员':'全部成员'}（\${members.length}）</div>\r
+          <button class="btn btn-primary text-[12px]" onclick="importUser()"><i class="fas fa-user-plus mr-1"></i>导入/新增用户</button>\r
+        </div>\r
+        <table class="w-full text-[12px]"><thead><tr class="text-gray-400 text-left"><th class="py-1">姓名</th><th>所属部门</th><th>职位</th></tr></thead><tbody>\r
+          \${members.map(m=>\`<tr class="border-t border-gray-100"><td class="py-1.5 font-medium">\${m.name}</td><td class="text-gray-500">\${deptName(m.deptId)}</td><td class="text-gray-500">\${m.title}</td></tr>\`).join('')}\r
+        </tbody></table>\r
+      </div>\r
+    </div>\r
+  </div>\`;\r
+}\r
+function deptTree(){\r
+  const depts=DEPTS.filter(d=>d.parentId===null);\r
+  return depts.map(d=>{\r
+    const groups=DEPTS.filter(g=>g.parentId===d.id);\r
+    const cnt=MEMBERS.filter(m=>m.deptId===d.id||groups.some(g=>g.id===m.deptId)).length;\r
+    return \`<div class="mb-1">\r
+      <div class="flex items-center gap-1 py-1 cursor-pointer \${state.deptId===d.id?'bg-[#eff4ff] rounded px-1':''}" onclick="state.deptId='\${d.id}';render()">\r
+        <i class="fas fa-sitemap text-gray-400"></i><span class="font-medium">\${d.name}</span><span class="text-[11px] text-gray-400">(\${cnt})</span>\r
+        <span class="ml-auto text-[11px] text-[#165DFF]" onclick="event.stopPropagation();addDept('\${d.id}')">+小组</span>\r
+      </div>\r
+      <div class="pl-4">\${groups.map(g=>{\r
+        const c=MEMBERS.filter(m=>m.deptId===g.id).length;\r
+        return \`<div class="flex items-center gap-1 py-0.5 cursor-pointer \${state.deptId===g.id?'bg-[#eff4ff] rounded px-1':''}" onclick="state.deptId='\${g.id}';render()"><i class="fas fa-users text-gray-300"></i><span>\${g.name}</span><span class="text-[11px] text-gray-400">(\${c})</span></div>\`;\r
+      }).join('')}</div>\r
+    </div>\`;\r
+  }).join('');\r
+}\r
+function addDept(parentId){\r
+  const name=prompt(parentId?'小组名称':'部门名称');if(!name)return;\r
+  DEPTS.push({id:uid('d'),name,type:parentId?'group':'dept',parentId:parentId||null});\r
+  render();\r
+}\r
+function importUser(){\r
+  openModal(\`<div class="font-bold mb-3">导入 / 新增用户</div>\r
+   <div class="field"><label>姓名</label><input id="iu_name" placeholder="如：孙琳"></div>\r
+   <div class="field"><label>职位</label><input id="iu_title" placeholder="如：产品经理"></div>\r
+   <div class="field"><label>归属部门/小组</label><select id="iu_dept">\${DEPTS.map(d=>\`<option value="\${d.id}">\${d.name}</option>\`).join('')}</select></div>\r
+   <div class="text-[11px] text-gray-400 mb-2">实际系统支持 Excel 批量导入 / 从企业微信同步；此处演示单条录入。</div>\r
+   <div class="flex justify-end gap-2 mt-2"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="doImportUser()">确定</button></div>\`);\r
+}\r
+function doImportUser(){\r
+  const name=document.getElementById('iu_name').value.trim();if(!name){alert('请填写姓名');return;}\r
+  MEMBERS.push({id:uid('m'),name,deptId:document.getElementById('iu_dept').value,title:document.getElementById('iu_title').value});\r
+  closeModal();render();\r
+}\r
+\r
+/* ===================== 模块三：角色权限管理 ===================== */\r
+function renderRolePerm(){\r
+  return \`<div>\r
+    <div class="mb-3"><h2 class="text-lg font-bold">租户管理</h2><p class="text-[12px] text-gray-500">按「角色组 → 角色 → 用户」组织；在一个页面内完成「挂用户 + 配置应用与菜单权限」。所有权限逻辑集中在此。</p></div>\r
+    <div class="flex gap-4">\r
+      <div class="w-72 card p-3">\r
+        <div class="flex items-center justify-between mb-2"><span class="font-semibold text-[13px]">角色组</span><button class="text-[11px] text-[#165DFF]" onclick="addGroup()">+ 新建角色组</button></div>\r
+        \${ROLE_GROUPS.map(g=>\`<div class="mb-2">\r
+          <div class="font-medium text-[13px] py-1"><i class="fas fa-layer-group text-gray-400 mr-1"></i>\${g.name} <span class="text-[11px] text-gray-400">(\${g.roles.length})</span></div>\r
+          <div class="pl-3">\${g.roles.map(r=>\`<div class="flex items-center gap-1 py-1 cursor-pointer rounded px-1 \${state.roleId===r.id?'bg-[#eff4ff]':''}" onclick="state.roleId='\${r.id}';state.roleShowPerm=false;render()">\r
+              <i class="fas fa-user-shield text-[#165DFF]"></i><span>\${r.name}</span><span class="text-[11px] text-gray-400 ml-auto">\${r.memberIds.length}人</span>\r
+            </div>\`).join('')}\r
+            <div class="text-[11px] text-[#165DFF] cursor-pointer pl-1 mt-1" onclick="addRole('\${g.id}')">+ 新建角色</div>\r
+          </div>\r
+        </div>\`).join('')}\r
+      </div>\r
+      <div class="flex-1">\${state.roleId?renderRoleDetail():'<div class="card p-8 text-center text-gray-400 text-[13px]">← 选择左侧角色查看 / 编辑</div>'}</div>\r
+    </div>\r
+  </div>\`;\r
+}\r
+/* renderRolesTab 已并入 renderRolePerm（左侧角色组/角色列表内联），保留空位以免遗漏引用 */\r
+function renderRoleDetail(){\r
+  const r=roleById(state.roleId);\r
+  return \`<div class="space-y-4">\r
+    <div class="card p-4">\r
+      <div class="flex items-center gap-2 mb-3"><span class="icon-box" style="background:#165DFF22;color:#165DFF">👥</span><div><div class="font-bold">\${r.name}</div><div class="text-[11px] text-gray-400">\${groupName(findGroupOf(r.id))}</div></div></div>\r
+      <div class="flex gap-2 mb-3">\r
+        <button class="btn btn-ghost text-[12px]" onclick="assignUsers('\${r.id}')"><i class="fas fa-user-plus mr-1"></i>挂用户</button>\r
+        <button class="btn btn-ghost text-[12px]" onclick="state.roleShowPerm=!state.roleShowPerm;render()"><i class="fas fa-sliders-h mr-1"></i>\${state.roleShowPerm?'收起应用与菜单权限':'配置应用与菜单权限'}</button>\r
+      </div>\r
+      <div>\r
+        <div class="font-semibold text-[13px] mb-1">角色下用户</div>\r
+        <div>\${r.memberIds.length?r.memberIds.map(m=>\`<span class="chip">\${memberName(m)}<i onclick="removeUserFromRole('\${r.id}','\${m}')">✕</i></span>\`).join(''):'<span class="text-[12px] text-gray-400">暂无用户，点击「挂用户」从组织架构添加</span>'}</div>\r
+      </div>\r
+    </div>\r
+    \${state.roleShowPerm?renderRolePermConfig(r):''}\r
+  </div>\`;\r
+}\r
+function addGroup(){const name=prompt('角色组名称');if(!name)return;ROLE_GROUPS.push({id:uid('g'),name,roles:[]});render();}\r
+function addRole(groupId){const name=prompt('角色名称');if(!name)return;ROLE_GROUPS.find(g=>g.id===groupId).roles.push({id:uid('r'),name,memberIds:[],appIds:[]});render();}\r
+function toggleRoleApp(roleId,appId){const r=roleById(roleId);if(r.appIds.includes(appId))r.appIds=r.appIds.filter(x=>x!==appId);else r.appIds.push(appId);render();}\r
+function assignUsers(roleId){\r
+  openModal(\`<div class="font-bold mb-3">为「\${roleById(roleId).name}」挂用户</div>\r
+   <div class="text-[12px] text-gray-500 mb-2">从组织架构选择用户（可多选）：</div>\r
+   <div class="max-h-64 overflow-auto space-y-1">\${DEPTS.map(d=>\`<div class="text-[12px] font-semibold text-gray-600 mt-1">\${d.name}</div>\${MEMBERS.filter(m=>m.deptId===d.id).map(m=>\`<label class="flex items-center gap-2 text-[12px] py-0.5"><input type="checkbox" \${roleById(roleId).memberIds.includes(m.id)?'checked':''} value="\${m.id}" class="uu"> \${m.name} <span class="text-gray-400">\${m.title}</span></label>\`).join('')}\`).join('')}</div>\r
+   <div class="flex justify-end gap-2 mt-3"><button class="btn btn-ghost" onclick="closeModal()">取消</button><button class="btn btn-primary" onclick="doAssignUsers('\${roleId}')">确定</button></div>\`);\r
+}\r
+function doAssignUsers(roleId){const r=roleById(roleId);r.memberIds=[...document.querySelectorAll('.uu:checked')].map(c=>c.value);closeModal();render();}\r
+function removeUserFromRole(roleId,mid){const r=roleById(roleId);r.memberIds=r.memberIds.filter(x=>x!==mid);render();}\r
+\r
+function renderRolePermConfig(r){\r
+  return \`<div class="card p-4">\r
+    <div class="font-semibold text-[13px] mb-2">应用与菜单权限（在一处配置）</div>\r
+    <div class="text-[12px] text-gray-500 mb-3">勾选应用 = 第一道门（角色成员可进入）；展开后逐菜单勾选 = 第二道门（该角色可见哪些菜单）。应用与菜单合并配置。</div>\r
+    <div class="space-y-3">\r
+      \${APPS.map(a=>{\r
+        const on=r.appIds.includes(a.id);\r
+        return \`<div class="border rounded p-3 \${on?'border-[#165DFF] bg-[#f7faff]':'border-gray-200'}">\r
+          <div class="flex items-center gap-2">\r
+            <input type="checkbox" \${on?'checked':''} onchange="toggleRoleApp('\${r.id}','\${a.id}')">\r
+            <span class="icon-box" style="background:#165DFF22;color:#165DFF"><i class="fas \${a.icon.name||'fa-th-large'}"></i></span>\r
+            <span class="font-medium">\${a.name}</span>\r
+            <span class="text-[11px] text-gray-400">\${a.menus.length} 菜单</span>\r
+          </div>\r
+          \${on?\`<div class="pl-6 mt-2 space-y-1">\${menuPermInline(a,a.menus,r)}</div>\`:\`<div class="pl-6 mt-2 text-[11px] text-gray-400">未进入该应用，菜单权限暂不生效。</div>\`}\r
+        </div>\`;\r
+      }).join('')}\r
+    </div>\r
+  </div>\`;\r
+}\r
+function menuVisibleByRole(m,r){\r
+  if(m.roleIds===null) return true;\r
+  return m.roleIds.includes(r.id);\r
+}\r
+function menuPermInline(a,menus,r){\r
+  if(!menus.length) return '<div class="text-[11px] text-gray-400">该应用暂无菜单。</div>';\r
+  return menus.map(m=>{\r
+    if(m.type==='folder') return \`<div class="pl-3"><div class="text-[12px] font-medium text-gray-500 py-0.5"><i class="fas fa-folder text-amber-500 mr-1"></i>\${m.name}</div>\${menuPermInline(a,m.children,r)}</div>\`;\r
+    const vis=menuVisibleByRole(m,r);\r
+    const icon=m.type==='form'?'file-alt':(m.type==='flow'?'project-diagram':'clipboard-list');\r
+    const tag=m.type==='form'?'表单':(m.type==='flow'?'流程':'任务');\r
+    return \`<label class="flex items-center gap-2 text-[12px] py-0.5 cursor-pointer \${vis?'text-[#165DFF] font-medium':''}">\r
+      <input type="checkbox" \${vis?'checked':''} onchange="toggleMenuRole('\${a.id}','\${m.id}','\${r.id}')">\r
+      <i class="fas fa-\${icon} text-[#165DFF]"></i>\${m.name}\r
+      <span class="text-[11px] text-gray-400">\${tag}</span>\r
+    </label>\`;\r
+  }).join('');\r
+}\r
+function toggleMenuRole(appId,menuId,roleId){\r
+  const a=APPS.find(x=>x.id===appId);const m=findMenu(a,menuId);\r
+  if(m.roleIds===null)m.roleIds=allRoles().filter(r=>r.appIds.includes(appId)).map(r=>r.id);\r
+  if(m.roleIds.includes(roleId))m.roleIds=m.roleIds.filter(x=>x!==roleId);else m.roleIds.push(roleId);\r
+  render();\r
+}\r
+\r
+/* ===================== 弹窗 ===================== */\r
+function openModal(html){document.getElementById('modal').innerHTML=\`<div class="modal-mask" onclick="if(event.target===this)closeModal()"><div class="modal-box">\${html}</div></div>\`;}\r
+function closeModal(){document.getElementById('modal').innerHTML='';}\r
+\r
+/* ===================== 右侧逻辑备注 ===================== */\r
+function renderNotes(){\r
+  const n=document.getElementById('notes');\r
+  if(state.module==='app'){\r
+    n.innerHTML=\`<div class="font-bold text-[13px] text-gray-700 mb-2">逻辑备注 · 应用中心</div>\r
+      <div class="note-card"><span class="note-num">1</span><b>图标库选择：</b>创建 / 编辑应用时点击图标从<b>图标库弹窗</b>选择（fa 图标集），不再手填 emoji 与颜色；应用自动归属当前租户。</div>\r
+      <div class="note-card"><span class="note-num">2</span><b>只建不配：</b>应用中心仅负责创建应用 + 挂载菜单（表单 / 流程 / 任务），<b>不做任何权限设置</b>。</div>\r
+      <div class="note-card"><span class="note-num">3</span><b>分组与菜单：</b>可<b>新建分组 / 子分组</b>归类菜单，分组下<b>添加菜单</b>；菜单为叶子节点，其下不能再加子菜单。</div>\r
+      <div class="note-card"><span class="note-num">4</span><b>菜单向导（支持多选）：</b>先填名称 → 选类型（表单 / 流程 / 任务下拉）→ 从<b>已发布素材</b>中筛选（关键词 + 类型）<b>多选</b>，一次生成多个菜单；单选时可用自定义名称，多选时以素材名命名。</div>\r
+      <div class="note-card"><span class="note-num">5</span><b>素材来源：</b>表单来自「表单设计器」、流程来自「流程中心」、任务指向「任务中心」，此处仅引用与编排。</div>\`;\r
+  }else if(state.module==='user'){\r
+    n.innerHTML=\`<div class="font-bold text-[13px] text-gray-700 mb-2">逻辑备注 · 用户管理</div>\r
+      <div class="note-card"><span class="note-num">1</span><b>唯一用户源：</b>用户由租户管理员在此导入/创建，<b>全租户所有应用共用，只建一次</b>。</div>\r
+      <div class="note-card"><span class="note-num">2</span><b>组织架构：</b>部门 → 小组 → 成员，是授权的组织维度，可在授权时按部门选择。</div>\r
+      <div class="note-card"><span class="note-num">3</span><b>与角色解耦：</b>此处只管"有哪些人、在什么组织"，不在此分配权限；权限在「角色权限管理」通过角色关联。</div>\`;\r
+  }else{\r
+    n.innerHTML=\`<div class="font-bold text-[13px] text-gray-700 mb-2">逻辑备注 · 角色权限管理</div>\r
+      <div class="note-card"><span class="note-num">1</span><b>角色组→角色→用户：</b>先建角色组（分类），组内建角色，角色下挂用户（从组织架构选）。</div>\r
+      <div class="note-card"><span class="note-num">2</span><b>单页配置：</b>选中角色后，同页内点「挂用户」与「配置应用与菜单权限」两个按钮，无需切换页签。</div>\r
+      <div class="note-card"><span class="note-num">3</span><b>应用与菜单合并：</b>同一角色下，勾选应用即第一道门（可进入），展开后逐菜单勾选即第二道门（可见菜单），两道门在一处完成。</div>\r
+      <div class="note-card"><span class="note-num">4</span><b>权限唯一入口：</b>所有访问控制集中在此模块，应用中心/用户管理均不触碰权限。</div>\`;\r
+  }\r
+}\r
+\r
+/* ===================== 初始化（支持从总控台按 #hash 直达） ===================== */\r
+function readHash(){\r
+  const h=location.hash.replace('#','');\r
+  if(['app'].includes(h)){state.module=h;render();}\r
+}\r
+window.addEventListener('hashchange',readHash);\r
+readHash();\r
+if(location.hash.replace('#','')!=='app') render();\r
+___SCEND___\r
+</body>\r
+</html>\r
+\r
+<\/script>\r
+\r
+<script>\r
+(function(){\r
+  var MODULES={\r
+    form:{iframe:document.getElementById('iframe-form'),tpl:'mod-form-full',loaded:false},\r
+    flow:{iframe:document.getElementById('iframe-flow'),tpl:'mod-flow-full',loaded:false},\r
+    app:{iframe:document.getElementById('iframe-app'),tpl:'mod-gov-full',loaded:false,hash:'app'},\r
+    user:{iframe:document.getElementById('iframe-user'),tpl:'mod-gov-full',loaded:false,hash:'user'},\r
+    tenant:{iframe:document.getElementById('iframe-tenant'),tpl:'mod-gov-full',loaded:false,hash:'role'}\r
+  };\r
+  window.switchModule=function(key){\r
+    for(var k in MODULES){ MODULES[k].iframe.style.display='none'; }\r
+    var m=MODULES[key];\r
+    m.iframe.style.display='block';\r
+    if(!m.loaded){
+      var raw=document.getElementById(m.tpl).textContent;
+      m.html=raw.replace(/___SCEND___/g,'<\\/script>');
+      m.iframe.srcdoc=m.html;
+      m.loaded=true;
+    }
+    var items=document.querySelectorAll('.topnav-item');\r
+    for(var i=0;i<items.length;i++){\r
+      items[i].classList.toggle('active', items[i].dataset.mod===key);\r
+    }\r
+  };\r
+  window.addEventListener('message', function(e){\r
+    if(e.data && e.data.type==='switch' && MODULES[e.data.mod]){\r
+      switchModule(e.data.mod);\r
+    }\r
+  });\r
+  var request = window.__hostLowCodeRequest || {};
+  var requestedModule = request.module;
+  var requestedView = request.view;
+  function openRequestedView(key, view, attempts){
+    if(!view) return;
+    var child = MODULES[key] && MODULES[key].iframe.contentWindow;
+    if(child && typeof child.showView === 'function'){
+      child.showView(view);
+      return;
+    }
+    if((attempts || 0) < 30){
+      setTimeout(function(){ openRequestedView(key, view, (attempts || 0) + 1); }, 120);
+    }
+  }
+  setTimeout(function(){
+    var initialModule = MODULES[requestedModule] ? requestedModule : 'form';
+    switchModule(initialModule);
+    openRequestedView(initialModule, requestedView);
+  }, 30);
+})();
+<\/script>\r
+</body>\r
+</html>\r
+`;DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Dz=[{label:`工作台`,icon:_z},{label:`应用`,icon:rz},{label:`任务`,icon:xz},{label:`流程`,icon:oz},{label:`动态`,icon:dz},{label:`预警`,icon:bz},{label:`看板`,icon:ZR}],Oz=[{id:`home`,label:`首页`,icon:_z},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:dz},{id:`task`,label:`任务`,icon:xz},{id:`flow`,label:`流程`,icon:oz},{id:`warning`,label:`预警`,icon:bz},{id:`message`,label:`消息`,icon:fz},{id:`equipment`,label:`设备`,icon:gz},{id:`production`,label:`生产`,icon:yz},{id:`fire`,label:`消防`,icon:Cz},{id:`explosive`,label:`火工品`,icon:cz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:pz},{id:`people`,label:`人员`,icon:wz},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:vz},{id:`idea`,label:`提示`,icon:lz},{id:`edit`,label:`编辑`,icon:sz},{id:`delete`,label:`删除`,icon:Sz},{id:`arrow`,label:`前往`,icon:uz}];function kz({name:e=`apps`,className:t}){return(0,Q.jsx)(Oz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var Az=`./xiaodong/`,jz=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:fz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:xz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:bz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],Mz=[{name:`双重预防机制`,description:`风险与隐患`,icon:dz},{name:`安全管理`,description:`检查与整改`,icon:bz},{name:`设备管理`,description:`点检与维修`,icon:gz},{name:`火工品管理`,description:`领用与追溯`,icon:cz},{name:`生产管理`,description:`计划与日报`,icon:yz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Cz},{name:`应急管理`,description:`预案与响应`,icon:lz}],Nz=[`系统管理员`,`安全管理员`,`任务执行人`,`数据查看员`],Pz=[`安全管理员`,`设备工程师`,`生产主管`],Fz=[{id:`workbench`,label:`工作台`,icon:_z,pinned:!0}],Iz=[{id:`msg-1`,source:`任务`,type:`执行提醒`,sender:`陈伟`,time:`今天 10:12`,title:`完成设备点检复核`,content:`3 号球磨机点检任务已完成，请确认复核结果。`,attachment:`任务表单`,formKind:`task`,read:!1,icon:xz,tone:`blue`},{id:`msg-2`,source:`流程`,type:`待你审批`,sender:`系统通知`,time:`今天 09:38`,title:`矿山应急照明设备采购申请`,content:`该流程已流转至你，请在今天内完成审批。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`预警`,type:`超期提醒`,sender:`安环部`,time:`昨天 16:45`,title:`南区排水泵隐患整改复查`,content:`整改期限临近，请及时查看现场复查情况。`,attachment:`预警处置表单`,formKind:`warning`,read:!1,icon:bz,tone:`red`},{id:`msg-4`,source:`任务`,type:`任务分派`,sender:`李明`,time:`昨天 14:20`,title:`平巷凿岩作业隐患排查任务`,content:`你已被添加为执行人，请按要求完成岗位检查。`,attachment:`任务表单`,formKind:`task`,read:!1,icon:dz,tone:`green`},{id:`msg-5`,source:`系统`,type:`系统通知`,sender:`系统通知`,time:`7 月 28 日 09:16`,title:`生产日报已同步完成`,content:`南区生产日报数据已归档，可进入生产管理查看。`,attachment:`系统通知`,formKind:`system`,read:!0,icon:pz,tone:`blue`}],Lz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`待审批`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`李明`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`待审批`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`设备平台主管审批`,approver:`刘海`,status:`审批中`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`孙宁`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0}],Rz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:dz,tone:`green`},{name:`安全管理`,time:`昨天 16:40`,icon:bz,tone:`green`},{name:`生产管理`,time:`7 月 25 日`,icon:yz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:dz,tone:`violet`}],zz=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:pz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:xz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:gz}];function Bz({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function Vz({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Dz.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)(Bz,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function Hz({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o}){let[s,c]=(0,Z.useState)(!1);return(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":s,onClick:()=>c(e=>!e),children:`张`}),s?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{c(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{c(!1),o()},children:`退出登录`})]}):null]})]})}function Uz({message:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e.formKind;return(0,Q.jsx)(`div`,{className:`message-dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`message-form-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`message-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`message-dialog-close`,"aria-label":`关闭消息表单`,onClick:t,children:(0,Q.jsx)(YR,{})}),(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:{task:`任务表单`,approval:`审批流表单`,warning:`预警处置表单`,system:`消息详情`}[i]}),(0,Q.jsx)(`h2`,{id:`message-form-title`,children:e.title}),(0,Q.jsx)(`p`,{children:e.content})]}),n?(0,Q.jsxs)(`div`,{className:`message-submit-success`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`h3`,{children:`已完成处理`}),(0,Q.jsx)(`p`,{children:`当前为演示状态，提交内容已记录在本次会话中。`}),(0,Q.jsx)(`button`,{onClick:t,children:`关闭`})]}):i===`task`?(0,Q.jsxs)(`form`,{onSubmit:e=>{e.preventDefault(),r(!0)},children:[(0,Q.jsxs)(`div`,{className:`message-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`任务名称`,(0,Q.jsx)(`input`,{defaultValue:e.title,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`执行人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`截止时间`,(0,Q.jsx)(`input`,{type:`date`,defaultValue:`2026-07-30`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`任务状态`,(0,Q.jsxs)(`select`,{defaultValue:`已完成`,children:[(0,Q.jsx)(`option`,{children:`待处理`}),(0,Q.jsx)(`option`,{children:`处理中`}),(0,Q.jsx)(`option`,{children:`已完成`})]})]})]}),(0,Q.jsxs)(`label`,{className:`message-form-wide`,children:[`执行说明`,(0,Q.jsx)(`textarea`,{rows:`3`,defaultValue:`现场点检已完成，等待复核确认。`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`message-form-primary`,type:`submit`,children:`确认任务`})]})]}):i===`approval`?(0,Q.jsxs)(`form`,{onSubmit:e=>{e.preventDefault(),r(!0)},children:[(0,Q.jsxs)(`div`,{className:`approval-summary`,children:[(0,Q.jsxs)(`span`,{children:[`申请人`,(0,Q.jsx)(`b`,{children:`机电管理部`})]}),(0,Q.jsxs)(`span`,{children:[`申请金额`,(0,Q.jsx)(`b`,{children:`￥28,600.00`})]}),(0,Q.jsxs)(`span`,{children:[`当前节点`,(0,Q.jsx)(`b`,{children:`张宇审批`})]})]}),(0,Q.jsxs)(`label`,{className:`message-form-wide`,children:[`审批意见`,(0,Q.jsx)(`textarea`,{rows:`4`,placeholder:`请输入审批意见`,required:!0})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:t,children:`退回`}),(0,Q.jsx)(`button`,{className:`message-form-primary`,type:`submit`,children:`同意并提交`})]})]}):i===`warning`?(0,Q.jsxs)(`form`,{onSubmit:e=>{e.preventDefault(),r(!0)},children:[(0,Q.jsxs)(`div`,{className:`warning-summary`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`预警等级`}),(0,Q.jsx)(`strong`,{children:`重要`})]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`预警位置`}),`南区排水泵房`]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`触发时间`}),`昨天 16:45`]})]}),(0,Q.jsxs)(`label`,{className:`message-form-wide`,children:[`处置措施`,(0,Q.jsx)(`textarea`,{rows:`4`,placeholder:`填写现场核查情况与处置措施`,required:!0})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:t,children:`暂不处理`}),(0,Q.jsx)(`button`,{className:`message-form-primary`,type:`submit`,children:`确认处置`})]})]}):(0,Q.jsxs)(`div`,{className:`message-submit-success`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`h3`,{children:`消息已阅读`}),(0,Q.jsx)(`p`,{children:`该消息不包含需要处理的业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`关闭`})]})]})})}function Wz({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r}){let[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(`全部`),[c,l]=(0,Z.useState)(`未读`),[u,d]=(0,Z.useState)(null),f=e.filter(e=>(i===`全部`||e.source===i)&&(o===`全部`||e.type===o)&&(c===`全部`||(c===`未读`?!e.read:e.read))),p=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,p,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:p===0,children:[(0,Q.jsx)(pz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:i,onChange:e=>a(e.target.value),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`系统`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsxs)(`select`,{value:o,onChange:e=>s(e.target.value),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`执行提醒`}),(0,Q.jsx)(`option`,{children:`待你审批`}),(0,Q.jsx)(`option`,{children:`超期提醒`}),(0,Q.jsx)(`option`,{children:`任务分派`}),(0,Q.jsx)(`option`,{children:`系统通知`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:c,onChange:e=>l(e.target.value),children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:f.length?f.map(e=>{let{id:n,source:r,type:i,sender:a,time:o,title:s,content:c,attachment:l,read:u,icon:f,tone:p}=e;return(0,Q.jsxs)(`button`,{className:u?`message-row read`:`message-row`,onClick:()=>{t(n),d(e)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${p}`,children:(0,Q.jsx)(f,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:a}),(0,Q.jsx)(`time`,{children:o}),u?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsxs)(`strong`,{children:[(0,Q.jsxs)(`em`,{children:[r,` · `,i]}),s]}),(0,Q.jsx)(`p`,{children:c}),(0,Q.jsxs)(`small`,{className:`message-attachment`,children:[(0,Q.jsx)(xz,{}),l]})]}),(0,Q.jsx)(uz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(Uz,{message:u,onClose:()=>d(null)},u?.id)]})}function Gz({process:e,onClose:t,onApprove:n,viewOnly:r=!1}){if(!e)return null;let i=[{time:e.initiatedAt,title:`流程已发起`,detail:`${e.initiator} 提交了${e.name}。`,state:`done`},{time:`今天 09:25`,title:`资料完整性校验通过`,detail:`系统已完成表单与附件校验。`,state:`done`},{time:`当前`,title:e.currentNode,detail:`等待 ${e.approver} 审批。`,state:`current`}],a=[`发起申请`,`部门负责人`,`安全审核`,`归档完成`];return(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程审批`}),(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`span`,{className:e.status===`待审批`?`process-status pending`:`process-status`,children:e.status})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:t,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body`,children:[(0,Q.jsxs)(`section`,{className:`process-dialog-section`,children:[(0,Q.jsx)(`h3`,{children:`流程关键信息`}),(0,Q.jsxs)(`div`,{className:`process-info-grid`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`发起人`}),e.initiator]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`发起时间`}),e.initiatedAt]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`所属部门`}),e.department]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`当前节点`}),e.currentNode]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`审批人`}),e.approver]}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:`申请金额`}),e.amount]})]})]}),(0,Q.jsxs)(`section`,{className:`process-dialog-section`,children:[(0,Q.jsx)(`h3`,{children:`审批流程图`}),(0,Q.jsx)(`div`,{className:`process-flowchart`,"aria-label":`审批流程图`,children:a.map((e,t)=>(0,Q.jsxs)(`div`,{className:t<2?`flow-node done`:t===2?`flow-node active`:`flow-node`,children:[(0,Q.jsx)(`span`,{children:t+1}),(0,Q.jsx)(`b`,{children:e}),t<a.length-1?(0,Q.jsx)(`i`,{}):null]},e))})]}),(0,Q.jsxs)(`section`,{className:`process-dialog-section process-log-section`,children:[(0,Q.jsx)(`h3`,{children:`审批日志`}),(0,Q.jsx)(`ol`,{children:i.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`time`,{children:e.time}),(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`p`,{children:e.detail})]})]},e.title))})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:r?`流程记录仅供查看。`:`审批意见将同步写入流程日志。`}),(0,Q.jsxs)(`div`,{children:[r?null:(0,Q.jsx)(`button`,{className:`process-reject`,onClick:()=>n(`已退回`),children:`退回`}),(0,Q.jsx)(`button`,{className:`process-approve`,onClick:r?t:()=>n(`已同意`),children:r?`关闭`:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(pz,{}),` 同意并提交`]})})]})]})]})})}function Kz({onAction:e,initialFilter:t=`待审批`}){let[n,r]=(0,Z.useState)(null),[i,a]=(0,Z.useState)(t),[o,s]=(0,Z.useState)({number:``,title:``,type:``,status:``}),[c,l]=(0,Z.useState)(`全部`),[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(null),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),v=[{category:`人资管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,tone:`red`,name:`材料采购流程`}],y={待审批:{filters:[`number`,`title`,`type`],columns:[`number`,`title`,`type`,`initiator`,`urgency`,`arrivalAt`]},已审批:{filters:[`number`,`type`],columns:[`number`,`title`,`type`,`initiator`,`urgency`,`arrivalAt`,`completedAt`,`duration`,`result`]},抄送给我:{filters:[`number`,`title`],columns:[`number`,`title`,`type`,`initiator`,`urgency`,`sentAt`,`endedAt`,`status`]},我发起的:{filters:[`number`,`status`],columns:[`number`,`title`,`type`,`urgency`,`currentNode`,`initiatedAt`,`endedAt`,`duration`,`status`]}},b={number:`流程编号`,title:`标题`,type:`流程类型`,initiator:`发起人`,urgency:`紧急程度`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},x=e=>i===`已审批`&&e===`title`?`流程标题`:i===`已审批`&&e===`arrivalAt`?`任务到达时间`:b[e],S=y[i],C=v.filter(e=>(c===`全部`||c===`我的收藏`&&e.favorite||c===`最近使用`&&e.recent)&&(!u.trim()||e.name.includes(u.trim()))),w=e=>({number:`LC-2026-${e.id.replace(`flow-`,`0`)}`,title:e.name,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,urgency:e.urgency,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?`同意`:`-`,sentAt:e.initiatedAt,endedAt:e.status===`审批中`?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),T=Lz.filter(e=>{let t=i===`待审批`&&e.status===`待审批`&&e.approver===`张宇`||i===`已审批`&&e.handledByMe||i===`抄送给我`&&e.ccToMe||i===`我发起的`&&e.startedByMe,n=w(e);return t&&(!o.number||n.number.includes(o.number))&&(!o.title||n.title.includes(o.title))&&(!o.type||n.type===o.type)&&(!o.status||n.status===o.status)}),E=t=>{e(`${n.name}${t}`),r(null)};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsxs)(`header`,{className:`task-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(`发起流程`),children:[(0,Q.jsx)(az,{}),`发起流程`]})]}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(y)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))})}),i===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":c===e,className:c===e?`active`:``,onClick:()=>l(e),children:e},e))}),(0,Q.jsx)(`input`,{value:u,onChange:e=>d(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=C.filter(t=>t.category===e),n=v.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsx)(`button`,{onClick:()=>{p(e),h(!1),_(!1)},children:e.name},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[S.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:o.number,onChange:e=>s(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,S.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`标题`}),(0,Q.jsx)(`input`,{value:o.title,onChange:e=>s(t=>({...t,title:e.target.value})),placeholder:`请输入标题`})]}):null,S.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:o.type,onChange:e=>s(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,S.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:o.status,onChange:e=>s(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>s({number:``,title:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${S.columns.length+1}, minmax(105px, 1fr))`},children:[S.columns.map(e=>(0,Q.jsx)(`span`,{children:x(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),T.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${S.columns.length+1}, minmax(105px, 1fr))`},children:[S.columns.map(t=>{let n=w(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>r(e),children:n},t):t===`status`||t===`urgency`||t===`result`?(0,Q.jsx)(`i`,{className:n===`待审批`||n===`紧急`?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>r(e),children:[(0,Q.jsx)(nz,{}),i===`待审批`?`审批`:`查看`]})]},e.id)),T.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(Gz,{process:n,onClose:()=>r(null),onApprove:E,viewOnly:i!==`待审批`}),f?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:()=>{p(null),_(!1)},role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`process-form-dialog${m?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),e(`已发起流程：${f.name}`),p(null),_(!1)},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`发起流程`}),(0,Q.jsx)(`h2`,{children:f.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>_(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>h(e=>!e),children:m?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:()=>{p(null),_(!1)},children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{defaultValue:f.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{defaultValue:`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`紧急程度`,(0,Q.jsxs)(`select`,{defaultValue:`常规`,children:[(0,Q.jsx)(`option`,{children:`常规`}),(0,Q.jsx)(`option`,{children:`紧急`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>{p(null),_(!1)},children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:`发起流程`})]})]})]})}):null,f&&g?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>_(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:f.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>_(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function qz({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(uz,{})]})})}function Jz({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>Mz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>Mz.find(t=>t.name===e)).filter(Boolean),...Mz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(uz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(uz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(vz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function Yz({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Rz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(uz,{})]},t))})]})}function Xz({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(Mz.find(t=>t.name===e)??Mz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(mz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:Mz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(pz,{}):null]},n))}):null]})}var Zz=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:dz,nested:!0},{label:`隐患排查治理`,icon:bz,expanded:!0}],Qz=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],$z=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:dz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:xz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:dz,tone:`lime`}];function eB({onAction:e,onSwitchApplication:t,initialFormTitle:n=$z[0].title}){let[r,i]=(0,Z.useState)(`岗位隐患排查清单`),[a,o]=(0,Z.useState)(!1),[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(`页面`),p=r,m=$z.find(e=>e.title===s)??$z[0],h=(e=$z[0])=>{c(e.title),o(!0),u(!1),f(`页面`)};return(0,Q.jsxs)(`section`,{className:`prevention-page`,"aria-labelledby":`prevention-page-title`,children:[(0,Q.jsxs)(`aside`,{className:`prevention-sidebar`,"aria-label":`双重预防机制功能导航`,children:[(0,Q.jsx)(Xz,{currentName:`双重预防机制`,onSelect:t}),(0,Q.jsx)(`nav`,{className:`prevention-nav`,children:Zz.map(({label:t,icon:n,nested:r,expanded:i})=>(0,Q.jsxs)(`button`,{className:i?`prevention-nav-item expanded`:`prevention-nav-item`,onClick:()=>e(t),children:[(0,Q.jsx)(n,{}),(0,Q.jsx)(`span`,{children:t}),r?(0,Q.jsx)(hz,{}):i?(0,Q.jsx)(mz,{}):null]},t))}),(0,Q.jsx)(`div`,{className:`prevention-submenu`,children:Qz.map(e=>(0,Q.jsxs)(`button`,{className:r===e?`selected`:``,onClick:()=>{i(e),o(!1)},children:[(0,Q.jsx)(`span`,{children:e}),[`隐患排查任务发布`,`隐患排查工作表`,`隐患整改通知单`,`隐患汇报`].includes(e)?(0,Q.jsx)(hz,{}):null]},e))}),(0,Q.jsxs)(`nav`,{className:`prevention-nav prevention-nav-bottom`,children:[(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险告知卡`),children:[(0,Q.jsx)(QR,{}),(0,Q.jsx)(`span`,{children:`风险告知卡`}),(0,Q.jsx)(hz,{})]}),(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险四色图`),children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`风险四色图`}),(0,Q.jsx)(hz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`prevention-content`,children:a?(0,Q.jsxs)(`section`,{className:`inspection-form-view`,"aria-labelledby":`inspection-form-title`,children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:`隐患排查治理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`button`,{onClick:()=>{o(!1),u(!1)},children:`岗位隐患排查清单`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:`在线填报`})]}),(0,Q.jsx)(`nav`,{className:`inspection-view-tabs`,"aria-label":`表单视图`,children:[`页面`,`数据`].map(e=>(0,Q.jsx)(`button`,{className:d===e?`active`:``,onClick:()=>f(e),children:e},e))}),d===`页面`?(0,Q.jsxs)(`form`,{className:`inspection-form`,onSubmit:t=>{t.preventDefault(),u(!0),e(`${m.title}已提交`)},children:[(0,Q.jsxs)(`header`,{className:`inspection-form-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`岗位隐患排查`}),(0,Q.jsx)(`h1`,{id:`inspection-form-title`,children:m.title}),(0,Q.jsx)(`span`,{children:`请如实填写现场检查情况，带 * 的项目为必填项。`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`form-back`,onClick:()=>{o(!1),u(!1)},children:`返回清单`})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`填报信息`}),(0,Q.jsxs)(`div`,{className:`form-fields`,children:[(0,Q.jsxs)(`label`,{children:[`填报人 *`,(0,Q.jsx)(`input`,{name:`reporter`,defaultValue:`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`检查日期 *`,(0,Q.jsx)(`input`,{name:`inspectionDate`,type:`date`,defaultValue:`2026-07-29`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`作业班次 *`,(0,Q.jsxs)(`select`,{name:`shift`,defaultValue:`早班`,required:!0,children:[(0,Q.jsx)(`option`,{children:`早班`}),(0,Q.jsx)(`option`,{children:`中班`}),(0,Q.jsx)(`option`,{children:`夜班`})]})]}),(0,Q.jsxs)(`label`,{children:[`作业地点 *`,(0,Q.jsx)(`input`,{name:`location`,placeholder:`例如：西翼 3# 平巷`,required:!0})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`现场检查`}),(0,Q.jsxs)(`div`,{className:`inspection-items`,children:[(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`凿岩设备防护装置完好`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`normal`,required:!0}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`作业面通风与照明符合要求`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`normal`,required:!0}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`人员防护用品佩戴规范`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`normal`,required:!0}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`issue`}),` `,`发现问题`]})]})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`问题说明`}),(0,Q.jsxs)(`label`,{className:`wide-field`,children:[`隐患描述与整改建议`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`3`,placeholder:`如发现隐患，请填写具体位置、问题描述及建议措施。`})]})]}),(0,Q.jsxs)(`footer`,{className:`form-actions`,children:[l?(0,Q.jsxs)(`span`,{className:`submit-status`,children:[(0,Q.jsx)(pz,{}),` 已提交，等待负责人复核`]}):(0,Q.jsx)(`span`,{children:`填写完成后可直接提交至隐患排查记录。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`form-secondary`,onClick:()=>{o(!1),u(!1)},children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`form-primary`,children:`提交排查表`})]})]})]}):(0,Q.jsxs)(`section`,{className:`inspection-data-view`,"aria-label":`${m.title}历史数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`历史填报数据`}),(0,Q.jsx)(`h2`,{children:m.title})]}),(0,Q.jsx)(`span`,{children:`共 2 条记录`})]}),(0,Q.jsx)(`div`,{className:`inspection-data-scroll`,children:(0,Q.jsxs)(`table`,{children:[(0,Q.jsx)(`thead`,{children:(0,Q.jsxs)(`tr`,{children:[(0,Q.jsx)(`th`,{children:`填报人`}),(0,Q.jsx)(`th`,{children:`检查日期`}),(0,Q.jsx)(`th`,{children:`作业班次`}),(0,Q.jsx)(`th`,{children:`作业地点`}),(0,Q.jsx)(`th`,{children:`凿岩设备防护装置完好`}),(0,Q.jsx)(`th`,{children:`作业面通风与照明符合要求`}),(0,Q.jsx)(`th`,{children:`人员防护用品佩戴规范`}),(0,Q.jsx)(`th`,{children:`隐患描述与整改建议`}),(0,Q.jsx)(`th`,{children:`填报状态`})]})}),(0,Q.jsxs)(`tbody`,{children:[(0,Q.jsxs)(`tr`,{children:[(0,Q.jsx)(`td`,{children:`张宇`}),(0,Q.jsx)(`td`,{children:`2026-07-29`}),(0,Q.jsx)(`td`,{children:`早班`}),(0,Q.jsx)(`td`,{children:`西翼 3# 平巷`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`现场检查正常，无需整改。`}),(0,Q.jsx)(`td`,{children:(0,Q.jsx)(`i`,{children:`已提交`})})]}),(0,Q.jsxs)(`tr`,{children:[(0,Q.jsx)(`td`,{children:`李明`}),(0,Q.jsx)(`td`,{children:`2026-07-28`}),(0,Q.jsx)(`td`,{children:`中班`}),(0,Q.jsx)(`td`,{children:`西翼 2# 平巷`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`发现问题`}),(0,Q.jsx)(`td`,{children:`正常`}),(0,Q.jsx)(`td`,{children:`照明灯具亮度不足，已通知机电班处理。`}),(0,Q.jsx)(`td`,{children:(0,Q.jsx)(`i`,{children:`已复核`})})]})]})]})})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`button`,{onClick:()=>i(`隐患排查治理`),children:`隐患排查治理`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:p})]}),(0,Q.jsx)(`div`,{className:`prevention-strip`}),r===`岗位隐患排查清单`?(0,Q.jsxs)(`section`,{className:`prevention-list prevention-menu-catalog`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`全部`})}),(0,Q.jsx)(`div`,{className:`prevention-catalog-grid`,children:$z.map(({title:e,icon:t,tone:n})=>(0,Q.jsxs)(`button`,{type:`button`,className:`prevention-catalog-card`,onClick:()=>h({title:e}),children:[(0,Q.jsx)(`span`,{className:`prevention-form-icon ${n}`,children:(0,Q.jsx)(t,{})}),(0,Q.jsx)(`b`,{children:e})]},e))})]}):(0,Q.jsxs)(`section`,{className:`prevention-list prevention-empty-content`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`功能页面`})}),(0,Q.jsx)(`p`,{children:`请从左侧菜单选择需要处理的业务。`})]})]})})]})}function tB({app:e,onReturn:t,onAction:n,onSwitchApplication:r}){let i=e.icon,a=[`核对今日${e.name}记录`,`完成本周${e.description}复核`,`查看待处理异常提醒`];return(0,Q.jsxs)(`section`,{className:`mock-app-page`,"aria-labelledby":`mock-app-title`,children:[(0,Q.jsxs)(`aside`,{className:`mock-app-sidebar`,"aria-label":`${e.name}功能导航`,children:[(0,Q.jsx)(Xz,{currentName:e.name,onSelect:r}),(0,Q.jsxs)(`nav`,{children:[(0,Q.jsxs)(`button`,{className:`mock-nav-item active`,children:[(0,Q.jsx)(_z,{}),`应用概览`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}待办`),children:[(0,Q.jsx)(xz,{}),`待办处理`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}记录`),children:[(0,Q.jsx)(QR,{}),`业务记录`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}统计`),children:[(0,Q.jsx)(ZR,{}),`数据统计`]})]})]}),(0,Q.jsxs)(`div`,{className:`mock-app-content`,children:[(0,Q.jsxs)(`div`,{className:`mock-app-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`应用中心`}),(0,Q.jsx)(hz,{}),(0,Q.jsx)(`strong`,{children:e.name})]}),(0,Q.jsxs)(`header`,{className:`mock-app-header`,children:[(0,Q.jsx)(`span`,{className:`mock-app-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h1`,{id:`mock-app-title`,children:[e.name,`工作台`]}),(0,Q.jsx)(`p`,{children:`示例业务页面，数据仅用于界面演示。`})]}),(0,Q.jsxs)(`button`,{className:`mock-primary-action`,onClick:()=>n(`新建${e.name}记录`),children:[(0,Q.jsx)(az,{}),`新建记录`]})]}),(0,Q.jsxs)(`section`,{className:`mock-metrics`,"aria-label":`${e.name}概览`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`待处理`}),(0,Q.jsx)(`b`,{children:`6`}),(0,Q.jsx)(`small`,{children:`需你跟进`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`今日记录`}),(0,Q.jsx)(`b`,{children:`14`}),(0,Q.jsx)(`small`,{children:`已同步更新`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`异常提醒`}),(0,Q.jsx)(`b`,{children:`2`}),(0,Q.jsx)(`small`,{children:`等待复核`})]})]}),(0,Q.jsxs)(`section`,{className:`mock-work-list`,"aria-labelledby":`mock-work-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`mock-work-title`,children:`待处理事项`}),(0,Q.jsxs)(`button`,{onClick:()=>n(`${e.name}全部事项`),children:[`查看全部 `,(0,Q.jsx)(uz,{})]})]}),a.map((e,t)=>(0,Q.jsxs)(`button`,{onClick:()=>n(e),children:[(0,Q.jsx)(`span`,{className:`mock-row-icon tone-${t}`,children:(0,Q.jsx)(xz,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsx)(`small`,{children:t===0?`今天需完成`:`已分配给你`})]}),(0,Q.jsx)(uz,{})]},e))]}),(0,Q.jsxs)(`button`,{className:`prevention-back`,onClick:t,children:[`返回工作台 `,(0,Q.jsx)(uz,{})]})]})]})}function nB({onOpen:e,onOpenAll:t}){return(0,Q.jsxs)(`section`,{className:`activity-feed`,"aria-labelledby":`activity-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`activity-title`,children:`动态`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:t,children:[`查看全部 `,(0,Q.jsx)(uz,{})]})]}),(0,Q.jsx)(`div`,{className:`feed-list`,children:zz.length?zz.map(({person:t,tone:n,avatar:r,headline:i,detail:a,time:o,icon:s})=>(0,Q.jsxs)(`button`,{className:`feed-item`,onClick:()=>e(i),children:[(0,Q.jsx)(`span`,{className:`feed-avatar ${n}`,children:r}),(0,Q.jsxs)(`span`,{className:`feed-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`strong`,{children:i})]}),(0,Q.jsx)(`p`,{children:a}),(0,Q.jsx)(`time`,{children:o})]}),(0,Q.jsx)(s,{className:`feed-icon`})]},i)):(0,Q.jsxs)(`div`,{className:`empty-feed`,children:[(0,Q.jsx)(iz,{}),(0,Q.jsx)(`p`,{children:`这一类动态已全部处理。`})]})})]})}function rB({onAction:e,onOpenTask:t,onOpenProcess:n,onOpenDynamics:r}){return(0,Q.jsxs)(`aside`,{className:`command-panel`,"aria-label":`快捷操作`,children:[(0,Q.jsx)(`p`,{children:`快捷入口`}),(0,Q.jsxs)(`button`,{className:`command-primary`,onClick:t,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(az,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起任务`}),(0,Q.jsx)(`small`,{children:`交办或跟进一项工作`})]}),(0,Q.jsx)(uz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:n,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(oz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起流程`}),(0,Q.jsx)(`small`,{children:`提交一次审批或申请`})]}),(0,Q.jsx)(uz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:r,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(fz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发动态`}),(0,Q.jsx)(`small`,{children:`发布一条安全工作动态`})]}),(0,Q.jsx)(uz,{})]})]})}function iB({title:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e===`发起任务`;return(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`action-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`dialog-close`,"aria-label":`关闭`,onClick:t,children:`×`}),n?(0,Q.jsxs)(`div`,{className:`dialog-success`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`h2`,{children:`已准备好继续`}),(0,Q.jsx)(`p`,{children:`这是工作台演示状态，实际接入后将在此进入对应业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`完成`})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`快速创建`}),(0,Q.jsx)(`h2`,{id:`action-dialog-title`,children:e}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:i?`填写最小必要信息，将工作直接交给相应负责人。`:`从授权模板中选择流程，减少重复填写。`}),(0,Q.jsxs)(`label`,{children:[i?`任务名称`:`流程模板`,(0,Q.jsx)(`input`,{autoFocus:!0,placeholder:i?`例如：完成现场安全检查`:`例如：选择设备检修申请`})]}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{className:`secondary-button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`primary-button`,onClick:()=>r(!0),children:`继续`})]})]})]})})}var aB=[{id:`safety`,name:`安全风险总览`,description:`风险等级、隐患整改与作业预警的综合视图`,metrics:[[`今日检查`,`28`,`较昨日 +4`],[`待整改隐患`,`16`,`4 项临近逾期`],[`高风险作业`,`3`,`均在监控中`],[`整改完成率`,`86%`,`本月累计`]],charts:[`risk`,`rectification`,`sources`,`trend`]},{id:`device`,name:`设备运行态势`,description:`关键设备运行状态、点检执行与故障分布`,metrics:[[`设备总数`,`248`,`当前在线 243`],[`待点检`,`12`,`今日需完成`],[`异常设备`,`5`,`等待处理`],[`设备完好率`,`97.8%`,`较上月 +0.6%`]],charts:[`device`,`trend`,`sources`,`risk`]},{id:`production`,name:`生产进度跟踪`,description:`产量计划、班组进度与生产指标完成情况`,metrics:[[`本月产量`,`12.6 万吨`,`计划完成 91%`],[`今日进尺`,`186 米`,`较计划 +12 米`],[`作业班组`,`8`,`全部已开工`],[`生产达成率`,`94%`,`较上周 +3%`]],charts:[`progress`,`trend`,`device`,`rectification`]},{id:`emergency`,name:`应急管理看板`,description:`应急物资、演练计划和预案执行情况`,metrics:[[`应急物资`,`356`,`库存充足`],[`本月演练`,`4`,`已完成 3 项`],[`应急预案`,`18`,`均为有效版本`],[`响应及时率`,`100%`,`本季度累计`]],charts:[`sources`,`progress`,`risk`,`trend`]}];function oB({type:e}){let t=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let n=t.current;if(!n)return;let r=oC(n),i={axisLine:{lineStyle:{color:`#dce4ec`}},axisLabel:{color:`#7b8998`,fontSize:10},splitLine:{lineStyle:{color:`#eef2f6`}}},a={risk:{title:{text:`风险等级分布`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},legend:{bottom:8,textStyle:{fontSize:10,color:`#7b8998`}},series:[{type:`pie`,radius:[`42%`,`66%`],center:[`50%`,`51%`],label:{show:!1},data:[{value:4,name:`重大`,itemStyle:{color:`#d95745`}},{value:12,name:`较大`,itemStyle:{color:`#e89b3e`}},{value:31,name:`一般`,itemStyle:{color:`#3c98d3`}},{value:47,name:`低风险`,itemStyle:{color:`#5bb287`}}]}]},rectification:{title:{text:`隐患整改闭环`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:16,top:49,bottom:26},xAxis:{type:`category`,data:[`一车间`,`二车间`,`南区`,`北区`,`选矿`],...i},yAxis:{type:`value`,...i},series:[{type:`bar`,barWidth:15,itemStyle:{color:`#1779ba`,borderRadius:[3,3,0,0]},data:[16,22,13,18,25]},{type:`bar`,barWidth:15,itemStyle:{color:`#a9d8c3`,borderRadius:[3,3,0,0]},data:[12,18,10,15,21]}]},sources:{title:{text:`问题来源占比`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},series:[{type:`pie`,radius:`62%`,center:[`50%`,`55%`],label:{formatter:`{b}
+{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function sB(){let[e,t]=(0,Z.useState)(`safety`),n=aB.find(t=>t.id===e)??aB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:aB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(hz,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(mz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(oB,{type:e})},`${n.id}-${e}`))})]})]})})}function cB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(`iframe`,{className:`embedded-dynamics-frame`,src:`${Az}index.html`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function lB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`},{label:`人员明细`,view:`view-personnel`}],[n,r]=(0,Z.useState)(e),i=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsx)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label))}),(0,Q.jsx)(`iframe`,{className:`embedded-tasks-frame`,src:`${Az}任务.html?view=${i.view}`,title:i.label},i.view)]})}function uB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`},{label:`预警统计`,view:`warning-stats-aggr`}],[t,n]=(0,Z.useState)(`预警任务`),r=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsx)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label))}),(0,Q.jsx)(`iframe`,{className:`embedded-warnings-frame`,src:`${Az}预警.html?view=${r.view}`,title:r.label},r.view)]})}function dB({module:e,view:t}){let n=new URLSearchParams({module:e,...t?{view:t}:{}}),r=JSON.stringify({module:e,view:t});return(0,Q.jsx)(`section`,{className:`settings-lowcode-embed`,"aria-label":e,children:(0,Q.jsx)(`iframe`,{srcDoc:Ez.replace(`<head>`,`<head><script>window.__hostLowCodeRequest = ${r};<\/script>`),title:`低代码平台`},n.toString())})}var fB=[{id:`task`,label:`待执行任务`,count:4,tone:`blue`,icon:xz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,count:3,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`机电管理部`,deadline:`今天内处理`,owner:`王建国`,note:`当前节点：部门负责人审批`,action:`去审批`},{title:`南区 2# 采场动火作业申请`,source:`生产管理部`,deadline:`今天 15:00 前`,owner:`李明`,note:`当前节点：安全管理部审批`,action:`去审批`},{title:`碎矿车间停机检修计划`,source:`设备管理部`,deadline:`明天 09:00 前`,owner:`赵磊`,note:`当前节点：设备平台主管审批`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,count:3,tone:`red`,icon:bz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`}]}];function pB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let[r,i]=(0,Z.useState)(`all`),a=r===`all`?fB:fB.filter(e=>e.id===r),o=fB.reduce((e,t)=>e+t.count,0),s=r=>{r.id===`task`?e():r.id===`approval`?t():n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsxs)(`nav`,{className:`todo-filter-tabs`,"aria-label":`待办分类`,children:[(0,Q.jsxs)(`button`,{className:r===`all`?`active`:``,onClick:()=>i(`all`),children:[`全部 `,(0,Q.jsx)(`b`,{children:o})]}),fB.map(e=>(0,Q.jsxs)(`button`,{className:r===e.id?`active`:``,onClick:()=>i(e.id),children:[e.label,(0,Q.jsx)(`b`,{className:`todo-tab-badge`,"aria-label":`${e.count} 项未处理`,children:e.count})]},e.id))]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:a.map(e=>{let t=e.icon;return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.count,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>s(e),children:[`查看全部 `,(0,Q.jsx)(uz,{})]})]}),(0,Q.jsx)(`div`,{children:e.items.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>s(e),children:[t.action,(0,Q.jsx)(uz,{})]})]},t.title))})]},e.id)})})]})}var mB=[{label:`安全动态`,icon:dz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:xz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:oz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:bz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function hB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:hB(e.children,t,n)})}function gB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:gB(e.children,t,n)})}function _B(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:_B(e.children,t)}))}function vB(e){return e.flatMap(e=>[e,...vB(e.children)])}function yB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(yB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function bB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(`尚未建立组织架构，可手动新增或导入模板。`),_=(0,Z.useRef)(null),v=e.length>0,y=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),b=p?n.filter(e=>e.organizationId===p):n,x=l,S=()=>{let t=r?.mode===`child`||r?.mode===`edit`?r.node.id:e[0]?.id??``;m(t),f(!0)},C=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:p===e.id?`active`:``,onClick:()=>m(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(C,{nodes:e.children}):null]},e.id))}),w=()=>{let e=URL.createObjectURL(new Blob([`﻿组织名称,上级组织
 华北矿业集团,
 安全管理部,华北矿业集团
 设备管理部,华北矿业集团
 南区采矿车间,安全管理部
-`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`组织架构导入模板.csv`,t.click(),URL.revokeObjectURL(e)},T=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},E=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},D=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},O=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=y?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>hB(e,r.node.id,c)),g(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?mB(t,r.node.id,e):[...t,e]),g(`已新增组织：${n}`)}o(``),u(null),i(null)},k=e=>{t(t=>gB(t,e.id)),g(`已删除组织：${e.name}`)},A=e=>{let n=e.target.files?.[0];if(!n||v)return;let r=new FileReader;r.onload=()=>{let e=String(r.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).map(e=>e.split(`,`).map(e=>e.trim())).filter(([e])=>e);if(!e.length){g(`未识别到可导入的组织数据，请检查模板内容。`);return}let n=e.map(([e,t])=>({id:`org-${e}-${Math.random().toString(36).slice(2,7)}`,name:e,parent:t,children:[]})),i=new Map(n.map(e=>[e.name,e])),a=[];n.forEach(e=>{e.parent&&i.has(e.parent)?i.get(e.parent).children.push(e):a.push(e)}),t(a),g(`已导入 ${n.length} 个组织节点，导入功能现已锁定。`)},r.readAsText(n,`utf-8`),e.target.value=``},j=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsxs)(`div`,{className:`organization-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`button`,{className:`organization-template`,onClick:w,children:[(0,Q.jsx)(QR,{}),`下载模板`]}),(0,Q.jsxs)(`button`,{className:`organization-import`,onClick:()=>_.current?.click(),disabled:v,title:v?`已有组织架构时不支持导入`:`上传已填写的组织架构模板`,children:[(0,Q.jsx)(QR,{}),`导入组织`]}),(0,Q.jsx)(`input`,{ref:_,type:`file`,accept:`.csv,text/csv`,onChange:A,hidden:!0})]})]}),(0,Q.jsxs)(`div`,{className:v?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`span`,{children:h}),v?(0,Q.jsx)(`b`,{children:`已有组织架构，暂不支持导入`}):null]}),v?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(vB,{nodes:e,onAddChild:E,onEdit:D,onDelete:k})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:T,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:j}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),y?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:S,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-leader-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-leader-title`,children:`选择负责人`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭选择负责人弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(C,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[b.length,` 人`]})]}),b.length?b.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`organization-leader`,checked:l?.id===e.id,onChange:()=>u(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选负责人 `,(0,Q.jsx)(`span`,{children:x?`1 人`:`0 人`})]}),x?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:x.name}),(0,Q.jsx)(`small`,{children:x.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择负责人`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>f(!1),children:`确认选择`})]})]})}):null]})}function bB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(bB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function xB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=xB(r.children,t,e);if(i)return i}return``}function SB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=t.filter(e=>n.includes(e)),c=e=>r(n.includes(e)?n.filter(t=>t!==e):[...n,e]);return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:s.length?s.join(`、`):`请选择${e}`}),(0,Q.jsx)(mz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(e),onChange:()=>c(e)}),(0,Q.jsx)(`span`,{children:e})]},e))}):null]})}function CB({organizations:e,setOrganizations:t,users:n,setUsers:r}){let[i,a]=(0,Z.useState)(`users`),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(null),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(null),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(``),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(`abc123`),[S,C]=(0,Z.useState)(``),[w,T]=(0,Z.useState)([]),[E,D]=(0,Z.useState)([]),[O,k]=(0,Z.useState)(``),[A,j]=(0,Z.useState)({}),[M,N]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[P,ee]=(0,Z.useState)(``),F=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!P)return;let e=window.setTimeout(()=>ee(``),3e3);return()=>window.clearTimeout(e)},[P]);let I=_B(e),te=I.find(e=>e.id===o),ne=n.filter(e=>(!o||e.organizationId===o)&&(!M.name||e.name.includes(M.name))&&(!M.account||e.account.includes(M.account))&&(!M.phone||e.phone.includes(M.phone))&&(!M.status||e.status===M.status)),re=()=>{p(null),h(``),_(``),y(``),x(`abc123`),C(o||I[0]?.id||``),T([]),D([]),j({}),k(``),l(`create`)},ie=e=>{p(e),h(e.name),_(e.account),y(e.phone===`未填写`?``:e.phone),x(e.password||`abc123`),C(e.organizationId||I[0]?.id||``),T(e.positions||[]),D(e.roles||[]),j({}),k(``),l(`create`)},ae=e=>j(t=>t[e]?{...t,[e]:``}:t),oe=t=>{t.preventDefault();let n=m.trim(),i=g.trim(),a={name:n?``:`请输入用户名称`,phone:!v||/^\d{11}$/.test(v)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:b.trim()?``:`请输入默认密码`,organization:S?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){j(a);return}let o=xB(e,S),c={name:n,account:i,phone:v||`未填写`,password:b,organizationId:S,department:o,positions:w,roles:E};r(e=>f?e.map(e=>e.id===f.id?{...e,...c}:e):[...e,{id:`user-${Date.now()}`,...c,status:`启用`}]),s(S),l(null),ee(`${f?`已保存用户`:`已新增用户`}：${n}`)},se=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
+`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`组织架构导入模板.csv`,t.click(),URL.revokeObjectURL(e)},T=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},E=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},D=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},O=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=y?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>gB(e,r.node.id,c)),g(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?hB(t,r.node.id,e):[...t,e]),g(`已新增组织：${n}`)}o(``),u(null),i(null)},k=e=>{t(t=>_B(t,e.id)),g(`已删除组织：${e.name}`)},A=e=>{let n=e.target.files?.[0];if(!n||v)return;let r=new FileReader;r.onload=()=>{let e=String(r.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).map(e=>e.split(`,`).map(e=>e.trim())).filter(([e])=>e);if(!e.length){g(`未识别到可导入的组织数据，请检查模板内容。`);return}let n=e.map(([e,t])=>({id:`org-${e}-${Math.random().toString(36).slice(2,7)}`,name:e,parent:t,children:[]})),i=new Map(n.map(e=>[e.name,e])),a=[];n.forEach(e=>{e.parent&&i.has(e.parent)?i.get(e.parent).children.push(e):a.push(e)}),t(a),g(`已导入 ${n.length} 个组织节点，导入功能现已锁定。`)},r.readAsText(n,`utf-8`),e.target.value=``},j=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsxs)(`div`,{className:`organization-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`button`,{className:`organization-template`,onClick:w,children:[(0,Q.jsx)(QR,{}),`下载模板`]}),(0,Q.jsxs)(`button`,{className:`organization-import`,onClick:()=>_.current?.click(),disabled:v,title:v?`已有组织架构时不支持导入`:`上传已填写的组织架构模板`,children:[(0,Q.jsx)(QR,{}),`导入组织`]}),(0,Q.jsx)(`input`,{ref:_,type:`file`,accept:`.csv,text/csv`,onChange:A,hidden:!0})]})]}),(0,Q.jsxs)(`div`,{className:v?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsx)(`span`,{children:h}),v?(0,Q.jsx)(`b`,{children:`已有组织架构，暂不支持导入`}):null]}),v?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(yB,{nodes:e,onAddChild:E,onEdit:D,onDelete:k})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:T,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:j}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),y?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:S,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-leader-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-leader-title`,children:`选择负责人`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭选择负责人弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(C,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[b.length,` 人`]})]}),b.length?b.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`organization-leader`,checked:l?.id===e.id,onChange:()=>u(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选负责人 `,(0,Q.jsx)(`span`,{children:x?`1 人`:`0 人`})]}),x?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:x.name}),(0,Q.jsx)(`small`,{children:x.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择负责人`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>f(!1),children:`确认选择`})]})]})}):null]})}function xB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(xB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function SB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=SB(r.children,t,e);if(i)return i}return``}function CB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=t.filter(e=>n.includes(e)),c=e=>r(n.includes(e)?n.filter(t=>t!==e):[...n,e]);return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:s.length?s.join(`、`):`请选择${e}`}),(0,Q.jsx)(mz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(e),onChange:()=>c(e)}),(0,Q.jsx)(`span`,{children:e})]},e))}):null]})}function wB({organizations:e,setOrganizations:t,users:n,setUsers:r}){let[i,a]=(0,Z.useState)(`users`),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(null),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(null),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(``),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(`abc123`),[S,C]=(0,Z.useState)(``),[w,T]=(0,Z.useState)([]),[E,D]=(0,Z.useState)([]),[O,k]=(0,Z.useState)(``),[A,j]=(0,Z.useState)({}),[M,N]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[P,ee]=(0,Z.useState)(``),F=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!P)return;let e=window.setTimeout(()=>ee(``),3e3);return()=>window.clearTimeout(e)},[P]);let I=vB(e),te=I.find(e=>e.id===o),ne=n.filter(e=>(!o||e.organizationId===o)&&(!M.name||e.name.includes(M.name))&&(!M.account||e.account.includes(M.account))&&(!M.phone||e.phone.includes(M.phone))&&(!M.status||e.status===M.status)),re=()=>{p(null),h(``),_(``),y(``),x(`abc123`),C(o||I[0]?.id||``),T([]),D([]),j({}),k(``),l(`create`)},ie=e=>{p(e),h(e.name),_(e.account),y(e.phone===`未填写`?``:e.phone),x(e.password||`abc123`),C(e.organizationId||I[0]?.id||``),T(e.positions||[]),D(e.roles||[]),j({}),k(``),l(`create`)},ae=e=>j(t=>t[e]?{...t,[e]:``}:t),oe=t=>{t.preventDefault();let n=m.trim(),i=g.trim(),a={name:n?``:`请输入用户名称`,phone:!v||/^\d{11}$/.test(v)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:b.trim()?``:`请输入默认密码`,organization:S?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){j(a);return}let o=SB(e,S),c={name:n,account:i,phone:v||`未填写`,password:b,organizationId:S,department:o,positions:w,roles:E};r(e=>f?e.map(e=>e.id===f.id?{...e,...c}:e):[...e,{id:`user-${Date.now()}`,...c,status:`启用`}]),s(S),l(null),ee(`${f?`已保存用户`:`已新增用户`}：${n}`)},se=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
 zhangyu,张宇,13800000000,安全管理部
-`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},L=t=>{let n=t.target.files?.[0];if(!n||!I.length)return;let i=o||I[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123`,organizationId:i,department:xB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),ee(`已导入 ${t.length} 位用户`)):ee(`未识别到可导入的用户数据`),l(null)},a.readAsText(n,`utf-8`),t.target.value=``},R=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),z=e=>{r(t=>t.filter(t=>t.id!==e)),ee(`已删除用户`)},ce=e=>d({type:`status`,user:e}),le=e=>d({type:`delete`,user:e}),ue=e=>d({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===`organization`,className:i===`organization`?`active`:``,onClick:()=>a(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===`users`,className:i===`users`?`active`:``,onClick:()=>a(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),i===`organization`?(0,Q.jsx)(yB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[I.length,` 个组织`]})]}),e.length?(0,Q.jsx)(bB,{nodes:e,selectedId:o,onSelect:s}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:te?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:M.name,onChange:e=>N(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:M.account,onChange:e=>N(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:M.phone,onChange:e=>N(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:M.status,onChange:e=>N(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>ee(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>N({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`user-directory-actions`,children:[(0,Q.jsxs)(`button`,{className:`user-import`,onClick:()=>l(`import`),disabled:!I.length,children:[(0,Q.jsx)(QR,{}),`导入用户`]}),(0,Q.jsxs)(`button`,{className:`user-add`,onClick:re,disabled:!I.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})]}),I.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),ne.length?ne.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>ce(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ie(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:c===`create`?(0,Q.jsxs)(`form`,{onSubmit:oe,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:f?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>l(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||k(``)},children:[(0,Q.jsxs)(`label`,{className:A.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:m,maxLength:10,onChange:e=>{h(e.target.value),ae(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),A.name?(0,Q.jsx)(`em`,{children:A.name}):null]}),(0,Q.jsxs)(`label`,{className:A.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:v,maxLength:11,inputMode:`numeric`,onChange:e=>{y(e.target.value.replace(/\D/g,``).slice(0,11)),ae(`phone`)},placeholder:`例如：13800000000`}),A.phone?(0,Q.jsx)(`em`,{children:A.phone}):null]}),(0,Q.jsxs)(`label`,{className:A.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:g,onChange:e=>{_(e.target.value),ae(`account`)},placeholder:`例如：zhangyu`}),A.account?(0,Q.jsx)(`em`,{children:A.account}):null]}),(0,Q.jsxs)(`label`,{className:A.password?`field-error`:``,children:[`默认密码`,(0,Q.jsx)(`input`,{type:`password`,value:b,onChange:e=>{x(e.target.value),ae(`password`)}}),A.password?(0,Q.jsx)(`em`,{children:A.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${A.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:S,onChange:e=>{C(e.target.value),ae(`organization`)},children:I.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:xB(e,t.id)},t.id))}),A.organization?(0,Q.jsx)(`em`,{children:A.organization}):null]}),(0,Q.jsx)(SB,{label:`岗位`,options:Nz,value:w,onChange:T,activeMenu:O,setActiveMenu:k}),(0,Q.jsx)(SB,{label:`角色`,options:Mz,value:E,onChange:D,activeMenu:O,setActiveMenu:k})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>l(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:te?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:F,type:`file`,accept:`.csv,text/csv`,onChange:L})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:se,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>l(null),children:`取消`})})]})})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>d(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:u.type===`cancel-create`?`确定取消${f?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:u.type===`delete`?`确定删除用户“${u.user.name}”吗？删除后无法恢复。`:u.type===`reset-password`?`确定将用户“${u.user.name}”的密码重置为默认密码 abc123 吗？`:`确定${u.user.status===`启用`?`停用`:`启用`}用户“${u.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{u.type===`cancel-create`?(l(null),k(``)):u.type===`status`?(R(u.user.id),ee(`已${u.user.status===`启用`?`停用`:`启用`}用户：${u.user.name}`)):u.type===`reset-password`?(r(e=>e.map(e=>e.id===u.user.id?{...e,password:`abc123`}:e)),ee(`已将 ${u.user.name} 的密码重置为 abc123`)):z(u.user.id),d(null)},children:`确定`})]})]})}):null,P?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[P,(0,Q.jsx)(`button`,{onClick:()=>ee(``),children:`×`})]}):null]})}function wB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function TB({onAction:e}){let[t,n]=(0,Z.useState)([{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}]),r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`},{name:`岗位隐患排查`}]},{name:`安全管理`,children:[{name:`安全检查`},{name:`作业许可`},{name:`安全培训`}]},{name:`设备管理`,children:[{name:`设备点检`},{name:`设备台账`},{name:`维修计划`}]},{name:`火工品管理`,children:[{name:`库存管理`},{name:`领用登记`}]},{name:`生产管理`,children:[{name:`生产日报`},{name:`生产计划`}]},{name:`机电管理`,children:[{name:`机电巡检`},{name:`供电管理`}]},{name:`消防管理`,children:[{name:`消防检查`},{name:`消防设施`}]},{name:`应急管理`,children:[{name:`应急预案`},{name:`应急演练`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`},{name:`待审批`},{name:`已审批`},{name:`抄送给我`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:[{name:`安全风险总览`},{name:`设备健康度`},{name:`生产进度跟踪`}]},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务配置`},{name:`流程配置`},{name:`预警配置`},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`岗位管理`},{name:`字典管理`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={工作台:[`查看`],岗位隐患排查:[`查看`,`在线填报`,`提交`,`导出`],风险分级管控:[`查看`,`新增`,`编辑`,`删除`,`导出`],隐患排查治理:[`查看`,`新增`,`编辑`,`删除`,`导出`],安全检查:[`查看`,`新增`,`编辑`,`删除`,`导出`],作业许可:[`查看`,`新增`,`审批`,`编辑`,`删除`],安全培训:[`查看`,`新增`,`编辑`,`删除`,`导出`],设备点检:[`查看`,`新增`,`编辑`,`删除`,`导出`],设备台账:[`查看`,`新增`,`编辑`,`删除`,`导出`],维修计划:[`查看`,`新增`,`编辑`,`删除`,`导出`],库存管理:[`查看`,`新增`,`编辑`,`删除`,`导出`],领用登记:[`查看`,`新增`,`审核`,`编辑`,`删除`],生产日报:[`查看`,`新增`,`编辑`,`删除`,`导出`],生产计划:[`查看`,`新增`,`编辑`,`删除`,`导出`],机电巡检:[`查看`,`新增`,`编辑`,`删除`,`导出`],供电管理:[`查看`,`新增`,`编辑`,`删除`,`导出`],消防检查:[`查看`,`新增`,`编辑`,`删除`,`导出`],消防设施:[`查看`,`新增`,`编辑`,`删除`,`导出`],应急预案:[`查看`,`新增`,`编辑`,`删除`,`导出`],应急演练:[`查看`,`新增`,`编辑`,`删除`,`导出`],发布任务:[`查看`,`发布`,`编辑`,`删除`],我的任务:[`查看`,`执行任务`,`提交反馈`],任务总台账:[`查看`,`导出`],人员明细:[`查看`,`导出`],发起流程:[`查看`,`发起流程`],待审批:[`查看`,`审批`],已审批:[`查看`,`导出`],抄送给我:[`查看`],我发起的:[`查看`,`撤回`,`催办`],动态列表:[`查看`,`删除`],发动态:[`查看`,`发布`],预警分级看板:[`查看`,`导出`],预警任务:[`查看`,`处置`,`关闭`,`导出`],预警信息表统计:[`查看`,`导出`],预警统计:[`查看`,`导出`],安全风险总览:[`查看`,`导出`],设备健康度:[`查看`,`导出`],生产进度跟踪:[`查看`,`导出`],角色权限:[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`],组织用户:[`查看`,`新增`,`编辑`,`删除`,`重置密码`],岗位管理:[`查看`,`新增`,`编辑`,`删除`],字典管理:[`查看`,`新增`,`编辑`,`删除`]},o=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:o(e.children,n)};let i=a[e.name]??[`查看`,`新增`,`编辑`,`删除`];return{id:`page:${r}`,name:e.name,type:`page`,children:i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`}))}}),s=o(r),c=e=>e.children?.length?e.children.flatMap(c):[e.id],l=s.flatMap(c),u=()=>{let e=t=>t.flatMap(t=>t.type===`menu`?[t.id,...e(t.children??[])]:[]);return new Set(e(s))},d=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[f,p]=(0,Z.useState)(null),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(`启用`),[v,y]=(0,Z.useState)(new Set(l.slice(0,18))),[b,x]=(0,Z.useState)(`menu`),[S,C]=(0,Z.useState)(u),[w,T]=(0,Z.useState)(null),[E,D]=(0,Z.useState)(null),[O,k]=(0,Z.useState)(d),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(`group`),[P,ee]=(0,Z.useState)([`u-zhang`]),F=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],I=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],te=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],ne=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],re=()=>{h(``),_(`启用`),y(new Set(l.slice(0,40))),k(d()),x(`menu`),C(u()),p({mode:`create`})},ie=e=>{h(e.name),_(e.status),y(new Set(l.slice(0,40))),k(d()),x(`menu`),C(u()),p({mode:`edit`,role:e})},ae=t=>{t.preventDefault();let r=m.trim();r&&(f.mode===`edit`?n(e=>e.map(e=>e.id===f.role.id?{...e,name:r,status:g}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:g,createdAt:`2026-08-12 10:30`}]),p(null),e(f.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},oe=e=>y(t=>{let n=new Set(t),r=c(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),se=e=>C(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),L=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=L(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return(a[e.name]??[`查看`,`新增`,`编辑`,`删除`]).map(e=>`button:${r}:${e}`).some(e=>v.has(e))?[e]:[]}),R=L(r),z=i(R).length,ce=e=>k(t=>({...t,...Object.fromEntries(i(R).map(t=>[t,e]))})),le=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:``,children:[(0,Q.jsx)(wB,{node:e,selectedIds:v,getLeafIds:c,onToggle:oe}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${S.has(e.id)?`expanded`:``}`,"aria-label":`${S.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>se(e.id),children:(0,Q.jsx)(hz,{})}):null]}),e.children&&S.has(e.id)?(0,Q.jsx)(le,{nodes:e.children}):null]},`${e.id}-${t}`))}),ue=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:M===e.id?`active`:``,onClick:()=>N(e.id),children:e.name}),e.children?(0,Q.jsx)(ue,{nodes:e.children}):null]},e.id))}),de=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:de(n.children??[],t)),null),fe=e=>e.children?.length?e.children.flatMap(fe):[e.id],pe=de(F,M),B=I.filter(e=>e.organization===M),V=B.map(e=>e.id),me=V.some(e=>P.includes(e)),he=V.length>0&&V.every(e=>P.includes(e)),ge=E?.dataPermissionOrganizationIds??[],_e=ne.filter(e=>ge.includes(e.organization)),ve=I.filter(e=>P.includes(e.id)),ye=e=>ee(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),be=()=>ee(e=>[...new Set([...e,...V])]),H=()=>ee(e=>e.filter(e=>!V.includes(e))),U=e=>{j(e),N(`group`),ee([`u-zhang`])},W=e=>{let t=fe(e);D(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=ne.filter(e=>i.includes(e.organization)).map(e=>e.id),o=ne.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},xe=e=>D(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Se=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:fe(e).some(e=>ge.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:fe(e).every(e=>ge.includes(e)),ref:t=>{if(!t)return;let n=fe(e),r=n.filter(e=>ge.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>W(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Se,{nodes:e.children}):null]},e.id))}),G=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:S.has(r)?`expanded`:``,"aria-label":`${S.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>se(r),children:(0,Q.jsx)(hz,{})})]}),S.has(r)?(0,Q.jsx)(`ul`,{children:G(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:O[e.name]??`全部`,onChange:t=>k(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`本部门及以下`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:re,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ie(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>T(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>U(e),children:`分配用户`})]})]},e.id))]})]}),f?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>p(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:ae,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:f.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>p(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:m,onChange:e=>h(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:g,onChange:e=>_(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":b===`menu`,className:b===`menu`?`active`:``,onClick:()=>x(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":b===`data`,className:b===`data`?`active`:``,onClick:()=>x(`data`),children:`数据权限`})]}),b===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单、页面与操作按钮选择可访问范围`})]}),(0,Q.jsx)(le,{nodes:s})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`本部门及以下`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:G(R)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>p(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,E?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>D(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>D(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:E.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Se,{nodes:te})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!_e.length&&_e.every(e=>E.dataAuthorizedUserIds.includes(e.id)),onChange:()=>D(e=>{let t=_e.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:_e.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:E.dataAuthorizedUserIds.includes(e.id),onChange:()=>xe(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[z,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:G(R)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>D(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${E.name}的数据权限`),D(null)},children:`保存权限`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(ue,{nodes:F})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:pe?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[B.length,` 人`]})]}),B.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:be,disabled:he,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:H,disabled:!me,children:`全不选`})]}):null]}),B.length?B.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:P.includes(e.id),onChange:()=>ye(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[ve.length,` 人`]})]}),ve.length?ve.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ye(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已为${A.name}分配 ${ve.length} 位用户`),j(null)},children:`确认分配`})]})]})}):null,w?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>T(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>T(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除角色“`,w.name,`”吗？已分配该角色的用户将不再保留该角色权限。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>T(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==w.id)),e(`已删除角色：${w.name}`),T(null)},children:`确认删除`})]})]})}):null]})}function EB({onAction:e}){let[t,n]=(0,Z.useState)(!1),[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(!1),[s,c]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[l,u]=(0,Z.useState)({current:``,next:``,confirm:``}),[d,f]=(0,Z.useState)(``),p=()=>{n(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:s.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部 · 安全管理员`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>o(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>t?p():n(!0),children:t?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>i(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:t?(0,Q.jsx)(`input`,{value:s.name,onChange:e=>c(t=>({...t,name:e.target.value}))}):s.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:t?(0,Q.jsx)(`input`,{value:s.phone,onChange:e=>c(t=>({...t,phone:e.target.value}))}):s.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:t?(0,Q.jsx)(`input`,{value:s.email,onChange:e=>c(t=>({...t,email:e.target.value}))}):s.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:`安全管理员`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!l.current||!l.next||!l.confirm){f(`请完整填写密码信息`);return}if(l.next!==l.confirm){f(`两次输入的新密码不一致`);return}if(l.current!==`123456`){f(`旧密码输入错误，请重新输入`);return}i(!1),u({current:``,next:``,confirm:``}),f(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:l.current,onChange:e=>u(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:l.next,onChange:e=>u(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:l.confirm,onChange:e=>u(t=>({...t,confirm:e.target.value}))})]}),d?(0,Q.jsx)(`p`,{className:`password-error`,children:d}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,a?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>o(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>o(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`退出后将结束当前会话，确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>o(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{o(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function DB({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),y=s.filter(e=>e.name.toLowerCase().includes(p.trim().toLowerCase())),b=Math.max(1,Math.ceil(y.length/_)),x=Math.min(h,b),S=y.slice((x-1)*_,x*_),C=(e=null)=>{o(e?{code:e.code,name:e.name,remark:e.remark??``}:{code:``,name:``,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),i({type:`editor`,dictionary:e})},w=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim();if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},T=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},E=()=>{g(1),f(null),c(e=>e.some(e=>e.isDraft)?e:[{id:`data-${Date.now()}`,code:``,name:``,updater:``,updatedAt:``,isDraft:!0},...e])},D=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},O=e=>{c(t=>t.map(t=>t.id===e&&t.code.trim()&&t.name.trim()?{...t,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t))},k=e=>{f({id:e.id,code:e.code,name:e.name})},A=()=>{!d?.code.trim()||!d.name.trim()||(c(e=>e.map(e=>e.id===d.id?{...e,code:d.code.trim(),name:d.name.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),f(null))},j=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},M=e=>{c(t=>t.filter(t=>!e.includes(t.id))),u(t=>t.filter(t=>!e.includes(t))),f(t=>t&&e.includes(t.id)?null:t)};return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>C(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>C(e),children:(0,Q.jsx)(sz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(Sz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:w,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:T,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:E,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>M(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!y.filter(e=>!e.isDraft).length&&l.length===y.filter(e=>!e.isDraft).length,onChange:()=>{let e=y.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),S.map(e=>{let t=d?.id===e.id;return(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``}`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>j(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?D(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?D(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>O(e.id),children:(0,Q.jsx)(pz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>M([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:A,children:(0,Q.jsx)(pz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>k(e),children:(0,Q.jsx)(sz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>M([e.id]),children:(0,Q.jsx)(Sz,{})})]})]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,y.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:x===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[x,` / `,b]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:x===b,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除字典“`,r.dictionary.name,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})]})}):null]})}function OB({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(!1),l=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){o(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){o(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),o(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},u=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},d=e=>{t(t=>({...t,systemIcon:e.id})),c(!1),n(`已选择系统图标：${e.label}`)};return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>u(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>l(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>u(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>l(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(Oz,{name:e.systemIcon})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(!0),children:`选择图标`})})]})]}),a?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:a}):null,s?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>c(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>c(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`请选择图标`}),(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:Dz.map(t=>(0,Q.jsx)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>d(t),children:(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Oz,{name:t.id})})},t.id))})]})}):null]})}function kB({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r}){let[i,a]=(0,Z.useState)(t),[o,s]=(0,Z.useState)([]),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)(!1),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),b=[{label:`工作表单`,module:`form`}],x=[{label:`流程中心`,module:`flow`}],S=b.find(e=>e.label===i);x.find(e=>e.label===i);let C=(i===`工作表`?{label:`工作表`,module:`form`}:i===`流程`?{label:`流程`,module:`flow`}:null)??(i===`应用中心`?{label:`应用中心`,module:`app`}:null),w=i===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===i),T=[{label:`预警信息表`,view:`warning-info-table`},{label:`预警规则设置`,view:`warning-rule`}],E=T.find(e=>e.label===i),D=[`组织用户`,`角色权限`,`字典管理`,`企业设置`],O=pB.find(e=>e.label===i)??S??w??E??pB[0],k=O.icon??QR,A={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[i]??[],j=i===`组织用户`,M=i===`角色权限`,N=i===`安全动态`,P=i===`字典管理`,ee=i===`企业设置`,F=!!C;S?.module;let I=!!w,te=!!E,ne=D.includes(i),re=e=>{let t=e===`worksheet`?!u:e===`process`?!f:e===`task`?!m:e===`warning`?!g:!v;d(e===`worksheet`&&t),p(e===`process`&&t),h(e===`task`&&t),_(e===`warning`&&t),y(e===`system`&&t),t&&(e===`worksheet`&&a(`工作表单`),e===`process`&&a(`流程中心`),e===`task`&&a(`任务模版`),e===`warning`&&a(`预警信息表`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:pB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`].includes(e)?(0,Q.jsxs)(`button`,{className:i===e?`active`:``,onClick:()=>a(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`预警`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${i===`预警`||te?`active`:``}`,onClick:()=>re(`warning`),"aria-expanded":g,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(hz,{className:g?`expanded`:``})]}),g?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:T.map(e=>(0,Q.jsx)(`button`,{className:i===e.label?`active`:``,onClick:()=>a(e.label),children:e.label},e.label))}):null]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ne?`active`:``}`,onClick:()=>re(`system`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(hz,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:D.map(e=>(0,Q.jsx)(`button`,{className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:i===e?`active`:``,onClick:()=>a(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(hz,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!j&&!M&&!ee&&!N&&!P&&!F&&!I&&!te?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(k,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:O.title}),(0,Q.jsx)(`p`,{children:O.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${O.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,N?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(`iframe`,{src:`${kz}index.html?view=feedno`,title:`动态圈管理`})}):ee?(0,Q.jsx)(OB,{branding:n,onBrandingChange:r,onAction:e}):P?(0,Q.jsx)(DB,{onAction:e}):F?(0,Q.jsx)(uB,{module:C.module,view:C.view}):I?(0,Q.jsx)(`section`,{className:`settings-task-embed`,"aria-label":w.label,children:(0,Q.jsx)(`iframe`,{src:`${kz}任务.html?view=${w.view}`,title:w.label})}):te?(0,Q.jsx)(`section`,{className:`settings-warning-embed`,"aria-label":E.label,children:(0,Q.jsx)(`iframe`,{src:`${kz}预警.html?view=${E.view}`,title:E.label})}):j?(0,Q.jsx)(CB,{organizations:o,setOrganizations:s,users:c,setUsers:l}):M?(0,Q.jsx)(TB,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[O.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${O.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),A.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function AB({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(``),[d,f]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(pz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(pz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(pz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){u(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){u(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}u(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),u(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsx)(`input`,{type:`password`,value:a,onChange:e=>{o(e.target.value),u(``)},autoComplete:`current-password`,placeholder:`请输入密码`})]}),l?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:l}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>f(!0),children:`忘记密码`})]}),d?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(uz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function jB(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function MB(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`}}}),[i,a]=(0,Z.useState)(`工作台`),[o,s]=(0,Z.useState)(`task`),[c,l]=(0,Z.useState)(null),[u,d]=(0,Z.useState)(``),f=(0,Z.useRef)(null),[p,m]=(0,Z.useState)(Pz),[h,g]=(0,Z.useState)(`workbench`),[_,v]=(0,Z.useState)(()=>jz.map(e=>e.name)),[y,b]=(0,Z.useState)(`我的任务`),[x,S]=(0,Z.useState)(`待审批`),[C,w]=(0,Z.useState)(`动态`),[T,E]=(0,Z.useState)(Qz[0].title),[D,O]=(0,Z.useState)(`安全动态`),[k,A]=(0,Z.useState)(Fz),[j,M]=(0,Z.useState)(null);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(n))}catch{}},[n]);let N=e=>{d(`已选择 ${e}`),window.clearTimeout(f.current),f.current=window.setTimeout(()=>d(``),3e3)},P=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e),a(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},ee=e=>{if(e===Qz[0].title){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{E(e),m(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:dz}]),g(`双重预防机制`),a(`应用`)});return}let t=e===`应用中心`?`双重预防机制`:e,n=jz.find(e=>e.name===t);if(!n){N(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===t)?e:[...e,{id:t,label:t,icon:n.icon}]),g(t),a(`应用`)})},F=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:fz}]),g(`messages`),a(`工作台`)})},I=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(null),b(e),m(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:xz}]),g(`tasks`),a(`任务`)})},te=(e=`待审批`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{S(e),m(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:oz}]),g(`processes`),a(`流程`)})},ne=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),g(`dashboard`),a(`看板`)})},re=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),m(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:dz}]),g(`safety-dynamics`),a(`动态`)})},ie=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:bz}]),g(`warnings`),a(`预警`)})},ae=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:xz}]),g(`todos`),a(`工作台`)})},oe=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{O(e),m(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),g(`settings`),a(`设置`)})},se=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:wz}]),g(`personal-center`),a(``)})},L=e=>A(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),R=()=>A(e=>e.map(e=>({...e,read:!0}))),z=e=>{let t=p.findIndex(t=>t.id===e),n=p.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(m(n),h===e){let e=n[Math.max(0,t-1)]??Pz[0];g(e.id),a(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ce=jz.find(e=>e.name===h);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(jB,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(Bz,{active:i,brandLogo:n.logo,onOpenSettings:oe,onChange:e=>{if(e===`工作台`){P(`workbench`);return}if(e===`应用`){ee(`应用中心`);return}if(e===`任务`){I();return}if(e===`流程`){te();return}if(e===`动态`){re();return}if(e===`预警`){ie();return}if(e===`看板`){ne();return}a(e),N(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(Vz,{tabs:p,activeTab:h,onSelect:P,onClose:z,onOpenMessages:F,onOpenPersonal:se,onLogout:()=>t(!1)}),(0,Q.jsx)(`main`,{children:h===`messages`?(0,Q.jsx)(Uz,{messages:k,onMarkRead:L,onMarkAllRead:R,onReturn:()=>P(`workbench`)}):h===`todos`?(0,Q.jsx)(fB,{onOpenTasks:I,onOpenProcesses:te,onOpenSafety:re}):h===`tasks`?(0,Q.jsx)(cB,{initialTab:y},y):h===`processes`?(0,Q.jsx)(Gz,{initialFilter:x,onAction:N},x):h===`safety-dynamics`?(0,Q.jsx)(sB,{initialTab:C,onAction:N},C):h===`warnings`?(0,Q.jsx)(lB,{}):h===`dashboard`?(0,Q.jsx)(oB,{}):h===`settings`?(0,Q.jsx)(kB,{initialSelected:D,onAction:N,branding:n,onBrandingChange:r},D):h===`personal-center`?(0,Q.jsx)(EB,{onAction:N}):ce?.name===`双重预防机制`?(0,Q.jsx)($z,{initialFormTitle:T,onAction:N,onSwitchApplication:ee},T):ce?(0,Q.jsx)(eB,{app:ce,onReturn:()=>P(`workbench`),onAction:N,onSwitchApplication:ee}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{children:`智慧应急安全管理平台欢迎您，张宇`})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:ae,children:[`待办总览 `,(0,Q.jsx)(uz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:Az.map(e=>(0,Q.jsx)(Kz,{item:e,active:o===e.id,onSelect:()=>s(e.id),onOpen:e=>{e===`message`&&F(),e===`task`&&I(),e===`approval`&&te(),e===`warning`&&ie()}},e.id))})]}),(0,Q.jsx)(Jz,{onOpen:ee}),(0,Q.jsx)(qz,{onOpen:ee,favoriteApps:_,onCustomize:v})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(nB,{onAction:l,onOpenTask:()=>I(`发布任务`),onOpenProcess:()=>te(`发起流程`),onOpenDynamics:()=>re(`发动态`)}),(0,Q.jsx)(tB,{onOpen:N,onOpenAll:re})]})]})]})})]}),u?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":u,children:[(0,Q.jsx)(pz,{}),u]}):null,(0,Q.jsx)(rB,{title:c,onClose:()=>l(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(jB,{}),(0,Q.jsx)(AB,{branding:n,onLogin:()=>t(!0)})]})}(0,Tz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(MB,{}));
+`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},L=t=>{let n=t.target.files?.[0];if(!n||!I.length)return;let i=o||I[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123`,organizationId:i,department:SB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),ee(`已导入 ${t.length} 位用户`)):ee(`未识别到可导入的用户数据`),l(null)},a.readAsText(n,`utf-8`),t.target.value=``},R=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),z=e=>{r(t=>t.filter(t=>t.id!==e)),ee(`已删除用户`)},ce=e=>d({type:`status`,user:e}),le=e=>d({type:`delete`,user:e}),ue=e=>d({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===`organization`,className:i===`organization`?`active`:``,onClick:()=>a(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===`users`,className:i===`users`?`active`:``,onClick:()=>a(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),i===`organization`?(0,Q.jsx)(bB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[I.length,` 个组织`]})]}),e.length?(0,Q.jsx)(xB,{nodes:e,selectedId:o,onSelect:s}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:te?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:M.name,onChange:e=>N(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:M.account,onChange:e=>N(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:M.phone,onChange:e=>N(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:M.status,onChange:e=>N(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>ee(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>N({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`user-directory-actions`,children:[(0,Q.jsxs)(`button`,{className:`user-import`,onClick:()=>l(`import`),disabled:!I.length,children:[(0,Q.jsx)(QR,{}),`导入用户`]}),(0,Q.jsxs)(`button`,{className:`user-add`,onClick:re,disabled:!I.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})]}),I.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),ne.length?ne.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>ce(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ie(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(wz,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:c===`create`?(0,Q.jsxs)(`form`,{onSubmit:oe,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:f?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>l(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||k(``)},children:[(0,Q.jsxs)(`label`,{className:A.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:m,maxLength:10,onChange:e=>{h(e.target.value),ae(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),A.name?(0,Q.jsx)(`em`,{children:A.name}):null]}),(0,Q.jsxs)(`label`,{className:A.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:v,maxLength:11,inputMode:`numeric`,onChange:e=>{y(e.target.value.replace(/\D/g,``).slice(0,11)),ae(`phone`)},placeholder:`例如：13800000000`}),A.phone?(0,Q.jsx)(`em`,{children:A.phone}):null]}),(0,Q.jsxs)(`label`,{className:A.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:g,onChange:e=>{_(e.target.value),ae(`account`)},placeholder:`例如：zhangyu`}),A.account?(0,Q.jsx)(`em`,{children:A.account}):null]}),(0,Q.jsxs)(`label`,{className:A.password?`field-error`:``,children:[`默认密码`,(0,Q.jsx)(`input`,{type:`password`,value:b,onChange:e=>{x(e.target.value),ae(`password`)}}),A.password?(0,Q.jsx)(`em`,{children:A.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${A.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:S,onChange:e=>{C(e.target.value),ae(`organization`)},children:I.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:SB(e,t.id)},t.id))}),A.organization?(0,Q.jsx)(`em`,{children:A.organization}):null]}),(0,Q.jsx)(CB,{label:`岗位`,options:Pz,value:w,onChange:T,activeMenu:O,setActiveMenu:k}),(0,Q.jsx)(CB,{label:`角色`,options:Nz,value:E,onChange:D,activeMenu:O,setActiveMenu:k})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>l(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:te?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:F,type:`file`,accept:`.csv,text/csv`,onChange:L})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:se,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>l(null),children:`取消`})})]})})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>d(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:u.type===`cancel-create`?`确定取消${f?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:u.type===`delete`?`确定删除用户“${u.user.name}”吗？删除后无法恢复。`:u.type===`reset-password`?`确定将用户“${u.user.name}”的密码重置为默认密码 abc123 吗？`:`确定${u.user.status===`启用`?`停用`:`启用`}用户“${u.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{u.type===`cancel-create`?(l(null),k(``)):u.type===`status`?(R(u.user.id),ee(`已${u.user.status===`启用`?`停用`:`启用`}用户：${u.user.name}`)):u.type===`reset-password`?(r(e=>e.map(e=>e.id===u.user.id?{...e,password:`abc123`}:e)),ee(`已将 ${u.user.name} 的密码重置为 abc123`)):z(u.user.id),d(null)},children:`确定`})]})]})}):null,P?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[P,(0,Q.jsx)(`button`,{onClick:()=>ee(``),children:`×`})]}):null]})}function TB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function EB({onAction:e}){let[t,n]=(0,Z.useState)([{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}]),r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`},{name:`岗位隐患排查`}]},{name:`安全管理`,children:[{name:`安全检查`},{name:`作业许可`},{name:`安全培训`}]},{name:`设备管理`,children:[{name:`设备点检`},{name:`设备台账`},{name:`维修计划`}]},{name:`火工品管理`,children:[{name:`库存管理`},{name:`领用登记`}]},{name:`生产管理`,children:[{name:`生产日报`},{name:`生产计划`}]},{name:`机电管理`,children:[{name:`机电巡检`},{name:`供电管理`}]},{name:`消防管理`,children:[{name:`消防检查`},{name:`消防设施`}]},{name:`应急管理`,children:[{name:`应急预案`},{name:`应急演练`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`},{name:`待审批`},{name:`已审批`},{name:`抄送给我`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:[{name:`安全风险总览`},{name:`设备健康度`},{name:`生产进度跟踪`}]},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务配置`},{name:`流程配置`},{name:`预警配置`},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`岗位管理`},{name:`字典管理`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={工作台:[`查看`],岗位隐患排查:[`查看`,`在线填报`,`提交`,`导出`],风险分级管控:[`查看`,`新增`,`编辑`,`删除`,`导出`],隐患排查治理:[`查看`,`新增`,`编辑`,`删除`,`导出`],安全检查:[`查看`,`新增`,`编辑`,`删除`,`导出`],作业许可:[`查看`,`新增`,`审批`,`编辑`,`删除`],安全培训:[`查看`,`新增`,`编辑`,`删除`,`导出`],设备点检:[`查看`,`新增`,`编辑`,`删除`,`导出`],设备台账:[`查看`,`新增`,`编辑`,`删除`,`导出`],维修计划:[`查看`,`新增`,`编辑`,`删除`,`导出`],库存管理:[`查看`,`新增`,`编辑`,`删除`,`导出`],领用登记:[`查看`,`新增`,`审核`,`编辑`,`删除`],生产日报:[`查看`,`新增`,`编辑`,`删除`,`导出`],生产计划:[`查看`,`新增`,`编辑`,`删除`,`导出`],机电巡检:[`查看`,`新增`,`编辑`,`删除`,`导出`],供电管理:[`查看`,`新增`,`编辑`,`删除`,`导出`],消防检查:[`查看`,`新增`,`编辑`,`删除`,`导出`],消防设施:[`查看`,`新增`,`编辑`,`删除`,`导出`],应急预案:[`查看`,`新增`,`编辑`,`删除`,`导出`],应急演练:[`查看`,`新增`,`编辑`,`删除`,`导出`],发布任务:[`查看`,`发布`,`编辑`,`删除`],我的任务:[`查看`,`执行任务`,`提交反馈`],任务总台账:[`查看`,`导出`],人员明细:[`查看`,`导出`],发起流程:[`查看`,`发起流程`],待审批:[`查看`,`审批`],已审批:[`查看`,`导出`],抄送给我:[`查看`],我发起的:[`查看`,`撤回`,`催办`],动态列表:[`查看`,`删除`],发动态:[`查看`,`发布`],预警分级看板:[`查看`,`导出`],预警任务:[`查看`,`处置`,`关闭`,`导出`],预警信息表统计:[`查看`,`导出`],预警统计:[`查看`,`导出`],安全风险总览:[`查看`,`导出`],设备健康度:[`查看`,`导出`],生产进度跟踪:[`查看`,`导出`],角色权限:[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`],组织用户:[`查看`,`新增`,`编辑`,`删除`,`重置密码`],岗位管理:[`查看`,`新增`,`编辑`,`删除`],字典管理:[`查看`,`新增`,`编辑`,`删除`]},o=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:o(e.children,n)};let i=a[e.name]??[`查看`,`新增`,`编辑`,`删除`];return{id:`page:${r}`,name:e.name,type:`page`,children:i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`}))}}),s=o(r),c=e=>e.children?.length?e.children.flatMap(c):[e.id],l=s.flatMap(c),u=()=>{let e=t=>t.flatMap(t=>t.type===`menu`?[t.id,...e(t.children??[])]:[]);return new Set(e(s))},d=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[f,p]=(0,Z.useState)(null),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(`启用`),[v,y]=(0,Z.useState)(new Set(l.slice(0,18))),[b,x]=(0,Z.useState)(`menu`),[S,C]=(0,Z.useState)(u),[w,T]=(0,Z.useState)(null),[E,D]=(0,Z.useState)(null),[O,k]=(0,Z.useState)(d),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(`group`),[P,ee]=(0,Z.useState)([`u-zhang`]),F=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],I=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],te=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],ne=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],re=()=>{h(``),_(`启用`),y(new Set(l.slice(0,40))),k(d()),x(`menu`),C(u()),p({mode:`create`})},ie=e=>{h(e.name),_(e.status),y(new Set(l.slice(0,40))),k(d()),x(`menu`),C(u()),p({mode:`edit`,role:e})},ae=t=>{t.preventDefault();let r=m.trim();r&&(f.mode===`edit`?n(e=>e.map(e=>e.id===f.role.id?{...e,name:r,status:g}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:g,createdAt:`2026-08-12 10:30`}]),p(null),e(f.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},oe=e=>y(t=>{let n=new Set(t),r=c(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),se=e=>C(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),L=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=L(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return(a[e.name]??[`查看`,`新增`,`编辑`,`删除`]).map(e=>`button:${r}:${e}`).some(e=>v.has(e))?[e]:[]}),R=L(r),z=i(R).length,ce=e=>k(t=>({...t,...Object.fromEntries(i(R).map(t=>[t,e]))})),le=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:``,children:[(0,Q.jsx)(TB,{node:e,selectedIds:v,getLeafIds:c,onToggle:oe}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${S.has(e.id)?`expanded`:``}`,"aria-label":`${S.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>se(e.id),children:(0,Q.jsx)(hz,{})}):null]}),e.children&&S.has(e.id)?(0,Q.jsx)(le,{nodes:e.children}):null]},`${e.id}-${t}`))}),ue=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:M===e.id?`active`:``,onClick:()=>N(e.id),children:e.name}),e.children?(0,Q.jsx)(ue,{nodes:e.children}):null]},e.id))}),de=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:de(n.children??[],t)),null),fe=e=>e.children?.length?e.children.flatMap(fe):[e.id],pe=de(F,M),B=I.filter(e=>e.organization===M),V=B.map(e=>e.id),me=V.some(e=>P.includes(e)),he=V.length>0&&V.every(e=>P.includes(e)),ge=E?.dataPermissionOrganizationIds??[],_e=ne.filter(e=>ge.includes(e.organization)),ve=I.filter(e=>P.includes(e.id)),ye=e=>ee(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),be=()=>ee(e=>[...new Set([...e,...V])]),H=()=>ee(e=>e.filter(e=>!V.includes(e))),U=e=>{j(e),N(`group`),ee([`u-zhang`])},W=e=>{let t=fe(e);D(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=ne.filter(e=>i.includes(e.organization)).map(e=>e.id),o=ne.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},xe=e=>D(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Se=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:fe(e).some(e=>ge.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:fe(e).every(e=>ge.includes(e)),ref:t=>{if(!t)return;let n=fe(e),r=n.filter(e=>ge.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>W(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Se,{nodes:e.children}):null]},e.id))}),G=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:S.has(r)?`expanded`:``,"aria-label":`${S.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>se(r),children:(0,Q.jsx)(hz,{})})]}),S.has(r)?(0,Q.jsx)(`ul`,{children:G(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:O[e.name]??`全部`,onChange:t=>k(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`本部门及以下`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:re,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ie(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>T(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>U(e),children:`分配用户`})]})]},e.id))]})]}),f?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>p(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:ae,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:f.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>p(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:m,onChange:e=>h(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:g,onChange:e=>_(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":b===`menu`,className:b===`menu`?`active`:``,onClick:()=>x(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":b===`data`,className:b===`data`?`active`:``,onClick:()=>x(`data`),children:`数据权限`})]}),b===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单、页面与操作按钮选择可访问范围`})]}),(0,Q.jsx)(le,{nodes:s})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`本部门及以下`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:G(R)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>p(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,E?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>D(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>D(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:E.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Se,{nodes:te})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!_e.length&&_e.every(e=>E.dataAuthorizedUserIds.includes(e.id)),onChange:()=>D(e=>{let t=_e.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:_e.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:E.dataAuthorizedUserIds.includes(e.id),onChange:()=>xe(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[z,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:G(R)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>D(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${E.name}的数据权限`),D(null)},children:`保存权限`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(ue,{nodes:F})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:pe?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[B.length,` 人`]})]}),B.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:be,disabled:he,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:H,disabled:!me,children:`全不选`})]}):null]}),B.length?B.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:P.includes(e.id),onChange:()=>ye(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[ve.length,` 人`]})]}),ve.length?ve.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ye(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已为${A.name}分配 ${ve.length} 位用户`),j(null)},children:`确认分配`})]})]})}):null,w?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>T(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>T(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除角色“`,w.name,`”吗？已分配该角色的用户将不再保留该角色权限。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>T(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==w.id)),e(`已删除角色：${w.name}`),T(null)},children:`确认删除`})]})]})}):null]})}function DB({onAction:e}){let[t,n]=(0,Z.useState)(!1),[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(!1),[s,c]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[l,u]=(0,Z.useState)({current:``,next:``,confirm:``}),[d,f]=(0,Z.useState)(``),p=()=>{n(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:s.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部 · 安全管理员`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>o(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>t?p():n(!0),children:t?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>i(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:t?(0,Q.jsx)(`input`,{value:s.name,onChange:e=>c(t=>({...t,name:e.target.value}))}):s.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:t?(0,Q.jsx)(`input`,{value:s.phone,onChange:e=>c(t=>({...t,phone:e.target.value}))}):s.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:t?(0,Q.jsx)(`input`,{value:s.email,onChange:e=>c(t=>({...t,email:e.target.value}))}):s.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:`安全管理员`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!l.current||!l.next||!l.confirm){f(`请完整填写密码信息`);return}if(l.next!==l.confirm){f(`两次输入的新密码不一致`);return}if(l.current!==`123456`){f(`旧密码输入错误，请重新输入`);return}i(!1),u({current:``,next:``,confirm:``}),f(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:l.current,onChange:e=>u(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:l.next,onChange:e=>u(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:l.confirm,onChange:e=>u(t=>({...t,confirm:e.target.value}))})]}),d?(0,Q.jsx)(`p`,{className:`password-error`,children:d}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,a?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>o(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>o(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`退出后将结束当前会话，确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>o(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{o(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function OB({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),y=s.filter(e=>e.name.toLowerCase().includes(p.trim().toLowerCase())),b=Math.max(1,Math.ceil(y.length/_)),x=Math.min(h,b),S=y.slice((x-1)*_,x*_),C=(e=null)=>{o(e?{code:e.code,name:e.name,remark:e.remark??``}:{code:``,name:``,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),i({type:`editor`,dictionary:e})},w=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim();if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},T=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},E=()=>{g(1),f(null),c(e=>e.some(e=>e.isDraft)?e:[{id:`data-${Date.now()}`,code:``,name:``,updater:``,updatedAt:``,isDraft:!0},...e])},D=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},O=e=>{c(t=>t.map(t=>t.id===e&&t.code.trim()&&t.name.trim()?{...t,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t))},k=e=>{f({id:e.id,code:e.code,name:e.name})},A=()=>{!d?.code.trim()||!d.name.trim()||(c(e=>e.map(e=>e.id===d.id?{...e,code:d.code.trim(),name:d.name.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),f(null))},j=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},M=e=>{c(t=>t.filter(t=>!e.includes(t.id))),u(t=>t.filter(t=>!e.includes(t))),f(t=>t&&e.includes(t.id)?null:t)};return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>C(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>C(e),children:(0,Q.jsx)(sz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(Sz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:w,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:T,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:E,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>M(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!y.filter(e=>!e.isDraft).length&&l.length===y.filter(e=>!e.isDraft).length,onChange:()=>{let e=y.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),S.map(e=>{let t=d?.id===e.id;return(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``}`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>j(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?D(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?D(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>O(e.id),children:(0,Q.jsx)(pz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>M([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:A,children:(0,Q.jsx)(pz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>k(e),children:(0,Q.jsx)(sz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>M([e.id]),children:(0,Q.jsx)(Sz,{})})]})]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,y.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:x===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[x,` / `,b]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:x===b,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除字典“`,r.dictionary.name,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})]})}):null]})}function kB({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(!1),l=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){o(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){o(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),o(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},u=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},d=e=>{t(t=>({...t,systemIcon:e.id})),c(!1),n(`已选择系统图标：${e.label}`)};return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>u(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>l(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>u(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>l(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(kz,{name:e.systemIcon})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(!0),children:`选择图标`})})]})]}),a?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:a}):null,s?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>c(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>c(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`请选择图标`}),(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:Oz.map(t=>(0,Q.jsx)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>d(t),children:(0,Q.jsx)(`span`,{children:(0,Q.jsx)(kz,{name:t.id})})},t.id))})]})}):null]})}function AB({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r}){let[i,a]=(0,Z.useState)(t),[o,s]=(0,Z.useState)([]),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)(!1),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),b=[{label:`工作表单`,module:`form`}],x=[{label:`流程中心`,module:`flow`}],S=b.find(e=>e.label===i);x.find(e=>e.label===i);let C=(i===`工作表`?{label:`工作表`,module:`form`}:i===`流程`?{label:`流程`,module:`flow`}:null)??(i===`应用中心`?{label:`应用中心`,module:`app`}:null),w=i===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===i),T=[{label:`预警信息表`,view:`warning-info-table`},{label:`预警规则设置`,view:`warning-rule`}],E=T.find(e=>e.label===i),D=[`组织用户`,`角色权限`,`字典管理`,`企业设置`],O=mB.find(e=>e.label===i)??S??w??E??mB[0],k=O.icon??QR,A={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[i]??[],j=i===`组织用户`,M=i===`角色权限`,N=i===`安全动态`,P=i===`字典管理`,ee=i===`企业设置`,F=!!C;S?.module;let I=!!w,te=!!E,ne=D.includes(i),re=e=>{let t=e===`worksheet`?!u:e===`process`?!f:e===`task`?!m:e===`warning`?!g:!v;d(e===`worksheet`&&t),p(e===`process`&&t),h(e===`task`&&t),_(e===`warning`&&t),y(e===`system`&&t),t&&(e===`worksheet`&&a(`工作表单`),e===`process`&&a(`流程中心`),e===`task`&&a(`任务模版`),e===`warning`&&a(`预警信息表`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:mB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`].includes(e)?(0,Q.jsxs)(`button`,{className:i===e?`active`:``,onClick:()=>a(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`预警`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${i===`预警`||te?`active`:``}`,onClick:()=>re(`warning`),"aria-expanded":g,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(hz,{className:g?`expanded`:``})]}),g?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:T.map(e=>(0,Q.jsx)(`button`,{className:i===e.label?`active`:``,onClick:()=>a(e.label),children:e.label},e.label))}):null]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ne?`active`:``}`,onClick:()=>re(`system`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(hz,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:D.map(e=>(0,Q.jsx)(`button`,{className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:i===e?`active`:``,onClick:()=>a(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(hz,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!j&&!M&&!ee&&!N&&!P&&!F&&!I&&!te?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(k,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:O.title}),(0,Q.jsx)(`p`,{children:O.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${O.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,N?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(`iframe`,{src:`${Az}index.html?view=feedno`,title:`动态圈管理`})}):ee?(0,Q.jsx)(kB,{branding:n,onBrandingChange:r,onAction:e}):P?(0,Q.jsx)(OB,{onAction:e}):F?(0,Q.jsx)(dB,{module:C.module,view:C.view}):I?(0,Q.jsx)(`section`,{className:`settings-task-embed`,"aria-label":w.label,children:(0,Q.jsx)(`iframe`,{src:`${Az}任务.html?view=${w.view}`,title:w.label})}):te?(0,Q.jsx)(`section`,{className:`settings-warning-embed`,"aria-label":E.label,children:(0,Q.jsx)(`iframe`,{src:`${Az}预警.html?view=${E.view}`,title:E.label})}):j?(0,Q.jsx)(wB,{organizations:o,setOrganizations:s,users:c,setUsers:l}):M?(0,Q.jsx)(EB,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[O.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${O.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),A.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(pz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function jB({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(``),[d,f]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(pz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(pz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(pz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){u(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){u(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}u(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),u(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsx)(`input`,{type:`password`,value:a,onChange:e=>{o(e.target.value),u(``)},autoComplete:`current-password`,placeholder:`请输入密码`})]}),l?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:l}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>f(!0),children:`忘记密码`})]}),d?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(uz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function MB(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function NB(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`}}}),[i,a]=(0,Z.useState)(`工作台`),[o,s]=(0,Z.useState)(`task`),[c,l]=(0,Z.useState)(null),[u,d]=(0,Z.useState)(``),f=(0,Z.useRef)(null),[p,m]=(0,Z.useState)(Fz),[h,g]=(0,Z.useState)(`workbench`),[_,v]=(0,Z.useState)(()=>Mz.map(e=>e.name)),[y,b]=(0,Z.useState)(`我的任务`),[x,S]=(0,Z.useState)(`待审批`),[C,w]=(0,Z.useState)(`动态`),[T,E]=(0,Z.useState)($z[0].title),[D,O]=(0,Z.useState)(`安全动态`),[k,A]=(0,Z.useState)(Iz),[j,M]=(0,Z.useState)(null);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(n))}catch{}},[n]);let N=e=>{d(`已选择 ${e}`),window.clearTimeout(f.current),f.current=window.setTimeout(()=>d(``),3e3)},P=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e),a(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},ee=e=>{if(e===$z[0].title){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{E(e),m(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:dz}]),g(`双重预防机制`),a(`应用`)});return}let t=e===`应用中心`?`双重预防机制`:e,n=Mz.find(e=>e.name===t);if(!n){N(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===t)?e:[...e,{id:t,label:t,icon:n.icon}]),g(t),a(`应用`)})},F=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:fz}]),g(`messages`),a(`工作台`)})},I=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(null),b(e),m(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:xz}]),g(`tasks`),a(`任务`)})},te=(e=`待审批`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{S(e),m(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:oz}]),g(`processes`),a(`流程`)})},ne=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),g(`dashboard`),a(`看板`)})},re=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),m(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:dz}]),g(`safety-dynamics`),a(`动态`)})},ie=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:bz}]),g(`warnings`),a(`预警`)})},ae=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:xz}]),g(`todos`),a(`工作台`)})},oe=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{O(e),m(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),g(`settings`),a(`设置`)})},se=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{m(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:wz}]),g(`personal-center`),a(``)})},L=e=>A(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),R=()=>A(e=>e.map(e=>({...e,read:!0}))),z=e=>{let t=p.findIndex(t=>t.id===e),n=p.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(m(n),h===e){let e=n[Math.max(0,t-1)]??Fz[0];g(e.id),a(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ce=Mz.find(e=>e.name===h);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(MB,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(Vz,{active:i,brandLogo:n.logo,onOpenSettings:oe,onChange:e=>{if(e===`工作台`){P(`workbench`);return}if(e===`应用`){ee(`应用中心`);return}if(e===`任务`){I();return}if(e===`流程`){te();return}if(e===`动态`){re();return}if(e===`预警`){ie();return}if(e===`看板`){ne();return}a(e),N(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(Hz,{tabs:p,activeTab:h,onSelect:P,onClose:z,onOpenMessages:F,onOpenPersonal:se,onLogout:()=>t(!1)}),(0,Q.jsx)(`main`,{children:h===`messages`?(0,Q.jsx)(Wz,{messages:k,onMarkRead:L,onMarkAllRead:R,onReturn:()=>P(`workbench`)}):h===`todos`?(0,Q.jsx)(pB,{onOpenTasks:I,onOpenProcesses:te,onOpenSafety:re}):h===`tasks`?(0,Q.jsx)(lB,{initialTab:y},y):h===`processes`?(0,Q.jsx)(Kz,{initialFilter:x,onAction:N},x):h===`safety-dynamics`?(0,Q.jsx)(cB,{initialTab:C,onAction:N},C):h===`warnings`?(0,Q.jsx)(uB,{}):h===`dashboard`?(0,Q.jsx)(sB,{}):h===`settings`?(0,Q.jsx)(AB,{initialSelected:D,onAction:N,branding:n,onBrandingChange:r},D):h===`personal-center`?(0,Q.jsx)(DB,{onAction:N}):ce?.name===`双重预防机制`?(0,Q.jsx)(eB,{initialFormTitle:T,onAction:N,onSwitchApplication:ee},T):ce?(0,Q.jsx)(tB,{app:ce,onReturn:()=>P(`workbench`),onAction:N,onSwitchApplication:ee}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{children:`智慧应急安全管理平台欢迎您，张宇`})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:ae,children:[`待办总览 `,(0,Q.jsx)(uz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:jz.map(e=>(0,Q.jsx)(qz,{item:e,active:o===e.id,onSelect:()=>s(e.id),onOpen:e=>{e===`message`&&F(),e===`task`&&I(),e===`approval`&&te(),e===`warning`&&ie()}},e.id))})]}),(0,Q.jsx)(Yz,{onOpen:ee}),(0,Q.jsx)(Jz,{onOpen:ee,favoriteApps:_,onCustomize:v})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(rB,{onAction:l,onOpenTask:()=>I(`发布任务`),onOpenProcess:()=>te(`发起流程`),onOpenDynamics:()=>re(`发动态`)}),(0,Q.jsx)(nB,{onOpen:N,onOpenAll:re})]})]})]})})]}),u?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":u,children:[(0,Q.jsx)(pz,{}),u]}):null,(0,Q.jsx)(iB,{title:c,onClose:()=>l(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(MB,{}),(0,Q.jsx)(jB,{branding:n,onLogin:()=>t(!0)})]})}(0,Tz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(NB,{}));
