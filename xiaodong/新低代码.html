@@ -2484,6 +2484,8 @@
   const ROLES=['产品','研发','HR','财务','部门总监','CEO'];
   const DEPTS=['产品部','研发部','财务部','人事部','市场部'];
   const POSTS=['产品经理','产品运营','研发工程师','测试工程师','HRBP','财务专员','部门总监','前端开发','后端开发'];
+  // 由宿主系统的“系统字典 · 流程分类”提供，未传入时保留演示默认值。
+  const FLOW_CATEGORY_DICTIONARY = (window.__hostLowCodeRequest && window.__hostLowCodeRequest.dictionaries && window.__hostLowCodeRequest.dictionaries.flowCategory) || ['人事管理','财务管理','安全管理','生产管理','设备管理','综合管理'];
   // 组织架构（演示用；真实环境为千人级，按部门/小组逐层展开 + 姓名搜索筛选）
   const ORG=[
     { name:'产品部', children:[
@@ -2507,7 +2509,7 @@
       { name:'渠道组', members:['沈刚(市场)'] }
     ]}
   ];
-  let orgExpand={}, pickerSel=new Set(), pickerQuery='', pickerField='members';
+  let orgExpand={}, pickerSel=new Set(), pickerQuery='', pickerField='members', pickerSingle=false;
   let deptExpand={}, pickerDeptSel=new Set(), pickerDeptField='';
   let pickerPostSel=new Set(), pickerPostField='';
   function orgInitExpand(){ ORG.forEach(d=>orgExpand[d.name]=true); }
@@ -2515,7 +2517,7 @@
   function FORM_FIELDS(id){ const f=FORM(id); return f?f.fields:[]; }
 
   function nodeStart(){ return { id:'n_'+Date.now()+'_s', type:'start', name:'发起人', initiatorScope:'all', initiatorDepts:[], initiatorRoles:[], initiatorMembers:[], fieldPerm:{}, x:0, y:0 }; }
-  function nodeApproval(){ return { id:'n_'+Date.now()+'_a', type:'approval', name:'审批', approverType:'initiator', members:[], roles:[], depts:[], posts:[], fieldRef:'', level:1, mode:'or', fieldPerm:{}, timeoutEnabled:false, timeoutHours:24, timeoutUnit:'hour', timeoutAction:'notify', opinion:'required', allowReject:true, rejectTo:'initiator', allowTransfer:true, allowAddSign:true, allowSubmit:true, x:0, y:0 }; }
+  function nodeApproval(){ return { id:'n_'+Date.now()+'_a', type:'approval', name:'审批', approverType:'initiator', members:[], roles:[], depts:[], posts:[], fieldRef:'', level:1, mode:'or', fieldPerm:{}, timeoutEnabled:false, timeoutHours:24, timeoutUnit:'hour', timeoutAction:'notify', opinion:'required', allowReject:true, rejectTo:'initiator', allowTransfer:true, allowAddSign:true, allowSubmit:true, missingOwnerAction:'stop', missingOwnerMember:'', x:0, y:0 }; }
   function nodeCC(){ return { id:'n_'+Date.now()+'_c', type:'cc', name:'抄送', ccType:'member', members:[], roles:[], depts:[], posts:[], content:'link', notify:['site'], fieldPerm:{}, x:0, y:0 }; }
   function nodeEnd(){ return { id:'n_'+Date.now()+'_e', type:'end', name:'流程结束', endAction:'archive', webhook:'', webhookMethod:'POST', webhookHeaders:'', x:0, y:0 }; }
 
@@ -2525,10 +2527,10 @@
   }
 
   let FLOWS = [
-    { id:'p1', name:'请假审批流程', formId:'f1', status:'已发布', version:2, hasUnpublished:false, publishedAt:'2026-07-20', publishedBy:'产品同学',
+    { id:'p1', name:'请假审批流程', formId:'f1', status:'已发布', version:2, hasUnpublished:false, publishedAt:'2026-07-20', publishedBy:'产品同学', category:'人事管理',
       desc:'员工请假线上审批', icon:'fa-plane', allowRecall:true, recallHours:24, recallUnit:'hour', viewScope:'all', viewRoles:[], creator:'产品同学', createdAt:'2026-07-18', printable:true, codeRule:'QJ-{yyyyMMdd}-{0000}',
       versions:[ (()=>{ const n1=nodeStart(), n2=nodeApproval(), n3=nodeEnd(); n2.name='直属主管审批'; n2.approverType='initiator_manager'; n2.level=1;
-        return { v:1, publishedAt:'2026-07-10', publishedBy:'产品同学', name:'请假审批流程', desc:'员工请假线上审批', icon:'fa-plane', formId:'f1', allowRecall:true, recallHours:24, recallUnit:'hour', nodes:[n1,n2,n3], edges:[
+        return { v:1, publishedAt:'2026-07-10', publishedBy:'产品同学', name:'请假审批流程', desc:'员工请假线上审批', icon:'fa-plane', formId:'f1', category:'人事管理', allowRecall:true, recallHours:24, recallUnit:'hour', nodes:[n1,n2,n3], edges:[
           { id:'e_p1v1a', from:n1.id, to:n2.id, mode:'always', logic:'and', conditions:[] },
           { id:'e_p1v1b', from:n2.id, to:n3.id, mode:'always', logic:'and', conditions:[] } ] }; })(),
         (()=>{ const n1=nodeStart(); n1.initiatorScope='all';
@@ -2536,7 +2538,7 @@
           const n3=nodeApproval(); n3.name='部门总监审批'; n3.approverType='role'; n3.roles=['部门总监']; n3.mode='or';
           const n4=nodeCC(); n4.name='通知HR'; n4.ccType='member'; n4.members=['王五(HR)'];
           const n5=nodeEnd();
-          return { v:2, publishedAt:'2026-07-20', publishedBy:'产品同学', name:'请假审批流程', desc:'员工请假线上审批', icon:'fa-plane', formId:'f1', allowRecall:true, recallHours:24, recallUnit:'hour', nodes:[n1,n2,n3,n4,n5], edges:[
+          return { v:2, publishedAt:'2026-07-20', publishedBy:'产品同学', name:'请假审批流程', desc:'员工请假线上审批', icon:'fa-plane', formId:'f1', category:'人事管理', allowRecall:true, recallHours:24, recallUnit:'hour', nodes:[n1,n2,n3,n4,n5], edges:[
             { id:'e_p1v2a', from:n1.id, to:n2.id, mode:'always', logic:'and', conditions:[] },
             { id:'e_p1v2b', from:n2.id, to:n3.id, mode:'always', logic:'and', conditions:[] },
             { id:'e_p1v2c', from:n3.id, to:n4.id, mode:'always', logic:'and', conditions:[] },
@@ -2547,7 +2549,7 @@
               (()=>{const n=nodeApproval();n.name='部门总监审批';n.approverType='role';n.roles=['部门总监'];n.mode='or';return n;})(),
               (()=>{const n=nodeCC();n.name='通知HR';n.ccType='member';n.members=['王五(HR)'];return n;})(),
               nodeEnd() ] },
-    { id:'p2', name:'报销审批流程', formId:'f2', status:'草稿', version:0, hasUnpublished:false,
+    { id:'p2', name:'报销审批流程', formId:'f2', status:'草稿', version:0, hasUnpublished:false, category:'财务管理',
       desc:'费用报销审批', icon:'fa-money-bill-wave', allowRecall:true, recallHours:48, recallUnit:'hour', viewScope:'role', viewRoles:['财务'], creator:'财务同学', createdAt:'2026-07-25', printable:true, codeRule:'BX-{yyyyMMdd}-{0000}', versions:[],
       nodes:[ (()=>{const n=nodeStart();return n;})(),
               (()=>{const n=nodeApproval();n.name='财务审批';n.approverType='role';n.roles=['财务'];return n;})(),
@@ -2699,7 +2701,7 @@
   function filterFormPickList(){ renderFormPickList(g('formSearchInput').value); }
   function confirmNewFlow(){
     const id='p_'+Date.now();
-    const flow={ id, name:'未命名流程', formId:pickedFormId, status:'草稿', version:0, hasUnpublished:false,
+    const flow={ id, name:'未命名流程', formId:pickedFormId, status:'草稿', version:0, hasUnpublished:false, category:'',
       desc:'', icon:FORM(pickedFormId).icon, allowRecall:true, recallHours:24, recallUnit:'hour', viewScope:'all', viewRoles:[], printable:true, codeRule:'', versions:[],
       nodes:[ nodeStart(), nodeEnd() ] };
     flow.edges=[{ id:'e_'+Date.now(), from:flow.nodes[0].id, to:flow.nodes[1].id, mode:'always', logic:'and', conditions:[] }];
@@ -3015,31 +3017,48 @@
       <div class="flex flex-wrap gap-1.5 mt-2">${chips}</div>`;
     return row(label, ctrl, '按部门/小组逐层展开组织架构勾选成员；顶部可搜索姓名快速筛选。支持千人规模，不逐一罗列。');
   }
+  function missingOwnerBlock(n){
+    const action=n.missingOwnerAction||'stop';
+    const member=n.missingOwnerMember||'';
+    const picker=`<button type="button" onclick="openMemberPicker('missingOwnerMember',true)" class="w-full flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md text-sm ${member?'text-gray-700':'text-gray-400'} hover:border-[#165DFF] hover:text-[#165DFF] btn-click">
+      <i class="fas fa-user text-[#165DFF]"></i><span class="flex-1 text-left">${member?esc(member):'请选择指定人'}</span><i class="fas fa-chevron-down text-xs text-gray-400"></i>
+    </button>`;
+    return `<div class="cfg-sec mt-4"><div class="cfg-sec-h">找不到节点负责人时</div>
+      ${row('处理方式', select('n_missing_owner',[['stop','停止流转并提示'],['transfer','转给指定成员'],['auto_submit','自动流转']], action), '当按节点规则未匹配到负责人时，系统按该策略处理当前流程实例。')}
+      ${action==='transfer'?row('请选择指定人', picker, '点击从组织架构中选择 1 名指定成员。'):''}
+    </div>`;
+  }
   function removePickedMember(field, m){
     const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;
     n[field] = (n[field]||[]).filter(x=>x!==m); renderConfig(); renderCanvas();
   }
-  function openMemberPicker(field){
+  function openMemberPicker(field, single){
     pickerField=field;
+    pickerSingle=!!single;
     const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId); if(!n) return;
-    pickerSel = new Set(n[field]||[]);
+    const current=n[field];
+    pickerSel = new Set(pickerSingle ? (current?[current]:[]) : (current||[]));
     pickerQuery=''; const se=g('pickerSearch'); if(se) se.value='';
     renderMemberPicker(); openModal('memberPickerModal');
   }
   function confirmMemberPicker(){
     const f=currentFlow(); const n=f.nodes.find(x=>x.id===selectedNodeId);
-    if(n){ n[pickerField] = [...pickerSel]; }
+    if(n){ n[pickerField] = pickerSingle ? ([...pickerSel][0]||'') : [...pickerSel]; }
     closeModal('memberPickerModal'); renderConfig(); renderCanvas();
   }
   function orgAllMembers(dept){ let r=[...(dept.members||[])]; (dept.children||[]).forEach(c=>r=r.concat(orgAllMembers(c))); return r; }
   function findDept(path){ const parts=path.split('/'); let list=ORG, cur=null; for(const p of parts){ cur=list.find(d=>d.name===p); if(!cur) return null; list=cur.children||[]; } return cur; }
   function toggleOrg(path){ orgExpand[path]=!orgExpand[path]; renderMemberPicker(); }
-  function toggleOrgDept(path, checked){ const d=findDept(path); if(!d) return; orgAllMembers(d).forEach(m=>{ if(checked) pickerSel.add(m); else pickerSel.delete(m); }); renderMemberPicker(); }
-  function togglePickerMember(m){ if(pickerSel.has(m)) pickerSel.delete(m); else pickerSel.add(m); renderMemberPicker(); }
+  function toggleOrgDept(path, checked){ if(pickerSingle) return; const d=findDept(path); if(!d) return; orgAllMembers(d).forEach(m=>{ if(checked) pickerSel.add(m); else pickerSel.delete(m); }); renderMemberPicker(); }
+  function togglePickerMember(m){ if(pickerSingle) pickerSel=new Set([m]); else if(pickerSel.has(m)) pickerSel.delete(m); else pickerSel.add(m); renderMemberPicker(); }
+  function clearPickedMember(){ pickerSel.clear(); renderMemberPicker(); }
   function memberRowHTML(m, depth){
     const indent = 8 + depth*16;
+    const selector = pickerSingle
+      ? `<input type="radio" name="pickerMember" class="org-mb" ${pickerSel.has(m)?'checked':''} onchange="togglePickerMember('${esc(m)}')">`
+      : `<input type="checkbox" class="org-mb" ${pickerSel.has(m)?'checked':''} onchange="togglePickerMember('${esc(m)}')">`;
     return `<div class="flex items-center gap-2 py-1 px-2 rounded hover:bg-gray-50" style="margin-left:${indent}px">
-      <input type="checkbox" class="org-mb" ${pickerSel.has(m)?'checked':''} onchange="togglePickerMember('${esc(m)}')">
+      ${selector}
       <span class="text-sm text-gray-700"><i class="fas fa-user text-gray-300 mr-1.5"></i>${esc(m)}</span>
     </div>`;
   }
@@ -3053,7 +3072,7 @@
     let h = `<div class="org-dept">
       <div class="org-dept-head flex items-center gap-2 py-1.5 px-2 rounded hover:bg-gray-50">
         ${caret}
-        <input type="checkbox" class="org-cb" ${allSel?'checked':''} ${someSel?'data-indet="1"':''} onchange="toggleOrgDept('${path}',this.checked)">
+        ${pickerSingle?'<span class="w-4 inline-block"></span>':`<input type="checkbox" class="org-cb" ${allSel?'checked':''} ${someSel?'data-indet="1"':''} onchange="toggleOrgDept('${path}',this.checked)">`}
         <span class="text-sm font-medium text-gray-700 flex-1 cursor-pointer" onclick="toggleOrg('${path}')">${dept.name} <span class="text-[11px] text-gray-400">(${all.length})</span></span>
       </div>`;
     if(expanded && hasChildren){ h += `<div class="org-dept-children">${inner}</div>`; }
@@ -3084,7 +3103,7 @@
     const selArr=[...pickerSel];
     g('pickerSelCount').textContent = selArr.length;
     g('pickerSelChips').innerHTML = selArr.length
-      ? selArr.map(m=>`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">${esc(m)}<button onclick="togglePickerMember('${esc(m)}')" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>`).join('')
+      ? selArr.map(m=>`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">${esc(m)}<button onclick="${pickerSingle?'clearPickedMember()':`togglePickerMember('${esc(m)}')`}" class="hover:text-red-600 btn-click"><i class="fas fa-times"></i></button></span>`).join('')
       : '<span class="text-[11px] text-gray-400">尚未选择</span>';
   }
 
@@ -3262,6 +3281,12 @@
       <i class="fas ${f.icon||'fa-file-signature'} text-[#165DFF]"></i><span>${cur?cur[1]:'选择图标'}</span><span class="ml-auto text-gray-400"><i class="fas fa-chevron-right"></i></span>
     </button>`, '流程在列表与发起入口处的标识，点击弹出图标库选择。');
   }
+  function flowCategoryRow(f){
+    const options=['<option value="">请选择流程分类</option>'].concat(FLOW_CATEGORY_DICTIONARY.map(function(category){
+      return '<option value="'+category+'" '+(f.category===category?'selected':'')+'>'+category+'</option>';
+    })).join('');
+    return row('流程分类', `<select id="fc_category" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">${options}</select>`, '分类来自系统字典，用于流程列表筛选与统一归类。');
+  }
   function openIconPicker(){ renderIconPicker(); openModal('iconPickerModal'); }
   function renderIconPicker(){
     g('iconPickerGrid').innerHTML = ICON_LIST.map(x=>{
@@ -3282,6 +3307,7 @@
       ${row('关联表单', `<div class="flex items-center gap-2 px-2.5 py-1.5 border border-gray-200 rounded-md bg-gray-50 text-sm text-gray-600"><i class="fas ${FORM(f.formId).icon} text-[#165DFF]"></i>${FORM(f.formId).name}<span class="text-[11px] text-gray-400 ml-auto">1:1 绑定</span></div>`, '流程与表单一对一绑定，一经发布锁定；表单字段用于审批人、字段权限与流转条件。')}
       ${row('流程描述', `<textarea id="fc_desc" rows="2" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm resize-none" placeholder="如：员工请假线上审批">${f.desc||''}</textarea>`, '对流程用途的补充说明，便于协作者理解。')}
       ${iconRow(f)}
+      ${flowCategoryRow(f)}
       <div class="cfg-sec">
         <div class="cfg-sec-h">提交设置</div>
         ${row('允许撤回', sw('fc_recall', f.allowRecall), '发起人在流程结束前可撤回单据，常用于填错重提。')}
@@ -3348,7 +3374,7 @@
         ${n.mode==='seq'?seqBlock(n):''}
         ${info('审批人 + 审批方式共同决定「谁审、怎么过」。方式仅在多人/多级时生效。')}`;
     }
-    g('configBody').innerHTML = head + tabs + body;
+    g('configBody').innerHTML = head + tabs + body + missingOwnerBlock(n);
     bindCommon(n); bindApproval(n);
   }
   function fieldPermMatrix(f,n){
@@ -3433,6 +3459,7 @@
     const set=(id,key,parse)=>{ const el=g(id); if(el) el.onchange=e=>{ f[key]=parse?parse(e.target.value):e.target.value; renderConfig(); }; };
     const setNum=(id,key)=>{ const el=g(id); if(el) el.oninput=e=>{ f[key]=Number(e.target.value); }; };
     set('fc_name','name');
+    set('fc_category','category');
     const d=g('fc_desc'); if(d) d.oninput=e=>f.desc=e.target.value;
     const fc=g('fc_recall'); if(fc) fc.onchange=e=>{ f.allowRecall=e.target.checked; renderConfig(); };
     setNum('fc_recallh','recallHours');
@@ -3454,6 +3481,7 @@
     const rjt=g('n_rejectto'); if(rjt) rjt.onchange=e=>{ n.rejectTo=e.target.value; };
     const tr=g('n_transfer'); if(tr) tr.onchange=e=>{ n.allowTransfer=e.target.checked; };
     const as=g('n_addsign'); if(as) as.onchange=e=>{ n.allowAddSign=e.target.checked; };
+    const moa=g('n_missing_owner'); if(moa) moa.onchange=e=>{ n.missingOwnerAction=e.target.value; renderConfig(); };
   }
 
   /* ---- 依次审批顺序 ---- */
@@ -3604,6 +3632,7 @@
   }
   function snapshotOf(f){
     return { v:f.version, publishedAt:f.publishedAt, publishedBy:f.publishedBy, name:f.name, desc:f.desc, icon:f.icon, formId:f.formId,
+      category:f.category,
       allowRecall:f.allowRecall, recallHours:f.recallHours, recallUnit:f.recallUnit,
       nodes:JSON.parse(JSON.stringify(f.nodes)), edges:JSON.parse(JSON.stringify(f.edges)) };
   }
@@ -3672,7 +3701,7 @@
     const f=currentFlow(); if(!f) return;
     const s=(f.versions||[]).find(x=>x.v===v); if(!s) return;
     if(!confirm('确认恢复历史版本 v'+v+'？\n将把当前流程内容替换为该版本内容并重新发布，版本号保持 v'+v+'，不生成新版本。')) return;
-    f.name=s.name; f.desc=s.desc; f.icon=s.icon; f.formId=s.formId;
+    f.name=s.name; f.desc=s.desc; f.icon=s.icon; f.formId=s.formId; f.category=s.category||'';
     f.allowRecall=s.allowRecall; f.recallHours=s.recallHours; f.recallUnit=s.recallUnit;
     f.nodes=JSON.parse(JSON.stringify(s.nodes)); f.edges=JSON.parse(JSON.stringify(s.edges));
     f.version=v; f.status='已发布'; f.hasUnpublished=false;

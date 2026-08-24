@@ -296,6 +296,36 @@ textarea.form-input { resize: vertical; }
 .kv .k { color: var(--text-muted); min-width: 84px; flex: none; }
 .kv .v { color: var(--text-primary); font-weight: 500; }
 
+/* 台账详情弹窗 */
+.modal.task-detail-modal { width: min(820px, 94vw); max-height: calc(100vh - 48px); }
+.task-detail-modal .modal-head { min-height: 54px; padding: 0 28px; }
+.task-detail-modal .modal-head h4 { font-size: 16px; color: #1d2b3d; }
+.task-detail-modal .modal-head .x { width: 34px; height: 34px; border-radius: 50%; background: #f5f7fb; font-size: 19px; }
+.task-detail-modal .modal-body { padding: 14px 30px 18px; background: #fbfcfe; }
+.task-detail-modal .modal-foot { min-height: 55px; padding: 10px 28px; background: #fff; }
+.task-detail-card { margin-bottom: 14px; overflow: hidden; border: 1px solid #e5ebf1; border-radius: 12px; background: #fff; }
+.task-detail-card:last-child { margin-bottom: 0; }
+.task-detail-card h5 { min-height: 52px; margin: 0 24px; display: flex; align-items: center; gap: 9px; border-bottom: 1px solid #e8edf2; color: #1d2b3d; font-size: 14px; font-weight: 700; }
+.task-detail-card h5 i { color: #f3a125; font-size: 17px; }
+.task-detail-grid { padding: 13px 25px 18px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); column-gap: 58px; row-gap: 0; }
+.task-detail-grid > div { min-height: 44px; display: flex; align-items: center; gap: 8px; color: #3d4b5d; font-size: 13px; }
+.task-detail-grid strong { color: #1d2b3d; font-size: 13px; white-space: nowrap; }
+.task-detail-grid .status { padding: 4px 9px; font-size: 11px; }
+.task-rule-items { min-height: 72px; padding: 17px 25px; display: flex; align-items: center; flex-wrap: wrap; gap: 24px; color: #68788d; font-size: 13px; }
+.task-rule-items span { display: inline-flex; align-items: center; gap: 6px; white-space: nowrap; }
+.task-rule-items i { color: #f3a125; font-size: 15px; }
+.task-rule-items span:nth-child(2) i { color: #22b9b4; }
+.task-rule-items span:nth-child(3) i { color: #f3a125; }
+.task-rule-items b { color: #526174; font-weight: 500; }
+.task-detail-logs { margin: 0 25px; padding: 17px 0 4px 20px; border-left: 1px solid #dfe7ee; }
+.task-detail-log { position: relative; min-height: 40px; padding-bottom: 13px; display: flex; align-items: flex-start; gap: 12px; color: #8391a5; font-size: 12px; line-height: 19px; }
+.task-detail-log::before { content: ''; position: absolute; top: 4px; left: -26px; width: 12px; height: 12px; border: 3px solid #fff; border-radius: 50%; background: #f4a42a; box-sizing: content-box; }
+.task-detail-log.execution::before { background: #2ebcb7; }
+.task-detail-log b { min-width: 64px; color: #f09b1d; font-size: 13px; }
+.task-detail-log.execution b { color: #26aea9; }
+.task-detail-log time { color: #8491a4; white-space: nowrap; }
+.task-detail-log span { color: #8491a4; }
+
 /* ===== Toast ===== */
 .toast-wrap { position: fixed; top: 20px; left: 50%; transform: translateX(-50%); z-index: 400; display: flex; flex-direction: column; gap: 10px; align-items: center; }
 .toast { background: var(--shaft-deep); color: #fff; padding: 11px 18px; border-radius: 10px; font-size: 12.5px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,.28); display: flex; align-items: center; gap: 9px; animation: toastIn .25s ease; border-left: 3px solid var(--amber); }
@@ -873,11 +903,12 @@ function bindHoverLink(selector, noteId){
 function currentView(){ var a=document.querySelector('.view.active'); return a? a.id.replace('view-','') : 'template'; }
 
 /* ---------- 弹窗通用 ---------- */
-function showModal(title, bodyHtml, footHtml, large){
+function showModal(title, bodyHtml, footHtml, large, variant){
     modalTitle.innerHTML = title;
     modalBody.innerHTML = bodyHtml;
     modalFoot.innerHTML = footHtml;
     modalEl.classList.toggle('lg', !!large);
+    modalEl.classList.toggle('task-detail-modal', variant === 'task-detail');
     overlay.classList.add('show');
 }
 function closeModal(){ overlay.classList.remove('show'); }
@@ -1137,8 +1168,65 @@ function openEnd(row){
     );
     document.getElementById('endSubmit').addEventListener('click', function(){ setStatus(row,'status-done','已完成'); toast('任务已强制结束','ok'); closeModal(); });
 }
+/* 台账详情统一采用完整任务信息、规则与日志的三段式视图。 */
+function openLedgerDetail(row){
+    var isLedger = !!row.closest('#ledgerBody');
+    var cells = row.children;
+    var taskId = row.dataset.tid || cells[0].textContent.trim();
+    var taskName = cells[1].textContent.trim();
+    var executor = cells[isLedger ? 3 : 2].textContent.trim();
+    var plan = cells[isLedger ? 4 : 5].textContent.trim();
+    var formType = isLedger ? cells[5].textContent.trim() : '巡检记录表';
+    var statusCell = cells[isLedger ? 6 : 4];
+    var statusNode = statusCell ? statusCell.querySelector('.status') : null;
+    var statusMarkup = statusNode ? statusNode.outerHTML : '<span class="status status-pending">未执行</span>';
+    var initiator = isLedger ? cells[2].textContent.trim() : '张伟明';
+    var completed = statusNode && statusNode.textContent.trim() === '已完成';
+    var statusText = statusNode ? statusNode.textContent.trim() : '未执行';
+    var planDate = plan.indexOf('~') > -1 ? plan.split('~')[0] : plan;
+    var fullPlanDate = planDate.indexOf('2026-') === 0 ? planDate : '2026-' + planDate;
+    var logs =
+        '<div class="task-detail-logs">' +
+            '<div class="task-detail-log"><b>任务发起</b><time>2026-06-25</time><span>' + initiator + ' 创建并发布任务</span></div>' +
+            (completed
+                ? '<div class="task-detail-log execution"><b>任务执行</b><time>2026-06-28 15:00</time><span>' + executor + ' 提交执行记录，任务已闭环</span></div>'
+                : '<div class="task-detail-log execution"><b>任务执行</b><time>' + fullPlanDate + ' 08:00</time><span>' + executor + ' 已接收任务，等待提交执行记录</span></div>') +
+        '</div>';
+    var body =
+        '<section class="task-detail-card">' +
+            '<h5><i class="bi bi-info-circle"></i>任务基本信息</h5>' +
+            '<div class="task-detail-grid">' +
+                '<div><strong>任务ID：</strong><span class="mono">' + taskId + '</span></div>' +
+                '<div><strong>任务名称：</strong><span>' + taskName + '</span></div>' +
+                '<div><strong>发起人：</strong><span>' + initiator + '</span></div>' +
+                '<div><strong>执行人：</strong><span>' + executor + '</span></div>' +
+                '<div><strong>计划开始：</strong><span>' + fullPlanDate + ' 08:00</span></div>' +
+                '<div><strong>计划结束：</strong><span>' + fullPlanDate + ' 17:00</span></div>' +
+                '<div><strong>执行地点：</strong><span>东区作业现场</span></div>' +
+                '<div><strong>执行工种：</strong><span>安全巡检</span></div>' +
+                '<div><strong>表单类型：</strong><span>' + formType + '</span></div>' +
+                '<div><strong>当前状态：</strong>' + statusMarkup + '</div>' +
+            '</div>' +
+        '</section>' +
+        '<section class="task-detail-card">' +
+            '<h5><i class="bi bi-gear"></i>任务规则配置</h5>' +
+            '<div class="task-rule-items">' +
+                '<span><i class="bi bi-bell"></i><b>任务提醒：</b>已开启</span>' +
+                '<span><i class="bi bi-arrow-repeat"></i><b>重复发布：</b>不重复</span>' +
+                '<span><i class="bi bi-shield-check"></i><b>任务审批：</b>未开启</span>' +
+            '</div>' +
+        '</section>' +
+        '<section class="task-detail-card">' +
+            '<h5><i class="bi bi-clock-history"></i>任务日志</h5>' + logs +
+        '</section>';
+    showModal('任务详情', body, '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>', true, 'task-detail');
+}
 /* 详情（按表头动态读取，适配各视图不同列） */
 function openDetail(row){
+    if(row.closest('#ledgerBody, #personBody')){
+        openLedgerDetail(row);
+        return;
+    }
     var table = row.closest('table');
     var ths = table ? table.querySelectorAll('thead th') : [];
     var tds = row.children;

@@ -56,6 +56,15 @@ import "./login.css";
 import "./enterprise-settings.css";
 import lowCodePrototypeHtml from "../xiaodong/新低代码.html?raw";
 
+const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
+  "人事管理",
+  "财务管理",
+  "安全管理",
+  "生产管理",
+  "设备管理",
+  "综合管理",
+];
+
 use([
   BarChart,
   LineChart,
@@ -493,6 +502,28 @@ function ApplicationTabs({
   onLogout,
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
+  const profileMenuRef = useRef(null);
+
+  useEffect(() => {
+    if (!profileOpen) return undefined;
+
+    const closeProfileMenu = (event) => {
+      if (!profileMenuRef.current?.contains(event.target)) {
+        setProfileOpen(false);
+      }
+    };
+    const closeOnEscape = (event) => {
+      if (event.key === "Escape") setProfileOpen(false);
+    };
+
+    document.addEventListener("pointerdown", closeProfileMenu);
+    document.addEventListener("keydown", closeOnEscape);
+    return () => {
+      document.removeEventListener("pointerdown", closeProfileMenu);
+      document.removeEventListener("keydown", closeOnEscape);
+    };
+  }, [profileOpen]);
+
   return (
     <header className="application-tabs" aria-label="应用页签">
       <div className="tabs-scroll" role="tablist" aria-label="已打开应用">
@@ -533,44 +564,45 @@ function ApplicationTabs({
           <span>消息</span>
           <i className="message-dot" aria-hidden="true" />
         </button>
-        <button
-          className="top-profile-avatar"
-          aria-label="用户菜单"
-          aria-expanded={profileOpen}
-          onClick={() => setProfileOpen((current) => !current)}
-        >
-          张
-        </button>
-        {profileOpen ? (
-          <div className="top-profile-menu" role="menu" aria-label="用户菜单">
-            <button
-              role="menuitem"
-              onClick={() => {
-                setProfileOpen(false);
-                onOpenPersonal();
-              }}
-            >
-              个人中心
-            </button>
-            <button
-              className="top-profile-logout"
-              role="menuitem"
-              onClick={() => {
-                setProfileOpen(false);
-                onLogout();
-              }}
-            >
-              退出登录
-            </button>
-          </div>
-        ) : null}
+        <div className="top-profile-control" ref={profileMenuRef}>
+          <button
+            className="top-profile-avatar"
+            aria-label="用户菜单"
+            aria-expanded={profileOpen}
+            onClick={() => setProfileOpen((current) => !current)}
+          >
+            张
+          </button>
+          {profileOpen ? (
+            <div className="top-profile-menu" role="menu" aria-label="用户菜单">
+              <button
+                role="menuitem"
+                onClick={() => {
+                  setProfileOpen(false);
+                  onOpenPersonal();
+                }}
+              >
+                个人中心
+              </button>
+              <button
+                className="top-profile-logout"
+                role="menuitem"
+                onClick={() => {
+                  setProfileOpen(false);
+                  onLogout();
+                }}
+              >
+                退出登录
+              </button>
+            </div>
+          ) : null}
+        </div>
       </div>
     </header>
   );
 }
 
 function MessageAttachmentDialog({ message, onClose }) {
-  const [submitted, setSubmitted] = useState(false);
   if (!message) return null;
   const kind = message.formKind;
   const labels = {
@@ -604,36 +636,24 @@ function MessageAttachmentDialog({ message, onClose }) {
           <h2 id="message-form-title">{message.title}</h2>
           <p>{message.content}</p>
         </header>
-        {submitted ? (
-          <div className="message-submit-success">
-            <CheckmarkCircle24Regular />
-            <h3>已完成处理</h3>
-            <p>当前为演示状态，提交内容已记录在本次会话中。</p>
-            <button onClick={onClose}>关闭</button>
-          </div>
-        ) : kind === "task" ? (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setSubmitted(true);
-            }}
-          >
+        {kind === "task" ? (
+          <form>
             <div className="message-form-grid">
               <label>
                 任务名称
-                <input defaultValue={message.title} required />
+                <input defaultValue={message.title} readOnly />
               </label>
               <label>
                 执行人
-                <input defaultValue="张宇" required />
+                <input defaultValue="张宇" readOnly />
               </label>
               <label>
                 截止时间
-                <input type="date" defaultValue="2026-07-30" required />
+                <input type="date" defaultValue="2026-07-30" readOnly />
               </label>
               <label>
                 任务状态
-                <select defaultValue="已完成">
+                <select defaultValue="已完成" disabled>
                   <option>待处理</option>
                   <option>处理中</option>
                   <option>已完成</option>
@@ -645,24 +665,17 @@ function MessageAttachmentDialog({ message, onClose }) {
               <textarea
                 rows="3"
                 defaultValue="现场点检已完成，等待复核确认。"
+                readOnly
               />
             </label>
             <footer>
-              <button type="button" onClick={onClose}>
-                取消
-              </button>
-              <button className="message-form-primary" type="submit">
-                确认任务
+              <button className="message-form-primary" type="button" onClick={onClose}>
+                关闭
               </button>
             </footer>
           </form>
         ) : kind === "approval" ? (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setSubmitted(true);
-            }}
-          >
+          <form>
             <div className="approval-summary">
               <span>
                 申请人<b>机电管理部</b>
@@ -676,24 +689,20 @@ function MessageAttachmentDialog({ message, onClose }) {
             </div>
             <label className="message-form-wide">
               审批意见
-              <textarea rows="4" placeholder="请输入审批意见" required />
+              <textarea
+                rows="4"
+                defaultValue="该审批流待处理，详情请查看流程中心。"
+                readOnly
+              />
             </label>
             <footer>
-              <button type="button" onClick={onClose}>
-                退回
-              </button>
-              <button className="message-form-primary" type="submit">
-                同意并提交
+              <button className="message-form-primary" type="button" onClick={onClose}>
+                关闭
               </button>
             </footer>
           </form>
         ) : kind === "warning" ? (
-          <form
-            onSubmit={(event) => {
-              event.preventDefault();
-              setSubmitted(true);
-            }}
-          >
+          <form>
             <div className="warning-summary">
               <span>
                 <b>预警等级</b>
@@ -710,16 +719,13 @@ function MessageAttachmentDialog({ message, onClose }) {
               处置措施
               <textarea
                 rows="4"
-                placeholder="填写现场核查情况与处置措施"
-                required
+                defaultValue="现场预警信息待处置，详情请查看预警中心。"
+                readOnly
               />
             </label>
             <footer>
-              <button type="button" onClick={onClose}>
-                暂不处理
-              </button>
-              <button className="message-form-primary" type="submit">
-                确认处置
+              <button className="message-form-primary" type="button" onClick={onClose}>
+                关闭
               </button>
             </footer>
           </form>
@@ -3035,7 +3041,14 @@ function EmbeddedWarningsPage() {
 
 function EmbeddedLowCodePage({ module, view }) {
   const query = new URLSearchParams({ module, ...(view ? { view } : {}) });
-  const request = JSON.stringify({ module, view });
+  const request = JSON.stringify({
+    module,
+    view,
+    dictionaries: {
+      // The embedded flow editor reads this as the system "流程分类" dictionary.
+      flowCategory: FLOW_CATEGORY_DICTIONARY_OPTIONS,
+    },
+  });
   const srcDoc = lowCodePrototypeHtml.replace(
     "<head>",
     `<head><script>window.__hostLowCodeRequest = ${request};</script>`,
@@ -6246,6 +6259,22 @@ function DictionaryManagement({ onAction }) {
     },
     { id: "dict-4", code: "HAZARD_CATEGORY", name: "隐患类别", remark: "", references: 21, updater: "陈伟", updatedAt: "2026-08-13 14:18", data: [] },
     { id: "dict-5", code: "WORK_STATUS", name: "作业状态", remark: "", references: 9, updater: "张宇", updatedAt: "2026-08-12 09:36", data: [] },
+    {
+      id: "dict-6",
+      code: "FLOW_CATEGORY",
+      name: "流程分类",
+      remark: "用于流程中心的流程归类。",
+      references: 2,
+      updater: "张宇",
+      updatedAt: "2026-08-24 10:30",
+      data: FLOW_CATEGORY_DICTIONARY_OPTIONS.map((name, index) => ({
+        id: `flow-category-${index + 1}`,
+        code: String(index + 1).padStart(2, "0"),
+        name,
+        updater: "张宇",
+        updatedAt: "2026-08-24 10:30",
+      })),
+    },
   ]);
   const [dialog, setDialog] = useState(null);
   const [draft, setDraft] = useState({ code: "", name: "", remark: "" });
@@ -7802,7 +7831,13 @@ function App() {
                 <header className="workbench-welcome">
                   <div>
                     <h1>
-                      智慧应急安全管理平台欢迎您，张宇
+                      智慧应急安全管理平台欢迎您，
+                      <button
+                        className="workbench-user-link"
+                        onClick={openPersonalCenter}
+                      >
+                        张宇
+                      </button>
                     </h1>
                   </div>
                   <span>今日工作已更新</span>
