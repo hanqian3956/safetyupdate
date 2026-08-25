@@ -3023,7 +3023,7 @@
     const picker=`<button type="button" onclick="openMemberPicker('missingOwnerMember',true)" class="w-full flex items-center gap-2 px-3 py-2 border border-dashed border-gray-300 rounded-md text-sm ${member?'text-gray-700':'text-gray-400'} hover:border-[#165DFF] hover:text-[#165DFF] btn-click">
       <i class="fas fa-user text-[#165DFF]"></i><span class="flex-1 text-left">${member?esc(member):'请选择指定人'}</span><i class="fas fa-chevron-down text-xs text-gray-400"></i>
     </button>`;
-    return `<div class="cfg-sec mt-4"><div class="cfg-sec-h">找不到节点负责人时</div>
+    return `<div class="cfg-sec mt-4"><div class="cfg-sec-h">找不到审批人时</div>
       ${row('处理方式', select('n_missing_owner',[['stop','停止流转并提示'],['transfer','转给指定成员'],['auto_submit','自动流转']], action), '当按节点规则未匹配到负责人时，系统按该策略处理当前流程实例。')}
       ${action==='transfer'?row('请选择指定人', picker, '点击从组织架构中选择 1 名指定成员。'):''}
     </div>`;
@@ -3374,7 +3374,7 @@
         ${n.mode==='seq'?seqBlock(n):''}
         ${info('审批人 + 审批方式共同决定「谁审、怎么过」。方式仅在多人/多级时生效。')}`;
     }
-    g('configBody').innerHTML = head + tabs + body + missingOwnerBlock(n);
+    g('configBody').innerHTML = head + tabs + body + (cfgTab==='base' ? missingOwnerBlock(n) : '');
     bindCommon(n); bindApproval(n);
   }
   function fieldPermMatrix(f,n){

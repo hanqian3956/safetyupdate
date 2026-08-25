@@ -55,6 +55,7 @@ import "./user-management.css";
 import "./login.css";
 import "./enterprise-settings.css";
 import lowCodePrototypeHtml from "../xiaodong/新低代码.html?raw";
+import newTaskPrototypeHtml from "../xiaodong/新任务.html?raw";
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "人事管理",
@@ -2971,6 +2972,35 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
   );
 }
 
+function EmbeddedTaskFrame({ view, title, className }) {
+  const request = JSON.stringify({ view });
+  const srcDoc = newTaskPrototypeHtml
+    .replace(
+      "</head>",
+      `<style>
+        /* Navigation and context are provided by the host system. */
+        .sidebar, .topbar, .logic { display: none !important; }
+        .app, .stage { height: 100dvh !important; }
+        .content { padding: 16px 20px 32px !important; }
+        html, body { background: #f5f7fa !important; }
+      </style></head>`,
+    )
+    .replace(
+      "</body>",
+      `<script>
+        (function () {
+          var request = ${request};
+          var taskViews = ["view-template", "view-publish", "view-mytask", "view-ledger", "view-personnel"];
+          if (taskViews.indexOf(request.view) !== -1 && typeof window.switchView === "function") {
+            window.switchView(request.view);
+          }
+        })();
+      </script></body>`,
+    );
+
+  return <iframe key={view} className={className} srcDoc={srcDoc} title={title} />;
+}
+
 function EmbeddedTasksPage({ initialTab = "我的任务" }) {
   const taskTabs = [
     { label: "发布任务", view: "view-publish" },
@@ -2994,10 +3024,9 @@ function EmbeddedTasksPage({ initialTab = "我的任务" }) {
           </button>
         ))}
       </nav>
-      <iframe
-        key={activeTask.view}
+      <EmbeddedTaskFrame
+        view={activeTask.view}
         className="embedded-tasks-frame"
-        src={`${prototypeBase}任务.html?view=${activeTask.view}`}
         title={activeTask.label}
       />
     </section>
@@ -7105,8 +7134,8 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
             />
           ) : isTaskPageSetting ? (
             <section className="settings-task-embed" aria-label={taskPageMenu.label}>
-              <iframe
-                src={`${prototypeBase}任务.html?view=${taskPageMenu.view}`}
+              <EmbeddedTaskFrame
+                view={taskPageMenu.view}
                 title={taskPageMenu.label}
               />
             </section>
