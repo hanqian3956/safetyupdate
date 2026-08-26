@@ -27,6 +27,8 @@ import {
   Delete24Regular,
   DocumentText24Regular,
   DismissRegular,
+  Eye24Regular,
+  EyeOff24Regular,
   ErrorCircle24Regular,
   Edit24Regular,
   Fire24Regular,
@@ -65,6 +67,21 @@ const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "设备管理",
   "综合管理",
 ];
+
+const PROTOTYPE_ANNOTATIONS_STORAGE_KEY = "smart-emergency:prototype-annotations:v1";
+const LEGACY_PROTOTYPE_ANNOTATIONS_STORAGE_KEY = "prototype-annotations";
+
+function loadPrototypeAnnotations() {
+  try {
+    const saved = localStorage.getItem(PROTOTYPE_ANNOTATIONS_STORAGE_KEY)
+      ?? localStorage.getItem(LEGACY_PROTOTYPE_ANNOTATIONS_STORAGE_KEY)
+      ?? "[]";
+    const annotations = JSON.parse(saved);
+    return Array.isArray(annotations) ? annotations : [];
+  } catch {
+    return [];
+  }
+}
 
 use([
   BarChart,
@@ -501,6 +518,10 @@ function ApplicationTabs({
   onOpenMessages,
   onOpenPersonal,
   onLogout,
+  annotationVisible,
+  onToggleAnnotations,
+  annotationManaging,
+  onToggleAnnotationManager,
 }) {
   const [profileOpen, setProfileOpen] = useState(false);
   const profileMenuRef = useRef(null);
@@ -557,6 +578,24 @@ function ApplicationTabs({
       </div>
       <div className="topbar-actions">
         <button
+          type="button"
+          className={annotationVisible ? "prototype-annotation-toggle active" : "prototype-annotation-toggle"}
+          aria-pressed={annotationVisible}
+          onClick={onToggleAnnotations}
+        >
+          <Edit24Regular />
+          <span>标注</span>
+        </button>
+        <button
+          type="button"
+          className={annotationManaging ? "prototype-annotation-manager active" : "prototype-annotation-manager"}
+          aria-pressed={annotationManaging}
+          onClick={onToggleAnnotationManager}
+        >
+          <Edit24Regular />
+          <span>管理</span>
+        </button>
+        <button
           className="message-entry"
           aria-label="消息中心，有 4 条未读消息"
           onClick={onOpenMessages}
@@ -600,6 +639,231 @@ function ApplicationTabs({
         </div>
       </div>
     </header>
+  );
+}
+
+function PrototypeAnnotations({
+  visible,
+  managing,
+  pageId,
+  pageLabel,
+  annotations,
+  onCloseManager,
+  onAdd,
+  onUpdate,
+  onRemove,
+  onReposition,
+}) {
+  const [draft, setDraft] = useState("");
+  const [editingId, setEditingId] = useState("");
+  const [selectedId, setSelectedId] = useState("");
+  const [placing, setPlacing] = useState(false);
+  const [relocatingId, setRelocatingId] = useState("");
+  const [dragging, setDragging] = useState(null);
+  const suppressTagClickRef = useRef(false);
+  const pageAnnotations = annotations.filter((annotation) => annotation.pageId === pageId);
+  const selectedAnnotation = pageAnnotations.find((annotation) => annotation.id === selectedId);
+
+  useEffect(() => {
+    if (!dragging) return undefined;
+
+    const moveTag = (event) => {
+      const left = Math.min(
+        Math.max(12, Math.round(event.clientX - dragging.offsetX)),
+        window.innerWidth - 37,
+      );
+      const top = Math.min(
+        Math.max(64, Math.round(event.clientY - dragging.offsetY)),
+        window.innerHeight - 37,
+      );
+      if (Math.abs(left - dragging.startLeft) > 3 || Math.abs(top - dragging.startTop) > 3) {
+        suppressTagClickRef.current = true;
+      }
+      setDragging((current) => (current ? { ...current, left, top } : current));
+    };
+    const finishDrag = () => {
+      onReposition(dragging.id, { left: dragging.left, top: dragging.top });
+      setDragging(null);
+    };
+
+    window.addEventListener("mousemove", moveTag);
+    window.addEventListener("mouseup", finishDrag, { once: true });
+    return () => {
+      window.removeEventListener("mousemove", moveTag);
+      window.removeEventListener("mouseup", finishDrag);
+    };
+  }, [dragging, onReposition]);
+
+  const saveAnnotation = () => {
+    const content = draft.trim();
+    if (!content) return;
+    if (editingId) {
+      onUpdate(editingId, content);
+      setDraft("");
+      setEditingId("");
+      return;
+    }
+    setPlacing(true);
+  };
+  const cancelPlacement = () => {
+    setDraft("");
+    setEditingId("");
+    setRelocatingId("");
+    setPlacing(false);
+  };
+  const placeAnnotation = (event) => {
+    const position = { left: Math.round(event.clientX), top: Math.round(event.clientY) };
+    if (relocatingId) onReposition(relocatingId, position);
+    else onAdd({ pageId, pageLabel, content: draft.trim(), ...position });
+    cancelPlacement();
+  };
+
+  return (
+    <>
+      {visible
+        ? pageAnnotations.map((annotation, index) => (
+            <button
+              key={annotation.id}
+              type="button"
+              className="prototype-annotation-tag"
+              style={{
+                left: `${dragging?.id === annotation.id ? dragging.left : annotation.left ?? 980}px`,
+                top: `${dragging?.id === annotation.id ? dragging.top : annotation.top ?? 156 + index * 42}px`,
+              }}
+              aria-label={`查看备注 ${index + 1}`}
+              onMouseDown={(event) => {
+                event.preventDefault();
+                const left = annotation.left ?? 980;
+                const top = annotation.top ?? 156 + index * 42;
+                suppressTagClickRef.current = false;
+                setDragging({
+                  id: annotation.id,
+                  left,
+                  top,
+                  startLeft: left,
+                  startTop: top,
+                  offsetX: event.clientX - left,
+                  offsetY: event.clientY - top,
+                });
+              }}
+              onClick={() => {
+                if (suppressTagClickRef.current) {
+                  suppressTagClickRef.current = false;
+                  return;
+                }
+                setSelectedId(annotation.id);
+              }}
+            >
+              {index + 1}
+            </button>
+          ))
+        : null}
+      {visible && selectedAnnotation ? (
+        <section
+          className="prototype-annotation-popover"
+          style={{
+            left: `${Math.min((selectedAnnotation.left ?? 980) + 32, window.innerWidth - 286)}px`,
+            top: `${Math.min((selectedAnnotation.top ?? 156) + 30, window.innerHeight - 160)}px`,
+          }}
+          aria-label="备注内容"
+        >
+          <header>
+            <span>备注内容</span>
+            <button type="button" aria-label="关闭备注内容" onClick={() => setSelectedId("")}>
+              <DismissRegular />
+            </button>
+          </header>
+          <p>{selectedAnnotation.content}</p>
+        </section>
+      ) : null}
+      {placing ? (
+        <div className="prototype-annotation-placement-layer" onClick={placeAnnotation} role="presentation">
+          <span>{relocatingId ? "请点击页面任意位置重新放置标签" : "请点击页面任意位置放置备注标签"}</span>
+        </div>
+      ) : null}
+      {managing ? (
+        <aside className="prototype-annotation-panel" aria-label="原型标注管理">
+          <header>
+            <div>
+              <span>原型标注管理</span>
+              <b>{pageLabel}</b>
+            </div>
+            <button type="button" aria-label="关闭标注管理" onClick={onCloseManager}>
+              <DismissRegular />
+            </button>
+          </header>
+          <div className="prototype-annotation-editor">
+            <label htmlFor="prototype-annotation-content">{editingId ? "编辑备注" : "新增备注"}</label>
+            <textarea
+              id="prototype-annotation-content"
+              value={draft}
+              maxLength={240}
+              placeholder="例如：此处提交后需校验审批人是否存在，并记录操作日志。"
+              onChange={(event) => setDraft(event.target.value)}
+            />
+            <footer>
+              {editingId || placing ? (
+                <button type="button" className="prototype-annotation-cancel" onClick={cancelPlacement}>
+                  {placing ? "取消放置" : "取消编辑"}
+                </button>
+              ) : null}
+              <button type="button" className="prototype-annotation-save" onClick={saveAnnotation} disabled={!draft.trim()}>
+                {editingId ? "保存备注" : "点击页面放置标签"}
+              </button>
+            </footer>
+          </div>
+          <div className="prototype-annotation-list">
+            {pageAnnotations.length ? (
+              pageAnnotations.map((annotation, index) => (
+                <article key={annotation.id}>
+                  <span>{String(index + 1).padStart(2, "0")}</span>
+                  <div className="prototype-annotation-entry">
+                    <p>{annotation.content}</p>
+                    <div>
+                      <button
+                        type="button"
+                        aria-label="编辑备注"
+                        onClick={() => {
+                          setDraft(annotation.content);
+                          setEditingId(annotation.id);
+                          setPlacing(false);
+                        }}
+                      >
+                        编辑
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="重新放置备注"
+                        onClick={() => {
+                          setRelocatingId(annotation.id);
+                          setPlacing(true);
+                        }}
+                      >
+                        重新放置
+                      </button>
+                      <button
+                        type="button"
+                        aria-label="删除备注"
+                        onClick={() => {
+                          if (selectedId === annotation.id) setSelectedId("");
+                          onRemove(annotation.id);
+                        }}
+                      >
+                        删除
+                      </button>
+                    </div>
+                  </div>
+                </article>
+              ))
+            ) : (
+              <div className="prototype-annotation-empty">
+                当前页面还没有备注，输入内容后即可在页面任意位置放置。
+              </div>
+            )}
+          </div>
+        </aside>
+      ) : null}
+    </>
   );
 }
 
@@ -745,14 +1009,20 @@ function MessageAttachmentDialog({ message, onClose }) {
 
 function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
   const [source, setSource] = useState("全部");
-  const [type, setType] = useState("全部");
   const [status, setStatus] = useState("未读");
+  const [pageSize, setPageSize] = useState(10);
+  const [page, setPage] = useState(1);
   const [selectedMessage, setSelectedMessage] = useState(null);
   const filteredMessages = messages.filter(
     (message) =>
       (source === "全部" || message.source === source) &&
-      (type === "全部" || message.type === type) &&
       (status === "全部" || (status === "未读" ? !message.read : message.read)),
+  );
+  const pageCount = Math.max(1, Math.ceil(filteredMessages.length / pageSize));
+  const currentPage = Math.min(page, pageCount);
+  const pageMessages = filteredMessages.slice(
+    (currentPage - 1) * pageSize,
+    currentPage * pageSize,
   );
   const unreadCount = messages.filter((message) => !message.read).length;
   return (
@@ -783,7 +1053,10 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
           消息来源
           <select
             value={source}
-            onChange={(event) => setSource(event.target.value)}
+            onChange={(event) => {
+              setSource(event.target.value);
+              setPage(1);
+            }}
           >
             <option>全部</option>
             <option>任务</option>
@@ -793,24 +1066,13 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
           </select>
         </label>
         <label>
-          消息类型
-          <select
-            value={type}
-            onChange={(event) => setType(event.target.value)}
-          >
-            <option>全部</option>
-            <option>执行提醒</option>
-            <option>待你审批</option>
-            <option>超期提醒</option>
-            <option>任务分派</option>
-            <option>系统通知</option>
-          </select>
-        </label>
-        <label>
           消息状态
           <select
             value={status}
-            onChange={(event) => setStatus(event.target.value)}
+            onChange={(event) => {
+              setStatus(event.target.value);
+              setPage(1);
+            }}
           >
             <option>未读</option>
             <option>已读</option>
@@ -819,8 +1081,8 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
         </label>
       </div>
       <div className="message-list">
-        {filteredMessages.length ? (
-          filteredMessages.map((message) => {
+        {pageMessages.length ? (
+          pageMessages.map((message) => {
             const {
               id,
               source: messageSource,
@@ -875,6 +1137,41 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
           </div>
         )}
       </div>
+      <footer className="message-pagination">
+        <span>共 {filteredMessages.length} 条</span>
+        <label>
+          每页
+          <select
+            aria-label="每页消息条数"
+            value={pageSize}
+            onChange={(event) => {
+              setPageSize(Number(event.target.value));
+              setPage(1);
+            }}
+          >
+            <option value={10}>10 条</option>
+            <option value={20}>20 条</option>
+            <option value={50}>50 条</option>
+          </select>
+        </label>
+        <button
+          type="button"
+          aria-label="上一页"
+          disabled={currentPage === 1}
+          onClick={() => setPage((current) => Math.max(1, current - 1))}
+        >
+          上一页
+        </button>
+        <b>{currentPage} / {pageCount}</b>
+        <button
+          type="button"
+          aria-label="下一页"
+          disabled={currentPage === pageCount}
+          onClick={() => setPage((current) => Math.min(pageCount, current + 1))}
+        >
+          下一页
+        </button>
+      </footer>
       <MessageAttachmentDialog
         key={selectedMessage?.id}
         message={selectedMessage}
@@ -1364,7 +1661,6 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   const visibleTemplates = processTemplates.filter(
     (template) =>
       (processLibraryTab === "全部" ||
-        (processLibraryTab === "我的收藏" && template.favorite) ||
         (processLibraryTab === "最近使用" && template.recent)) &&
       (!processLibraryKeyword.trim() ||
         template.name.includes(processLibraryKeyword.trim())),
@@ -1437,7 +1733,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
         <section className="process-library" aria-label="流程库">
           <header>
             <div className="process-library-tabs" role="tablist" aria-label="流程库分类">
-              {["全部", "我的收藏", "最近使用"].map((tab) => (
+              {["全部", "最近使用"].map((tab) => (
                 <button
                   key={tab}
                   role="tab"
@@ -1948,6 +2244,7 @@ const preventionNavigation = [
 const preventionSubmenu = [
   "隐患排查任务发布",
   "岗位隐患排查清单",
+  "隐患排查审批流程",
   "隐患排查治理记录",
   "隐患排查工作表",
   "隐患整改通知单",
@@ -1977,20 +2274,77 @@ const preventionForms = [
   },
 ];
 
+const preventionApprovalFlows = [
+  {
+    title: "平巷凿岩作业隐患排查审批流程",
+    detail: "隐患排查审批",
+    icon: ApprovalsApp24Regular,
+    tone: "blue",
+    kind: "approval",
+  },
+  {
+    title: "掘进工作面隐患整改审批流程",
+    detail: "隐患排查审批",
+    icon: ApprovalsApp24Regular,
+    tone: "lime",
+    kind: "approval",
+  },
+];
+
+const initialInspectionRecords = [
+  {
+    id: "inspection-001",
+    reporter: "张宇",
+    date: "2026-07-29",
+    shift: "早班",
+    location: "西翼 3# 平巷",
+    equipment: "正常",
+    environment: "正常",
+    protection: "正常",
+    description: "现场检查正常，无需整改。",
+    status: "已提交",
+  },
+  {
+    id: "inspection-002",
+    reporter: "李明",
+    date: "2026-07-28",
+    shift: "中班",
+    location: "西翼 2# 平巷",
+    equipment: "正常",
+    environment: "发现问题",
+    protection: "正常",
+    description: "照明灯具亮度不足，已通知机电班处理。",
+    status: "已复核",
+  },
+];
+
 function DualPreventionPage({
   onAction,
   onSwitchApplication,
   initialFormTitle = preventionForms[0].title,
+  initialOpenForm = false,
 }) {
   const [selectedItem, setSelectedItem] = useState("岗位隐患排查清单");
-  const [activeForm, setActiveForm] = useState(false);
+  const [activeForm, setActiveForm] = useState(initialOpenForm);
   const [selectedForm, setSelectedForm] = useState(initialFormTitle);
   const [submitted, setSubmitted] = useState(false);
   const [inspectionTab, setInspectionTab] = useState("页面");
+  const [formSource, setFormSource] = useState("岗位隐患排查清单");
+  const [inspectionRecords, setInspectionRecords] = useState(initialInspectionRecords);
+  const [selectedRecordIds, setSelectedRecordIds] = useState([]);
+  const importInputRef = useRef(null);
   const selectedLabel = selectedItem;
-  const activeFormRecord = preventionForms.find((form) => form.title === selectedForm) ?? preventionForms[0];
-  const openForm = (form = preventionForms[0]) => {
+  const allPreventionForms = [...preventionForms, ...preventionApprovalFlows];
+  const activeFormRecord =
+    allPreventionForms.find((form) => form.title === selectedForm) ??
+    preventionForms[0];
+  const isApprovalFlow = activeFormRecord.kind === "approval";
+  const openForm = (
+    form = preventionForms[0],
+    source = "岗位隐患排查清单",
+  ) => {
     setSelectedForm(form.title);
+    setFormSource(source);
     setActiveForm(true);
     setSubmitted(false);
     setInspectionTab("页面");
@@ -1998,7 +2352,52 @@ function DualPreventionPage({
   const submitForm = (event) => {
     event.preventDefault();
     setSubmitted(true);
-    onAction(`${activeFormRecord.title}已提交`);
+    onAction(
+      `${activeFormRecord.title}已提交${
+        isApprovalFlow ? "，已进入审批流程" : ""
+      }`,
+    );
+  };
+  const toggleRecord = (recordId) => {
+    setSelectedRecordIds((current) =>
+      current.includes(recordId)
+        ? current.filter((id) => id !== recordId)
+        : [...current, recordId],
+    );
+  };
+  const removeRecords = (recordIds) => {
+    setInspectionRecords((current) => current.filter((record) => !recordIds.includes(record.id)));
+    setSelectedRecordIds((current) => current.filter((id) => !recordIds.includes(id)));
+  };
+  const exportRecords = () => {
+    const headers = ["填报人", "检查日期", "作业班次", "作业地点", "凿岩设备防护装置完好", "作业面通风与照明符合要求", "人员防护用品佩戴规范", "隐患描述与整改建议", "填报状态"];
+    const rows = inspectionRecords.map((record) => [record.reporter, record.date, record.shift, record.location, record.equipment, record.environment, record.protection, record.description, record.status]);
+    const csv = [headers, ...rows].map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(",")).join("\n");
+    const link = document.createElement("a");
+    link.href = URL.createObjectURL(new Blob([`\ufeff${csv}`], { type: "text/csv;charset=utf-8" }));
+    link.download = `${activeFormRecord.title}-历史数据.csv`;
+    link.click();
+    URL.revokeObjectURL(link.href);
+    onAction("历史填报数据已导出");
+  };
+  const importRecords = (event) => {
+    const file = event.target.files?.[0];
+    if (!file) return;
+    const importedRecord = {
+      id: `inspection-${Date.now()}`,
+      reporter: "导入用户",
+      date: "2026-07-30",
+      shift: "早班",
+      location: "西翼 1# 平巷",
+      equipment: "正常",
+      environment: "正常",
+      protection: "正常",
+      description: `已从 ${file.name} 导入填报记录。`,
+      status: "已导入",
+    };
+    setInspectionRecords((current) => [importedRecord, ...current]);
+    event.target.value = "";
+    onAction(`已导入 ${file.name}`);
   };
   return (
     <section
@@ -2091,7 +2490,7 @@ function DualPreventionPage({
                   setSubmitted(false);
                 }}
               >
-                岗位隐患排查清单
+                {formSource}
               </button>
               <ChevronRight24Regular />
               <strong id="prevention-page-title">在线填报</strong>
@@ -2111,9 +2510,13 @@ function DualPreventionPage({
             <form className="inspection-form" onSubmit={submitForm}>
               <header className="inspection-form-header">
                 <div>
-                  <p>岗位隐患排查</p>
+                  <p>{activeFormRecord.detail}</p>
                   <h1 id="inspection-form-title">{activeFormRecord.title}</h1>
-                  <span>请如实填写现场检查情况，带 * 的项目为必填项。</span>
+                  <span>
+                    {isApprovalFlow
+                      ? "请如实填写隐患情况，提交后将进入审批流程。"
+                      : "请如实填写现场检查情况，带 * 的项目为必填项。"}
+                  </span>
                 </div>
                 <button
                   type="button"
@@ -2233,10 +2636,16 @@ function DualPreventionPage({
               <footer className="form-actions">
                 {submitted ? (
                   <span className="submit-status">
-                    <CheckmarkCircle24Regular /> 已提交，等待负责人复核
+                    <CheckmarkCircle24Regular /> {isApprovalFlow
+                      ? "已提交，等待审批流程处理"
+                      : "已提交，等待负责人复核"}
                   </span>
                 ) : (
-                  <span>填写完成后可直接提交至隐患排查记录。</span>
+                  <span>
+                    {isApprovalFlow
+                      ? "填写完成后将提交至隐患排查审批流程。"
+                      : "填写完成后可直接提交至隐患排查记录。"}
+                  </span>
                 )}
                 <div>
                   <button
@@ -2250,7 +2659,7 @@ function DualPreventionPage({
                     取消
                   </button>
                   <button type="submit" className="form-primary">
-                    提交排查表
+                    {isApprovalFlow ? "提交审批流程" : "提交排查表"}
                   </button>
                 </div>
               </footer>
@@ -2262,18 +2671,77 @@ function DualPreventionPage({
                     <p>历史填报数据</p>
                     <h2>{activeFormRecord.title}</h2>
                   </div>
-                  <span>共 2 条记录</span>
+                  <span>共 {inspectionRecords.length} 条记录</span>
                 </header>
+                <div className="inspection-data-actions">
+                  <div>
+                    <button
+                      type="button"
+                      className="inspection-action-primary"
+                      onClick={() => {
+                        setInspectionTab("页面");
+                        setSubmitted(false);
+                        onAction("请填写新的隐患排查记录");
+                      }}
+                    >
+                      <Add24Regular />
+                      新增
+                    </button>
+                    <button type="button" onClick={() => importInputRef.current?.click()}>
+                      导入
+                    </button>
+                    <button type="button" onClick={exportRecords}>导出</button>
+                    <button
+                      type="button"
+                      className="inspection-action-danger"
+                      onClick={() => {
+                        if (!selectedRecordIds.length) {
+                          onAction("请先选择需要删除的填报记录");
+                          return;
+                        }
+                        removeRecords(selectedRecordIds);
+                        onAction(`已删除 ${selectedRecordIds.length} 条填报记录`);
+                      }}
+                    >
+                      批量删除
+                    </button>
+                  </div>
+                  <input
+                    ref={importInputRef}
+                    className="inspection-import-input"
+                    type="file"
+                    accept=".csv,.xlsx,.xls"
+                    onChange={importRecords}
+                  />
+                </div>
                 <div className="inspection-data-scroll">
                   <table>
                     <thead>
                       <tr>
-                        <th>填报人</th><th>检查日期</th><th>作业班次</th><th>作业地点</th><th>凿岩设备防护装置完好</th><th>作业面通风与照明符合要求</th><th>人员防护用品佩戴规范</th><th>隐患描述与整改建议</th><th>填报状态</th>
+                        <th className="inspection-select-column">
+                          <input
+                            type="checkbox"
+                            aria-label="全选填报记录"
+                            checked={inspectionRecords.length > 0 && selectedRecordIds.length === inspectionRecords.length}
+                            onChange={(event) => setSelectedRecordIds(event.target.checked ? inspectionRecords.map((record) => record.id) : [])}
+                          />
+                        </th>
+                        <th>填报人</th><th>检查日期</th><th>作业班次</th><th>作业地点</th><th>凿岩设备防护装置完好</th><th>作业面通风与照明符合要求</th><th>人员防护用品佩戴规范</th><th>隐患描述与整改建议</th><th>填报状态</th><th>操作</th>
                       </tr>
                     </thead>
                     <tbody>
-                      <tr><td>张宇</td><td>2026-07-29</td><td>早班</td><td>西翼 3# 平巷</td><td>正常</td><td>正常</td><td>正常</td><td>现场检查正常，无需整改。</td><td><i>已提交</i></td></tr>
-                      <tr><td>李明</td><td>2026-07-28</td><td>中班</td><td>西翼 2# 平巷</td><td>正常</td><td>发现问题</td><td>正常</td><td>照明灯具亮度不足，已通知机电班处理。</td><td><i>已复核</i></td></tr>
+                      {inspectionRecords.length ? inspectionRecords.map((record) => (
+                        <tr key={record.id}>
+                          <td className="inspection-select-column"><input type="checkbox" aria-label={`选择 ${record.reporter} 的填报记录`} checked={selectedRecordIds.includes(record.id)} onChange={() => toggleRecord(record.id)} /></td>
+                          <td>{record.reporter}</td><td>{record.date}</td><td>{record.shift}</td><td>{record.location}</td><td>{record.equipment}</td><td>{record.environment}</td><td>{record.protection}</td><td>{record.description}</td><td><i>{record.status}</i></td>
+                          <td className="inspection-row-actions">
+                            <button type="button" onClick={() => { setInspectionTab("页面"); onAction(`正在修改 ${record.date} 的填报记录`); }}>修改</button>
+                            <button type="button" onClick={() => { removeRecords([record.id]); onAction("填报记录已删除"); }}>删除</button>
+                          </td>
+                        </tr>
+                      )) : (
+                        <tr><td colSpan="11" className="inspection-data-empty">暂无历史填报数据</td></tr>
+                      )}
                     </tbody>
                   </table>
                 </div>
@@ -2292,18 +2760,23 @@ function DualPreventionPage({
               <strong id="prevention-page-title">{selectedLabel}</strong>
             </div>
             <div className="prevention-strip" />
-            {selectedItem === "岗位隐患排查清单" ? (
+            {["岗位隐患排查清单", "隐患排查审批流程"].includes(
+              selectedItem,
+            ) ? (
               <section className="prevention-list prevention-menu-catalog">
                 <div className="prevention-list-heading">
                   <h2>全部</h2>
                 </div>
                 <div className="prevention-catalog-grid">
-                  {preventionForms.map(({ title, icon: Icon, tone }) => (
+                  {(selectedItem === "隐患排查审批流程"
+                    ? preventionApprovalFlows
+                    : preventionForms
+                  ).map(({ title, icon: Icon, tone }) => (
                     <button
                       type="button"
                       className="prevention-catalog-card"
                       key={title}
-                      onClick={() => openForm({ title })}
+                      onClick={() => openForm({ title }, selectedItem)}
                     >
                       <span className={`prevention-form-icon ${tone}`}>
                         <Icon />
@@ -3203,7 +3676,6 @@ const todoGroups = [
   {
     id: "task",
     label: "待执行任务",
-    count: 4,
     tone: "blue",
     icon: ClipboardTask24Regular,
     items: [
@@ -3239,12 +3711,27 @@ const todoGroups = [
         note: "补充风险分级管控记录",
         action: "执行任务",
       },
+      {
+        title: "核对井下作业人员定位数据",
+        source: "安全管理",
+        deadline: "7 月 31 日 10:00 前",
+        owner: "调度室",
+        note: "补充人员定位异常情况说明",
+        action: "执行任务",
+      },
+      {
+        title: "更新选矿车间设备保养记录",
+        source: "设备管理",
+        deadline: "7 月 31 日 17:00 前",
+        owner: "刘海",
+        note: "同步本周关键设备保养信息",
+        action: "执行任务",
+      },
     ],
   },
   {
     id: "approval",
     label: "待审批流程",
-    count: 3,
     tone: "orange",
     icon: ApprovalsApp24Regular,
     items: [
@@ -3277,7 +3764,6 @@ const todoGroups = [
   {
     id: "warning",
     label: "待处理预警",
-    count: 3,
     tone: "red",
     icon: ErrorCircle24Regular,
     items: [
@@ -3305,18 +3791,30 @@ const todoGroups = [
         note: "北区提升机房摄像头离线 18 分钟",
         action: "查看处置",
       },
+      {
+        title: "井下局部通风机风量波动预警",
+        source: "通风监测",
+        deadline: "今天 18:00 前",
+        owner: "通风区",
+        note: "连续 15 分钟低于设定风量阈值",
+        action: "查看处置",
+      },
+      {
+        title: "尾矿库在线监测数据中断",
+        source: "安全预警",
+        deadline: "明天 09:00 前",
+        owner: "环保部",
+        note: "请核实数据采集设备与通信链路",
+        action: "查看处置",
+      },
     ],
   },
 ];
 
 function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenSafety }) {
-  const [selected, setSelected] = useState("all");
-  const visibleGroups =
-    selected === "all"
-      ? todoGroups
-      : todoGroups.filter((group) => group.id === selected);
+  const visibleGroups = todoGroups;
   const totalCount = todoGroups.reduce(
-    (total, group) => total + group.count,
+    (total, group) => total + group.items.length,
     0,
   );
   const handleAction = (group) => {
@@ -3339,32 +3837,10 @@ function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenSafety }) {
           <span>项待办需要处理</span>
         </div>
       </header>
-      <nav className="todo-filter-tabs" aria-label="待办分类">
-        <button
-          className={selected === "all" ? "active" : ""}
-          onClick={() => setSelected("all")}
-        >
-          全部 <b>{totalCount}</b>
-        </button>
-        {todoGroups.map((group) => (
-          <button
-            key={group.id}
-            className={selected === group.id ? "active" : ""}
-            onClick={() => setSelected(group.id)}
-          >
-            {group.label}
-            <b
-              className="todo-tab-badge"
-              aria-label={`${group.count} 项未处理`}
-            >
-              {group.count}
-            </b>
-          </button>
-        ))}
-      </nav>
       <div className="todo-groups">
         {visibleGroups.map((group) => {
           const Icon = group.icon;
+          const displayedItems = group.items.slice(0, 5);
           return (
             <section className={`todo-group ${group.tone}`} key={group.id}>
               <header>
@@ -3373,14 +3849,14 @@ function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenSafety }) {
                 </span>
                 <div>
                   <h2>{group.label}</h2>
-                  <p>{group.count} 项待你处理</p>
+                  <p>{group.items.length} 项待你处理</p>
                 </div>
                 <button onClick={() => handleAction(group)}>
                   查看全部 <ArrowRight24Regular />
                 </button>
               </header>
               <div>
-                {group.items.map((item) => (
+                {displayedItems.map((item) => (
                   <article className="todo-row" key={item.title}>
                     <span className="todo-row-dot" />
                     <div className="todo-row-main">
@@ -3558,10 +4034,7 @@ function OrganizationCenter({ organizations, setOrganizations, users }) {
   const [organizationLeader, setOrganizationLeader] = useState(null);
   const [leaderPickerOpen, setLeaderPickerOpen] = useState(false);
   const [leaderOrganization, setLeaderOrganization] = useState("");
-  const [message, setMessage] = useState(
-    "尚未建立组织架构，可手动新增或导入模板。",
-  );
-  const importRef = useRef(null);
+  const [message, setMessage] = useState("尚未建立组织架构，可手动新增根组织。");
   const hasOrganization = organizations.length > 0;
   const isRootOrganizationForm =
     formState?.mode === "root" ||
@@ -3597,18 +4070,6 @@ function OrganizationCenter({ organizations, setOrganizations, users }) {
       ))}
     </ul>
   );
-  const downloadTemplate = () => {
-    const template =
-      "\ufeff组织名称,上级组织\n华北矿业集团,\n安全管理部,华北矿业集团\n设备管理部,华北矿业集团\n南区采矿车间,安全管理部\n";
-    const url = URL.createObjectURL(
-      new Blob([template], { type: "text/csv;charset=utf-8;" }),
-    );
-    const link = document.createElement("a");
-    link.href = url;
-    link.download = "组织架构导入模板.csv";
-    link.click();
-    URL.revokeObjectURL(url);
-  };
   const openRootForm = () => {
     setOrganizationName("");
     setOrganizationType("公司");
@@ -3666,40 +4127,6 @@ function OrganizationCenter({ organizations, setOrganizations, users }) {
     setOrganizations((current) => removeOrganizationNode(current, node.id));
     setMessage(`已删除组织：${node.name}`);
   };
-  const importTemplate = (event) => {
-    const file = event.target.files?.[0];
-    if (!file || hasOrganization) return;
-    const reader = new FileReader();
-    reader.onload = () => {
-      const rows = String(reader.result)
-        .replace(/^\ufeff/, "")
-        .split(/\r?\n/)
-        .slice(1)
-        .map((line) => line.split(",").map((cell) => cell.trim()))
-        .filter(([name]) => name);
-      if (!rows.length) {
-        setMessage("未识别到可导入的组织数据，请检查模板内容。");
-        return;
-      }
-      const records = rows.map(([name, parent]) => ({
-        id: `org-${name}-${Math.random().toString(36).slice(2, 7)}`,
-        name,
-        parent,
-        children: [],
-      }));
-      const byName = new Map(records.map((record) => [record.name, record]));
-      const roots = [];
-      records.forEach((record) => {
-        if (record.parent && byName.has(record.parent))
-          byName.get(record.parent).children.push(record);
-        else roots.push(record);
-      });
-      setOrganizations(roots);
-      setMessage(`已导入 ${records.length} 个组织节点，导入功能现已锁定。`);
-    };
-    reader.readAsText(file, "utf-8");
-    event.target.value = "";
-  };
   const formTitle =
     formState?.mode === "edit"
       ? `编辑组织：${formState.node.name}`
@@ -3716,35 +4143,6 @@ function OrganizationCenter({ organizations, setOrganizations, users }) {
           <div>
             <h2 id="organization-title">组织架构</h2>
           </div>
-          <div>
-            <button
-              className="organization-template"
-              onClick={downloadTemplate}
-            >
-              <DocumentText24Regular />
-              下载模板
-            </button>
-            <button
-              className="organization-import"
-              onClick={() => importRef.current?.click()}
-              disabled={hasOrganization}
-              title={
-                hasOrganization
-                  ? "已有组织架构时不支持导入"
-                  : "上传已填写的组织架构模板"
-              }
-            >
-              <DocumentText24Regular />
-              导入组织
-            </button>
-            <input
-              ref={importRef}
-              type="file"
-              accept=".csv,text/csv"
-              onChange={importTemplate}
-              hidden
-            />
-          </div>
         </div>
         <div
           className={
@@ -3753,7 +4151,6 @@ function OrganizationCenter({ organizations, setOrganizations, users }) {
         >
           <CheckmarkCircle24Regular />
           <span>{message}</span>
-          {hasOrganization ? <b>已有组织架构，暂不支持导入</b> : null}
         </div>
         {hasOrganization ? (
           <div className="organization-tree-panel">
@@ -4042,7 +4439,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
   const [userName, setUserName] = useState("");
   const [userAccount, setUserAccount] = useState("");
   const [userPhone, setUserPhone] = useState("");
-  const [userPassword, setUserPassword] = useState("abc123");
+  const [userPassword, setUserPassword] = useState("abc123#");
   const [userOrganization, setUserOrganization] = useState("");
   const [userPositions, setUserPositions] = useState([]);
   const [userRoles, setUserRoles] = useState([]);
@@ -4078,7 +4475,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
     setUserName("");
     setUserAccount("");
     setUserPhone("");
-    setUserPassword("abc123");
+    setUserPassword("abc123#");
     setUserOrganization(selectedOrganization || organizationNodes[0]?.id || "");
     setUserPositions([]);
     setUserRoles([]);
@@ -4091,7 +4488,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
     setUserName(user.name);
     setUserAccount(user.account);
     setUserPhone(user.phone === "未填写" ? "" : user.phone);
-    setUserPassword(user.password || "abc123");
+    setUserPassword(user.password || "abc123#");
     setUserOrganization(user.organizationId || organizationNodes[0]?.id || "");
     setUserPositions(user.positions || []);
     setUserRoles(user.roles || []);
@@ -4177,7 +4574,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                 account,
                 name,
                 phone: phone || "未填写",
-                password: "abc123",
+                password: "abc123#",
                 organizationId,
                 department: organizationPath(organizations, organizationId),
                 status: "启用",
@@ -4208,7 +4605,13 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
   };
   const requestStatusToggle = (user) =>
     setConfirmAction({ type: "status", user });
-  const requestDelete = (user) => setConfirmAction({ type: "delete", user });
+  const requestDelete = (user) => {
+    if (user.status === "启用") {
+      setNotice(`用户“${user.name}”处于启用状态，请先停用后再删除`);
+      return;
+    }
+    setConfirmAction({ type: "delete", user });
+  };
   const requestPasswordReset = (user) =>
     setConfirmAction({ type: "reset-password", user });
   const requestCreateCancel = () => setConfirmAction({ type: "cancel-create" });
@@ -4225,11 +4628,11 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
       setUsers((current) =>
         current.map((user) =>
           user.id === confirmAction.user.id
-            ? { ...user, password: "abc123" }
+            ? { ...user, password: "abc123#" }
             : user,
         ),
       );
-      setNotice(`已将 ${confirmAction.user.name} 的密码重置为 abc123`);
+      setNotice(`已将 ${confirmAction.user.name} 的密码重置为 abc123#`);
     } else {
       removeUser(confirmAction.user.id);
     }
@@ -4343,14 +4746,6 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                 </button>
               </div>
               <div className="user-directory-actions">
-                <button
-                  className="user-import"
-                  onClick={() => setDialog("import")}
-                  disabled={!organizationNodes.length}
-                >
-                  <DocumentText24Regular />
-                  导入用户
-                </button>
                 <button
                   className="user-add"
                   onClick={openUserDialog}
@@ -4503,7 +4898,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                   <label className={userFieldErrors.password ? "field-error" : ""}>
                     默认密码
                     <input
-                      type="password"
+                      type="text"
                       value={userPassword}
                       onChange={(event) => {
                         setUserPassword(event.target.value);
@@ -4640,7 +5035,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                   : confirmAction.type === "delete"
                   ? `确定删除用户“${confirmAction.user.name}”吗？删除后无法恢复。`
                   : confirmAction.type === "reset-password"
-                  ? `确定将用户“${confirmAction.user.name}”的密码重置为默认密码 abc123 吗？`
+                  ? `确定将用户“${confirmAction.user.name}”的密码重置为默认密码 abc123# 吗？`
                   : `确定${confirmAction.user.status === "启用" ? "停用" : "启用"}用户“${confirmAction.user.name}”吗？`}
               </p>
             </div>
@@ -5359,7 +5754,7 @@ const organizationLeafIds = (node) =>
             }
           >
             <option>全部</option>
-            <option>本部门及以下</option>
+            <option>所在组织及下级</option>
             <option>仅自己</option>
           </select>
         </li>
@@ -5496,7 +5891,7 @@ const organizationLeafIds = (node) =>
                     <b>授权项</b>
                     <div className="role-data-permission-header-actions">
                       <span>全部设置为：</span>
-                      {['全部', '本部门及以下', '仅自己'].map((scope) => (
+                      {['全部', '所在组织及下级', '仅自己'].map((scope) => (
                         <button
                           type="button"
                           key={scope}
@@ -6250,6 +6645,7 @@ function DictionaryManagement({ onAction }) {
       id: "dict-1",
       code: "SAFETY_LEVEL",
       name: "安全风险等级",
+      type: "系统字典",
       remark: "用于风险辨识与预警分级。",
       references: 28,
       updater: "张宇",
@@ -6263,6 +6659,7 @@ function DictionaryManagement({ onAction }) {
       id: "dict-2",
       code: "EQUIPMENT_TYPE",
       name: "设备类型",
+      type: "业务字典",
       remark: "用于设备台账和巡检记录。",
       references: 16,
       updater: "李明",
@@ -6276,6 +6673,7 @@ function DictionaryManagement({ onAction }) {
       id: "dict-3",
       code: "POSITION",
       name: "岗位字典",
+      type: "系统字典",
       remark: "用于用户岗位配置与任务分派。",
       references: 12,
       updater: "张宇",
@@ -6286,12 +6684,13 @@ function DictionaryManagement({ onAction }) {
         { id: "position-3", code: "PRODUCTION_SUPERVISOR", name: "生产主管", updater: "张宇", updatedAt: "2026-08-19 09:30" },
       ],
     },
-    { id: "dict-4", code: "HAZARD_CATEGORY", name: "隐患类别", remark: "", references: 21, updater: "陈伟", updatedAt: "2026-08-13 14:18", data: [] },
-    { id: "dict-5", code: "WORK_STATUS", name: "作业状态", remark: "", references: 9, updater: "张宇", updatedAt: "2026-08-12 09:36", data: [] },
+    { id: "dict-4", code: "HAZARD_CATEGORY", name: "隐患类别", type: "业务字典", remark: "", references: 21, updater: "陈伟", updatedAt: "2026-08-13 14:18", data: [] },
+    { id: "dict-5", code: "WORK_STATUS", name: "作业状态", type: "系统字典", remark: "", references: 9, updater: "张宇", updatedAt: "2026-08-12 09:36", data: [] },
     {
       id: "dict-6",
       code: "FLOW_CATEGORY",
       name: "流程分类",
+      type: "业务字典",
       remark: "用于流程中心的流程归类。",
       references: 2,
       updater: "张宇",
@@ -6306,7 +6705,7 @@ function DictionaryManagement({ onAction }) {
     },
   ]);
   const [dialog, setDialog] = useState(null);
-  const [draft, setDraft] = useState({ code: "", name: "", remark: "" });
+  const [draft, setDraft] = useState({ code: "", name: "", type: "业务字典", remark: "" });
   const [dataRows, setDataRows] = useState([]);
   const [selectedDataIds, setSelectedDataIds] = useState([]);
   const [editingData, setEditingData] = useState(null);
@@ -6333,9 +6732,10 @@ function DictionaryManagement({ onAction }) {
         ? {
             code: dictionary.code,
             name: dictionary.name,
+            type: dictionary.type ?? "业务字典",
             remark: dictionary.remark ?? "",
           }
-        : { code: "", name: "", remark: "" },
+        : { code: "", name: "", type: "业务字典", remark: "" },
     );
     setDataRows(dictionary?.data ?? []);
     setSelectedDataIds([]);
@@ -6349,6 +6749,7 @@ function DictionaryManagement({ onAction }) {
     event.preventDefault();
     const code = draft.code.trim();
     const name = draft.name.trim();
+    const type = draft.type;
     if (!code || !name) return;
 
     if (dialog.dictionary) {
@@ -6359,6 +6760,7 @@ function DictionaryManagement({ onAction }) {
                 ...item,
                 code,
                 name,
+                type,
                 remark: draft.remark.trim(),
                 updater: "张宇",
                 updatedAt: "刚刚",
@@ -6368,7 +6770,7 @@ function DictionaryManagement({ onAction }) {
       );
       setDialog((current) => ({
         ...current,
-        dictionary: { ...current.dictionary, code, name, remark: draft.remark.trim() },
+        dictionary: { ...current.dictionary, code, name, type, remark: draft.remark.trim() },
       }));
       onAction(`已保存字典信息：${name}`);
     } else {
@@ -6376,6 +6778,7 @@ function DictionaryManagement({ onAction }) {
         id: `dict-${Date.now()}`,
         code,
         name,
+        type,
         remark: draft.remark.trim(),
         data: [],
         references: 0,
@@ -6514,6 +6917,7 @@ function DictionaryManagement({ onAction }) {
         <div className="dictionary-table-head">
           <span>编码</span>
           <span>字典名称</span>
+          <span>类型</span>
           <span>被引用次数</span>
           <span>更新人</span>
           <span>更新时间</span>
@@ -6523,6 +6927,7 @@ function DictionaryManagement({ onAction }) {
           <div className="dictionary-table-row" key={dictionary.id}>
             <code>{dictionary.code}</code>
             <strong>{dictionary.name}</strong>
+            <span>{dictionary.type ?? "业务字典"}</span>
             <span>{dictionary.references}</span>
             <span>{dictionary.updater}</span>
             <time>{dictionary.updatedAt}</time>
@@ -6574,6 +6979,13 @@ function DictionaryManagement({ onAction }) {
                 <label>
                   <b>字典名称</b>
                   <input value={draft.name} onChange={(event) => setDraft((current) => ({ ...current, name: event.target.value }))} placeholder="请输入字典名称" />
+                </label>
+                <label>
+                  <b>类型</b>
+                  <select value={draft.type} onChange={(event) => setDraft((current) => ({ ...current, type: event.target.value }))}>
+                    <option>系统字典</option>
+                    <option>业务字典</option>
+                  </select>
                 </label>
                 <label>
                   <b>字典备注</b>
@@ -7218,6 +7630,7 @@ function LoginPage({ onLogin, branding }) {
   const [account, setAccount] = useState(savedCredentials?.account ?? "");
   const [password, setPassword] = useState(savedCredentials?.password ?? "");
   const [rememberPassword, setRememberPassword] = useState(Boolean(savedCredentials));
+  const [passwordVisible, setPasswordVisible] = useState(false);
   const [error, setError] = useState("");
   const [forgotPassword, setForgotPassword] = useState(false);
   const submitLogin = (event) => {
@@ -7293,16 +7706,27 @@ function LoginPage({ onLogin, branding }) {
           </label>
           <label>
             密码
-            <input
-              type="password"
-              value={password}
-              onChange={(event) => {
-                setPassword(event.target.value);
-                setError("");
-              }}
-              autoComplete="current-password"
-              placeholder="请输入密码"
-            />
+            <span className="login-password-field">
+              <input
+                type={passwordVisible ? "text" : "password"}
+                value={password}
+                onChange={(event) => {
+                  setPassword(event.target.value);
+                  setError("");
+                }}
+                autoComplete="current-password"
+                placeholder="请输入密码"
+              />
+              <button
+                type="button"
+                className="login-password-visibility"
+                aria-label={passwordVisible ? "隐藏密码" : "显示密码"}
+                title={passwordVisible ? "隐藏密码" : "显示密码"}
+                onClick={() => setPasswordVisible((current) => !current)}
+              >
+                {passwordVisible ? <EyeOff24Regular /> : <Eye24Regular />}
+              </button>
+            </span>
           </label>
           {error ? <p className="login-error" role="alert">{error}</p> : null}
           <div className="login-options">
@@ -7481,9 +7905,13 @@ function App() {
   const [preventionInitial, setPreventionInitial] = useState(
     preventionForms[0].title,
   );
+  const [preventionFormOpen, setPreventionFormOpen] = useState(false);
   const [settingsInitial, setSettingsInitial] = useState("安全动态");
   const [messages, setMessages] = useState(messageEntries);
   const [taskDetail, setTaskDetail] = useState(null);
+  const [annotationsOpen, setAnnotationsOpen] = useState(true);
+  const [annotationsManaging, setAnnotationsManaging] = useState(false);
+  const [prototypeAnnotations, setPrototypeAnnotations] = useState(loadPrototypeAnnotations);
   useEffect(() => {
     try {
       localStorage.setItem("enterprise-branding", JSON.stringify(enterpriseBranding));
@@ -7491,6 +7919,13 @@ function App() {
       // The current session still uses the uploaded assets when browser storage is unavailable.
     }
   }, [enterpriseBranding]);
+  useEffect(() => {
+    try {
+      localStorage.setItem(PROTOTYPE_ANNOTATIONS_STORAGE_KEY, JSON.stringify(prototypeAnnotations));
+    } catch {
+      // Prototype annotations remain available during the current browser session.
+    }
+  }, [prototypeAnnotations]);
   const showNotice = (label) => {
     setNotice(`已选择 ${label}`);
     window.clearTimeout(appNoticeTimer.current);
@@ -7526,6 +7961,7 @@ function App() {
       window.scrollTo({ top: 0, behavior: "smooth" });
       startTransition(() => {
         setPreventionInitial(name);
+        setPreventionFormOpen(true);
         setOpenTabs((current) =>
           current.some((tab) => tab.id === "双重预防机制")
             ? current
@@ -7551,6 +7987,7 @@ function App() {
     }
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
+      if (targetName === "双重预防机制") setPreventionFormOpen(false);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === targetName)
           ? current
@@ -7798,6 +8235,10 @@ function App() {
             onOpenMessages={openMessages}
             onOpenPersonal={openPersonalCenter}
             onLogout={() => setAuthenticated(false)}
+            annotationVisible={annotationsOpen}
+            onToggleAnnotations={() => setAnnotationsOpen((current) => !current)}
+            annotationManaging={annotationsManaging}
+            onToggleAnnotationManager={() => setAnnotationsManaging((current) => !current)}
           />
           <main>
             {activeTab === "messages" ? (
@@ -7843,8 +8284,9 @@ function App() {
               <PersonalCenter onAction={showNotice} />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
-                key={preventionInitial}
+                key={`${preventionInitial}-${preventionFormOpen ? "form" : "catalog"}`}
                 initialFormTitle={preventionInitial}
+                initialOpenForm={preventionFormOpen}
                 onAction={showNotice}
                 onSwitchApplication={openApplication}
               />
@@ -7929,6 +8371,41 @@ function App() {
             )}
           </main>
         </div>
+        <PrototypeAnnotations
+          visible={annotationsOpen}
+          managing={annotationsManaging}
+          pageId={activeTab}
+          pageLabel={openTabs.find((tab) => tab.id === activeTab)?.label ?? "工作台"}
+          annotations={prototypeAnnotations}
+          onCloseManager={() => setAnnotationsManaging(false)}
+          onAdd={({ pageId, pageLabel, content, left, top }) => {
+            setAnnotationsOpen(true);
+            setPrototypeAnnotations((current) => [
+              ...current,
+              { id: `annotation-${Date.now()}`, pageId, pageLabel, content, left, top },
+            ]);
+          }}
+          onUpdate={(id, content) =>
+            setPrototypeAnnotations((current) =>
+              current.map((annotation) =>
+                annotation.id === id ? { ...annotation, content } : annotation,
+              ),
+            )
+          }
+          onRemove={(id) =>
+            setPrototypeAnnotations((current) =>
+              current.filter((annotation) => annotation.id !== id),
+            )
+          }
+          onReposition={(id, position) => {
+            setAnnotationsOpen(true);
+            setPrototypeAnnotations((current) =>
+              current.map((annotation) =>
+                annotation.id === id ? { ...annotation, ...position } : annotation,
+              ),
+            );
+          }}
+        />
         {notice ? (
           <div className="toast" role="status" aria-label={notice}>
             <CheckmarkCircle24Regular />

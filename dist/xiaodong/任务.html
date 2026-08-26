@@ -191,6 +191,17 @@ body { font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei",
 .data-table tbody tr:hover { background: rgba(15,108,189,.05); }
 .data-table .actions { display: flex; gap: 4px; flex-wrap: wrap; }
 
+/* 与系统消息、数据列表保持一致的分页组件。 */
+.task-pagination { min-height: 48px; padding: 0 18px; display: flex; align-items: center; justify-content: flex-end; gap: 9px; border-top: 1px solid var(--line); background: var(--surface); color: var(--text-muted); font-size: 11px; }
+.task-pagination > span { margin-right: auto; }
+.task-pagination label { display: inline-flex; align-items: center; gap: 5px; }
+.task-pagination select, .task-pagination button { height: 28px; padding: 0 8px; border: 1px solid #d6e0e8; border-radius: 4px; background: #fff; color: #536579; font: inherit; }
+.task-pagination select { width: 72px; padding: 0 6px; }
+.task-pagination button { cursor: pointer; }
+.task-pagination button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.task-pagination button:disabled { opacity: .45; cursor: not-allowed; }
+.task-pagination b { min-width: 35px; color: var(--text-primary); font-weight: 650; text-align: center; }
+
 /* ===== Status Badges ===== */
 .status { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
 .status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
@@ -532,6 +543,9 @@ html, body { background: #f5f7fa; }
         <tr data-tid="TPL002"><td class="mono">TPL002</td><td>设备维修任务模板</td><td>无</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>
         <tr data-tid="TPL003"><td class="mono">TPL003</td><td>隐患整改任务模板</td><td>BPM流程表单</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>
       </tbody></table>
+      <footer class="task-pagination" data-pagination-target="#pubBody">
+        <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页发布模板条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
+      </footer>
     </div>
   </div>
 </div>
@@ -655,6 +669,9 @@ html, body { background: #f5f7fa; }
             <tr data-tid="T20260701007"><td class="mono">T20260701007</td><td>瓦斯浓度监测</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-07-02</td><td>无</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button></div></td></tr>
         </tbody>
         </table>
+        <footer class="task-pagination" data-pagination-mode="mytask">
+          <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页任务条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
+        </footer>
     </div>
 </div>
 </div>
@@ -675,6 +692,9 @@ html, body { background: #f5f7fa; }
             <tr data-tid="T20260701006" data-ft="普通业务表单"><td class="mono">T20260701006</td><td>东区3号矿井巡检</td><td>张伟明</td><td>李强</td><td style="font-size:11px">07-01</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td class="mono" style="font-size:11px">07-01</td><td class="mono" style="font-size:11px">-</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-adj-exec">调整执行人</button><button class="btn btn-danger btn-xs act-end">结束</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>
             <tr data-tid="T20260701007" data-ft="无"><td class="mono">T20260701007</td><td>瓦斯浓度监测</td><td>周文博</td><td>李强</td><td style="font-size:11px">07-02</td><td>无</td><td><span class="status status-pending">未执行</span></td><td><span style="color:var(--verdigris);font-size:11px;">正常</span></td><td class="mono" style="font-size:11px">07-01</td><td class="mono" style="font-size:11px">-</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-adj-exec">调整执行人</button><button class="btn btn-danger btn-xs act-end">结束</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>
         </tbody></table>
+        <footer class="task-pagination" data-pagination-target="#ledgerBody">
+          <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页任务总台账条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
+        </footer>
     </div>
 </div>
 </div>
@@ -695,6 +715,9 @@ html, body { background: #f5f7fa; }
             <tr data-tid="T20260701006"><td class="mono">T20260701006</td><td>东区巡检</td><td>李强</td><td style="font-size:11px">-</td><td><span class="status status-pending">未执行</span></td><td style="font-size:11px">07-01</td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>
             <tr data-tid="T20260701007"><td class="mono">T20260701007</td><td>瓦斯监测</td><td>李强</td><td style="font-size:11px">-</td><td><span class="status status-pending">未执行</span></td><td style="font-size:11px">07-02</td><td><span style="color:var(--verdigris);font-size:11px;">正常</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>
         </tbody></table>
+        <footer class="task-pagination" data-pagination-target="#personBody">
+          <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页人员明细条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
+        </footer>
     </div>
 </div>
 </div>
@@ -1062,6 +1085,71 @@ function activateMyTab(id){
     if(tab) tab.click();
 }
 
+/* ====================== 统一分页 ====================== */
+var taskPaginationControllers = [];
+function taskPaginationRows(target){
+    if(!target) return [];
+    return Array.prototype.filter.call(target.children, function(child){ return child.tagName === 'TR'; });
+}
+function taskPaginationTarget(controller){
+    if(controller.mode === 'mytask'){
+        var activeTab = document.querySelector('#myTabs .tab.active');
+        return activeTab ? document.getElementById(activeTab.dataset.tab) : null;
+    }
+    return document.querySelector(controller.target);
+}
+function renderTaskPagination(controller){
+    var rows = taskPaginationRows(taskPaginationTarget(controller));
+    var pageCount = Math.max(1, Math.ceil(rows.length / controller.pageSize));
+    if(controller.page > pageCount) controller.page = pageCount;
+    rows.forEach(function(row, index){
+        var visible = index >= (controller.page - 1) * controller.pageSize && index < controller.page * controller.pageSize;
+        row.style.display = visible ? '' : 'none';
+    });
+    controller.total.textContent = '共 ' + rows.length + ' 条';
+    controller.current.textContent = controller.page + ' / ' + pageCount;
+    controller.prev.disabled = controller.page === 1;
+    controller.next.disabled = controller.page === pageCount;
+}
+function refreshTaskPagination(){
+    taskPaginationControllers.forEach(renderTaskPagination);
+}
+function resetTaskPagination(mode){
+    taskPaginationControllers.forEach(function(controller){
+        if(controller.mode === mode){ controller.page = 1; renderTaskPagination(controller); }
+    });
+}
+function initTaskPagination(){
+    document.querySelectorAll('.task-pagination').forEach(function(element){
+        var controller = {
+            mode: element.dataset.paginationMode || '',
+            target: element.dataset.paginationTarget || '',
+            page: 1,
+            pageSize: Number(element.querySelector('[data-pagination-size]').value),
+            total: element.querySelector('[data-pagination-total]'),
+            current: element.querySelector('[data-pagination-current]'),
+            prev: element.querySelector('[data-pagination-prev]'),
+            next: element.querySelector('[data-pagination-next]'),
+            size: element.querySelector('[data-pagination-size]')
+        };
+        controller.size.addEventListener('change', function(){
+            controller.pageSize = Number(this.value);
+            controller.page = 1;
+            renderTaskPagination(controller);
+        });
+        controller.prev.addEventListener('click', function(){
+            controller.page = Math.max(1, controller.page - 1);
+            renderTaskPagination(controller);
+        });
+        controller.next.addEventListener('click', function(){
+            controller.page += 1;
+            renderTaskPagination(controller);
+        });
+        taskPaginationControllers.push(controller);
+        renderTaskPagination(controller);
+    });
+}
+
 /* ====================== 我的任务：标签切换 ====================== */
 document.getElementById('myTabs').addEventListener('click', function(e){
     var tab = e.target.closest('.tab');
@@ -1072,6 +1160,7 @@ document.getElementById('myTabs').addEventListener('click', function(e){
     ['t-draft','t-launch','t-exec','t-done','t-forward','t-withdraw','t-join'].forEach(function(t){
         document.getElementById(t).style.display = (t===id)?'':'none';
     });
+    resetTaskPagination('mytask');
 });
 
 /* ====================== 我的任务 / 台账：动作分发 ====================== */
@@ -1261,6 +1350,7 @@ document.querySelectorAll('.content').forEach(function(container){
         else if(btn.classList.contains('act-edit-recalled')){ editDraftTask(row); }
         else if(btn.classList.contains('act-adj-exec')){ openAdjust(row); }
         else if(btn.classList.contains('act-end')){ openEnd(row); }
+        refreshTaskPagination();
     });
 });
 
@@ -1278,6 +1368,7 @@ document.getElementById('roleSelect').addEventListener('change', function(){
 document.getElementById('mToggle').addEventListener('click', function(){ logicPanel.classList.toggle('show'); });
 
 /* 嵌入入口可指定任务模块，未指定时展示个人任务中心。 */
+initTaskPagination();
 var embeddedTaskView = new URLSearchParams(window.location.search).get('view');
 var embeddedTaskViews = ['view-template', 'view-publish', 'view-mytask', 'view-ledger', 'view-personnel'];
 switchView(embeddedTaskViews.includes(embeddedTaskView) ? embeddedTaskView : 'view-mytask');
