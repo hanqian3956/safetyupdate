@@ -68,19 +68,11 @@ const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "综合管理",
 ];
 
-const PROTOTYPE_ANNOTATIONS_STORAGE_KEY = "smart-emergency:prototype-annotations:v1";
-const LEGACY_PROTOTYPE_ANNOTATIONS_STORAGE_KEY = "prototype-annotations";
+const PROTOTYPE_ANNOTATIONS_URL = `${import.meta.env.BASE_URL}prototype-annotations.json`;
 
-function loadPrototypeAnnotations() {
-  try {
-    const saved = localStorage.getItem(PROTOTYPE_ANNOTATIONS_STORAGE_KEY)
-      ?? localStorage.getItem(LEGACY_PROTOTYPE_ANNOTATIONS_STORAGE_KEY)
-      ?? "[]";
-    const annotations = JSON.parse(saved);
-    return Array.isArray(annotations) ? annotations : [];
-  } catch {
-    return [];
-  }
+function getAnnotationsFromPayload(payload) {
+  const annotations = Array.isArray(payload) ? payload : payload?.annotations;
+  return Array.isArray(annotations) ? annotations : [];
 }
 
 use([
@@ -793,6 +785,9 @@ function PrototypeAnnotations({
             </button>
           </header>
           <div className="prototype-annotation-editor">
+            <p className="prototype-annotation-source-note">
+              标注从部署文件读取；在线调整仅用于当前预览。
+            </p>
             <label htmlFor="prototype-annotation-content">{editingId ? "编辑备注" : "新增备注"}</label>
             <textarea
               id="prototype-annotation-content"
@@ -7911,7 +7906,7 @@ function App() {
   const [taskDetail, setTaskDetail] = useState(null);
   const [annotationsOpen, setAnnotationsOpen] = useState(true);
   const [annotationsManaging, setAnnotationsManaging] = useState(false);
-  const [prototypeAnnotations, setPrototypeAnnotations] = useState(loadPrototypeAnnotations);
+  const [prototypeAnnotations, setPrototypeAnnotations] = useState([]);
   useEffect(() => {
     try {
       localStorage.setItem("enterprise-branding", JSON.stringify(enterpriseBranding));
@@ -7920,12 +7915,24 @@ function App() {
     }
   }, [enterpriseBranding]);
   useEffect(() => {
-    try {
-      localStorage.setItem(PROTOTYPE_ANNOTATIONS_STORAGE_KEY, JSON.stringify(prototypeAnnotations));
-    } catch {
-      // Prototype annotations remain available during the current browser session.
-    }
-  }, [prototypeAnnotations]);
+    let cancelled = false;
+
+    fetch(PROTOTYPE_ANNOTATIONS_URL, { cache: "no-store" })
+      .then((response) => {
+        if (!response.ok) throw new Error("Unable to load prototype annotations");
+        return response.json();
+      })
+      .then((payload) => {
+        if (!cancelled) setPrototypeAnnotations(getAnnotationsFromPayload(payload));
+      })
+      .catch(() => {
+        if (!cancelled) setPrototypeAnnotations([]);
+      });
+
+    return () => {
+      cancelled = true;
+    };
+  }, []);
   const showNotice = (label) => {
     setNotice(`已选择 ${label}`);
     window.clearTimeout(appNoticeTimer.current);
