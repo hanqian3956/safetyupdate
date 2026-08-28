@@ -339,7 +339,8 @@ const processEntries = [
     initiatedAt: "今天 09:12",
     currentNode: "部门负责人审批",
     approver: "张宇",
-    status: "待审批",
+    status: "审批中",
+    application: "设备管理",
     amount: "86,500 元",
     department: "机电管理部",
     urgency: "常规",
@@ -347,27 +348,30 @@ const processEntries = [
   {
     id: "flow-2",
     name: "南区 2# 采场动火作业申请",
-    initiator: "李明",
+    initiator: "张宇",
     initiatedAt: "今天 08:46",
     currentNode: "安全管理部审批",
-    approver: "张宇",
-    status: "待审批",
+    approver: "李四",
+    status: "已驳回",
+    application: "安全管理",
     amount: "不涉及",
     department: "生产管理部",
     urgency: "紧急",
+    startedByMe: true,
   },
   {
     id: "flow-3",
     name: "碎矿车间停机检修计划",
     initiator: "赵磊",
     initiatedAt: "昨天 15:28",
-    currentNode: "设备平台主管审批",
+    currentNode: "流程已结束",
     approver: "刘海",
-    status: "审批中",
+    status: "已通过",
     amount: "128,000 元",
     department: "设备管理部",
     urgency: "常规",
     handledByMe: true,
+    handledResult: "同意",
   },
   {
     id: "flow-4",
@@ -383,6 +387,160 @@ const processEntries = [
     ccToMe: true,
     startedByMe: true,
   },
+  {
+    id: "flow-5",
+    name: "东区临时用电申请",
+    initiator: "陈伟",
+    initiatedAt: "昨天 11:16",
+    currentNode: "流程已结束",
+    approver: "张宇",
+    status: "已拒绝",
+    application: "安全管理",
+    amount: "不涉及",
+    department: "生产管理部",
+    urgency: "常规",
+    handledByMe: true,
+    handledResult: "驳回",
+  },
+  {
+    id: "flow-6",
+    name: "井下设备检修采购申请",
+    initiator: "刘海",
+    initiatedAt: "8 月 26 日 16:42",
+    currentNode: "流程已撤销",
+    approver: "张宇",
+    status: "已撤销",
+    application: "设备管理",
+    amount: "42,800 元",
+    department: "机电管理部",
+    urgency: "常规",
+    handledByMe: true,
+    handledResult: "同意",
+    revokedBy: "刘海",
+    revokedAt: "2026-08-26 17:08:00",
+  },
+  {
+    id: "flow-7",
+    name: "高处作业审批申请",
+    initiator: "孙宁",
+    initiatedAt: "8 月 25 日 09:34",
+    currentNode: "分管领导审批",
+    approver: "张宇",
+    status: "已驳回",
+    application: "双重预防机制",
+    amount: "不涉及",
+    department: "安全管理部",
+    urgency: "紧急",
+    handledByMe: true,
+    handledResult: "驳回",
+  },
+  {
+    id: "flow-8",
+    name: "井下通风设施改造申请",
+    initiator: "李明",
+    initiatedAt: "8 月 27 日 14:18",
+    currentNode: "流程已结束",
+    approver: "陈伟",
+    status: "已通过",
+    application: "应急管理",
+    amount: "26,000 元",
+    department: "安全管理部",
+    urgency: "常规",
+    ccToMe: true,
+    finalOperator: "陈伟",
+  },
+  {
+    id: "flow-9",
+    name: "采场临时封闭申请",
+    initiator: "王强",
+    initiatedAt: "8 月 27 日 10:05",
+    currentNode: "流程已结束",
+    approver: "赵磊",
+    status: "已拒绝",
+    application: "安全管理",
+    amount: "不涉及",
+    department: "生产管理部",
+    urgency: "紧急",
+    ccToMe: true,
+    finalOperator: "赵磊",
+  },
+  {
+    id: "flow-10",
+    name: "消防器材增补采购申请",
+    initiator: "周敏",
+    initiatedAt: "8 月 26 日 13:26",
+    currentNode: "流程已撤销",
+    approver: "孙宁",
+    status: "已撤销",
+    application: "消防管理",
+    amount: "18,600 元",
+    department: "综合管理部",
+    urgency: "常规",
+    ccToMe: true,
+    revokedBy: "周敏",
+    revokedAt: "2026-08-26 15:20:00",
+  },
+  {
+    id: "flow-11",
+    name: "爆破作业人员调整申请",
+    initiator: "何勇",
+    initiatedAt: "8 月 25 日 16:50",
+    currentNode: "分管领导审批",
+    approver: "周杰伦",
+    status: "已驳回",
+    application: "火工品管理",
+    amount: "不涉及",
+    department: "生产管理部",
+    urgency: "常规",
+    ccToMe: true,
+    rejectedBy: "周杰伦",
+  },
+  {
+    id: "flow-draft-1",
+    name: "员工离职申请",
+    initiator: "张宇",
+    initiatedAt: "2026-08-28 10:36:00",
+    currentNode: "待提交",
+    status: "草稿",
+    department: "安全管理部",
+    description: "已完成离职原因与交接安排说明，待补充附件后提交。",
+    draft: true,
+  },
+  {
+    id: "flow-draft-2",
+    name: "员工离职申请",
+    initiator: "张宇",
+    initiatedAt: "2026-08-27 16:18:00",
+    currentNode: "待提交",
+    status: "草稿",
+    department: "安全管理部",
+    description: "已填写基本离职信息，待确认最后工作日期。",
+    draft: true,
+  },
+];
+
+const processTransferOrganizations = [
+  {
+    id: "group",
+    name: "华北矿业集团",
+    children: [
+      {
+        id: "mine",
+        name: "矿山事业部",
+        children: [
+          { id: "safety", name: "安全管理部", children: [] },
+          { id: "equipment", name: "设备管理部", children: [] },
+          { id: "production", name: "生产技术部", children: [] },
+        ],
+      },
+    ],
+  },
+];
+
+const processTransferUsers = [
+  { id: "transfer-zhao", name: "赵六", account: "zhaoliu", department: "安全管理部", organizationId: "safety" },
+  { id: "transfer-wang", name: "王五", account: "wangwu", department: "生产技术部", organizationId: "production" },
+  { id: "transfer-li", name: "李四", account: "lisi", department: "设备管理部", organizationId: "equipment" },
 ];
 
 const recentApps = [
@@ -393,10 +551,10 @@ const recentApps = [
     tone: "green",
   },
   {
-    name: "安全管理",
+    name: "平巷凿岩作业隐患排查审批流程",
     time: "昨天 16:40",
-    icon: ErrorCircle24Regular,
-    tone: "green",
+    icon: ApprovalsApp24Regular,
+    tone: "blue",
   },
   {
     name: "生产管理",
@@ -1439,33 +1597,202 @@ function TaskDetailPage({ task, onBack }) {
   );
 }
 
-function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false }) {
+function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, canRevoke = false, canResumeDraft = false, hideFinalLog = false, onResumeDraft, onResubmit }) {
+  const [flowchartOpen, setFlowchartOpen] = useState(false);
+  const [transferOpen, setTransferOpen] = useState(false);
+  const [transferPickerOpen, setTransferPickerOpen] = useState(false);
+  const [transferPerson, setTransferPerson] = useState(null);
+  const [transferReason, setTransferReason] = useState("");
+  const [addSignerOpen, setAddSignerOpen] = useState(false);
+  const [addSignerPickerOpen, setAddSignerPickerOpen] = useState(false);
+  const [addSigners, setAddSigners] = useState([]);
+  const [addSignerReason, setAddSignerReason] = useState("");
+  const [returnOpen, setReturnOpen] = useState(false);
+  const [returnTarget, setReturnTarget] = useState(null);
+  const [returnReason, setReturnReason] = useState("");
+  const [revokeConfirmOpen, setRevokeConfirmOpen] = useState(false);
+  const [refuseConfirmOpen, setRefuseConfirmOpen] = useState(false);
+  const [refuseOpinion, setRefuseOpinion] = useState("");
+  const closeProcessDialog = () => {
+    setFlowchartOpen(false);
+    setTransferOpen(false);
+    setTransferPickerOpen(false);
+    setAddSignerOpen(false);
+    setAddSignerPickerOpen(false);
+    setAddSigners([]);
+    setAddSignerReason("");
+    setReturnOpen(false);
+    setReturnTarget(null);
+    setReturnReason("");
+    setRevokeConfirmOpen(false);
+    setRefuseConfirmOpen(false);
+    setRefuseOpinion("");
+    onClose();
+  };
   if (!process) return null;
+  const isRejected = process.status === "已驳回";
+  const isRevoked = process.status === "已撤销";
+  const isApproved = process.status === "已通过";
+  const isRefused = process.status === "已拒绝";
+  const isResubmitted = process.resubmitted;
+  const returnTargets = [
+    { id: "return-initiator", label: "发起人", name: process.initiator },
+    { id: "return-previous", label: "上一节点", name: process.previousApprover ?? "张七" },
+  ].filter((user, index, users) => users.findIndex((item) => item.name === user.name) === index);
   const logs = [
     {
-      time: process.initiatedAt,
-      title: "流程已发起",
-      detail: `${process.initiator} 提交了${process.name}。`,
+      time: "2026-08-23 12:00:00",
+      title: "系统发起",
+      details: [`${process.initiator}发起了${process.name}`],
+      action: "发起",
       state: "done",
     },
     {
-      time: "今天 09:25",
-      title: "资料完整性校验通过",
-      detail: "系统已完成表单与附件校验。",
+      time: "2026-08-23 12:00:00",
+      title: "主管领导审批",
+      details: ["李四已同意", "审批意见：请按流程办理", "流程到达时间：2026-08-23 12:00:00"],
+      action: "同意",
       state: "done",
     },
     {
-      time: "当前",
-      title: process.currentNode,
-      detail: `等待 ${process.approver} 审批。`,
-      state: "current",
+      time: "2026-08-23 12:00:00",
+      title: "分管领导审批",
+      details: ["王五已转办", "转办原因：赵总定夺", "流程到达时间：2026-08-23 12:00:00"],
+      action: "转办",
+      state: "done",
     },
+    {
+      time: "2026-08-23 12:00:00",
+      title: "转办审批",
+      details: ["赵六已加签", "流程到达时间：2026-08-23 12:00:00"],
+      action: "加签",
+      state: "done",
+    },
+    {
+      time: "2026-08-23 12:00:00",
+      title: "加签审批",
+      details: ["张七已同意", "流程到达时间：2026-08-23 12:00:00"],
+      action: "同意",
+      state: "done",
+    },
+    {
+      time: "2026-08-23 12:00:00",
+      title: "抄送",
+      details: ["系统已抄送", "流程到达时间：2026-08-23 12:00:00"],
+      action: "抄送",
+      state: "done",
+    },
+    {
+      time: isRejected || isResubmitted || isApproved || isRefused ? "2026-08-23 12:00:00" : isRevoked ? (process.revokedAt ?? "2026-08-28 10:36:00") : "当前",
+      title: isRejected || isResubmitted || isApproved || isRefused ? "分管领导审批" : isRevoked ? "撤销" : "结束",
+      details: isRejected || isResubmitted
+        ? [`${process.rejectedBy ?? "周杰伦"}已驳回`, `审批意见：${process.rejectionOpinion ?? "请核对清楚再提交"}`, "流程到达时间：2026-08-23 12:00:00"]
+        : isApproved
+          ? [`${process.finalOperator ?? "张宇"}已同意`, "审批意见：同意办理", "流程完成时间：2026-08-23 12:00:00"]
+          : isRefused
+            ? [`${process.finalOperator ?? "张宇"}已拒绝`, `审批意见：${process.refusalOpinion || "未填写"}`, "流程完成时间：2026-08-23 12:00:00"]
+        : isRevoked
+          ? [`${process.revokedBy ?? "张宇"}已撤销该流程`]
+        : [
+            ["待审批", "审批中"].includes(process.status)
+              ? `当前待 ${process.approver} 审批`
+              : "流程已结束",
+          ],
+      action: isRejected || isResubmitted ? "驳回" : isApproved ? "同意" : isRefused ? "拒绝" : isRevoked ? "撤销" : undefined,
+      state: isResubmitted ? "done" : "current",
+    },
+    ...(isResubmitted
+      ? [{
+          time: "2026-08-23 12:30:00",
+          title: "重新提交",
+          details: [`${process.initiator}已重新提交`],
+          action: "重新提交",
+          state: "done",
+        }, {
+          time: "",
+          hideTime: true,
+          title: "分管领导审批",
+          details: ["周杰伦", "流程到达时间：2026-08-23 12:30:00"],
+          state: isRevoked ? "done" : "current",
+        }, ...(isRevoked
+          ? [{
+              time: process.revokedAt ?? "2026-08-28 10:36:00",
+              title: "撤销",
+              details: [`${process.revokedBy ?? "张宇"}已撤销该流程`],
+              action: "撤销",
+              state: "current",
+            }]
+          : [])]
+      : []),
+    ...(process.actionLogs ?? []),
   ];
-  const nodes = ["发起申请", "部门负责人", "安全审核", "归档完成"];
+  const formFields = [
+    ["流程编号", `LC-2026-${process.id.replace("flow-", "0")}`],
+    ["流程类型", process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批"],
+    ["所属部门", process.department],
+    ["发起人", process.initiator],
+    ["发起时间", process.initiatedAt],
+    ["当前节点", process.currentNode],
+  ];
+  const handleApprovalAction = (action) => {
+    if (action === "撤销") {
+      setRevokeConfirmOpen(true);
+      return;
+    }
+    if (action === "转办") {
+      setTransferOpen(true);
+      return;
+    }
+    if (action === "加签") {
+      setAddSigners([]);
+      setAddSignerReason("");
+      setAddSignerOpen(true);
+      return;
+    }
+    if (action === "退回") {
+      setReturnTarget(null);
+      setReturnReason("");
+      setReturnOpen(true);
+      return;
+    }
+    if (action === "拒绝") {
+      setRefuseOpinion("");
+      setRefuseConfirmOpen(true);
+      return;
+    }
+    onApprove(`已${action}`);
+  };
+  const visibleLogs = hideFinalLog && !isRejected && !isRevoked && !isResubmitted && !isApproved && !isRefused && !(process.actionLogs?.length) ? logs.slice(0, -1) : logs;
+  const submitTransfer = (event) => {
+    event.preventDefault();
+    if (!transferPerson) return;
+    onApprove("已转办", { target: transferPerson, reason: transferReason });
+    setTransferOpen(false);
+    setTransferPickerOpen(false);
+    setTransferReason("");
+  };
+  const submitAddSigner = (event) => {
+    event.preventDefault();
+    if (!addSigners.length) return;
+    onApprove("已加签", { targets: addSigners, reason: addSignerReason });
+    setAddSignerOpen(false);
+    setAddSignerPickerOpen(false);
+    setAddSigners([]);
+    setAddSignerReason("");
+  };
+  const submitReturn = (event) => {
+    event.preventDefault();
+    if (!returnTarget) return;
+    onApprove("已驳回", { target: returnTarget, reason: returnReason });
+    setReturnOpen(false);
+    setReturnTarget(null);
+    setReturnReason("");
+  };
   return (
-    <div
+    <>
+      <div
       className="process-dialog-layer"
-      onMouseDown={onClose}
+      onMouseDown={closeProcessDialog}
       role="presentation"
     >
       <section
@@ -1476,120 +1803,423 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false }
         onMouseDown={(event) => event.stopPropagation()}
       >
         <header>
-          <div>
-            <p>流程审批</p>
-            <h2 id="process-dialog-title">{process.name}</h2>
-            <span
-              className={
-                process.status === "待审批"
-                  ? "process-status pending"
-                  : "process-status"
-              }
-            >
-              {process.status}
-            </span>
-          </div>
+          <h2 id="process-dialog-title">{process.name}</h2>
           <button
             className="process-dialog-close"
             aria-label="关闭流程审批"
-            onClick={onClose}
+            onClick={closeProcessDialog}
           >
             <DismissRegular />
           </button>
         </header>
-        <div className="process-dialog-body">
-          <section className="process-dialog-section">
-            <h3>流程关键信息</h3>
-            <div className="process-info-grid">
-              <span>
-                <b>发起人</b>
-                {process.initiator}
-              </span>
-              <span>
-                <b>发起时间</b>
-                {process.initiatedAt}
-              </span>
-              <span>
-                <b>所属部门</b>
-                {process.department}
-              </span>
-              <span>
-                <b>当前节点</b>
-                {process.currentNode}
-              </span>
-              <span>
-                <b>审批人</b>
-                {process.approver}
-              </span>
-              <span>
-                <b>申请金额</b>
-                {process.amount}
-              </span>
-            </div>
-          </section>
-          <section className="process-dialog-section">
-            <h3>审批流程图</h3>
-            <div className="process-flowchart" aria-label="审批流程图">
-              {nodes.map((node, index) => (
-                <div
-                  key={node}
-                  className={
-                    index < 2
-                      ? "flow-node done"
-                      : index === 2
-                        ? "flow-node active"
-                        : "flow-node"
-                  }
-                >
-                  <span>{index + 1}</span>
-                  <b>{node}</b>
-                  {index < nodes.length - 1 ? <i /> : null}
+        <div className={`process-dialog-body${canResumeDraft ? " draft-detail" : ""}`}>
+          <div className="process-approval-main">
+            <section className="process-approval-form">
+              <h3>申请单</h3>
+              <div className="process-approval-fields">
+                {formFields.map(([label, value]) => (
+                  <span key={label}>
+                    <b>{label}</b>
+                    {value || "-"}
+                  </span>
+                ))}
+              </div>
+              <label className="process-approval-description">
+                申请说明
+                <textarea
+                  rows="5"
+                  readOnly
+                  defaultValue={`${process.name}相关事项，请按流程审核处理。`}
+                />
+              </label>
+              {canRevoke && !isRejected && !isRevoked ? (
+                <div className="process-initiated-actions">
+                  <button type="button" onClick={() => handleApprovalAction("撤销")}>撤销</button>
                 </div>
-              ))}
+              ) : null}
+              {canResumeDraft ? (
+                <div className="process-draft-detail-actions">
+                  <button type="button" onClick={() => onResumeDraft?.(process)}>继续填报</button>
+                </div>
+              ) : null}
+            </section>
+            {isRejected && canRevoke ? (
+              <div className="process-rejected-actions">
+                <button type="button" onClick={() => handleApprovalAction("撤销")}>撤销</button>
+                <button type="button" className="primary" onClick={() => onResubmit?.(process)}>重新提交</button>
+              </div>
+            ) : !viewOnly ? (
+              <section className="process-approval-opinion">
+                <h3>审批意见</h3>
+                <textarea rows="5" placeholder="请输入审批意见" />
+                <div className="process-approval-actions">
+                  <button type="button" onClick={() => handleApprovalAction("转办")}>转办</button>
+                  <button type="button" onClick={() => handleApprovalAction("加签")}>加签</button>
+                  <button type="button" className="danger" onClick={() => handleApprovalAction("退回")}>驳回</button>
+                  <button type="button" className="danger" onClick={() => handleApprovalAction("拒绝")}>拒绝</button>
+                  <button type="button" className="primary" onClick={() => handleApprovalAction("同意")}>同意</button>
+                </div>
+              </section>
+            ) : null}
+          </div>
+          {!canResumeDraft ? (
+            <section className="process-approval-log">
+              <header>
+                <h3>流程日志</h3>
+                <button type="button" onClick={() => setFlowchartOpen(true)}>流程图</button>
+              </header>
+              <ol>
+                {visibleLogs.map((log) => (
+                  <li key={log.title}>
+                    <span className={log.state} />
+                    <div>
+                      <div className="process-log-entry-heading">
+                        <b>{log.title}</b>
+                        <span className="process-log-entry-meta">
+                          {!log.hideTime ? <time>{log.time}</time> : null}
+                          {log.action ? (
+                            <span className="process-log-action">{log.action}</span>
+                          ) : null}
+                        </span>
+                      </div>
+                      {log.details.map((detail) => <p key={detail}>{detail}</p>)}
+                    </div>
+                  </li>
+                ))}
+              </ol>
+            </section>
+          ) : null}
+        </div>
+      </section>
+      </div>
+      {flowchartOpen ? (
+        <div
+          className="process-flowchart-map-layer"
+          role="presentation"
+          onMouseDown={() => setFlowchartOpen(false)}
+        >
+          <section
+            className="process-flowchart-map-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="process-flowchart-map-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <header>
+              <h2 id="process-flowchart-map-title">流程图</h2>
+              <button
+                type="button"
+                className="process-dialog-close"
+                aria-label="关闭流程图"
+                onClick={() => setFlowchartOpen(false)}
+              >
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="process-flowchart-map" aria-label={`${process.name}流程图`}>
+              <i className="flowchart-map-link start-down" />
+              <i className="flowchart-map-link main-down" />
+              <i className="flowchart-map-link main-right" />
+              <i className="flowchart-map-link secondary-right" />
+              <div className="flowchart-map-node start">
+                <CheckmarkCircle24Regular />
+                <b>{process.name}</b>
+              </div>
+              <div className="flowchart-map-node approval active">
+                <People24Regular />
+                <b>设备主管审批</b>
+              </div>
+              <div className="flowchart-map-node copy first-copy">
+                <ArrowRight24Regular />
+                <b>抄送节点</b>
+              </div>
+              <div className="flowchart-map-node approval manager">
+                <People24Regular />
+                <b>总经理审批</b>
+              </div>
+              <div className="flowchart-map-node copy second-copy">
+                <ArrowRight24Regular />
+                <b>抄送节点</b>
+              </div>
             </div>
-          </section>
-          <section className="process-dialog-section process-log-section">
-            <h3>审批日志</h3>
-            <ol>
-              {logs.map((log) => (
-                <li key={log.title}>
-                  <time>{log.time}</time>
-                  <span className={log.state} />
-                  <div>
-                    <b>{log.title}</b>
-                    <p>{log.detail}</p>
-                  </div>
-                </li>
-              ))}
-            </ol>
           </section>
         </div>
-        <footer>
-          <span>{viewOnly ? "流程记录仅供查看。" : "审批意见将同步写入流程日志。"}</span>
-          <div>
-            {!viewOnly ? (
+      ) : null}
+      {revokeConfirmOpen ? (
+        <div
+          className="process-revoke-layer"
+          role="presentation"
+          onMouseDown={() => setRevokeConfirmOpen(false)}
+        >
+          <section
+            className="process-revoke-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="process-revoke-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <header>
+              <h2 id="process-revoke-title">确认撤销</h2>
               <button
-                className="process-reject"
-                onClick={() => onApprove("已退回")}
+                type="button"
+                className="process-dialog-close"
+                aria-label="关闭撤销确认"
+                onClick={() => setRevokeConfirmOpen(false)}
               >
-                退回
+                <DismissRegular />
               </button>
-            ) : null}
-            <button
-              className="process-approve"
-              onClick={viewOnly ? onClose : () => onApprove("已同意")}
-            >
-              {viewOnly ? "关闭" : <><CheckmarkCircle24Regular /> 同意并提交</>}
-            </button>
-          </div>
-        </footer>
-      </section>
-    </div>
+            </header>
+            <p>撤销后，流程将终止，无法再次发起，确定要撤销吗？</p>
+            <footer>
+              <button type="button" onClick={() => setRevokeConfirmOpen(false)}>取消</button>
+              <button
+                type="button"
+                onClick={() => {
+                  setRevokeConfirmOpen(false);
+                  onApprove("已撤销");
+                }}
+              >
+                确定撤销
+              </button>
+            </footer>
+          </section>
+        </div>
+      ) : null}
+      {refuseConfirmOpen ? (
+        <div
+          className="process-refuse-layer"
+          role="presentation"
+          onMouseDown={() => setRefuseConfirmOpen(false)}
+        >
+          <section
+            className="process-refuse-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="process-refuse-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <header>
+              <h2 id="process-refuse-title">确认拒绝</h2>
+              <button
+                type="button"
+                className="process-dialog-close"
+                aria-label="关闭拒绝确认"
+                onClick={() => setRefuseConfirmOpen(false)}
+              >
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="process-refuse-body">
+              <label>
+                拒绝意见
+                <textarea
+                  rows="4"
+                  value={refuseOpinion}
+                  onChange={(event) => setRefuseOpinion(event.target.value)}
+                  placeholder="请输入拒绝意见"
+                />
+              </label>
+              <p>拒绝后该流程终止，无法修改，确认要拒绝吗？</p>
+            </div>
+            <footer>
+              <button type="button" onClick={() => setRefuseConfirmOpen(false)}>取消</button>
+              <button
+                type="button"
+                onClick={() => {
+                  onApprove("已拒绝", refuseOpinion.trim());
+                  setRefuseConfirmOpen(false);
+                  setRefuseOpinion("");
+                }}
+              >
+                确定拒绝
+              </button>
+            </footer>
+          </section>
+        </div>
+      ) : null}
+      {transferOpen ? (
+        <div
+          className="process-transfer-layer"
+          role="presentation"
+          onMouseDown={() => setTransferOpen(false)}
+        >
+          <form
+            className="process-transfer-dialog"
+            onSubmit={submitTransfer}
+            onMouseDown={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="process-transfer-title"
+          >
+            <header>
+              <h2 id="process-transfer-title">转办流程</h2>
+              <button
+                type="button"
+                className="process-dialog-close"
+                aria-label="关闭转办弹窗"
+                onClick={() => setTransferOpen(false)}
+              >
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="process-transfer-body">
+              <label>
+                <span className="process-transfer-label"><em>*</em> 转办人</span>
+                <button
+                  type="button"
+                  className="process-transfer-person"
+                  onClick={() => setTransferPickerOpen(true)}
+                >
+                  {transferPerson
+                    ? `${transferPerson.name} · ${transferPerson.department}`
+                    : "请选择转办人"}
+                  <ChevronRight24Regular />
+                </button>
+              </label>
+              <label>
+                转办原因
+                <textarea
+                  rows="4"
+                  value={transferReason}
+                  onChange={(event) => setTransferReason(event.target.value)}
+                  placeholder="请输入转办原因"
+                />
+              </label>
+            </div>
+            <footer>
+              <button type="button" onClick={() => setTransferOpen(false)}>取消</button>
+              <button type="submit" disabled={!transferPerson}>确认转办</button>
+            </footer>
+          </form>
+        </div>
+      ) : null}
+      {addSignerOpen ? (
+        <div
+          className="process-transfer-layer"
+          role="presentation"
+          onMouseDown={() => setAddSignerOpen(false)}
+        >
+          <form
+            className="process-transfer-dialog"
+            onSubmit={submitAddSigner}
+            onMouseDown={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="process-add-signer-title"
+          >
+            <header>
+              <h2 id="process-add-signer-title">加签流程</h2>
+              <button
+                type="button"
+                className="process-dialog-close"
+                aria-label="关闭加签弹窗"
+                onClick={() => setAddSignerOpen(false)}
+              >
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="process-transfer-body">
+              <label>
+                <span className="process-transfer-label"><em>*</em> 加签人</span>
+                <button
+                  type="button"
+                  className="process-transfer-person"
+                  onClick={() => setAddSignerPickerOpen(true)}
+                >
+                  {addSigners.length
+                    ? addSigners.map((user) => user.name).join("、")
+                    : "请选择加签人"}
+                  <ChevronRight24Regular />
+                </button>
+              </label>
+              <label>
+                加签原因
+                <textarea
+                  rows="4"
+                  value={addSignerReason}
+                  onChange={(event) => setAddSignerReason(event.target.value)}
+                  placeholder="请输入加签原因"
+                />
+              </label>
+            </div>
+            <footer>
+              <button type="button" onClick={() => setAddSignerOpen(false)}>取消</button>
+              <button type="submit" disabled={!addSigners.length}>确认加签</button>
+            </footer>
+          </form>
+        </div>
+      ) : null}
+      {returnOpen ? (
+        <div
+          className="process-transfer-layer"
+          role="presentation"
+          onMouseDown={() => setReturnOpen(false)}
+        >
+          <form
+            className="process-transfer-dialog"
+            onSubmit={submitReturn}
+            onMouseDown={(event) => event.stopPropagation()}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="process-return-title"
+          >
+            <header>
+              <h2 id="process-return-title">驳回流程</h2>
+              <button type="button" className="process-dialog-close" aria-label="关闭驳回弹窗" onClick={() => setReturnOpen(false)}><DismissRegular /></button>
+            </header>
+            <div className="process-transfer-body">
+              <label>
+                <span className="process-transfer-label"><em>*</em> 驳回至</span>
+                <select
+                  className="process-return-target-select"
+                  value={returnTarget?.id ?? ""}
+                  onChange={(event) => setReturnTarget(returnTargets.find((target) => target.id === event.target.value) ?? null)}
+                >
+                  <option value="">请选择驳回对象</option>
+                  {returnTargets.map((target) => <option key={target.id} value={target.id}>{target.label}</option>)}
+                </select>
+              </label>
+              <label>
+                驳回原因
+                <textarea rows="4" value={returnReason} onChange={(event) => setReturnReason(event.target.value)} placeholder="请输入驳回原因" />
+              </label>
+            </div>
+            <footer>
+              <button type="button" onClick={() => setReturnOpen(false)}>取消</button>
+              <button type="submit" disabled={!returnTarget}>确认驳回</button>
+            </footer>
+          </form>
+        </div>
+      ) : null}
+      {transferPickerOpen ? (
+        <SinglePersonPickerDialog
+          organizations={processTransferOrganizations}
+          users={processTransferUsers}
+          selectedUser={transferPerson}
+          onSelect={setTransferPerson}
+          onClose={() => setTransferPickerOpen(false)}
+          title="选择转办人"
+          selectedLabel="已选转办人"
+        />
+      ) : null}
+      {addSignerPickerOpen ? (
+        <MultiPersonPickerDialog
+          organizations={processTransferOrganizations}
+          users={processTransferUsers}
+          selectedUsers={addSigners}
+          onSelect={setAddSigners}
+          onClose={() => setAddSignerPickerOpen(false)}
+          title="选择加签人"
+          selectedLabel="已选加签人"
+        />
+      ) : null}
+    </>
   );
 }
 
 function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   const [selectedProcess, setSelectedProcess] = useState(null);
+  const [processRecords, setProcessRecords] = useState(processEntries);
   const [processFilter, setProcessFilter] = useState(initialFilter);
   const [processFilters, setProcessFilters] = useState({
     number: "",
@@ -1600,6 +2230,10 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   const [processLibraryTab, setProcessLibraryTab] = useState("全部");
   const [processLibraryKeyword, setProcessLibraryKeyword] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState(null);
+  const [selectedDraft, setSelectedDraft] = useState(null);
+  const [formMode, setFormMode] = useState("new");
+  const [draftRestore, setDraftRestore] = useState(null);
+  const [selectedDraftId, setSelectedDraftId] = useState("");
   const [formFullscreen, setFormFullscreen] = useState(false);
   const [flowchartDialog, setFlowchartDialog] = useState(false);
   const processTemplates = [
@@ -1616,27 +2250,31 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   const processTabs = {
     待审批: {
       filters: ["number", "title", "type"],
-      columns: ["number", "title", "type", "initiator", "urgency", "arrivalAt"],
+      columns: ["number", "title", "application", "initiator", "initiatedAt", "arrivalAt", "status"],
     },
     已审批: {
       filters: ["number", "type"],
-      columns: ["number", "title", "type", "initiator", "urgency", "arrivalAt", "completedAt", "duration", "result"],
+      columns: ["number", "title", "application", "initiator", "initiatedAt", "completedAt", "result", "status"],
     },
-    抄送给我: {
+    抄送我的: {
       filters: ["number", "title"],
-      columns: ["number", "title", "type", "initiator", "urgency", "sentAt", "endedAt", "status"],
+      columns: ["number", "title", "application", "initiator", "initiatedAt", "sentAt", "status"],
     },
     我发起的: {
       filters: ["number", "status"],
-      columns: ["number", "title", "type", "urgency", "currentNode", "initiatedAt", "endedAt", "duration", "status"],
+      columns: ["number", "title", "application", "initiatedAt", "currentNode", "status"],
+    },
+    草稿箱: {
+      filters: ["title"],
+      columns: ["title", "application", "initiatedAt", "status"],
     },
   };
   const columnLabels = {
     number: "流程编号",
     title: "标题",
+    application: "所属应用",
     type: "流程类型",
     initiator: "发起人",
-    urgency: "紧急程度",
     arrivalAt: "流程到达时间",
     completedAt: "处理完成时间",
     duration: "处理耗时",
@@ -1648,8 +2286,20 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
     initiatedAt: "发起时间",
   };
   const columnLabel = (column) => {
-    if (processFilter === "已审批" && column === "title") return "流程标题";
-    if (processFilter === "已审批" && column === "arrivalAt") return "任务到达时间";
+    if (processFilter === "待审批" && column === "title") return "流程名称";
+    if (processFilter === "待审批" && column === "status") return "当前状态";
+    if (processFilter === "已审批" && column === "title") return "流程名称";
+    if (processFilter === "已审批" && column === "completedAt") return "处理时间";
+    if (processFilter === "已审批" && column === "result") return "我的处理";
+    if (processFilter === "已审批" && column === "status") return "当前状态";
+    if (processFilter === "抄送我的" && column === "title") return "流程名称";
+    if (processFilter === "抄送我的" && column === "sentAt") return "抄送时间";
+    if (processFilter === "抄送我的" && column === "status") return "当前状态";
+    if (processFilter === "我发起的" && column === "title") return "流程名称";
+    if (processFilter === "我发起的" && column === "status") return "当前状态";
+    if (processFilter === "草稿箱" && column === "title") return "流程名称";
+    if (processFilter === "草稿箱" && column === "initiatedAt") return "保存时间";
+    if (processFilter === "草稿箱" && column === "status") return "状态";
     return columnLabels[column];
   };
   const activeTab = processTabs[processFilter];
@@ -1663,27 +2313,28 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   const processDetails = (process) => ({
     number: `LC-2026-${process.id.replace("flow-", "0")}`,
     title: process.name,
+    application: process.application ?? "综合管理",
     type: process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批",
     initiator: process.initiator,
-    urgency: process.urgency,
     arrivalAt: process.initiatedAt,
     completedAt: process.handledByMe ? "今天 10:18" : "-",
     duration: process.handledByMe ? "42 分钟" : "进行中",
-    result: process.handledByMe ? "同意" : "-",
+    result: process.handledByMe ? (process.handledResult ?? "同意") : "-",
     sentAt: process.initiatedAt,
-    endedAt: process.status === "审批中" ? "-" : "进行中",
+    endedAt: ["审批中", "已撤销"].includes(process.status) ? "-" : process.draft ? "-" : "进行中",
     status: process.status,
     currentNode: process.currentNode,
     initiatedAt: process.initiatedAt,
   });
-  const visibleProcesses = processEntries.filter((process) => {
+  const visibleProcesses = processRecords.filter((process) => {
     const matchesFilter =
       (processFilter === "待审批" &&
-        process.status === "待审批" &&
+        ["待审批", "审批中"].includes(process.status) &&
         process.approver === "张宇") ||
       (processFilter === "已审批" && process.handledByMe) ||
-      (processFilter === "抄送给我" && process.ccToMe) ||
-      (processFilter === "我发起的" && process.startedByMe);
+      (processFilter === "抄送我的" && process.ccToMe) ||
+      (processFilter === "我发起的" && process.startedByMe) ||
+      (processFilter === "草稿箱" && process.draft);
     const details = processDetails(process);
     return (
       matchesFilter &&
@@ -1693,9 +2344,161 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
       (!processFilters.status || details.status === processFilters.status)
     );
   });
-  const approve = (result) => {
+  const approve = (result, payload = {}) => {
+    const actionPayload = typeof payload === "string" ? { opinion: payload } : payload;
+    if (result === "已撤销") {
+      setProcessRecords((current) =>
+        current.map((process) =>
+          process.id === selectedProcess.id
+            ? {
+                ...process,
+                status: "已撤销",
+                startedByMe: true,
+                currentNode: "流程已撤销",
+                revokedBy: "张宇",
+                revokedAt: "2026-08-28 10:36:00",
+              }
+            : process,
+        ),
+      );
+    }
+    if (result === "已拒绝") {
+      setProcessRecords((current) =>
+        current.map((process) =>
+          process.id === selectedProcess.id
+            ? {
+                ...process,
+                status: "已拒绝",
+                handledByMe: true,
+                handledResult: "拒绝",
+                finalOperator: "张宇",
+                refusalOpinion: actionPayload.opinion ?? "",
+                currentNode: "流程已结束",
+              }
+            : process,
+        ),
+      );
+    }
+    if (result === "已转办") {
+      setProcessRecords((current) =>
+        current.map((process) =>
+          process.id === selectedProcess.id
+            ? {
+                ...process,
+                status: "审批中",
+                approver: actionPayload.target?.name ?? process.approver,
+                currentNode: "转办审批",
+                handledByMe: true,
+                handledResult: "转办",
+                actionLogs: [...(process.actionLogs ?? []), {
+                  time: "2026-08-28 11:00:00",
+                  title: "转办",
+                  details: [`张宇已转办给${actionPayload.target?.name ?? "处理人"}`, `转办原因：${actionPayload.reason || "未填写"}`],
+                  action: "转办",
+                  state: "done",
+                }],
+              }
+            : process,
+        ),
+      );
+    }
+    if (result === "已加签") {
+      setProcessRecords((current) =>
+        current.map((process) =>
+          process.id === selectedProcess.id
+            ? {
+                ...process,
+                actionLogs: [...(process.actionLogs ?? []), {
+                  time: "2026-08-28 11:02:00",
+                  title: "加签",
+                  details: [`张宇已加签给${actionPayload.targets?.map((user) => user.name).join("、") || "处理人"}`, `加签原因：${actionPayload.reason || "未填写"}`],
+                  action: "加签",
+                  state: "done",
+                }],
+              }
+            : process,
+        ),
+      );
+    }
+    if (result === "已驳回") {
+      setProcessRecords((current) =>
+        current.map((process) =>
+          process.id === selectedProcess.id
+            ? {
+                ...process,
+                status: "已驳回",
+                currentNode: `已驳回至${actionPayload.target?.label ?? "上一节点"}`,
+                handledByMe: true,
+                handledResult: "驳回",
+                rejectedBy: "张宇",
+                rejectionOpinion: actionPayload.reason || "未填写",
+                actionLogs: [...(process.actionLogs ?? []), {
+                  time: "2026-08-28 11:05:00",
+                  title: "驳回",
+                  details: [`张宇已驳回至${actionPayload.target?.label ?? "上一节点"}`, `驳回原因：${actionPayload.reason || "未填写"}`],
+                  action: "驳回",
+                  state: "current",
+                }],
+              }
+            : process,
+        ),
+      );
+    }
     onAction(`${selectedProcess.name}${result}`);
     setSelectedProcess(null);
+  };
+  const resumeDraft = (draft) => {
+    const template = processTemplates.find((item) => item.name === draft.name) ?? {
+      category: "其他流程",
+      tone: "blue",
+      name: draft.name,
+    };
+    setSelectedProcess(null);
+    setProcessFilter("发起流程");
+    openProcessForm(template, draft);
+  };
+  const resubmitProcess = (process) => {
+    const template = processTemplates.find((item) => item.name === process.name) ?? {
+      category: "其他流程",
+      tone: "blue",
+      name: process.name,
+    };
+    setSelectedProcess(null);
+    openProcessForm(
+      {
+        ...template,
+        name: process.name,
+      },
+      {
+        ...process,
+        description: "请根据驳回意见核对并完善申请信息后重新提交。",
+      },
+      "resubmit",
+    );
+  };
+  const openProcessForm = (template, draft = null, mode = "restore") => {
+    setSelectedTemplate(template);
+    setSelectedDraft(draft);
+    setFormMode(draft ? mode : "new");
+    setDraftRestore(null);
+    setFormFullscreen(false);
+    setFlowchartDialog(false);
+  };
+  const selectProcessTemplate = (template) => {
+    const matchingDrafts = processEntries.filter(
+      (process) => process.draft && process.name === template.name,
+    );
+    if (matchingDrafts.length) {
+      setDraftRestore({ template, drafts: matchingDrafts });
+      setSelectedDraftId(matchingDrafts[0].id);
+      return;
+    }
+    openProcessForm(template);
+  };
+  const closeProcessForm = () => {
+    setSelectedTemplate(null);
+    setSelectedDraft(null);
+    setFlowchartDialog(false);
   };
   return (
     <section className="process-list-page" aria-labelledby="process-list-title">
@@ -1704,10 +2507,6 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
           <p>流程中心</p>
           <h1 id="process-list-title">流程列表</h1>
         </div>
-        <button onClick={() => setProcessFilter("发起流程")}>
-          <Add24Regular />
-          发起流程
-        </button>
       </header>
       <div className="process-toolbar">
         <div className="process-filter-tabs" role="tablist" aria-label="流程状态">
@@ -1757,11 +2556,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
                   {templates.length ? templates.map((template) => (
                     <button
                       key={template.name}
-                      onClick={() => {
-                        setSelectedTemplate(template);
-                        setFormFullscreen(false);
-                        setFlowchartDialog(false);
-                      }}
+                      onClick={() => selectProcessTemplate(template)}
                     >
                       {template.name}
                     </button>
@@ -1786,11 +2581,11 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
         ) : null}
         {activeTab.filters.includes("title") ? (
           <label>
-            <span>标题</span>
+            <span>{processFilter === "草稿箱" ? "流程名称" : "标题"}</span>
             <input
               value={processFilters.title}
               onChange={(event) => setProcessFilters((current) => ({ ...current, title: event.target.value }))}
-              placeholder="请输入标题"
+              placeholder={processFilter === "草稿箱" ? "请输入流程名称" : "请输入标题"}
             />
           </label>
         ) : null}
@@ -1829,8 +2624,8 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
               const value = processDetails(process)[column];
               return column === "title" ? (
                 <button key={column} className="process-name-link" onClick={() => setSelectedProcess(process)}>{value}</button>
-              ) : column === "status" || column === "urgency" || column === "result" ? (
-                <i key={column} className={value === "待审批" || value === "紧急" ? "pending" : ""}>{value}</i>
+              ) : column === "status" || column === "result" ? (
+                <i key={column} className={["已驳回", "已拒绝"].includes(value) ? "rejected" : ["待审批", "审批中"].includes(value) ? "pending" : ""}>{value}</i>
               ) : <span key={column}>{value}</span>;
             })}
             <button
@@ -1853,16 +2648,88 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
         onClose={() => setSelectedProcess(null)}
         onApprove={approve}
         viewOnly={processFilter !== "待审批"}
+        canRevoke={processFilter === "我发起的"}
+        canResumeDraft={processFilter === "草稿箱"}
+        hideFinalLog={["已审批", "我发起的"].includes(processFilter)}
+        onResumeDraft={resumeDraft}
+        onResubmit={resubmitProcess}
       />
-      {selectedTemplate ? (
-        <div className="process-form-layer" onMouseDown={() => { setSelectedTemplate(null); setFlowchartDialog(false); }} role="presentation">
-          <form className={`process-form-dialog${formFullscreen ? " fullscreen" : ""}`} onMouseDown={(event) => event.stopPropagation()} onSubmit={(event) => { event.preventDefault(); onAction(`已发起流程：${selectedTemplate.name}`); setSelectedTemplate(null); setFlowchartDialog(false); }}>
+      {draftRestore ? (
+        <div
+          className="process-draft-restore-layer"
+          role="presentation"
+          onMouseDown={() => setDraftRestore(null)}
+        >
+          <section
+            className="process-draft-restore-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="draft-restore-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
             <header>
-              <div><p>发起流程</p><h2>{selectedTemplate.name}</h2></div>
+              <div>
+                <p>草稿箱提醒</p>
+                <h2 id="draft-restore-title">发现同名流程草稿</h2>
+              </div>
+              <button
+                type="button"
+                className="process-dialog-close"
+                aria-label="关闭草稿提醒"
+                onClick={() => setDraftRestore(null)}
+              >
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="process-draft-restore-body">
+              <p>
+                当前草稿箱内有 {draftRestore.drafts.length} 条“{draftRestore.template.name}”草稿，请选择恢复继续填报，或重新发起新的流程。
+              </p>
+              <div className="process-draft-options" role="radiogroup" aria-label="选择要恢复的流程草稿">
+                {draftRestore.drafts.map((draft) => (
+                  <label key={draft.id} className={selectedDraftId === draft.id ? "selected" : ""}>
+                    <input
+                      type="radio"
+                      name="process-draft"
+                      value={draft.id}
+                      checked={selectedDraftId === draft.id}
+                      onChange={() => setSelectedDraftId(draft.id)}
+                    />
+                    <span>
+                      <b>{draft.name}</b>
+                      <small>最后保存：{draft.initiatedAt}</small>
+                    </span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <footer>
+              <button type="button" className="process-reject" onClick={() => openProcessForm(draftRestore.template)}>
+                重新发起
+              </button>
+              <button
+                type="button"
+                className="process-approve"
+                onClick={() => {
+                  const draft = draftRestore.drafts.find((item) => item.id === selectedDraftId);
+                  openProcessForm(draftRestore.template, draft);
+                }}
+              >
+                恢复并继续填报
+              </button>
+            </footer>
+          </section>
+        </div>
+      ) : null}
+      {selectedTemplate ? (
+        <div className="process-form-layer" onMouseDown={closeProcessForm} role="presentation">
+          <form className={`process-form-dialog${formFullscreen ? " fullscreen" : ""}`} onMouseDown={(event) => event.stopPropagation()} onSubmit={(event) => { event.preventDefault(); if (formMode === "resubmit" && selectedDraft?.id) { setProcessRecords((current) => current.map((process) => process.id === selectedDraft.id ? { ...process, status: "审批中", currentNode: "分管领导审批", resubmitted: true } : process)); } onAction(`${formMode === "resubmit" ? "已重新提交流程" : "已发起流程"}：${selectedTemplate.name}`); closeProcessForm(); }}>
+            <header>
+              <div><p>{selectedDraft ? formMode === "resubmit" ? "重新提交" : "恢复草稿" : "发起流程"}</p><h2>{selectedTemplate.name}</h2></div>
               <div>
                 <button type="button" className="process-form-text-action" onClick={() => setFlowchartDialog(true)}>查看流程图</button>
                 <button type="button" className="process-form-text-action" onClick={() => setFormFullscreen((current) => !current)}>{formFullscreen ? "退出全屏" : "全屏"}</button>
-                <button type="button" className="process-dialog-close" aria-label="关闭流程表单" onClick={() => { setSelectedTemplate(null); setFlowchartDialog(false); }}><DismissRegular /></button>
+                <button type="button" className="process-dialog-close" aria-label="关闭流程表单" onClick={closeProcessForm}><DismissRegular /></button>
               </div>
             </header>
             <div className="process-form-body">
@@ -1870,15 +2737,14 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
                 <h3>申请信息</h3>
                 <div className="process-form-grid">
                   <label>申请标题<input defaultValue={selectedTemplate.name} /></label>
-                  <label>申请部门<select defaultValue="安全管理部"><option>安全管理部</option><option>生产管理部</option><option>设备管理部</option></select></label>
-                  <label>紧急程度<select defaultValue="常规"><option>常规</option><option>紧急</option></select></label>
+                  <label>申请部门<select defaultValue={selectedDraft?.department ?? "安全管理部"}><option>安全管理部</option><option>生产管理部</option><option>设备管理部</option></select></label>
                   <label>申请人<input defaultValue="张宇" disabled /></label>
-                  <label className="wide">申请说明<textarea rows="5" placeholder="请填写申请事由、工作安排及需要说明的事项" /></label>
+                  <label className="wide">申请说明<textarea rows="5" defaultValue={selectedDraft?.description ?? ""} placeholder="请填写申请事由、工作安排及需要说明的事项" /></label>
                   <label className="wide">相关附件<input type="file" /></label>
                 </div>
               </section>
             </div>
-            <footer><span>请确认信息无误后再发起流程。</span><div><button type="button" className="process-reject" onClick={() => { setSelectedTemplate(null); setFlowchartDialog(false); }}>取消</button><button type="submit" className="process-approve">发起流程</button></div></footer>
+            <footer><span>{selectedDraft ? formMode === "resubmit" ? "请根据驳回意见核对信息后重新提交。" : `正在恢复 ${selectedDraft.initiatedAt} 保存的草稿。` : "请确认信息无误后再发起流程。"}</span><div><button type="button" className="process-reject" onClick={closeProcessForm}>取消</button><button type="submit" className="process-approve">{formMode === "resubmit" ? "重新提交" : "发起流程"}</button></div></footer>
           </form>
         </div>
       ) : null}
@@ -2271,6 +3137,13 @@ const preventionForms = [
 
 const preventionApprovalFlows = [
   {
+    title: "员工离职申请",
+    detail: "隐患排查审批",
+    icon: ApprovalsApp24Regular,
+    tone: "blue",
+    kind: "approval",
+  },
+  {
     title: "平巷凿岩作业隐患排查审批流程",
     detail: "隐患排查审批",
     icon: ApprovalsApp24Regular,
@@ -2318,15 +3191,24 @@ function DualPreventionPage({
   onSwitchApplication,
   initialFormTitle = preventionForms[0].title,
   initialOpenForm = false,
+  initialFormSource = preventionApprovalFlows.some(
+    (form) => form.title === initialFormTitle,
+  )
+    ? "隐患排查审批流程"
+    : "岗位隐患排查清单",
 }) {
-  const [selectedItem, setSelectedItem] = useState("岗位隐患排查清单");
+  const [selectedItem, setSelectedItem] = useState(initialFormSource);
   const [activeForm, setActiveForm] = useState(initialOpenForm);
   const [selectedForm, setSelectedForm] = useState(initialFormTitle);
   const [submitted, setSubmitted] = useState(false);
   const [inspectionTab, setInspectionTab] = useState("页面");
-  const [formSource, setFormSource] = useState("岗位隐患排查清单");
+  const [formSource, setFormSource] = useState(initialFormSource);
+  const [approvalDraftRestore, setApprovalDraftRestore] = useState(null);
+  const [selectedApprovalDraft, setSelectedApprovalDraft] = useState(null);
+  const [selectedApprovalDraftId, setSelectedApprovalDraftId] = useState("");
   const [inspectionRecords, setInspectionRecords] = useState(initialInspectionRecords);
-  const [selectedRecordIds, setSelectedRecordIds] = useState([]);
+  const [inspectionFilterDraft, setInspectionFilterDraft] = useState({ reporter: "", date: "", shift: "" });
+  const [inspectionFilters, setInspectionFilters] = useState({ reporter: "", date: "", shift: "" });
   const importInputRef = useRef(null);
   const selectedLabel = selectedItem;
   const allPreventionForms = [...preventionForms, ...preventionApprovalFlows];
@@ -2334,15 +3216,33 @@ function DualPreventionPage({
     allPreventionForms.find((form) => form.title === selectedForm) ??
     preventionForms[0];
   const isApprovalFlow = activeFormRecord.kind === "approval";
+  const openFormDirect = (
+    form = preventionForms[0],
+    source = "岗位隐患排查清单",
+    draft = null,
+  ) => {
+    setSelectedForm(form.title);
+    setFormSource(source);
+    setSelectedApprovalDraft(draft);
+    setActiveForm(true);
+    setSubmitted(false);
+    setInspectionTab("页面");
+  };
   const openForm = (
     form = preventionForms[0],
     source = "岗位隐患排查清单",
   ) => {
-    setSelectedForm(form.title);
-    setFormSource(source);
-    setActiveForm(true);
-    setSubmitted(false);
-    setInspectionTab("页面");
+    const matchingDrafts = form.kind === "approval"
+      ? processEntries.filter(
+        (process) => process.draft && process.name === form.title,
+      )
+      : [];
+    if (matchingDrafts.length) {
+      setApprovalDraftRestore({ form, source, drafts: matchingDrafts });
+      setSelectedApprovalDraftId(matchingDrafts[0].id);
+      return;
+    }
+    openFormDirect(form, source);
   };
   const submitForm = (event) => {
     event.preventDefault();
@@ -2353,20 +3253,14 @@ function DualPreventionPage({
       }`,
     );
   };
-  const toggleRecord = (recordId) => {
-    setSelectedRecordIds((current) =>
-      current.includes(recordId)
-        ? current.filter((id) => id !== recordId)
-        : [...current, recordId],
-    );
-  };
-  const removeRecords = (recordIds) => {
-    setInspectionRecords((current) => current.filter((record) => !recordIds.includes(record.id)));
-    setSelectedRecordIds((current) => current.filter((id) => !recordIds.includes(id)));
-  };
-  const exportRecords = () => {
+  const filteredInspectionRecords = inspectionRecords.filter((record) =>
+    (!inspectionFilters.reporter || record.reporter.includes(inspectionFilters.reporter))
+    && (!inspectionFilters.date || record.date === inspectionFilters.date)
+    && (!inspectionFilters.shift || record.shift === inspectionFilters.shift),
+  );
+  const exportRecords = (records = inspectionRecords) => {
     const headers = ["填报人", "检查日期", "作业班次", "作业地点", "凿岩设备防护装置完好", "作业面通风与照明符合要求", "人员防护用品佩戴规范", "隐患描述与整改建议", "填报状态"];
-    const rows = inspectionRecords.map((record) => [record.reporter, record.date, record.shift, record.location, record.equipment, record.environment, record.protection, record.description, record.status]);
+    const rows = records.map((record) => [record.reporter, record.date, record.shift, record.location, record.equipment, record.environment, record.protection, record.description, record.status]);
     const csv = [headers, ...rows].map((row) => row.map((value) => `"${String(value).replaceAll('"', '""')}"`).join(",")).join("\n");
     const link = document.createElement("a");
     link.href = URL.createObjectURL(new Blob([`\ufeff${csv}`], { type: "text/csv;charset=utf-8" }));
@@ -2624,6 +3518,7 @@ function DualPreventionPage({
                   <textarea
                     name="description"
                     rows="3"
+                    defaultValue={selectedApprovalDraft?.description ?? ""}
                     placeholder="如发现隐患，请填写具体位置、问题描述及建议措施。"
                   />
                 </label>
@@ -2666,8 +3561,58 @@ function DualPreventionPage({
                     <p>历史填报数据</p>
                     <h2>{activeFormRecord.title}</h2>
                   </div>
-                  <span>共 {inspectionRecords.length} 条记录</span>
+                  <span>共 {filteredInspectionRecords.length} 条记录</span>
                 </header>
+                <form
+                  className="inspection-data-filter"
+                  onSubmit={(event) => {
+                    event.preventDefault();
+                    setInspectionFilters(inspectionFilterDraft);
+                  }}
+                >
+                  <label>
+                    填报人
+                    <input
+                      value={inspectionFilterDraft.reporter}
+                      maxLength={10}
+                      placeholder="请输入填报人"
+                      onChange={(event) => setInspectionFilterDraft((current) => ({ ...current, reporter: event.target.value }))}
+                    />
+                  </label>
+                  <label>
+                    检查日期
+                    <input
+                      type="date"
+                      value={inspectionFilterDraft.date}
+                      onChange={(event) => setInspectionFilterDraft((current) => ({ ...current, date: event.target.value }))}
+                    />
+                  </label>
+                  <label>
+                    作业班次
+                    <select
+                      value={inspectionFilterDraft.shift}
+                      onChange={(event) => setInspectionFilterDraft((current) => ({ ...current, shift: event.target.value }))}
+                    >
+                      <option value="">全部班次</option>
+                      <option value="早班">早班</option>
+                      <option value="中班">中班</option>
+                      <option value="夜班">夜班</option>
+                    </select>
+                  </label>
+                  <div className="inspection-filter-actions">
+                    <button type="submit" className="inspection-filter-search">搜索</button>
+                    <button
+                      type="button"
+                      onClick={() => {
+                        const emptyFilters = { reporter: "", date: "", shift: "" };
+                        setInspectionFilterDraft(emptyFilters);
+                        setInspectionFilters(emptyFilters);
+                      }}
+                    >
+                      重置
+                    </button>
+                  </div>
+                </form>
                 <div className="inspection-data-actions">
                   <div>
                     <button
@@ -2685,21 +3630,7 @@ function DualPreventionPage({
                     <button type="button" onClick={() => importInputRef.current?.click()}>
                       导入
                     </button>
-                    <button type="button" onClick={exportRecords}>导出</button>
-                    <button
-                      type="button"
-                      className="inspection-action-danger"
-                      onClick={() => {
-                        if (!selectedRecordIds.length) {
-                          onAction("请先选择需要删除的填报记录");
-                          return;
-                        }
-                        removeRecords(selectedRecordIds);
-                        onAction(`已删除 ${selectedRecordIds.length} 条填报记录`);
-                      }}
-                    >
-                      批量删除
-                    </button>
+                    <button type="button" onClick={() => exportRecords(filteredInspectionRecords)}>导出</button>
                   </div>
                   <input
                     ref={importInputRef}
@@ -2713,29 +3644,16 @@ function DualPreventionPage({
                   <table>
                     <thead>
                       <tr>
-                        <th className="inspection-select-column">
-                          <input
-                            type="checkbox"
-                            aria-label="全选填报记录"
-                            checked={inspectionRecords.length > 0 && selectedRecordIds.length === inspectionRecords.length}
-                            onChange={(event) => setSelectedRecordIds(event.target.checked ? inspectionRecords.map((record) => record.id) : [])}
-                          />
-                        </th>
-                        <th>填报人</th><th>检查日期</th><th>作业班次</th><th>作业地点</th><th>凿岩设备防护装置完好</th><th>作业面通风与照明符合要求</th><th>人员防护用品佩戴规范</th><th>隐患描述与整改建议</th><th>填报状态</th><th>操作</th>
+                        <th>填报人</th><th>检查日期</th><th>作业班次</th><th>作业地点</th><th>凿岩设备防护装置完好</th><th>作业面通风与照明符合要求</th><th>人员防护用品佩戴规范</th><th>隐患描述与整改建议</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {inspectionRecords.length ? inspectionRecords.map((record) => (
+                      {filteredInspectionRecords.length ? filteredInspectionRecords.map((record) => (
                         <tr key={record.id}>
-                          <td className="inspection-select-column"><input type="checkbox" aria-label={`选择 ${record.reporter} 的填报记录`} checked={selectedRecordIds.includes(record.id)} onChange={() => toggleRecord(record.id)} /></td>
-                          <td>{record.reporter}</td><td>{record.date}</td><td>{record.shift}</td><td>{record.location}</td><td>{record.equipment}</td><td>{record.environment}</td><td>{record.protection}</td><td>{record.description}</td><td><i>{record.status}</i></td>
-                          <td className="inspection-row-actions">
-                            <button type="button" onClick={() => { setInspectionTab("页面"); onAction(`正在修改 ${record.date} 的填报记录`); }}>修改</button>
-                            <button type="button" onClick={() => { removeRecords([record.id]); onAction("填报记录已删除"); }}>删除</button>
-                          </td>
+                          <td>{record.reporter}</td><td>{record.date}</td><td>{record.shift}</td><td>{record.location}</td><td>{record.equipment}</td><td>{record.environment}</td><td>{record.protection}</td><td>{record.description}</td>
                         </tr>
                       )) : (
-                        <tr><td colSpan="11" className="inspection-data-empty">暂无历史填报数据</td></tr>
+                        <tr><td colSpan="8" className="inspection-data-empty">暂无历史填报数据</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -2766,19 +3684,22 @@ function DualPreventionPage({
                   {(selectedItem === "隐患排查审批流程"
                     ? preventionApprovalFlows
                     : preventionForms
-                  ).map(({ title, icon: Icon, tone }) => (
+                  ).map((form) => {
+                    const { title, icon: Icon, tone } = form;
+                    return (
                     <button
                       type="button"
                       className="prevention-catalog-card"
                       key={title}
-                      onClick={() => openForm({ title }, selectedItem)}
+                      onClick={() => openForm(form, selectedItem)}
                     >
                       <span className={`prevention-form-icon ${tone}`}>
                         <Icon />
                       </span>
                       <b>{title}</b>
                     </button>
-                  ))}
+                    );
+                  })}
                 </div>
               </section>
             ) : (
@@ -2792,6 +3713,66 @@ function DualPreventionPage({
           </>
         )}
       </div>
+      {approvalDraftRestore ? (
+        <div
+          className="process-draft-restore-layer"
+          role="presentation"
+          onMouseDown={() => setApprovalDraftRestore(null)}
+        >
+          <section
+            className="process-draft-restore-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="approval-draft-restore-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <header>
+              <div>
+                <p>草稿箱提醒</p>
+                <h2 id="approval-draft-restore-title">发现同名流程草稿</h2>
+              </div>
+              <button
+                type="button"
+                className="process-dialog-close"
+                aria-label="关闭草稿提醒"
+                onClick={() => setApprovalDraftRestore(null)}
+              >
+                <DismissRegular />
+              </button>
+            </header>
+            <div className="process-draft-restore-body">
+              <p>当前草稿箱内有 {approvalDraftRestore.drafts.length} 条“{approvalDraftRestore.form.title}”草稿，请选择恢复继续填报，或重新发起新的流程。</p>
+              <div className="process-draft-options" role="radiogroup" aria-label="选择要恢复的流程草稿">
+                {approvalDraftRestore.drafts.map((draft) => (
+                  <label key={draft.id} className={selectedApprovalDraftId === draft.id ? "selected" : ""}>
+                    <input
+                      type="radio"
+                      name="approval-process-draft"
+                      value={draft.id}
+                      checked={selectedApprovalDraftId === draft.id}
+                      onChange={() => setSelectedApprovalDraftId(draft.id)}
+                    />
+                    <span><b>{draft.name}</b><small>最后保存：{draft.initiatedAt}</small></span>
+                  </label>
+                ))}
+              </div>
+            </div>
+            <footer>
+              <button type="button" className="process-reject" onClick={() => openFormDirect(approvalDraftRestore.form, approvalDraftRestore.source)}>重新发起</button>
+              <button
+                type="button"
+                className="process-approve"
+                onClick={() => {
+                  const draft = approvalDraftRestore.drafts.find((item) => item.id === selectedApprovalDraftId);
+                  openFormDirect(approvalDraftRestore.form, approvalDraftRestore.source, draft);
+                }}
+              >
+                恢复并继续填报
+              </button>
+            </footer>
+          </section>
+        </div>
+      ) : null}
     </section>
   );
 }
@@ -4022,49 +5003,219 @@ function OrganizationTree({ nodes, onAddChild, onEdit, onDelete }) {
   );
 }
 
+function SinglePersonPickerDialog({
+  organizations,
+  users,
+  selectedUser,
+  onSelect,
+  onClose,
+  title = "选择人员",
+  selectedLabel = "已选人员",
+}) {
+  const [draftUser, setDraftUser] = useState(selectedUser);
+  const [selectedOrganization, setSelectedOrganization] = useState(
+    draftUser?.organizationId ?? users[0]?.organizationId ?? organizations[0]?.id ?? "",
+  );
+  const visibleUsers = selectedOrganization
+    ? users.filter((user) => user.organizationId === selectedOrganization)
+    : users;
+  const OrganizationPickerTree = ({ nodes }) => (
+    <ul className="assignment-org-tree">
+      {nodes.map((node) => (
+        <li key={node.id}>
+          <button
+            type="button"
+            className={selectedOrganization === node.id ? "active" : ""}
+            onClick={() => setSelectedOrganization(node.id)}
+          >
+            {node.name}
+          </button>
+          {node.children?.length ? (
+            <OrganizationPickerTree nodes={node.children} />
+          ) : null}
+        </li>
+      ))}
+    </ul>
+  );
+  return (
+    <div
+      className="single-person-picker-layer"
+      onMouseDown={onClose}
+      role="presentation"
+    >
+      <section
+        className="management-dialog assign-user-dialog organization-leader-dialog"
+        onMouseDown={(event) => event.stopPropagation()}
+        role="dialog"
+        aria-modal="true"
+        aria-labelledby="single-person-picker-title"
+      >
+        <header>
+          <h2 id="single-person-picker-title">{title}</h2>
+          <button
+            type="button"
+            className="management-dialog-close"
+            aria-label={`关闭${title}弹窗`}
+            onClick={onClose}
+          >
+            <DismissRegular />
+          </button>
+        </header>
+        <div className="assign-user-body">
+          <aside>
+            <header>组织架构</header>
+            {organizations.length ? (
+              <OrganizationPickerTree nodes={organizations} />
+            ) : (
+              <p className="assign-user-empty">暂无可选组织</p>
+            )}
+          </aside>
+          <section>
+            <header>
+              人员 <span>{visibleUsers.length} 人</span>
+            </header>
+            {visibleUsers.length ? (
+              visibleUsers.map((user) => (
+                <label key={user.id}>
+                  <input
+                    type="radio"
+                    name="single-person-picker"
+                    checked={draftUser?.id === user.id}
+                    onChange={() => setDraftUser(user)}
+                  />
+                  <span>
+                    <b>{user.name}</b>
+                    <small>{user.account} · {user.department}</small>
+                  </span>
+                </label>
+              ))
+            ) : (
+              <p className="assign-user-empty">该组织暂无人员</p>
+            )}
+          </section>
+          <section>
+            <header>
+              {selectedLabel} <span>{draftUser ? "1 人" : "0 人"}</span>
+            </header>
+            {draftUser ? (
+              <div>
+                <span>
+                  <b>{draftUser.name}</b>
+                  <small>{draftUser.department || "未设置部门"}</small>
+                </span>
+                <button type="button" onClick={() => setDraftUser(null)}>移除</button>
+              </div>
+            ) : (
+              <p className="assign-user-empty">暂未选择人员</p>
+            )}
+          </section>
+        </div>
+        <footer>
+          <button type="button" className="management-dialog-cancel" onClick={onClose}>取消</button>
+          <button
+            type="button"
+            className="management-dialog-primary"
+            onClick={() => {
+              onSelect(draftUser);
+              onClose();
+            }}
+          >
+            确认选择
+          </button>
+        </footer>
+      </section>
+    </div>
+  );
+}
+
+function MultiPersonPickerDialog({
+  organizations,
+  users,
+  selectedUsers,
+  onSelect,
+  onClose,
+  title = "分配用户",
+  selectedLabel = "已选人员",
+}) {
+  const [draftUserIds, setDraftUserIds] = useState(selectedUsers.map((user) => user.id));
+  const [selectedOrganization, setSelectedOrganization] = useState(
+    selectedUsers[0]?.organizationId ?? users[0]?.organizationId ?? organizations[0]?.id ?? "",
+  );
+  const organizationOf = (user) => user.organizationId ?? user.organization;
+  const visibleUsers = selectedOrganization
+    ? users.filter((user) => organizationOf(user) === selectedOrganization)
+    : users;
+  const chosenUsers = users.filter((user) => draftUserIds.includes(user.id));
+  const allVisibleSelected = visibleUsers.length > 0 && visibleUsers.every((user) => draftUserIds.includes(user.id));
+  const toggleUser = (id) => setDraftUserIds((current) => current.includes(id) ? current.filter((item) => item !== id) : [...current, id]);
+  const selectVisibleUsers = () => setDraftUserIds((current) => [...new Set([...current, ...visibleUsers.map((user) => user.id)])]);
+  const clearVisibleUsers = () => setDraftUserIds((current) => current.filter((id) => !visibleUsers.some((user) => user.id === id)));
+  const OrganizationPickerTree = ({ nodes }) => (
+    <ul className="assignment-org-tree">
+      {nodes.map((node) => (
+        <li key={node.id}>
+          <button type="button" className={selectedOrganization === node.id ? "active" : ""} onClick={() => setSelectedOrganization(node.id)}>{node.name}</button>
+          {node.children?.length ? <OrganizationPickerTree nodes={node.children} /> : null}
+        </li>
+      ))}
+    </ul>
+  );
+  return (
+    <div className="single-person-picker-layer" onMouseDown={onClose} role="presentation">
+      <section className="management-dialog assign-user-dialog" onMouseDown={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="multi-person-picker-title">
+        <header>
+          <h2 id="multi-person-picker-title">{title}</h2>
+          <button type="button" className="management-dialog-close" aria-label={`关闭${title}弹窗`} onClick={onClose}><DismissRegular /></button>
+        </header>
+        <div className="assign-user-body">
+          <aside>
+            <header>组织架构</header>
+            {organizations.length ? <OrganizationPickerTree nodes={organizations} /> : <p className="assign-user-empty">暂无可选组织</p>}
+          </aside>
+          <section>
+            <header>
+              <div className="assign-user-list-heading"><b>人员</b><span>{visibleUsers.length} 人</span></div>
+              {visibleUsers.length ? <div className="assign-user-bulk-actions"><button type="button" onClick={selectVisibleUsers} disabled={allVisibleSelected}>全选</button><button type="button" onClick={clearVisibleUsers} disabled={!visibleUsers.some((user) => draftUserIds.includes(user.id))}>全不选</button></div> : null}
+            </header>
+            {visibleUsers.length ? visibleUsers.map((user) => (
+              <label key={user.id}>
+                <input type="checkbox" checked={draftUserIds.includes(user.id)} onChange={() => toggleUser(user.id)} />
+                <span><b>{user.name}</b><small>{user.account} · {user.department}</small></span>
+              </label>
+            )) : <p className="assign-user-empty">该组织暂无人员</p>}
+          </section>
+          <section>
+            <header>{selectedLabel} <span>{chosenUsers.length} 人</span></header>
+            {chosenUsers.length ? chosenUsers.map((user) => (
+              <div key={user.id}>
+                <span><b>{user.name}</b><small>{user.department || "未设置部门"}</small></span>
+                <button type="button" onClick={() => toggleUser(user.id)}>移除</button>
+              </div>
+            )) : <p className="assign-user-empty">暂未选择人员</p>}
+          </section>
+        </div>
+        <footer>
+          <button type="button" className="management-dialog-cancel" onClick={onClose}>取消</button>
+          <button type="button" className="management-dialog-primary" onClick={() => { onSelect(chosenUsers); onClose(); }}>确认选择</button>
+        </footer>
+      </section>
+    </div>
+  );
+}
+
 function OrganizationCenter({ organizations, setOrganizations, users }) {
   const [formState, setFormState] = useState(null);
   const [organizationName, setOrganizationName] = useState("");
   const [organizationType, setOrganizationType] = useState("公司");
   const [organizationLeader, setOrganizationLeader] = useState(null);
   const [leaderPickerOpen, setLeaderPickerOpen] = useState(false);
-  const [leaderOrganization, setLeaderOrganization] = useState("");
   const [message, setMessage] = useState("尚未建立组织架构，可手动新增根组织。");
   const hasOrganization = organizations.length > 0;
   const isRootOrganizationForm =
     formState?.mode === "root" ||
     (formState?.mode === "edit" &&
       organizations.some((node) => node.id === formState.node.id));
-  const leaderPickerUsers = leaderOrganization
-    ? users.filter((user) => user.organizationId === leaderOrganization)
-    : users;
-  const leaderPickerSelectedUser = organizationLeader;
-  const openLeaderPicker = () => {
-    const defaultOrganization =
-      formState?.mode === "child"
-        ? formState.node.id
-        : formState?.mode === "edit"
-          ? formState.node.id
-          : organizations[0]?.id ?? "";
-    setLeaderOrganization(defaultOrganization);
-    setLeaderPickerOpen(true);
-  };
-  const LeaderPickerTree = ({ nodes }) => (
-    <ul className="assignment-org-tree">
-      {nodes.map((node) => (
-        <li key={node.id}>
-          <button
-            type="button"
-            className={leaderOrganization === node.id ? "active" : ""}
-            onClick={() => setLeaderOrganization(node.id)}
-          >
-            {node.name}
-          </button>
-          {node.children?.length ? <LeaderPickerTree nodes={node.children} /> : null}
-        </li>
-      ))}
-    </ul>
-  );
+  const openLeaderPicker = () => setLeaderPickerOpen(true);
   const openRootForm = () => {
     setOrganizationName("");
     setOrganizationType("公司");
@@ -4251,101 +5402,15 @@ function OrganizationCenter({ organizations, setOrganizations, users }) {
         </div>
       ) : null}
       {leaderPickerOpen ? (
-        <div
-          className="management-dialog-layer"
-          onMouseDown={() => setLeaderPickerOpen(false)}
-          role="presentation"
-        >
-          <section
-            className="management-dialog assign-user-dialog organization-leader-dialog"
-            onMouseDown={(event) => event.stopPropagation()}
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="organization-leader-title"
-          >
-            <header>
-              <h2 id="organization-leader-title">选择负责人</h2>
-              <button
-                type="button"
-                className="management-dialog-close"
-                aria-label="关闭选择负责人弹窗"
-                onClick={() => setLeaderPickerOpen(false)}
-              >
-                <DismissRegular />
-              </button>
-            </header>
-            <div className="assign-user-body">
-              <aside>
-                <header>组织架构</header>
-                {organizations.length ? (
-                  <LeaderPickerTree nodes={organizations} />
-                ) : (
-                  <p className="assign-user-empty">暂无可选组织</p>
-                )}
-              </aside>
-              <section>
-                <header>
-                  人员 <span>{leaderPickerUsers.length} 人</span>
-                </header>
-                {leaderPickerUsers.length ? (
-                  leaderPickerUsers.map((user) => (
-                    <label key={user.id}>
-                      <input
-                        type="radio"
-                        name="organization-leader"
-                        checked={organizationLeader?.id === user.id}
-                        onChange={() => setOrganizationLeader(user)}
-                      />
-                      <span>
-                        <b>{user.name}</b>
-                        <small>{user.account} · {user.department}</small>
-                      </span>
-                    </label>
-                  ))
-                ) : (
-                  <p className="assign-user-empty">该组织暂无人员</p>
-                )}
-              </section>
-              <section>
-                <header>
-                  已选负责人 <span>{leaderPickerSelectedUser ? "1 人" : "0 人"}</span>
-                </header>
-                {leaderPickerSelectedUser ? (
-                  <div>
-                    <span>
-                      <b>{leaderPickerSelectedUser.name}</b>
-                      <small>{leaderPickerSelectedUser.department || "未设置部门"}</small>
-                    </span>
-                    <button
-                      type="button"
-                      onClick={() => setOrganizationLeader(null)}
-                    >
-                      移除
-                    </button>
-                  </div>
-                ) : (
-                  <p className="assign-user-empty">暂未选择负责人</p>
-                )}
-              </section>
-            </div>
-            <footer>
-              <button
-                type="button"
-                className="management-dialog-cancel"
-                onClick={() => setLeaderPickerOpen(false)}
-              >
-                取消
-              </button>
-              <button
-                type="button"
-                className="management-dialog-primary"
-                onClick={() => setLeaderPickerOpen(false)}
-              >
-                确认选择
-              </button>
-            </footer>
-          </section>
-        </div>
+        <SinglePersonPickerDialog
+          organizations={organizations}
+          users={users}
+          selectedUser={organizationLeader}
+          onSelect={setOrganizationLeader}
+          onClose={() => setLeaderPickerOpen(false)}
+          title="选择负责人"
+          selectedLabel="已选负责人"
+        />
       ) : null}
     </>
   );
@@ -5126,45 +6191,94 @@ function RbacPage({ onAction }) {
           name: "双重预防机制",
           children: [
             { name: "风险分级管控" },
-            { name: "隐患排查治理" },
-            { name: "岗位隐患排查" },
+            {
+              name: "隐患排查治理",
+              children: [
+                { name: "法律法规" },
+                { name: "制度文件" },
+                { name: "隐患排查任务发布" },
+                {
+                  name: "岗位隐患排查清单",
+                  children: preventionForms.map((form) => ({ name: form.title })),
+                },
+                { name: "隐患排查治理记录" },
+                {
+                  name: "隐患排查审批流程",
+                  children: preventionApprovalFlows.map((flow) => ({ name: flow.title })),
+                },
+                { name: "隐患排查工作表" },
+                { name: "隐患整改通知单" },
+                { name: "隐患整改台账" },
+                { name: "隐患信息统计" },
+                { name: "隐患汇报" },
+              ],
+            },
+            { name: "风险告知卡" },
+            { name: "风险四色图" },
           ],
         },
         {
           name: "安全管理",
           children: [
-            { name: "安全检查" },
-            { name: "作业许可" },
-            { name: "安全培训" },
+            { name: "应用概览" },
+            { name: "待办处理" },
+            { name: "业务记录" },
+            { name: "数据统计" },
           ],
         },
         {
           name: "设备管理",
           children: [
-            { name: "设备点检" },
-            { name: "设备台账" },
-            { name: "维修计划" },
+            { name: "应用概览" },
+            { name: "待办处理" },
+            { name: "业务记录" },
+            { name: "数据统计" },
           ],
         },
         {
           name: "火工品管理",
-          children: [{ name: "库存管理" }, { name: "领用登记" }],
+          children: [
+            { name: "应用概览" },
+            { name: "待办处理" },
+            { name: "业务记录" },
+            { name: "数据统计" },
+          ],
         },
         {
           name: "生产管理",
-          children: [{ name: "生产日报" }, { name: "生产计划" }],
+          children: [
+            { name: "应用概览" },
+            { name: "待办处理" },
+            { name: "业务记录" },
+            { name: "数据统计" },
+          ],
         },
         {
           name: "机电管理",
-          children: [{ name: "机电巡检" }, { name: "供电管理" }],
+          children: [
+            { name: "应用概览" },
+            { name: "待办处理" },
+            { name: "业务记录" },
+            { name: "数据统计" },
+          ],
         },
         {
           name: "消防管理",
-          children: [{ name: "消防检查" }, { name: "消防设施" }],
+          children: [
+            { name: "应用概览" },
+            { name: "待办处理" },
+            { name: "业务记录" },
+            { name: "数据统计" },
+          ],
         },
         {
           name: "应急管理",
-          children: [{ name: "应急预案" }, { name: "应急演练" }],
+          children: [
+            { name: "应用概览" },
+            { name: "待办处理" },
+            { name: "业务记录" },
+            { name: "数据统计" },
+          ],
         },
       ],
     },
@@ -5172,7 +6286,16 @@ function RbacPage({ onAction }) {
       name: "任务",
       children: [
         { name: "发布任务" },
-        { name: "我的任务" },
+        {
+          name: "我的任务",
+          children: [
+            { name: "我发起的" },
+            { name: "已执行" },
+            { name: "已转发" },
+            { name: "我撤回的" },
+            { name: "我参与的" },
+          ],
+        },
         { name: "任务总台账" },
         { name: "人员明细" },
       ],
@@ -5180,10 +6303,38 @@ function RbacPage({ onAction }) {
     {
       name: "流程",
       children: [
-        { name: "发起流程" },
+        {
+          name: "发起流程",
+          children: [
+            {
+              name: "人资管理",
+              children: [
+                { name: "员工离职申请" },
+                { name: "职员晋升审批" },
+                { name: "职员调岗审批" },
+              ],
+            },
+            {
+              name: "基建管理",
+              children: [
+                { name: "地表基建项目报建申请" },
+                { name: "年度工程计划编制审批" },
+                { name: "项目合同申报审批" },
+              ],
+            },
+            {
+              name: "选矿管理",
+              children: [
+                { name: "换矿申请" },
+                { name: "选厂药剂领用申请" },
+                { name: "材料采购流程" },
+              ],
+            },
+          ],
+        },
         { name: "待审批" },
         { name: "已审批" },
-        { name: "抄送给我" },
+        { name: "抄送我的" },
         { name: "我发起的" },
       ],
     },
@@ -5202,20 +6353,22 @@ function RbacPage({ onAction }) {
     },
     {
       name: "看板",
-      children: [
-        { name: "安全风险总览" },
-        { name: "设备健康度" },
-        { name: "生产进度跟踪" },
-      ],
+      children: dashboardItems.map((item) => ({ name: item.name })),
     },
     {
       name: "设置中心",
       children: [
         { name: "安全动态" },
         { name: "工作表" },
-        { name: "任务配置" },
-        { name: "流程配置" },
-        { name: "预警配置" },
+        { name: "任务" },
+        { name: "流程" },
+        {
+          name: "预警",
+          children: [
+            { name: "预警信息表" },
+            { name: "预警规则设置" },
+          ],
+        },
         { name: "数据台" },
         { name: "数据看板" },
         { name: "应用中心" },
@@ -5235,50 +6388,6 @@ function RbacPage({ onAction }) {
     nodes.flatMap((node) =>
       node.children?.length ? leafMenus(node.children) : [node.name],
     );
-  const buttonActionsByPage = {
-    工作台: ["查看"],
-    岗位隐患排查: ["查看", "在线填报", "提交", "导出"],
-    风险分级管控: ["查看", "新增", "编辑", "删除", "导出"],
-    隐患排查治理: ["查看", "新增", "编辑", "删除", "导出"],
-    安全检查: ["查看", "新增", "编辑", "删除", "导出"],
-    作业许可: ["查看", "新增", "审批", "编辑", "删除"],
-    安全培训: ["查看", "新增", "编辑", "删除", "导出"],
-    设备点检: ["查看", "新增", "编辑", "删除", "导出"],
-    设备台账: ["查看", "新增", "编辑", "删除", "导出"],
-    维修计划: ["查看", "新增", "编辑", "删除", "导出"],
-    库存管理: ["查看", "新增", "编辑", "删除", "导出"],
-    领用登记: ["查看", "新增", "审核", "编辑", "删除"],
-    生产日报: ["查看", "新增", "编辑", "删除", "导出"],
-    生产计划: ["查看", "新增", "编辑", "删除", "导出"],
-    机电巡检: ["查看", "新增", "编辑", "删除", "导出"],
-    供电管理: ["查看", "新增", "编辑", "删除", "导出"],
-    消防检查: ["查看", "新增", "编辑", "删除", "导出"],
-    消防设施: ["查看", "新增", "编辑", "删除", "导出"],
-    应急预案: ["查看", "新增", "编辑", "删除", "导出"],
-    应急演练: ["查看", "新增", "编辑", "删除", "导出"],
-    发布任务: ["查看", "发布", "编辑", "删除"],
-    我的任务: ["查看", "执行任务", "提交反馈"],
-    任务总台账: ["查看", "导出"],
-    人员明细: ["查看", "导出"],
-    发起流程: ["查看", "发起流程"],
-    待审批: ["查看", "审批"],
-    已审批: ["查看", "导出"],
-    抄送给我: ["查看"],
-    我发起的: ["查看", "撤回", "催办"],
-    动态列表: ["查看", "删除"],
-    发动态: ["查看", "发布"],
-    预警分级看板: ["查看", "导出"],
-    预警任务: ["查看", "处置", "关闭", "导出"],
-    预警信息表统计: ["查看", "导出"],
-    预警统计: ["查看", "导出"],
-    安全风险总览: ["查看", "导出"],
-    设备健康度: ["查看", "导出"],
-    生产进度跟踪: ["查看", "导出"],
-    角色权限: ["查看", "新增", "编辑", "删除", "分配用户", "数据权限"],
-    组织用户: ["查看", "新增", "编辑", "删除", "重置密码"],
-    岗位管理: ["查看", "新增", "编辑", "删除"],
-    字典管理: ["查看", "新增", "编辑", "删除"],
-  };
   const createRolePermissionTree = (nodes, parents = []) =>
     nodes.map((node) => {
       const path = [...parents, node.name];
@@ -5291,16 +6400,10 @@ function RbacPage({ onAction }) {
           children: createRolePermissionTree(node.children, path),
         };
       }
-      const actions = buttonActionsByPage[node.name] ?? ["查看", "新增", "编辑", "删除"];
       return {
         id: `page:${key}`,
         name: node.name,
         type: "page",
-        children: actions.map((action) => ({
-          id: `button:${key}:${action}`,
-          name: action,
-          type: "button",
-        })),
       };
     });
   const rolePermissionTree = createRolePermissionTree(menuTree);
@@ -5316,7 +6419,7 @@ function RbacPage({ onAction }) {
           ? [node.id, ...collectMenuIds(node.children ?? [])]
           : [],
       );
-    // Expand menu layers by default; page nodes remain collapsed so action buttons stay hidden.
+    // Expand all menu layers so the selectable page menus are immediately visible.
     return new Set(collectMenuIds(rolePermissionTree));
   };
   const defaultDataMenuScopes = () =>
@@ -5496,11 +6599,9 @@ function RbacPage({ onAction }) {
         return children.length ? [{ ...node, children }] : [];
       }
 
-      // A page is available for data authorization once any operation on it is granted.
+      // A page is available for data authorization once its menu is granted.
       const pageKey = path.join("/");
-      const actionIds = (buttonActionsByPage[node.name] ?? ["查看", "新增", "编辑", "删除"])
-        .map((action) => `button:${pageKey}:${action}`);
-      return actionIds.some((id) => roleMenus.has(id)) ? [node] : [];
+      return roleMenus.has(`page:${pageKey}`) ? [node] : [];
     });
   const dataPermissionMenuTree = selectedDataPermissionTree(menuTree);
   const dataPermissionLeafCount = leafMenus(dataPermissionMenuTree).length;
@@ -5876,7 +6977,7 @@ const organizationLeafIds = (node) =>
                 <section className="role-menu-selector" role="tabpanel">
                   <header>
                     <b>菜单权限</b>
-                    <span>按菜单、页面与操作按钮选择可访问范围</span>
+                    <span>按菜单与页面选择可访问范围</span>
                   </header>
                   <MenuTree nodes={rolePermissionTree} />
                 </section>
@@ -7964,10 +9065,13 @@ function App() {
     });
   };
   const openApplication = (name) => {
-    if (name === preventionForms[0].title) {
+    const preventionForm = [...preventionForms, ...preventionApprovalFlows].find(
+      (form) => form.title === name,
+    );
+    if (preventionForm) {
       window.scrollTo({ top: 0, behavior: "smooth" });
       startTransition(() => {
-        setPreventionInitial(name);
+        setPreventionInitial(preventionForm.title);
         setPreventionFormOpen(true);
         setOpenTabs((current) =>
           current.some((tab) => tab.id === "双重预防机制")
