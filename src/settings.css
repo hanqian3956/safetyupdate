@@ -74,6 +74,58 @@
 .settings-note b { font-size: 11px; }
 .settings-note span { margin-top: 2px; color: var(--muted); font-size: 10px; }
 
+/* Menu management follows the desktop tree-table convention used by RuoYi. */
+.menu-management { display: grid; gap: 13px; }
+.menu-management-toolbar, .menu-management-panel { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.menu-management-toolbar { min-height: 64px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; }
+.menu-management-toolbar h1 { margin: 0; color: var(--text); font-size: 16px; }
+.menu-management-primary { min-height: 31px; padding: 0 11px; display: inline-flex; align-items: center; gap: 4px; border: 1px solid var(--accent); border-radius: 5px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 650; }
+.menu-management-primary svg { width: 14px; }
+.menu-management-panel { overflow: hidden; }
+.menu-management-filters { min-height: 62px; padding: 0 16px; display: flex; align-items: center; gap: 9px; border-bottom: 1px solid var(--line); }
+.menu-management-filters label { display: inline-flex; align-items: center; gap: 7px; color: #526476; font-size: 11px; font-weight: 650; }
+.menu-management-filters input, .menu-management-filters select { width: 160px; height: 30px; padding: 0 9px; border: 1px solid #d4dee7; border-radius: 5px; background: #fff; color: var(--text); font: inherit; font-size: 11px; outline: none; }
+.menu-management-filters select { width: 88px; }
+.menu-management-filters input:focus, .menu-management-filters select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgb(15 108 189 / 12%); }
+.menu-management-filters > button { height: 30px; padding: 0 10px; border-radius: 5px; font-size: 11px; font-weight: 650; }
+.menu-filter-search { border: 1px solid var(--accent); background: var(--accent); color: #fff; }
+.menu-filter-reset, .menu-tree-tool { border: 1px solid #d4dee7; background: #fff; color: #5a6c7c; }
+.menu-management-filters > span { flex: 1 1 auto; }
+.menu-tree-tool:hover, .menu-filter-reset:hover { border-color: #9ac8e6; background: #f4faff; color: var(--accent); }
+.menu-management-table { min-width: 0; }
+.menu-management-table-head, .menu-management-table-row { display: grid; grid-template-columns: minmax(156px, 1.22fr) 34px 34px minmax(94px, .8fr) minmax(92px, .78fr) 46px 98px 136px; align-items: center; column-gap: 7px; }
+.menu-management-table-head { min-height: 40px; padding: 0 16px; background: #f7fafc; color: var(--muted); font-size: 10px; }
+.menu-management-table-row { min-height: 52px; padding: 0 16px; border-top: 1px solid var(--line); color: #586a7c; font-size: 11px; }
+.menu-management-table-row:hover { background: #fbfdff; }
+.menu-tree-name { min-width: 0; padding-left: calc(var(--menu-depth) * 20px); display: grid; grid-template-columns: 19px 16px minmax(0, auto) auto; align-items: center; gap: 5px; }
+.menu-tree-name > button, .menu-tree-name > i { width: 19px; height: 19px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 3px; background: transparent; color: #8595a5; }
+.menu-tree-name > button:hover { background: #e9f4fb; color: var(--accent); }
+.menu-tree-name > button svg { width: 13px; transition: transform .16s ease; }
+.menu-tree-name > button.expanded svg { transform: rotate(90deg); }
+.menu-tree-name > svg, .menu-management-table-row > span > svg { width: 15px; color: #6f8799; }
+.menu-tree-name strong { min-width: 0; overflow: hidden; color: var(--text); font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.menu-tree-name em { padding: 2px 4px; border-radius: 3px; background: #f1f5f8; color: #778797; font-size: 9px; font-style: normal; }
+.menu-management-table-row > code { overflow: hidden; color: #637b8f; font-family: "SFMono-Regular", Consolas, monospace; font-size: 9px; text-overflow: ellipsis; white-space: nowrap; }
+.menu-management-table-row time { color: var(--muted); font-size: 10px; }
+.menu-status { padding: 3px 5px; border-radius: 4px; background: #fff2f0; color: #bb6157; font-size: 9px; font-style: normal; }
+.menu-status.enabled { background: #e8f5ed; color: #278062; }
+.menu-row-actions { display: flex; align-items: center; gap: 1px; }
+.menu-row-actions button { padding: 3px 3px; border: 0; border-radius: 3px; background: transparent; color: var(--accent); font-size: 9px; white-space: nowrap; }
+.menu-row-actions button:hover:not(:disabled) { background: var(--accent-soft); }
+.menu-row-actions button:disabled { color: #b6c1ca; cursor: not-allowed; }
+.menu-row-actions .danger { color: #bc5d53; }
+.menu-row-actions .danger:hover { background: #fff2f0; }
+.management-dialog.menu-editor-dialog { width: min(660px, calc(100vw - 48px)); }
+.menu-editor-dialog > header, .menu-editor-dialog > footer { min-height: 52px; padding: 0 18px; }
+.menu-editor-form { padding: 17px 20px 14px; display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 18px; }
+.menu-editor-form label { display: grid; grid-template-columns: 60px minmax(0, 1fr); align-items: center; gap: 9px; color: #536578; font-size: 11px; }
+.menu-editor-form label b::before { margin-right: 3px; color: #d95d54; content: "*"; }
+.menu-editor-form label:nth-child(1) b::before, .menu-editor-form label:nth-child(2) b::before, .menu-editor-form label:nth-child(5) b::before, .menu-editor-form label:nth-child(6) b::before, .menu-editor-form label:nth-child(7) b::before, .menu-editor-form label:nth-child(8) b::before, .menu-editor-form label:nth-child(9) b::before, .menu-editor-form label:nth-child(10) b::before { visibility: hidden; }
+.menu-editor-form input, .menu-editor-form select { width: 100%; height: 31px; padding: 0 9px; border: 1px solid #d4dee7; border-radius: 5px; background: #fff; color: var(--text); font: inherit; font-size: 11px; outline: none; }
+.menu-editor-form input:focus, .menu-editor-form select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgb(15 108 189 / 12%); }
+.menu-editor-form input:disabled, .menu-editor-form select:disabled { background: #f5f8fa; color: #718294; }
+.menu-editor-error { grid-column: 1 / -1; margin: -2px 0 0 69px; color: #c55b51; font-size: 10px; }
+
 .dictionary-management { display: grid; gap: 13px; }
 .dictionary-toolbar { min-height: 64px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; gap: 16px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .dictionary-toolbar h1, .dictionary-toolbar span { margin: 0; display: block; }
@@ -566,3 +618,6 @@
 .management-dialog.assign-user-dialog { width: 900px !important; min-width: 900px; max-width: none; flex: 0 0 900px; }
 .management-dialog.assign-user-dialog .assign-user-body { grid-template-columns: 220px minmax(0, 1fr) 220px !important; }
 @media (max-width: 920px) { .assign-user-dialog-layer { display: flex; align-items: center; justify-content: flex-start; overflow: auto; padding: 24px; }.management-dialog.assign-user-dialog { width: 900px !important; min-width: 900px; } }
+.role-menu-tree li.role-menu-tab > label, .role-menu-tree li.role-menu-tab .role-menu-tab-label { min-height: 23px; color: #63798c; }
+.role-menu-tree li.role-menu-tab .role-menu-tab-label > span::before { margin-right: 5px; color: #9bacba; content: "Tab"; font-size: 8px; font-weight: 700; letter-spacing: .02em; }
+.role-menu-tree li.role-menu-tab .role-menu-tab-label > input:checked + span { color: var(--accent); font-weight: 650; }

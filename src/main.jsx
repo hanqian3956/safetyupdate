@@ -331,6 +331,28 @@ const taskEntries = [
   },
 ];
 
+const FLOW_NUMBER_REFERENCE_DATE = "20260831";
+
+function getFlowDatePart(initiatedAt = "") {
+  const dateTimeMatch = String(initiatedAt).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);
+  if (dateTimeMatch) {
+    return `${dateTimeMatch[1]}${dateTimeMatch[2].padStart(2, "0")}${dateTimeMatch[3].padStart(2, "0")}`;
+  }
+  const monthDayMatch = String(initiatedAt).match(/(\d{1,2})\s*月\s*(\d{1,2})\s*日/);
+  if (monthDayMatch) {
+    return `2026${monthDayMatch[1].padStart(2, "0")}${monthDayMatch[2].padStart(2, "0")}`;
+  }
+  if (String(initiatedAt).includes("昨天")) return "20260830";
+  return FLOW_NUMBER_REFERENCE_DATE;
+}
+
+function getFlowNumber(process) {
+  const source = String(process.id ?? "");
+  const sequenceFromId = Number(source.match(/(\d+)(?!.*\d)/)?.[1]);
+  const sequence = Number(process.sequence) || (sequenceFromId % 9999) || 1;
+  return `${getFlowDatePart(process.initiatedAt)}${String(sequence).padStart(4, "0")}`;
+}
+
 const processEntries = [
   {
     id: "flow-1",
@@ -1607,9 +1629,8 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
   const [addSignerPickerOpen, setAddSignerPickerOpen] = useState(false);
   const [addSigners, setAddSigners] = useState([]);
   const [addSignerReason, setAddSignerReason] = useState("");
-  const [returnOpen, setReturnOpen] = useState(false);
-  const [returnTarget, setReturnTarget] = useState(null);
-  const [returnReason, setReturnReason] = useState("");
+  const [returnConfirmTarget, setReturnConfirmTarget] = useState(null);
+  const [nextReturnTarget, setNextReturnTarget] = useState("initiator");
   const [revokeConfirmOpen, setRevokeConfirmOpen] = useState(false);
   const [refuseConfirmOpen, setRefuseConfirmOpen] = useState(false);
   const [refuseOpinion, setRefuseOpinion] = useState("");
@@ -1621,9 +1642,7 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
     setAddSignerPickerOpen(false);
     setAddSigners([]);
     setAddSignerReason("");
-    setReturnOpen(false);
-    setReturnTarget(null);
-    setReturnReason("");
+    setReturnConfirmTarget(null);
     setRevokeConfirmOpen(false);
     setRefuseConfirmOpen(false);
     setRefuseOpinion("");
@@ -1635,10 +1654,9 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
   const isApproved = process.status === "已通过";
   const isRefused = process.status === "已拒绝";
   const isResubmitted = process.resubmitted;
-  const returnTargets = [
-    { id: "return-initiator", label: "发起人", name: process.initiator },
-    { id: "return-previous", label: "上一节点", name: process.previousApprover ?? "张七" },
-  ].filter((user, index, users) => users.findIndex((item) => item.name === user.name) === index);
+  const returnTarget = returnConfirmTarget === "initiator"
+    ? { label: "发起人", name: process.initiator }
+    : { label: "上一节点", name: process.previousApprover ?? "张七" };
   const logs = [
     {
       time: "2026-08-23 12:00:00",
@@ -1727,7 +1745,7 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
     ...(process.actionLogs ?? []),
   ];
   const formFields = [
-    ["流程编号", `LC-2026-${process.id.replace("flow-", "0")}`],
+    ["流程编号", getFlowNumber(process)],
     ["流程类型", process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批"],
     ["所属部门", process.department],
     ["发起人", process.initiator],
@@ -1750,9 +1768,8 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
       return;
     }
     if (action === "退回") {
-      setReturnTarget(null);
-      setReturnReason("");
-      setReturnOpen(true);
+      setReturnConfirmTarget(nextReturnTarget);
+      setNextReturnTarget((current) => current === "initiator" ? "previous" : "initiator");
       return;
     }
     if (action === "拒绝") {
@@ -1780,13 +1797,9 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
     setAddSigners([]);
     setAddSignerReason("");
   };
-  const submitReturn = (event) => {
-    event.preventDefault();
-    if (!returnTarget) return;
-    onApprove("已驳回", { target: returnTarget, reason: returnReason });
-    setReturnOpen(false);
-    setReturnTarget(null);
-    setReturnReason("");
+  const confirmReturn = () => {
+    onApprove("已驳回", { target: returnTarget });
+    setReturnConfirmTarget(null);
   };
   return (
     <>
@@ -2149,46 +2162,29 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
           </form>
         </div>
       ) : null}
-      {returnOpen ? (
+      {returnConfirmTarget ? (
         <div
-          className="process-transfer-layer"
+          className="process-revoke-layer"
           role="presentation"
-          onMouseDown={() => setReturnOpen(false)}
+          onMouseDown={() => setReturnConfirmTarget(null)}
         >
-          <form
-            className="process-transfer-dialog"
-            onSubmit={submitReturn}
+          <section
+            className="process-revoke-dialog"
             onMouseDown={(event) => event.stopPropagation()}
             role="dialog"
             aria-modal="true"
-            aria-labelledby="process-return-title"
+            aria-labelledby="process-return-confirm-title"
           >
             <header>
-              <h2 id="process-return-title">驳回流程</h2>
-              <button type="button" className="process-dialog-close" aria-label="关闭驳回弹窗" onClick={() => setReturnOpen(false)}><DismissRegular /></button>
+              <h2 id="process-return-confirm-title">确认驳回</h2>
+              <button type="button" className="process-dialog-close" aria-label="关闭驳回确认" onClick={() => setReturnConfirmTarget(null)}><DismissRegular /></button>
             </header>
-            <div className="process-transfer-body">
-              <label>
-                <span className="process-transfer-label"><em>*</em> 驳回至</span>
-                <select
-                  className="process-return-target-select"
-                  value={returnTarget?.id ?? ""}
-                  onChange={(event) => setReturnTarget(returnTargets.find((target) => target.id === event.target.value) ?? null)}
-                >
-                  <option value="">请选择驳回对象</option>
-                  {returnTargets.map((target) => <option key={target.id} value={target.id}>{target.label}</option>)}
-                </select>
-              </label>
-              <label>
-                驳回原因
-                <textarea rows="4" value={returnReason} onChange={(event) => setReturnReason(event.target.value)} placeholder="请输入驳回原因" />
-              </label>
-            </div>
+            <p>驳回后，流程将退回至{returnTarget.label}，确认要驳回吗？</p>
             <footer>
-              <button type="button" onClick={() => setReturnOpen(false)}>取消</button>
-              <button type="submit" disabled={!returnTarget}>确认驳回</button>
+              <button type="button" onClick={() => setReturnConfirmTarget(null)}>取消</button>
+              <button type="button" onClick={confirmReturn}>确认驳回</button>
             </footer>
-          </form>
+          </section>
         </div>
       ) : null}
       {transferPickerOpen ? (
@@ -2236,6 +2232,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   const [selectedDraftId, setSelectedDraftId] = useState("");
   const [formFullscreen, setFormFullscreen] = useState(false);
   const [flowchartDialog, setFlowchartDialog] = useState(false);
+  const processFormRef = useRef(null);
   const processTemplates = [
     { category: "人资管理", tone: "blue", name: "员工离职申请", favorite: true },
     { category: "人资管理", tone: "blue", name: "职员晋升审批" },
@@ -2311,7 +2308,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
         template.name.includes(processLibraryKeyword.trim())),
   );
   const processDetails = (process) => ({
-    number: `LC-2026-${process.id.replace("flow-", "0")}`,
+    number: getFlowNumber(process),
     title: process.name,
     application: process.application ?? "综合管理",
     type: process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批",
@@ -2499,6 +2496,30 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
     setSelectedTemplate(null);
     setSelectedDraft(null);
     setFlowchartDialog(false);
+  };
+  const saveProcessDraft = () => {
+    if (!selectedTemplate) return;
+    const values = new FormData(processFormRef.current);
+    const draft = {
+      id: selectedDraft?.draft ? selectedDraft.id : `flow-draft-${Date.now()}`,
+      name: selectedTemplate.name,
+      initiator: "张宇",
+      initiatedAt: "2026-08-31 10:00:00",
+      currentNode: "待提交",
+      status: "草稿",
+      department: values.get("department") || "安全管理部",
+      description: values.get("description") || "",
+      draft: true,
+      startedByMe: true,
+      sequence: selectedDraft?.sequence ?? (processRecords.filter((item) => getFlowDatePart(item.initiatedAt) === FLOW_NUMBER_REFERENCE_DATE).length + 1),
+    };
+    setProcessRecords((current) =>
+      selectedDraft?.draft
+        ? current.map((item) => (item.id === draft.id ? draft : item))
+        : [draft, ...current],
+    );
+    setSelectedDraft(draft);
+    onAction(`${selectedTemplate.name}已暂存到草稿箱`);
   };
   return (
     <section className="process-list-page" aria-labelledby="process-list-title">
@@ -2723,7 +2744,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
       ) : null}
       {selectedTemplate ? (
         <div className="process-form-layer" onMouseDown={closeProcessForm} role="presentation">
-          <form className={`process-form-dialog${formFullscreen ? " fullscreen" : ""}`} onMouseDown={(event) => event.stopPropagation()} onSubmit={(event) => { event.preventDefault(); if (formMode === "resubmit" && selectedDraft?.id) { setProcessRecords((current) => current.map((process) => process.id === selectedDraft.id ? { ...process, status: "审批中", currentNode: "分管领导审批", resubmitted: true } : process)); } onAction(`${formMode === "resubmit" ? "已重新提交流程" : "已发起流程"}：${selectedTemplate.name}`); closeProcessForm(); }}>
+          <form ref={processFormRef} className={`process-form-dialog${formFullscreen ? " fullscreen" : ""}`} onMouseDown={(event) => event.stopPropagation()} onSubmit={(event) => { event.preventDefault(); if (formMode === "resubmit" && selectedDraft?.id) { setProcessRecords((current) => current.map((process) => process.id === selectedDraft.id ? { ...process, status: "审批中", currentNode: "分管领导审批", resubmitted: true } : process)); } onAction(`${formMode === "resubmit" ? "已重新提交流程" : "已发起流程"}：${selectedTemplate.name}`); closeProcessForm(); }}>
             <header>
               <div><p>{selectedDraft ? formMode === "resubmit" ? "重新提交" : "恢复草稿" : "发起流程"}</p><h2>{selectedTemplate.name}</h2></div>
               <div>
@@ -2736,15 +2757,15 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
               <section>
                 <h3>申请信息</h3>
                 <div className="process-form-grid">
-                  <label>申请标题<input defaultValue={selectedTemplate.name} /></label>
-                  <label>申请部门<select defaultValue={selectedDraft?.department ?? "安全管理部"}><option>安全管理部</option><option>生产管理部</option><option>设备管理部</option></select></label>
+                  <label>申请标题<input name="title" defaultValue={selectedTemplate.name} /></label>
+                  <label>申请部门<select name="department" defaultValue={selectedDraft?.department ?? "安全管理部"}><option>安全管理部</option><option>生产管理部</option><option>设备管理部</option></select></label>
                   <label>申请人<input defaultValue="张宇" disabled /></label>
-                  <label className="wide">申请说明<textarea rows="5" defaultValue={selectedDraft?.description ?? ""} placeholder="请填写申请事由、工作安排及需要说明的事项" /></label>
+                  <label className="wide">申请说明<textarea name="description" rows="5" defaultValue={selectedDraft?.description ?? ""} placeholder="请填写申请事由、工作安排及需要说明的事项" /></label>
                   <label className="wide">相关附件<input type="file" /></label>
                 </div>
               </section>
             </div>
-            <footer><span>{selectedDraft ? formMode === "resubmit" ? "请根据驳回意见核对信息后重新提交。" : `正在恢复 ${selectedDraft.initiatedAt} 保存的草稿。` : "请确认信息无误后再发起流程。"}</span><div><button type="button" className="process-reject" onClick={closeProcessForm}>取消</button><button type="submit" className="process-approve">{formMode === "resubmit" ? "重新提交" : "发起流程"}</button></div></footer>
+            <footer><span>{selectedDraft ? formMode === "resubmit" ? "请根据驳回意见核对信息后重新提交。" : `正在恢复 ${selectedDraft.initiatedAt} 保存的草稿。` : "请确认信息无误后再发起流程。"}</span><div><button type="button" className="process-reject" onClick={closeProcessForm}>取消</button><button type="button" className="process-draft-action" onClick={saveProcessDraft}>暂存</button><button type="submit" className="process-approve">{formMode === "resubmit" ? "重新提交" : "发起流程"}</button></div></footer>
           </form>
         </div>
       ) : null}
@@ -3206,10 +3227,12 @@ function DualPreventionPage({
   const [approvalDraftRestore, setApprovalDraftRestore] = useState(null);
   const [selectedApprovalDraft, setSelectedApprovalDraft] = useState(null);
   const [selectedApprovalDraftId, setSelectedApprovalDraftId] = useState("");
+  const [approvalDrafts, setApprovalDrafts] = useState([]);
   const [inspectionRecords, setInspectionRecords] = useState(initialInspectionRecords);
   const [inspectionFilterDraft, setInspectionFilterDraft] = useState({ reporter: "", date: "", shift: "" });
   const [inspectionFilters, setInspectionFilters] = useState({ reporter: "", date: "", shift: "" });
   const importInputRef = useRef(null);
+  const approvalFormRef = useRef(null);
   const selectedLabel = selectedItem;
   const allPreventionForms = [...preventionForms, ...preventionApprovalFlows];
   const activeFormRecord =
@@ -3224,6 +3247,7 @@ function DualPreventionPage({
     setSelectedForm(form.title);
     setFormSource(source);
     setSelectedApprovalDraft(draft);
+    setApprovalDraftRestore(null);
     setActiveForm(true);
     setSubmitted(false);
     setInspectionTab("页面");
@@ -3233,7 +3257,7 @@ function DualPreventionPage({
     source = "岗位隐患排查清单",
   ) => {
     const matchingDrafts = form.kind === "approval"
-      ? processEntries.filter(
+      ? [...processEntries, ...approvalDrafts].filter(
         (process) => process.draft && process.name === form.title,
       )
       : [];
@@ -3252,6 +3276,30 @@ function DualPreventionPage({
         isApprovalFlow ? "，已进入审批流程" : ""
       }`,
     );
+  };
+  const saveApprovalDraft = () => {
+    if (!isApprovalFlow) return;
+    const values = new FormData(approvalFormRef.current);
+    const draft = {
+      id: selectedApprovalDraft?.id?.startsWith("approval-draft-")
+        ? selectedApprovalDraft.id
+        : `approval-draft-${Date.now()}`,
+      name: activeFormRecord.title,
+      initiator: values.get("reporter") || "张宇",
+      initiatedAt: "2026-08-31 10:00:00",
+      currentNode: "待提交",
+      status: "草稿",
+      department: "安全管理部",
+      description: values.get("description") || "",
+      draft: true,
+    };
+    setApprovalDrafts((current) =>
+      selectedApprovalDraft?.id?.startsWith("approval-draft-")
+        ? current.map((item) => (item.id === draft.id ? draft : item))
+        : [draft, ...current],
+    );
+    setSelectedApprovalDraft(draft);
+    onAction(`${activeFormRecord.title}已暂存到草稿箱`);
   };
   const filteredInspectionRecords = inspectionRecords.filter((record) =>
     (!inspectionFilters.reporter || record.reporter.includes(inspectionFilters.reporter))
@@ -3396,7 +3444,7 @@ function DualPreventionPage({
               ))}
             </nav>
             {inspectionTab === "页面" ? (
-            <form className="inspection-form" onSubmit={submitForm}>
+            <form ref={approvalFormRef} className="inspection-form" onSubmit={submitForm}>
               <header className="inspection-form-header">
                 <div>
                   <p>{activeFormRecord.detail}</p>
@@ -3548,6 +3596,15 @@ function DualPreventionPage({
                   >
                     取消
                   </button>
+                  {isApprovalFlow ? (
+                    <button
+                      type="button"
+                      className="form-draft"
+                      onClick={saveApprovalDraft}
+                    >
+                      暂存
+                    </button>
+                  ) : null}
                   <button type="submit" className="form-primary">
                     {isApprovalFlow ? "提交审批流程" : "提交排查表"}
                   </button>
@@ -6377,8 +6434,9 @@ function RbacPage({ onAction }) {
           children: [
             { name: "角色权限" },
             { name: "组织用户" },
-            { name: "岗位管理" },
+            { name: "菜单管理" },
             { name: "字典管理" },
+            { name: "企业设置" },
           ],
         },
       ],
@@ -6398,10 +6456,24 @@ function RbacPage({ onAction }) {
       "数据权限",
     ],
   };
+  const tabPermissionPaths = new Set([
+    ...preventionForms.map(
+      (form) =>
+        `应用/双重预防机制/隐患排查治理/岗位隐患排查清单/${form.title}`,
+    ),
+    ...preventionApprovalFlows.map(
+      (flow) =>
+        `应用/双重预防机制/隐患排查治理/隐患排查审批流程/${flow.title}`,
+    ),
+  ]);
   const roleActionIdsForPath = (path) =>
     (roleActionPermissions[path] ?? []).map(
       (action) => `button:${path}:${action}`,
     );
+  const roleTabIdsForPath = (path) =>
+    tabPermissionPaths.has(path)
+      ? ["页面", "数据"].map((tab) => `tab:${path}:${tab}`)
+      : [];
   const createRolePermissionTree = (nodes, parents = []) =>
     nodes.map((node) => {
       const path = [...parents, node.name];
@@ -6415,16 +6487,24 @@ function RbacPage({ onAction }) {
         };
       }
       const actions = roleActionPermissions[key] ?? [];
+      const tabs = tabPermissionPaths.has(key) ? ["页面", "数据"] : [];
       return {
         id: `page:${key}`,
         name: node.name,
         type: "page",
-        children: actions.length
-          ? actions.map((action) => ({
+        children: actions.length || tabs.length
+          ? [
+              ...actions.map((action) => ({
               id: `button:${key}:${action}`,
               name: action,
               type: "button",
-            }))
+              })),
+              ...tabs.map((tab) => ({
+                id: `tab:${key}:${tab}`,
+                name: tab,
+                type: "tab",
+              })),
+            ]
           : undefined,
       };
     });
@@ -6627,7 +6707,8 @@ function RbacPage({ onAction }) {
       // A page is available for data authorization once its menu is granted.
       const pageKey = path.join("/");
       const pageGranted = roleMenus.has(`page:${pageKey}`)
-        || roleActionIdsForPath(pageKey).some((id) => roleMenus.has(id));
+        || roleActionIdsForPath(pageKey).some((id) => roleMenus.has(id))
+        || roleTabIdsForPath(pageKey).some((id) => roleMenus.has(id));
       return pageGranted ? [node] : [];
     });
   const dataPermissionMenuTree = selectedDataPermissionTree(menuTree);
@@ -6643,11 +6724,23 @@ function RbacPage({ onAction }) {
     <ul className="role-menu-tree">
       {nodes.map((node, index) => (
         <li
-          className={node.type === "button" ? "role-menu-action" : ""}
+          className={
+            node.type === "button"
+              ? "role-menu-action"
+              : node.type === "tab"
+                ? "role-menu-tab"
+                : ""
+          }
           key={`${node.id}-${index}`}
         >
           <div className="role-menu-node">
-            <label className={node.type === "button" ? "role-menu-button" : ""}>
+            <label className={
+              node.type === "button"
+                ? "role-menu-button"
+                : node.type === "tab"
+                  ? "role-menu-tab-label"
+                  : ""
+            }>
               <RolePermissionCheckbox
                 node={node}
                 selectedIds={roleMenus}
@@ -8405,6 +8498,152 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
   );
 }
 
+function MenuManagementPage({ onAction }) {
+  const initialMenus = [
+    {
+      id: "settings", name: "设置中心", type: "目录", icon: "settings", sort: 8, path: "/settings", component: "", perms: "", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00",
+      children: [
+        { id: "settings-dynamics", name: "安全动态", type: "菜单", icon: "message", sort: 1, path: "dynamics", component: "DynamicsSettings", perms: "settings:dynamics:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+        { id: "settings-worksheet", name: "工作表", type: "菜单", icon: "document", sort: 2, path: "worksheet", component: "EmbeddedLowCodePage", perms: "settings:worksheet:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+        { id: "settings-task", name: "任务", type: "菜单", icon: "task", sort: 3, path: "task", component: "EmbeddedTaskFrame", perms: "settings:task:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+        { id: "settings-flow", name: "流程", type: "菜单", icon: "flow", sort: 4, path: "flow", component: "EmbeddedLowCodePage", perms: "settings:flow:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+        {
+          id: "system-settings", name: "系统设置", type: "目录", icon: "settings", sort: 8, path: "system", component: "", perms: "", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00",
+          children: [
+            { id: "organization-users", name: "组织用户", type: "菜单", icon: "people", sort: 1, path: "organization-users", component: "UserManagementCenter", perms: "system:user:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+            { id: "role-permission", name: "角色权限", type: "菜单", icon: "approval", sort: 2, path: "role-permission", component: "RbacPage", perms: "system:role:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+            { id: "menu-management", name: "菜单管理", type: "菜单", icon: "sort", sort: 3, path: "menu-management", component: "MenuManagementPage", perms: "system:menu:view", visible: "显示", status: "启用", createdAt: "2026-08-31 09:00", children: [] },
+            { id: "dictionary", name: "字典管理", type: "菜单", icon: "document", sort: 4, path: "dictionary", component: "DictionaryManagement", perms: "system:dictionary:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+            { id: "enterprise", name: "企业设置", type: "菜单", icon: "briefcase", sort: 5, path: "enterprise", component: "EnterpriseSettings", perms: "system:enterprise:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+          ],
+        },
+      ],
+    },
+  ];
+  const emptyMenu = (parentId = "settings") => ({ parentId, name: "", type: "菜单", icon: "apps", sort: 1, path: "", component: "", perms: "", visible: "显示", status: "启用" });
+  const [menus, setMenus] = useState(initialMenus);
+  const [queryName, setQueryName] = useState("");
+  const [queryStatus, setQueryStatus] = useState("");
+  const [expanded, setExpanded] = useState(() => new Set(["settings", "system-settings"]));
+  const [dialog, setDialog] = useState(null);
+  const [form, setForm] = useState(emptyMenu());
+  const [formError, setFormError] = useState("");
+
+  const flattenMenus = (nodes, depth = 0, parentId = "0") =>
+    nodes.flatMap((node) => [
+      { ...node, depth, parentId },
+      ...flattenMenus(node.children ?? [], depth + 1, node.id),
+    ]);
+  const menuRows = flattenMenus(menus);
+  const parentOptions = menuRows.filter((item) => item.type !== "按钮");
+  const visibleRows = menuRows.filter((record) => {
+    const ownMatch = (!queryName || record.name.includes(queryName.trim())) && (!queryStatus || record.status === queryStatus);
+    if (ownMatch) return true;
+    return menuRows.some((item) => item.id !== record.id && item.depth > record.depth && item.parentId === record.id && (!queryName || item.name.includes(queryName.trim())) && (!queryStatus || item.status === queryStatus));
+  });
+  const isRowVisible = (record) => {
+    let parentId = record.parentId;
+    while (parentId !== "0") {
+      if (!expanded.has(parentId)) return false;
+      parentId = menuRows.find((item) => item.id === parentId)?.parentId ?? "0";
+    }
+    return true;
+  };
+  const replaceNode = (nodes, id, update) => nodes.map((node) => node.id === id ? { ...node, ...update } : { ...node, children: replaceNode(node.children ?? [], id, update) });
+  const appendNode = (nodes, parentId, node) => parentId === "0" ? [...nodes, node] : nodes.map((item) => item.id === parentId ? { ...item, children: [...(item.children ?? []), node] } : { ...item, children: appendNode(item.children ?? [], parentId, node) });
+  const removeNode = (nodes, id) => nodes.filter((node) => node.id !== id).map((node) => ({ ...node, children: removeNode(node.children ?? [], id) }));
+  const openCreate = (parentId = "settings") => {
+    const parent = menuRows.find((item) => item.id === parentId);
+    setForm({ ...emptyMenu(parentId), sort: (parent?.children?.length ?? menus.length) + 1 });
+    setFormError("");
+    setDialog({ mode: "create", parentId });
+  };
+  const openEdit = (record) => {
+    setForm({ ...record });
+    setFormError("");
+    setDialog({ mode: "edit", id: record.id });
+  };
+  const saveMenu = (event) => {
+    event.preventDefault();
+    const name = form.name.trim();
+    if (!name) {
+      setFormError("请输入菜单名称");
+      return;
+    }
+    const duplicate = menuRows.some((item) => item.id !== dialog?.id && item.parentId === form.parentId && item.name === name);
+    if (duplicate) {
+      setFormError("同级菜单名称不能重复");
+      return;
+    }
+    const payload = { ...form, name, sort: Number(form.sort) || 1 };
+    if (dialog?.mode === "edit") setMenus((items) => replaceNode(items, dialog.id, payload));
+    else setMenus((items) => appendNode(items, payload.parentId, { ...payload, id: `menu-${Date.now()}`, createdAt: "2026-08-31 10:00", children: [] }));
+    setDialog(null);
+    onAction(`${dialog?.mode === "edit" ? "保存" : "新增"}菜单成功`);
+  };
+  const toggleStatus = (record) => {
+    const nextStatus = record.status === "启用" ? "停用" : "启用";
+    setMenus((items) => replaceNode(items, record.id, { status: nextStatus }));
+    onAction(`${record.name}已${nextStatus}`);
+  };
+  const deleteMenu = () => {
+    setMenus((items) => removeNode(items, dialog.id));
+    setDialog(null);
+    onAction("删除菜单成功");
+  };
+  const expandAll = () => setExpanded(new Set(menuRows.filter((item) => item.children?.length).map((item) => item.id)));
+  const collapseAll = () => setExpanded(new Set());
+  const setField = (key, value) => { setForm((current) => ({ ...current, [key]: value })); setFormError(""); };
+  return (
+    <section className="menu-management" aria-labelledby="menu-management-title">
+      <header className="menu-management-toolbar">
+        <h1 id="menu-management-title">菜单管理</h1>
+        <button type="button" className="menu-management-primary" onClick={() => openCreate("settings")}><Add24Regular />新增菜单</button>
+      </header>
+      <section className="menu-management-panel">
+        <div className="menu-management-filters">
+          <label>菜单名称<input value={queryName} onChange={(event) => setQueryName(event.target.value)} maxLength={20} placeholder="请输入菜单名称" /></label>
+          <label>状态<select value={queryStatus} onChange={(event) => setQueryStatus(event.target.value)}><option value="">全部</option><option>启用</option><option>停用</option></select></label>
+          <button type="button" className="menu-filter-search">搜索</button>
+          <button type="button" className="menu-filter-reset" onClick={() => { setQueryName(""); setQueryStatus(""); }}>重置</button>
+          <span />
+          <button type="button" className="menu-tree-tool" onClick={expandAll}>展开</button>
+          <button type="button" className="menu-tree-tool" onClick={collapseAll}>折叠</button>
+        </div>
+        <div className="menu-management-table" role="table" aria-label="菜单列表">
+          <div className="menu-management-table-head" role="row"><span>菜单名称</span><span>图标</span><span>排序</span><span>权限标识</span><span>组件路径</span><span>状态</span><span>创建时间</span><span>操作</span></div>
+          {visibleRows.filter(isRowVisible).map((record) => {
+            const hasChildren = (record.children ?? []).length > 0;
+            return <div className="menu-management-table-row" role="row" key={record.id}>
+              <div className="menu-tree-name" style={{ "--menu-depth": record.depth }}>
+                {hasChildren ? <button type="button" className={expanded.has(record.id) ? "expanded" : ""} onClick={() => setExpanded((current) => { const next = new Set(current); next.has(record.id) ? next.delete(record.id) : next.add(record.id); return next; })}><ChevronRight24Regular /></button> : <i />}
+                <SystemIcon name={record.icon} />
+                <strong>{record.name}</strong><em>{record.type}</em>
+              </div>
+              <span><SystemIcon name={record.icon} /></span><span>{record.sort}</span><code>{record.perms || "-"}</code><code>{record.component || "-"}</code><span><i className={record.status === "启用" ? "menu-status enabled" : "menu-status"}>{record.status}</i></span><time>{record.createdAt}</time>
+              <div className="menu-row-actions"><button type="button" onClick={() => openCreate(record.id)} disabled={record.type === "按钮"}>新增</button><button type="button" onClick={() => openEdit(record)}>修改</button><button type="button" onClick={() => toggleStatus(record)}>{record.status === "启用" ? "停用" : "启用"}</button><button type="button" className="danger" disabled={record.id === "settings"} onClick={() => setDialog({ mode: "delete", id: record.id, name: record.name })}>删除</button></div>
+            </div>;
+          })}
+        </div>
+      </section>
+      {dialog?.mode === "create" || dialog?.mode === "edit" ? <div className="management-dialog-layer" onMouseDown={() => setDialog(null)} role="presentation"><form className="management-dialog menu-editor-dialog" onSubmit={saveMenu} onMouseDown={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="menu-editor-title"><header><h2 id="menu-editor-title">{dialog.mode === "edit" ? "修改菜单" : "新增菜单"}</h2><button type="button" className="management-dialog-close" aria-label="关闭菜单编辑弹窗" onClick={() => setDialog(null)}><DismissRegular /></button></header><div className="management-dialog-body menu-editor-form">
+        <label><b>上级菜单</b><select value={form.parentId} onChange={(event) => setField("parentId", event.target.value)} disabled={dialog.mode === "edit"}>{dialog.mode === "edit" && form.parentId === "0" ? <option value="0">主类目</option> : null}{parentOptions.filter((item) => item.id !== dialog.id).map((item) => <option value={item.id} key={item.id}>{"　".repeat(item.depth)}{item.name}</option>)}</select></label>
+        <label><b>菜单类型</b><select value={form.type} onChange={(event) => setField("type", event.target.value)}><option>目录</option><option>菜单</option><option>按钮</option></select></label>
+        <label><b>菜单名称</b><input value={form.name} onChange={(event) => setField("name", event.target.value)} maxLength={20} placeholder="请输入菜单名称" autoFocus /></label>
+        <label><b>显示排序</b><input value={form.sort} onChange={(event) => setField("sort", event.target.value.replace(/\D/g, "").slice(0, 4))} inputMode="numeric" maxLength={4} placeholder="请输入排序号" /></label>
+        <label><b>路由地址</b><input value={form.path} onChange={(event) => setField("path", event.target.value)} maxLength={60} placeholder="例如：system/menu" /></label>
+        <label><b>组件路径</b><input value={form.component} onChange={(event) => setField("component", event.target.value)} maxLength={60} placeholder="例如：system/menu/index" /></label>
+        <label><b>权限标识</b><input value={form.perms} onChange={(event) => setField("perms", event.target.value)} maxLength={60} placeholder="例如：system:menu:view" /></label>
+        <label><b>菜单图标</b><select value={form.icon} onChange={(event) => setField("icon", event.target.value)}>{systemIconLibrary.map((icon) => <option key={icon.id} value={icon.id}>{icon.label}</option>)}</select></label>
+        <label><b>显示状态</b><select value={form.visible} onChange={(event) => setField("visible", event.target.value)}><option>显示</option><option>隐藏</option></select></label>
+        <label><b>菜单状态</b><select value={form.status} onChange={(event) => setField("status", event.target.value)}><option>启用</option><option>停用</option></select></label>
+        {formError ? <p className="menu-editor-error">{formError}</p> : null}
+      </div><footer><button type="button" className="management-dialog-cancel" onClick={() => setDialog(null)}>取消</button><button type="submit" className="management-dialog-primary">保存</button></footer></form></div> : null}
+      {dialog?.mode === "delete" ? <div className="management-dialog-layer" onMouseDown={() => setDialog(null)} role="presentation"><section className="management-dialog management-confirm-dialog" onMouseDown={(event) => event.stopPropagation()} role="dialog" aria-modal="true" aria-labelledby="delete-menu-title"><header><h2 id="delete-menu-title">确认删除</h2><button type="button" className="management-dialog-close" aria-label="关闭删除确认" onClick={() => setDialog(null)}><DismissRegular /></button></header><div className="management-dialog-body"><p>确定删除菜单“{dialog.name}”吗？其下级菜单也将一并删除。</p></div><footer><button type="button" className="management-dialog-cancel" onClick={() => setDialog(null)}>取消</button><button type="button" className="management-dialog-primary" onClick={deleteMenu}>确认删除</button></footer></section></div> : null}
+    </section>
+  );
+}
+
 function SettingsPage({ onAction, initialSelected = "安全动态", branding, onBrandingChange }) {
   const [selected, setSelected] = useState(initialSelected);
   const [organizations, setOrganizations] = useState([]);
@@ -8442,7 +8681,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
   const warningPageMenu = warningPageMenus.find(
     (entry) => entry.label === selected,
   );
-  const systemSettingsMenus = ["组织用户", "角色权限", "字典管理", "企业设置"];
+  const systemSettingsMenus = ["组织用户", "角色权限", "菜单管理", "字典管理", "企业设置"];
   const item =
     settingsItems.find((entry) => entry.label === selected) ??
     worksheetMenu ??
@@ -8495,6 +8734,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
   const rows = rowsBySetting[selected] ?? [];
   const isUserCenter = selected === "组织用户";
   const isRbac = selected === "角色权限";
+  const isMenuManagement = selected === "菜单管理";
   const isDynamicsSetting = selected === "安全动态";
   const isDictionarySetting = selected === "字典管理";
   const isEnterpriseSetting = selected === "企业设置";
@@ -8624,6 +8864,7 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
         <div className="settings-content">
           {!isUserCenter &&
           !isRbac &&
+          !isMenuManagement &&
           !isEnterpriseSetting &&
           !isDynamicsSetting &&
           !isDictionarySetting &&
@@ -8693,6 +8934,8 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
             />
           ) : isRbac ? (
             <RbacPage onAction={onAction} />
+          ) : isMenuManagement ? (
+            <MenuManagementPage onAction={onAction} />
           ) : (
             <>
               <section
