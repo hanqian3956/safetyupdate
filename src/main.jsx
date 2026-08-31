@@ -6388,6 +6388,20 @@ function RbacPage({ onAction }) {
     nodes.flatMap((node) =>
       node.children?.length ? leafMenus(node.children) : [node.name],
     );
+  const roleActionPermissions = {
+    "设置中心/系统设置/角色权限": [
+      "查看",
+      "新增",
+      "编辑",
+      "删除",
+      "分配用户",
+      "数据权限",
+    ],
+  };
+  const roleActionIdsForPath = (path) =>
+    (roleActionPermissions[path] ?? []).map(
+      (action) => `button:${path}:${action}`,
+    );
   const createRolePermissionTree = (nodes, parents = []) =>
     nodes.map((node) => {
       const path = [...parents, node.name];
@@ -6400,10 +6414,18 @@ function RbacPage({ onAction }) {
           children: createRolePermissionTree(node.children, path),
         };
       }
+      const actions = roleActionPermissions[key] ?? [];
       return {
         id: `page:${key}`,
         name: node.name,
         type: "page",
+        children: actions.length
+          ? actions.map((action) => ({
+              id: `button:${key}:${action}`,
+              name: action,
+              type: "button",
+            }))
+          : undefined,
       };
     });
   const rolePermissionTree = createRolePermissionTree(menuTree);
@@ -6419,8 +6441,11 @@ function RbacPage({ onAction }) {
           ? [node.id, ...collectMenuIds(node.children ?? [])]
           : [],
       );
-    // Expand all menu layers so the selectable page menus are immediately visible.
-    return new Set(collectMenuIds(rolePermissionTree));
+    // Keep menus open and expose the dedicated role-management actions by default.
+    return new Set([
+      ...collectMenuIds(rolePermissionTree),
+      "page:设置中心/系统设置/角色权限",
+    ]);
   };
   const defaultDataMenuScopes = () =>
     Object.fromEntries(leafMenus(menuTree).map((name) => [name, "仅自己"]));
@@ -6601,7 +6626,9 @@ function RbacPage({ onAction }) {
 
       // A page is available for data authorization once its menu is granted.
       const pageKey = path.join("/");
-      return roleMenus.has(`page:${pageKey}`) ? [node] : [];
+      const pageGranted = roleMenus.has(`page:${pageKey}`)
+        || roleActionIdsForPath(pageKey).some((id) => roleMenus.has(id));
+      return pageGranted ? [node] : [];
     });
   const dataPermissionMenuTree = selectedDataPermissionTree(menuTree);
   const dataPermissionLeafCount = leafMenus(dataPermissionMenuTree).length;
