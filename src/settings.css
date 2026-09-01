@@ -295,9 +295,74 @@
   text-align: center;
 }
 
-.settings-lowcode-embed {
+.settings-lowcode-page {
   height: calc(100dvh - 118px);
   min-height: 760px;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  background: var(--surface);
+}
+
+.settings-lowcode-toolbar {
+  height: 42px;
+  padding: 0 16px;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+  border-bottom: 1px solid var(--line);
+  background: #fbfdff;
+}
+
+.settings-lowcode-description-switch {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  color: #536579;
+  font-size: 12px;
+  font-weight: 600;
+  cursor: pointer;
+}
+
+.settings-lowcode-description-switch input {
+  position: absolute;
+  opacity: 0;
+  pointer-events: none;
+}
+
+.settings-lowcode-description-switch > span {
+  position: relative;
+  width: 30px;
+  height: 16px;
+  border-radius: 999px;
+  background: #c9d5df;
+  transition: background .18s ease;
+}
+
+.settings-lowcode-description-switch > span::after {
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  background: #fff;
+  content: "";
+  box-shadow: 0 1px 2px rgb(33 52 70 / 20%);
+  transition: transform .18s ease;
+}
+
+.settings-lowcode-description-switch input:checked + span {
+  background: var(--accent);
+}
+
+.settings-lowcode-description-switch input:checked + span::after {
+  transform: translateX(14px);
+}
+
+.settings-lowcode-embed {
+  min-height: 0;
+  flex: 1;
   overflow: hidden;
   background: transparent;
 }

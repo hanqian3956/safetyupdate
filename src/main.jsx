@@ -56,7 +56,7 @@ import "./organization-center.css";
 import "./user-management.css";
 import "./login.css";
 import "./enterprise-settings.css";
-import lowCodePrototypeHtml from "../xiaodong/新低代码.html?raw";
+import lowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
 import newTaskPrototypeHtml from "../xiaodong/新任务.html?raw";
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
@@ -4657,7 +4657,7 @@ function EmbeddedWarningsPage() {
   );
 }
 
-function EmbeddedLowCodePage({ module, view }) {
+function EmbeddedLowCodePage({ module, view, showDescription = false }) {
   const query = new URLSearchParams({ module, ...(view ? { view } : {}) });
   const request = JSON.stringify({
     module,
@@ -4667,20 +4667,63 @@ function EmbeddedLowCodePage({ module, view }) {
       flowCategory: FLOW_CATEGORY_DICTIONARY_OPTIONS,
     },
   });
-  const srcDoc = lowCodePrototypeHtml.replace(
-    "<head>",
-    `<head><script>window.__hostLowCodeRequest = ${request};</script>`,
-  );
+  const embeddedWorkspaceStyles = `
+    #topbar, #appMenu, #left-panel > aside:first-child, .sidebar { display: none !important; }
+    #left-panel { width: ${showDescription ? "80%" : "100%"} !important; }
+    #right-panel, #divider, #notes { display: ${showDescription ? "block" : "none"} !important; }
+  `;
+  const embeddedHead = `<head><style>${embeddedWorkspaceStyles}</style>`;
+  const srcDoc = lowCodePrototypeHtml
+    .replaceAll("<head>", embeddedHead)
+    .replace(
+      embeddedHead,
+      `${embeddedHead}<script>
+        window.__hostLowCodeRequest = ${request};
+        window.addEventListener("load", function () {
+          window.setTimeout(function () {
+            if (typeof window.switchModule === "function") window.switchModule(${JSON.stringify(module)});
+          }, 80);
+        });
+      </script>`,
+    );
 
   return (
     <section className="settings-lowcode-embed" aria-label={module}>
       <iframe
-        key={query.toString()}
+        key={`${query.toString()}-${showDescription ? "with-description" : "workspace-only"}`}
         srcDoc={srcDoc}
         title="低代码平台"
       />
     </section>
   );
+}
+
+function LowCodeEmbeddedWorkspace({ module, view, label }) {
+  const [showDescription, setShowDescription] = useState(false);
+  return (
+    <section className="settings-lowcode-page" aria-label={`${label}低代码页面`}>
+      <div className="settings-lowcode-toolbar">
+        <label className="settings-lowcode-description-switch">
+          <input
+            type="checkbox"
+            checked={showDescription}
+            onChange={(event) => setShowDescription(event.target.checked)}
+          />
+          <span aria-hidden="true" />
+          显示说明
+        </label>
+      </div>
+      <EmbeddedLowCodePage
+        module={module}
+        view={view}
+        showDescription={showDescription}
+      />
+    </section>
+  );
+}
+
+function EmbeddedApplicationCenterPage() {
+  return <LowCodeEmbeddedWorkspace module="app" label="应用中心" />;
 }
 
 function WarningCenterPage() {
@@ -8987,9 +9030,10 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
           ) : isDictionarySetting ? (
             <DictionaryManagement onAction={onAction} />
           ) : isLowCodeSetting ? (
-            <EmbeddedLowCodePage
+            <LowCodeEmbeddedWorkspace
               module={lowCodeMenu.module}
               view={lowCodeMenu.view}
+              label={lowCodeMenu.label}
             />
           ) : isTaskPageSetting ? (
             <section className="settings-task-embed" aria-label={taskPageMenu.label}>
@@ -9419,6 +9463,22 @@ function App() {
     });
   };
   const openApplication = (name) => {
+    if (name === "应用中心") {
+      window.scrollTo({ top: 0, behavior: "smooth" });
+      startTransition(() => {
+        setOpenTabs((current) =>
+          current.some((tab) => tab.id === "application-center")
+            ? current
+            : [
+                ...current,
+                { id: "application-center", label: "应用中心", icon: Apps24Regular },
+              ],
+        );
+        setActiveTab("application-center");
+        setActiveNav("应用");
+      });
+      return;
+    }
     const preventionForm = [...preventionForms, ...preventionApprovalFlows].find(
       (form) => form.title === name,
     );
@@ -9750,6 +9810,8 @@ function App() {
               />
             ) : activeTab === "personal-center" ? (
               <PersonalCenter onAction={showNotice} />
+            ) : activeTab === "application-center" ? (
+              <EmbeddedApplicationCenterPage />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
                 key={`${preventionInitial}-${preventionFormOpen ? "form" : "catalog"}`}
