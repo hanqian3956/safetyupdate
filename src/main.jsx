@@ -4722,10 +4722,6 @@ function LowCodeEmbeddedWorkspace({ module, view, label }) {
   );
 }
 
-function EmbeddedApplicationCenterPage() {
-  return <LowCodeEmbeddedWorkspace module="app" label="应用中心" />;
-}
-
 function WarningCenterPage() {
   const [filter, setFilter] = useState("全部");
   const warnings = [
@@ -9463,22 +9459,6 @@ function App() {
     });
   };
   const openApplication = (name) => {
-    if (name === "应用中心") {
-      window.scrollTo({ top: 0, behavior: "smooth" });
-      startTransition(() => {
-        setOpenTabs((current) =>
-          current.some((tab) => tab.id === "application-center")
-            ? current
-            : [
-                ...current,
-                { id: "application-center", label: "应用中心", icon: Apps24Regular },
-              ],
-        );
-        setActiveTab("application-center");
-        setActiveNav("应用");
-      });
-      return;
-    }
     const preventionForm = [...preventionForms, ...preventionApprovalFlows].find(
       (form) => form.title === name,
     );
@@ -9810,8 +9790,6 @@ function App() {
               />
             ) : activeTab === "personal-center" ? (
               <PersonalCenter onAction={showNotice} />
-            ) : activeTab === "application-center" ? (
-              <EmbeddedApplicationCenterPage />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
                 key={`${preventionInitial}-${preventionFormOpen ? "form" : "catalog"}`}
