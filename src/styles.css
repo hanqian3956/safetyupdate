@@ -71,3 +71,16 @@ main { max-width: 1530px; margin: 0 auto; padding: 16px 26px 40px; }.section-tit
 .process-return-target-select { width: 100%; height: 35px; padding: 0 29px 0 9px; border: 1px solid #cfdbe5; border-radius: 5px; background: #fff; color: #52677a; font: inherit; font-size: 12px; outline: none; }.process-return-target-select:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgb(15 108 189 / 13%); }
 .form-draft, .process-draft-action { min-height: 32px; padding: 0 12px; border: 1px solid #a8cbe3; border-radius: 6px; background: #f4faff; color: var(--accent); font-size: 11px; font-weight: 650; white-space: nowrap; }
 .form-draft:hover, .process-draft-action:hover { border-color: var(--accent); background: #e9f5fc; }
+.inspection-data-scroll table.inspection-approval-data-table { min-width: 1450px; }
+.inspection-data-scroll td.inspection-description-cell { min-width: 230px; white-space: normal; line-height: 1.45; }
+.system-pagination { min-height: 48px; padding: 0 16px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; border-top: 1px solid var(--line); background: #fff; color: var(--muted); font-size: 11px; }
+.system-pagination > span { margin-right: auto; }
+.system-pagination label { display: inline-flex; align-items: center; gap: 5px; }
+.system-pagination select, .system-pagination button { height: 28px; padding: 0 8px; border: 1px solid #d6e0e8; border-radius: 4px; background: #fff; color: #536579; font: inherit; font-size: 11px; }
+.system-pagination select { width: 72px; padding: 0 6px; }
+.system-pagination button:hover:not(:disabled) { border-color: #9bc5e2; background: #f4faff; color: var(--accent); }
+.system-pagination button:disabled { opacity: .45; cursor: not-allowed; }
+.system-pagination b { min-width: 35px; color: var(--text); font-weight: 650; text-align: center; }
+.inspection-data-pagination { border-radius: 0 0 10px 10px; }
+.message-row { min-height: 82px; }
+.message-row-content .message-action-type { color: #8a98a6; font-size: 11px; font-weight: 500; }

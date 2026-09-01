@@ -214,26 +214,34 @@ const initialTabs = [
 const messageEntries = [
   {
     id: "msg-1",
-    source: "任务",
-    type: "执行提醒",
-    sender: "陈伟",
+    source: "流程审批",
+    type: "审批提醒",
+    sender: "矿山应急照明设备采购申请",
     time: "今天 10:12",
-    title: "完成设备点检复核",
-    content: "3 号球磨机点检任务已完成，请确认复核结果。",
-    attachment: "任务表单",
-    formKind: "task",
+    initiator: "王建国",
+    initiatedAt: "今天 09:12",
+    application: "机电管理",
+    processNumber: "202608310001",
+    title: "矿山应急照明设备采购申请",
+    content: "流程已流转至当前审批节点，请及时处理。",
+    attachment: "审批流表单",
+    formKind: "approval",
     read: false,
-    icon: ClipboardTask24Regular,
+    icon: ApprovalsApp24Regular,
     tone: "blue",
   },
   {
     id: "msg-2",
-    source: "流程",
-    type: "待你审批",
-    sender: "系统通知",
+    source: "流程超时",
+    type: "超时提醒",
+    sender: "南区 2# 采场动火作业申请",
     time: "今天 09:38",
-    title: "矿山应急照明设备采购申请",
-    content: "该流程已流转至你，请在今天内完成审批。",
+    initiator: "张宇",
+    initiatedAt: "今天 08:46",
+    application: "安全管理",
+    processNumber: "202608310002",
+    title: "南区 2# 采场动火作业申请",
+    content: "当前审批节点已超时，请尽快处理。",
     attachment: "审批流表单",
     formKind: "approval",
     read: false,
@@ -242,42 +250,54 @@ const messageEntries = [
   },
   {
     id: "msg-3",
-    source: "预警",
-    type: "超期提醒",
-    sender: "安环部",
+    source: "流程结束",
+    type: "结束提醒",
+    sender: "碎矿车间停机检修计划",
     time: "昨天 16:45",
-    title: "南区排水泵隐患整改复查",
-    content: "整改期限临近，请及时查看现场复查情况。",
-    attachment: "预警处置表单",
-    formKind: "warning",
+    initiator: "赵磊",
+    initiatedAt: "昨天 15:28",
+    application: "设备管理",
+    processNumber: "202608300003",
+    title: "碎矿车间停机检修计划",
+    content: "流程已处理结束，相关结果已归档。",
+    attachment: "审批流表单",
+    formKind: "approval",
     read: false,
     icon: ErrorCircle24Regular,
     tone: "red",
   },
   {
     id: "msg-4",
-    source: "任务",
-    type: "任务分派",
-    sender: "李明",
+    source: "流程审批",
+    type: "审批提醒",
+    sender: "外协队入场资格审核",
     time: "昨天 14:20",
-    title: "平巷凿岩作业隐患排查任务",
-    content: "你已被添加为执行人，请按要求完成岗位检查。",
-    attachment: "任务表单",
-    formKind: "task",
+    initiator: "周敏",
+    initiatedAt: "昨天 10:20",
+    application: "双重预防机制",
+    processNumber: "202608300004",
+    title: "外协队入场资格审核",
+    content: "流程已流转至当前审批节点，请及时处理。",
+    attachment: "审批流表单",
+    formKind: "approval",
     read: false,
-    icon: ShieldCheckmark24Regular,
-    tone: "green",
+    icon: ApprovalsApp24Regular,
+    tone: "orange",
   },
   {
     id: "msg-5",
-    source: "系统",
-    type: "系统通知",
-    sender: "系统通知",
+    source: "流程结束",
+    type: "结束提醒",
+    sender: "井下设备检修采购申请",
     time: "7 月 28 日 09:16",
-    title: "生产日报已同步完成",
-    content: "南区生产日报数据已归档，可进入生产管理查看。",
-    attachment: "系统通知",
-    formKind: "system",
+    initiator: "刘海",
+    initiatedAt: "8 月 26 日 16:42",
+    application: "设备管理",
+    processNumber: "202608260006",
+    title: "井下设备检修采购申请",
+    content: "流程已处理结束，相关结果已归档。",
+    attachment: "审批流表单",
+    formKind: "approval",
     read: true,
     icon: CheckmarkCircle24Regular,
     tone: "blue",
@@ -373,8 +393,8 @@ const processEntries = [
     initiator: "张宇",
     initiatedAt: "今天 08:46",
     currentNode: "安全管理部审批",
-    approver: "李四",
-    status: "已驳回",
+    approver: "张宇",
+    status: "审批中",
     application: "安全管理",
     amount: "不涉及",
     department: "生产管理部",
@@ -393,6 +413,7 @@ const processEntries = [
     department: "设备管理部",
     urgency: "常规",
     handledByMe: true,
+    startedByMe: true,
     handledResult: "同意",
   },
   {
@@ -401,7 +422,7 @@ const processEntries = [
     initiator: "周敏",
     initiatedAt: "昨天 10:20",
     currentNode: "安环部备案",
-    approver: "孙宁",
+    approver: "张宇",
     status: "审批中",
     amount: "不涉及",
     department: "安全管理部",
@@ -437,6 +458,7 @@ const processEntries = [
     department: "机电管理部",
     urgency: "常规",
     handledByMe: true,
+    startedByMe: true,
     handledResult: "同意",
     revokedBy: "刘海",
     revokedAt: "2026-08-26 17:08:00",
@@ -1182,12 +1204,58 @@ function MessageAttachmentDialog({ message, onClose }) {
   );
 }
 
-function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
+function SystemPagination({
+  total,
+  page,
+  pageSize,
+  onPageChange,
+  onPageSizeChange,
+  className = "",
+  itemLabel = "条",
+}) {
+  const pageCount = Math.max(1, Math.ceil(total / pageSize));
+  const currentPage = Math.min(page, pageCount);
+  return (
+    <footer className={`system-pagination ${className}`.trim()}>
+      <span>共 {total} {itemLabel}</span>
+      <label>
+        每页
+        <select
+          aria-label={`每页${itemLabel}数`}
+          value={pageSize}
+          onChange={(event) => onPageSizeChange(Number(event.target.value))}
+        >
+          <option value={10}>10 {itemLabel}</option>
+          <option value={20}>20 {itemLabel}</option>
+          <option value={50}>50 {itemLabel}</option>
+        </select>
+      </label>
+      <button
+        type="button"
+        aria-label="上一页"
+        disabled={currentPage === 1}
+        onClick={() => onPageChange(Math.max(1, currentPage - 1))}
+      >
+        上一页
+      </button>
+      <b>{currentPage} / {pageCount}</b>
+      <button
+        type="button"
+        aria-label="下一页"
+        disabled={currentPage === pageCount}
+        onClick={() => onPageChange(Math.min(pageCount, currentPage + 1))}
+      >
+        下一页
+      </button>
+    </footer>
+  );
+}
+
+function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenProcess }) {
   const [source, setSource] = useState("全部");
   const [status, setStatus] = useState("未读");
   const [pageSize, setPageSize] = useState(10);
   const [page, setPage] = useState(1);
-  const [selectedMessage, setSelectedMessage] = useState(null);
   const filteredMessages = messages.filter(
     (message) =>
       (source === "全部" || message.source === source) &&
@@ -1225,7 +1293,7 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
       </header>
       <div className="message-filters" aria-label="消息筛选">
         <label>
-          消息来源
+          消息类型
           <select
             value={source}
             onChange={(event) => {
@@ -1234,10 +1302,9 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
             }}
           >
             <option>全部</option>
-            <option>任务</option>
-            <option>流程</option>
-            <option>预警</option>
-            <option>系统</option>
+            <option>流程审批</option>
+            <option>流程超时</option>
+            <option>流程结束</option>
           </select>
         </label>
         <label>
@@ -1264,8 +1331,10 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
               type: messageType,
               sender,
               time,
-              title,
-              content,
+              initiator,
+              initiatedAt,
+              application,
+              processNumber,
               attachment,
               read,
               icon: Icon,
@@ -1277,7 +1346,7 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
                 key={id}
                 onClick={() => {
                   onMarkRead(id);
-                  setSelectedMessage(message);
+                  onOpenProcess(messageType === "结束提醒" ? "我发起的" : "待审批", processNumber);
                 }}
               >
                 <span className={`message-row-icon ${tone}`}>
@@ -1290,12 +1359,12 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
                     {!read ? <i>未读</i> : null}
                   </span>
                   <strong>
-                    <em>
-                      {messageSource} · {messageType}
-                    </em>
-                    {title}
+                    <em>{messageSource} ·</em>
+                    <span className="message-action-type">{messageType}</span>
                   </strong>
-                  <p>{content}</p>
+                  <p className="message-process-origin">
+                    {initiator}于{initiatedAt}通过{application}应用发起的流程编号为：{processNumber}
+                  </p>
                   <small className="message-attachment">
                     <ClipboardTask24Regular />
                     {attachment}
@@ -1312,45 +1381,16 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn }) {
           </div>
         )}
       </div>
-      <footer className="message-pagination">
-        <span>共 {filteredMessages.length} 条</span>
-        <label>
-          每页
-          <select
-            aria-label="每页消息条数"
-            value={pageSize}
-            onChange={(event) => {
-              setPageSize(Number(event.target.value));
-              setPage(1);
-            }}
-          >
-            <option value={10}>10 条</option>
-            <option value={20}>20 条</option>
-            <option value={50}>50 条</option>
-          </select>
-        </label>
-        <button
-          type="button"
-          aria-label="上一页"
-          disabled={currentPage === 1}
-          onClick={() => setPage((current) => Math.max(1, current - 1))}
-        >
-          上一页
-        </button>
-        <b>{currentPage} / {pageCount}</b>
-        <button
-          type="button"
-          aria-label="下一页"
-          disabled={currentPage === pageCount}
-          onClick={() => setPage((current) => Math.min(pageCount, current + 1))}
-        >
-          下一页
-        </button>
-      </footer>
-      <MessageAttachmentDialog
-        key={selectedMessage?.id}
-        message={selectedMessage}
-        onClose={() => setSelectedMessage(null)}
+      <SystemPagination
+        className="message-pagination"
+        total={filteredMessages.length}
+        page={currentPage}
+        pageSize={pageSize}
+        onPageChange={setPage}
+        onPageSizeChange={(size) => {
+          setPageSize(size);
+          setPage(1);
+        }}
       />
     </section>
   );
@@ -2213,13 +2253,14 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
   );
 }
 
-function ProcessListPage({ onAction, initialFilter = "待审批" }) {
+function ProcessListPage({ onAction, initialFilter = "待审批", initialProcessNumber = "" }) {
   const [selectedProcess, setSelectedProcess] = useState(null);
   const [processRecords, setProcessRecords] = useState(processEntries);
   const [processFilter, setProcessFilter] = useState(initialFilter);
   const [processFilters, setProcessFilters] = useState({
-    number: "",
+    number: initialProcessNumber,
     title: "",
+    application: "",
     type: "",
     status: "",
   });
@@ -2246,19 +2287,19 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
   ];
   const processTabs = {
     待审批: {
-      filters: ["number", "title", "type"],
+      filters: ["number", "title", "application"],
       columns: ["number", "title", "application", "initiator", "initiatedAt", "arrivalAt", "status"],
     },
     已审批: {
-      filters: ["number", "type"],
+      filters: ["number", "title", "application"],
       columns: ["number", "title", "application", "initiator", "initiatedAt", "completedAt", "result", "status"],
     },
     抄送我的: {
-      filters: ["number", "title"],
+      filters: ["number", "title", "application"],
       columns: ["number", "title", "application", "initiator", "initiatedAt", "sentAt", "status"],
     },
     我发起的: {
-      filters: ["number", "status"],
+      filters: ["number", "title", "application"],
       columns: ["number", "title", "application", "initiatedAt", "currentNode", "status"],
     },
     草稿箱: {
@@ -2300,6 +2341,9 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
     return columnLabels[column];
   };
   const activeTab = processTabs[processFilter];
+  const processApplications = [
+    ...new Set(processRecords.map((process) => process.application ?? "综合管理")),
+  ];
   const visibleTemplates = processTemplates.filter(
     (template) =>
       (processLibraryTab === "全部" ||
@@ -2337,6 +2381,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
       matchesFilter &&
       (!processFilters.number || details.number.includes(processFilters.number)) &&
       (!processFilters.title || details.title.includes(processFilters.title)) &&
+      (!processFilters.application || details.application === processFilters.application) &&
       (!processFilters.type || details.type === processFilters.type) &&
       (!processFilters.status || details.status === processFilters.status)
     );
@@ -2602,12 +2647,21 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
         ) : null}
         {activeTab.filters.includes("title") ? (
           <label>
-            <span>{processFilter === "草稿箱" ? "流程名称" : "标题"}</span>
+            <span>流程名称</span>
             <input
               value={processFilters.title}
               onChange={(event) => setProcessFilters((current) => ({ ...current, title: event.target.value }))}
-              placeholder={processFilter === "草稿箱" ? "请输入流程名称" : "请输入标题"}
+              placeholder="请输入流程名称"
             />
+          </label>
+        ) : null}
+        {activeTab.filters.includes("application") ? (
+          <label>
+            <span>所属应用</span>
+            <select value={processFilters.application} onChange={(event) => setProcessFilters((current) => ({ ...current, application: event.target.value }))}>
+              <option value="">请选择所属应用</option>
+              {processApplications.map((application) => <option key={application}>{application}</option>)}
+            </select>
           </label>
         ) : null}
         {activeTab.filters.includes("type") ? (
@@ -2632,7 +2686,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批" }) {
           </label>
         ) : null}
         <button type="button" className="process-query-submit" onClick={() => onAction("已按当前条件筛选流程")}>搜索</button>
-        <button type="button" className="process-query-reset" onClick={() => setProcessFilters({ number: "", title: "", type: "", status: "" })}>重置</button>
+        <button type="button" className="process-query-reset" onClick={() => setProcessFilters({ number: "", title: "", application: "", type: "", status: "" })}>重置</button>
       </div>
       <div className="process-list-table" role="table" aria-label="流程列表">
         <div className="process-table-head" role="row" style={{ gridTemplateColumns: `repeat(${activeTab.columns.length + 1}, minmax(105px, 1fr))` }}>
@@ -3231,6 +3285,8 @@ function DualPreventionPage({
   const [inspectionRecords, setInspectionRecords] = useState(initialInspectionRecords);
   const [inspectionFilterDraft, setInspectionFilterDraft] = useState({ reporter: "", date: "", shift: "" });
   const [inspectionFilters, setInspectionFilters] = useState({ reporter: "", date: "", shift: "" });
+  const [inspectionDataPage, setInspectionDataPage] = useState(1);
+  const [inspectionDataPageSize, setInspectionDataPageSize] = useState(10);
   const importInputRef = useRef(null);
   const approvalFormRef = useRef(null);
   const selectedLabel = selectedItem;
@@ -3305,6 +3361,18 @@ function DualPreventionPage({
     (!inspectionFilters.reporter || record.reporter.includes(inspectionFilters.reporter))
     && (!inspectionFilters.date || record.date === inspectionFilters.date)
     && (!inspectionFilters.shift || record.shift === inspectionFilters.shift),
+  );
+  const inspectionDataPageCount = Math.max(
+    1,
+    Math.ceil(filteredInspectionRecords.length / inspectionDataPageSize),
+  );
+  const currentInspectionDataPage = Math.min(
+    inspectionDataPage,
+    inspectionDataPageCount,
+  );
+  const pagedInspectionRecords = filteredInspectionRecords.slice(
+    (currentInspectionDataPage - 1) * inspectionDataPageSize,
+    currentInspectionDataPage * inspectionDataPageSize,
   );
   const exportRecords = (records = inspectionRecords) => {
     const headers = ["填报人", "检查日期", "作业班次", "作业地点", "凿岩设备防护装置完好", "作业面通风与照明符合要求", "人员防护用品佩戴规范", "隐患描述与整改建议", "填报状态"];
@@ -3625,6 +3693,7 @@ function DualPreventionPage({
                   onSubmit={(event) => {
                     event.preventDefault();
                     setInspectionFilters(inspectionFilterDraft);
+                    setInspectionDataPage(1);
                   }}
                 >
                   <label>
@@ -3664,6 +3733,7 @@ function DualPreventionPage({
                         const emptyFilters = { reporter: "", date: "", shift: "" };
                         setInspectionFilterDraft(emptyFilters);
                         setInspectionFilters(emptyFilters);
+                        setInspectionDataPage(1);
                       }}
                     >
                       重置
@@ -3698,23 +3768,36 @@ function DualPreventionPage({
                   />
                 </div>
                 <div className="inspection-data-scroll">
-                  <table>
+                  <table className={isApprovalFlow ? "inspection-approval-data-table" : ""}>
                     <thead>
                       <tr>
+                        {isApprovalFlow ? <><th>发起人</th><th>发起时间</th></> : null}
                         <th>填报人</th><th>检查日期</th><th>作业班次</th><th>作业地点</th><th>凿岩设备防护装置完好</th><th>作业面通风与照明符合要求</th><th>人员防护用品佩戴规范</th><th>隐患描述与整改建议</th>
                       </tr>
                     </thead>
                     <tbody>
-                      {filteredInspectionRecords.length ? filteredInspectionRecords.map((record) => (
+                      {pagedInspectionRecords.length ? pagedInspectionRecords.map((record) => (
                         <tr key={record.id}>
-                          <td>{record.reporter}</td><td>{record.date}</td><td>{record.shift}</td><td>{record.location}</td><td>{record.equipment}</td><td>{record.environment}</td><td>{record.protection}</td><td>{record.description}</td>
+                          {isApprovalFlow ? <><td>{record.initiator ?? record.reporter}</td><td>{record.initiatedAt ?? `${record.date} 08:00`}</td></> : null}
+                          <td>{record.reporter}</td><td>{record.date}</td><td>{record.shift}</td><td>{record.location}</td><td>{record.equipment}</td><td>{record.environment}</td><td>{record.protection}</td><td className="inspection-description-cell">{record.description}</td>
                         </tr>
                       )) : (
-                        <tr><td colSpan="8" className="inspection-data-empty">暂无历史填报数据</td></tr>
+                        <tr><td colSpan={isApprovalFlow ? 10 : 8} className="inspection-data-empty">暂无历史填报数据</td></tr>
                       )}
                     </tbody>
                   </table>
                 </div>
+                <SystemPagination
+                  className="inspection-data-pagination"
+                  total={filteredInspectionRecords.length}
+                  page={currentInspectionDataPage}
+                  pageSize={inspectionDataPageSize}
+                  onPageChange={setInspectionDataPage}
+                  onPageSizeChange={(size) => {
+                    setInspectionDataPageSize(size);
+                    setInspectionDataPage(1);
+                  }}
+                />
               </section>
             )}
           </section>
@@ -9267,6 +9350,7 @@ function App() {
   );
   const [taskInitial, setTaskInitial] = useState("我的任务");
   const [processInitial, setProcessInitial] = useState("待审批");
+  const [processInitialNumber, setProcessInitialNumber] = useState("");
   const [dynamicsInitial, setDynamicsInitial] = useState("动态");
   const [preventionInitial, setPreventionInitial] = useState(
     preventionForms[0].title,
@@ -9410,10 +9494,11 @@ function App() {
       setActiveNav("任务");
     });
   };
-  const openProcesses = (initialFilter = "待审批") => {
+  const openProcesses = (initialFilter = "待审批", initialProcessNumber = "") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
       setProcessInitial(initialFilter);
+      setProcessInitialNumber(initialProcessNumber);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "processes")
           ? current
@@ -9628,6 +9713,7 @@ function App() {
                 onMarkRead={markMessageRead}
                 onMarkAllRead={markAllMessagesRead}
                 onReturn={() => selectTab("workbench")}
+                onOpenProcess={openProcesses}
               />
             ) : activeTab === "todos" ? (
               <TodoOverviewPage
@@ -9639,8 +9725,9 @@ function App() {
               <EmbeddedTasksPage key={taskInitial} initialTab={taskInitial} />
             ) : activeTab === "processes" ? (
               <ProcessListPage
-                key={processInitial}
+                key={`${processInitial}-${processInitialNumber}`}
                 initialFilter={processInitial}
+                initialProcessNumber={processInitialNumber}
                 onAction={showNotice}
               />
             ) : activeTab === "safety-dynamics" ? (
