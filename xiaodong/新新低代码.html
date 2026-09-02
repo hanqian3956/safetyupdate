@@ -2109,7 +2109,7 @@
     const cv=currentView();
     let h = `<div class="mb-3 pb-3 border-b border-gray-100 flex items-center gap-2 text-sm font-semibold text-gray-700"><i class="fas fa-cog text-[#165DFF]"></i>表单配置</div>`;
     h += sec('一、基础信息','form_basic');
-    h += row('表单名称', `<input id="fc_name" ${inp(c.name)}>`, '该表单的显示名称，出现在列表与运行态顶部。');
+    h += row('<span class="text-red-500 mr-1">*</span>表单名称', `<input id="fc_name" required ${inp(c.name)}>`, '表单名称为必填项，作为表单的显示名称，出现在列表与运行态顶部。');
     h += row('表单描述', `<textarea id="fc_desc" rows="2" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm resize-none">${c.desc||''}</textarea>`, '运行态表单顶部展示的说明文字，帮助用户理解用途。');
     h += row('表单图标', `<select id="fc_icon" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="fa-file-alt" ${c.icon==='fa-file-alt'?'selected':''}>📄 通用文件</option><option value="fa-umbrella-beach" ${c.icon==='fa-umbrella-beach'?'selected':''}>🌴 请假</option><option value="fa-receipt" ${c.icon==='fa-receipt'?'selected':''}>🧾 报销</option><option value="fa-id-card" ${c.icon==='fa-id-card'?'selected':''}>🪪 登记</option></select>`, '列表与入口处展示的图标，便于区分业务。');
     h += row('表单分类', `<select id="fc_cat" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option>未分类</option><option>人事</option><option>财务</option><option>行政</option></select>`, '用于列表分组与权限批量管理。');
@@ -2227,6 +2227,14 @@
      草稿 → 仍保持草稿；已发布 → 标记为「待发布修改」（线上版本不变，黄条提示）。
      新表单（未入列表）→ 首次保存即写入列表，状态为草稿 v0。 */
   function saveForm(){
+    const name=(formName||'').trim();
+    if(!name){
+      alert('请填写表单名称（必填）。');
+      const nameInput=document.getElementById('fc_name')||document.getElementById('formNameInput');
+      if(nameInput) nameInput.focus();
+      return;
+    }
+    formName=name; formConfig.name=name;
     let f=currentForm();
     if(!f){
       const id='form'+Date.now();

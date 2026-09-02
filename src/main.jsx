@@ -373,6 +373,15 @@ function getFlowNumber(process) {
   return `${getFlowDatePart(process.initiatedAt)}${String(sequence).padStart(4, "0")}`;
 }
 
+const PROCESS_STATUS_OPTIONS = [
+  "待审批",
+  "审批中",
+  "已通过",
+  "已拒绝",
+  "已撤销",
+  "已驳回",
+];
+
 const processEntries = [
   {
     id: "flow-1",
@@ -538,6 +547,22 @@ const processEntries = [
     urgency: "常规",
     ccToMe: true,
     rejectedBy: "周杰伦",
+  },
+  {
+    id: "flow-12",
+    name: "东翼通风系统整改申请",
+    initiator: "张宇",
+    initiatedAt: "2026-09-02 09:18:00",
+    currentNode: "已驳回至发起人",
+    approver: "周杰伦",
+    status: "已驳回",
+    application: "双重预防机制",
+    amount: "不涉及",
+    department: "安全管理部",
+    urgency: "常规",
+    startedByMe: true,
+    rejectedBy: "周杰伦",
+    rejectionOpinion: "请补充整改方案及现场照片后重新提交。",
   },
   {
     id: "flow-draft-1",
@@ -2253,9 +2278,9 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
   );
 }
 
-function ProcessListPage({ onAction, initialFilter = "待审批", initialProcessNumber = "" }) {
+function ProcessListPage({ onAction, initialFilter = "待审批", initialProcessNumber = "", processRecords, setProcessRecords }) {
   const [selectedProcess, setSelectedProcess] = useState(null);
-  const [processRecords, setProcessRecords] = useState(processEntries);
+  const [revokeCandidate, setRevokeCandidate] = useState(null);
   const [processFilter, setProcessFilter] = useState(initialFilter);
   const [processFilters, setProcessFilters] = useState({
     number: initialProcessNumber,
@@ -2489,6 +2514,24 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     onAction(`${selectedProcess.name}${result}`);
     setSelectedProcess(null);
   };
+  const revokeInitiatedProcess = () => {
+    if (!revokeCandidate) return;
+    setProcessRecords((current) =>
+      current.map((process) =>
+        process.id === revokeCandidate.id
+          ? {
+              ...process,
+              status: "已撤销",
+              currentNode: "流程已撤销",
+              revokedBy: "张宇",
+              revokedAt: "2026-09-02 10:36:00",
+            }
+          : process,
+      ),
+    );
+    onAction(`${revokeCandidate.name}已撤销`);
+    setRevokeCandidate(null);
+  };
   const resumeDraft = (draft) => {
     const template = processTemplates.find((item) => item.name === draft.name) ?? {
       category: "其他流程",
@@ -2527,7 +2570,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     setFlowchartDialog(false);
   };
   const selectProcessTemplate = (template) => {
-    const matchingDrafts = processEntries.filter(
+    const matchingDrafts = processRecords.filter(
       (process) => process.draft && process.name === template.name,
     );
     if (matchingDrafts.length) {
@@ -2703,13 +2746,21 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
                 <i key={column} className={["已驳回", "已拒绝"].includes(value) ? "rejected" : ["待审批", "审批中"].includes(value) ? "pending" : ""}>{value}</i>
               ) : <span key={column}>{value}</span>;
             })}
-            <button
-              className="process-approval-action"
-              onClick={() => setSelectedProcess(process)}
-            >
-              <ApprovalsApp24Regular />
-              {processFilter === "待审批" ? "审批" : "查看"}
-            </button>
+            <span className="process-list-actions">
+              {processFilter === "我发起的" && process.status === "已驳回" ? (
+                <button type="button" className="process-list-inline-action" onClick={() => resubmitProcess(process)}>重新提交</button>
+              ) : null}
+              {processFilter === "我发起的" && ["待审批", "审批中", "已驳回"].includes(process.status) ? (
+                <button type="button" className="process-list-inline-action danger" onClick={() => setRevokeCandidate(process)}>撤销</button>
+              ) : null}
+              <button
+                className="process-approval-action"
+                onClick={() => setSelectedProcess(process)}
+              >
+                <ApprovalsApp24Regular />
+                {processFilter === "待审批" ? "审批" : "查看"}
+              </button>
+            </span>
           </div>
         ))}
         {!visibleProcesses.length ? (
@@ -2723,12 +2774,27 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
         onClose={() => setSelectedProcess(null)}
         onApprove={approve}
         viewOnly={processFilter !== "待审批"}
-        canRevoke={processFilter === "我发起的"}
+        canRevoke={false}
         canResumeDraft={processFilter === "草稿箱"}
         hideFinalLog={["已审批", "我发起的"].includes(processFilter)}
         onResumeDraft={resumeDraft}
         onResubmit={resubmitProcess}
       />
+      {revokeCandidate ? (
+        <div className="process-revoke-layer" role="presentation" onMouseDown={() => setRevokeCandidate(null)}>
+          <section className="process-revoke-dialog" role="dialog" aria-modal="true" aria-labelledby="process-list-revoke-title" onMouseDown={(event) => event.stopPropagation()}>
+            <header>
+              <h2 id="process-list-revoke-title">确认撤销</h2>
+              <button type="button" className="process-dialog-close" aria-label="关闭撤销确认" onClick={() => setRevokeCandidate(null)}><DismissRegular /></button>
+            </header>
+            <p>撤销后，流程将终止，无法再次发起，确定要撤销吗？</p>
+            <footer>
+              <button type="button" onClick={() => setRevokeCandidate(null)}>取消</button>
+              <button type="button" onClick={revokeInitiatedProcess}>确定撤销</button>
+            </footer>
+          </section>
+        </div>
+      ) : null}
       {draftRestore ? (
         <div
           className="process-draft-restore-layer"
@@ -3246,6 +3312,7 @@ const initialInspectionRecords = [
     protection: "正常",
     description: "现场检查正常，无需整改。",
     status: "已提交",
+    flowStatus: "审批中",
   },
   {
     id: "inspection-002",
@@ -3258,12 +3325,17 @@ const initialInspectionRecords = [
     protection: "正常",
     description: "照明灯具亮度不足，已通知机电班处理。",
     status: "已复核",
+    flowStatus: "已通过",
   },
 ];
 
 function DualPreventionPage({
   onAction,
   onSwitchApplication,
+  approvalDrafts,
+  setApprovalDrafts,
+  onSaveProcessDraft,
+  onDeleteProcessDraft,
   initialFormTitle = preventionForms[0].title,
   initialOpenForm = false,
   initialFormSource = preventionApprovalFlows.some(
@@ -3281,10 +3353,9 @@ function DualPreventionPage({
   const [approvalDraftRestore, setApprovalDraftRestore] = useState(null);
   const [selectedApprovalDraft, setSelectedApprovalDraft] = useState(null);
   const [selectedApprovalDraftId, setSelectedApprovalDraftId] = useState("");
-  const [approvalDrafts, setApprovalDrafts] = useState([]);
   const [inspectionRecords, setInspectionRecords] = useState(initialInspectionRecords);
-  const [inspectionFilterDraft, setInspectionFilterDraft] = useState({ reporter: "", date: "", shift: "" });
-  const [inspectionFilters, setInspectionFilters] = useState({ reporter: "", date: "", shift: "" });
+  const [inspectionFilterDraft, setInspectionFilterDraft] = useState({ reporter: "", date: "", shift: "", flowStatus: "" });
+  const [inspectionFilters, setInspectionFilters] = useState({ reporter: "", date: "", shift: "", flowStatus: "" });
   const [inspectionDataPage, setInspectionDataPage] = useState(1);
   const [inspectionDataPageSize, setInspectionDataPageSize] = useState(10);
   const importInputRef = useRef(null);
@@ -3295,6 +3366,9 @@ function DualPreventionPage({
     allPreventionForms.find((form) => form.title === selectedForm) ??
     preventionForms[0];
   const isApprovalFlow = activeFormRecord.kind === "approval";
+  const inspectionDrafts = approvalDrafts.filter(
+    (draft) => draft.kind === (isApprovalFlow ? "approval" : "inspection") && draft.name === activeFormRecord.title,
+  );
   const openFormDirect = (
     form = preventionForms[0],
     source = "岗位隐患排查清单",
@@ -3312,11 +3386,9 @@ function DualPreventionPage({
     form = preventionForms[0],
     source = "岗位隐患排查清单",
   ) => {
-    const matchingDrafts = form.kind === "approval"
-      ? [...processEntries, ...approvalDrafts].filter(
-        (process) => process.draft && process.name === form.title,
-      )
-      : [];
+    const matchingDrafts = approvalDrafts.filter(
+      (draft) => draft.draft && draft.name === form.title && draft.kind === (form.kind === "approval" ? "approval" : "inspection"),
+    );
     if (matchingDrafts.length) {
       setApprovalDraftRestore({ form, source, drafts: matchingDrafts });
       setSelectedApprovalDraftId(matchingDrafts[0].id);
@@ -3340,6 +3412,8 @@ function DualPreventionPage({
       id: selectedApprovalDraft?.id?.startsWith("approval-draft-")
         ? selectedApprovalDraft.id
         : `approval-draft-${Date.now()}`,
+      processDraftId: selectedApprovalDraft?.processDraftId ?? `flow-draft-${Date.now()}`,
+      kind: "approval",
       name: activeFormRecord.title,
       initiator: values.get("reporter") || "张宇",
       initiatedAt: "2026-08-31 10:00:00",
@@ -3355,12 +3429,62 @@ function DualPreventionPage({
         : [draft, ...current],
     );
     setSelectedApprovalDraft(draft);
+    onSaveProcessDraft({
+      id: draft.processDraftId,
+      name: draft.name,
+      initiator: draft.initiator,
+      initiatedAt: draft.initiatedAt,
+      currentNode: draft.currentNode,
+      status: draft.status,
+      department: draft.department,
+      description: draft.description,
+      application: "双重预防机制",
+      draft: true,
+      startedByMe: true,
+    });
     onAction(`${activeFormRecord.title}已暂存到草稿箱`);
+  };
+  const saveInspectionDraft = () => {
+    const values = new FormData(approvalFormRef.current);
+    const draft = {
+      id: selectedApprovalDraft?.id?.startsWith("inspection-draft-")
+        ? selectedApprovalDraft.id
+        : `inspection-draft-${Date.now()}`,
+      kind: "inspection",
+      name: activeFormRecord.title,
+      reporter: values.get("reporter") || "张宇",
+      inspectionDate: values.get("inspectionDate") || "2026-09-02",
+      shift: values.get("shift") || "早班",
+      location: values.get("location") || "",
+      equipment: values.get("equipment") || "",
+      environment: values.get("environment") || "",
+      protection: values.get("protection") || "",
+      description: values.get("description") || "",
+      initiatedAt: "2026-09-02 10:00:00",
+      status: "草稿",
+      draft: true,
+    };
+    setApprovalDrafts((current) =>
+      selectedApprovalDraft?.id?.startsWith("inspection-draft-")
+        ? current.map((item) => (item.id === draft.id ? draft : item))
+        : [draft, ...current],
+    );
+    setSelectedApprovalDraft(draft);
+    onAction(`${activeFormRecord.title}已暂存到草稿箱`);
+  };
+  const switchInspectionTab = (tab) => {
+    if (tab === "页面" && inspectionTab !== "页面" && inspectionDrafts.length) {
+      setApprovalDraftRestore({ form: activeFormRecord, source: formSource, drafts: inspectionDrafts });
+      setSelectedApprovalDraftId(inspectionDrafts[0].id);
+      return;
+    }
+    setInspectionTab(tab);
   };
   const filteredInspectionRecords = inspectionRecords.filter((record) =>
     (!inspectionFilters.reporter || record.reporter.includes(inspectionFilters.reporter))
     && (!inspectionFilters.date || record.date === inspectionFilters.date)
-    && (!inspectionFilters.shift || record.shift === inspectionFilters.shift),
+    && (!inspectionFilters.shift || record.shift === inspectionFilters.shift)
+    && (!isApprovalFlow || !inspectionFilters.flowStatus || record.flowStatus === inspectionFilters.flowStatus),
   );
   const inspectionDataPageCount = Math.max(
     1,
@@ -3399,6 +3523,7 @@ function DualPreventionPage({
       protection: "正常",
       description: `已从 ${file.name} 导入填报记录。`,
       status: "已导入",
+      flowStatus: "待审批",
     };
     setInspectionRecords((current) => [importedRecord, ...current]);
     event.target.value = "";
@@ -3501,18 +3626,18 @@ function DualPreventionPage({
               <strong id="prevention-page-title">在线填报</strong>
             </div>
             <nav className="inspection-view-tabs" aria-label="表单视图">
-              {["页面", "数据"].map((tab) => (
+              {["页面", "数据", "草稿箱"].map((tab) => (
                 <button
                   key={tab}
                   className={inspectionTab === tab ? "active" : ""}
-                  onClick={() => setInspectionTab(tab)}
+                  onClick={() => switchInspectionTab(tab)}
                 >
                   {tab}
                 </button>
               ))}
             </nav>
             {inspectionTab === "页面" ? (
-            <form ref={approvalFormRef} className="inspection-form" onSubmit={submitForm}>
+            <form key={selectedApprovalDraft?.id ?? selectedForm} ref={approvalFormRef} className="inspection-form" onSubmit={submitForm}>
               <header className="inspection-form-header">
                 <div>
                   <p>{activeFormRecord.detail}</p>
@@ -3539,20 +3664,20 @@ function DualPreventionPage({
                 <div className="form-fields">
                   <label>
                     填报人 *
-                    <input name="reporter" defaultValue="张宇" required />
+                    <input name="reporter" defaultValue={selectedApprovalDraft?.reporter ?? "张宇"} required />
                   </label>
                   <label>
                     检查日期 *
                     <input
                       name="inspectionDate"
                       type="date"
-                      defaultValue="2026-07-29"
+                      defaultValue={selectedApprovalDraft?.inspectionDate ?? "2026-07-29"}
                       required
                     />
                   </label>
                   <label>
                     作业班次 *
-                    <select name="shift" defaultValue="早班" required>
+                    <select name="shift" defaultValue={selectedApprovalDraft?.shift ?? "早班"} required>
                       <option>早班</option>
                       <option>中班</option>
                       <option>夜班</option>
@@ -3562,6 +3687,7 @@ function DualPreventionPage({
                     作业地点 *
                     <input
                       name="location"
+                      defaultValue={selectedApprovalDraft?.location ?? ""}
                       placeholder="例如：西翼 3# 平巷"
                       required
                     />
@@ -3580,11 +3706,12 @@ function DualPreventionPage({
                           name="equipment"
                           value="normal"
                           required
+                          defaultChecked={selectedApprovalDraft?.equipment === "normal"}
                         />{" "}
                         正常
                       </label>
                       <label>
-                        <input type="radio" name="equipment" value="issue" />{" "}
+                        <input type="radio" name="equipment" value="issue" defaultChecked={selectedApprovalDraft?.equipment === "issue"} />{" "}
                         发现问题
                       </label>
                     </span>
@@ -3598,11 +3725,12 @@ function DualPreventionPage({
                           name="environment"
                           value="normal"
                           required
+                          defaultChecked={selectedApprovalDraft?.environment === "normal"}
                         />{" "}
                         正常
                       </label>
                       <label>
-                        <input type="radio" name="environment" value="issue" />{" "}
+                        <input type="radio" name="environment" value="issue" defaultChecked={selectedApprovalDraft?.environment === "issue"} />{" "}
                         发现问题
                       </label>
                     </span>
@@ -3616,11 +3744,12 @@ function DualPreventionPage({
                           name="protection"
                           value="normal"
                           required
+                          defaultChecked={selectedApprovalDraft?.protection === "normal"}
                         />{" "}
                         正常
                       </label>
                       <label>
-                        <input type="radio" name="protection" value="issue" />{" "}
+                        <input type="radio" name="protection" value="issue" defaultChecked={selectedApprovalDraft?.protection === "issue"} />{" "}
                         发现问题
                       </label>
                     </span>
@@ -3664,22 +3793,20 @@ function DualPreventionPage({
                   >
                     取消
                   </button>
-                  {isApprovalFlow ? (
-                    <button
-                      type="button"
-                      className="form-draft"
-                      onClick={saveApprovalDraft}
-                    >
-                      暂存
-                    </button>
-                  ) : null}
+                  <button
+                    type="button"
+                    className="form-draft"
+                    onClick={isApprovalFlow ? saveApprovalDraft : saveInspectionDraft}
+                  >
+                    暂存
+                  </button>
                   <button type="submit" className="form-primary">
                     {isApprovalFlow ? "提交审批流程" : "提交排查表"}
                   </button>
                 </div>
               </footer>
             </form>
-            ) : (
+            ) : inspectionTab === "数据" ? (
               <section className="inspection-data-view" aria-label={`${activeFormRecord.title}历史数据`}>
                 <header>
                   <div>
@@ -3725,12 +3852,24 @@ function DualPreventionPage({
                       <option value="夜班">夜班</option>
                     </select>
                   </label>
+                  {isApprovalFlow ? (
+                    <label>
+                      流程状态
+                      <select
+                        value={inspectionFilterDraft.flowStatus}
+                        onChange={(event) => setInspectionFilterDraft((current) => ({ ...current, flowStatus: event.target.value }))}
+                      >
+                        <option value="">全部状态</option>
+                        {PROCESS_STATUS_OPTIONS.map((status) => <option key={status} value={status}>{status}</option>)}
+                      </select>
+                    </label>
+                  ) : null}
                   <div className="inspection-filter-actions">
                     <button type="submit" className="inspection-filter-search">搜索</button>
                     <button
                       type="button"
                       onClick={() => {
-                        const emptyFilters = { reporter: "", date: "", shift: "" };
+                        const emptyFilters = { reporter: "", date: "", shift: "", flowStatus: "" };
                         setInspectionFilterDraft(emptyFilters);
                         setInspectionFilters(emptyFilters);
                         setInspectionDataPage(1);
@@ -3746,7 +3885,7 @@ function DualPreventionPage({
                       type="button"
                       className="inspection-action-primary"
                       onClick={() => {
-                        setInspectionTab("页面");
+                        switchInspectionTab("页面");
                         setSubmitted(false);
                         onAction("请填写新的隐患排查记录");
                       }}
@@ -3771,18 +3910,18 @@ function DualPreventionPage({
                   <table className={isApprovalFlow ? "inspection-approval-data-table" : ""}>
                     <thead>
                       <tr>
-                        {isApprovalFlow ? <><th>发起人</th><th>发起时间</th></> : null}
+                        {isApprovalFlow ? <><th>发起人</th><th>发起时间</th><th>流程状态</th></> : null}
                         <th>填报人</th><th>检查日期</th><th>作业班次</th><th>作业地点</th><th>凿岩设备防护装置完好</th><th>作业面通风与照明符合要求</th><th>人员防护用品佩戴规范</th><th>隐患描述与整改建议</th>
                       </tr>
                     </thead>
                     <tbody>
                       {pagedInspectionRecords.length ? pagedInspectionRecords.map((record) => (
                         <tr key={record.id}>
-                          {isApprovalFlow ? <><td>{record.initiator ?? record.reporter}</td><td>{record.initiatedAt ?? `${record.date} 08:00`}</td></> : null}
+                          {isApprovalFlow ? <><td>{record.initiator ?? record.reporter}</td><td>{record.initiatedAt ?? `${record.date} 08:00`}</td><td>{record.flowStatus ?? "待审批"}</td></> : null}
                           <td>{record.reporter}</td><td>{record.date}</td><td>{record.shift}</td><td>{record.location}</td><td>{record.equipment}</td><td>{record.environment}</td><td>{record.protection}</td><td className="inspection-description-cell">{record.description}</td>
                         </tr>
                       )) : (
-                        <tr><td colSpan={isApprovalFlow ? 10 : 8} className="inspection-data-empty">暂无历史填报数据</td></tr>
+                        <tr><td colSpan={isApprovalFlow ? 11 : 8} className="inspection-data-empty">暂无历史填报数据</td></tr>
                       )}
                     </tbody>
                   </table>
@@ -3798,6 +3937,44 @@ function DualPreventionPage({
                     setInspectionDataPage(1);
                   }}
                 />
+              </section>
+            ) : (
+              <section className="inspection-draft-view" aria-label={`${activeFormRecord.title}草稿箱`}>
+                <header>
+                  <div>
+                    <p>暂存记录</p>
+                    <h2>草稿箱</h2>
+                  </div>
+                  <span>共 {inspectionDrafts.length} 条草稿</span>
+                </header>
+                {inspectionDrafts.length ? (
+                  <div className="inspection-draft-list">
+                    {inspectionDrafts.map((draft) => (
+                      <article key={draft.id}>
+                        <div>
+                          <span className="inspection-draft-title"><b>{draft.name}</b><i>草稿</i></span>
+                          <span>填报人：{draft.reporter || "张宇"}</span>
+                          <time>保存时间：{draft.initiatedAt}</time>
+                        </div>
+                        <div>
+                          <button type="button" onClick={() => openFormDirect(activeFormRecord, formSource, draft)}>继续填报</button>
+                          <button
+                            type="button"
+                            className="danger"
+                            onClick={() => {
+                              setApprovalDrafts((current) => current.filter((item) => item.id !== draft.id));
+                              if (draft.processDraftId) onDeleteProcessDraft(draft.processDraftId);
+                              if (selectedApprovalDraft?.id === draft.id) setSelectedApprovalDraft(null);
+                              onAction(`已删除草稿：${draft.name}`);
+                            }}
+                          >
+                            删除
+                          </button>
+                        </div>
+                      </article>
+                    ))}
+                  </div>
+                ) : <div className="inspection-draft-empty">暂无草稿，页面内暂存的填报数据会显示在这里。</div>}
               </section>
             )}
           </section>
@@ -3869,7 +4046,7 @@ function DualPreventionPage({
             <header>
               <div>
                 <p>草稿箱提醒</p>
-                <h2 id="approval-draft-restore-title">发现同名流程草稿</h2>
+                <h2 id="approval-draft-restore-title">发现同名{approvalDraftRestore.form.kind === "approval" ? "流程" : "表单"}草稿</h2>
               </div>
               <button
                 type="button"
@@ -3881,7 +4058,7 @@ function DualPreventionPage({
               </button>
             </header>
             <div className="process-draft-restore-body">
-              <p>当前草稿箱内有 {approvalDraftRestore.drafts.length} 条“{approvalDraftRestore.form.title}”草稿，请选择恢复继续填报，或重新发起新的流程。</p>
+              <p>当前草稿箱内有 {approvalDraftRestore.drafts.length} 条“{approvalDraftRestore.form.title}”草稿，请选择恢复继续填报，或重新发起新的{approvalDraftRestore.form.kind === "approval" ? "流程" : "表单"}。</p>
               <div className="process-draft-options" role="radiogroup" aria-label="选择要恢复的流程草稿">
                 {approvalDraftRestore.drafts.map((draft) => (
                   <label key={draft.id} className={selectedApprovalDraftId === draft.id ? "selected" : ""}>
@@ -9391,6 +9568,8 @@ function App() {
   const [taskInitial, setTaskInitial] = useState("我的任务");
   const [processInitial, setProcessInitial] = useState("待审批");
   const [processInitialNumber, setProcessInitialNumber] = useState("");
+  const [processRecords, setProcessRecords] = useState(processEntries);
+  const [preventionDrafts, setPreventionDrafts] = useState([]);
   const [dynamicsInitial, setDynamicsInitial] = useState("动态");
   const [preventionInitial, setPreventionInitial] = useState(
     preventionForms[0].title,
@@ -9768,6 +9947,8 @@ function App() {
                 key={`${processInitial}-${processInitialNumber}`}
                 initialFilter={processInitial}
                 initialProcessNumber={processInitialNumber}
+                processRecords={processRecords}
+                setProcessRecords={setProcessRecords}
                 onAction={showNotice}
               />
             ) : activeTab === "safety-dynamics" ? (
@@ -9795,6 +9976,10 @@ function App() {
                 key={`${preventionInitial}-${preventionFormOpen ? "form" : "catalog"}`}
                 initialFormTitle={preventionInitial}
                 initialOpenForm={preventionFormOpen}
+                approvalDrafts={preventionDrafts}
+                setApprovalDrafts={setPreventionDrafts}
+                onSaveProcessDraft={(draft) => setProcessRecords((current) => current.some((item) => item.id === draft.id) ? current.map((item) => item.id === draft.id ? draft : item) : [draft, ...current])}
+                onDeleteProcessDraft={(draftId) => setProcessRecords((current) => current.filter((item) => item.id !== draftId))}
                 onAction={showNotice}
                 onSwitchApplication={openApplication}
               />
