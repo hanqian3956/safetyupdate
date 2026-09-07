@@ -69,7 +69,7 @@ const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
 ];
 
 const PROTOTYPE_ANNOTATIONS_URL = `${import.meta.env.BASE_URL}prototype-annotations.json`;
-const PROTOTYPE_SPECIFICATION_URL = `${import.meta.env.BASE_URL}spec.html`;
+const PROTOTYPE_SPECIFICATION_URL = "https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e";
 
 function getAnnotationsFromPayload(payload) {
   const annotations = Array.isArray(payload) ? payload : payload?.annotations;
