@@ -44,13 +44,17 @@
         if (/^---+$/.test(line.trim())) return "<hr />";
         return line.trim() ? `<p>${escapeHtml(line)}</p>` : "";
       }).join("");
-      fetch(new URL("./spec.md", window.location.href))
+      fetch(new URL("./spec.md", window.location.href), { cache: "no-store" })
         .then((response) => {
           if (!response.ok) throw new Error("无法读取 spec.md");
           return response.arrayBuffer();
         })
         .then((buffer) => {
-          content.innerHTML = renderMarkdown(new TextDecoder("utf-8").decode(buffer));
+          const markdown = new TextDecoder("utf-8").decode(buffer);
+          if (/^\s*(?:<!doctype\s+html|<html\b)/i.test(markdown)) {
+            throw new Error("文档请求返回了首页");
+          }
+          content.innerHTML = renderMarkdown(markdown);
         })
         .catch(() => {
           content.className = "error";
