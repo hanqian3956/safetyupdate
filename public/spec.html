@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>spec.md - 产品说明</title>
+    <style>
+      :root { color: #26394b; background: #fff; font-family: "Microsoft YaHei", sans-serif; }
+      body { max-width: 960px; margin: 0 auto; padding: 28px 32px 56px; }
+      #spec-content { font-size: 15px; line-height: 1.8; }
+      h1, h2, h3, h4, h5, h6 { margin: 28px 0 12px; color: #1f3549; line-height: 1.35; }
+      h3 { padding-bottom: 10px; border-bottom: 1px solid #dbe5ed; font-size: 24px; }
+      h4 { color: #176cac; font-size: 20px; }
+      h5 { font-size: 16px; }
+      p { margin: 0 0 16px; }
+      hr { margin: 28px 0; border: 0; border-top: 1px solid #dbe5ed; }
+      img { max-width: 100%; height: auto; margin: 8px 0 18px; border: 1px solid #dbe5ed; border-radius: 6px; }
+      .error { color: #b4514a; }
+    </style>
+  </head>
+  <body>
+    <main id="spec-content">正在读取 spec.md…</main>
+    <script>
+      const content = document.getElementById("spec-content");
+      const escapeHtml = (value) => value
+        .replaceAll("&", "&amp;")
+        .replaceAll("<", "&lt;")
+        .replaceAll(">", "&gt;")
+        .replaceAll('"', "&quot;")
+        .replaceAll("'", "&#039;");
+      const imageSource = (source) => source.startsWith("/Users/")
+        ? `./spec-assets/${source.split("/").at(-1)}`
+        : source;
+      const renderMarkdown = (markdown) => markdown.split(/\r?\n/).map((line) => {
+        const heading = line.match(/^(#{1,6})\s+(.+)$/);
+        const image = line.match(/^!\[([^\]]*)\]\(([^)]+)\)$/);
+        if (heading) {
+          const level = heading[1].length;
+          return `<h${level}>${escapeHtml(heading[2])}</h${level}>`;
+        }
+        if (image) {
+          return `<img src="${escapeHtml(imageSource(image[2]))}" alt="${escapeHtml(image[1])}" />`;
+        }
+        if (/^---+$/.test(line.trim())) return "<hr />";
+        return line.trim() ? `<p>${escapeHtml(line)}</p>` : "";
+      }).join("");
+      fetch(new URL("./spec.md", window.location.href))
+        .then((response) => {
+          if (!response.ok) throw new Error("无法读取 spec.md");
+          return response.arrayBuffer();
+        })
+        .then((buffer) => {
+          content.innerHTML = renderMarkdown(new TextDecoder("utf-8").decode(buffer));
+        })
+        .catch(() => {
+          content.className = "error";
+          content.textContent = "无法读取 spec.md，请检查文件是否已部署。";
+        });
+    </script>
+  </body>
+</html>
