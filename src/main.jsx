@@ -8667,14 +8667,40 @@ function DictionaryManagement({ onAction }) {
     );
   };
 
+  const validateDictionaryData = ({ id, code, name }) => {
+    const normalizedCode = code.trim();
+    const normalizedName = name.trim();
+    if (!normalizedCode) {
+      onAction("数据编码不能为空");
+      return null;
+    }
+    if (!normalizedName) {
+      onAction("数据名称不能为空");
+      return null;
+    }
+    const isDuplicate = dataRows.some(
+      (item) => item.id !== id && item.code.trim().toLocaleLowerCase() === normalizedCode.toLocaleLowerCase(),
+    );
+    if (isDuplicate) {
+      onAction(`数据编码“${normalizedCode}”已存在，请修改后保存`);
+      return null;
+    }
+    return { code: normalizedCode, name: normalizedName };
+  };
+
   const confirmDataRow = (id) => {
+    const item = dataRows.find((entry) => entry.id === id);
+    if (!item) return false;
+    const value = validateDictionaryData(item);
+    if (!value) return false;
     setDataRows((current) =>
       current.map((item) =>
-        item.id === id && item.code.trim() && item.name.trim()
-          ? { ...item, isDraft: false, updater: "张宇", updatedAt: "刚刚" }
+        item.id === id
+          ? { ...item, ...value, isDraft: false, updater: "张宇", updatedAt: "刚刚" }
           : item,
       ),
     );
+    return true;
   };
 
   const startEditingDataRow = (item) => {
@@ -8682,15 +8708,16 @@ function DictionaryManagement({ onAction }) {
   };
 
   const confirmEditingDataRow = () => {
-    if (!editingData?.code.trim() || !editingData.name.trim()) return;
+    if (!editingData) return false;
+    const value = validateDictionaryData(editingData);
+    if (!value) return false;
 
     setDataRows((current) =>
       current.map((item) =>
         item.id === editingData.id
           ? {
               ...item,
-              code: editingData.code.trim(),
-              name: editingData.name.trim(),
+              ...value,
               updater: "张宇",
               updatedAt: "刚刚",
             }
@@ -8698,6 +8725,7 @@ function DictionaryManagement({ onAction }) {
       ),
     );
     setEditingData(null);
+    return true;
   };
 
   const toggleDataRow = (id) => {
@@ -8801,7 +8829,12 @@ function DictionaryManagement({ onAction }) {
                 </label>
                 <label>
                   <b>类型</b>
-                  <select value={draft.type} onChange={(event) => setDraft((current) => ({ ...current, type: event.target.value }))}>
+                  <select
+                    value={draft.type}
+                    disabled={Boolean(dialog.dictionary)}
+                    title={dialog.dictionary ? "编辑字典时不能修改类型" : undefined}
+                    onChange={(event) => setDraft((current) => ({ ...current, type: event.target.value }))}
+                  >
                     <option>系统字典</option>
                     <option>业务字典</option>
                   </select>
@@ -8866,6 +8899,11 @@ function DictionaryManagement({ onAction }) {
                     <div
                       className={`dictionary-data-row ${item.isDraft || isInlineEditing ? "draft" : ""}`}
                       key={item.id}
+                      onBlur={(event) => {
+                        if (event.currentTarget.contains(event.relatedTarget)) return;
+                        if (item.isDraft) confirmDataRow(item.id);
+                        if (isInlineEditing) confirmEditingDataRow();
+                      }}
                     >
                       <span>
                         <input
