@@ -1921,12 +1921,9 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
     ...(process.actionLogs ?? []),
   ];
   const formFields = [
-    ["流程编号", getFlowNumber(process)],
-    ["流程类型", process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批"],
     ["所属部门", process.department],
     ["发起人", process.initiator],
     ["发起时间", process.initiatedAt],
-    ["当前节点", process.currentNode],
   ];
   const handleApprovalAction = (action) => {
     if (action === "撤销") {
@@ -2433,23 +2430,23 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
   const processTabs = {
     待审批: {
       filters: ["number", "title", "application"],
-      columns: ["number", "title", "application", "initiator", "initiatedAt", "arrivalAt", "status"],
+      columns: ["number", "title", "type", "application", "initiator", "initiatedAt", "arrivalAt", "status"],
     },
     已审批: {
       filters: ["number", "title", "application"],
-      columns: ["number", "title", "application", "initiator", "initiatedAt", "completedAt", "result", "status"],
+      columns: ["number", "title", "type", "application", "initiator", "initiatedAt", "completedAt", "result", "status"],
     },
     抄送我的: {
       filters: ["number", "title", "application"],
-      columns: ["number", "title", "application", "initiator", "initiatedAt", "sentAt", "status"],
+      columns: ["number", "title", "type", "application", "initiator", "initiatedAt", "sentAt", "status"],
     },
     我发起的: {
       filters: ["number", "title", "application"],
-      columns: ["number", "title", "application", "initiatedAt", "currentNode", "status"],
+      columns: ["number", "title", "type", "application", "initiatedAt", "currentNode", "status"],
     },
     草稿箱: {
       filters: ["title"],
-      columns: ["title", "application", "initiatedAt", "status"],
+      columns: ["title", "type", "application", "initiatedAt", "status"],
     },
   };
   const columnLabels = {
