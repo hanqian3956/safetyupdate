@@ -2417,15 +2417,15 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
   const [flowchartDialog, setFlowchartDialog] = useState(false);
   const processFormRef = useRef(null);
   const processTemplates = [
-    { category: "人资管理", tone: "blue", name: "员工离职申请", favorite: true },
-    { category: "人资管理", tone: "blue", name: "职员晋升审批" },
-    { category: "人资管理", tone: "blue", name: "职员调岗审批", recent: true },
-    { category: "基建管理", tone: "gold", name: "地表基建项目报建申请", favorite: true },
-    { category: "基建管理", tone: "gold", name: "年度工程计划编制审批" },
-    { category: "基建管理", tone: "gold", name: "项目合同申报审批", recent: true },
-    { category: "选矿管理", tone: "red", name: "换矿申请" },
-    { category: "选矿管理", tone: "red", name: "选厂药剂领用申请", recent: true },
-    { category: "选矿管理", tone: "red", name: "材料采购流程" },
+    { category: "人资管理", application: "消防管理", tone: "blue", name: "员工离职申请", favorite: true },
+    { category: "人资管理", application: "机电管理", tone: "blue", name: "职员晋升审批" },
+    { category: "人资管理", application: "双重预防机制", tone: "blue", name: "职员调岗审批", recent: true },
+    { category: "基建管理", application: "生产管理", tone: "gold", name: "地表基建项目报建申请", favorite: true },
+    { category: "基建管理", application: "应急管理", tone: "gold", name: "年度工程计划编制审批" },
+    { category: "基建管理", application: "设备管理", tone: "gold", name: "项目合同申报审批", recent: true },
+    { category: "选矿管理", application: "火工品管理", tone: "red", name: "换矿申请" },
+    { category: "选矿管理", application: "安全管理", tone: "red", name: "选厂药剂领用申请", recent: true },
+    { category: "选矿管理", application: "双重预防机制", tone: "red", name: "材料采购流程" },
   ];
   const processTabs = {
     待审批: {
@@ -2687,14 +2687,6 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     setFlowchartDialog(false);
   };
   const selectProcessTemplate = (template) => {
-    const matchingDrafts = processRecords.filter(
-      (process) => process.draft && process.name === template.name,
-    );
-    if (matchingDrafts.length) {
-      setDraftRestore({ template, drafts: matchingDrafts });
-      setSelectedDraftId(matchingDrafts[0].id);
-      return;
-    }
     openProcessForm(template);
   };
   const closeProcessForm = () => {
@@ -2712,6 +2704,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
       initiatedAt: "2026-08-31 10:00:00",
       currentNode: "待提交",
       status: "草稿",
+      application: selectedTemplate.application,
       department: values.get("department") || "安全管理部",
       description: values.get("description") || "",
       draft: true,
@@ -2725,6 +2718,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     );
     setSelectedDraft(draft);
     onAction(`${selectedTemplate.name}已暂存到草稿箱`);
+    closeProcessForm();
   };
   return (
     <section className="process-list-page" aria-labelledby="process-list-title">
@@ -2784,7 +2778,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
                       key={template.name}
                       onClick={() => selectProcessTemplate(template)}
                     >
-                      {template.name}
+                      {template.name}（{template.application}）
                     </button>
                   )) : <p>暂无流程</p>}
                 </section>
