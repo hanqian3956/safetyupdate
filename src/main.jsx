@@ -6196,7 +6196,7 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
       name: name ? "" : "请输入用户名称",
       phone: !userPhone || /^\d{11}$/.test(userPhone) ? "" : "请输入 11 位数字手机号",
       account: account ? "" : "请输入账号",
-      password: userPassword.trim() ? "" : "请输入默认密码",
+      password: userPassword.trim() ? "" : "请输入密码",
       organization: userOrganization ? "" : "请选择所属组织",
     };
     if (Object.values(errors).some(Boolean)) {
@@ -6584,10 +6584,11 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                     {userFieldErrors.account ? <em>{userFieldErrors.account}</em> : null}
                   </label>
                   <label className={userFieldErrors.password ? "field-error" : ""}>
-                    默认密码
+                    密码
                     <input
-                      type="text"
+                      type={editingUser ? "password" : "text"}
                       value={userPassword}
+                      placeholder={editingUser ? "请输入密码" : undefined}
                       onChange={(event) => {
                         setUserPassword(event.target.value);
                         clearUserFieldError("password");
