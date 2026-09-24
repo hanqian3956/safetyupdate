@@ -115,7 +115,7 @@ Error generating stack: `+e.message+`
     .subform-col-row.drop-target { box-shadow:inset 0 2px 0 #165DFF; }\r
     .cfg-info { font-size:11px; color:#6b7280; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:8px 10px; line-height:1.5; }
     .cfg-info i { color:#165DFF; }
-    /* 成员控件的指定部门入口：确认选择后固定展示为蓝色编辑状态。 */
+    /* 成员控件的指定组织入口：确认选择后固定展示为蓝色编辑状态。 */
     .member-dept-trigger { width:100%; display:flex; align-items:center; justify-content:center; gap:8px; padding:8px 12px; border-radius:6px; font-size:14px; cursor:pointer; transition:all .15s; }
     .member-dept-trigger.is-empty { border:1px dashed #d1d5db; color:#4b5563; background:#fff; }
     .member-dept-trigger.is-selected { border:1px solid #165DFF; color:#165DFF; background:#F5F9FF; }
@@ -568,20 +568,20 @@ Error generating stack: `+e.message+`
     </div>
   </div>
 
-  <!-- 成员控件的指定部门范围选择器 -->
+  <!-- 成员控件的指定组织范围选择器 -->
   <div id="memberDeptRangePickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">
     <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">
       <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
         <div>
-          <h3 class="text-lg font-semibold text-gray-800">选择指定部门</h3>
-          <p class="text-xs text-gray-500 mt-1">勾选部门后，成员组件仅可从这些部门中选择人员。</p>
+          <h3 class="text-lg font-semibold text-gray-800">选择指定组织</h3>
+          <p class="text-xs text-gray-500 mt-1">组织节点支持独立复选，成员组件仅可从所选组织范围内选择人员。</p>
         </div>
-        <button onclick="closeModal('memberDeptRangePickerModal')" class="text-gray-400 hover:text-gray-600 btn-click" aria-label="关闭选择部门弹窗"><i class="fas fa-times"></i></button>
+        <button onclick="closeModal('memberDeptRangePickerModal')" class="text-gray-400 hover:text-gray-600 btn-click" aria-label="关闭选择组织弹窗"><i class="fas fa-times"></i></button>
       </div>
       <div class="px-6 py-4">
         <div class="flex items-center justify-between mb-3 text-xs text-gray-500">
           <span>组织架构</span>
-          <span>已选 <b id="memberDeptRangeSelectedCount" class="text-[#165DFF]">0</b> 个部门</span>
+          <span>已选 <b id="memberDeptRangeSelectedCount" class="text-[#165DFF]">0</b> 个组织</span>
         </div>
         <div id="memberDeptRangeTree" class="max-h-80 overflow-auto rounded-lg border border-gray-200 bg-gray-50 p-2"></div>
       </div>
@@ -649,7 +649,7 @@ Error generating stack: `+e.message+`
     formref: { noun:'工作表单', ph:'请选择工作表单', scopeAll:'全部工作表单' },\r
     feed:    { noun:'动态圈',   ph:'请选择动态',     scopeAll:'全部动态圈' },\r
   };\r
-  function pickerScope(f){ const m=PICKER_META[f.type]||PICKER_META.member; return f.range==='all'?m.scopeAll:(f.range==='dept'?((f.depts||[]).join('/')||'指定部门'):((f.posts||[]).join('/')||'指定岗位')); }
+  function pickerScope(f){ const m=PICKER_META[f.type]||PICKER_META.member; const orgLabel=f.type==='member'?'指定组织':'指定部门'; return f.range==='all'?m.scopeAll:(f.range==='dept'?((f.depts||[]).join('/')||orgLabel):((f.posts||[]).join('/')||'指定岗位')); }
   /* 多级查询（级联）示例数据：国家 → 城市 → 区县（演示逐级下拉），可替换为业务字典 */\r
   const CASCADER_SAMPLE = [\r
     { label:'中国', children:[\r
@@ -756,10 +756,11 @@ Error generating stack: `+e.message+`
     const t=document.getElementById('dpTitle'); if(t) t.textContent='选择默认'+noun;\r
     let all=(DEFAULT_PICKER_DATA[dpCtx.type]||[]);\r
     let scopeNote='';\r
-    if(dpCtx.type==='member'){\r
-      if(dpCtx.range==='dept'){\r
-        all = all.filter(x=>(dpCtx.depts||[]).includes(x.dept));\r
-        scopeNote = (dpCtx.depts&&dpCtx.depts.length) ? ('仅限部门：'+(dpCtx.depts.join('/'))) : '请先在专属配置选择「指定部门」范围';\r
+    if(dpCtx.type==='member'){
+      if(dpCtx.range==='dept'){
+        const allowedDepartments=selectedMemberOrganizationLeaves(dpCtx.depts||[]);
+        all = all.filter(x=>allowedDepartments.has(x.dept));
+        scopeNote = (dpCtx.depts&&dpCtx.depts.length) ? ('仅限组织：'+(dpCtx.depts.join('/'))) : '请先在专属配置选择「指定组织」范围';
       } else if(dpCtx.range==='post'){
         all = all.filter(x=>(x.posts||[]).some(post=>(dpCtx.posts||[]).includes(post)));
         scopeNote = (dpCtx.posts&&dpCtx.posts.length) ? ('仅限岗位：'+(dpCtx.posts.join('/'))) : '请先在专属配置选择「指定岗位」范围';
@@ -1562,24 +1563,31 @@ Error generating stack: `+e.message+`
     const buttonState=hasSelection?'is-selected':'is-empty';
     const chips=selected.length
       ? selected.map(dept=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${dept}<button type="button" onclick="removeMemberDepartment('\${f.id}','\${dept}')" class="hover:text-red-600 btn-click" aria-label="移除\${dept}"><i class="fas fa-times"></i></button></span>\`).join('')
-      : '<span class="text-[11px] text-gray-400">尚未指定部门</span>';
-    return \`<div><button type="button" onclick="openMemberDepartmentPicker('\${f.id}')" class="member-dept-trigger \${buttonState} btn-click"><i class="fas \${hasSelection?'fa-pen':'fa-plus'}"></i>\${hasSelection?'编辑部门':'新增部门'}</button><div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div></div>\`;
+      : '<span class="text-[11px] text-gray-400">尚未指定组织</span>';
+    return \`<div><button type="button" onclick="openMemberDepartmentPicker('\${f.id}')" class="member-dept-trigger \${buttonState} btn-click"><i class="fas \${hasSelection?'fa-pen':'fa-plus'}"></i>\${hasSelection?'编辑组织':'新增组织'}</button><div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div></div>\`;
   }
   function memberDeptLeaves(node){
     return node.children&&node.children.length ? node.children.flatMap(memberDeptLeaves) : [node.name];
   }
-  function allMemberDepartmentNames(){ return MEMBER_SCOPE_ORGANIZATION.flatMap(memberDeptLeaves); }
+  function memberOrganizationNames(node){ return [node.name].concat((node.children||[]).flatMap(memberOrganizationNames)); }
+  function allMemberOrganizationNames(){ return MEMBER_SCOPE_ORGANIZATION.flatMap(memberOrganizationNames); }
+  function selectedMemberOrganizationLeaves(selectedNames){
+    const allowed=new Set();
+    const collect=node=>{
+      if(selectedNames.includes(node.name)) memberDeptLeaves(node).forEach(name=>allowed.add(name));
+      else (node.children||[]).forEach(collect);
+    };
+    MEMBER_SCOPE_ORGANIZATION.forEach(collect);
+    return allowed;
+  }
   function renderMemberDepartmentTree(){
     const tree=document.getElementById('memberDeptRangeTree'); if(!tree) return;
     const renderNode=(node, depth=0)=>{
-      const leaves=memberDeptLeaves(node);
-      const checked=leaves.length>0&&leaves.every(name=>memberDeptRangePicker.selected.has(name));
-      const partial=!checked&&leaves.some(name=>memberDeptRangePicker.selected.has(name));
+      const checked=memberDeptRangePicker.selected.has(node.name);
       const hasChildren=Boolean(node.children&&node.children.length);
-      return \`<div style="margin-left:\${depth*18}px" class="py-0.5"><label class="flex items-center gap-2 min-h-8 px-2 rounded-md hover:bg-white cursor-pointer"><input type="checkbox" class="rounded text-[#165DFF] w-4 h-4" data-member-dept-partial="\${partial?'1':'0'}" \${checked?'checked':''} onchange="toggleMemberDepartmentNode('\${node.id}')"><i class="fas \${hasChildren?'fa-sitemap':'fa-building'} text-xs \${hasChildren?'text-[#165DFF]':'text-gray-400'} w-3"></i><span class="text-sm \${hasChildren?'font-medium text-gray-700':'text-gray-600'}">\${node.name}</span></label>\${hasChildren?node.children.map(child=>renderNode(child,depth+1)).join(''):''}</div>\`;
+      return \`<div style="margin-left:\${depth*18}px" class="py-0.5"><label class="flex items-center gap-2 min-h-8 px-2 rounded-md hover:bg-white cursor-pointer"><input type="checkbox" class="rounded text-[#165DFF] w-4 h-4" \${checked?'checked':''} onchange="toggleMemberDepartmentNode('\${node.id}')"><i class="fas \${hasChildren?'fa-sitemap':'fa-building'} text-xs \${hasChildren?'text-[#165DFF]':'text-gray-400'} w-3"></i><span class="text-sm \${hasChildren?'font-medium text-gray-700':'text-gray-600'}">\${node.name}</span></label>\${hasChildren?node.children.map(child=>renderNode(child,depth+1)).join(''):''}</div>\`;
     };
     tree.innerHTML=MEMBER_SCOPE_ORGANIZATION.map(node=>renderNode(node)).join('');
-    tree.querySelectorAll('[data-member-dept-partial="1"]').forEach(input=>{ input.indeterminate=true; });
     const count=document.getElementById('memberDeptRangeSelectedCount');
     if(count) count.textContent=memberDeptRangePicker.selected.size;
   }
@@ -1598,14 +1606,13 @@ Error generating stack: `+e.message+`
   }
   function toggleMemberDepartmentNode(nodeId){
     const node=findMemberDepartmentNode(MEMBER_SCOPE_ORGANIZATION,nodeId); if(!node) return;
-    const leaves=memberDeptLeaves(node);
-    const shouldClear=leaves.every(name=>memberDeptRangePicker.selected.has(name));
-    leaves.forEach(name=>shouldClear?memberDeptRangePicker.selected.delete(name):memberDeptRangePicker.selected.add(name));
+    if(memberDeptRangePicker.selected.has(node.name)) memberDeptRangePicker.selected.delete(node.name);
+    else memberDeptRangePicker.selected.add(node.name);
     renderMemberDepartmentTree();
   }
   function confirmMemberDepartmentPicker(){
     const f=getField(memberDeptRangePicker.fieldId); if(!f) return;
-    f.depts=allMemberDepartmentNames().filter(name=>memberDeptRangePicker.selected.has(name));
+    f.depts=allMemberOrganizationNames().filter(name=>memberDeptRangePicker.selected.has(name));
     closeModal('memberDeptRangePickerModal');
     // 选择器位于属性事件作用域之外，直接刷新画布和配置区，避免保存后界面仍保留旧状态。
     renderCanvas(); renderConfig();
@@ -2004,11 +2011,10 @@ Error generating stack: `+e.message+`
       h += row('显示汇总行', sw('cfg_sum', f.showSummary, '在子表单底部增加「合计」行，对所有「数字」类型子字段自动求和。'), '开启后，画布表格底部立即出现蓝色合计行（标「Σ 自动求和」），运行态随用户录入实时累加。文本 / 日期列不参与汇总。');\r
     } else if(['member','dept','formref','feed'].includes(f.type)){
       const m = PICKER_META[f.type];
-      h += row('选择范围', \`<select id="cfg_range" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="all" \${f.range==='all'?'selected':''}>\${m.scopeAll}</option><option value="dept" \${f.range==='dept'?'selected':''}>指定部门</option><option value="post" \${f.range==='post'?'selected':''}>指定岗位</option></select>\`, \`限定可选\${m.noun}的范围；选部门/岗位时需勾选具体对象。切换后画布即时显示范围摘要。\`);
+      const scopeLabel=f.type==='member'?'指定组织':'指定部门';
+      h += row('选择范围', \`<select id="cfg_range" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="all" \${f.range==='all'?'selected':''}>\${m.scopeAll}</option><option value="dept" \${f.range==='dept'?'selected':''}>\${scopeLabel}</option></select>\`, \`限定可选\${m.noun}的范围；选择\${scopeLabel}时需勾选具体组织。切换后画布即时显示范围摘要。\`);
       if(f.range==='dept'){
-        h += row('指定部门', f.type==='member' ? memberDepartmentRangeHTML(f) : chipsHTML(\`getField('\${f.id}').depts\`, f.depts, 'dept'), \`仅可从所选部门中选择\${m.noun}；成员控件可通过“新增部门”从组织架构树批量选择。\`);
-      } else if(f.range==='post'){
-        h += row('指定岗位', memberPostRangeHTML(f), \`仅可从所选岗位中选择\${m.noun}；点击“新增岗位”可多选岗位。\`);
+        h += row(scopeLabel, f.type==='member' ? memberDepartmentRangeHTML(f) : chipsHTML(\`getField('\${f.id}').depts\`, f.depts, 'dept'), f.type==='member' ? \`仅可从所选组织中选择\${m.noun}；可通过“新增组织”在组织架构树中独立复选。\` : \`仅可从所选部门中选择\${m.noun}。\`);
       }
       // 默认值配置：业务控件的默认候选必须落在「选择范围」内，故放在「选择范围」下方维护\r
       h += bizDefaultValueHTML(f);\r
@@ -3469,7 +3475,7 @@ Error generating stack: `+e.message+`
   let _nidSeq=0;\r
   function nid(prefix){ return 'n_'+(++_nidSeq)+'_'+(prefix||'x'); }\r
   function nodeStart(){ return { id:nid('s'), type:'start', name:'发起人', initiatorScope:'all', initiatorDepts:[], initiatorRoles:[], initiatorMembers:[], fieldPerm:{}, x:0, y:0 }; }\r
-  function nodeApproval(){ return { id:nid('a'), type:'approval', name:'审批', approverType:'initiator', members:[], roles:[], depts:[], posts:[], fieldRef:'', level:1, mode:'or', fieldPerm:{}, timeoutEnabled:false, timeoutHours:24, timeoutUnit:'hour', timeoutAction:'notify', noApprover:'auto', noApproverMember:'', opinion:'required', allowBounceBack:true, rejectTo:'initiator', allowReject:true, allowTransfer:true, allowAddSign:true, allowSubmit:true, x:0, y:0 }; }\r
+  function nodeApproval(){ return { id:nid('a'), type:'approval', name:'审批', approverType:'initiator', members:[], roles:[], depts:[], posts:[], postScope:'company', fieldRef:'', level:1, mode:'or', fieldPerm:{}, timeoutEnabled:false, timeoutHours:24, timeoutUnit:'hour', timeoutAction:'notify', noApprover:'auto', noApproverMember:'', opinion:'required', allowBounceBack:true, rejectTo:'initiator', allowReject:true, allowTransfer:true, allowAddSign:true, allowSubmit:true, x:0, y:0 }; }
   function nodeCC(){ return { id:nid('c'), type:'cc', name:'抄送', ccType:'member', members:[], roles:[], depts:[], posts:[], content:'link', notify:['site'], fieldPerm:{}, x:0, y:0 }; }\r
   function nodeEnd(){ return { id:nid('e'), type:'end', name:'流程结束', endAction:'archive', webhook:'', webhookMethod:'POST', webhookHeaders:'', x:0, y:0 }; }\r
 \r
@@ -3487,7 +3493,7 @@ Error generating stack: `+e.message+`
           { id:'e_p1v1b', from:n2.id, to:n3.id, mode:'always', logic:'and', conditions:[] } ] }; })(),\r
         (()=>{ const n1=nodeStart(); n1.initiatorScope='all';\r
           const n2=nodeApproval(); n2.name='直属主管审批'; n2.approverType='initiator_manager'; n2.level=1;\r
-          const n3=nodeApproval(); n3.name='部门总监审批'; n3.approverType='role'; n3.roles=['部门总监']; n3.mode='or';\r
+          const n3=nodeApproval(); n3.name='部门总监审批'; n3.approverType='post'; n3.posts=['生产主管']; n3.mode='or';
           const n4=nodeCC(); n4.name='通知HR'; n4.ccType='member'; n4.members=['王五(HR)'];\r
           const n5=nodeEnd();\r
           return { v:2, publishedAt:'2026-07-20', publishedBy:'产品同学', name:'请假审批流程', desc:'员工请假线上审批', icon:'fa-plane', formId:'f1', allowRecall:true, recallHours:24, recallUnit:'hour', nodes:[n1,n2,n3,n4,n5], edges:[\r
@@ -3498,13 +3504,13 @@ Error generating stack: `+e.message+`
       ],\r
       nodes:[ (()=>{const n=nodeStart();n.initiatorScope='all';return n;})(),\r
               (()=>{const n=nodeApproval();n.name='直属主管审批';n.approverType='initiator_manager';n.level=1;return n;})(),\r
-              (()=>{const n=nodeApproval();n.name='部门总监审批';n.approverType='role';n.roles=['部门总监'];n.mode='or';return n;})(),\r
+              (()=>{const n=nodeApproval();n.name='部门总监审批';n.approverType='post';n.posts=['生产主管'];n.mode='or';return n;})(),
               (()=>{const n=nodeCC();n.name='通知HR';n.ccType='member';n.members=['王五(HR)'];return n;})(),\r
               nodeEnd() ] },\r
     { id:'p2', name:'报销审批流程', formId:'f2', category:'approval', status:'草稿', version:0, hasUnpublished:false,\r
       desc:'费用报销审批', icon:'fa-money-bill-wave', allowRecall:true, recallHours:48, recallUnit:'hour', viewScope:'role', viewRoles:['财务'], creator:'财务同学', createdAt:'2026-07-25 11:15', refs:[], printable:true, codeRule:'BX-{yyyyMMdd}-{0000}', versions:[],\r
       nodes:[ (()=>{const n=nodeStart();return n;})(),\r
-              (()=>{const n=nodeApproval();n.name='财务审批';n.approverType='role';n.roles=['财务'];return n;})(),\r
+              (()=>{const n=nodeApproval();n.name='财务审批';n.approverType='post';n.posts=['调度员'];return n;})(),
               nodeEnd() ] }\r
   ];\r
   // 初始化边：示例流程保持简单线性\r
@@ -4730,10 +4736,10 @@ Error generating stack: `+e.message+`
         </div>\`;\r
     } else {\r
       body = \`\r
-        \${row('审批人来源', select('n_atype',[['initiator','发起人本人'],['manager_level','连续多级主管'],['member','指定成员'],['role','指定角色'],['dept_head','部门主管'],['field','表单成员字段'],['post','指定岗位']], n.approverType), '决定本节点由谁审批。主管类适配标准汇报线；指定成员/角色/岗位适合固定审批人；表单字段实现按数据动态带出。')}\r
-        \${n.approverType==='member'?memberPickerBlock(n, '指定成员', 'members'):''}\r
-        \${n.approverType==='post'?postPickerBlock(n, '指定岗位', 'posts'):''}\r
-        \${n.approverType==='role'?rolePickerBlock(n, '指定角色', 'roles'):''}\r
+        \${row('审批人来源', select('n_atype',[['initiator','发起人本人'],['manager_level','连续多级主管'],['member','指定成员'],['dept_head','部门主管'],['field','表单成员字段'],['post','指定岗位']], n.approverType), '决定本节点由谁审批。主管类适配标准汇报线；指定成员/岗位适合固定审批人；表单字段实现按数据动态带出。')}
+        \${n.approverType==='member'?memberPickerBlock(n, '指定成员', 'members'):''}
+        \${n.approverType==='post'?postPickerBlock(n, '指定岗位', 'posts'):''}
+        \${n.approverType==='post'?row('岗位范围', select('n_postscope',[['company','仅本公司'],['allCompanies','本公司及其他公司']], n.postScope||'company'), '限定岗位解析的组织范围；默认仅在当前公司内匹配岗位人员。'):''}
         \${n.approverType==='dept_head'?deptPickerBlock(n, '部门', 'depts'):''}\r
         \${n.approverType==='field'?row('成员字段', select('n_field', FORM_FIELDS(f.formId).map(x=>[x.fieldName,x.label]).concat([['','— 无成员字段 —']]), n.fieldRef||''), '取表单中「成员」控件的填写值作为审批人，实现按单据数据动态指定审批人。'):''}\r
         \${n.approverType==='manager_level'?row('主管层级', \`<input id="n_level" type="number" min="1" class="form-input w-20 border border-gray-300 rounded-md px-2.5 py-1.5 text-sm" \${inp(n.level)}>\`, '第几级主管：1=直属主管，2=主管的主管，用于多级审批链。'):''}\r
@@ -4844,10 +4850,11 @@ Error generating stack: `+e.message+`
     setNum('fc_recallh','recallHours');\r
     const fru=g('fc_recallu'); if(fru) fru.onchange=e=>{ f.recallUnit=e.target.value; };\r
   }\r
-  function bindApproval(n){\r
-    const f=currentFlow();\r
-    const at=g('n_atype'); if(at) at.onchange=e=>{ n.approverType=e.target.value; renderConfig(); };\r
-    const fl=g('n_field'); if(fl) fl.onchange=e=>{ n.fieldRef=e.target.value; };\r
+  function bindApproval(n){
+    const f=currentFlow();
+    const at=g('n_atype'); if(at) at.onchange=e=>{ n.approverType=e.target.value; renderConfig(); };
+    const ps=g('n_postscope'); if(ps) ps.onchange=e=>{ n.postScope=e.target.value; };
+    const fl=g('n_field'); if(fl) fl.onchange=e=>{ n.fieldRef=e.target.value; };
     const lv=g('n_level'); if(lv) lv.oninput=e=>{ n.level=Number(e.target.value)||1; };\r
     const mo=g('n_mode'); if(mo) mo.onchange=e=>{ n.mode=e.target.value; renderCanvas(); };\r
     const nap=g('n_noapprover'); if(nap) nap.onchange=e=>{ n.noApprover=e.target.value; renderConfig(); };\r
