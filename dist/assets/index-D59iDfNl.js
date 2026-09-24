@@ -592,6 +592,30 @@ Error generating stack: `+e.message+`
     </div>
   </div>
 
+  <!-- 业务控件的指定岗位范围选择器 -->
+  <div id="memberPostRangePickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">选择指定岗位</h3>
+          <p class="text-xs text-gray-500 mt-1">支持复选岗位，成员组件仅可从这些岗位的人员中选择。</p>
+        </div>
+        <button onclick="closeModal('memberPostRangePickerModal')" class="text-gray-400 hover:text-gray-600 btn-click" aria-label="关闭选择岗位弹窗"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between mb-3 text-xs text-gray-500">
+          <span>岗位列表</span>
+          <span>已选 <b id="memberPostRangeSelectedCount" class="text-[#165DFF]">0</b> 个岗位</span>
+        </div>
+        <div id="memberPostRangeList" class="max-h-80 overflow-auto rounded-lg border border-gray-200 bg-gray-50 p-2"></div>
+      </div>
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
+        <button onclick="closeModal('memberPostRangePickerModal')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 btn-click">取消</button>
+        <button onclick="confirmMemberPostPicker()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>
+      </div>
+    </div>
+  </div>
+
   <script>
   /* ===================== 控件定义 ===================== */\r
   const CONTROL_DEFS = {\r
@@ -605,10 +629,10 @@ Error generating stack: `+e.message+`
     divider:    { group:'basic',    icon:'fa-minus',        label:'分隔线',    fnPrefix:'divider', defaults:()=>({showText:false,text:'',divPos:'center',divStyle:'solid'}) },\r
     select:  { group:'select',   icon:'fa-caret-down',   label:'下拉单选', fnPrefix:'select', defaults:()=>({placeholder:'请选择',searchable:false,allowCustom:false,defaultValue:'',defaultType:'manual',source:'static',apiUrl:'',dictKey:'',options:[{label:'选项一',value:'opt1'},{label:'选项二',value:'opt2'}]}) },\r
     subform: { group:'advanced', icon:'fa-table',        label:'子表单',   fnPrefix:'subform', defaults:()=>({minRows:0,maxRows:10,allowAdd:true,showSummary:false,defaultValue:'',defaultType:'manual',subFields:[{label:'明细名称',type:'text'},{label:'金额',type:'number'}]}) },\r
-    member:  { group:'biz',      icon:'fa-user-friends', label:'成员',     fnPrefix:'member', defaults:()=>({multi:false,range:'all',depts:[],roles:[],defaultValue:'',defaultType:'manual',includeDept:false}) },\r
-    dept:    { group:'biz',      icon:'fa-sitemap',      label:'@部门',    fnPrefix:'dept',   defaults:()=>({multi:false,range:'all',depts:[],roles:[],defaultValue:'',defaultType:'manual',includeDept:false}) },\r
-    formref: { group:'biz',      icon:'fa-file-alt',     label:'@工作表单', fnPrefix:'formref',defaults:()=>({multi:false,range:'all',depts:[],roles:[],defaultValue:'',defaultType:'manual',includeDept:false}) },\r
-    feed:    { group:'biz',      icon:'fa-comments',     label:'@动态圈',  fnPrefix:'feed',   defaults:()=>({multi:false,range:'all',depts:[],roles:[],defaultValue:'',defaultType:'manual',includeDept:false}) },\r
+    member:  { group:'biz',      icon:'fa-user-friends', label:'成员',     fnPrefix:'member', defaults:()=>({multi:false,range:'all',depts:[],posts:[],defaultValue:'',defaultType:'manual',includeDept:false}) },
+    dept:    { group:'biz',      icon:'fa-sitemap',      label:'@部门',    fnPrefix:'dept',   defaults:()=>({multi:false,range:'all',depts:[],posts:[],defaultValue:'',defaultType:'manual',includeDept:false}) },
+    formref: { group:'biz',      icon:'fa-file-alt',     label:'@工作表单', fnPrefix:'formref',defaults:()=>({multi:false,range:'all',depts:[],posts:[],defaultValue:'',defaultType:'manual',includeDept:false}) },
+    feed:    { group:'biz',      icon:'fa-comments',     label:'@动态圈',  fnPrefix:'feed',   defaults:()=>({multi:false,range:'all',depts:[],posts:[],defaultValue:'',defaultType:'manual',includeDept:false}) },
     signature:  { group:'advanced', icon:'fa-signature',    label:'电子签名',  fnPrefix:'signature', defaults:()=>({signMode:'hand',penColor:'#165DFF',signHeight:120,showWatermark:false}) },\r
     address:    { group:'basic',    icon:'fa-map-marker-alt', label:'地址',    fnPrefix:'address',   defaults:()=>({addrShow:{province:true,city:true,district:true,detail:true},requireDetail:true,placeholder:'请选择/输入地址'}) },\r
     image:      { group:'advanced', icon:'fa-image',        label:'图片',     fnPrefix:'image',     defaults:()=>({uploadMode:'local',maxCount:1,maxSize:5,formats:['png','jpg','jpeg'],compress:true}) },\r
@@ -625,7 +649,7 @@ Error generating stack: `+e.message+`
     formref: { noun:'工作表单', ph:'请选择工作表单', scopeAll:'全部工作表单' },\r
     feed:    { noun:'动态圈',   ph:'请选择动态',     scopeAll:'全部动态圈' },\r
   };\r
-  function pickerScope(f){ const m=PICKER_META[f.type]||PICKER_META.member; return f.range==='all'?m.scopeAll:(f.range==='dept'?((f.depts||[]).join('/')||'指定部门'):((f.roles||[]).join('/')||'指定角色')); }\r
+  function pickerScope(f){ const m=PICKER_META[f.type]||PICKER_META.member; return f.range==='all'?m.scopeAll:(f.range==='dept'?((f.depts||[]).join('/')||'指定部门'):((f.posts||[]).join('/')||'指定岗位')); }
   /* 多级查询（级联）示例数据：国家 → 城市 → 区县（演示逐级下拉），可替换为业务字典 */\r
   const CASCADER_SAMPLE = [\r
     { label:'中国', children:[\r
@@ -702,16 +726,17 @@ Error generating stack: `+e.message+`
   /* 默认值选择器（@成员 / @部门 / @工作表单 / @动态圈 在「默认值·手动填写」时需选具体实体，而非手输文本）\r
      候选数据取自各类型样例集；单选取 radio，多选取 checkbox，确定后写入 f.defaultValue */\r
   /* 成员名录（带部门/角色归属），用于「默认值选择器」按可选范围反查候选子集 */\r
-  const MEMBER_DIR = [\r
-    { name:'张三', dept:'研发部', roles:['管理员','审批人'] },\r
-    { name:'李四', dept:'研发部', roles:['普通员工'] },\r
-    { name:'王五', dept:'产品部', roles:['部门负责人'] },\r
-    { name:'赵六', dept:'产品部', roles:['普通员工'] },\r
-    { name:'孙七', dept:'市场部', roles:['普通员工'] },\r
-    { name:'周八', dept:'财务部', roles:['财务审核'] },\r
-    { name:'吴九', dept:'人事部', roles:['HRBP'] },\r
-    { name:'郑十', dept:'行政部', roles:['普通员工'] },\r
-    { name:'钱一', dept:'销售部', roles:['普通员工'] },\r
+  const POSTS = ['安全员','采矿工程师','机电工程师','通风工程师','班组长','调度员','生产主管'];
+  const MEMBER_DIR = [
+    { name:'张三', dept:'研发部', posts:['采矿工程师'], roles:['管理员','审批人'] },
+    { name:'李四', dept:'研发部', posts:['机电工程师'], roles:['普通员工'] },
+    { name:'王五', dept:'产品部', posts:['生产主管'], roles:['部门负责人'] },
+    { name:'赵六', dept:'产品部', posts:['安全员'], roles:['普通员工'] },
+    { name:'孙七', dept:'市场部', posts:['通风工程师'], roles:['普通员工'] },
+    { name:'周八', dept:'财务部', posts:['调度员'], roles:['财务审核'] },
+    { name:'吴九', dept:'人事部', posts:['班组长'], roles:['HRBP'] },
+    { name:'郑十', dept:'行政部', posts:['安全员'], roles:['普通员工'] },
+    { name:'钱一', dept:'销售部', posts:['采矿工程师'], roles:['普通员工'] },
   ];\r
   const DEFAULT_PICKER_DATA = {\r
     member:  MEMBER_DIR,\r
@@ -722,7 +747,7 @@ Error generating stack: `+e.message+`
   let dpCtx = { fieldId:null, type:null, multi:false, sel:[], query:'' };\r
   function openDefaultPicker(fieldId){\r
     const f=fields.find(x=>x.id===fieldId); if(!f) return;\r
-    dpCtx = { fieldId, type:f.type, multi:!!f.multi, range:f.range||'all', depts:f.depts||[], roles:f.roles||[], sel: Array.isArray(f.defaultValue)?[...f.defaultValue]:(f.defaultValue?[f.defaultValue]:[]), query:'' };\r
+    dpCtx = { fieldId, type:f.type, multi:!!f.multi, range:f.range||'all', depts:f.depts||[], posts:f.posts||[], sel: Array.isArray(f.defaultValue)?[...f.defaultValue]:(f.defaultValue?[f.defaultValue]:[]), query:'' };
     const se=document.getElementById('dpSearch'); if(se) se.value='';\r
     renderDefaultPicker(); openModal('formDefaultPickerModal');\r
   }\r
@@ -735,9 +760,9 @@ Error generating stack: `+e.message+`
       if(dpCtx.range==='dept'){\r
         all = all.filter(x=>(dpCtx.depts||[]).includes(x.dept));\r
         scopeNote = (dpCtx.depts&&dpCtx.depts.length) ? ('仅限部门：'+(dpCtx.depts.join('/'))) : '请先在专属配置选择「指定部门」范围';\r
-      } else if(dpCtx.range==='role'){\r
-        all = all.filter(x=>(x.roles||[]).some(r=>(dpCtx.roles||[]).includes(r)));\r
-        scopeNote = (dpCtx.roles&&dpCtx.roles.length) ? ('仅限角色：'+(dpCtx.roles.join('/'))) : '请先在专属配置选择「指定角色」范围';\r
+      } else if(dpCtx.range==='post'){
+        all = all.filter(x=>(x.posts||[]).some(post=>(dpCtx.posts||[]).includes(post)));
+        scopeNote = (dpCtx.posts&&dpCtx.posts.length) ? ('仅限岗位：'+(dpCtx.posts.join('/'))) : '请先在专属配置选择「指定岗位」范围';
       }\r
     } else if(dpCtx.type==='dept'){\r
       if(dpCtx.range==='dept'){\r
@@ -1589,8 +1614,43 @@ Error generating stack: `+e.message+`
     const f=getField(fieldId); if(!f) return;
     f.depts=(f.depts||[]).filter(name=>name!==dept); renderCanvas(); renderConfig();
   }
-\r
-  /* ---- 数据可见范围：默认范围 + 按角色覆盖（规则仅含数据条件，角色由覆盖层指定） ---- */\r
+
+  let memberPostRangePicker = { fieldId:null, selected:new Set() };
+  function memberPostRangeHTML(f){
+    const selected=f.posts||[];
+    const hasSelection=selected.length>0;
+    const chips=selected.length
+      ? selected.map(post=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${post}<button type="button" onclick="removeMemberPost('\${f.id}','\${post}')" class="hover:text-red-600 btn-click" aria-label="移除\${post}"><i class="fas fa-times"></i></button></span>\`).join('')
+      : '<span class="text-[11px] text-gray-400">尚未指定岗位</span>';
+    return \`<div><button type="button" onclick="openMemberPostPicker('\${f.id}')" class="member-dept-trigger \${hasSelection?'is-selected':'is-empty'} btn-click"><i class="fas \${hasSelection?'fa-pen':'fa-plus'}"></i>\${hasSelection?'编辑岗位':'新增岗位'}</button><div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div></div>\`;
+  }
+  function renderMemberPostList(){
+    const list=document.getElementById('memberPostRangeList'); if(!list) return;
+    list.innerHTML=POSTS.map(post=>\`<label class="flex items-center gap-2 min-h-9 px-2 rounded-md hover:bg-white cursor-pointer"><input type="checkbox" class="rounded text-[#165DFF] w-4 h-4" \${memberPostRangePicker.selected.has(post)?'checked':''} onchange="toggleMemberPost('\${post}')"><i class="fas fa-briefcase text-xs text-[#165DFF] w-3"></i><span class="text-sm text-gray-700">\${post}</span></label>\`).join('');
+    const count=document.getElementById('memberPostRangeSelectedCount');
+    if(count) count.textContent=memberPostRangePicker.selected.size;
+  }
+  function openMemberPostPicker(fieldId){
+    const f=getField(fieldId); if(!f) return;
+    memberPostRangePicker={ fieldId, selected:new Set(f.posts||[]) };
+    renderMemberPostList(); openModal('memberPostRangePickerModal');
+  }
+  function toggleMemberPost(post){
+    if(memberPostRangePicker.selected.has(post)) memberPostRangePicker.selected.delete(post);
+    else memberPostRangePicker.selected.add(post);
+    renderMemberPostList();
+  }
+  function confirmMemberPostPicker(){
+    const f=getField(memberPostRangePicker.fieldId); if(!f) return;
+    f.posts=POSTS.filter(post=>memberPostRangePicker.selected.has(post));
+    closeModal('memberPostRangePickerModal'); renderCanvas(); renderConfig();
+  }
+  function removeMemberPost(fieldId, post){
+    const f=getField(fieldId); if(!f) return;
+    f.posts=(f.posts||[]).filter(name=>name!==post); renderCanvas(); renderConfig();
+  }
+
+  /* ---- 数据可见范围：默认范围 + 按角色覆盖（规则仅含数据条件，角色由覆盖层指定） ---- */
   const VIS_OPTS=[['creator','仅创建人'],['dept','同部门'],['deptSub','同部门及下级'],['all','全部数据'],['rule','自定义规则（引用登录人属性）']];\r
   const LOGIN_ATTRS=[['role','登录人.角色'],['region','登录人.区域'],['dept','登录人.部门']];\r
   const RULE_OPS=[['=','='],['≠','≠'],['包含','包含']];\r
@@ -1942,14 +2002,14 @@ Error generating stack: `+e.message+`
       const subs=(f.subFields||[]).map((s,i)=>\`<div class="subform-col-row flex items-center gap-1.5 mb-1.5 p-1 rounded border border-gray-200 bg-white" draggable="true" data-col="\${i}" ondragstart="onSubColDragStart(event,'\${f.id}',\${i})" ondragover="onSubColDragOver(event)" ondrop="onSubColDrop(event,'\${f.id}',\${i})" ondragend="this.classList.remove('dragging');document.querySelectorAll('.subform-col-row').forEach(r=>r.classList.remove('drop-target'))"><i class="fas fa-grip-vertical text-gray-300 cursor-grab"></i><span class="text-[10px] text-gray-400 w-8 flex-none text-center">\${SUB_TYPE_LABEL[s.type]||s.type}</span><input class="form-input flex-1 border border-gray-300 rounded-md px-2 py-1 text-sm" value="\${s.label}" oninput="updateSub(\${i},this.value)"><button class="text-gray-400 hover:text-red-500 btn-click" onclick="removeSub(\${i})" title="删除该列"><i class="fas fa-times"></i></button></div>\`).join('');\r
       h += \`<div class="mb-3.5"><label class="block text-xs font-medium text-gray-600 mb-1">子表单列（类型由拖入控件决定，不可改）</label>\${subs}<div class="cfg-logic"><i class="fas fa-info-circle"></i><span><b>新增列</b>：从左侧控件库拖控件到画布中的子表单区域，松手即成一列（列类型＝拖入控件类型，表头标「文本/数字/日期/下拉/成员」）。<b>排序</b>：在本列表中拖动每行（⠿ 手柄）调整列顺序；<b>删除</b>：点 ✕。列类型不可在此修改，需换类型时删除后重新拖入对应控件。</span></div></div>\`;\r
       h += row('显示汇总行', sw('cfg_sum', f.showSummary, '在子表单底部增加「合计」行，对所有「数字」类型子字段自动求和。'), '开启后，画布表格底部立即出现蓝色合计行（标「Σ 自动求和」），运行态随用户录入实时累加。文本 / 日期列不参与汇总。');\r
-    } else if(['member','dept','formref','feed'].includes(f.type)){\r
-      const m = PICKER_META[f.type];\r
-      h += row('选择范围', \`<select id="cfg_range" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="all" \${f.range==='all'?'selected':''}>\${m.scopeAll}</option><option value="dept" \${f.range==='dept'?'selected':''}>指定部门</option><option value="role" \${f.range==='role'?'selected':''}>指定角色</option></select>\`, \`限定可选\${m.noun}的范围；选部门/角色时需勾选具体对象（对接组织架构集成）。切换后画布即时显示范围摘要。\`);
+    } else if(['member','dept','formref','feed'].includes(f.type)){
+      const m = PICKER_META[f.type];
+      h += row('选择范围', \`<select id="cfg_range" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="all" \${f.range==='all'?'selected':''}>\${m.scopeAll}</option><option value="dept" \${f.range==='dept'?'selected':''}>指定部门</option><option value="post" \${f.range==='post'?'selected':''}>指定岗位</option></select>\`, \`限定可选\${m.noun}的范围；选部门/岗位时需勾选具体对象。切换后画布即时显示范围摘要。\`);
       if(f.range==='dept'){
         h += row('指定部门', f.type==='member' ? memberDepartmentRangeHTML(f) : chipsHTML(\`getField('\${f.id}').depts\`, f.depts, 'dept'), \`仅可从所选部门中选择\${m.noun}；成员控件可通过“新增部门”从组织架构树批量选择。\`);
-      } else if(f.range==='role'){
-        h += row('指定角色', chipsHTML(\`getField('\${f.id}').roles\`, f.roles, 'role'), \`仅可从所选角色中选择\${m.noun}；点击标签切换选中，画布范围摘要同步更新。\`);\r
-      }\r
+      } else if(f.range==='post'){
+        h += row('指定岗位', memberPostRangeHTML(f), \`仅可从所选岗位中选择\${m.noun}；点击“新增岗位”可多选岗位。\`);
+      }
       // 默认值配置：业务控件的默认候选必须落在「选择范围」内，故放在「选择范围」下方维护\r
       h += bizDefaultValueHTML(f);\r
       h += row('多选', sw('cfg_multi', f.multi, \`可同时选择多个\${m.noun}，存储为数组。\`), \`如多个\${m.noun}协作场景。\`);\r
@@ -2628,12 +2688,15 @@ Error generating stack: `+e.message+`
     if(['member','dept','formref','feed'].includes(f.type)){\r
       const m=PICKER_META[f.type];\r
       let ph=m.ph; const dt=f.defaultType||'manual';\r
-      if(dt==='manual' && f.defaultValue){ ph = Array.isArray(f.defaultValue)?f.defaultValue.join('、'):f.defaultValue; }\r
-      else if(dt==='currentUser')ph='当前登录人'; else if(dt==='linkage')ph=defaultDisplay(f);\r
-      const scope=pickerScope(f);\r
-      const icon=f.type==='dept'?'fa-sitemap':f.type==='formref'?'fa-file-alt':f.type==='feed'?'fa-comments':'fa-user-plus';\r
-      return \`<div class="border border-gray-300 rounded-md px-3 py-2 text-sm flex items-center gap-2 cursor-pointer hover:border-[#165DFF]" onclick="alert('\${(m.noun+'选择器 · 范围：'+scope).replace(/'/g,'')}')"><i class="fas \${icon} text-[#165DFF]"></i> \${ph}\${f.multi?'（可多选）':''}<span class="ml-auto text-xs text-gray-400">\${scope}</span></div>\`;\r
-    }\r
+      if(dt==='manual' && f.defaultValue){ ph = Array.isArray(f.defaultValue)?f.defaultValue.join('、'):f.defaultValue; }
+      else if(dt==='currentUser')ph='当前登录人'; else if(dt==='linkage')ph=defaultDisplay(f);
+      const scope=pickerScope(f);
+      const icon=f.type==='dept'?'fa-sitemap':f.type==='formref'?'fa-file-alt':f.type==='feed'?'fa-comments':'fa-user-plus';
+      const clickTip=f.type==='member'
+        ? '人员单选通用组件：流程-待审批-审批-转办-转办人；复选组件：流程-待审批-审批-加签-加签人'
+        : (m.noun+'选择器 · 范围：'+scope);
+      return \`<div class="border border-gray-300 rounded-md px-3 py-2 text-sm flex items-center gap-2 cursor-pointer hover:border-[#165DFF]" onclick="alert('\${clickTip.replace(/'/g,'')}')"><i class="fas \${icon} text-[#165DFF]"></i> \${ph}\${f.multi?'（可多选）':''}<span class="ml-auto text-xs text-gray-400">\${scope}</span></div>\`;
+    }
     if(f.type==='signature'){\r
       const hgh=f.signHeight||120; const col=f.penColor||'#165DFF';\r
       const modeTxt={hand:'手写签名（请用鼠标在框内书写）',type:'打字签名',image:'点击上传签名图片'}[f.signMode]||'手写签名';\r
@@ -2813,7 +2876,7 @@ Error generating stack: `+e.message+`
         if(f.type==='text') Object.assign(base,{placeholder:f.placeholder,maxLength:f.maxLength,minLength:f.minLength,format:f.format,password:!!f.password,trim:!!f.trim});\r
         if(f.type==='select') Object.assign(base,{source:f.source,apiUrl:f.apiUrl||'',dictKey:f.dictKey||'',options:f.options,searchable:!!f.searchable,allowCustom:!!f.allowCustom});\r
         if(f.type==='subform') Object.assign(base,{minRows:f.minRows,maxRows:f.maxRows,allowAdd:!!f.allowAdd,showSummary:!!f.showSummary,subFields:f.subFields});\r
-        if(['member','dept','formref','feed'].includes(f.type)) Object.assign(base,{range:f.range,depts:f.depts||[],roles:f.roles||[],multi:!!f.multi,includeDept:!!f.includeDept});\r
+        if(['member','dept','formref','feed'].includes(f.type)) Object.assign(base,{range:f.range,depts:f.depts||[],posts:f.posts||[],multi:!!f.multi,includeDept:!!f.includeDept});
         if(f.type==='cascader') Object.assign(base,{levels:f.levels,cascadeLevels:f.cascadeLevels,searchable:!!f.searchable});\r
         if(f.type==='autonumber') Object.assign(base,{prefix:f.prefix,dateFmt:f.dateFmt,seqLen:f.seqLen,suffix:f.suffix,start:f.start,step:f.step,reset:f.reset});\r
         if(['signature','address','image','attachment','location'].includes(f.type)) Object.assign(base,{...f});\r
