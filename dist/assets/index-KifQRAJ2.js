@@ -113,8 +113,13 @@ Error generating stack: `+e.message+`
     .subform-col-row { cursor:grab; }\r
     .subform-col-row.dragging { opacity:.4; }\r
     .subform-col-row.drop-target { box-shadow:inset 0 2px 0 #165DFF; }\r
-    .cfg-info { font-size:11px; color:#6b7280; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:8px 10px; line-height:1.5; }\r
-    .cfg-info i { color:#165DFF; }\r
+    .cfg-info { font-size:11px; color:#6b7280; background:#f9fafb; border:1px solid #e5e7eb; border-radius:6px; padding:8px 10px; line-height:1.5; }
+    .cfg-info i { color:#165DFF; }
+    /* 成员控件的指定部门入口：确认选择后固定展示为蓝色编辑状态。 */
+    .member-dept-trigger { width:100%; display:flex; align-items:center; justify-content:center; gap:8px; padding:8px 12px; border-radius:6px; font-size:14px; cursor:pointer; transition:all .15s; }
+    .member-dept-trigger.is-empty { border:1px dashed #d1d5db; color:#4b5563; background:#fff; }
+    .member-dept-trigger.is-selected { border:1px solid #165DFF; color:#165DFF; background:#F5F9FF; }
+    .member-dept-trigger:hover { border-color:#165DFF; color:#165DFF; }
 \r
     .label-cell { display:inline-block; background:#f9fafb; border:1px dashed #e5e7eb; border-radius:4px; padding:4px 6px; margin:-4px 0; line-height:1.4; }\r
     .label-cell.auto { background:transparent; border-style:dotted; }\r
@@ -544,7 +549,7 @@ Error generating stack: `+e.message+`
   </div>\r
 \r
   <!-- 默认值选择器（@成员/@部门/@工作表单/@动态圈） -->\r
-  <div id="formDefaultPickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">\r
+  <div id="formDefaultPickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">
     <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-md mx-4 overflow-hidden">\r
       <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">\r
         <h3 class="text-lg font-semibold text-gray-800" id="dpTitle">选择默认项</h3>\r
@@ -560,10 +565,34 @@ Error generating stack: `+e.message+`
         <button onclick="closeModal('formDefaultPickerModal')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 btn-click">取消</button>\r
         <button onclick="confirmDefaultPicker()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>\r
       </div>\r
-    </div>\r
-  </div>\r
-\r
-  <script>\r
+    </div>
+  </div>
+
+  <!-- 成员控件的指定部门范围选择器 -->
+  <div id="memberDeptRangePickerModal" class="modal-overlay modal-hidden fixed inset-0 z-[70] flex items-center justify-center bg-black/40">
+    <div class="modal-content bg-white rounded-xl shadow-2xl w-full max-w-lg mx-4 overflow-hidden">
+      <div class="flex items-center justify-between px-6 py-4 border-b border-gray-200">
+        <div>
+          <h3 class="text-lg font-semibold text-gray-800">选择指定部门</h3>
+          <p class="text-xs text-gray-500 mt-1">勾选部门后，成员组件仅可从这些部门中选择人员。</p>
+        </div>
+        <button onclick="closeModal('memberDeptRangePickerModal')" class="text-gray-400 hover:text-gray-600 btn-click" aria-label="关闭选择部门弹窗"><i class="fas fa-times"></i></button>
+      </div>
+      <div class="px-6 py-4">
+        <div class="flex items-center justify-between mb-3 text-xs text-gray-500">
+          <span>组织架构</span>
+          <span>已选 <b id="memberDeptRangeSelectedCount" class="text-[#165DFF]">0</b> 个部门</span>
+        </div>
+        <div id="memberDeptRangeTree" class="max-h-80 overflow-auto rounded-lg border border-gray-200 bg-gray-50 p-2"></div>
+      </div>
+      <div class="flex items-center justify-end gap-3 px-6 py-4 border-t border-gray-200 bg-gray-50">
+        <button onclick="closeModal('memberDeptRangePickerModal')" class="px-4 py-2 border border-gray-300 rounded-lg text-sm text-gray-600 btn-click">取消</button>
+        <button onclick="confirmMemberDepartmentPicker()" class="px-4 py-2 bg-[#165DFF] hover:bg-blue-600 text-white text-sm rounded-lg font-medium btn-click">确定</button>
+      </div>
+    </div>
+  </div>
+
+  <script>
   /* ===================== 控件定义 ===================== */\r
   const CONTROL_DEFS = {\r
     text:    { group:'basic',    icon:'fa-font',         label:'单行文本', fnPrefix:'text',  defaults:()=>({placeholder:'请输入',defaultValue:'',defaultType:'manual',maxLength:50,minLength:0,format:'none',password:false,trim:true,errMsg:'',linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''}}) },\r
@@ -641,8 +670,27 @@ Error generating stack: `+e.message+`
     chinese:'只能输入中文',\r
   };\r
   const DEFAULT_TYPES = [['manual','手动填写'],['formula','公式编辑'],['currentUser','当前用户'],['today','当前日期'],['linkage','数据联动']];\r
-  const DEPTS = ['产品部','研发部','市场部','财务部','人事部','行政部','销售部'];\r
-  const ROLES = ['管理员','部门负责人','普通员工','财务审核','HRBP','审批人'];\r
+  const DEPTS = ['产品部','研发部','市场部','财务部','人事部','行政部','销售部'];
+  const ROLES = ['管理员','部门负责人','普通员工','财务审核','HRBP','审批人'];
+  const MEMBER_SCOPE_ORGANIZATION = [
+    { id:'org-root', name:'华北矿业集团', children:[
+      { id:'org-mine', name:'矿山事业部', children:[
+        { id:'dept-rd', name:'研发部', children:[
+          { id:'dept-rd-system', name:'系统研发组' },
+        ]},
+        { id:'dept-product', name:'产品部' },
+        { id:'dept-market', name:'市场部' },
+      ]},
+      { id:'org-operation', name:'运营管理中心', children:[
+        { id:'dept-hr', name:'人事部', children:[
+          { id:'dept-hr-od', name:'组织发展组' },
+        ]},
+        { id:'dept-finance', name:'财务部' },
+        { id:'dept-admin', name:'行政部' },
+        { id:'dept-sales', name:'销售部' },
+      ]},
+    ]},
+  ];
   // 可供数据联动选择的关联表单（演示数据）\r
   const LINKAGE_FORMS = [\r
     { id:'dept_info', name:'部门信息表', fields:[{field:'dept_name',label:'部门名称'},{field:'dept_leader',label:'部门负责人'},{field:'leader_phone',label:'负责人电话'}] },\r
@@ -1476,12 +1524,71 @@ Error generating stack: `+e.message+`
       return \`<span class="px-2 py-1 rounded-md text-xs cursor-pointer border \${on?'bg-[#165DFF] text-white border-[#165DFF]':'bg-white text-gray-600 border-gray-200'}" onclick="chipToggle(\${arrAccessor},'\${v}',this)">\${v}</span>\`;\r
     }).join('')+\`</div>\`;\r
   }\r
-  function chipToggle(arr, val, el){\r
+  function chipToggle(arr, val, el){
     const i=arr.indexOf(val);\r
     if(i>=0) arr.splice(i,1); else arr.push(val);\r
     const on=arr.includes(val);\r
-    el.className=\`px-2 py-1 rounded-md text-xs cursor-pointer border \${on?'bg-[#165DFF] text-white border-[#165DFF]':'bg-white text-gray-600 border-gray-200'}\`;\r
-  }\r
+    el.className=\`px-2 py-1 rounded-md text-xs cursor-pointer border \${on?'bg-[#165DFF] text-white border-[#165DFF]':'bg-white text-gray-600 border-gray-200'}\`;
+  }
+  let memberDeptRangePicker = { fieldId:null, selected:new Set() };
+  function memberDepartmentRangeHTML(f){
+    const selected=f.depts||[];
+    const hasSelection=selected.length>0;
+    const buttonState=hasSelection?'is-selected':'is-empty';
+    const chips=selected.length
+      ? selected.map(dept=>\`<span class="inline-flex items-center gap-1 pl-2 pr-1 py-0.5 rounded-full bg-[#165DFF]/10 text-[#165DFF] text-[11px]">\${dept}<button type="button" onclick="removeMemberDepartment('\${f.id}','\${dept}')" class="hover:text-red-600 btn-click" aria-label="移除\${dept}"><i class="fas fa-times"></i></button></span>\`).join('')
+      : '<span class="text-[11px] text-gray-400">尚未指定部门</span>';
+    return \`<div><button type="button" onclick="openMemberDepartmentPicker('\${f.id}')" class="member-dept-trigger \${buttonState} btn-click"><i class="fas \${hasSelection?'fa-pen':'fa-plus'}"></i>\${hasSelection?'编辑部门':'新增部门'}</button><div class="flex flex-wrap gap-1.5 mt-2">\${chips}</div></div>\`;
+  }
+  function memberDeptLeaves(node){
+    return node.children&&node.children.length ? node.children.flatMap(memberDeptLeaves) : [node.name];
+  }
+  function allMemberDepartmentNames(){ return MEMBER_SCOPE_ORGANIZATION.flatMap(memberDeptLeaves); }
+  function renderMemberDepartmentTree(){
+    const tree=document.getElementById('memberDeptRangeTree'); if(!tree) return;
+    const renderNode=(node, depth=0)=>{
+      const leaves=memberDeptLeaves(node);
+      const checked=leaves.length>0&&leaves.every(name=>memberDeptRangePicker.selected.has(name));
+      const partial=!checked&&leaves.some(name=>memberDeptRangePicker.selected.has(name));
+      const hasChildren=Boolean(node.children&&node.children.length);
+      return \`<div style="margin-left:\${depth*18}px" class="py-0.5"><label class="flex items-center gap-2 min-h-8 px-2 rounded-md hover:bg-white cursor-pointer"><input type="checkbox" class="rounded text-[#165DFF] w-4 h-4" data-member-dept-partial="\${partial?'1':'0'}" \${checked?'checked':''} onchange="toggleMemberDepartmentNode('\${node.id}')"><i class="fas \${hasChildren?'fa-sitemap':'fa-building'} text-xs \${hasChildren?'text-[#165DFF]':'text-gray-400'} w-3"></i><span class="text-sm \${hasChildren?'font-medium text-gray-700':'text-gray-600'}">\${node.name}</span></label>\${hasChildren?node.children.map(child=>renderNode(child,depth+1)).join(''):''}</div>\`;
+    };
+    tree.innerHTML=MEMBER_SCOPE_ORGANIZATION.map(node=>renderNode(node)).join('');
+    tree.querySelectorAll('[data-member-dept-partial="1"]').forEach(input=>{ input.indeterminate=true; });
+    const count=document.getElementById('memberDeptRangeSelectedCount');
+    if(count) count.textContent=memberDeptRangePicker.selected.size;
+  }
+  function findMemberDepartmentNode(nodes, id){
+    for(const node of nodes){
+      if(node.id===id) return node;
+      const child=node.children&&findMemberDepartmentNode(node.children,id);
+      if(child) return child;
+    }
+    return null;
+  }
+  function openMemberDepartmentPicker(fieldId){
+    const f=getField(fieldId); if(!f) return;
+    memberDeptRangePicker={ fieldId, selected:new Set(f.depts||[]) };
+    renderMemberDepartmentTree(); openModal('memberDeptRangePickerModal');
+  }
+  function toggleMemberDepartmentNode(nodeId){
+    const node=findMemberDepartmentNode(MEMBER_SCOPE_ORGANIZATION,nodeId); if(!node) return;
+    const leaves=memberDeptLeaves(node);
+    const shouldClear=leaves.every(name=>memberDeptRangePicker.selected.has(name));
+    leaves.forEach(name=>shouldClear?memberDeptRangePicker.selected.delete(name):memberDeptRangePicker.selected.add(name));
+    renderMemberDepartmentTree();
+  }
+  function confirmMemberDepartmentPicker(){
+    const f=getField(memberDeptRangePicker.fieldId); if(!f) return;
+    f.depts=allMemberDepartmentNames().filter(name=>memberDeptRangePicker.selected.has(name));
+    closeModal('memberDeptRangePickerModal');
+    // 选择器位于属性事件作用域之外，直接刷新画布和配置区，避免保存后界面仍保留旧状态。
+    renderCanvas(); renderConfig();
+  }
+  function removeMemberDepartment(fieldId, dept){
+    const f=getField(fieldId); if(!f) return;
+    f.depts=(f.depts||[]).filter(name=>name!==dept); renderCanvas(); renderConfig();
+  }
 \r
   /* ---- 数据可见范围：默认范围 + 按角色覆盖（规则仅含数据条件，角色由覆盖层指定） ---- */\r
   const VIS_OPTS=[['creator','仅创建人'],['dept','同部门'],['deptSub','同部门及下级'],['all','全部数据'],['rule','自定义规则（引用登录人属性）']];\r
@@ -1837,10 +1944,10 @@ Error generating stack: `+e.message+`
       h += row('显示汇总行', sw('cfg_sum', f.showSummary, '在子表单底部增加「合计」行，对所有「数字」类型子字段自动求和。'), '开启后，画布表格底部立即出现蓝色合计行（标「Σ 自动求和」），运行态随用户录入实时累加。文本 / 日期列不参与汇总。');\r
     } else if(['member','dept','formref','feed'].includes(f.type)){\r
       const m = PICKER_META[f.type];\r
-      h += row('选择范围', \`<select id="cfg_range" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="all" \${f.range==='all'?'selected':''}>\${m.scopeAll}</option><option value="dept" \${f.range==='dept'?'selected':''}>指定部门</option><option value="role" \${f.range==='role'?'selected':''}>指定角色</option></select>\`, \`限定可选\${m.noun}的范围；选部门/角色时需勾选具体对象（对接组织架构集成）。切换后画布即时显示范围摘要。\`);\r
-      if(f.range==='dept'){\r
-        h += row('指定部门', chipsHTML(\`getField('\${f.id}').depts\`, f.depts, 'dept'), \`仅可从所选部门中选择\${m.noun}；点击标签切换选中，画布范围摘要同步更新。\`);\r
-      } else if(f.range==='role'){\r
+      h += row('选择范围', \`<select id="cfg_range" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="all" \${f.range==='all'?'selected':''}>\${m.scopeAll}</option><option value="dept" \${f.range==='dept'?'selected':''}>指定部门</option><option value="role" \${f.range==='role'?'selected':''}>指定角色</option></select>\`, \`限定可选\${m.noun}的范围；选部门/角色时需勾选具体对象（对接组织架构集成）。切换后画布即时显示范围摘要。\`);
+      if(f.range==='dept'){
+        h += row('指定部门', f.type==='member' ? memberDepartmentRangeHTML(f) : chipsHTML(\`getField('\${f.id}').depts\`, f.depts, 'dept'), \`仅可从所选部门中选择\${m.noun}；成员控件可通过“新增部门”从组织架构树批量选择。\`);
+      } else if(f.range==='role'){
         h += row('指定角色', chipsHTML(\`getField('\${f.id}').roles\`, f.roles, 'role'), \`仅可从所选角色中选择\${m.noun}；点击标签切换选中，画布范围摘要同步更新。\`);\r
       }\r
       // 默认值配置：业务控件的默认候选必须落在「选择范围」内，故放在「选择范围」下方维护\r
