@@ -4801,11 +4801,9 @@ Error generating stack: `+e.message+`
       body = fieldPermMatrix(f,n);\r
     } else {\r
       body = \`\r
-        \${row('抄送人类型', select('n_ctype',[['member','指定成员'],['role','指定角色'],['dept','指定部门'],['post','指定岗位']], n.ccType), '被抄送人仅接收知会，不参与审批、不影响流转。')}\r
-        \${n.ccType==='member'?memberPickerBlock(n, '指定成员', 'members'):''}\r
-        \${n.ccType==='role'?rolePickerBlock(n, '指定角色', 'roles'):''}\r
-        \${n.ccType==='dept'?deptPickerBlock(n, '指定部门', 'depts'):''}\r
-        \${n.ccType==='post'?postPickerBlock(n, '指定岗位', 'posts'):''}\r
+        \${row('抄送人类型', select('n_ctype',[['member','指定成员'],['post','指定岗位']], n.ccType), '被抄送人仅接收知会，不参与审批、不影响流转。')}
+        \${n.ccType==='member'?memberPickerBlock(n, '指定成员', 'members'):''}
+        \${n.ccType==='post'?postPickerBlock(n, '指定岗位', 'posts'):''}
         \${info('抄送人类型决定「抄送给谁」；在「字段权限」中配置抄送人可见的字段范围（仅只读 / 隐藏，抄送人不可编辑）。')}\`;\r
     }\r
     g('configBody').innerHTML = head + tabs + body;\r
