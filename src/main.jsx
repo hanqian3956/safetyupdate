@@ -1439,6 +1439,8 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
                 <option>流程审批</option>
                 <option>流程超时</option>
                 <option>流程结束</option>
+                <option>流程驳回</option>
+                <option>流程抄送</option>
               </>
             ) : messageSource === "全部" ? (
               <option>全部</option>
