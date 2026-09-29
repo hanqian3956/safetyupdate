@@ -128,7 +128,11 @@ const systemIconLibrary = [
   { id: "arrow", label: "前往", icon: ArrowRight24Regular },
 ];
 
-function SystemIcon({ name = "apps", className }) {
+function SystemIcon({ name = "apps", className, customIcons = [] }) {
+  const customIcon = customIcons.find((item) => item.id === name);
+  if (customIcon) {
+    return <img className={className} src={customIcon.src} alt="" aria-hidden="true" />;
+  }
   const Icon = systemIconLibrary.find((item) => item.id === name)?.icon ?? Apps24Regular;
   return <Icon className={className} aria-hidden="true" />;
 }
@@ -9034,8 +9038,10 @@ function DictionaryManagement({ onAction }) {
 function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
   const logoInputRef = useRef(null);
   const backgroundInputRef = useRef(null);
+  const iconInputRef = useRef(null);
   const [uploadError, setUploadError] = useState("");
   const [iconPickerOpen, setIconPickerOpen] = useState(false);
+  const [iconPendingDeletion, setIconPendingDeletion] = useState(null);
   const uploadImage = (key, event) => {
     const file = event.target.files?.[0];
     event.target.value = "";
@@ -9065,6 +9071,54 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
     setIconPickerOpen(false);
     onAction(`已选择系统图标：${icon.label}`);
   };
+  const uploadSystemIcon = (event) => {
+    const file = event.target.files?.[0];
+    event.target.value = "";
+    if (!file) return;
+    if (!file.type.startsWith("image/")) {
+      setUploadError("请选择图片格式的图标文件");
+      return;
+    }
+    if (file.size > 512 * 1024) {
+      setUploadError("图标文件不能超过 512KB");
+      return;
+    }
+    const reader = new FileReader();
+    reader.onload = () => {
+      const icon = {
+        id: `custom-icon-${Date.now()}`,
+        label: file.name.replace(/\.[^.]+$/, "").slice(0, 20) || "自定义图标",
+        src: String(reader.result),
+      };
+      onBrandingChange((current) => ({
+        ...current,
+        customSystemIcons: [...(current.customSystemIcons ?? []), icon],
+      }));
+      setUploadError("");
+      onAction(`图标“${icon.label}”已上传`);
+    };
+    reader.readAsDataURL(file);
+  };
+  const deleteSystemIcon = (icon) => {
+    onBrandingChange((current) => ({
+      ...current,
+      customSystemIcons: icon.src
+        ? (current.customSystemIcons ?? []).filter((item) => item.id !== icon.id)
+        : current.customSystemIcons ?? [],
+      hiddenSystemIconIds: icon.src
+        ? current.hiddenSystemIconIds ?? []
+        : [...new Set([...(current.hiddenSystemIconIds ?? []), icon.id])],
+      systemIcon: current.systemIcon === icon.id ? "apps" : current.systemIcon,
+    }));
+    setIconPendingDeletion(null);
+    onAction(`图标“${icon.label}”已删除`);
+  };
+  const availableIcons = [
+    ...systemIconLibrary.filter(
+      (icon) => !(branding.hiddenSystemIconIds ?? []).includes(icon.id),
+    ),
+    ...(branding.customSystemIcons ?? []),
+  ];
   return (
     <section className="enterprise-settings" aria-labelledby="enterprise-settings-title">
       <header>
@@ -9099,11 +9153,11 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
         <section className="enterprise-setting-card enterprise-icon-card">
           <header><h2>系统图标管理</h2></header>
           <div className="enterprise-system-icon-preview" aria-label="当前系统图标预览">
-            <SystemIcon name={branding.systemIcon} />
+            <SystemIcon name={branding.systemIcon} customIcons={branding.customSystemIcons} />
           </div>
           <p>统一维护系统内可复用的功能图标。</p>
           <div className="enterprise-setting-actions">
-            <button type="button" onClick={() => setIconPickerOpen(true)}>选择图标</button>
+            <button type="button" onClick={() => setIconPickerOpen(true)}>管理图标</button>
           </div>
         </section>
       </div>
@@ -9126,20 +9180,53 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
               <DismissRegular />
             </button>
             <h2 className="system-icon-picker-title">请选择图标</h2>
+            <div className="system-icon-picker-actions">
+              <button type="button" onClick={() => iconInputRef.current?.click()}>上传图标</button>
+              <span>支持 PNG、JPG、WebP、SVG，最大 512KB</span>
+            </div>
             <div className="system-icon-picker-grid">
-              {systemIconLibrary.map((icon) => (
-                <button
-                  type="button"
-                  key={icon.id}
-                  aria-label={`选择${icon.label}图标`}
-                  title={icon.label}
-                  className={branding.systemIcon === icon.id ? "selected" : ""}
-                  onClick={() => selectSystemIcon(icon)}
-                >
-                  <span><SystemIcon name={icon.id} /></span>
-                </button>
+              {availableIcons.map((icon) => (
+                <div className="system-icon-picker-item" key={icon.id}>
+                  <button
+                    type="button"
+                    aria-label={`选择${icon.label}图标`}
+                    title={icon.label}
+                    className={branding.systemIcon === icon.id ? "selected" : ""}
+                    onClick={() => selectSystemIcon(icon)}
+                  >
+                    <span><SystemIcon name={icon.id} customIcons={branding.customSystemIcons} /></span>
+                  </button>
+                  <button
+                    type="button"
+                    className="system-icon-delete"
+                    aria-label={`删除${icon.label}图标`}
+                    title="删除图标"
+                    onClick={() => setIconPendingDeletion(icon)}
+                  >
+                    <Delete24Regular />
+                  </button>
+                </div>
               ))}
             </div>
+            <input ref={iconInputRef} type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onChange={uploadSystemIcon} hidden />
+          </section>
+        </div>
+      ) : null}
+      {iconPendingDeletion ? (
+        <div className="management-dialog-layer" onMouseDown={() => setIconPendingDeletion(null)} role="presentation">
+          <section
+            className="management-dialog management-confirm-dialog"
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="delete-system-icon-title"
+            onMouseDown={(event) => event.stopPropagation()}
+          >
+            <header><h2 id="delete-system-icon-title">确认删除图标</h2></header>
+            <div className="management-dialog-body"><p>确定删除图标“{iconPendingDeletion.label}”吗？删除后无法恢复。</p></div>
+            <footer>
+              <button type="button" className="management-dialog-cancel" onClick={() => setIconPendingDeletion(null)}>取消</button>
+              <button type="button" className="management-dialog-primary" onClick={() => deleteSystemIcon(iconPendingDeletion)}>确认删除</button>
+            </footer>
           </section>
         </div>
       ) : null}
@@ -9953,9 +10040,27 @@ function App() {
         logo: typeof stored.logo === "string" ? stored.logo : "",
         loginBackground: typeof stored.loginBackground === "string" ? stored.loginBackground : "",
         systemIcon: typeof stored.systemIcon === "string" ? stored.systemIcon : "apps",
+        customSystemIcons: Array.isArray(stored.customSystemIcons)
+          ? stored.customSystemIcons.filter(
+              (icon) =>
+                icon &&
+                typeof icon.id === "string" &&
+                typeof icon.label === "string" &&
+                typeof icon.src === "string",
+            )
+          : [],
+        hiddenSystemIconIds: Array.isArray(stored.hiddenSystemIconIds)
+          ? stored.hiddenSystemIconIds.filter((id) => typeof id === "string")
+          : [],
       };
     } catch {
-      return { logo: "", loginBackground: "", systemIcon: "apps" };
+      return {
+        logo: "",
+        loginBackground: "",
+        systemIcon: "apps",
+        customSystemIcons: [],
+        hiddenSystemIconIds: [],
+      };
     }
   });
   const [activeNav, setActiveNav] = useState("工作台");
