@@ -9042,6 +9042,10 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
   const [uploadError, setUploadError] = useState("");
   const [iconPickerOpen, setIconPickerOpen] = useState(false);
   const [iconPendingDeletion, setIconPendingDeletion] = useState(null);
+  const [iconUploadOpen, setIconUploadOpen] = useState(false);
+  const [iconUploadName, setIconUploadName] = useState("");
+  const [iconUploadFile, setIconUploadFile] = useState(null);
+  const [iconUploadError, setIconUploadError] = useState("");
   const uploadImage = (key, event) => {
     const file = event.target.files?.[0];
     event.target.value = "";
@@ -9071,33 +9075,58 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
     setIconPickerOpen(false);
     onAction(`已选择系统图标：${icon.label}`);
   };
-  const uploadSystemIcon = (event) => {
+  const toggleIconUpload = () => {
+    setIconUploadOpen((current) => {
+      if (current) {
+        setIconUploadName("");
+        setIconUploadFile(null);
+        setIconUploadError("");
+      }
+      return !current;
+    });
+  };
+  const selectSystemIconFile = (event) => {
     const file = event.target.files?.[0];
     event.target.value = "";
     if (!file) return;
     if (!file.type.startsWith("image/")) {
-      setUploadError("请选择图片格式的图标文件");
+      setIconUploadError("请选择图片格式的图标文件");
       return;
     }
     if (file.size > 512 * 1024) {
-      setUploadError("图标文件不能超过 512KB");
+      setIconUploadError("图标文件不能超过 512KB");
+      return;
+    }
+    setIconUploadFile(file);
+    setIconUploadError("");
+  };
+  const uploadSystemIcon = () => {
+    if (!iconUploadName.trim()) {
+      setIconUploadError("请输入图标名称");
+      return;
+    }
+    if (!iconUploadFile) {
+      setIconUploadError("请选择图标文件");
       return;
     }
     const reader = new FileReader();
     reader.onload = () => {
       const icon = {
         id: `custom-icon-${Date.now()}`,
-        label: file.name.replace(/\.[^.]+$/, "").slice(0, 20) || "自定义图标",
+        label: iconUploadName.trim().slice(0, 20),
         src: String(reader.result),
       };
       onBrandingChange((current) => ({
         ...current,
         customSystemIcons: [...(current.customSystemIcons ?? []), icon],
       }));
-      setUploadError("");
+      setIconUploadError("");
+      setIconUploadName("");
+      setIconUploadFile(null);
+      setIconUploadOpen(false);
       onAction(`图标“${icon.label}”已上传`);
     };
-    reader.readAsDataURL(file);
+    reader.readAsDataURL(iconUploadFile);
   };
   const deleteSystemIcon = (icon) => {
     onBrandingChange((current) => ({
@@ -9179,11 +9208,33 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
             >
               <DismissRegular />
             </button>
-            <h2 className="system-icon-picker-title">请选择图标</h2>
+            <h2 className="system-icon-picker-title">图标库</h2>
             <div className="system-icon-picker-actions">
-              <button type="button" onClick={() => iconInputRef.current?.click()}>上传图标</button>
+              <button type="button" onClick={toggleIconUpload}>{iconUploadOpen ? "取消上传" : "上传图标"}</button>
               <span>支持 PNG、JPG、WebP、SVG，最大 512KB</span>
             </div>
+            {iconUploadOpen ? (
+              <div className="system-icon-upload-form">
+                <label>
+                  <span>图标名称 <i>*</i></span>
+                  <input
+                    value={iconUploadName}
+                    maxLength={20}
+                    placeholder="请输入图标名称"
+                    onChange={(event) => {
+                      setIconUploadName(event.target.value);
+                      setIconUploadError("");
+                    }}
+                  />
+                </label>
+                <div className="system-icon-upload-file">
+                  <button type="button" className="secondary" onClick={() => iconInputRef.current?.click()}>选择文件</button>
+                  <span>{iconUploadFile?.name ?? "未选择文件"}</span>
+                  <button type="button" onClick={uploadSystemIcon}>确认上传</button>
+                </div>
+                {iconUploadError ? <p role="alert">{iconUploadError}</p> : null}
+              </div>
+            ) : null}
             <div className="system-icon-picker-grid">
               {availableIcons.map((icon) => (
                 <div className="system-icon-picker-item" key={icon.id}>
@@ -9195,6 +9246,7 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
                     onClick={() => selectSystemIcon(icon)}
                   >
                     <span><SystemIcon name={icon.id} customIcons={branding.customSystemIcons} /></span>
+                    <b>{icon.label}</b>
                   </button>
                   <button
                     type="button"
@@ -9208,7 +9260,7 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
                 </div>
               ))}
             </div>
-            <input ref={iconInputRef} type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onChange={uploadSystemIcon} hidden />
+            <input ref={iconInputRef} type="file" accept="image/png,image/jpeg,image/webp,image/svg+xml" onChange={selectSystemIconFile} hidden />
           </section>
         </div>
       ) : null}
