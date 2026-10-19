@@ -7145,6 +7145,12 @@ function RbacPage({ onAction }) {
   const [assignRole, setAssignRole] = useState(null);
   const [assignOrganization, setAssignOrganization] = useState("group");
   const [selectedUserIds, setSelectedUserIds] = useState(["u-zhang"]);
+  const [roleUserAssignments, setRoleUserAssignments] = useState({
+    admin: ["u-zhang"],
+    safety: ["u-zhao"],
+    executor: ["u-li"],
+    viewer: [],
+  });
   const assignmentOrganizations = [
     {
       id: "group",
@@ -7436,7 +7442,7 @@ const organizationLeafIds = (node) =>
   const openAssign = (role) => {
     setAssignRole(role);
     setAssignOrganization("group");
-    setSelectedUserIds(["u-zhang"]);
+    setSelectedUserIds(roleUserAssignments[role.id] ?? []);
   };
   const openDataPermission = (role) => {
     setDataRole({
@@ -7578,10 +7584,27 @@ const organizationLeafIds = (node) =>
       );
     });
   const deleteRole = () => {
+    const assignedUserIds = roleUserAssignments[confirmRole.id] ?? [];
+    if (assignedUserIds.length) {
+      onAction(`角色“${confirmRole.name}”已分配 ${assignedUserIds.length} 位用户，无法删除`);
+      setConfirmRole(null);
+      return;
+    }
     setRoles((current) => current.filter((item) => item.id !== confirmRole.id));
+    setRoleUserAssignments((current) => {
+      const next = { ...current };
+      delete next[confirmRole.id];
+      return next;
+    });
     onAction(`已删除角色：${confirmRole.name}`);
     setConfirmRole(null);
   };
+  const confirmRoleHasUsers = Boolean(
+    confirmRole && (roleUserAssignments[confirmRole.id] ?? []).length,
+  );
+  const confirmRoleUserCount = confirmRole
+    ? (roleUserAssignments[confirmRole.id] ?? []).length
+    : 0;
   return (
     <>
       <section className="role-list-page" aria-label="角色权限管理">
@@ -7987,6 +8010,10 @@ const organizationLeafIds = (node) =>
                 type="button"
                 className="management-dialog-primary"
                 onClick={() => {
+                  setRoleUserAssignments((current) => ({
+                    ...current,
+                    [assignRole.id]: selectedUserIds,
+                  }));
                   onAction(
                     `已为${assignRole.name}分配 ${selectedUsers.length} 位用户`,
                   );
@@ -8013,7 +8040,9 @@ const organizationLeafIds = (node) =>
             aria-labelledby="delete-role-title"
           >
             <header>
-              <h2 id="delete-role-title">确认删除</h2>
+              <h2 id="delete-role-title">
+                {confirmRoleHasUsers ? "无法删除" : "确认删除"}
+              </h2>
               <button
                 type="button"
                 className="management-dialog-close"
@@ -8025,25 +8054,38 @@ const organizationLeafIds = (node) =>
             </header>
             <div className="management-dialog-body">
               <p>
-                确定删除角色“{confirmRole.name}
-                ”吗？已分配该角色的用户将不再保留该角色权限。
+                {confirmRoleHasUsers
+                  ? `角色“${confirmRole.name}”下已分配 ${confirmRoleUserCount} 位用户，无法删除。请先移除该角色下的用户后再试。`
+                  : `确定删除角色“${confirmRole.name}”吗？`}
               </p>
             </div>
             <footer>
-              <button
-                type="button"
-                className="management-dialog-cancel"
-                onClick={() => setConfirmRole(null)}
-              >
-                取消
-              </button>
-              <button
-                type="button"
-                className="management-dialog-primary"
-                onClick={deleteRole}
-              >
-                确认删除
-              </button>
+              {confirmRoleHasUsers ? (
+                <button
+                  type="button"
+                  className="management-dialog-primary"
+                  onClick={() => setConfirmRole(null)}
+                >
+                  知道了
+                </button>
+              ) : (
+                <>
+                  <button
+                    type="button"
+                    className="management-dialog-cancel"
+                    onClick={() => setConfirmRole(null)}
+                  >
+                    取消
+                  </button>
+                  <button
+                    type="button"
+                    className="management-dialog-primary"
+                    onClick={deleteRole}
+                  >
+                    确认删除
+                  </button>
+                </>
+              )}
             </footer>
           </section>
         </div>
@@ -8304,7 +8346,7 @@ function PersonalCenter({ onAction }) {
               </button>
             </header>
             <div className="management-dialog-body">
-              <p>退出后将结束当前会话，确定要退出登录吗？</p>
+              <p>确定要退出登录吗？</p>
             </div>
             <footer>
               <button
@@ -9458,11 +9500,6 @@ function MenuManagementPage({ onAction }) {
     const name = form.name.trim();
     if (!name) {
       setFormError("请输入菜单名称");
-      return;
-    }
-    const duplicate = menuRows.some((item) => item.id !== dialog?.id && item.parentId === form.parentId && item.name === name);
-    if (duplicate) {
-      setFormError("同级菜单名称不能重复");
       return;
     }
     const payload = { ...form, name, sort: Number(form.sort) || 1 };
