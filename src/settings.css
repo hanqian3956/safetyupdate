@@ -193,7 +193,7 @@
 
 .dictionary-data-scroll .dictionary-data-head,
 .dictionary-data-scroll .dictionary-data-row {
-  grid-template-columns: 30px minmax(130px, .85fr) minmax(220px, 1.5fr) minmax(88px, .68fr) minmax(130px, .96fr) 82px;
+  grid-template-columns: 30px minmax(108px, .7fr) minmax(168px, 1.15fr) minmax(118px, .8fr) minmax(76px, .5fr) minmax(116px, .78fr) 118px;
 }
 
 .dictionary-data-scroll .dictionary-data-head {
@@ -237,6 +237,123 @@
   width: 17px;
   height: 17px;
   stroke-width: 1.85;
+}
+
+.dictionary-actions .dictionary-toggle-child {
+  width: auto;
+  min-width: 0;
+  height: 27px;
+  padding: 0 5px;
+  color: #377eb4;
+  font-size: 10px;
+  white-space: nowrap;
+}
+
+.dictionary-actions .dictionary-toggle-child[aria-expanded="true"] {
+  background: #e8f3fb;
+  color: #1f70aa;
+}
+
+.dictionary-child-add-row {
+  display: grid;
+  grid-template-columns: 30px minmax(108px, .7fr) minmax(168px, 1.15fr) minmax(118px, .8fr) minmax(76px, .5fr) minmax(116px, .78fr) 118px;
+  min-height: 34px;
+  padding: 0 18px;
+  align-items: center;
+  border-top: 1px dashed #d6e4ee;
+  background: #f4f9fc;
+}
+
+.dictionary-child-add-label {
+  grid-column: 2 / 7;
+  padding-left: 20px;
+  color: #7a91a3;
+  font-size: 10px;
+}
+
+.dictionary-child-add-row button {
+  width: fit-content;
+  height: 25px;
+  padding: 0 9px;
+  border: 1px solid #9ac7e7;
+  border-radius: 4px;
+  background: #fff;
+  color: #2877b0;
+  font-size: 10px;
+  font-weight: 650;
+}
+
+.dictionary-child-add-row button:hover {
+  border-color: var(--accent);
+  background: #eef7fd;
+}
+
+.dictionary-data-child-name {
+  position: relative;
+  padding-left: 30px;
+  color: #42647d;
+  font-weight: 600;
+}
+
+.dictionary-data-child-name::before {
+  position: absolute;
+  top: -18px;
+  bottom: 50%;
+  left: 12px;
+  width: 0;
+  border-left: 1px solid #aebfcd;
+  content: "";
+}
+
+.dictionary-data-child-name::after {
+  position: absolute;
+  top: 50%;
+  left: 12px;
+  width: 10px;
+  border-top: 1px solid #aebfcd;
+  content: "";
+}
+
+.dictionary-parent-data,
+.dictionary-root-data {
+  color: var(--muted);
+  font-size: 10px;
+}
+
+.dictionary-data-row-root {
+  background: #fff;
+}
+
+.dictionary-data-row-root strong {
+  color: #21384a;
+  font-weight: 700;
+}
+
+.dictionary-data-row-child {
+  background: #f8fbfd;
+}
+
+.dictionary-data-row-child:hover {
+  background: #eef6fb;
+}
+
+.dictionary-data-row-child code {
+  padding-left: 8px;
+  color: #7590a3;
+}
+
+.dictionary-parent-data {
+  width: fit-content;
+  padding: 3px 7px;
+  border-radius: 10px;
+  background: #e8f2f8;
+  color: #50728a;
+  line-height: 1;
+  white-space: nowrap;
+}
+
+.dictionary-root-data {
+  color: #a4b2be;
 }
 
 .dictionary-pagination {

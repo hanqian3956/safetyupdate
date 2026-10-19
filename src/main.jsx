@@ -1,4 +1,4 @@
-import { startTransition, useEffect, useRef, useState } from "react";
+import { Fragment, startTransition, useEffect, useRef, useState } from "react";
 import { createRoot } from "react-dom/client";
 import { init, use } from "echarts/core";
 import { BarChart, LineChart, PieChart, RadarChart } from "echarts/charts";
@@ -8097,7 +8097,7 @@ function PersonalCenter({ onAction }) {
           <span className="personal-center-avatar">张</span>
           <div>
             <h2>{profile.name}</h2>
-            <span>矿山事业部 / 安全管理部 · 安全管理员</span>
+            <span>矿山事业部 / 安全管理部</span>
           </div>
           <button
             className="personal-profile-logout"
@@ -8482,8 +8482,10 @@ function DictionaryManagement({ onAction }) {
       updater: "李明",
       updatedAt: "2026-08-13 16:40",
       data: [
-        { id: "type-1", code: "01", name: "采矿车", updater: "李明", updatedAt: "2026-08-13 16:40" },
-        { id: "type-2", code: "02", name: "掘进机", updater: "李明", updatedAt: "2026-08-13 16:40" },
+        { id: "type-1", code: "01", name: "采矿设备", updater: "李明", updatedAt: "2026-08-13 16:40" },
+        { id: "type-1-1", parentId: "type-1", code: "0101", name: "采矿车", updater: "李明", updatedAt: "2026-08-13 16:40" },
+        { id: "type-2", code: "02", name: "掘进设备", updater: "李明", updatedAt: "2026-08-13 16:40" },
+        { id: "type-2-1", parentId: "type-2", code: "0201", name: "掘进机", updater: "李明", updatedAt: "2026-08-13 16:40" },
       ],
     },
     {
@@ -8529,16 +8531,28 @@ function DictionaryManagement({ onAction }) {
   const [dataSearch, setDataSearch] = useState("");
   const [dataPage, setDataPage] = useState(1);
   const [dataPageSize, setDataPageSize] = useState(10);
+  const [expandedParentId, setExpandedParentId] = useState(null);
 
+  const normalizedDataSearch = dataSearch.trim().toLowerCase();
   const filteredDataRows = dataRows.filter((item) =>
-    item.name.toLowerCase().includes(dataSearch.trim().toLowerCase()),
+    item.name.toLowerCase().includes(normalizedDataSearch),
   );
+  const orderedDataRows = [
+    ...filteredDataRows
+      .filter((item) => !item.parentId)
+      .flatMap((item) => [
+        item,
+        ...(expandedParentId === item.id
+          ? filteredDataRows.filter((child) => child.parentId === item.id)
+          : []),
+      ]),
+  ];
   const dataPageCount = Math.max(
     1,
-    Math.ceil(filteredDataRows.length / dataPageSize),
+    Math.ceil(orderedDataRows.length / dataPageSize),
   );
   const currentDataPage = Math.min(dataPage, dataPageCount);
-  const pagedDataRows = filteredDataRows.slice(
+  const pagedDataRows = orderedDataRows.slice(
     (currentDataPage - 1) * dataPageSize,
     currentDataPage * dataPageSize,
   );
@@ -8559,6 +8573,7 @@ function DictionaryManagement({ onAction }) {
     setEditingData(null);
     setDataSearch("");
     setDataPage(1);
+    setExpandedParentId(null);
     setDialog({ type: "editor", dictionary });
   };
 
@@ -8637,9 +8652,10 @@ function DictionaryManagement({ onAction }) {
     setDialog(null);
   };
 
-  const addDataRow = () => {
+  const addDataRow = (parentId = null) => {
     setDataPage(1);
     setEditingData(null);
+    if (parentId) setExpandedParentId(parentId);
     setDataRows((current) =>
       current.some((item) => item.isDraft)
         ? current
@@ -8648,6 +8664,7 @@ function DictionaryManagement({ onAction }) {
               id: `data-${Date.now()}`,
               code: "",
               name: "",
+              parentId,
               updater: "",
               updatedAt: "",
               isDraft: true,
@@ -8735,10 +8752,18 @@ function DictionaryManagement({ onAction }) {
   };
 
   const deleteDataRows = (ids) => {
-    setDataRows((current) => current.filter((item) => !ids.includes(item.id)));
-    setSelectedDataIds((current) => current.filter((id) => !ids.includes(id)));
-    setEditingData((current) => (current && ids.includes(current.id) ? null : current));
+    const deletedIds = new Set(ids);
+    dataRows.forEach((item) => {
+      if (item.parentId && deletedIds.has(item.parentId)) deletedIds.add(item.id);
+    });
+    setDataRows((current) => current.filter((item) => !deletedIds.has(item.id)));
+    setSelectedDataIds((current) => current.filter((id) => !deletedIds.has(id)));
+    setEditingData((current) => (current && deletedIds.has(current.id) ? null : current));
+    if (expandedParentId && deletedIds.has(expandedParentId)) setExpandedParentId(null);
   };
+
+  const getParentDataName = (parentId) =>
+    dataRows.find((item) => item.id === parentId)?.name || "-";
 
   const deleteDictionary = () => {
     setDictionaries((current) =>
@@ -8870,12 +8895,12 @@ function DictionaryManagement({ onAction }) {
                         aria-label="全选字典数据"
                         type="checkbox"
                         checked={
-                          Boolean(filteredDataRows.filter((item) => !item.isDraft).length) &&
+                          Boolean(orderedDataRows.filter((item) => !item.isDraft).length) &&
                           selectedDataIds.length ===
-                            filteredDataRows.filter((item) => !item.isDraft).length
+                            orderedDataRows.filter((item) => !item.isDraft).length
                         }
                         onChange={() => {
-                          const selectableIds = filteredDataRows
+                          const selectableIds = orderedDataRows
                             .filter((item) => !item.isDraft)
                             .map((item) => item.id);
                           setSelectedDataIds((current) =>
@@ -8886,16 +8911,19 @@ function DictionaryManagement({ onAction }) {
                     </span>
                     <span>编码</span>
                     <span>数据名称</span>
+                    <span>上级数据</span>
                     <span>更新人</span>
                     <span>更新时间</span>
                     <span>操作</span>
                   </div>
                   {pagedDataRows.map((item) => {
                     const isInlineEditing = editingData?.id === item.id;
+                    const isExpandedParent = !item.parentId && expandedParentId === item.id;
 
                     return (
+                    <Fragment key={item.id}>
                     <div
-                      className={`dictionary-data-row ${item.isDraft || isInlineEditing ? "draft" : ""}`}
+                      className={`dictionary-data-row ${item.isDraft || isInlineEditing ? "draft" : ""} ${item.parentId ? "dictionary-data-row-child" : "dictionary-data-row-root"}`}
                       key={item.id}
                       onBlur={(event) => {
                         if (event.currentTarget.contains(event.relatedTarget)) return;
@@ -8936,8 +8964,11 @@ function DictionaryManagement({ onAction }) {
                           }
                         />
                       ) : (
-                        <strong>{item.name}</strong>
+                        <strong className={item.parentId ? "dictionary-data-child-name" : ""}>{item.name}</strong>
                       )}
+                      <span className={item.parentId ? "dictionary-parent-data" : "dictionary-root-data"}>
+                        {item.parentId ? getParentDataName(item.parentId) : "-"}
+                      </span>
                       <span>{item.updater}</span>
                       <time>{item.updatedAt}</time>
                       {item.isDraft ? (
@@ -8960,6 +8991,18 @@ function DictionaryManagement({ onAction }) {
                         </span>
                       ) : (
                         <span className="dictionary-actions">
+                          {!item.parentId ? (
+                            <button
+                              type="button"
+                              className="dictionary-toggle-child"
+                              aria-label={`${isExpandedParent ? "收起" : "展开"}${item.name}的子级数据`}
+                              aria-expanded={isExpandedParent}
+                              title={isExpandedParent ? "收起子级" : "展开子级"}
+                              onClick={() => setExpandedParentId((current) => (current === item.id ? null : item.id))}
+                            >
+                              子级
+                            </button>
+                          ) : null}
                           <button type="button" aria-label={`编辑${item.name}`} title="编辑" onClick={() => startEditingDataRow(item)}>
                             <Edit24Regular />
                           </button>
@@ -8969,6 +9012,13 @@ function DictionaryManagement({ onAction }) {
                         </span>
                       )}
                     </div>
+                    {isExpandedParent ? (
+                      <div className="dictionary-child-add-row" key={`${item.id}-child-add`}>
+                        <span className="dictionary-child-add-label">子级数据</span>
+                        <button type="button" onClick={() => addDataRow(item.id)}>新增子级</button>
+                      </div>
+                    ) : null}
+                    </Fragment>
                     );
                   })}
                 </div>
