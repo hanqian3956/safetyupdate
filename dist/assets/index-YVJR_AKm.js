@@ -7585,9 +7585,4821 @@ syncLogic('template');
 <\/script>\r
 </body>\r
 </html>\r
-`,Az=[`人事管理`,`财务管理`,`安全管理`,`生产管理`,`设备管理`,`综合管理`],jz=`./prototype-annotations.json`,Mz=`https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e`;function Nz(e){let t=Array.isArray(e)?e:e?.annotations;return Array.isArray(t)?t:[]}DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Pz=[{label:`工作台`,icon:yz},{label:`应用`,icon:rz},{label:`任务`,icon:Cz},{label:`流程`,icon:cz},{label:`动态`,icon:pz},{label:`预警`,icon:Sz},{label:`看板`,icon:ZR}],Fz=[{id:`home`,label:`首页`,icon:yz},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:pz},{id:`task`,label:`任务`,icon:Cz},{id:`flow`,label:`流程`,icon:cz},{id:`warning`,label:`预警`,icon:Sz},{id:`message`,label:`消息`,icon:mz},{id:`equipment`,label:`设备`,icon:vz},{id:`production`,label:`生产`,icon:xz},{id:`fire`,label:`消防`,icon:Tz},{id:`explosive`,label:`火工品`,icon:uz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:hz},{id:`people`,label:`人员`,icon:Ez},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:bz},{id:`idea`,label:`提示`,icon:dz},{id:`edit`,label:`编辑`,icon:lz},{id:`delete`,label:`删除`,icon:wz},{id:`arrow`,label:`前往`,icon:fz}];function Iz({name:e=`apps`,className:t,customIcons:n=[]}){let r=n.find(t=>t.id===e);return r?(0,Q.jsx)(`img`,{className:t,src:r.src,alt:``,"aria-hidden":`true`}):(0,Q.jsx)(Fz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var Lz=`./xiaodong/`,Rz=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:mz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:Cz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:Sz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],zz=[{name:`双重预防机制`,description:`风险与隐患`,icon:pz},{name:`安全管理`,description:`检查与整改`,icon:Sz},{name:`设备管理`,description:`点检与维修`,icon:vz},{name:`火工品管理`,description:`领用与追溯`,icon:uz},{name:`生产管理`,description:`计划与日报`,icon:xz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Tz},{name:`应急管理`,description:`预案与响应`,icon:dz}],Bz=[{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}],Vz=[`安全管理员`,`设备工程师`,`生产主管`],Hz=[{id:`workbench`,label:`工作台`,icon:yz,pinned:!0}],Uz=[{id:`msg-1`,source:`流程审批`,type:`审批提醒`,sender:`矿山应急照明设备采购申请`,time:`今天 10:12`,initiator:`王建国`,initiatedAt:`今天 09:12`,application:`机电管理`,processNumber:`202608310001`,title:`矿山应急照明设备采购申请`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`blue`},{id:`msg-2`,source:`流程超时`,type:`超时提醒`,sender:`南区 2# 采场动火作业申请`,time:`今天 09:38`,initiator:`张宇`,initiatedAt:`今天 08:46`,application:`安全管理`,processNumber:`202608310002`,title:`南区 2# 采场动火作业申请`,content:`当前审批节点已超时，请尽快处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`流程结束`,type:`结束提醒`,sender:`碎矿车间停机检修计划`,time:`昨天 16:45`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,application:`设备管理`,processNumber:`202608300003`,title:`碎矿车间停机检修计划`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:Sz,tone:`red`},{id:`msg-4`,source:`流程审批`,type:`审批提醒`,sender:`外协队入场资格审核`,time:`昨天 14:20`,initiator:`周敏`,initiatedAt:`昨天 10:20`,application:`双重预防机制`,processNumber:`202608300004`,title:`外协队入场资格审核`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-5`,source:`流程结束`,type:`结束提醒`,sender:`井下设备检修采购申请`,time:`7 月 28 日 09:16`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,application:`设备管理`,processNumber:`202608260006`,title:`井下设备检修采购申请`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!0,icon:hz,tone:`blue`}],Wz=`20260831`;function Gz(e=``){let t=String(e).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);if(t)return`${t[1]}${t[2].padStart(2,`0`)}${t[3].padStart(2,`0`)}`;let n=String(e).match(/(\d{1,2})\s*月\s*(\d{1,2})\s*日/);return n?`2026${n[1].padStart(2,`0`)}${n[2].padStart(2,`0`)}`:String(e).includes(`昨天`)?`20260830`:Wz}function Kz(e){let t=String(e.id??``),n=Number(t.match(/(\d+)(?!.*\d)/)?.[1]),r=Number(e.sequence)||n%9999||1;return`${Gz(e.initiatedAt)}${String(r).padStart(4,`0`)}`}var qz=[`待审批`,`审批中`,`已通过`,`已拒绝`,`已撤销`,`已驳回`],Jz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`审批中`,application:`设备管理`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`张宇`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`审批中`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,startedByMe:!0},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`流程已结束`,approver:`刘海`,status:`已通过`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`张宇`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0},{id:`flow-5`,name:`东区临时用电申请`,initiator:`陈伟`,initiatedAt:`昨天 11:16`,currentNode:`流程已结束`,approver:`张宇`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,handledByMe:!0,handledResult:`驳回`},{id:`flow-6`,name:`井下设备检修采购申请`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,currentNode:`流程已撤销`,approver:`张宇`,status:`已撤销`,application:`设备管理`,amount:`42,800 元`,department:`机电管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`,revokedBy:`刘海`,revokedAt:`2026-08-26 17:08:00`},{id:`flow-7`,name:`高处作业审批申请`,initiator:`孙宁`,initiatedAt:`8 月 25 日 09:34`,currentNode:`分管领导审批`,approver:`张宇`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`紧急`,handledByMe:!0,handledResult:`驳回`},{id:`flow-8`,name:`井下通风设施改造申请`,initiator:`李明`,initiatedAt:`8 月 27 日 14:18`,currentNode:`流程已结束`,approver:`陈伟`,status:`已通过`,application:`应急管理`,amount:`26,000 元`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,finalOperator:`陈伟`},{id:`flow-9`,name:`采场临时封闭申请`,initiator:`王强`,initiatedAt:`8 月 27 日 10:05`,currentNode:`流程已结束`,approver:`赵磊`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,ccToMe:!0,finalOperator:`赵磊`},{id:`flow-10`,name:`消防器材增补采购申请`,initiator:`周敏`,initiatedAt:`8 月 26 日 13:26`,currentNode:`流程已撤销`,approver:`孙宁`,status:`已撤销`,application:`消防管理`,amount:`18,600 元`,department:`综合管理部`,urgency:`常规`,ccToMe:!0,revokedBy:`周敏`,revokedAt:`2026-08-26 15:20:00`},{id:`flow-11`,name:`爆破作业人员调整申请`,initiator:`何勇`,initiatedAt:`8 月 25 日 16:50`,currentNode:`分管领导审批`,approver:`周杰伦`,status:`已驳回`,application:`火工品管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,ccToMe:!0,rejectedBy:`周杰伦`},{id:`flow-12`,name:`东翼通风系统整改申请`,initiator:`张宇`,initiatedAt:`2026-09-02 09:18:00`,currentNode:`已驳回至发起人`,approver:`周杰伦`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,startedByMe:!0,rejectedBy:`周杰伦`,rejectionOpinion:`请补充整改方案及现场照片后重新提交。`},{id:`flow-draft-1`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-28 10:36:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已完成离职原因与交接安排说明，待补充附件后提交。`,draft:!0},{id:`flow-draft-2`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-27 16:18:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已填写基本离职信息，待确认最后工作日期。`,draft:!0}],Yz=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`,children:[]},{id:`equipment`,name:`设备管理部`,children:[]},{id:`production`,name:`生产技术部`,children:[]}]}]}],Xz=[{id:`transfer-zhao`,name:`赵六`,account:`zhaoliu`,department:`安全管理部`,organizationId:`safety`},{id:`transfer-wang`,name:`王五`,account:`wangwu`,department:`生产技术部`,organizationId:`production`},{id:`transfer-li`,name:`李四`,account:`lisi`,department:`设备管理部`,organizationId:`equipment`}],Zz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:pz,tone:`green`},{name:`平巷凿岩作业隐患排查审批流程`,time:`昨天 16:40`,icon:nz,tone:`blue`},{name:`生产管理`,time:`7 月 25 日`,icon:xz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:pz,tone:`violet`}],Qz=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:hz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:Cz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:vz}];function $z({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function eB({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Pz.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)($z,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function tB({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o,onOpenSpecification:s}){let[c,l]=(0,Z.useState)(!1),u=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{if(!c)return;let e=e=>{u.current?.contains(e.target)||l(!1)},t=e=>{e.key===`Escape`&&l(!1)};return document.addEventListener(`pointerdown`,e),document.addEventListener(`keydown`,t),()=>{document.removeEventListener(`pointerdown`,e),document.removeEventListener(`keydown`,t)}},[c]),(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{type:`button`,className:`prototype-annotation-toggle`,onClick:s,children:[(0,Q.jsx)(lz,{}),(0,Q.jsx)(`span`,{children:`标注`})]}),(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsxs)(`div`,{className:`top-profile-control`,ref:u,children:[(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":c,onClick:()=>l(e=>!e),children:`张`}),c?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{l(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{l(!1),o()},children:`退出登录`})]}):null]})]})]})}function nB({visible:e,managing:t,pageId:n,pageLabel:r,annotations:i,onCloseManager:a,onAdd:o,onUpdate:s,onRemove:c,onReposition:l}){let[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(``),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(null),S=()=>{let e=document.querySelector(`.page-shell`),t=e?.getBoundingClientRect();return{left:t?.left??80,top:t?.top??0,width:Math.max(t?.width??window.innerWidth-80,1),height:Math.max(e?.scrollHeight??0,t?.height??window.innerHeight,1)}},[C,w]=(0,Z.useState)(()=>({left:80,top:0,width:Math.max(window.innerWidth-80,1),height:Math.max(window.innerHeight,1)})),T=(0,Z.useRef)(!1),E=i.filter(e=>e.pageId===n),D=E.find(e=>e.id===m),O=(e,t=0)=>{let n=Math.min(980,window.innerWidth-37),r=156+t*42,i=e.leftPercent!==null&&e.leftPercent!==void 0&&e.topPercent!==null&&e.topPercent!==void 0&&Number.isFinite(Number(e.leftPercent))&&Number.isFinite(Number(e.topPercent)),a=i&&e.positionSpace===`page`,o=i?Number(e.leftPercent)/100*window.innerWidth:e.left??n,s=i?Number(e.topPercent)/100*window.innerHeight:e.top??r;return{left:a?Number(e.leftPercent)/100*C.width:o-C.left,top:a?Number(e.topPercent)/100*C.height:s-C.top,hasRelativePosition:i,isPagePosition:a}},k=(e,t,n=C)=>({leftPercent:Number((e/n.width*100).toFixed(3)),topPercent:Number((t/n.height*100).toFixed(3)),positionSpace:`page`}),A=(e,t)=>{if(b?.id===e.id)return{left:`${b.left}px`,top:`${b.top}px`};let n=O(e,t);return{left:`${n.left}px`,top:`${n.top}px`}};(0,Z.useEffect)(()=>{let e=()=>w(S()),t=document.querySelector(`.page-shell`),n=typeof ResizeObserver>`u`?null:new ResizeObserver(e);return e(),t&&n?.observe(t),window.addEventListener(`resize`,e),window.visualViewport?.addEventListener(`resize`,e),()=>{n?.disconnect(),window.removeEventListener(`resize`,e),window.visualViewport?.removeEventListener(`resize`,e)}},[n]),(0,Z.useEffect)(()=>{E.forEach((e,t)=>{let{isPagePosition:n,left:r,top:i}=O(e,t);n||l(e.id,k(r,i))})},[i,n,C.width,C.height]),(0,Z.useEffect)(()=>{if(!b)return;let e=e=>{let t=S(),n=Math.min(Math.max(12,Math.round(e.clientX-t.left-b.offsetX)),t.width-37),r=Math.min(Math.max(64,Math.round(e.clientY-t.top-b.offsetY)),t.height-37);(Math.abs(n-b.startLeft)>3||Math.abs(r-b.startTop)>3)&&(T.current=!0),x(e=>e&&{...e,left:n,top:r})},t=()=>{l(b.id,k(b.left,b.top,S())),x(null)};return window.addEventListener(`mousemove`,e),window.addEventListener(`mouseup`,t,{once:!0}),()=>{window.removeEventListener(`mousemove`,e),window.removeEventListener(`mouseup`,t)}},[b,l]);let j=()=>{let e=u.trim();if(e){if(f){s(f,e),d(``),p(``);return}_(!0)}},M=()=>{d(``),p(``),y(``),_(!1)};return(0,Q.jsxs)(Q.Fragment,{children:[e?E.map((e,t)=>(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-tag`,style:A(e,t),"aria-label":`查看备注 ${t+1}`,onMouseDown:n=>{n.preventDefault();let{left:r,top:i}=O(e,t),a=S();T.current=!1,x({id:e.id,left:r,top:i,startLeft:r,startTop:i,offsetX:n.clientX-a.left-r,offsetY:n.clientY-a.top-i})},onClick:()=>{if(T.current){T.current=!1;return}h(e.id)},children:t+1},e.id)):null,e&&D?(0,Q.jsxs)(`section`,{className:`prototype-annotation-popover`,style:{left:`${Math.min(O(D).left+32,C.width-286)}px`,top:`${Math.min(O(D).top+30,C.height-160)}px`},"aria-label":`备注内容`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:`备注内容`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭备注内容`,onClick:()=>h(``),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:D.content})]}):null,g?(0,Q.jsx)(`div`,{className:`prototype-annotation-placement-layer`,onClick:e=>{let t=S(),i=Math.min(Math.max(12,Math.round(e.clientX-t.left)),t.width-37),a=Math.min(Math.max(64,Math.round(e.clientY-t.top)),t.height-37),s=k(i,a,t);v?l(v,s):o({pageId:n,pageLabel:r,content:u.trim(),...s}),M()},role:`presentation`,children:(0,Q.jsx)(`span`,{children:v?`请点击页面任意位置重新放置标签`:`请点击页面任意位置放置备注标签`})}):null,t?(0,Q.jsxs)(`aside`,{className:`prototype-annotation-panel`,"aria-label":`原型标注管理`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`原型标注管理`}),(0,Q.jsx)(`b`,{children:r})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭标注管理`,onClick:a,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-editor`,children:[(0,Q.jsx)(`p`,{className:`prototype-annotation-source-note`,children:`标注从部署文件读取；在线调整仅用于当前预览。`}),(0,Q.jsx)(`label`,{htmlFor:`prototype-annotation-content`,children:f?`编辑备注`:`新增备注`}),(0,Q.jsx)(`textarea`,{id:`prototype-annotation-content`,value:u,maxLength:240,placeholder:`例如：此处提交后需校验审批人是否存在，并记录操作日志。`,onChange:e=>d(e.target.value)}),(0,Q.jsxs)(`footer`,{children:[f||g?(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-cancel`,onClick:M,children:g?`取消放置`:`取消编辑`}):null,(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-save`,onClick:j,disabled:!u.trim(),children:f?`保存备注`:`点击页面放置标签`})]})]}),(0,Q.jsx)(`div`,{className:`prototype-annotation-list`,children:E.length?E.map((e,t)=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:String(t+1).padStart(2,`0`)}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-entry`,children:[(0,Q.jsx)(`p`,{children:e.content}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑备注`,onClick:()=>{d(e.content),p(e.id),_(!1)},children:`编辑`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`重新放置备注`,onClick:()=>{y(e.id),_(!0)},children:`重新放置`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除备注`,onClick:()=>{m===e.id&&h(``),c(e.id)},children:`删除`})]})]})]},e.id)):(0,Q.jsx)(`div`,{className:`prototype-annotation-empty`,children:`当前页面还没有备注，输入内容后即可在页面任意位置放置。`})})]}):null]})}function rB({total:e,page:t,pageSize:n,onPageChange:r,onPageSizeChange:i,className:a=``,itemLabel:o=`条`}){let s=Math.max(1,Math.ceil(e/n)),c=Math.min(t,s);return(0,Q.jsxs)(`footer`,{className:`system-pagination ${a}`.trim(),children:[(0,Q.jsxs)(`span`,{children:[`共 `,e,` `,o]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页${o}数`,value:n,onChange:e=>i(Number(e.target.value)),children:[(0,Q.jsxs)(`option`,{value:10,children:[`10 `,o]}),(0,Q.jsxs)(`option`,{value:20,children:[`20 `,o]}),(0,Q.jsxs)(`option`,{value:50,children:[`50 `,o]})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:c===1,onClick:()=>r(Math.max(1,c-1)),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[c,` / `,s]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:c===s,onClick:()=>r(Math.min(s,c+1)),children:`下一页`})]})}function iB({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r,onOpenProcess:i}){let[a,o]=(0,Z.useState)(`全部`),[s,c]=(0,Z.useState)(`全部`),[l,u]=(0,Z.useState)(`未读`),[d,f]=(0,Z.useState)(10),[p,m]=(0,Z.useState)(1),h=e=>e.source.startsWith(`流程`)?`流程`:e.source,g=e.filter(e=>(a===`全部`||h(e)===a)&&(a!==`流程`||s===`全部`||e.source===s)&&(l===`全部`||(l===`未读`?!e.read:e.read))),_=Math.max(1,Math.ceil(g.length/d)),v=Math.min(p,_),y=g.slice((v-1)*d,v*d),b=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,b,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:b===0,children:[(0,Q.jsx)(hz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:a,onChange:e=>{let t=e.target.value;o(t),c([`流程`,`全部`].includes(t)?`全部`:``),m(1)},children:[(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`动态`}),(0,Q.jsx)(`option`,{children:`全部`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsx)(`select`,{value:s,disabled:![`流程`,`全部`].includes(a),onChange:e=>{c(e.target.value),m(1)},children:a===`流程`?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`流程审批`}),(0,Q.jsx)(`option`,{children:`流程超时`}),(0,Q.jsx)(`option`,{children:`流程结束`}),(0,Q.jsx)(`option`,{children:`流程驳回`}),(0,Q.jsx)(`option`,{children:`流程抄送`})]}):a===`全部`?(0,Q.jsx)(`option`,{children:`全部`}):(0,Q.jsx)(`option`,{value:``,children:` `})})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:l,onChange:e=>{u(e.target.value),m(1)},children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:y.length?y.map(e=>{let{id:n,source:r,type:a,sender:o,time:s,initiator:c,initiatedAt:l,application:u,processNumber:d,read:f,icon:p,tone:m}=e;return(0,Q.jsxs)(`button`,{className:f?`message-row read`:`message-row`,onClick:()=>{t(n),i(a===`结束提醒`?`我发起的`:`待审批`,d)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${m}`,children:(0,Q.jsx)(p,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`time`,{children:s}),f?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsx)(`strong`,{children:(0,Q.jsx)(`em`,{children:r})}),(0,Q.jsxs)(`p`,{className:`message-process-origin`,children:[c,`于`,l,`通过`,u,`应用发起的流程编号为：`,d]})]}),(0,Q.jsx)(fz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(rB,{className:`message-pagination`,total:g.length,page:v,pageSize:d,onPageChange:m,onPageSizeChange:e=>{f(e),m(1)}})]})}function aB({process:e,onClose:t,onApprove:n,viewOnly:r=!1,canRevoke:i=!1,canResumeDraft:a=!1,hideFinalLog:o=!1,onResumeDraft:s,onResubmit:c}){let[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(!1),[h,g]=(0,Z.useState)(null),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(!1),[x,S]=(0,Z.useState)(!1),[C,w]=(0,Z.useState)([]),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(null),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)(`initiator`),[N,P]=(0,Z.useState)(!1),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(``),ne=()=>{u(!1),f(!1),m(!1),b(!1),S(!1),w([]),E(``),O(null),A(``),P(!1),F(!1),te(``),t()};if(!e)return null;let re=e.status===`已驳回`,ie=e.status===`已撤销`,ae=e.status===`已通过`,oe=e.status===`已拒绝`,se=e.resubmitted,L=D===`initiator`?{label:`发起人`,name:e.initiator}:{label:`上一节点`,name:e.previousApprover??`张七`},R=[{time:`2026-08-23 12:00:00`,title:`系统发起`,details:[`${e.initiator}发起了${e.name}`],action:`发起`,state:`done`},{time:`2026-08-23 12:00:00`,title:`主管领导审批`,details:[`李四已同意`,`审批意见：请按流程办理`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`分管领导审批`,details:[`王五已转办`,`转办原因：赵总定夺`,`流程到达时间：2026-08-23 12:00:00`],action:`转办`,state:`done`},{time:`2026-08-23 12:00:00`,title:`转办审批`,details:[`赵六已加签`,`流程到达时间：2026-08-23 12:00:00`],action:`加签`,state:`done`},{time:`2026-08-23 12:00:00`,title:`加签审批`,details:[`张七已同意`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`抄送`,details:[`系统已抄送`,`流程到达时间：2026-08-23 12:00:00`],action:`抄送`,state:`done`},{time:re||se||ae||oe?`2026-08-23 12:00:00`:ie?e.revokedAt??`2026-08-28 10:36:00`:`当前`,title:re||se||ae||oe?`分管领导审批`:ie?`撤销`:`结束`,details:re||se?[`${e.rejectedBy??`周杰伦`}已驳回`,`审批意见：${e.rejectionOpinion??`请核对清楚再提交`}`,`流程到达时间：2026-08-23 12:00:00`]:ae?[`${e.finalOperator??`张宇`}已同意`,`审批意见：同意办理`,`流程完成时间：2026-08-23 12:00:00`]:oe?[`${e.finalOperator??`张宇`}已拒绝`,`审批意见：${e.refusalOpinion||`未填写`}`,`流程完成时间：2026-08-23 12:00:00`]:ie?[`${e.revokedBy??`张宇`}已撤销该流程`]:[[`待审批`,`审批中`].includes(e.status)?`当前待 ${e.approver} 审批`:`流程已结束`],action:re||se?`驳回`:ae?`同意`:oe?`拒绝`:ie?`撤销`:void 0,state:se?`done`:`current`},...se?[{time:`2026-08-23 12:30:00`,title:`重新提交`,details:[`${e.initiator}已重新提交`],action:`重新提交`,state:`done`},{time:``,hideTime:!0,title:`分管领导审批`,details:[`周杰伦`,`流程到达时间：2026-08-23 12:30:00`],state:ie?`done`:`current`},...ie?[{time:e.revokedAt??`2026-08-28 10:36:00`,title:`撤销`,details:[`${e.revokedBy??`张宇`}已撤销该流程`],action:`撤销`,state:`current`}]:[]]:[],...e.actionLogs??[]],z=[[`所属部门`,e.department],[`发起人`,e.initiator],[`发起时间`,e.initiatedAt]],ce=e=>{if(e===`撤销`){P(!0);return}if(e===`转办`){f(!0);return}if(e===`加签`){w([]),E(``),b(!0);return}if(e===`退回`){A(``),O(j),M(e=>e===`initiator`?`previous`:`initiator`);return}if(e===`拒绝`){te(``),F(!0);return}n(`已${e}`)},B=o&&!re&&!ie&&!se&&!ae&&!oe&&!e.actionLogs?.length?R.slice(0,-1):R;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:ne,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:ne,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body${a?` draft-detail`:``}`,children:[(0,Q.jsxs)(`div`,{className:`process-approval-main`,children:[(0,Q.jsxs)(`section`,{className:`process-approval-form`,children:[(0,Q.jsx)(`h3`,{children:`申请单`}),(0,Q.jsx)(`div`,{className:`process-approval-fields`,children:z.map(([e,t])=>(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),t||`-`]},e))}),(0,Q.jsxs)(`label`,{className:`process-approval-description`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,readOnly:!0,defaultValue:`${e.name}相关事项，请按流程审核处理。`})]}),i&&!re&&!ie?(0,Q.jsx)(`div`,{className:`process-initiated-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`})}):null]}),re&&i?(0,Q.jsxs)(`div`,{className:`process-rejected-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>c?.(e),children:`重新提交`})]}):r?null:(0,Q.jsxs)(`section`,{className:`process-approval-opinion`,children:[(0,Q.jsx)(`h3`,{children:`审批意见`}),(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请输入审批意见`}),(0,Q.jsxs)(`div`,{className:`process-approval-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`转办`),children:`转办`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`加签`),children:`加签`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`退回`),children:`驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`拒绝`),children:`拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>ce(`同意`),children:`同意`})]})]})]}),a?null:(0,Q.jsxs)(`section`,{className:`process-approval-log`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`流程日志`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(!0),children:`流程图`})]}),(0,Q.jsx)(`ol`,{children:B.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`div`,{className:`process-log-entry-heading`,children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsxs)(`span`,{className:`process-log-entry-meta`,children:[e.hideTime?null:(0,Q.jsx)(`time`,{children:e.time}),e.action?(0,Q.jsx)(`span`,{className:`process-log-action`,children:e.action}):null]})]}),e.details.map(e=>(0,Q.jsx)(`p`,{children:e},e))]})]},e.title))})]})]})]})}),l?(0,Q.jsx)(`div`,{className:`process-flowchart-map-layer`,role:`presentation`,onMouseDown:()=>u(!1),children:(0,Q.jsxs)(`section`,{className:`process-flowchart-map-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-flowchart-map-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-flowchart-map-title`,children:`流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程图`,onClick:()=>u(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart-map`,"aria-label":`${e.name}流程图`,children:[(0,Q.jsx)(`i`,{className:`flowchart-map-link start-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-right`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link secondary-right`}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node start`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`b`,{children:e.name})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval active`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`设备主管审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy first-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval manager`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`总经理审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy second-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]})]})]})}):null,N?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>P(!1),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>P(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>P(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{P(!1),n(`已撤销`)},children:`确定撤销`})]})]})}):null,ee?(0,Q.jsx)(`div`,{className:`process-refuse-layer`,role:`presentation`,onMouseDown:()=>F(!1),children:(0,Q.jsxs)(`section`,{className:`process-refuse-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-refuse-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-refuse-title`,children:`确认拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭拒绝确认`,onClick:()=>F(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-refuse-body`,children:[(0,Q.jsxs)(`label`,{children:[`拒绝意见`,(0,Q.jsx)(`textarea`,{rows:`4`,value:I,onChange:e=>te(e.target.value),placeholder:`请输入拒绝意见`})]}),(0,Q.jsx)(`p`,{children:`拒绝后该流程终止，无法修改，确认要拒绝吗？`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>F(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已拒绝`,I.trim()),F(!1),te(``)},children:`确定拒绝`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>f(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),h&&(n(`已转办`,{target:h,reason:_}),f(!1),m(!1),v(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-transfer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-transfer-title`,children:`转办流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭转办弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 转办人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>m(!0),children:[h?`${h.name} · ${h.department}`:`请选择转办人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`转办原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:_,onChange:e=>v(e.target.value),placeholder:`请输入转办原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!h,children:`确认转办`})]})]})}):null,y?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>b(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),C.length&&(n(`已加签`,{targets:C,reason:T}),b(!1),S(!1),w([]),E(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-add-signer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-add-signer-title`,children:`加签流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭加签弹窗`,onClick:()=>b(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 加签人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>S(!0),children:[C.length?C.map(e=>e.name).join(`、`):`请选择加签人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`加签原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:T,onChange:e=>E(e.target.value),placeholder:`请输入加签原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>b(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!C.length,children:`确认加签`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>O(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-return-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-return-confirm-title`,children:`确认驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭驳回确认`,onClick:()=>O(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-return-body`,children:[(0,Q.jsxs)(`label`,{children:[`驳回意见`,(0,Q.jsx)(`textarea`,{rows:`3`,value:k,maxLength:200,placeholder:`请输入驳回意见（选填）`,onChange:e=>A(e.target.value)})]}),(0,Q.jsxs)(`p`,{children:[`驳回后，流程将退回至`,L.label,`，确认要驳回吗？`]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{O(null),A(``)},children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已驳回`,{target:L,reason:k.trim()}),O(null),A(``)},children:`确认驳回`})]})]})}):null,p?(0,Q.jsx)(RB,{organizations:Yz,users:Xz,selectedUser:h,onSelect:g,onClose:()=>m(!1),title:`选择转办人`,selectedLabel:`已选转办人`}):null,x?(0,Q.jsx)(zB,{organizations:Yz,users:Xz,selectedUsers:C,onSelect:w,onClose:()=>S(!1),title:`选择加签人`,selectedLabel:`已选加签人`}):null]})}function oB({onAction:e,initialFilter:t=`待审批`,initialProcessNumber:n=``,processRecords:r,setProcessRecords:i}){let[a,o]=(0,Z.useState)(null),[s,c]=(0,Z.useState)(null),[l,u]=(0,Z.useState)(t),[d,f]=(0,Z.useState)({number:n,title:``,application:``,type:``,status:``}),[p,m]=(0,Z.useState)(`全部`),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(null),[y,b]=(0,Z.useState)(null),[x,S]=(0,Z.useState)(`new`),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),j=(0,Z.useRef)(null),M=[{category:`人资管理`,application:`消防管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,application:`机电管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,application:`双重预防机制`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,application:`生产管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,application:`应急管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,application:`设备管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,application:`火工品管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,application:`安全管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,application:`双重预防机制`,tone:`red`,name:`材料采购流程`}],N={待审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`arrivalAt`,`status`]},已审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`completedAt`,`result`,`status`]},抄送我的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`sentAt`,`status`]},我发起的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiatedAt`,`currentNode`,`status`]},草稿箱:{filters:[`title`],columns:[`title`,`type`,`application`,`initiatedAt`,`status`]}},P={number:`流程编号`,title:`标题`,application:`所属应用`,type:`流程类型`,initiator:`发起人`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},ee=e=>l===`待审批`&&e===`title`?`流程名称`:l===`待审批`&&e===`status`?`当前状态`:l===`已审批`&&e===`title`?`流程名称`:l===`已审批`&&e===`completedAt`?`处理时间`:l===`已审批`&&e===`result`?`我的处理`:l===`已审批`&&e===`status`?`当前状态`:l===`抄送我的`&&e===`title`?`流程名称`:l===`抄送我的`&&e===`sentAt`?`抄送时间`:l===`抄送我的`&&e===`status`?`当前状态`:l===`我发起的`&&e===`title`?`流程名称`:l===`我发起的`&&e===`status`?`当前状态`:l===`草稿箱`&&e===`title`?`流程名称`:l===`草稿箱`&&e===`initiatedAt`?`保存时间`:l===`草稿箱`&&e===`status`?`状态`:P[e],F=N[l],I=[...new Set(r.map(e=>e.application??`综合管理`))],te=M.filter(e=>(p===`全部`||p===`最近使用`&&e.recent)&&(!h.trim()||e.name.includes(h.trim()))),ne=e=>({number:Kz(e),title:e.name,application:e.application??`综合管理`,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?e.handledResult??`同意`:`-`,sentAt:e.initiatedAt,endedAt:[`审批中`,`已撤销`].includes(e.status)||e.draft?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),re=r.filter(e=>{let t=l===`待审批`&&[`待审批`,`审批中`].includes(e.status)&&e.approver===`张宇`||l===`已审批`&&e.handledByMe||l===`抄送我的`&&e.ccToMe||l===`我发起的`&&e.startedByMe||l===`草稿箱`&&e.draft,n=ne(e);return t&&(!d.number||n.number.includes(d.number))&&(!d.title||n.title.includes(d.title))&&(!d.application||n.application===d.application)&&(!d.type||n.type===d.type)&&(!d.status||n.status===d.status)}),ie=(t,n={})=>{let r=typeof n==`string`?{opinion:n}:n;t===`已撤销`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已撤销`,startedByMe:!0,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-08-28 10:36:00`}:e)),t===`已拒绝`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已拒绝`,handledByMe:!0,handledResult:`拒绝`,finalOperator:`张宇`,refusalOpinion:r.opinion??``,currentNode:`流程已结束`}:e)),t===`已转办`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`审批中`,approver:r.target?.name??e.approver,currentNode:`转办审批`,handledByMe:!0,handledResult:`转办`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:00:00`,title:`转办`,details:[`张宇已转办给${r.target?.name??`处理人`}`,`转办原因：${r.reason||`未填写`}`],action:`转办`,state:`done`}]}:e)),t===`已加签`&&i(e=>e.map(e=>e.id===a.id?{...e,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:02:00`,title:`加签`,details:[`张宇已加签给${r.targets?.map(e=>e.name).join(`、`)||`处理人`}`,`加签原因：${r.reason||`未填写`}`],action:`加签`,state:`done`}]}:e)),t===`已驳回`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已驳回`,currentNode:`已驳回至${r.target?.label??`上一节点`}`,handledByMe:!0,handledResult:`驳回`,rejectedBy:`张宇`,rejectionOpinion:r.reason||`未填写`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:05:00`,title:`驳回`,details:[`张宇已驳回至${r.target?.label??`上一节点`}`,`驳回原因：${r.reason||`未填写`}`],action:`驳回`,state:`current`}]}:e)),e(`${a.name}${t}`),o(null)},ae=()=>{s&&(i(e=>e.map(e=>e.id===s.id?{...e,status:`已撤销`,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-09-02 10:36:00`}:e)),e(`${s.name}已撤销`),c(null))},oe=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),u(`发起流程`),L(t,e)},se=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),L({...t,name:e.name},{...e,description:`请根据驳回意见核对并完善申请信息后重新提交。`},`resubmit`)},L=(e,t=null,n=`restore`)=>{v(e),b(t),S(t?n:`new`),w(null),O(!1),A(!1)},R=e=>{L(e)},z=()=>{v(null),b(null),A(!1)},ce=()=>{if(!_)return;let t=new FormData(j.current),n={id:y?.draft?y.id:`flow-draft-${Date.now()}`,name:_.name,initiator:`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,application:_.application,department:t.get(`department`)||`安全管理部`,description:t.get(`description`)||``,draft:!0,startedByMe:!0,sequence:y?.sequence??r.filter(e=>Gz(e.initiatedAt)===Wz).length+1};i(e=>y?.draft?e.map(e=>e.id===n.id?n:e):[n,...e]),b(n),e(`${_.name}已暂存到草稿箱`),z()};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsx)(`header`,{className:`task-list-header`,children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]})}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(N)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":l===e,className:l===e?`active`:``,onClick:()=>u(e),children:e},e))})}),l===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":p===e,className:p===e?`active`:``,onClick:()=>m(e),children:e},e))}),(0,Q.jsx)(`input`,{value:h,onChange:e=>g(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=te.filter(t=>t.category===e),n=M.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsxs)(`button`,{onClick:()=>R(e),children:[e.name,`（`,e.application,`）`]},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[F.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:d.number,onChange:e=>f(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,F.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程名称`}),(0,Q.jsx)(`input`,{value:d.title,onChange:e=>f(t=>({...t,title:e.target.value})),placeholder:`请输入流程名称`})]}):null,F.filters.includes(`application`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`所属应用`}),(0,Q.jsxs)(`select`,{value:d.application,onChange:e=>f(t=>({...t,application:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择所属应用`}),I.map(e=>(0,Q.jsx)(`option`,{children:e},e))]})]}):null,F.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:d.type,onChange:e=>f(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,F.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:d.status,onChange:e=>f(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>f({number:``,title:``,application:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(e=>(0,Q.jsx)(`span`,{children:ee(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),re.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(t=>{let n=ne(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>o(e),children:n},t):t===`status`||t===`result`?(0,Q.jsx)(`i`,{className:[`已驳回`,`已拒绝`].includes(n)?`rejected`:[`待审批`,`审批中`].includes(n)?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),l===`我发起的`?(0,Q.jsxs)(`span`,{className:`process-list-actions initiated-actions`,children:[(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:e.status===`已驳回`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>se(e),children:`重新提交`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:[`待审批`,`审批中`,`已驳回`].includes(e.status)?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action danger`,onClick:()=>c(e),children:`撤销`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),`查看`]})})]}):(0,Q.jsxs)(`span`,{className:`process-list-actions`,children:[l===`草稿箱`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>oe(e),children:`继续填报`}):null,(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),l===`待审批`?`审批`:`查看`]})]})]},e.id)),re.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(aB,{process:a,onClose:()=>o(null),onApprove:ie,viewOnly:l!==`待审批`,canRevoke:!1,canResumeDraft:l===`草稿箱`,hideFinalLog:[`已审批`,`我发起的`].includes(l),onResumeDraft:oe,onResubmit:se}),s?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>c(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-list-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-list-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>c(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:ae,children:`确定撤销`})]})]})}):null,C?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>w(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsx)(`h2`,{id:`draft-restore-title`,children:`发现同名流程草稿`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>w(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,C.drafts.length,` 条“`,C.template.name,`”草稿，请选择恢复继续填报，或重新发起新的流程。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:C.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>L(C.template),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=C.drafts.find(e=>e.id===T);L(C.template,e)},children:`恢复并继续填报`})]})]})}):null,_?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:z,role:`presentation`,children:(0,Q.jsxs)(`form`,{ref:j,className:`process-form-dialog${D?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),x===`resubmit`&&y?.id&&i(e=>e.map(e=>e.id===y.id?{...e,status:`审批中`,currentNode:`分管领导审批`,resubmitted:!0}:e)),e(`${x===`resubmit`?`已重新提交流程`:`已发起流程`}：${_.name}`),z()},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:y?x===`resubmit`?`重新提交`:`恢复草稿`:`发起流程`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>A(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>O(e=>!e),children:D?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:z,children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{name:`title`,defaultValue:_.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{name:`department`,defaultValue:y?.department??`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`5`,defaultValue:y?.description??``,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:y?x===`resubmit`?`请根据驳回意见核对信息后重新提交。`:`正在恢复 ${y.initiatedAt} 保存的草稿。`:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:z,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-draft-action`,onClick:ce,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:x===`resubmit`?`重新提交`:`发起流程`})]})]})]})}):null,_&&k?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>A(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>A(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function sB({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(fz,{})]})})}function cB({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>zz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>zz.find(t=>t.name===e)).filter(Boolean),...zz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(fz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(fz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(bz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function lB({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Zz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(fz,{})]},t))})]})}function uB({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(zz.find(t=>t.name===e)??zz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(gz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:zz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(hz,{}):null]},n))}):null]})}var dB=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:pz,nested:!0},{label:`隐患排查治理`,icon:Sz,expanded:!0}],fB=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查审批流程`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],pB=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:Cz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`}],mB=[{title:`员工离职申请`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`平巷凿岩作业隐患排查审批流程`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`掘进工作面隐患整改审批流程`,detail:`隐患排查审批`,icon:nz,tone:`lime`,kind:`approval`}],hB=[{id:`inspection-001`,reporter:`张宇`,date:`2026-07-29`,shift:`早班`,location:`西翼 3# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`现场检查正常，无需整改。`,status:`已提交`,flowStatus:`审批中`},{id:`inspection-002`,reporter:`李明`,date:`2026-07-28`,shift:`中班`,location:`西翼 2# 平巷`,equipment:`正常`,environment:`发现问题`,protection:`正常`,description:`照明灯具亮度不足，已通知机电班处理。`,status:`已复核`,flowStatus:`已通过`}];function gB({onAction:e,onSwitchApplication:t,approvalDrafts:n,setApprovalDrafts:r,onSaveProcessDraft:i,onDeleteProcessDraft:a,initialFormTitle:o=pB[0].title,initialOpenForm:s=!1,initialFormSource:c=mB.some(e=>e.title===o)?`隐患排查审批流程`:`岗位隐患排查清单`}){let[l,u]=(0,Z.useState)(c),[d,f]=(0,Z.useState)(s),[p,m]=(0,Z.useState)(o),[h,g]=(0,Z.useState)(!1),[_,v]=(0,Z.useState)(`页面`),[y,b]=(0,Z.useState)(c),[x,S]=(0,Z.useState)(null),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),[j,M]=(0,Z.useState)(null),[N,P]=(0,Z.useState)(hB),[ee,F]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[I,te]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[ne,re]=(0,Z.useState)(1),[ie,ae]=(0,Z.useState)(10),oe=(0,Z.useRef)(null),se=(0,Z.useRef)(null),L=l,R=[...pB,...mB].find(e=>e.title===p)??pB[0],z=R.kind===`approval`,ce=n.filter(e=>e.kind===(z?`approval`:`inspection`)&&e.name===R.title),B=(e=pB[0],t=`岗位隐患排查清单`,n=null)=>{m(e.title),b(t),w(n),S(null),f(!0),g(!1),v(`页面`),A(!1),M(null)},le=(e=pB[0],t=`岗位隐患排查清单`)=>{let r=n.filter(t=>t.draft&&t.name===e.title&&t.kind===(e.kind===`approval`?`approval`:`inspection`));if(r.length){S({form:e,source:t,drafts:r}),E(r[0].id);return}B(e,t)},ue=()=>O(!0),de=()=>{O(!1),f(!1),g(!1),A(!1)},fe=t=>{t.preventDefault(),g(!0),A(!1),e(`${R.title}已提交${z?`，已进入审批流程`:``}`)},V=()=>{if(!z)return;let t=new FormData(se.current),n={id:C?.id?.startsWith(`approval-draft-`)?C.id:`approval-draft-${Date.now()}`,processDraftId:C?.processDraftId??`flow-draft-${Date.now()}`,kind:`approval`,name:R.title,initiator:t.get(`reporter`)||`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:t.get(`description`)||``,draft:!0};r(e=>C?.id?.startsWith(`approval-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),i({id:n.processDraftId,name:n.name,initiator:n.initiator,initiatedAt:n.initiatedAt,currentNode:n.currentNode,status:n.status,department:n.department,description:n.description,application:`双重预防机制`,draft:!0,startedByMe:!0}),A(!1),e(`${R.title}已暂存到草稿箱`)},H=()=>{let t=new FormData(se.current),n={id:C?.id?.startsWith(`inspection-draft-`)?C.id:`inspection-draft-${Date.now()}`,kind:`inspection`,name:R.title,reporter:t.get(`reporter`)||`张宇`,inspectionDate:t.get(`inspectionDate`)||`2026-09-02`,shift:t.get(`shift`)||`早班`,location:t.get(`location`)||``,equipment:t.get(`equipment`)||``,environment:t.get(`environment`)||``,protection:t.get(`protection`)||``,description:t.get(`description`)||``,initiatedAt:`2026-09-02 10:00:00`,status:`草稿`,draft:!0};r(e=>C?.id?.startsWith(`inspection-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),A(!1),e(`${R.title}已暂存到草稿箱`)},pe=e=>{if(e===`页面`&&_!==`页面`&&ce.length){S({form:R,source:y,drafts:ce}),E(ce[0].id);return}v(e)},me=e=>{if(e!==_){if(_===`页面`&&k){M({type:`tab`,tab:e});return}pe(e)}},he=e=>{if(d&&_===`页面`&&k){M({type:`page`,item:e});return}u(e),f(!1),g(!1)},ge=e=>{if(d&&_===`页面`&&k){M({type:`application`,application:e});return}t(e)},_e=()=>{let e=j;if(M(null),A(!1),e?.type===`tab`){pe(e.tab);return}e?.type===`page`&&(u(e.item),f(!1),g(!1)),e?.type===`application`&&t(e.application)},ve=N.filter(e=>(!I.reporter||e.reporter.includes(I.reporter))&&(!I.date||e.date===I.date)&&(!I.shift||e.shift===I.shift)&&(!z||!I.flowStatus||e.flowStatus===I.flowStatus)),ye=Math.max(1,Math.ceil(ve.length/ie)),U=Math.min(ne,ye),W=ve.slice((U-1)*ie,U*ie),G=(t=N)=>{let n=[[`填报人`,`检查日期`,`作业班次`,`作业地点`,`凿岩设备防护装置完好`,`作业面通风与照明符合要求`,`人员防护用品佩戴规范`,`隐患描述与整改建议`,`填报状态`],...t.map(e=>[e.reporter,e.date,e.shift,e.location,e.equipment,e.environment,e.protection,e.description,e.status])].map(e=>e.map(e=>`"${String(e).replaceAll(`"`,`""`)}"`).join(`,`)).join(`
-`),r=document.createElement(`a`);r.href=URL.createObjectURL(new Blob([`\ufeff${n}`],{type:`text/csv;charset=utf-8`})),r.download=`${R.title}-历史数据.csv`,r.click(),URL.revokeObjectURL(r.href),e(`历史填报数据已导出`)};return(0,Q.jsxs)(`section`,{className:`prevention-page`,"aria-labelledby":`prevention-page-title`,children:[(0,Q.jsxs)(`aside`,{className:`prevention-sidebar`,"aria-label":`双重预防机制功能导航`,children:[(0,Q.jsx)(uB,{currentName:`双重预防机制`,onSelect:ge}),(0,Q.jsx)(`nav`,{className:`prevention-nav`,children:dB.map(({label:t,icon:n,nested:r,expanded:i})=>(0,Q.jsxs)(`button`,{className:i?`prevention-nav-item expanded`:`prevention-nav-item`,onClick:()=>e(t),children:[(0,Q.jsx)(n,{}),(0,Q.jsx)(`span`,{children:t}),r?(0,Q.jsx)(_z,{}):i?(0,Q.jsx)(gz,{}):null]},t))}),(0,Q.jsx)(`div`,{className:`prevention-submenu`,children:fB.map(e=>(0,Q.jsxs)(`button`,{className:l===e?`selected`:``,onClick:()=>he(e),children:[(0,Q.jsx)(`span`,{children:e}),[`隐患排查任务发布`,`隐患排查工作表`,`隐患整改通知单`,`隐患汇报`].includes(e)?(0,Q.jsx)(_z,{}):null]},e))}),(0,Q.jsxs)(`nav`,{className:`prevention-nav prevention-nav-bottom`,children:[(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险告知卡`),children:[(0,Q.jsx)(QR,{}),(0,Q.jsx)(`span`,{children:`风险告知卡`}),(0,Q.jsx)(_z,{})]}),(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险四色图`),children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`风险四色图`}),(0,Q.jsx)(_z,{})]})]})]}),(0,Q.jsx)(`div`,{className:`prevention-content`,children:d?(0,Q.jsxs)(`section`,{className:`inspection-form-view`,"aria-labelledby":`inspection-form-title`,children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`span`,{children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>he(y),children:y}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:`在线填报`})]}),(0,Q.jsx)(`nav`,{className:`inspection-view-tabs`,"aria-label":`表单视图`,children:[`页面`,`数据`,`草稿箱`].map(e=>(0,Q.jsx)(`button`,{className:_===e?`active`:``,onClick:()=>me(e),children:e},e))}),_===`页面`?(0,Q.jsxs)(`form`,{ref:se,className:`inspection-form`,onChange:()=>A(!0),onSubmit:fe,children:[(0,Q.jsxs)(`header`,{className:`inspection-form-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`inspection-form-title`,children:R.title}),(0,Q.jsx)(`span`,{children:z?`请如实填写隐患情况，提交后将进入审批流程。`:`请如实填写现场检查情况，带 * 的项目为必填项。`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`form-back`,onClick:ue,children:`返回清单`})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`填报信息`}),(0,Q.jsxs)(`div`,{className:`form-fields`,children:[(0,Q.jsxs)(`label`,{children:[`填报人 *`,(0,Q.jsx)(`input`,{name:`reporter`,defaultValue:C?.reporter??`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`检查日期 *`,(0,Q.jsx)(`input`,{name:`inspectionDate`,type:`date`,defaultValue:C?.inspectionDate??`2026-07-29`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`作业班次 *`,(0,Q.jsxs)(`select`,{name:`shift`,defaultValue:C?.shift??`早班`,required:!0,children:[(0,Q.jsx)(`option`,{children:`早班`}),(0,Q.jsx)(`option`,{children:`中班`}),(0,Q.jsx)(`option`,{children:`夜班`})]})]}),(0,Q.jsxs)(`label`,{children:[`作业地点 *`,(0,Q.jsx)(`input`,{name:`location`,defaultValue:C?.location??``,placeholder:`例如：西翼 3# 平巷`,required:!0})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`现场检查`}),(0,Q.jsxs)(`div`,{className:`inspection-items`,children:[(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`凿岩设备防护装置完好`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`normal`,required:!0,defaultChecked:C?.equipment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`issue`,defaultChecked:C?.equipment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`作业面通风与照明符合要求`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`normal`,required:!0,defaultChecked:C?.environment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`issue`,defaultChecked:C?.environment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`人员防护用品佩戴规范`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`normal`,required:!0,defaultChecked:C?.protection===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`issue`,defaultChecked:C?.protection===`issue`}),` `,`发现问题`]})]})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`问题说明`}),(0,Q.jsxs)(`label`,{className:`wide-field`,children:[`隐患描述与整改建议`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`3`,defaultValue:C?.description??``,placeholder:`如发现隐患，请填写具体位置、问题描述及建议措施。`})]})]}),(0,Q.jsxs)(`footer`,{className:`form-actions`,children:[h?(0,Q.jsxs)(`span`,{className:`submit-status`,children:[(0,Q.jsx)(hz,{}),` `,z?`已提交，等待审批流程处理`:`已提交，等待负责人复核`]}):(0,Q.jsx)(`span`,{children:z?`填写完成后将提交至隐患排查审批流程。`:`填写完成后可直接提交至隐患排查记录。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`form-secondary`,onClick:ue,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`form-draft`,onClick:z?V:H,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`form-primary`,children:`提交`})]})]})]},C?.id??p):_===`数据`?(0,Q.jsxs)(`section`,{className:`inspection-data-view`,"aria-label":`${R.title}历史数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`历史填报数据`}),(0,Q.jsx)(`h2`,{children:R.title})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ve.length,` 条记录`]})]}),(0,Q.jsxs)(`form`,{className:`inspection-data-filter`,onSubmit:e=>{e.preventDefault(),te(ee),re(1)},children:[(0,Q.jsxs)(`label`,{children:[`填报人`,(0,Q.jsx)(`input`,{value:ee.reporter,maxLength:10,placeholder:`请输入填报人`,onChange:e=>F(t=>({...t,reporter:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`检查日期`,(0,Q.jsx)(`input`,{type:`date`,value:ee.date,onChange:e=>F(t=>({...t,date:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`作业班次`,(0,Q.jsxs)(`select`,{value:ee.shift,onChange:e=>F(t=>({...t,shift:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部班次`}),(0,Q.jsx)(`option`,{value:`早班`,children:`早班`}),(0,Q.jsx)(`option`,{value:`中班`,children:`中班`}),(0,Q.jsx)(`option`,{value:`夜班`,children:`夜班`})]})]}),z?(0,Q.jsxs)(`label`,{children:[`流程状态`,(0,Q.jsxs)(`select`,{value:ee.flowStatus,onChange:e=>F(t=>({...t,flowStatus:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),qz.map(e=>(0,Q.jsx)(`option`,{value:e,children:e},e))]})]}):null,(0,Q.jsxs)(`div`,{className:`inspection-filter-actions`,children:[(0,Q.jsx)(`button`,{type:`submit`,className:`inspection-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{let e={reporter:``,date:``,shift:``,flowStatus:``};F(e),te(e),re(1)},children:`重置`})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-data-actions`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>oe.current?.click(),children:`导入`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>G(ve),children:`导出`})]}),(0,Q.jsx)(`input`,{ref:oe,className:`inspection-import-input`,type:`file`,accept:`.csv,.xlsx,.xls`,onChange:t=>{let n=t.target.files?.[0];if(!n)return;let r={id:`inspection-${Date.now()}`,reporter:`导入用户`,date:`2026-07-30`,shift:`早班`,location:`西翼 1# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`已从 ${n.name} 导入填报记录。`,status:`已导入`,flowStatus:`待审批`};P(e=>[r,...e]),t.target.value=``,e(`已导入 ${n.name}`)}})]}),(0,Q.jsx)(`div`,{className:`inspection-data-scroll`,children:(0,Q.jsxs)(`table`,{className:z?`inspection-approval-data-table`:``,children:[(0,Q.jsx)(`thead`,{children:(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`th`,{children:`发起人`}),(0,Q.jsx)(`th`,{children:`发起时间`}),(0,Q.jsx)(`th`,{children:`流程状态`})]}):null,(0,Q.jsx)(`th`,{children:`填报人`}),(0,Q.jsx)(`th`,{children:`检查日期`}),(0,Q.jsx)(`th`,{children:`作业班次`}),(0,Q.jsx)(`th`,{children:`作业地点`}),(0,Q.jsx)(`th`,{children:`凿岩设备防护装置完好`}),(0,Q.jsx)(`th`,{children:`作业面通风与照明符合要求`}),(0,Q.jsx)(`th`,{children:`人员防护用品佩戴规范`}),(0,Q.jsx)(`th`,{children:`隐患描述与整改建议`})]})}),(0,Q.jsx)(`tbody`,{children:W.length?W.map(e=>(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`td`,{children:e.initiator??e.reporter}),(0,Q.jsx)(`td`,{children:e.initiatedAt??`${e.date} 08:00`}),(0,Q.jsx)(`td`,{children:e.flowStatus??`待审批`})]}):null,(0,Q.jsx)(`td`,{children:e.reporter}),(0,Q.jsx)(`td`,{children:e.date}),(0,Q.jsx)(`td`,{children:e.shift}),(0,Q.jsx)(`td`,{children:e.location}),(0,Q.jsx)(`td`,{children:e.equipment}),(0,Q.jsx)(`td`,{children:e.environment}),(0,Q.jsx)(`td`,{children:e.protection}),(0,Q.jsx)(`td`,{className:`inspection-description-cell`,children:e.description})]},e.id)):(0,Q.jsx)(`tr`,{children:(0,Q.jsx)(`td`,{colSpan:z?11:8,className:`inspection-data-empty`,children:`暂无历史填报数据`})})})]})}),(0,Q.jsx)(rB,{className:`inspection-data-pagination`,total:ve.length,page:U,pageSize:ie,onPageChange:re,onPageSizeChange:e=>{ae(e),re(1)}})]}):(0,Q.jsxs)(`section`,{className:`inspection-draft-view`,"aria-label":`${R.title}草稿箱`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`暂存记录`}),(0,Q.jsx)(`h2`,{children:`草稿箱`})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ce.length,` 条草稿`]})]}),ce.length?(0,Q.jsx)(`div`,{className:`inspection-draft-list`,children:ce.map(t=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{className:`inspection-draft-title`,children:[(0,Q.jsx)(`b`,{children:t.name}),(0,Q.jsx)(`i`,{children:`草稿`})]}),(0,Q.jsxs)(`span`,{children:[`填报人：`,t.reporter||`张宇`]}),(0,Q.jsxs)(`time`,{children:[`保存时间：`,t.initiatedAt]})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>B(R,y,t),children:`继续填报`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>{r(e=>e.filter(e=>e.id!==t.id)),t.processDraftId&&a(t.processDraftId),C?.id===t.id&&w(null),e(`已删除草稿：${t.name}`)},children:`删除`})]})]},t.id))}):(0,Q.jsx)(`div`,{className:`inspection-draft-empty`,children:`暂无草稿，页面内暂存的填报数据会显示在这里。`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>u(`隐患排查治理`),children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:L})]}),(0,Q.jsx)(`div`,{className:`prevention-strip`}),[`岗位隐患排查清单`,`隐患排查审批流程`].includes(l)?(0,Q.jsxs)(`section`,{className:`prevention-list prevention-menu-catalog`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`全部`})}),(0,Q.jsx)(`div`,{className:`prevention-catalog-grid`,children:(l===`隐患排查审批流程`?mB:pB).map(e=>{let{title:t,icon:n,tone:r}=e;return(0,Q.jsxs)(`button`,{type:`button`,className:`prevention-catalog-card`,onClick:()=>le(e,l),children:[(0,Q.jsx)(`span`,{className:`prevention-form-icon ${r}`,children:(0,Q.jsx)(n,{})}),(0,Q.jsx)(`b`,{children:t})]},t)})})]}):(0,Q.jsxs)(`section`,{className:`prevention-list prevention-empty-content`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`功能页面`})}),(0,Q.jsx)(`p`,{children:`请从左侧菜单选择需要处理的业务。`})]})]})}),x?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>S(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`approval-draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsxs)(`h2`,{id:`approval-draft-restore-title`,children:[`发现同名`,x.form.kind===`approval`?`流程`:`表单`,`草稿`]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>S(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,x.drafts.length,` 条“`,x.form.title,`”草稿，请选择恢复继续填报，或重新发起新的`,x.form.kind===`approval`?`流程`:`表单`,`。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:x.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`approval-process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>B(x.form,x.source),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=x.drafts.find(e=>e.id===T);B(x.form,x.source,e)},children:`恢复并继续填报`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>O(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`cancel-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭取消确认`,onClick:()=>O(!1),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`取消填写`}),(0,Q.jsx)(`h2`,{id:`cancel-inspection-form-title`,children:`确认取消吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，取消后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>O(!1),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:de,children:`确认取消`})]})]})}):null,j?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>M(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`unsaved-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭未保存提醒`,onClick:()=>M(null),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`未保存内容`}),(0,Q.jsx)(`h2`,{id:`unsaved-inspection-form-title`,children:`确认切换吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，切换后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>M(null),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:_e,children:`确认切换`})]})]})}):null]})}function _B({app:e,onReturn:t,onAction:n,onSwitchApplication:r}){let i=e.icon,a=[`核对今日${e.name}记录`,`完成本周${e.description}复核`,`查看待处理异常提醒`];return(0,Q.jsxs)(`section`,{className:`mock-app-page`,"aria-labelledby":`mock-app-title`,children:[(0,Q.jsxs)(`aside`,{className:`mock-app-sidebar`,"aria-label":`${e.name}功能导航`,children:[(0,Q.jsx)(uB,{currentName:e.name,onSelect:r}),(0,Q.jsxs)(`nav`,{children:[(0,Q.jsxs)(`button`,{className:`mock-nav-item active`,children:[(0,Q.jsx)(yz,{}),`应用概览`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}待办`),children:[(0,Q.jsx)(Cz,{}),`待办处理`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}记录`),children:[(0,Q.jsx)(QR,{}),`业务记录`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}统计`),children:[(0,Q.jsx)(ZR,{}),`数据统计`]})]})]}),(0,Q.jsxs)(`div`,{className:`mock-app-content`,children:[(0,Q.jsxs)(`div`,{className:`mock-app-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`应用中心`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{children:e.name})]}),(0,Q.jsxs)(`header`,{className:`mock-app-header`,children:[(0,Q.jsx)(`span`,{className:`mock-app-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h1`,{id:`mock-app-title`,children:[e.name,`工作台`]}),(0,Q.jsx)(`p`,{children:`示例业务页面，数据仅用于界面演示。`})]}),(0,Q.jsxs)(`button`,{className:`mock-primary-action`,onClick:()=>n(`新建${e.name}记录`),children:[(0,Q.jsx)(az,{}),`新建记录`]})]}),(0,Q.jsxs)(`section`,{className:`mock-metrics`,"aria-label":`${e.name}概览`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`待处理`}),(0,Q.jsx)(`b`,{children:`6`}),(0,Q.jsx)(`small`,{children:`需你跟进`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`今日记录`}),(0,Q.jsx)(`b`,{children:`14`}),(0,Q.jsx)(`small`,{children:`已同步更新`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`异常提醒`}),(0,Q.jsx)(`b`,{children:`2`}),(0,Q.jsx)(`small`,{children:`等待复核`})]})]}),(0,Q.jsxs)(`section`,{className:`mock-work-list`,"aria-labelledby":`mock-work-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`mock-work-title`,children:`待处理事项`}),(0,Q.jsxs)(`button`,{onClick:()=>n(`${e.name}全部事项`),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),a.map((e,t)=>(0,Q.jsxs)(`button`,{onClick:()=>n(e),children:[(0,Q.jsx)(`span`,{className:`mock-row-icon tone-${t}`,children:(0,Q.jsx)(Cz,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsx)(`small`,{children:t===0?`今天需完成`:`已分配给你`})]}),(0,Q.jsx)(fz,{})]},e))]}),(0,Q.jsxs)(`button`,{className:`prevention-back`,onClick:t,children:[`返回工作台 `,(0,Q.jsx)(fz,{})]})]})]})}function vB({onOpen:e,onOpenAll:t}){return(0,Q.jsxs)(`section`,{className:`activity-feed`,"aria-labelledby":`activity-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`activity-title`,children:`动态`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:t,children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`feed-list`,children:Qz.length?Qz.map(({person:t,tone:n,avatar:r,headline:i,detail:a,time:o,icon:s})=>(0,Q.jsxs)(`button`,{className:`feed-item`,onClick:()=>e(i),children:[(0,Q.jsx)(`span`,{className:`feed-avatar ${n}`,children:r}),(0,Q.jsxs)(`span`,{className:`feed-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`strong`,{children:i})]}),(0,Q.jsx)(`p`,{children:a}),(0,Q.jsx)(`time`,{children:o})]}),(0,Q.jsx)(s,{className:`feed-icon`})]},i)):(0,Q.jsxs)(`div`,{className:`empty-feed`,children:[(0,Q.jsx)(iz,{}),(0,Q.jsx)(`p`,{children:`这一类动态已全部处理。`})]})})]})}function yB({onAction:e,onOpenTask:t,onOpenProcess:n,onOpenDynamics:r}){return(0,Q.jsxs)(`aside`,{className:`command-panel`,"aria-label":`快捷操作`,children:[(0,Q.jsx)(`p`,{children:`快捷入口`}),(0,Q.jsxs)(`button`,{className:`command-primary`,onClick:t,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(az,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起任务`}),(0,Q.jsx)(`small`,{children:`交办或跟进一项工作`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:n,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(cz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起流程`}),(0,Q.jsx)(`small`,{children:`提交一次审批或申请`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:r,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(mz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发动态`}),(0,Q.jsx)(`small`,{children:`发布一条安全工作动态`})]}),(0,Q.jsx)(fz,{})]})]})}function bB({title:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e===`发起任务`;return(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`action-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`dialog-close`,"aria-label":`关闭`,onClick:t,children:`×`}),n?(0,Q.jsxs)(`div`,{className:`dialog-success`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`h2`,{children:`已准备好继续`}),(0,Q.jsx)(`p`,{children:`这是工作台演示状态，实际接入后将在此进入对应业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`完成`})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`快速创建`}),(0,Q.jsx)(`h2`,{id:`action-dialog-title`,children:e}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:i?`填写最小必要信息，将工作直接交给相应负责人。`:`从授权模板中选择流程，减少重复填写。`}),(0,Q.jsxs)(`label`,{children:[i?`任务名称`:`流程模板`,(0,Q.jsx)(`input`,{autoFocus:!0,placeholder:i?`例如：完成现场安全检查`:`例如：选择设备检修申请`})]}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{className:`secondary-button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`primary-button`,onClick:()=>r(!0),children:`继续`})]})]})]})})}var xB=[{id:`safety`,name:`安全风险总览`,description:`风险等级、隐患整改与作业预警的综合视图`,metrics:[[`今日检查`,`28`,`较昨日 +4`],[`待整改隐患`,`16`,`4 项临近逾期`],[`高风险作业`,`3`,`均在监控中`],[`整改完成率`,`86%`,`本月累计`]],charts:[`risk`,`rectification`,`sources`,`trend`]},{id:`device`,name:`设备运行态势`,description:`关键设备运行状态、点检执行与故障分布`,metrics:[[`设备总数`,`248`,`当前在线 243`],[`待点检`,`12`,`今日需完成`],[`异常设备`,`5`,`等待处理`],[`设备完好率`,`97.8%`,`较上月 +0.6%`]],charts:[`device`,`trend`,`sources`,`risk`]},{id:`production`,name:`生产进度跟踪`,description:`产量计划、班组进度与生产指标完成情况`,metrics:[[`本月产量`,`12.6 万吨`,`计划完成 91%`],[`今日进尺`,`186 米`,`较计划 +12 米`],[`作业班组`,`8`,`全部已开工`],[`生产达成率`,`94%`,`较上周 +3%`]],charts:[`progress`,`trend`,`device`,`rectification`]},{id:`emergency`,name:`应急管理看板`,description:`应急物资、演练计划和预案执行情况`,metrics:[[`应急物资`,`356`,`库存充足`],[`本月演练`,`4`,`已完成 3 项`],[`应急预案`,`18`,`均为有效版本`],[`响应及时率`,`100%`,`本季度累计`]],charts:[`sources`,`progress`,`risk`,`trend`]}];function SB({type:e}){let t=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let n=t.current;if(!n)return;let r=oC(n),i={axisLine:{lineStyle:{color:`#dce4ec`}},axisLabel:{color:`#7b8998`,fontSize:10},splitLine:{lineStyle:{color:`#eef2f6`}}},a={risk:{title:{text:`风险等级分布`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},legend:{bottom:8,textStyle:{fontSize:10,color:`#7b8998`}},series:[{type:`pie`,radius:[`42%`,`66%`],center:[`50%`,`51%`],label:{show:!1},data:[{value:4,name:`重大`,itemStyle:{color:`#d95745`}},{value:12,name:`较大`,itemStyle:{color:`#e89b3e`}},{value:31,name:`一般`,itemStyle:{color:`#3c98d3`}},{value:47,name:`低风险`,itemStyle:{color:`#5bb287`}}]}]},rectification:{title:{text:`隐患整改闭环`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:16,top:49,bottom:26},xAxis:{type:`category`,data:[`一车间`,`二车间`,`南区`,`北区`,`选矿`],...i},yAxis:{type:`value`,...i},series:[{type:`bar`,barWidth:15,itemStyle:{color:`#1779ba`,borderRadius:[3,3,0,0]},data:[16,22,13,18,25]},{type:`bar`,barWidth:15,itemStyle:{color:`#a9d8c3`,borderRadius:[3,3,0,0]},data:[12,18,10,15,21]}]},sources:{title:{text:`问题来源占比`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},series:[{type:`pie`,radius:`62%`,center:[`50%`,`55%`],label:{formatter:`{b}
-{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function CB(){let[e,t]=(0,Z.useState)(`safety`),n=xB.find(t=>t.id===e)??xB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:xB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(_z,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(gz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(SB,{type:e})},`${n.id}-${e}`))})]})]})})}function wB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(`iframe`,{className:`embedded-dynamics-frame`,src:`${Lz}index.html`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function TB({view:e,title:t,className:n}){let r=JSON.stringify({view:e});return(0,Q.jsx)(`iframe`,{className:n,srcDoc:kz.replace(`</head>`,`<style>
+`,Az=`<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>预警模块 - 低代码平台原型</title>
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet" media="print" onload="this.media='all'">
+<style>
+* { margin: 0; padding: 0; box-sizing: border-box; }
+:root {
+  --primary: #0f6cbd;
+  --primary-dark: #0b5394;
+  --primary-light: #eaf2fb;
+  --success: #2ba471;
+  --warning: #e6a23c;
+  --danger: #f5655b;
+  --info: #8b95a5;
+  --text-primary: #1f2733;
+  --text-regular: #515b69;
+  --text-secondary: #8b95a5;
+  --border-color: #e1e7ef;
+  --border-light: #eef1f5;
+  --bg-page: #f4f6f9;
+  --bg-white: #ffffff;
+  --bg-hover: #eef2f7;
+  --shadow-base: 0 1px 3px rgba(23,36,55,0.06), 0 4px 12px rgba(23,36,55,0.05);
+  --radius: 10px;
+}
+body {
+  font-family: "Segoe UI Variable Text", "Segoe UI", -apple-system, BlinkMacSystemFont, "Noto Sans SC", "Microsoft YaHei", sans-serif;
+  font-size: 14px;
+  color: var(--text-primary);
+  background: var(--bg-page);
+  overflow: hidden;
+  height: 100vh;
+}
+
+/* ====== Layout ====== */
+.app-container { display: flex; height: 100vh; }
+
+/* ====== Sidebar ====== */
+.sidebar {
+  width: 230px;
+  background: #172437;
+  color: rgba(255,255,255,0.65);
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  transition: width 0.2s;
+  overflow: hidden;
+}
+.sidebar-header {
+  height: 50px;
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  color: #fff;
+  font-size: 16px;
+  font-weight: 600;
+  background: #1f3354;
+  white-space: nowrap;
+}
+.sidebar-header span { margin-left: 8px; }
+.sidebar-menu {
+  flex: 1;
+  overflow-y: auto;
+  overflow-x: hidden;
+}
+.sidebar-menu::-webkit-scrollbar { width: 4px; }
+.sidebar-menu::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.15); border-radius: 2px; }
+.menu-group-title {
+  padding: 10px 18px 6px;
+  font-size: 11px;
+  color: rgba(255,255,255,0.35);
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+.menu-item, .submenu-title {
+  display: flex;
+  align-items: center;
+  padding: 0 18px;
+  height: 38px;
+  cursor: pointer;
+  white-space: nowrap;
+  transition: all 0.15s;
+  font-size: 13px;
+  position: relative;
+}
+.menu-item:hover, .submenu-title:hover { background: rgba(255,255,255,0.06); color: #fff; }
+.menu-item.active { background: var(--primary); color: #fff; box-shadow: inset 3px 0 0 #82c4fa; }
+.menu-item .menu-icon { width: 16px; margin-right: 8px; text-align: center; font-size: 14px; }
+.menu-item .menu-arrow { margin-left: auto; font-size: 10px; }
+.submenu-children { overflow: hidden; transition: max-height 0.2s; }
+.submenu-children .menu-item { padding-left: 42px; font-size: 12.5px; }
+
+/* ====== Main Content ====== */
+.main-container { flex: 1; display: flex; flex-direction: column; overflow: hidden; position: relative; }
+.top-bar {
+  height: 42px;
+  background: #fff;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  padding: 0 16px;
+  flex-shrink: 0;
+  position: relative;
+  z-index: 1;
+}
+  gap: 8px;
+}
+.breadcrumb { font-size: 13px; color: var(--text-secondary); }
+.breadcrumb span { color: var(--text-primary); }
+.top-bar-right { margin-left: auto; display: flex; align-items: center; gap: 12px; }
+.top-bar-right .avatar {
+  width: 28px; height: 28px; border-radius: 50%; background: var(--primary);
+  display: flex; align-items: center; justify-content: center; color: #fff; font-size: 12px;
+}
+.content-area { position: absolute; top: 42px; left: 0; right: 0; bottom: 0; overflow-y: auto; padding: 16px; }
+
+/* Embedded in the main system: the host provides navigation and page tabs. */
+.sidebar, .top-bar { display: none !important; }
+.main-container { width: 100%; }
+.content-area { top: 0; padding: 16px 20px 32px; }
+
+/* ====== Page Panels ====== */
+.page { display: none; }
+.page.active { display: block; }
+/* 页面 / 菜单隐藏（保留代码，删除 hidden 即可恢复） */
+.page[hidden], .menu-item[hidden], .menu-group-title[hidden] { display: none !important; }
+
+/* ====== Cards & Panels ====== */
+.card {
+  background: #fff;
+  border-radius: var(--radius);
+  box-shadow: var(--shadow-base);
+  margin-bottom: 16px;
+}
+.card-header {
+  padding: 12px 16px;
+  border-bottom: 1px solid var(--border-light);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.card-title { font-size: 15px; font-weight: 600; }
+.card-body { padding: 16px; }
+
+/* ====== Buttons ====== */
+.btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  padding: 7px 15px;
+  font-size: 13px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  background: #fff;
+  color: var(--text-regular);
+  transition: all 0.15s;
+  gap: 4px;
+  white-space: nowrap;
+}
+.btn:hover { color: var(--primary); border-color: var(--primary); }
+.btn-primary { background: var(--primary); border-color: var(--primary); color: #fff; }
+.btn-primary:hover { background: var(--primary-dark); border-color: var(--primary-dark); color: #fff; }
+.btn-success { background: var(--success); border-color: var(--success); color: #fff; }
+.btn-danger { background: var(--danger); border-color: var(--danger); color: #fff; }
+.btn-text { border: none; background: transparent; padding: 4px 8px; color: var(--primary); }
+.btn-text:hover { background: var(--primary-light); }
+.btn-sm { padding: 4px 10px; font-size: 12px; }
+.btn-group { display: flex; gap: 8px; }
+
+/* ====== Table ====== */
+.data-table { width: 100%; border-collapse: collapse; font-size: 13px; }
+.data-table th {
+  background: #fafafa;
+  padding: 10px 12px;
+  text-align: left;
+  font-weight: 600;
+  color: var(--text-secondary);
+  border-bottom: 1px solid var(--border-color);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+  color: var(--text-regular);
+}
+.data-table td:first-child,
+.data-table td:last-child { white-space: nowrap; }
+.data-table td .tag { white-space: nowrap; }
+#page-warning-task .data-table td:nth-child(7),
+#page-warning-task .data-table td:nth-child(8) { white-space: nowrap; }
+#page-warning-task .data-table td:nth-child(6) { min-width: 80px; }
+#page-warning-task .data-table td:nth-child(9) { min-width: 74px; }
+.hit-badge { white-space: nowrap; }
+.stats-pane { overflow-x: auto; }
+#statsPaneLedger .data-table { font-size: 12px; }
+#statsPaneLedger .data-table th,
+#statsPaneLedger .data-table td { padding-left: 6px; padding-right: 6px; }
+#statsPaneLedger .data-table td:nth-child(2),
+#statsPaneLedger .data-table td:nth-child(6),
+#statsPaneLedger .data-table td:nth-child(7),
+#statsPaneLedger .data-table td:nth-child(8),
+#statsPaneLedger .data-table td:nth-child(9),
+#statsPaneLedger .data-table td:nth-child(11) { white-space: nowrap; }
+#statsPaneLedger .data-table td:nth-child(12) { white-space: normal; }
+#statsPaneLedger .data-table th:nth-child(3),
+#statsPaneLedger .data-table td:nth-child(3) { min-width: 88px; }
+#statsPaneLedger .data-table th:nth-child(4),
+#statsPaneLedger .data-table td:nth-child(4) { min-width: 92px; }
+#modal-drill .data-table { font-size: 12px; }
+#modal-drill .data-table th,
+#modal-drill .data-table td { padding-left: 6px; padding-right: 6px; }
+#modal-drill .data-table td:nth-child(1),
+#modal-drill .data-table td:nth-child(5),
+#modal-drill .data-table td:nth-child(6),
+#modal-drill .data-table td:nth-child(7),
+#modal-drill .data-table td:nth-child(8),
+#modal-drill .data-table td:nth-child(10) { white-space: nowrap; }
+#modal-drill .data-table th:nth-child(2),
+#modal-drill .data-table td:nth-child(2) { min-width: 88px; }
+#modal-drill .data-table th:nth-child(3),
+#modal-drill .data-table td:nth-child(3) { min-width: 96px; }
+.data-table tbody tr:hover { background: var(--bg-hover); }
+.data-table .link { color: var(--primary); cursor: pointer; text-decoration: none; }
+.data-table td.wrn-link { color: var(--primary); cursor: pointer; }
+.data-table td.wrn-link:hover { text-decoration: underline; }
+.data-table .link:hover { text-decoration: underline; }
+
+/* ====== Tags / Badges ====== */
+.tag {
+  display: inline-block;
+  padding: 2px 8px;
+  font-size: 12px;
+  border-radius: var(--radius);
+  line-height: 1.5;
+}
+.tag-danger { background: #fef0f0; color: var(--danger); border: 1px solid #fde2e2; }
+.tag-warning { background: #fdf6ec; color: var(--warning); border: 1px solid #faecd8; }
+.tag-success { background: #f0f9eb; color: var(--success); border: 1px solid #e1f3d8; }
+.tag-info { background: #f4f4f5; color: var(--info); border: 1px solid #e9e9eb; }
+.tag-primary { background: var(--primary-light); color: var(--primary); border: 1px solid #d9ecff; }
+
+/* ====== Risk Level Colors ====== */
+.risk-1 { color: #f5655b; font-weight: 600; }
+.risk-2 { color: #e6a23c; font-weight: 600; }
+.risk-3 { color: #0f6cbd; font-weight: 600; }
+.risk-4 { color: #2ba471; font-weight: 600; }
+
+/* ====== Form Elements ====== */
+.form-item { margin-bottom: 16px; }
+.form-label {
+  display: block;
+  font-size: 13px;
+  color: var(--text-regular);
+  margin-bottom: 6px;
+}
+.form-label .required { color: var(--danger); margin-right: 2px; }
+.input, .select, .textarea {
+  width: 100%;
+  padding: 7px 12px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  font-size: 13px;
+  outline: none;
+  transition: border-color 0.15s;
+  background: #fff;
+}
+.input:focus, .select:focus, .textarea:focus { border-color: var(--primary); }
+.input:disabled, .select:disabled, .textarea:disabled {
+  background: #f5f7fa; color: var(--text-secondary); cursor: not-allowed;
+}
+.textarea { resize: vertical; min-height: 80px; }
+.form-row { display: flex; gap: 16px; }
+.form-row > .form-item { flex: 1; }
+
+/* ====== Tabs ====== */
+.tabs { display: flex; border-bottom: 1px solid var(--border-color); margin-bottom: 16px; }
+.tab-item {
+  padding: 8px 20px;
+  cursor: pointer;
+  font-size: 14px;
+  color: var(--text-regular);
+  border-bottom: 2px solid transparent;
+  transition: all 0.15s;
+  position: relative;
+  bottom: -1px;
+}
+.tab-item:hover { color: var(--primary); }
+.tab-item.active { color: var(--primary); border-bottom-color: var(--primary); font-weight: 600; }
+.tab-content { display: none; }
+.tab-content.active { display: block; }
+.task-tab-content { display: none; }
+.task-tab-content.active { display: block; }
+
+/* ====== Switch ====== */
+.switch { display: inline-flex; align-items: center; cursor: pointer; gap: 8px; }
+.switch-track {
+  width: 40px; height: 20px; border-radius: 10px;
+  background: #dcdfe6; position: relative; transition: background 0.2s;
+}
+.switch-thumb {
+  width: 16px; height: 16px; border-radius: 50%; background: #fff;
+  position: absolute; top: 2px; left: 2px; transition: left 0.2s;
+  box-shadow: 0 1px 3px rgba(0,0,0,0.2);
+}
+.switch.on .switch-track { background: var(--primary); }
+.switch.on .switch-thumb { left: 22px; }
+.switch-label { font-size: 13px; color: var(--text-regular); }
+
+/* ====== Modal ====== */
+.modal-overlay {
+  position: fixed; top: 0; left: 0; right: 0; bottom: 0;
+  background: rgba(0,0,0,0.45);
+  z-index: 2000;
+  display: none;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: #fff;
+  border-radius: 12px;
+  max-width: 90vw;
+  max-height: 90vh;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+}
+.modal-header {
+  padding: 12px 20px;
+  border-bottom: 1px solid var(--border-color);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.modal-title { font-size: 16px; font-weight: 600; }
+.modal-close { cursor: pointer; font-size: 20px; color: var(--text-secondary); line-height: 1; }
+.modal-body { padding: 20px; overflow-y: auto; max-height: calc(90vh - 110px); }
+.modal-footer { padding: 12px 20px; border-top: 1px solid var(--border-color); display: flex; justify-content: flex-end; gap: 8px; }
+
+/* ====== Comment / Note ====== */
+.logic-note {
+  background: #f0f6ff;
+  border: 1px dashed #bcdcff;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  margin: 8px 0;
+  font-size: 12px;
+  color: #0b5394;
+  line-height: 1.8;
+}
+.logic-note::before { content: "📝 "; }
+.logic-note .note-title { font-weight: 600; margin-bottom: 2px; display: block; }
+
+/* ====== Risk Detail Display ====== */
+.risk-detail-display {
+  background: #f0f6ff;
+  border: 1px solid #bcdcff;
+  border-radius: var(--radius);
+  padding: 12px 16px;
+  margin: 12px 0 0 0;
+  animation: fadeIn 0.3s ease;
+}
+.risk-detail-display .form-row { margin-bottom: 8px; }
+.risk-detail-display .form-item { flex: 1; }
+.risk-detail-display .form-label { font-size: 11px; color: var(--text-secondary); margin-bottom: 2px; }
+
+/* ====== Statistics Cards ====== */
+.stat-row { display: flex; gap: 16px; margin-bottom: 16px; flex-wrap: wrap; }
+.stat-card {
+  flex: 1;
+  min-width: 140px;
+  background: #fff;
+  border-radius: var(--radius);
+  padding: 16px;
+  box-shadow: var(--shadow-base);
+  cursor: pointer;
+  transition: transform 0.15s;
+}
+.stat-card:hover { transform: translateY(-2px); }
+.stat-card .stat-value { font-size: 28px; font-weight: 700; }
+.stat-card .stat-label { font-size: 13px; color: var(--text-secondary); margin-top: 4px; }
+.stat-card .stat-bar { height: 3px; border-radius: 2px; margin-top: 8px; }
+
+/* ====== Low-code Editor Layout ====== */
+.lc-editor { display: flex; height: 100%; }
+.lc-left {
+  width: 200px;
+  background: #fafafa;
+  border-right: 1px solid var(--border-color);
+  padding: 12px;
+  overflow-y: auto;
+}
+.lc-left-title { font-size: 12px; color: var(--text-secondary); margin-bottom: 8px; font-weight: 600; }
+.lc-component {
+  padding: 8px 12px;
+  margin-bottom: 4px;
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  cursor: grab;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  background: #fff;
+  transition: all 0.15s;
+}
+.lc-component:hover { border-color: var(--primary); color: var(--primary); }
+.lc-component .comp-icon { font-size: 14px; }
+.lc-center {
+  flex: 1;
+  padding: 16px;
+  overflow-y: auto;
+  background: #f9fafc;
+}
+.lc-right {
+  width: 300px;
+  border-left: 1px solid var(--border-color);
+  padding: 12px;
+  overflow-y: auto;
+  background: #fff;
+}
+.lc-right-title { font-size: 13px; font-weight: 600; margin-bottom: 12px; padding-bottom: 8px; border-bottom: 1px solid var(--border-light); }
+
+/* ====== Form Zone Divider ====== */
+.zone-divider {
+  background: linear-gradient(90deg, #e8f4ff, transparent);
+  border-left: 3px solid var(--primary);
+  padding: 8px 12px;
+  margin: 0 0 12px 0;
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--primary-dark);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+}
+.zone-divider .zone-tag { font-size: 12px; font-weight: 400; color: var(--text-secondary); }
+
+/* ====== Read-only field display ====== */
+.readonly-field {
+  background: #f5f7fa;
+  padding: 7px 12px;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  font-size: 13px;
+  color: var(--text-secondary);
+  min-height: 32px;
+}
+
+/* ====== Upload Area ====== */
+.upload-area {
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius);
+  padding: 12px;
+  text-align: center;
+  cursor: pointer;
+  color: var(--text-secondary);
+  font-size: 13px;
+  transition: border-color 0.15s;
+}
+.upload-area:hover { border-color: var(--primary); color: var(--primary); }
+
+/* ====== Signature Area ====== */
+.signature-area {
+  border: 1px dashed var(--border-color);
+  border-radius: var(--radius);
+  height: 80px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: var(--text-secondary);
+  font-size: 13px;
+  cursor: pointer;
+  background: #fafafa;
+}
+.signature-area:hover { border-color: var(--primary); }
+
+/* ====== Condition Group ====== */
+.condition-group {
+  background: #f9fafc;
+  border: 1px solid var(--border-light);
+  border-radius: var(--radius);
+  padding: 12px;
+  margin-bottom: 8px;
+}
+.condition-row {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 8px;
+  flex-wrap: wrap;
+}
+.condition-row .cond-field { flex: 1; min-width: 120px; }
+/* Sub-condition connector between sub-conditions */
+.sub-condition-connector {
+  text-align: center;
+  font-size: 12px;
+  font-weight: 700;
+  color: var(--primary);
+  padding: 4px 0;
+  cursor: pointer;
+  user-select: none;
+}
+.sub-condition-connector:hover { color: var(--primary-dark); text-decoration: underline; }
+.condition-logic {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 10px;
+  font-size: 13px;
+  color: var(--text-regular);
+}
+.condition-logic .logic-tag {
+  padding: 4px 12px;
+  border-radius: var(--radius);
+  cursor: pointer;
+  border: 1px solid var(--border-color);
+  font-size: 12px;
+}
+.condition-logic .logic-tag.active { background: var(--primary); color: #fff; border-color: var(--primary); }
+
+/* ====== Selected items display ====== */
+.selected-items {
+  background: #f0f7ff;
+  border: 1px solid #d9ecff;
+  border-radius: var(--radius);
+  padding: 8px 12px;
+  margin-bottom: 12px;
+}
+.selected-item-tag {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 3px 10px;
+  background: #fff;
+  border: 1px solid #d9ecff;
+  border-radius: 12px;
+  font-size: 12px;
+  margin: 2px;
+}
+.selected-item-tag .remove { cursor: pointer; color: var(--danger); font-weight: 600; }
+
+/* ====== Radio Card ====== */
+.radio-card {
+  border: 2px solid var(--border-color);
+  border-radius: var(--radius);
+  padding: 12px;
+  cursor: pointer;
+  transition: all 0.15s;
+}
+.radio-card:hover { border-color: var(--primary); }
+.radio-card.selected { border-color: var(--primary); background: var(--primary-light); }
+.radio-card-title { font-weight: 600; font-size: 14px; margin-bottom: 4px; }
+.radio-card-desc { font-size: 12px; color: var(--text-secondary); }
+
+/* ====== Checkbox list ====== */
+.checkbox-list { max-height: 200px; overflow-y: auto; border: 1px solid var(--border-color); border-radius: var(--radius); }
+.checkbox-item {
+  display: flex;
+  align-items: center;
+  padding: 8px 12px;
+  cursor: pointer;
+  border-bottom: 1px solid var(--border-light);
+  gap: 8px;
+  font-size: 13px;
+}
+.checkbox-item:last-child { border-bottom: none; }
+.checkbox-item:hover { background: var(--bg-hover); }
+.checkbox-item input[type="checkbox"] { cursor: pointer; }
+
+/* ====== Person category list（预警处理人/通知人按角色勾选） ====== */
+.person-cat-list {
+  border: 1px solid var(--border-color);
+  border-radius: var(--radius);
+  background: #fff;
+  max-height: 480px;
+  overflow-y: auto;
+}
+.person-cat-row {
+  display: flex;
+  align-items: center;
+  padding: 10px 12px;
+  border-bottom: 1px solid var(--border-light);
+  font-size: 13px;
+  gap: 8px;
+}
+.person-cat-row:last-child { border-bottom: none; }
+.person-cat-label { flex: 1; color: var(--text-primary); }
+.person-cat-state { width: 100px; text-align: left; font-size: 12px; color: var(--text-secondary); }
+.person-cat-actions { display: flex; align-items: center; gap: 12px; }
+.checkbox-item-inline {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  cursor: pointer;
+  white-space: nowrap;
+}
+.checkbox-item-inline input[type="checkbox"] { cursor: pointer; }
+.btn-icon {
+  background: transparent;
+  border: 1px solid var(--border-color);
+  color: var(--text-secondary);
+  width: 22px;
+  height: 22px;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 14px;
+  line-height: 1;
+  padding: 0;
+}
+.btn-icon:hover { border-color: var(--primary); color: var(--primary); }
+.person-cat-divider {
+  padding: 6px 12px;
+  background: #f5f7fa;
+  color: var(--text-secondary);
+  font-size: 12px;
+  font-weight: 500;
+  border-bottom: 1px solid var(--border-light);
+  border-top: 1px solid var(--border-light);
+}
+
+/* ====== Timeline ====== */
+.timeline { padding-left: 16px; border-left: 2px solid var(--border-color); }
+.timeline-item { position: relative; padding: 0 0 16px 16px; }
+.timeline-item::before {
+  content: '';
+  position: absolute;
+  left: -21px;
+  top: 4px;
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: var(--primary);
+  border: 2px solid #fff;
+  box-shadow: 0 0 0 1px var(--primary);
+}
+.timeline-time { font-size: 12px; color: var(--text-secondary); }
+.timeline-content { font-size: 13px; color: var(--text-regular); margin-top: 2px; }
+
+/* ====== Toolbar ====== */
+.toolbar {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+.toolbar .spacer { flex: 1; }
+
+/* ====== Search bar ====== */
+.search-bar {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+  margin-bottom: 12px;
+  flex-wrap: wrap;
+}
+
+/* ====== Dashboard chart placeholder ====== */
+.chart-placeholder {
+  display: flex;
+  align-items: flex-end;
+  gap: 12px;
+  height: 200px;
+  padding: 16px 0;
+}
+.chart-bar-group { flex: 1; display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.chart-bar { width: 100%; border-radius: 3px 3px 0 0; transition: height 0.3s; cursor: pointer; }
+.chart-label { font-size: 12px; color: var(--text-secondary); }
+
+/* ====== Misc ====== */
+.text-muted { color: var(--text-secondary); }
+.text-sm { font-size: 12px; }
+.text-danger { color: var(--danger); }
+.text-success { color: var(--success); }
+.text-warning { color: var(--warning); }
+.mt-8 { margin-top: 8px; }
+.mt-16 { margin-top: 16px; }
+.mb-8 { margin-bottom: 8px; }
+.mb-16 { margin-bottom: 16px; }
+.pl-16 { padding-left: 16px; }
+.flex { display: flex; }
+.flex-1 { flex: 1; }
+.gap-8 { gap: 8px; }
+.gap-16 { gap: 16px; }
+.items-center { align-items: center; }
+.justify-between { justify-content: space-between; }
+.w-full { width: 100%; }
+.cursor-pointer { cursor: pointer; }
+.font-bold { font-weight: 600; }
+.no-select { user-select: none; }
+
+/* Divider */
+.divider { height: 1px; background: var(--border-light); margin: 12px 0; }
+
+/* Collapse arrow */
+.collapse-arrow {
+  display: inline-block;
+  transition: transform 0.2s;
+  font-size: 10px;
+  margin-right: 4px;
+}
+.collapse-arrow.open { transform: rotate(90deg); }
+
+/* Sub-form table */
+.sub-form-table { width: 100%; border: 1px solid var(--border-color); border-radius: var(--radius); overflow: hidden; }
+.sub-form-table th { background: #fafafa; padding: 8px; font-size: 12px; text-align: left; border-bottom: 1px solid var(--border-color); }
+.sub-form-table td { padding: 8px; border-bottom: 1px solid var(--border-light); font-size: 13px; }
+.sub-form-table .sub-input {
+  width: 100%; border: 1px solid transparent; padding: 4px 6px;
+  font-size: 13px; background: transparent; border-radius: 2px;
+}
+.sub-form-table .sub-input:focus { border-color: var(--primary); background: #fff; }
+
+/* Empty state */
+.empty-state {
+  text-align: center;
+  padding: 40px 20px;
+  color: var(--text-secondary);
+  font-size: 13px;
+}
+
+/* Warning level badge */
+.warn-level {
+  display: inline-flex;
+  align-items: center;
+  gap: 4px;
+  padding: 2px 8px;
+  border-radius: 10px;
+  font-size: 12px;
+  font-weight: 500;
+}
+
+/* ====== 预警规则设置（对齐参考原型样式） ====== */
+:root{
+  --amber:#0f6cbd;
+  --amber-soft:rgba(15,108,189,0.10);
+}
+.page-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:16px; margin-bottom:18px; }
+.ph-title{ font-size:18px; font-weight:700; color:var(--text-primary); }
+.ph-desc{ font-size:12px; color:var(--text-secondary); margin-top:6px; line-height:1.6; max-width:780px; }
+.ph-actions{ display:flex; gap:10px; flex-shrink:0; }
+
+.rtabs{ display:flex; gap:6px; background:var(--bg-hover); border-radius:8px; padding:5px; margin-bottom:18px; }
+.rtab{ flex:1; text-align:center; padding:10px 16px; font-size:13px; font-weight:600; color:var(--text-secondary); cursor:pointer; border-radius:8px; transition:.2s; display:flex; align-items:center; justify-content:center; gap:6px; }
+.rtab:hover{ color:var(--text-primary); }
+.rtab.active{ background:var(--bg-white); color:var(--amber); box-shadow:0 1px 3px rgba(0,0,0,.08); }
+.rtab .rt-num{ background:var(--amber-soft); color:var(--amber); font-size:11px; padding:1px 7px; border-radius:8px; }
+.rtab-pane{ display:none; }
+.rtab-pane.active{ display:block; animation:fadeUp .25s ease; }
+@keyframes fadeUp{ from{opacity:0;transform:translateY(6px);} to{opacity:1;transform:none;} }
+
+.section-block{ background:var(--bg-white); border-radius:var(--radius); border:1px solid var(--border-light); padding:20px; margin-bottom:16px; }
+.section-block h5{ font-size:13px; font-weight:700; color:var(--text-primary); margin-bottom:14px; padding-bottom:10px; border-bottom:1px solid var(--border-light); display:flex; align-items:center; gap:8px; }
+.section-block h5 i{ color:var(--amber); font-size:14px; }
+
+.cond-relation{ display:inline-flex; align-items:center; gap:8px; padding:10px 14px; background:var(--amber-soft); border-radius:var(--radius); font-size:13px; font-weight:500; color:#0b5394; margin-bottom:14px; flex-wrap:wrap; }
+.cond-relation select{ padding:5px 10px; border:1px solid rgba(15,108,189,.35); border-radius:5px; font-size:13px; font-weight:700; color:#0b5394; background:var(--bg-white); }
+
+.cond-group{ border:1px solid var(--border-color); border-radius:var(--radius); padding:16px; margin-bottom:14px; background:var(--bg-white); }
+.cg-head{ display:flex; align-items:center; justify-content:space-between; margin-bottom:12px; }
+.cg-title{ font-size:13px; font-weight:700; color:var(--text-secondary); }
+.group-rel{ display:inline-flex; align-items:center; gap:6px; font-size:12px; color:var(--text-secondary); margin-right:12px; }
+.group-rel select{ padding:4px 8px; border:1px solid var(--border-color); border-radius:4px; font-size:12px; }
+.sub-cond-list{ margin-top:4px; }
+.sub-cond-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:9px 10px; background:var(--bg-hover); border:1px solid var(--border-light); border-radius:var(--radius); margin-bottom:6px; }
+.sub-cond-row select, .sub-cond-row input{ padding:6px 10px; font-size:12px; border:1px solid var(--border-color); border-radius:4px; }
+.sc-field{ min-width:120px; } .sc-logic{ min-width:110px; } .sc-value{ min-width:120px; }
+.sub-cond-connector{ padding:2px 0 2px 10px; }
+.sc-conn-tag{ display:inline-block; padding:2px 12px; border-radius:12px; background:var(--amber-soft); color:#0b5394; font-weight:700; font-size:11px; }
+.cg-add{ width:100%; margin-top:6px; border:1px dashed var(--border-color); color:var(--text-secondary); background:transparent; }
+.cg-add:hover{ border-color:var(--amber); color:var(--amber); }
+.risk-attr-area{ margin-top:14px; padding-top:14px; border-top:1px dashed var(--border-light); }
+.risk-attr-area .ra-row{ display:flex; gap:16px; } .risk-attr-area .ra-row .form-item{ flex:1; }
+
+.empty-tip{ font-size:12px; color:var(--text-secondary); text-align:center; padding:12px; }
+.hide{ display:none !important; }
+.mb0{ margin-bottom:0 !important; }
+
+/* 组织架构选择（转发） */
+.org-picker{ border:1px solid var(--border-color); border-radius:var(--radius); overflow:hidden; }
+.org-search{ display:flex; align-items:center; gap:6px; padding:9px 12px; border-bottom:1px solid var(--border-light); background:var(--bg-hover); }
+.org-search i{ color:var(--text-secondary); }
+.org-search input{ border:none; background:transparent; outline:none; flex:1; font-size:13px; }
+.org-tree{ max-height:300px; overflow:auto; padding:6px; }
+.org-dept-head{ display:flex; align-items:center; gap:6px; padding:8px 10px; font-weight:600; cursor:pointer; font-size:13px; color:var(--text-primary); }
+.org-dept-head i{ transition:.2s; color:var(--text-secondary); }
+.org-dept-head .org-count{ margin-left:auto; font-size:11px; color:var(--text-secondary); background:var(--bg-hover); padding:1px 8px; border-radius:10px; }
+.org-people{ padding:2px 0 6px 18px; }
+.org-person{ display:flex; align-items:center; gap:8px; padding:7px 10px; border-radius:var(--radius); font-size:13px; cursor:pointer; color:var(--text-regular); }
+.org-person:hover{ background:var(--bg-hover); }
+.org-person.active{ background:var(--primary-light); color:var(--primary); font-weight:600; }
+.org-selected{ margin-top:12px; font-size:13px; color:var(--text-secondary); }
+.org-selected b{ color:var(--primary); }
+
+/* ====== 预警内容 / 工作项（条件组） ====== */
+.cg-seq{ display:inline-flex; align-items:center; padding:2px 8px; border-radius:10px; background:var(--amber-soft); color:#0b5394; font-size:11px; font-weight:700; margin-right:10px; flex-shrink:0; }
+.cg-content{ display:flex; align-items:center; gap:8px; flex:1; margin-right:12px; min-width:0; }
+.cg-content > label{ font-size:12px; color:var(--text-secondary); white-space:nowrap; }
+.cg-content > label .text-danger{ color:var(--danger); }
+.cg-content input{ flex:1; min-width:160px; padding:7px 10px; font-size:13px; font-weight:600; color:var(--text-primary); border:1px solid var(--border-color); border-radius:4px; }
+.cg-content input:focus{ outline:none; border-color:var(--amber); }
+.sub-cond-hint{ font-size:12px; color:var(--text-secondary); margin:2px 0 7px; }
+
+/* ====== 任务列表：预警内容 / 预警工作项 / 命中明细 ====== */
+.wc-title{ font-weight:600; color:var(--text-primary); }
+.hit-main{ font-size:13px; color:var(--text-primary); }
+.hit-sub{ font-size:12px; color:var(--text-secondary); margin-top:2px; }
+.hit-sub b{ color:var(--danger); }
+.hit-badge{ display:inline-block; margin-left:6px; padding:1px 7px; border-radius:9px; background:var(--primary-light); color:var(--primary); font-size:11px; }
+.hit-cell{ cursor:pointer; }
+.hit-cell:hover{ color:var(--primary); }
+.hit-caret{ display:inline-block; width:0; height:0; border-left:3px solid transparent; border-right:3px solid transparent; border-top:4px solid currentColor; margin-left:5px; vertical-align:middle; opacity:.55; }
+
+/* ====== 适用预警条件：超长截断 + 悬浮看全部 ====== */
+.cond-cell{ position:relative; max-width:230px; }
+.cond-main{ display:inline-block; max-width:146px; overflow:hidden; text-overflow:ellipsis; white-space:nowrap; vertical-align:middle; }
+.cond-tip{ display:none; position:absolute; left:0; top:100%; margin-top:6px; z-index:80; min-width:200px; max-width:340px; padding:8px 10px; background:#fff; border:1px solid var(--border-color); border-radius:var(--radius); box-shadow:0 8px 24px rgba(23,36,55,.14); font-size:12px; line-height:1.9; color:var(--text-regular); white-space:normal; text-align:left; }
+.cond-tip-title{ color:var(--text-secondary); margin-bottom:3px; }
+.cond-cell:hover .cond-tip{ display:block; }
+.hit-detail-row > td{ background:#f7f9fc; padding:0 !important; }
+.hit-detail-inner{ padding:10px 14px; }
+.hit-detail-table{ width:100%; border-collapse:collapse; font-size:12px; }
+.hit-detail-table th{ text-align:left; font-weight:500; color:var(--text-secondary); padding:5px 8px; border-bottom:1px solid var(--border-light); }
+.hit-detail-table td{ padding:6px 8px; border-bottom:1px solid var(--border-light); }
+.hit-conclusion{ margin-top:8px; font-size:12px; color:var(--text-secondary); }
+
+/* ====== 超期徽标（独立于状态，放在状态列）====== */
+.ovd{ display:inline-block; margin-left:6px; padding:1px 7px; border-radius:9px; font-size:11px; line-height:16px; vertical-align:middle; }
+.ovd-late{ background:#fef0f0; color:var(--danger); }
+.ovd-done{ background:#fdf6ec; color:var(--warning); }
+/* ====== 处置记录（只读 · 按人分块）====== */
+#excTableBody td{ vertical-align:top; }
+#excTableBody td:first-child, #excTableBody td:last-child{ white-space:nowrap; }
+.dis-block{ border:1px solid var(--border-light); border-radius:var(--radius); padding:10px 12px; margin-bottom:10px; }
+.dis-block:last-child{ margin-bottom:0; }
+.dis-head{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; margin-bottom:6px; }
+.dis-name{ font-size:13px; font-weight:600; color:var(--text-primary); }
+.dis-from{ font-size:11px; color:var(--text-secondary); background:#f4f4f5; border-radius:9px; padding:1px 7px; }
+.dis-time{ margin-left:auto; font-size:12px; color:var(--text-secondary); }
+.dis-label{ font-size:12px; color:var(--text-secondary); margin:6px 0 3px; }
+.dis-text{ font-size:12px; color:var(--text-regular); line-height:1.8; }
+.dis-empty{ font-size:12px; color:var(--text-secondary); margin-top:4px; }
+/* ====== 统计页 Tab / 分派异常 ====== */
+.stats-tabs{ display:flex; gap:4px; border-bottom:1px solid var(--border-color); margin:2px 0 14px; }
+.stats-tab{ padding:8px 16px; font-size:13px; color:var(--text-secondary); cursor:pointer; border-bottom:2px solid transparent; margin-bottom:-1px; }
+.stats-tab.active{ color:var(--primary); border-bottom-color:var(--primary); font-weight:600; }
+.tab-count{ display:inline-block; min-width:18px; padding:0 5px; margin-left:4px; border-radius:9px; background:#fef0f0; color:var(--danger); font-size:11px; line-height:16px; text-align:center; }
+.rp-list{ max-height:170px; overflow:auto; border:1px solid var(--border-color); border-radius:var(--radius); padding:8px 10px; }
+.rp-dept{ font-size:12px; color:var(--text-secondary); margin:6px 0 4px; }
+.rp-person{ display:inline-block; padding:3px 10px; margin:0 6px 6px 0; font-size:12px; border:1px solid var(--border-color); border-radius:14px; cursor:pointer; }
+.rp-person:hover{ border-color:var(--primary); color:var(--primary); }
+.rp-person.active{ border-color:var(--primary); background:var(--primary-light); color:var(--primary); }
+/* ====== 处理日志（操作留痕时间线 · 内嵌详情底部）====== */
+.log-head-bar{ display:flex; align-items:center; gap:10px; padding:9px 12px; background:#f7f9fc; border:1px solid var(--border-light); border-radius:var(--radius); cursor:pointer; }
+.log-head-bar:hover{ border-color:var(--primary); }
+.log-head-title{ font-size:13px; font-weight:600; color:var(--text-primary); }
+.log-head-meta{ font-size:12px; color:var(--text-secondary); }
+.log-head-toggle{ margin-left:auto; font-size:12px; color:var(--primary); }
+.log-list{ display:flex; flex-direction:column; }
+.log-item{ position:relative; padding:0 0 14px 20px; border-left:1px solid var(--border-color); }
+.log-item:last-child{ border-left-color:transparent; padding-bottom:0; }
+.log-dot{ position:absolute; left:-5px; top:4px; width:9px; height:9px; border-radius:50%; background:var(--info); box-shadow:0 0 0 2px #fff; }
+.log-item.t-forward .log-dot{ background:var(--warning); }
+.log-item.t-submit .log-dot{ background:var(--success); }
+.log-item.t-void .log-dot{ background:#a8abb2; }
+.log-head{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; }
+.log-time{ font-size:12px; color:var(--text-secondary); font-variant-numeric:tabular-nums; }
+.log-actor{ font-size:13px; font-weight:600; color:var(--text-primary); }
+.log-role{ font-size:11px; color:var(--text-secondary); background:#f4f4f5; border-radius:9px; padding:1px 7px; }
+.log-action{ display:inline-block; padding:1px 7px; font-size:11px; border-radius:9px; line-height:1.6; }
+.log-action.a-system{ background:#f4f4f5; color:var(--info); }
+.log-action.a-forward{ background:#fdf6ec; color:var(--warning); }
+.log-action.a-submit{ background:#f0f9eb; color:var(--success); }
+.log-action.a-void{ background:#f4f4f5; color:var(--info); }
+.log-detail{ margin-top:4px; font-size:12px; color:var(--text-regular); line-height:1.75; }
+.log-foot{ margin-top:10px; display:flex; align-items:center; gap:12px; font-size:12px; flex-wrap:wrap; }
+.log-empty{ font-size:12px; color:var(--text-secondary); padding:8px 0; }
+.log-more{ text-align:center; margin-top:6px; }
+
+
+/* ====== 开发说明抽屉 ====== */
+.dev-doc-btn { display:inline-flex; align-items:center; gap:6px; height:30px; padding:0 12px; font-size:13px; color:var(--primary); background:var(--primary-light); border:1px solid #cfe2f6; border-radius:6px; cursor:pointer; }
+.dev-doc-btn:hover { background:#dcebf9; }
+.dev-doc-drawer { position:fixed; top:0; right:0; width:600px; max-width:94vw; height:100vh; background:var(--bg-white); border-left:1px solid var(--border-color); box-shadow:-10px 0 28px rgba(23,36,55,0.10); transform:translateX(100%); transition:transform .22s ease; z-index:900; display:flex; flex-direction:column; }
+.dev-doc-drawer.open { transform:translateX(0); }
+.dev-doc-head { height:52px; flex-shrink:0; display:flex; align-items:center; justify-content:space-between; padding:0 18px; border-bottom:1px solid var(--border-color); background:#fafbfd; }
+.dev-doc-head .t { font-size:14px; font-weight:600; color:var(--text-primary); }
+.dev-doc-head .s { font-size:12px; color:var(--text-secondary); margin-left:8px; font-weight:400; }
+.dev-doc-close { width:26px; height:26px; line-height:24px; text-align:center; border-radius:6px; cursor:pointer; color:var(--text-secondary); font-size:16px; }
+.dev-doc-close:hover { background:var(--bg-hover); color:var(--text-primary); }
+.dev-doc-body { flex:1; overflow-y:auto; padding:18px 22px 70px; font-size:13px; line-height:1.78; color:var(--text-regular); }
+.dev-doc-body h4 { font-size:13.5px; color:var(--text-primary); margin:22px 0 8px; padding-left:9px; border-left:3px solid var(--primary); line-height:1.4; font-weight:600; }
+.dev-doc-body h4:first-child { margin-top:0; }
+.dev-doc-body h5 { font-size:12.5px; color:var(--text-primary); margin:14px 0 6px; font-weight:600; }
+.dev-doc-body h6 { font-size:12px; color:var(--text-secondary); margin:12px 0 5px; font-weight:600; }
+.dev-doc-body p { margin:0 0 8px; }
+.dev-doc-body ul, .dev-doc-body ol { margin:0 0 8px; padding-left:20px; }
+.dev-doc-body li { margin:3px 0; }
+.dev-doc-body b { color:var(--text-primary); font-weight:600; }
+.dev-doc-body code { font-family:Consolas,Menlo,monospace; font-size:11.5px; background:#f2f5f9; padding:1px 5px; border-radius:4px; color:var(--primary-dark); }
+.devdoc-table { width:100%; border-collapse:collapse; font-size:12px; margin:4px 0 12px; }
+.devdoc-table th { background:#f7f9fc; color:var(--text-secondary); font-weight:600; text-align:left; padding:6px 8px; border:1px solid var(--border-color); white-space:nowrap; }
+.devdoc-table td { padding:6px 8px; border:1px solid var(--border-color); vertical-align:top; line-height:1.62; }
+.devdoc-table td:first-child { color:var(--text-primary); white-space:nowrap; }
+.devdoc-table--spec th:nth-child(2), .devdoc-table--spec td:nth-child(2) { width:80px; }
+.devdoc-table--spec th:nth-child(3), .devdoc-table--spec td:nth-child(3) { width:38px; }
+.devdoc-table--spec th:nth-child(4), .devdoc-table--spec td:nth-child(4) { width:108px; }
+.devdoc-table--spec td:nth-child(2), .devdoc-table--spec td:nth-child(3) { font-size:11.5px; color:var(--text-secondary); }
+.devdoc-table--spec td:nth-child(4) { font-size:11px; color:var(--text-secondary); white-space:nowrap; }
+.devdoc-kv { display:grid; grid-template-columns:86px 1fr; gap:5px 12px; font-size:12.5px; margin:0 0 6px; }
+.devdoc-kv .k { color:var(--text-secondary); }
+.devdoc-tip { background:#fdf8ee; border:1px solid #f3e2c0; border-radius:6px; padding:8px 11px; font-size:12px; margin:8px 0 12px; color:#7a5b1e; }
+.devdoc-empty { color:var(--text-secondary); font-size:13px; padding:28px 0; line-height:1.9; }
+.devdoc-src { display:none; }
+.app-container { transition: padding-right .22s ease; }
+body.devdoc-open .app-container { padding-right: 600px; }
+@media (max-width: 980px) { body.devdoc-open .app-container { padding-right: 0; } }
+
+</style>
+</head>
+<body>
+
+<div class="app-container">
+  <!-- ====== Sidebar ====== -->
+  <div class="sidebar" id="sidebar">
+    <div class="sidebar-header">
+      <span>⚠️ 预警管控平台</span>
+    </div>
+    <div class="sidebar-menu" id="sidebarMenu">
+      <!-- ================================================================
+           已隐藏页面（2026-10-21 产品决定暂不提供，仅隐藏、未删除）
+           恢复方法：删除对应菜单项与页面 div 上的 hidden 属性即可
+             1) 预警信息表          → data-page="warning-info-table"（分组标题「工作表」也需去掉 hidden）
+             2) 预警统计（按工作表） → data-page="warning-stats-aggr"
+           ================================================================ -->
+      <div class="menu-group-title" hidden>工作表</div>
+      <div class="menu-item" data-page="warning-info-table" hidden onclick="navigateTo('warning-info-table')">
+        <span class="menu-icon">📋</span> 预警信息表
+      </div>
+
+      <div class="menu-group-title">工作表管理</div>
+      <div class="menu-item" data-page="warning-rule" onclick="navigateTo('warning-rule')">
+        <span class="menu-icon">⚙️</span> 预警规则设置
+      </div>
+
+      <div class="menu-group-title">预警分级管控</div>
+      <div class="menu-item" data-page="warning-dashboard" onclick="navigateTo('warning-dashboard')">
+        <span class="menu-icon">📊</span> 预警分级看板
+      </div>
+      <div class="menu-item active" data-page="warning-task" onclick="navigateTo('warning-task')">
+        <span class="menu-icon">🔔</span> 预警任务
+      </div>
+
+      <div class="menu-group-title">预警统计</div>
+      <div class="menu-item" data-page="warning-stats" onclick="navigateTo('warning-stats')">
+        <span class="menu-icon">📋</span> 预警信息表统计
+      </div>
+      <div class="menu-item" data-page="warning-stats-aggr" hidden onclick="navigateTo('warning-stats-aggr')">
+        <span class="menu-icon">📈</span> 预警统计（按工作表）
+      </div>
+    </div>
+  </div>
+
+  <!-- ====== Main ====== -->
+  <div class="main-container">
+    <div class="top-bar">
+      <div class="breadcrumb" id="breadcrumb">预警分级管控 / <span>预警任务</span></div>
+      <div class="top-bar-right">
+        <button class="dev-doc-btn" onclick="toggleDevDoc()">开发说明</button>
+        <span class="text-sm text-muted">管理员</span>
+        <div class="avatar">管</div>
+      </div>
+    </div>
+    <div class="content-area" id="contentArea">
+
+      <!-- ================================================================ -->
+      <!-- PAGE 1: 预警信息表 - 列表视图 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-info-table" hidden><!-- 已隐藏（2026-10-21）：预警信息表；恢复时删除本行 hidden -->
+
+        <!-- 列表视图 -->
+        <div id="wit-list-view">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title">预警信息表</div>
+              <span class="tag" style="background:#f4f4f5;color:#8b95a5;border:1px solid #e9e9eb;">开发参考 · 不对用户开放</span>
+            </div>
+            <div class="card-body">
+
+
+              <div class="search-bar">
+                <input class="input" style="width: 200px;" placeholder="搜索表单名称..." value="预警信息表" readonly>
+                <select class="select" style="width: 140px;">
+                  <option>全部状态</option>
+                  <option>启用</option>
+                  <option>停用</option>
+                </select>
+                <button class="btn btn-primary btn-sm">🔍 查询</button>
+                <button class="btn btn-sm">重置</button>
+              </div>
+
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>表单名称</th>
+                    <th>表单类型</th>
+                    <th>状态</th>
+                    <th>简介</th>
+                    <th>更新人</th>
+                    <th>更新时间</th>
+                    <th>操作</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td class="link" onclick="enterWitEditView()">预警信息表</td>
+                    <td><span class="tag tag-primary">预警信息表</span></td>
+                    <td><span class="tag tag-success">启用</span></td>
+                    <td class="text-sm">系统预制统一模板，存储全部预警基础信息、处置记录</td>
+                    <td>系统</td>
+                    <td>2026-07-08 09:30</td>
+                    <td>
+                      <button class="btn-text btn-sm" onclick="enterWitEditView()">编辑</button>
+                      <button class="btn-text btn-sm" onclick="enterWitViewMode()">查看</button>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+
+            </div>
+          </div>
+        </div>
+
+        <!-- 编辑视图：低代码表单设计器 -->
+        <div id="wit-edit-view" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title flex items-center gap-8">
+                <button class="btn btn-sm" onclick="backToWitList()">← 返回</button>
+                <span>编辑预警信息表 - 表单设计器</span>
+              </div>
+              <div class="btn-group">
+                <button class="btn btn-sm btn-primary" onclick="backToWitList()">💾 保存</button>
+                <button class="btn btn-sm" onclick="backToWitList()">取消</button>
+              </div>
+            </div>
+            <div class="card-body" style="padding:0;">
+              <div class="lc-editor" style="height: calc(100vh - 200px);">
+
+                <!-- 左侧：低代码平台组件库 -->
+                <div class="lc-left">
+                  <div class="lc-left-title">组件库</div>
+                  <div class="lc-component"><span class="comp-icon">📝</span> 单行文本</div>
+                  <div class="lc-component"><span class="comp-icon">📄</span> 多行文本</div>
+                  <div class="lc-component"><span class="comp-icon">🔢</span> 数字</div>
+                  <div class="lc-component"><span class="comp-icon">📅</span> 日期时间</div>
+                  <div class="lc-component"><span class="comp-icon">📋</span> 下拉选择</div>
+                  <div class="lc-component"><span class="comp-icon">☑️</span> 多选框</div>
+                  <div class="lc-component"><span class="comp-icon">🔘</span> 单选框</div>
+                  <div class="lc-component"><span class="comp-icon">👤</span> 人员选择</div>
+                  <div class="lc-component"><span class="comp-icon">📎</span> 附件上传</div>
+                  <div class="lc-component"><span class="comp-icon">✍️</span> 电子签字</div>
+                  <div class="lc-component"><span class="comp-icon">📊</span> 子表单</div>
+                  <div class="lc-component"><span class="comp-icon">🔗</span> 关联数据</div>
+                  <div class="lc-component"><span class="comp-icon">📏</span> 地址</div>
+                  <div class="lc-component"><span class="comp-icon">🏷️</span> 标签</div>
+                  <div class="lc-component"><span class="comp-icon">💡</span> 提示文字</div>
+
+                  <div class="lc-left-title mt-16">布局组件</div>
+                  <div class="lc-component"><span class="comp-icon">▭</span> 分栏</div>
+                  <div class="lc-component"><span class="comp-icon">◧</span> 分组</div>
+                  <div class="lc-component"><span class="comp-icon">▬</span> 分割线</div>
+                </div>
+
+                <!-- 中间：表单画布 -->
+                <div class="lc-center">
+
+
+                  <!-- 上区：预警基础信息区 -->
+                  <div class="zone-divider">
+                    <span>上区 - 预警基础信息区</span>
+                    <span class="zone-tag">系统自动抓取回填，无需人工录入</span>
+                  </div>
+
+
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">工作表名称</label>
+                      <input class="input" value="预警信息表" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">预警内容</label>
+                      <input class="input" value="设备温度超限预警" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">工作项</label>
+                      <input class="input" value="设备温度（等 2 项）" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">预警发生时间</label>
+                      <input class="input" value="2026-07-08 10:23:45" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">预警值（阈值）</label>
+                      <input class="input" value="设备温度 > 80°C" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">触发值（实测）</label>
+                      <input class="input" value="设备温度 = 85°C" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">通知人</label>
+                      <input class="input" value="陈海波、孙立" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">处理人</label>
+                      <input class="input" value="王五、李国强" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+                  <div class="form-row mb-8">
+                    <div class="form-item">
+                      <label class="form-label">预警处理期限</label>
+                      <input class="input" value="2026-07-08 18:00:00" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                    <div class="form-item">
+                      <label class="form-label">表单提交人</label>
+                      <input class="input" value="王五（一线操作员）" disabled style="background:#f5f7fa;color:#909399;">
+                    </div>
+                  </div>
+
+                  <div class="divider mt-16 mb-16"></div>
+
+                  <!-- 下区：预警处置情况区 -->
+                  <div class="zone-divider">
+                    <span>下区 - 预警处置情况区</span>
+                    <span class="zone-tag">预警处理人工填写 · 支持增行（多处理人）</span>
+                  </div>
+
+
+                  <div class="sub-form-table">
+                    <table style="width:100%;">
+                      <thead>
+                        <tr>
+                          <th style="width:25%;">处理情况</th>
+                          <th style="width:20%;">整改照片/附件</th>
+                          <th style="width:15%;">实际处理人</th>
+                          <th style="width:15%;">电子签字</th>
+                          <th style="width:8%;">操作</th>
+                        </tr>
+                      </thead>
+                      <tbody id="disposalTableBody">
+                        <tr>
+                          <td><input class="sub-input" value="已停机降温，更换冷却风扇"></td>
+                          <td><span class="tag tag-info">📎 整改照片.jpg</span></td>
+                          <td><input class="sub-input" value="李四"></td>
+                          <td><span class="text-success">✅ 已签字</span></td>
+                          <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td><input class="sub-input" value="复核确认温度正常"></td>
+                          <td><span class="tag tag-info">📎 复核记录.pdf</span></td>
+                          <td><input class="sub-input" value="张三"></td>
+                          <td><span class="text-success">✅ 已签字</span></td>
+                          <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+                        </tr>
+                        <tr>
+                          <td><input class="sub-input" placeholder="请输入处理情况..."></td>
+                          <td><span class="tag tag-info" style="cursor:pointer;">📎 上传</span></td>
+                          <td><input class="sub-input" placeholder="选择人员..."></td>
+                          <td><span class="text-muted">待签字</span></td>
+                          <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+                        </tr>
+                      </tbody>
+                    </table>
+                  </div>
+                  <button class="btn btn-sm mt-8" onclick="addDisposalRow()">+ 增行</button>
+
+
+                </div>
+
+                <!-- 右侧：表单属性编辑 -->
+                <div class="lc-right">
+                  <div class="lc-right-title">表单属性</div>
+
+                  <div class="form-item">
+                    <label class="form-label">表单名称</label>
+                    <input class="input" value="预警信息表" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">表单编码</label>
+                    <input class="input" value="WRN_INFO_001" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">表单类型</label>
+                    <input class="input" value="预警信息表" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">表单描述</label>
+                    <textarea class="textarea" rows="3">系统预制统一模板，存储全部预警基础信息、处置记录；用户不可新增、删除工作表，仅可维护单元格属性</textarea>
+                  </div>
+
+                  <div class="divider"></div>
+
+                  <div class="lc-right-title">字段属性 - 工作表名称</div>
+                  <div class="form-item">
+                    <label class="form-label">字段名称</label>
+                    <input class="input" value="工作表名称">
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">字段类型</label>
+                    <input class="input" value="单行文本" disabled>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">数据来源</label>
+                    <select class="select">
+                      <option>系统自动抓取</option>
+                    </select>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">是否只读</label>
+                    <div class="switch on" onclick="toggleSwitch(this)">
+                      <div class="switch-track"><div class="switch-thumb"></div></div>
+                      <span class="switch-label">是</span>
+                    </div>
+                  </div>
+                  <div class="form-item">
+                    <label class="form-label">是否必填</label>
+                    <div class="switch on" onclick="toggleSwitch(this)">
+                      <div class="switch-track"><div class="switch-thumb"></div></div>
+                      <span class="switch-label">是</span>
+                    </div>
+                  </div>
+
+
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- 查看视图 -->
+        <div id="wit-view-mode" style="display:none;">
+          <div class="card">
+            <div class="card-header">
+              <div class="card-title flex items-center gap-8">
+                <button class="btn btn-sm" onclick="backToWitList()">← 返回</button>
+                <span>查看 - 预警信息表（只读）</span>
+              </div>
+            </div>
+            <div class="card-body">
+
+
+              <div class="zone-divider">
+                <span>上区 - 预警基础信息区</span>
+                <span class="zone-tag">系统自动抓取回填（只读）</span>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">工作表名称</label><div class="readonly-field">预警信息表</div></div>
+                <div class="form-item"><label class="form-label">预警内容</label><div class="readonly-field">设备温度超限预警</div></div>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">工作项</label><div class="readonly-field">设备温度（等 2 项）</div></div>
+                <div class="form-item"><label class="form-label">预警发生时间</label><div class="readonly-field">2026-07-08 10:23:45</div></div>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">预警值（阈值）</label><div class="readonly-field">设备温度 > 80°C</div></div>
+                <div class="form-item"><label class="form-label">触发值（实测）</label><div class="readonly-field">设备温度 = 85°C</div></div>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">通知人</label><div class="readonly-field">陈海波、孙立</div></div>
+                <div class="form-item"><label class="form-label">处理人</label><div class="readonly-field">王五、李国强 <a class="link" style="margin-left:6px;" onclick="showAssigneeModal('WRN-20260708-001')">处理人明细</a></div></div>
+              </div>
+              <div class="form-row mb-8">
+                <div class="form-item"><label class="form-label">预警处理期限</label><div class="readonly-field">2026-07-08 18:00:00</div></div>
+                <div class="form-item"><label class="form-label">表单提交人</label><div class="readonly-field">王五（一线操作员）</div></div>
+              </div>
+
+              <div class="divider mt-16 mb-16"></div>
+
+              <div class="zone-divider">
+                <span>下区 - 预警处置情况区</span>
+                <span class="zone-tag">预警处理人工填写（只读）</span>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>处理情况</th>
+                    <th>整改照片/附件</th>
+                    <th>实际处理人</th>
+                    <th>实际处理时间</th>
+                    <th>电子签字</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr>
+                    <td>已停机降温，更换冷却风扇</td>
+                    <td>📎 整改照片.jpg</td>
+                    <td>李四</td>
+                    <td>2026-07-08 14:20:05</td>
+                    <td><span class="text-success">✅ 已签字</span></td>
+                  </tr>
+                  <tr>
+                    <td>复核确认温度正常</td>
+                    <td>📎 复核记录.pdf</td>
+                    <td>张三</td>
+                    <td>2026-07-08 15:05:32</td>
+                    <td><span class="text-success">✅ 已签字</span></td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 3: 预警规则设置 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-rule">
+        <!-- 视图1：工作表列表 -->
+        <div id="rulesListView">
+          <div class="page-head">
+            <div>
+              <div class="ph-title">工作表预警配置</div>
+              <div class="ph-desc">选择目标工作表，进入该表的预警设置：预警条件、预警通知人与超期提醒均在同一个编辑器内配置。</div>
+            </div>
+          </div>
+          <div class="card">
+            <div class="card-header"><div class="card-title">工作表列表</div></div>
+            <div class="card-body">
+              <table class="data-table">
+                <thead><tr><th>工作表名称</th><th>已配置预警条件</th><th>预警类型</th><th>启用状态</th><th>最后更新</th><th style="text-align:right;">操作</th></tr></thead>
+                <tbody id="wsRuleBody"></tbody>
+              </table>
+            </div>
+          </div>
+        </div>
+
+        <!-- 视图2：预警设置编辑器（两 Tab，无审批） -->
+        <div id="rulesEditView" class="hide">
+          <div class="page-head">
+            <div>
+              <div class="ph-title" id="ruleEditTitle">预警设置 · 安全巡检记录表</div>
+              <div class="ph-desc">预警条件、预警通知人及超时提醒分为两个 Tab 页独立配置。</div>
+            </div>
+            <div class="ph-actions">
+              <button class="btn" onclick="closeRuleEdit()"><i class="bi bi-arrow-left"></i> 返回列表</button>
+              <button class="btn btn-primary" onclick="saveRule()"><i class="bi bi-lightning-charge"></i> 启用规则</button>
+            </div>
+          </div>
+
+          <div class="rtabs">
+            <div class="rtab active" data-rtab="cond" onclick="switchRtab('cond')"><i class="bi bi-funnel"></i> 预警条件设置 <span class="rt-num" id="rtCondNum">0</span></div>
+            <div class="rtab" data-rtab="notify" onclick="switchRtab('notify')"><i class="bi bi-people"></i> 预警通知人及超时提醒 <span class="rt-num" id="rtNotifyNum">0</span></div>
+          </div>
+
+          <!-- Tab1 预警条件设置 -->
+          <div class="rtab-pane active" id="pane-cond">
+
+            <div class="section-block">
+              <h5><i class="bi bi-funnel"></i> 预警条件组列表
+                <button class="btn btn-sm" style="margin-left:auto; border:1px solid var(--border-color);" onclick="addCondition()"><i class="bi bi-plus"></i> 添加预警条件组</button>
+              </h5>
+              <div id="condContainer"></div>
+            </div>
+          </div>
+
+          <!-- Tab2 预警通知人及超时提醒 -->
+          <div class="rtab-pane" id="pane-notify">
+
+            <div class="card">
+              <div class="card-header">
+                <div class="card-title">通知及超时方案</div>
+                <button class="btn btn-primary btn-sm" onclick="showNotifyConfigModal()"><i class="bi bi-plus-lg"></i> 添加预警通知人及超时提醒</button>
+              </div>
+              <div class="card-body">
+                <table class="data-table">
+                  <thead><tr><th>适用预警条件</th><th>处理人</th><th>通知人</th><th>处置模式</th><th>处理期限</th><th>超期提醒</th><th style="text-align:right;">操作</th></tr></thead>
+                  <tbody id="notifyConfigList">
+                    <tr>
+                      <td class="cond-cell">
+                        <span class="cond-main">设备温度超限预警</span><span class="hit-badge">等 3 个</span>
+                        <div class="cond-tip">
+                          <div class="cond-tip-title">适用的预警条件（共 3 个）</div>
+                          <div>· 设备温度超限预警</div>
+                          <div>· CO 浓度超限预警</div>
+                          <div>· 顶板离层量超限预警</div>
+                        </div>
+                      </td>
+                      <td class="cond-cell">
+                        <span class="cond-main">表单提交人</span><span class="hit-badge">等 2 个</span>
+                        <div class="cond-tip">
+                          <div class="cond-tip-title">处理人（共 2 个）</div>
+                          <div>· 表单提交人</div>
+                          <div>· 预警所在事事号的负责人</div>
+                        </div>
+                      </td>
+                      <td class="cond-cell">
+                        <span class="cond-main">预警所在事事号的成员</span><span class="hit-badge">等 2 个</span>
+                        <div class="cond-tip">
+                          <div class="cond-tip-title">通知人（共 2 个）</div>
+                          <div>· 预警所在事事号的成员</div>
+                          <div>· 表单提交人的部门负责人</div>
+                        </div>
+                      </td>
+                      <td>并行处置，任一完成</td>
+                      <td>24小时</td>
+                      <td class="cond-cell">
+                        <span class="cond-main">超期1小时 → 表单提交人的部门负责人</span><span class="hit-badge">等 2 条</span>
+                        <div class="cond-tip">
+                          <div class="cond-tip-title">超期提醒规则（共 2 条）</div>
+                          <div>· 超期1小时 → 表单提交人的部门负责人</div>
+                          <div>· 超期3小时 → 预警所在事事号的负责人</div>
+                        </div>
+                      </td>
+                      <td><button class="btn-text btn-sm">编辑</button><button class="btn-text btn-sm text-danger">删除</button></td>
+                    </tr>
+                    <tr>
+                      <td class="cond-cell"><span class="cond-main">管道压力异常预警</span></td>
+                      <td class="cond-cell"><span class="cond-main">表单提交人</span></td>
+                      <td class="cond-cell"><span class="cond-main">预警所在事事号的成员</span></td>
+                      <td>并行处置，全部完成</td>
+                      <td>表单字段（截止日期）</td>
+                      <td class="cond-cell">
+                        <span class="cond-main">超期2小时 → 表单提交人的部门负责人</span>
+                        <div class="cond-tip">
+                          <div class="cond-tip-title">超期提醒规则（共 1 条）</div>
+                          <div>· 超期2小时 → 表单提交人的部门负责人</div>
+                        </div>
+                      </td>
+                      <td><button class="btn-text btn-sm">编辑</button><button class="btn-text btn-sm text-danger">删除</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 4: 预警分级看板 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-dashboard">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警分级看板</div>
+            <button class="btn btn-sm">📥 导出Excel</button>
+          </div>
+          <div class="card-body">
+
+
+            <div class="search-bar">
+              <span class="text-muted">触发时间</span>
+              <input class="input" type="date" style="width:160px;" value="2026-07-01">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;" value="2026-07-08">
+              <select class="select" style="width: 140px;">
+                <option>全部工作表</option>
+                <option>安全巡检记录表</option>
+                <option>设备运行日检表</option>
+              </select>
+              <select class="select" style="width: 120px;">
+                <option>全部等级</option>
+                <option>一级风险</option>
+                <option>二级风险</option>
+                <option>三级风险</option>
+                <option>四级风险</option>
+              </select>
+              <button class="btn btn-primary btn-sm">查询</button>
+              <button class="btn btn-sm">重置</button>
+            </div>
+
+            <!-- 统计卡片 -->
+            <div class="stat-row">
+              <div class="stat-card" onclick="showDrillModal('全部','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--primary);">28</div>
+                <div class="stat-label">预警总数</div>
+                <div class="stat-bar" style="background:var(--primary);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-success">20</div>
+                <div class="stat-label">已处理</div>
+                <div class="stat-bar" style="background:var(--success);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('未处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-danger">4</div>
+                <div class="stat-label">未处理</div>
+                <div class="stat-bar" style="background:var(--danger);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('处理中','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-warning">2</div>
+                <div class="stat-label">处理中</div>
+                <div class="stat-bar" style="background:var(--warning);"></div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已作废','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--info);">2</div>
+                <div class="stat-label">已作废</div>
+                <div class="stat-bar" style="background:var(--info);"></div>
+              </div>
+            </div>
+
+
+
+            <!-- 按风险等级统计 -->
+            <div class="card" style="box-shadow:none;border:1px solid var(--border-color);">
+              <div class="card-header">
+                <div class="card-title">按风险等级统计</div>
+              </div>
+              <div class="card-body">
+                <table class="data-table">
+                  <thead>
+                    <tr>
+                      <th>风险等级</th>
+                      <th>预警总数</th>
+                      <th>已处理</th>
+                      <th>未处理</th>
+                      <th>处理中</th>
+                      <th>已作废</th>
+                      <th>操作</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr>
+                      <td><span class="risk-1">● 一级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','一级风险')">5</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','一级风险')">3</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','一级风险')">1</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','一级风险')">1</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','一级风险')">0</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','一级风险')">下钻查看</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="risk-2">● 二级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','二级风险')">12</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','二级风险')">8</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','二级风险')">3</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','二级风险')">1</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','二级风险')">0</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','二级风险')">下钻查看</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="risk-3">● 三级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','三级风险')">8</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','三级风险')">6</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','三级风险')">1</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','三级风险')">1</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','三级风险')">1</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','三级风险')">下钻查看</button></td>
+                    </tr>
+                    <tr>
+                      <td><span class="risk-4">● 四级风险</span></td>
+                      <td><span class="link" onclick="showDrillModal('全部','四级风险')">3</span></td>
+                      <td><span class="link text-success" onclick="showDrillModal('已处理','四级风险')">3</span></td>
+                      <td><span class="link text-danger" onclick="showDrillModal('未处理','四级风险')">0</span></td>
+                      <td><span class="link text-warning" onclick="showDrillModal('处理中','四级风险')">0</span></td>
+                      <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','四级风险')">0</span></td>
+                      <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','四级风险')">下钻查看</button></td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+
+            <!-- 按类型统计 -->
+            <div class="card mt-16" style="box-shadow:none;border:1px solid var(--border-color);">
+              <div class="card-header">
+                <div class="card-title">按类型统计</div>
+                <span class="text-sm text-muted">点击数字下钻查看明细</span>
+              </div>
+              <div class="card-body">
+
+                <div style="max-height:400px;overflow-y:auto;border:1px solid var(--border-color);border-radius:4px;">
+                  <table class="data-table" style="border:none;">
+                    <thead style="position:sticky;top:0;z-index:1;">
+                      <tr>
+                        <th>类型</th>
+                        <th>预警总数</th>
+                        <th>已处理</th>
+                        <th>未处理</th>
+                        <th>处理中</th>
+                        <th>已作废</th>
+                        <th>操作</th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr>
+                        <td>灼烫</td>
+                        <td><span class="link" onclick="showDrillModal('全部','灼烫')">5</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','灼烫')">3</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','灼烫')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','灼烫')">1</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','灼烫')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','灼烫')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>高处坠落</td>
+                        <td><span class="link" onclick="showDrillModal('全部','高处坠落')">7</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','高处坠落')">5</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','高处坠落')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','高处坠落')">1</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','高处坠落')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','高处坠落')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>触电</td>
+                        <td><span class="link" onclick="showDrillModal('全部','触电')">4</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','触电')">3</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','触电')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','触电')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','触电')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','触电')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>物体打击</td>
+                        <td><span class="link" onclick="showDrillModal('全部','物体打击')">3</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','物体打击')">2</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','物体打击')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','物体打击')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','物体打击')">1</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','物体打击')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>火灾</td>
+                        <td><span class="link" onclick="showDrillModal('全部','火灾')">5</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','火灾')">4</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','火灾')">1</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','火灾')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','火灾')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','火灾')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>中毒窒息</td>
+                        <td><span class="link" onclick="showDrillModal('全部','中毒窒息')">2</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','中毒窒息')">1</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','中毒窒息')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','中毒窒息')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','中毒窒息')">1</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','中毒窒息')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>冒顶片帮</td>
+                        <td><span class="link" onclick="showDrillModal('全部','冒顶片帮')">1</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','冒顶片帮')">1</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','冒顶片帮')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','冒顶片帮')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','冒顶片帮')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','冒顶片帮')">下钻</button></td>
+                      </tr>
+                      <tr>
+                        <td>放炮</td>
+                        <td><span class="link" onclick="showDrillModal('全部','放炮')">1</span></td>
+                        <td><span class="link text-success" onclick="showDrillModal('已处理','放炮')">1</span></td>
+                        <td><span class="link text-danger" onclick="showDrillModal('未处理','放炮')">0</span></td>
+                        <td><span class="link text-warning" onclick="showDrillModal('处理中','放炮')">0</span></td>
+                        <td><span class="link" style="color:var(--info);" onclick="showDrillModal('已作废','放炮')">0</span></td>
+                        <td><button class="btn-text btn-sm" onclick="showDrillModal('全部','放炮')">下钻</button></td>
+                      </tr>
+                    </tbody>
+                  </table>
+                </div>
+
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 5: 预警任务 -->
+      <!-- ================================================================ -->
+      <div class="page active" id="page-warning-task">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警任务</div>
+          </div>
+          <div class="card-body">
+
+
+            <!-- 状态页签 -->
+            <div class="tabs" id="task-tabs">
+              <div class="tab-item active" onclick="switchTaskTab(this, 'task-pending')">未处理 <span class="tag tag-danger" style="margin-left:4px;">3</span></div>
+              <div class="tab-item" onclick="switchTaskTab(this, 'task-notify')">通知我 <span class="tag tag-primary" style="margin-left:4px;">2</span></div>
+              <div class="tab-item" onclick="switchTaskTab(this, 'task-done')">已处理</div>
+              <div class="tab-item" onclick="switchTaskTab(this, 'task-forwarded')">我转发</div>
+            </div>
+
+            <div class="search-bar" id="task-search-bar">
+              <span class="text-muted">时间维度</span>
+              <select class="select" style="width:150px;">
+                <option>触发时间</option>
+                <option>处理期限</option>
+              </select>
+              <input class="input" type="date" style="width:160px;">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;">
+              <input class="input" style="width:140px;" placeholder="预警工作项...">
+              <select class="select" style="width: 120px;">
+                <option>全部等级</option>
+                <option>未分级</option>
+                <option>一级风险</option>
+                <option>二级风险</option>
+                <option>三级风险</option>
+                <option>四级风险</option>
+              </select>
+              <button class="btn btn-primary btn-sm">查询</button>
+              <button class="btn btn-sm">重置</button>
+            </div>
+
+            <!-- ====== Tab Contents ====== -->
+            <div class="task-tab-content active" id="task-pending-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警内容</th><th>预警工作项</th><th>风险等级</th><th>处理人</th><th>触发时间</th><th>处理期限</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-001', 'task')">WRN-20260708-001</td><td>安全巡检记录表</td><td><span class="wc-title">设备温度超限预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-pending-1')">设备温度<span class="hit-caret"></span></td><td><span class="risk-1">● 一级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-001')"><span class="cond-main">王五</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 0/2）</div><div>· 王五（表单提交人）· 未处理</div><div>· 李国强（预警所在事事号的负责人）· 未处理</div></div></td><td>2026-07-08 10:23</td><td>2026-07-08 18:00</td><td><span class="tag tag-danger">未处理</span></td>
+                    <td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">处理</button><button class="btn-text btn-sm" onclick="showForwardModal()">转发</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-pending-1" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>设备温度</td><td>大于</td><td>80°C</td><td class="text-danger">85°C</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-002', 'task')">WRN-20260708-002</td><td>设备运行日检表</td><td><span class="wc-title">管道压力异常预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-pending-2')">管道压力<span class="hit-badge">共 2 项</span><span class="hit-caret"></span></td><td><span class="risk-2">● 二级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-002')"><span class="cond-main">王五</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人）</div><div>· 王五（表单提交人的部门负责人）· 未处理</div></div></td><td>2026-07-08 09:15</td><td>2026-07-09 09:00</td><td><span class="tag tag-danger">未处理</span></td>
+                    <td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">处理</button><button class="btn-text btn-sm" onclick="showForwardModal()">转发</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-pending-2" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>管道压力</td><td>大于</td><td>3.0MPa</td><td class="text-danger">3.2MPa</td></tr>
+                            <tr><td>设备状态</td><td>等于</td><td>故障</td><td class="text-danger">故障</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-003', 'task')">WRN-20260708-003</td><td>隐患排查治理表</td><td><span class="wc-title">防护设施缺失预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-pending-3')">防护栏状态<span class="hit-caret"></span></td><td><span class="risk-1">● 一级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-003')"><span class="cond-main">赵六</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 1/2）</div><div>· 赵六（预警所在事事号的管理员）· 未处理</div><div>· 孙立（预警所在事事号的成员）· 已处理</div></div></td><td>2026-07-07 16:00</td><td>2026-07-07 18:00</td><td><span class="tag tag-warning">处理中</span><span class="ovd ovd-late">已超期</span></td>
+                    <td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">处理</button><button class="btn-text btn-sm" onclick="showForwardModal()">转发</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-pending-3" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>防护栏状态</td><td>等于</td><td>缺失</td><td class="text-danger">缺失</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="task-tab-content" id="task-notify-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警内容</th><th>预警工作项</th><th>风险等级</th><th>处理人</th><th>触发时间</th><th>处理期限</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-001', 'task')">WRN-20260708-001</td><td>安全巡检记录表</td><td><span class="wc-title">设备温度超限预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-notify-1')">设备温度<span class="hit-caret"></span></td><td><span class="risk-1">● 一级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-001')"><span class="cond-main">王五</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 0/2）</div><div>· 王五（表单提交人）· 未处理</div><div>· 李国强（预警所在事事号的负责人）· 未处理</div></div></td><td>2026-07-08 10:23</td><td>2026-07-08 18:00</td><td><span class="tag tag-danger">未处理</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">查看</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-notify-1" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>设备温度</td><td>大于</td><td>80°C</td><td class="text-danger">85°C</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260707-005', 'task')">WRN-20260707-005</td><td>设备运行日检表</td><td><span class="wc-title">接地电阻超标预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-notify-2')">接地电阻<span class="hit-caret"></span></td><td><span class="risk-2">● 二级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260707-005')"><span class="cond-main">孙立</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 2/2）</div><div>· 孙立（表单提交人）· 已处理</div><div>· 周伟（预警所在事事号的成员）· 已处理</div></div></td><td>2026-07-06 11:00</td><td>2026-07-06 15:00</td><td><span class="tag tag-success">已完成</span><span class="ovd ovd-done">超期完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">查看</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-notify-2" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>接地电阻</td><td>大于</td><td>4Ω</td><td class="text-danger">6Ω</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+            <div class="task-tab-content" id="task-done-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警内容</th><th>预警工作项</th><th>风险等级</th><th>处理人</th><th>触发时间</th><th>处理期限</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260707-005', 'task')">WRN-20260707-005</td><td>设备运行日检表</td><td><span class="wc-title">接地电阻超标预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-done-1')">接地电阻<span class="hit-caret"></span></td><td><span class="risk-2">● 二级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260707-005')"><span class="cond-main">孙立</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 2/2）</div><div>· 孙立（表单提交人）· 已处理</div><div>· 周伟（预警所在事事号的成员）· 已处理</div></div></td><td>2026-07-06 11:00</td><td>2026-07-06 15:00</td><td><span class="tag tag-success">已完成</span><span class="ovd ovd-done">超期完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">查看</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-done-1" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>接地电阻</td><td>大于</td><td>4Ω</td><td class="text-danger">6Ω</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260707-006', 'task')">WRN-20260707-006</td><td>隐患排查治理表</td><td><span class="wc-title">物料堆放超高预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-done-2')">堆垛高度<span class="hit-caret"></span></td><td><span class="risk-3">● 三级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260707-006')"><span class="cond-main">孙立</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人 · 已处理 1/1）</div><div>· 孙立（预警所在事事号的成员）· 已处理</div></div></td><td>2026-07-05 15:00</td><td>2026-07-06 15:00</td><td><span class="tag tag-success">已完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">查看</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-done-2" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>堆垛高度</td><td>大于</td><td>2m</td><td class="text-danger">2.5m</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-008', 'task')">WRN-20260708-008</td><td>安全巡检记录表</td><td><span class="wc-title">高温区域标识缺失预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-done-3')">警示标识状态<span class="hit-caret"></span></td><td><span class="risk-1">● 一级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-008')"><span class="cond-main">王五</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人 · 已处理 1/1）</div><div>· 王五（表单提交人）· 已处理</div></div></td><td>2026-07-08 11:00</td><td>2026-07-08 18:00</td><td><span class="tag tag-success">已完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">查看</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-done-3" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>警示标识状态</td><td>等于</td><td>缺失</td><td class="text-danger">缺失</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-010', 'task')">WRN-20260708-010</td><td>设备运行日检表</td><td><span class="wc-title">管道泄漏预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-done-4')">管道压力<span class="hit-caret"></span></td><td><span class="risk-1">● 一级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-010')"><span class="cond-main">李国强</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人 · 已处理 1/1）</div><div>· 李国强（预警所在事事号的负责人）· 已处理</div></div></td><td>2026-07-08 09:45</td><td>2026-07-08 15:00</td><td><span class="tag tag-success">已完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">查看</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-done-4" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>管道压力</td><td>小于</td><td>1.0MPa</td><td class="text-danger">0.6MPa</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+
+            </div>
+
+            <div class="task-tab-content" id="task-forwarded-content">
+              <table class="data-table">
+                <thead><tr><th>预警编号</th><th>工作表</th><th>预警内容</th><th>预警工作项</th><th>风险等级</th><th>处理人</th><th>触发时间</th><th>处理期限</th><th>状态</th><th>操作</th></tr></thead>
+                <tbody>
+                  <tr>
+                    <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260706-009', 'task')">WRN-20260706-009</td><td>安全巡检记录表</td><td><span class="wc-title">噪音超标预警</span></td><td class="hit-cell" onclick="toggleHitDetail('hd-fwd-1')">噪音值<span class="hit-caret"></span></td><td><span class="risk-2">● 二级</span></td><td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260706-009')"><span class="cond-main">李国强</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人 · 已处理 1/1）</div><div>· 李国强（经 陈海波 转发）· 已处理</div></div></td><td>2026-07-06 09:40</td><td>2026-07-07 10:00</td><td><span class="tag tag-success">已完成</span></td><td><button class="btn-text btn-sm" onclick="showTaskDetailModalFromRow(this)">查看</button></td>
+                  </tr>
+                  <tr class="hit-detail-row" id="hd-fwd-1" style="display:none;">
+                    <td colspan="10">
+                      <div class="hit-detail-inner">
+                        <table class="hit-detail-table">
+                          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                          <tbody>
+                            <tr><td>噪音值</td><td>大于</td><td>85分贝</td><td class="text-danger">92分贝</td></tr>
+                          </tbody>
+                        </table>
+                      </div>
+                    </td>
+                  </tr>
+                </tbody>
+              </table>
+            </div>
+
+
+            </div>
+          </div>
+        </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 6: 预警信息表统计 -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-stats">
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警信息表统计</div>
+            <div class="btn-group">
+              <button class="btn btn-sm">📥 导出Excel</button>
+              <button class="btn btn-danger btn-sm" onclick="showVoidConfirmModal()">🗑️ 作废</button>
+            </div>
+          </div>
+          <div class="card-body">
+
+
+            <div class="stats-tabs">
+              <div class="stats-tab active" onclick="switchStatsTab('ledger', this)">预警台账</div>
+              <div class="stats-tab" onclick="switchStatsTab('exception', this)">分派异常 <span class="tab-count" id="excTabCount">3</span></div>
+            </div>
+
+            <div class="stats-pane" id="statsPaneLedger">
+            <div class="search-bar">
+              <span class="text-muted">时间维度</span>
+              <select class="select" style="width:150px;">
+                <option>触发时间</option>
+                <option>处理期限</option>
+              </select>
+              <input class="input" type="date" style="width:160px;" value="2026-07-01">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;" value="2026-07-08">
+              <select class="select" style="width: 140px;">
+                <option>全部工作表</option>
+                <option>安全巡检记录表</option>
+                <option>设备运行日检表</option>
+              </select>
+              <input class="input" style="width:140px;" placeholder="表单提交人...">
+              <select class="select" style="width: 120px;">
+                <option>全部状态</option>
+                <option>未处理</option>
+                <option>处理中</option>
+                <option>已完成</option>
+                <option>已作废</option>
+              </select>
+              <button class="btn btn-primary btn-sm">查询</button>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th style="width:30px;"><input type="checkbox" onchange="toggleSelectAllRows(this)"></th>
+                  <th>预警编号</th>
+                  <th>工作表</th>
+                  <th>预警内容</th>
+                  <th>预警工作项</th>
+                  <th>风险等级</th>
+                  <th>类型</th>
+                  <th>触发时间</th>
+                  <th>提交人</th>
+                  <th>处理人</th>
+                  <th>处理期限</th>
+                  <th>状态</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-001', 'task')">WRN-20260708-001</td>
+                  <td>安全巡检记录表</td>
+                  <td>设备温度超限预警</td>
+                  <td class="hit-cell" onclick="toggleHitDetail('hd-ledger-1')">设备温度<span class="hit-caret"></span></td>
+                  <td><span class="risk-1">● 一级</span></td><td>灼烫</td>
+                  <td>2026-07-08 10:23</td>
+                  <td>王五</td>
+                  <td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-001')"><span class="cond-main">王五</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 0/2）</div><div>· 王五（表单提交人）· 未处理</div><div>· 李国强（预警所在事事号的负责人）· 未处理</div></div></td>
+                  <td>2026-07-08 18:00</td>
+                  <td><span class="tag tag-danger">未处理</span></td>
+                </tr>
+                <tr class="hit-detail-row" id="hd-ledger-1" style="display:none;">
+                  <td colspan="12">
+                    <div class="hit-detail-inner">
+                      <table class="hit-detail-table">
+                        <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                        <tbody>
+                          <tr><td>设备温度</td><td>大于</td><td>80°C</td><td class="text-danger">85°C</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-002', 'task')">WRN-20260708-002</td>
+                  <td>设备运行日检表</td>
+                  <td>管道压力异常预警</td>
+                  <td class="hit-cell" onclick="toggleHitDetail('hd-ledger-2')">管道压力<span class="hit-badge">共 2 项</span><span class="hit-caret"></span></td>
+                  <td><span class="risk-2">● 二级</span></td><td>触电</td>
+                  <td>2026-07-08 09:15</td>
+                  <td>赵六</td>
+                  <td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-002')"><span class="cond-main">王五</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人）</div><div>· 王五（表单提交人的部门负责人）· 未处理</div></div></td>
+                  <td>2026-07-09 09:00</td>
+                  <td><span class="tag tag-danger">未处理</span></td>
+                </tr>
+                <tr class="hit-detail-row" id="hd-ledger-2" style="display:none;">
+                  <td colspan="12">
+                    <div class="hit-detail-inner">
+                      <table class="hit-detail-table">
+                        <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                        <tbody>
+                          <tr><td>管道压力</td><td>大于</td><td>3.0MPa</td><td class="text-danger">3.2MPa</td></tr>
+                          <tr><td>设备状态</td><td>等于</td><td>故障</td><td class="text-danger">故障</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260708-003', 'task')">WRN-20260708-003</td>
+                  <td>隐患排查治理表</td>
+                  <td>防护设施缺失预警</td>
+                  <td class="hit-cell" onclick="toggleHitDetail('hd-ledger-3')">防护栏状态<span class="hit-caret"></span></td>
+                  <td><span class="risk-1">● 一级</span></td><td>高处坠落</td>
+                  <td>2026-07-07 16:00</td>
+                  <td>王五</td>
+                  <td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260708-003')"><span class="cond-main">赵六</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 1/2）</div><div>· 赵六（预警所在事事号的管理员）· 未处理</div><div>· 孙立（预警所在事事号的成员）· 已处理</div></div></td>
+                  <td>2026-07-07 18:00</td>
+                  <td><span class="tag tag-warning">处理中</span><span class="ovd ovd-late">已超期</span></td>
+                </tr>
+                <tr class="hit-detail-row" id="hd-ledger-3" style="display:none;">
+                  <td colspan="12">
+                    <div class="hit-detail-inner">
+                      <table class="hit-detail-table">
+                        <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                        <tbody>
+                          <tr><td>防护栏状态</td><td>等于</td><td>缺失</td><td class="text-danger">缺失</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260707-005', 'task')">WRN-20260707-005</td>
+                  <td>设备运行日检表</td>
+                  <td>接地电阻超标预警</td>
+                  <td class="hit-cell" onclick="toggleHitDetail('hd-ledger-4')">接地电阻<span class="hit-caret"></span></td>
+                  <td><span class="risk-2">● 二级</span></td><td>触电</td>
+                  <td>2026-07-06 11:00</td>
+                  <td>赵六</td>
+                  <td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260707-005')"><span class="cond-main">孙立</span><span class="hit-badge">等 2 人</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 2 人 · 已处理 2/2）</div><div>· 孙立（表单提交人）· 已处理</div><div>· 周伟（预警所在事事号的成员）· 已处理</div></div></td>
+                  <td>2026-07-06 15:00</td>
+                  <td><span class="tag tag-success">已完成</span><span class="ovd ovd-done">超期完成</span></td>
+                </tr>
+                <tr class="hit-detail-row" id="hd-ledger-4" style="display:none;">
+                  <td colspan="12">
+                    <div class="hit-detail-inner">
+                      <table class="hit-detail-table">
+                        <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                        <tbody>
+                          <tr><td>接地电阻</td><td>大于</td><td>4Ω</td><td class="text-danger">6Ω</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260707-006', 'task')">WRN-20260707-006</td>
+                  <td>隐患排查治理表</td>
+                  <td>物料堆放超高预警</td>
+                  <td class="hit-cell" onclick="toggleHitDetail('hd-ledger-5')">堆垛高度<span class="hit-caret"></span></td>
+                  <td><span class="risk-3">● 三级</span></td><td>物体打击</td>
+                  <td>2026-07-05 15:00</td>
+                  <td>王五</td>
+                  <td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260707-006')"><span class="cond-main">孙立</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人 · 已处理 1/1）</div><div>· 孙立（预警所在事事号的成员）· 已处理</div></div></td>
+                  <td>2026-07-06 15:00</td>
+                  <td><span class="tag tag-success">已完成</span></td>
+                </tr>
+                <tr class="hit-detail-row" id="hd-ledger-5" style="display:none;">
+                  <td colspan="12">
+                    <div class="hit-detail-inner">
+                      <table class="hit-detail-table">
+                        <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                        <tbody>
+                          <tr><td>堆垛高度</td><td>大于</td><td>2m</td><td class="text-danger">2.5m</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+                <tr>
+                  <td><input type="checkbox" class="row-check"></td>
+                  <td class="wrn-link" onclick="showTaskDetailModal('WRN-20260707-007', 'task')">WRN-20260707-007</td>
+                  <td>安全巡检记录表</td>
+                  <td>通风排风故障预警</td>
+                  <td class="hit-cell" onclick="toggleHitDetail('hd-ledger-6')">风机运行状态<span class="hit-caret"></span></td>
+                  <td><span class="risk-4">● 四级</span></td><td>中毒窒息</td>
+                  <td>2026-07-04 10:00</td>
+                  <td>赵六</td>
+                  <td class="cond-cell hit-cell" onclick="showAssigneeModal('WRN-20260707-007')"><span class="cond-main">李国强</span><div class="cond-tip"><div class="cond-tip-title">处理人（共 1 人 · 已处理 1/1）</div><div>· 李国强（转发自 周伟）· 已处理</div></div></td>
+                  <td>2026-07-05 10:00</td>
+                  <td><span class="tag" style="background:#f4f4f5;color:var(--info);border:1px solid #e9e9eb;">已作废</span></td>
+                </tr>
+                <tr class="hit-detail-row" id="hd-ledger-6" style="display:none;">
+                  <td colspan="12">
+                    <div class="hit-detail-inner">
+                      <table class="hit-detail-table">
+                        <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+                        <tbody>
+                          <tr><td>风机运行状态</td><td>等于</td><td>故障</td><td class="text-danger">故障</td></tr>
+                        </tbody>
+                      </table>
+                    </div>
+                  </td>
+                </tr>
+              </tbody>
+            </table>
+
+            </div>
+
+            <div class="stats-pane" id="statsPaneException" style="display:none;">
+
+              <div class="search-bar" style="margin-bottom:10px;">
+                <span class="text-muted">状态</span>
+                <select class="select" style="width:130px;">
+                  <option>全部</option>
+                  <option>待指派</option>
+                  <option>已指派</option>
+                </select>
+                <span class="text-muted">失败原因</span>
+                <select class="select" style="width:170px;">
+                  <option>全部原因</option>
+                  <option>组织架构未配置</option>
+                  <option>表单字段为空</option>
+                  <option>人员已离职</option>
+                </select>
+                <button class="btn btn-sm">📥 导出异常清单</button>
+              </div>
+              <table class="data-table">
+                <thead>
+                  <tr>
+                    <th>预警编号</th>
+                    <th>预警内容</th>
+                    <th>工作表</th>
+                    <th>触发时间</th>
+                    <th>原角色类别</th>
+                    <th>失败原因</th>
+                    <th>状态</th>
+                    <th style="text-align:right;">操作</th>
+                  </tr>
+                </thead>
+                <tbody id="excTableBody"></tbody>
+              </table>
+            </div>
+
+
+
+
+          </div>
+        </div>
+      </div>
+
+      <!-- ================================================================ -->
+      <!-- PAGE 7: 预警统计（按工作表聚合） -->
+      <!-- ================================================================ -->
+      <div class="page" id="page-warning-stats-aggr" hidden><!-- 已隐藏（2026-10-21）：预警统计（按工作表）；恢复时删除本行 hidden -->
+        <div class="card">
+          <div class="card-header">
+            <div class="card-title">预警统计（按工作表聚合）</div>
+            <button class="btn btn-sm">📥 导出Excel</button>
+          </div>
+          <div class="card-body">
+
+
+            <div class="search-bar">
+              <input class="input" type="date" style="width:160px;" value="2026-07-01">
+              <span class="text-muted">至</span>
+              <input class="input" type="date" style="width:160px;" value="2026-07-08">
+              <select class="select" style="width: 140px;">
+                <option>全部工作表</option>
+                <option>安全巡检记录表</option>
+                <option>设备运行日检表</option>
+              </select>
+              <select class="select" style="width: 120px;">
+                <option>全部状态</option>
+                <option>未处理</option>
+                <option>处理中</option>
+                <option>已完成</option>
+                <option>已作废</option>
+              </select>
+              <input class="input" style="width:140px;" placeholder="提交人...">
+              <input class="input" style="width:140px;" placeholder="实际处理人...">
+              <button class="btn btn-primary btn-sm">查询</button>
+            </div>
+
+            <div class="stat-row">
+              <div class="stat-card" onclick="showDrillModal('全部','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--primary);">28</div>
+                <div class="stat-label">预警总数</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-success">20</div>
+                <div class="stat-label">已处理</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('未处理','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-danger">4</div>
+                <div class="stat-label">未处理</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('处理中','全部等级')" style="cursor:pointer;">
+                <div class="stat-value text-warning">2</div>
+                <div class="stat-label">处理中</div>
+              </div>
+              <div class="stat-card" onclick="showDrillModal('已作废','全部等级')" style="cursor:pointer;">
+                <div class="stat-value" style="color:var(--info);">2</div>
+                <div class="stat-label">已作废</div>
+              </div>
+            </div>
+
+            <table class="data-table">
+              <thead>
+                <tr>
+                  <th>工作表</th>
+                  <th>预警触发总数</th>
+                  <th>已处理</th>
+                  <th>未处理</th>
+                  <th>处理中</th>
+                  <th>已作废</th>
+                  <th>处理率</th>
+                </tr>
+              </thead>
+              <tbody>
+                <tr>
+                  <td>安全巡检记录表</td>
+                  <td><span class="link" onclick="showSheetDrillModal('安全巡检记录表', '全部')">15</span></td>
+                  <td><span class="link text-success" onclick="showSheetDrillModal('安全巡检记录表', '已处理')">10</span></td>
+                  <td><span class="link text-danger" onclick="showSheetDrillModal('安全巡检记录表', '未处理')">4</span></td>
+                  <td><span class="link text-warning" onclick="showSheetDrillModal('安全巡检记录表', '处理中')">1</span></td>
+                  <td><span class="link" style="color:var(--info);" onclick="showSheetDrillModal('安全巡检记录表', '已作废')">0</span></td>
+                  <td>66.7%</td>
+                </tr>
+                <tr>
+                  <td>设备运行日检表</td>
+                  <td><span class="link" onclick="showSheetDrillModal('设备运行日检表', '全部')">8</span></td>
+                  <td><span class="link text-success" onclick="showSheetDrillModal('设备运行日检表', '已处理')">6</span></td>
+                  <td><span class="link text-danger" onclick="showSheetDrillModal('设备运行日检表', '未处理')">1</span></td>
+                  <td><span class="link text-warning" onclick="showSheetDrillModal('设备运行日检表', '处理中')">1</span></td>
+                  <td><span class="link" style="color:var(--info);" onclick="showSheetDrillModal('设备运行日检表', '已作废')">0</span></td>
+                  <td>75.0%</td>
+                </tr>
+                <tr>
+                  <td>隐患排查治理表</td>
+                  <td><span class="link" onclick="showSheetDrillModal('隐患排查治理表', '全部')">5</span></td>
+                  <td><span class="link text-success" onclick="showSheetDrillModal('隐患排查治理表', '已处理')">4</span></td>
+                  <td><span class="link text-danger" onclick="showSheetDrillModal('隐患排查治理表', '未处理')">0</span></td>
+                  <td><span class="link text-warning" onclick="showSheetDrillModal('隐患排查治理表', '处理中')">0</span></td>
+                  <td><span class="link" style="color:var(--info);" onclick="showSheetDrillModal('隐患排查治理表', '已作废')">1</span></td>
+                  <td>80.0%</td>
+                </tr>
+              </tbody>
+            </table>
+
+
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+</div>
+
+<!-- ====== Modals ====== -->
+
+<!-- 表单逻辑查看 -->
+
+
+<!-- 预警通知人配置 -->
+<div class="modal-overlay" id="modal-notify-config">
+  <div class="modal" style="width:700px;">
+    <div class="modal-header">
+      <div class="modal-title">添加预警通知人及超时提醒</div>
+      <span class="modal-close" onclick="closeModal('modal-notify-config')">×</span>
+    </div>
+    <div class="modal-body">
+
+
+      <!-- 预警条件多选 -->
+      <div class="form-item">
+        <label class="form-label">选择预警条件 <span class="text-danger">*</span></label>
+
+        <div class="checkbox-list">
+          <div class="checkbox-item" style="background:#f0f7ff;font-weight:600;">
+            <input type="checkbox" id="notifySelectAll" onchange="toggleSelectAll(this, 'notifyCondList')">
+            <span>全选/反选</span>
+          </div>
+          <div id="notifyCondList">
+            <label class="checkbox-item">
+              <input type="checkbox" checked onchange="updateSelectedDisplay(this, 'notifySelectedDisplay')"> 设备温度超限预警
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" checked onchange="updateSelectedDisplay(this, 'notifySelectedDisplay')"> CO 浓度超限预警
+            </label>
+            <label class="checkbox-item">
+              <input type="checkbox" onchange="updateSelectedDisplay(this, 'notifySelectedDisplay')"> 管道压力异常预警
+            </label>
+          </div>
+        </div>
+      </div>
+
+      <!-- 已选预警条件展示 -->
+
+
+      <div class="divider"></div>
+
+      <!-- 处理人 -->
+      <div class="form-item">
+        <label class="form-label">处理人 <span class="text-danger">*</span>（按角色类别勾选）</label>
+        <div class="selected-items">
+          <span class="selected-item-tag">表单提交人 · 处理人<span class="remove">×</span></span>
+          <span class="selected-item-tag">预警所在事事号的负责人 · 处理人<span class="remove">×</span></span>
+        </div>
+        <button class="btn btn-sm mt-8" onclick="showPersonSelectModal()">+ 配置处理人/通知人</button>
+      </div>
+
+      <!-- 处理人处置模式 -->
+      <div class="form-item">
+        <label class="form-label">处置模式 <span class="text-danger">*</span></label>
+
+        <div class="form-row">
+          <label class="flex items-center gap-8" style="cursor:pointer;padding:8px 12px;border:1px solid var(--border-color);border-radius:4px;flex:1;">
+            <input type="radio" name="handleMode" value="parallel-any" checked>
+            <div>
+              <div class="font-bold text-sm">并行处置，任意一人完成即可</div>
+              <div class="text-muted text-sm">多人同时收到，任一完成即闭环</div>
+            </div>
+          </label>
+          <label class="flex items-center gap-8" style="cursor:pointer;padding:8px 12px;border:1px solid var(--border-color);border-radius:4px;flex:1;">
+            <input type="radio" name="handleMode" value="parallel-all">
+            <div>
+              <div class="font-bold text-sm">并行处置，全部人员均需完成</div>
+              <div class="text-muted text-sm">多人同时收到，全部完成才闭环</div>
+            </div>
+          </label>
+        </div>
+      </div>
+
+
+
+      <!-- 处理期限 -->
+      <div class="form-item">
+        <label class="form-label">处理期限 <span class="text-danger">*</span></label>
+
+        <div class="form-row">
+          <label class="flex items-center gap-8" style="cursor:pointer;">
+            <input type="radio" name="deadline" value="fixed" checked onchange="onDeadlineTypeChange(this)"> 固定时长
+          </label>
+          <label class="flex items-center gap-8" style="cursor:pointer;">
+            <input type="radio" name="deadline" value="field" onchange="onDeadlineTypeChange(this)"> 表单字段
+          </label>
+        </div>
+        <div class="form-row mt-8" id="deadline-fixed-area">
+          <div class="form-item">
+            <select class="select"><option>小时</option><option>天</option></select>
+          </div>
+          <div class="form-item">
+            <input class="input" type="number" value="24" placeholder="数值">
+          </div>
+        </div>
+        <div class="form-row mt-8" id="deadline-field-area" style="display:none;">
+          <div class="form-item">
+            <label class="form-label text-sm">选择表单日期字段</label>
+            <select class="select">
+              <option value="">请选择表单日期字段...</option>
+              <option>截止日期</option>
+              <option>计划完成日期</option>
+              <option>整改期限</option>
+              <option>验收日期</option>
+            </select>
+          </div>
+        </div>
+      </div>
+
+      <!-- 超期提醒 -->
+      <div class="form-item">
+        <label class="form-label">超期提醒</label>
+
+        <div class="sub-form-table">
+          <table style="width:100%;">
+            <thead>
+              <tr><th>操作</th><th>超期时间</th><th>超期提醒人</th></tr>
+            </thead>
+            <tbody>
+              <tr>
+                <td><button class="btn-text btn-sm text-danger" onclick="removeReminderRule(this)"><i class="bi bi-trash"></i></button></td>
+                <td>
+                  <div class="flex gap-4 items-center">
+                    <input class="sub-input" value="1" style="width:60px;">
+                    <select class="select" style="width:90px;">
+                      <option>分钟</option>
+                      <option>小时</option>
+                      <option>天</option>
+                    </select>
+                  </div>
+                </td>
+                <td>
+                  <button type="button" class="btn btn-sm btn-outline-primary" onclick="openOverdueReminderPicker(this)" data-reminder-cats="">设置</button>
+                </td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+        <button class="btn btn-sm mt-8" onclick="addReminderRule()"><i class="bi bi-plus-lg"></i> 增加一行</button>
+      </div>
+
+      <!-- 消息渠道 -->
+      <div class="form-item">
+        <label class="form-label">消息渠道</label>
+        <div class="flex gap-16">
+          <label class="flex items-center gap-8"><input type="checkbox" checked> 系统站内消息</label>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-notify-config')">取消</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-notify-config')">保存</button>
+    </div>
+  </div>
+</div>
+
+<!-- 预警处理人/通知人 -->
+<div class="modal-overlay" id="modal-person-select">
+  <div class="modal" style="width:680px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ 预警处理人/通知人</div>
+      <span class="modal-close" onclick="closeModal('modal-person-select')">×</span>
+    </div>
+    <div class="modal-body">
+
+
+      <div class="person-cat-list">
+        <div class="person-cat-divider">动态通知人员</div>
+
+        <!-- 表单内@成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label" onclick="openAtMemberPicker(this.closest('.person-cat-row'))" style="cursor:pointer;">表单内@成员 <i class="bi bi-chevron-right text-muted"></i></div>
+          <div class="person-cat-state" onclick="openAtMemberPicker(this.closest('.person-cat-row'))" style="cursor:pointer;"><span class="text-primary">已选 0 项</span> <span class="text-muted">›</span></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+            <button class="btn-icon" title="再加一行@成员" onclick="addAtMemberRow(this)">＋</button>
+          </div>
+        </div>
+
+
+        <div class="person-cat-divider">表单创建者-表单相关</div>
+
+        <!-- 预警所在事事号的负责人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的负责人</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 预警所在事事号的成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的成员</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门负责人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的部门负责人</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的部门成员</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
+            <label class="checkbox-item-inline"><input type="checkbox"> 通知人</label>
+          </div>
+        </div>
+
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div style="flex:1;"></div>
+      <button class="btn" onclick="closeModal('modal-person-select')">关闭</button>
+      <button class="btn btn-primary" onclick="closeModal('modal-person-select')">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 表单内@成员 字段选择 -->
+<div class="modal-overlay" id="modal-at-member-select">
+  <div class="modal" style="width:560px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ 选择表单内@成员字段</div>
+      <span class="modal-close" onclick="closeModal('modal-at-member-select')">×</span>
+    </div>
+    <div class="modal-body">
+
+      <div class="form-item">
+        <label class="form-label">表单内@成员字段（可多选）</label>
+        <div class="checkbox-list">
+          <div class="checkbox-item" style="background:#f0f7ff;font-weight:600;">
+            <input type="checkbox" id="atMemberSelectAll" onchange="toggleSelectAll(this, 'atMemberFieldList')">
+            <span>全选/反选</span>
+          </div>
+          <div id="atMemberFieldList">
+            <label class="checkbox-item"><input type="checkbox"> 巡检负责人（@成员）</label>
+            <label class="checkbox-item"><input type="checkbox"> 安全员（@成员）</label>
+            <label class="checkbox-item"><input type="checkbox"> 复核人（@成员）</label>
+            <label class="checkbox-item"><input type="checkbox"> 值班负责人（@成员）</label>
+            <label class="checkbox-item"><input type="checkbox"> 现场监护人（@成员）</label>
+            <label class="checkbox-item"><input type="checkbox"> 验收人（@成员）</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-at-member-select')">取消</button>
+      <button class="btn btn-primary" onclick="confirmAtMemberSelect()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 超期提醒人 选择 -->
+<div class="modal-overlay" id="modal-overdue-reminder-select">
+  <div class="modal" style="width:560px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ 超期提醒人</div>
+      <span class="modal-close" onclick="closeModal('modal-overdue-reminder-select')">×</span>
+    </div>
+    <div class="modal-body">
+
+
+      <div class="person-cat-list">
+        <div class="person-cat-divider">动态通知人员</div>
+
+        <!-- 表单内@成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label" onclick="openAtMemberPicker(this.closest('.person-cat-row'))" style="cursor:pointer;">表单内@成员 <i class="bi bi-chevron-right text-muted"></i></div>
+          <div class="person-cat-state" onclick="openAtMemberPicker(this.closest('.person-cat-row'))" style="cursor:pointer;"><span class="text-primary">已选 0 项</span> <span class="text-muted">›</span></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+            <button class="btn-icon" title="再加一行@成员" onclick="addAtMemberRow(this)">＋</button>
+          </div>
+        </div>
+
+
+        <div class="person-cat-divider">表单创建者-表单相关</div>
+
+        <!-- 预警所在事事号的负责人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的负责人</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 预警所在事事号的成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">预警所在事事号的成员</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门负责人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">发布所在事事号的负责人接收</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门负责人 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的部门负责人</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+
+        <!-- 表单提交人的部门成员 -->
+        <div class="person-cat-row">
+          <div class="person-cat-label">表单提交人的部门成员</div>
+          <div class="person-cat-state"></div>
+          <div class="person-cat-actions">
+            <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
+          </div>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div style="flex:1;"></div>
+      <button class="btn" onclick="closeModal('modal-overdue-reminder-select')">关闭</button>
+      <button class="btn btn-primary" onclick="confirmOverdueReminder()">确定</button>
+    </div>
+  </div>
+</div>
+
+<!-- 处理人明细（点「处理人」打开；只列人，不含日志） -->
+<div class="modal-overlay" id="modal-assignee">
+  <div class="modal" style="width:680px;">
+    <div class="modal-header">
+      <div class="modal-title" id="assigneeTitle">处理人明细</div>
+      <span class="modal-close" onclick="closeModal('modal-assignee')">×</span>
+    </div>
+    <div class="modal-body">
+      <div class="form-item">
+        <label class="form-label">处理人　<span class="text-muted text-sm">派单快照时间：<span id="assigneeSnapshot">—</span></span></label>
+        <table class="hit-detail-table">
+          <thead><tr><th>处理人</th><th>来源角色类别</th><th>处置状态</th><th>提交时间</th><th>处理详情</th></tr></thead>
+          <tbody id="assigneeTbody"></tbody>
+        </table>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div style="flex:1;"></div>
+      <button class="btn" onclick="closeModal('modal-assignee')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 预警处理 -->
+<div class="modal-overlay" id="modal-task-detail">
+  <div class="modal" style="width:750px;">
+    <div class="modal-header">
+      <div class="modal-title" id="tdTitle">处理预警 - WRN-20260708-001</div>
+      <span class="modal-close" onclick="closeModal('modal-task-detail')">×</span>
+    </div>
+    <div class="modal-body">
+
+
+      <div class="zone-divider">
+        <span>预警基础信息（只读）</span>
+        <span class="zone-tag">系统自动抓取</span>
+      </div>
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">工作表名称</label><div class="readonly-field" id="tdSheet">安全巡检记录表</div></div>
+        <div class="form-item"><label class="form-label">预警内容</label><div class="readonly-field wc-title" id="tdContent">设备温度超限预警</div></div>
+      </div>
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">预警发生时间</label><div class="readonly-field" id="tdTime">2026-07-08 10:23:45</div></div>
+        <div class="form-item"><label class="form-label">风险等级 / 类型</label><div class="readonly-field" id="tdLevel"><span class="risk-1">● 一级风险</span>　｜　灼烫</div></div>
+      </div>
+      <div class="form-item">
+        <label class="form-label">命中明细 <span class="text-muted text-sm">（工作项 · 判定 · 预警值/阈值 · 触发值/实测）</span></label>
+        <table class="hit-detail-table">
+          <thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead>
+          <tbody id="tdHitBody"></tbody>
+        </table>
+      </div>
+      <div class="form-row mb-8">
+        <div class="form-item" id="tdHandlerItem"><label class="form-label">处理人</label><div class="readonly-field" id="tdHandler">王五、李国强</div></div>
+        <div class="form-item"><label class="form-label">处理期限</label><div class="readonly-field text-danger" id="tdDue">2026-07-08 18:00:00</div></div>
+      </div>
+
+      <div id="tdAssigneesSection">
+      <div class="divider mt-16 mb-16"></div>
+
+      <div class="zone-divider" id="tdAssigneesBlock">
+        <span>处理人（<span id="tdAssigneeCount">0</span> 人）</span>
+        <span class="zone-tag" id="tdAssigneeSnapshot">派单快照 —</span>
+      </div>
+      <table class="hit-detail-table">
+        <thead><tr><th>处理人</th><th>来源角色类别</th><th>处置状态</th><th>提交时间</th><th>处理详情</th></tr></thead>
+        <tbody id="tdAssigneeBody"></tbody>
+      </table>
+      </div><!-- /#tdAssigneesSection -->
+
+      <div id="tdDisposalSection">
+      <div class="divider mt-16 mb-16"></div>
+
+      <div class="zone-divider">
+        <span id="tdDisposalZoneTitle">预警处置（人工填写）</span>
+        <span class="zone-tag" id="tdDisposalZoneTag">支持增行</span>
+      </div>
+      <div id="tdDisposalEdit">
+        <div class="form-item">
+          <label class="form-label">处理情况 <span class="text-danger">*</span></label>
+          <textarea class="textarea" placeholder="请填写处理情况..."></textarea>
+        </div>
+        <div class="form-item">
+          <label class="form-label">整改照片/附件</label>
+          <div class="upload-area">📎 点击或拖拽文件上传</div>
+        </div>
+        <div class="form-row">
+          <div class="form-item">
+            <label class="form-label">实际处理人</label>
+            <input class="input" id="tdActual" value="—" readonly style="background:#f5f7fa;">
+          </div>
+          <div class="form-item">
+            <label class="form-label">实际处理时间</label>
+            <input class="input" id="tdActualTime" value="—" readonly style="background:#f5f7fa;">
+          </div>
+        </div>
+        <div class="form-item">
+          <label class="form-label">电子签字</label>
+          <div class="signature-area">✍️ 点击签字</div>
+        </div>
+      </div>
+      <div id="tdDisposalView" style="display:none;"></div>
+      </div><!-- /#tdDisposalSection -->
+
+      <div id="tdLogSection">
+      <div class="divider mt-16 mb-16"></div>
+      <div class="log-head-bar" onclick="toggleDetailLog()">
+        <span class="log-head-title">处理日志</span>
+        <span class="log-head-meta" id="taskDetailLogMeta">只读留痕 · 触发 / 处理 / 转发 / 作废</span>
+        <span class="log-head-toggle" id="taskDetailLogToggle">展开</span>
+        <span class="hit-caret" id="taskDetailLogCaret"></span>
+      </div>
+      <div id="taskDetailLogBox" style="display:none;">
+        <div class="log-list" id="taskDetailLog"></div>
+      </div>
+      </div><!-- /#tdLogSection -->
+    </div>
+    <div class="modal-footer">
+      <div style="flex:1;"></div>
+      <button class="btn" id="tdCancelBtn" onclick="closeModal('modal-task-detail')">取消</button>
+      <button class="btn btn-primary" id="tdSubmitBtn" onclick="closeModal('modal-task-detail')">提交处置</button>
+    </div>
+  </div>
+</div>
+
+<!-- 转发 -->
+<div class="modal-overlay" id="modal-forward">
+  <div class="modal" style="width:640px;">
+    <div class="modal-header">
+      <div class="modal-title">转发预警任务</div>
+      <span class="modal-close" onclick="closeModal('modal-forward')">×</span>
+    </div>
+    <div class="modal-body">
+
+      <div class="form-item">
+        <label class="form-label">转发给 <span class="text-danger">*</span>（从组织架构选择具体人员）</label>
+        <div class="org-picker">
+          <div class="org-search"><i class="bi bi-search"></i><input id="orgFilter" placeholder="搜索姓名..." oninput="filterOrg()"></div>
+          <div class="org-tree" id="orgTree"></div>
+        </div>
+        <div class="org-selected">已选择：<b id="orgSelectedName">未选择</b></div>
+      </div>
+      <div class="form-item">
+        <label class="form-label">转办说明</label>
+        <textarea class="textarea" placeholder="请输入转办说明..."></textarea>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-forward')">取消</button>
+      <button class="btn btn-primary" onclick="confirmForward()">确认转发</button>
+    </div>
+  </div>
+</div>
+<!-- 重新指派（仅用于角色类别解析失败） -->
+<div class="modal-overlay" id="modal-reassign">
+  <div class="modal" style="width:620px;">
+    <div class="modal-header">
+      <div class="modal-title" id="rsTitle">重新指派</div>
+      <span class="modal-close" onclick="closeModal('modal-reassign')">×</span>
+    </div>
+    <div class="modal-body">
+
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">预警内容</label><div class="readonly-field" id="rsContent">—</div></div>
+        <div class="form-item"><label class="form-label">原角色类别</label><div class="readonly-field" id="rsCat">—</div></div>
+      </div>
+      <!-- 已指派：指派详情（只读） -->
+      <div id="rsDetail" style="display:none;">
+        <div class="dis-block">
+          <div class="dis-head">指派详情</div>
+          <div class="form-row mb-8">
+            <div class="form-item"><label class="form-label">指派给</label><div class="readonly-field" id="rsDetailTo">—</div></div>
+            <div class="form-item"><label class="form-label">指派时间</label><div class="readonly-field" id="rsDetailAt">—</div></div>
+          </div>
+          <div class="form-row mb-8">
+            <div class="form-item"><label class="form-label">指派操作人</label><div class="readonly-field" id="rsDetailBy">—</div></div>
+          </div>
+          <div class="form-item"><label class="form-label">指派原因</label><div class="readonly-field" id="rsDetailReason">—</div></div>
+        </div>
+      </div>
+
+      <div class="form-row mb-8">
+        <div class="form-item"><label class="form-label">失败原因</label><div class="readonly-field" id="rsReason">—</div></div>
+        <div class="form-item"><label class="form-label">当前处理人</label><div class="readonly-field">暂无（待指派，未派发给任何人）</div></div>
+      </div>
+
+      <!-- 待指派 / 再次指派：编辑区 -->
+      <div id="rsEditArea">
+        <div class="form-item">
+          <label class="form-label">指派给 <span class="text-danger">*</span></label>
+          <input class="input mb-8" id="rsFilter" placeholder="搜索姓名..." oninput="renderReassignPeople(this.value)">
+          <div class="rp-list" id="rsPeople"></div>
+        </div>
+        <div class="form-item">
+          <label class="form-label">指派原因 <span class="text-danger">*</span></label>
+          <textarea class="textarea" id="rsReasonInput" placeholder="请说明为什么指派（如：该事事号未配置负责人，由我指定安全员跟进）"></textarea>
+        </div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <div style="flex:1;"></div>
+      <button class="btn" onclick="closeModal('modal-reassign')">取消</button>
+      <button class="btn btn-primary" id="rsViewBtn" style="display:none;" onclick="switchToReassignEdit()">重新指派</button>
+      <button class="btn btn-primary" id="rsConfirmBtn" onclick="confirmReassign()">确认指派</button>
+    </div>
+  </div>
+</div>
+
+<!-- 下钻明细弹窗 -->
+<div class="modal-overlay" id="modal-drill">
+  <div class="modal" style="width:1100px;">
+    <div class="modal-header">
+      <div class="modal-title" id="drillTitle">预警明细</div>
+      <span class="modal-close" onclick="closeModal('modal-drill')">×</span>
+    </div>
+    <div class="modal-body">
+
+      <div id="drillFilterInfo" class="search-bar">
+        <span class="tag tag-primary" style="padding:6px 12px;"></span>
+      </div>
+      <table class="data-table">
+        <thead>
+          <tr>
+            <th>预警编号</th>
+            <th>工作表</th>
+            <th>预警内容</th>
+            <th>预警工作项</th>
+            <th>风险等级</th>
+            <th>类型</th>
+            <th>触发时间</th>
+            <th>提交人</th>
+            <th>处理人</th>
+            <th>处理期限</th>
+            <th>状态</th>
+          </tr>
+        </thead>
+        <tbody id="drillTableBody">
+        </tbody>
+      </table>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-drill')">关闭</button>
+    </div>
+  </div>
+</div>
+
+<!-- 作废确认弹窗 -->
+<div class="modal-overlay" id="modal-void-confirm">
+  <div class="modal" style="width:450px;">
+    <div class="modal-header">
+      <div class="modal-title">⚠️ 确认作废预警</div>
+      <span class="modal-close" onclick="closeModal('modal-void-confirm')">×</span>
+    </div>
+    <div class="modal-body">
+
+      <div class="form-item">
+        <label class="form-label">作废原因 <span class="text-danger">*</span></label>
+        <textarea class="textarea" placeholder="请输入作废原因..." rows="3"></textarea>
+      </div>
+      <div class="form-item">
+        <label class="form-label">选中预警数量</label>
+        <div class="readonly-field" id="voidCountDisplay">0 条</div>
+      </div>
+    </div>
+    <div class="modal-footer">
+      <button class="btn" onclick="closeModal('modal-void-confirm')">取消</button>
+      <button class="btn btn-danger" onclick="confirmVoid()">确认作废</button>
+    </div>
+  </div>
+</div>
+
+
+<!-- ============================================================ -->
+<!-- 开发说明抽屉 -->
+<!-- ============================================================ -->
+<div class="dev-doc-drawer" id="devDocDrawer">
+  <div class="dev-doc-head">
+    <div><span class="t">开发说明</span><span class="s" id="devDocPageName">—</span></div>
+    <div class="dev-doc-close" onclick="closeDevDoc()" title="收起">×</div>
+  </div>
+  <div class="dev-doc-body" id="devDocBody"></div>
+</div>
+
+<!-- 文档正文源（按页面，隐藏；抽屉按当前页面渲染对应一份） -->
+
+<div class="devdoc-src" id="devdoc-warning-info-table">
+
+<h4>1. 交付说明（不面向用户）</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div>page-warning-info-table（仅原型示意，<b>不进入正式产品</b>）</div>
+  <div class="k">交付形态</div><div><b>不提供用户界面</b>：正式产品中没有这个页面、没有这个菜单</div>
+  <div class="k">本页用途</div><div>向开发说明：系统需要一张<b>预警信息表</b>，用于存储每一条预警的记录</div>
+  <div class="k">数据归属</div><div><b>预警主表</b>（一条预警一行）+ <b>处置子表</b>（一位处理人一行）</div>
+  <div class="k">唯一数据源</div><div>预警任务、预警信息表统计、分级看板、按工作表统计、导出，全部读这张表</div>
+</div>
+<div class="devdoc-tip">原型里的「列表 / 表单设计器 / 只读视图」只是让开发直观看到数据结构，<b>不要按这套页面交互去实现</b>。字段严格按原型上区、下区所列为准，不做增补。</div>
+
+<h4>2. 建表目标</h4>
+<p>规则引擎每命中一个条件组，就向<b>预警主表</b>写入一条记录；处理人每提交一次处置，就向<b>处置子表</b>写入一条记录。这张表是全系统预警数据的唯一来源。</p>
+<ul>
+  <li><b>主表 = 一条预警的完整档案</b>：字段在生成时固化，后续不可修改。</li>
+  <li><b>子表与主表 1:N</b>：按处理人维度各存一条，多人并行提交互不覆盖。</li>
+  <li><b>两表用「预警编号」关联</b>：编号是这条预警的唯一标识，台账、任务、导出都以它为键。</li>
+</ul>
+
+<h4>3. 表结构</h4>
+<h5>3.1 预警主表</h5>
+<p>一条预警一行，存触发时的基础信息（上区 10 个字段）。</p>
+<h5>3.2 处置子表</h5>
+<p>一条处置一行，按处理人拆分（下区 5 个字段）；前端「处理人列表 / 个人处置详情」都读这张表。</p>
+
+<h4>4. 字段规格</h4>
+<p><b>通用规则</b>：长度按字符计；文本入库前 <code>trim()</code>；时间统一 <code>YYYY-MM-DD HH:mm</code>（带年份，精确到分钟），存储用 <code>datetime</code>，展示再格式化。</p>
+
+<h5>4.1 预警主表（与原型上区一致，10 个字段）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>类型</th><th>必填</th><th>长度 / 格式</th><th>来源与约束</th></tr></thead>
+  <tbody>
+    <tr><td>工作表名称</td><td>字符串</td><td>是</td><td>≤ 30 字</td><td>取触发本次预警的源工作表名称，生成时固化</td></tr>
+    <tr><td>预警内容</td><td>字符串</td><td>是</td><td>≤ 50 字</td><td>取规则条件组的「预警内容」，即这条预警的标题，生成时固化</td></tr>
+    <tr><td>工作项</td><td>字符串</td><td>是</td><td>≤ 20 字</td><td>取命中的工作项；命中多项时存「首项 + 等 N 项」的展示值</td></tr>
+    <tr><td>预警发生时间</td><td>datetime</td><td>是</td><td>YYYY-MM-DD HH:mm</td><td>= 表单提交并通过条件判定的时间；<b>建索引</b>，列表与统计默认按此倒序</td></tr>
+    <tr><td>预警值（阈值）</td><td>字符串</td><td>是</td><td>≤ 30 字</td><td>规则里配置的判定阈值（含单位）；多项时为「首项 … 等 N 项」</td></tr>
+    <tr><td>触发值（实测）</td><td>字符串</td><td>是</td><td>≤ 30 字</td><td>触发时源表单的实际值（含单位）</td></tr>
+    <tr><td>通知人</td><td>JSON 数组</td><td>否</td><td>≤ 50 人</td><td>触发时按角色类别解析出的真实人员，每人含姓名 / ID；解析结果<b>快照固化</b>，不随组织架构变动</td></tr>
+    <tr><td>处理人</td><td>JSON 数组</td><td>是</td><td>≤ 50 人</td><td>同上；解析不到人员时为空，该预警不派发</td></tr>
+    <tr><td>预警处理期限</td><td>datetime</td><td>是</td><td>YYYY-MM-DD HH:mm</td><td>= 预警发生时间 + 规则配置的处理期限（按分钟/小时累加），或取表单指定日期字段；<b>只存时间，不存状态文字</b></td></tr>
+    <tr><td>表单提交人</td><td>字符串</td><td>是</td><td>—</td><td>提交源表单的真实人员姓名与 ID</td></tr>
+  </tbody>
+</table>
+<p class="text-sm text-muted">主键为<b>预警编号</b>（WRN-YYYYMMDD-NNN，全局唯一、生成后不可改），与子表关联；原型上区不展示该字段，故未列入上表。</p>
+
+<h5>4.2 处置子表（与原型下区一致，5 个字段）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>类型</th><th>必填</th><th>长度 / 格式</th><th>来源与约束</th></tr></thead>
+  <tbody>
+    <tr><td>处理情况</td><td>文本</td><td>是</td><td>≤ 500 字</td><td>处理人填写；trim 后非空；提交后<b>不可修改</b></td></tr>
+    <tr><td>整改照片 / 附件</td><td>JSON 数组</td><td>否</td><td>≤ 9 个，单个 ≤ 10MB</td><td>jpg / jpeg / png / pdf；存文件 ID 列表，不存二进制；提交后不可删除</td></tr>
+    <tr><td>实际处理人</td><td>字符串</td><td>是</td><td>—</td><td>提交时由服务端写入当前登录人，<b>不接受前端传值</b></td></tr>
+    <tr><td>实际处理时间</td><td>datetime</td><td>是</td><td>YYYY-MM-DD HH:mm</td><td>提交时由服务端写入当前时间，<b>不接受前端传值</b></td></tr>
+    <tr><td>电子签字</td><td>图片</td><td>是</td><td>—</td><td>手写签名的图片文件 ID，与这条处置记录一一对应</td></tr>
+  </tbody>
+</table>
+<p class="text-sm text-muted">子表通过<b>预警编号</b>关联主表；「预警编号 + 实际处理人」组合唯一，同一人同一预警只保留一条处置。</p>
+
+<h4>5. 写入与约束</h4>
+<ol>
+  <li><b>写入时机</b>：表单提交 → 规则判定 → 命中条件组 → 同一事务内写入主表 1 条 + 按处理人写入子表初值；任一环节失败整条回滚，不允许出现「有主表无处理人」的半成品。</li>
+  <li><b>生成后只读</b>：主表 10 个字段全部在生成时固化，后续不可修改；需要修正只能作废后重新触发。</li>
+  <li><b>子表一人一行</b>：处理人提交处置时插入一条；同一「预警编号 + 实际处理人」重复提交按幂等处理，只保留首次，后续返回「该预警已提交处置」。</li>
+  <li><b>附件与签字</b>：只存文件 ID，不存二进制；文件服务删除需与记录生命周期绑定，记录未删除时文件不可物理删除。</li>
+  <li><b>读取方</b>：预警任务、预警信息表统计、分级看板、按工作表统计、Excel 导出，统一读这两张表，不做二次冗余。</li>
+  <li><b>数据量</b>：主表按年增长，建议按「预警发生时间」做分区或归档，历史数据只读保留。</li>
+</ol>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-warning-rule">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">模块性质</div><div><b>不是独立页面</b>：它是「工作表」列表上每行的一个配置入口，没有独立菜单</div>
+  <div class="k">入口位置</div><div>工作表列表 → 某行的操作「预警规则设置」按钮</div>
+  <div class="k">作用范围</div><div>只作用于<b>当前这一张工作表</b>，规则按表独立保存</div>
+  <div class="k">两个 Tab</div><div>预警条件设置 / 预警通知人及超时提醒</div>
+  <div class="k">退出方式</div><div>左上「返回列表」回到工作表列表</div>
+  <div class="k">原型说明</div><div>本原型侧边栏的「预警规则设置」入口<b>只是方便查看配置界面</b>；正式产品中该入口为工作表列表的行操作，<b>没有独立菜单</b>。原型内的「工作表列表」视图见工作表模块原型，不属本模块。</div>
+</div>
+
+<h4>2. 模块目标</h4>
+<p>为当前工作表配置两件事：<b>什么条件触发预警</b>（条件组 + 子条件 + 风险属性），以及<b>触发后派给谁、多久必须处理完、超时提醒谁</b>（通知方案）。保存并启用后，该表后续提交的数据开始按规则生成预警。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>头部</b>：标题「预警设置 · 工作表名称」、「返回列表」按钮、「启用规则」按钮。</li>
+  <li><b>页签栏</b>：预警条件设置（角标=条件组数）/ 预警通知人及超时提醒（角标=方案数）。</li>
+  <li><b>Tab1 预警条件设置</b>：条件组列表，每组一张卡片（预警内容 / 组内关系 / 子条件 / 风险属性），底部「添加预警条件组」。</li>
+  <li><b>Tab2 预警通知人及超时提醒</b>：通知方案表格，右上「添加预警通知人及超时提醒」。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用规则</b>：长度按字符计；提交前 <code>trim()</code>；必填为空时提示「请输入/请选择{字段名}」；保存时统一校验，不通过则定位到第一个错误项。</p>
+
+<h5>4.1 条件组卡片（Tab1）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>组序号</td><td>徽标·只读</td><td>—</td><td>组 N</td><td>按条件组顺序自动编号，删除后重排</td></tr>
+    <tr><td>预警内容</td><td>单行文本</td><td>是</td><td>≤ 50 字</td><td>即预警标题；为空提示「请输入预警内容」；同一工作表内不允许重复，重复提示「预警内容已存在」</td></tr>
+    <tr><td>组内子条件关系</td><td>下拉</td><td>是</td><td>全部 / 任一</td><td>默认「全部」；全部＝所有子条件都满足才触发；任一＝任意一条满足即触发</td></tr>
+    <tr><td>属于几级风险</td><td>下拉</td><td>否</td><td>不指定 / 一级 / 二级 / 三级 / 四级</td><td>默认不指定；未指定时预警照常生成，等级显示「未分级」，但<b>不进入「预警分级看板」</b>（看板只统计一级 ~ 四级）</td></tr>
+    <tr><td>类型</td><td>下拉</td><td>是</td><td>字典项</td><td>选项从<b>系统字典</b>读取（类型字典，后台可维护，页面不写死枚举）；默认「请选择类型」，保存时必填。当前字典项：物体打击 / 高处坠落 / 冒顶片帮 / 中毒窒息 / 放炮 / 触电 / 火灾 / 灼烫 / 机械伤害 / 坍塌 / 其他</td></tr>
+    <tr><td>删除条件组</td><td>按钮</td><td>—</td><td>—</td><td>点击即删除，<b>不做二次确认</b>；该条件组立即从列表移除，其余组序号自动重排</td></tr>
+  </tbody>
+</table>
+
+<h5>4.2 子条件行（条件组内）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>字段</th><th>控件</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>工作项</td><td>下拉</td><td>下拉<b>默认显示「请选择工作项」</b>；选项为本工作表的字段（如 设备温度 / 管道压力 / 回风流瓦斯浓度 等）；必选，未选时该子条件不参与判定；同一组内允许重复选择同一工作项</td></tr>
+    <tr><td>判定方式</td><td>下拉</td><td>大于 / 小于 / 等于 / 不等于 / 大于等于 / 小于等于 / 包含 / 不包含；数字型字段用大小比较，文本型字段用相等 / 包含</td></tr>
+    <tr><td>阈值</td><td>单行文本</td><td>≤ 30 字符；数字型字段需可转数字，否则提示「请输入有效数值」；文本型字段按原样比较</td></tr>
+    <tr><td>组内连接词</td><td>文本·只读</td><td>第 2 条起，行间显示所属条件组的「全部 / 任一」作为连接标签</td></tr>
+    <tr><td>添加子条件</td><td>按钮</td><td>在组末追加一条空白子条件，默认不带工作项</td></tr>
+    <tr><td>删除子条件</td><td>按钮</td><td>删除该条；组内至少保留 1 条，否则提示「至少保留一条子条件」</td></tr>
+  </tbody>
+</table>
+
+<h5>4.3 通知方案列表（Tab2）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>列</th><th>取值与展示</th></tr></thead>
+  <tbody>
+    <tr><td>适用预警条件</td><td>该方案作用的条件组；多项时只显示第 1 个 + 徽标「等 N 个」，悬浮列出全部</td></tr>
+    <tr><td>处理人</td><td>角色类别（不定位个人）；多项折叠 + 悬浮看全部</td></tr>
+    <tr><td>通知人</td><td>同上；在处理人配置弹窗中与处理人一并勾选</td></tr>
+    <tr><td>处置模式</td><td>「并行处置，任一完成」/「并行处置，全部完成」</td></tr>
+    <tr><td>处理期限</td><td>「1.5 小时 / 2 天」或「表单字段（字段名）」</td></tr>
+    <tr><td>超期提醒</td><td>形如「超期 1 小时 → 提醒人」；多条折叠 + 悬浮看全部</td></tr>
+    <tr><td>操作</td><td>编辑 / 删除</td></tr>
+  </tbody>
+</table>
+
+<h5>4.4 通知配置弹窗</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>选择预警条件</td><td>多选</td><td>是</td><td>≥ 1 项</td><td>选项来自本表的条件组「预警内容」；未选提示「请选择适用的预警条件」</td></tr>
+    <tr><td>处理人</td><td>角色类别（弹窗勾选）</td><td>是</td><td>≥ 1 项</td><td>6 个类别：表单内@成员、预警所在事事号的负责人 / 成员、表单提交人、表单提交人的部门负责人 / 部门成员；同一行可同时勾处理人与通知人</td></tr>
+    <tr><td>处置模式</td><td>单选</td><td>是</td><td>并行·任一完成 / 并行·全部完成</td><td>默认「并行·任一完成」；任一完成＝第一个提交即闭环，全部完成＝所有人都提交才闭环</td></tr>
+    <tr><td>处理期限</td><td>单选 + 数值 + 单位</td><td>是</td><td>数值 &gt; 0，最多 2 位小数；分钟 / 小时 / 天</td><td>固定时长<b>支持小数</b>（如 1.5 小时），只需大于 0；或选「表单字段」，下拉列出<b>该表单中组件类型为「日期 / 日期时间」的全部字段</b>，不是固定几项</td></tr>
+    <tr><td>超期提醒</td><td>可增删的多行</td><td>否</td><td>0–5 条</td><td>每条含时长（1–999）+ 单位（分钟 / 小时 / 天）+ 超期提醒人；可删至 0 条</td></tr>
+    <tr><td>消息渠道</td><td>复选</td><td>是</td><td>系统站内消息</td><td>仅「系统站内消息」，默认勾选且不可取消</td></tr>
+  </tbody>
+</table>
+
+<h5>4.5 人员选择弹窗（处理人 / 通知人 共用）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>分类</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>表单内@成员</td><td>点「已选 N 项」选择该表单中组件类型为 @成员 的字段，可多选；行尾「＋」再加一行 @成员，用于不同成员分别担任处理人 / 通知人，新增行以「−」删除</td></tr>
+    <tr><td>预警所在事事号的负责人 / 成员</td><td>角色类别，触发时动态解析为真实人员，不定位个人</td></tr>
+    <tr><td>表单提交人 / 部门负责人 / 部门成员</td><td>同上，按提交人关联解析</td></tr>
+    <tr><td>勾选规则</td><td>每行可分别勾「处理人」「通知人」，至少勾选一项才能确定，否则提示「请至少选择一个角色」</td></tr>
+  </tbody>
+</table>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>进入</b>：工作表列表点行操作「预警规则设置」→ 打开该表的编辑器，标题带出表名，自动加载已有配置。</li>
+  <li><b>Tab 切换</b>：两个 Tab 各自保存，切换不丢未保存内容，角标数字实时反映条件组数与方案数。</li>
+  <li><b>添加条件组</b>：追加一张空白卡片，序号 +1，默认组内关系「全部」、风险「不指定」。</li>
+  <li><b>启用规则</b>：统一校验（预警内容非空且不重复、类型必选、每组至少 1 条子条件且工作项已选）→ 通过后保存并置「已启用」；失败定位到第一个错误项。</li>
+  <li><b>通知方案变更</b>：保存、编辑或删除方案后，下方方案列表立即刷新，「预警通知人及超时提醒」页签后的数量同步加减。</li>
+  <li><b>返回列表</b>：有未保存修改时提示「有未保存的修改，确定离开？」。</li>
+</ol>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-warning-dashboard">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div>page-warning-dashboard</div>
+  <div class="k">菜单路径</div><div>预警分级管控 / 预警分级看板</div>
+  <div class="k">数据来源</div><div>预警任务表的聚合结果（按风险等级 / 类型分组）</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>快速看清「各级风险各有多少、处理到什么程度」，支持从数字直接下钻到明细清单，用于例会与安全考核。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>筛选条</b>：日期范围 + 工作表 + 风险等级 + 查询。</li>
+  <li><b>统计卡</b>：预警总数 / 已处理 / 未处理 / 处理中 / 已作废，点卡片可按该状态下钻。</li>
+  <li><b>按风险等级统计表</b>：每个等级一行，行尾「下钻查看」。</li>
+  <li><b>按类型统计表</b>：每个事故类型一行，列同等级表。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用规则</b>：长度按字符计；文本提交前执行 <code>trim()</code>；必填为空时按钮置灰并提示「请输入/请选择{字段名}」；日期时间一律 <code>YYYY-MM-DD HH:mm</code>（带年份，不省略），精确到分钟。</p>
+<h5>4.1 筛选条</h5>
+<table class="devdoc-table">
+  <thead><tr><th>字段</th><th>控件</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>开始 / 结束日期</td><td>日期</td><td>默认当月 1 日至今天；起 ≤ 止；<b>按「触发时间」过滤</b>（= 表单提交并通过判定的时间），不是处理期限；日期前有「触发时间」标签明示口径</td></tr>
+    <tr><td>工作表</td><td>下拉</td><td>全部工作表 / 具体表名，精确匹配</td></tr>
+    <tr><td>风险等级</td><td>下拉</td><td>全部等级 / 一级 / 二级 / 三级 / 四级，精确匹配；<b>未分级的预警不进入本看板</b>，因此不提供「未分级」选项</td></tr>
+    <tr><td>查询</td><td>按钮</td><td>按当前条件刷新统计卡与两张统计表</td></tr>
+    <tr><td>重置</td><td>按钮</td><td>日期恢复默认（当月 1 日至今天）、工作表与等级恢复「全部」，并重新查询</td></tr>
+  </tbody>
+</table>
+
+<h5>4.2 统计卡</h5>
+<table class="devdoc-table">
+  <thead><tr><th>指标</th><th>口径</th></tr></thead>
+  <tbody>
+    <tr><td>预警总数</td><td>筛选范围内全部预警条数（含已作废）</td></tr>
+    <tr><td>已处理</td><td>状态为「已完成」的条数</td></tr>
+    <tr><td>未处理</td><td>状态为「未处理」的条数</td></tr>
+    <tr><td>处理中</td><td>状态为「处理中」的条数</td></tr>
+    <tr><td>已作废</td><td>状态为「已作废」的条数</td></tr>
+  </tbody>
+</table>
+<p>五张卡满足：已处理 + 未处理 + 处理中 + 已作废 = 预警总数，可直接对账。</p>
+
+<h5>4.3 统计表（按风险等级 / 按类型）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>风险等级 / 类型</td><td>文本·只读</td><td>—</td><td>—</td><td>分组维度值；只统计一级 ~ 四级，未指定等级的预警不出现在本表</td></tr>
+    <tr><td>预警总数</td><td>数字·只读</td><td>—</td><td>整数</td><td>该分组下的预警条数</td></tr>
+    <tr><td>已处理 / 未处理 / 处理中 / 已作废</td><td>数字·只读</td><td>—</td><td>整数</td><td>按任务状态分别计数，四者之和 = 预警总数</td></tr>
+    <tr><td>操作</td><td>按钮</td><td>—</td><td>—</td><td>「下钻查看」打开该分组的预警明细弹窗</td></tr>
+  </tbody>
+</table>
+
+<h5>4.4 下钻明细弹窗</h5>
+<p>点统计卡或行尾「下钻查看」打开。列与展示形式<b>与「预警信息表统计」台账保持一致</b>，方便同一批数据对照查看。</p>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>预警编号</td><td>文本·只读</td><td>—</td><td>WRN-YYYYMMDD-NNN</td><td>系统生成，全局唯一</td></tr>
+    <tr><td>工作表 / 预警内容</td><td>文本·只读</td><td>—</td><td>≤ 30 / ≤ 50 字</td><td>同台账口径</td></tr>
+    <tr><td>预警工作项</td><td>可点击格</td><td>—</td><td>首项 ≤ 20 字</td><td>与台账一致：显示首项，命中多项时加「共 N 项」徽标；<b>点击整格展开命中明细</b>（工作项 / 判定 / 预警值（阈值）/ 触发值（实测））</td></tr>
+    <tr><td>风险等级</td><td>标签·只读</td><td>—</td><td>一级 ~ 四级</td><td>颜色按等级固定</td></tr>
+    <tr><td>类型</td><td>文本·只读</td><td>—</td><td>2 ~ 4 字</td><td>取规则条件组配置的类型，字典项（如 灼烫 / 触电 / 高处坠落）</td></tr>
+    <tr><td>触发时间</td><td>文本·只读</td><td>—</td><td>YYYY-MM-DD HH:mm</td><td>预警生成时间</td></tr>
+    <tr><td>提交人</td><td>文本·只读</td><td>—</td><td>—</td><td>源表单提交人的真实姓名</td></tr>
+    <tr><td>处理人</td><td>折叠格</td><td>—</td><td>首人 + 等 N 人</td><td>与台账一致：悬浮可看全部，<b>点击打开处理人明细</b></td></tr>
+    <tr><td>处理期限</td><td>文本·只读</td><td>—</td><td>YYYY-MM-DD HH:mm</td><td>只存时间，不写状态、不标红</td></tr>
+    <tr><td>状态</td><td>标签 + 徽标</td><td>—</td><td>未处理 / 处理中 / 已完成 / 已作废</td><td>超期时在状态后追加「已超期 / 超期完成」徽标</td></tr>
+  </tbody>
+</table>
+<p>弹窗顶部显示当前筛选条件（维度 + 状态）；无数据时显示「暂无数据」；<b>不提供勾选与作废</b>——作废只在台账里操作。</p>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>点统计卡</b>：按该状态 + 当前筛选条件下钻明细。</li>
+  <li><b>点行「下钻查看」</b>：按该分组维度下钻，明细弹窗标题显示「预警明细 - 维度 / 状态」；<b>表头与展示形式同台账</b>（工作项可展开、处理人可点开明细）。</li>
+  <li><b>导出</b>：「导出 Excel」按当前筛选条件导出统计表，不含明细。</li>
+  <li><b>统计口径</b>：全部按<b>任务数</b>统计，一条任务命中多个工作项仍计 1 条。</li>
+</ol>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-warning-stats">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div>page-warning-stats</div>
+  <div class="k">菜单路径</div><div>预警统计 / 预警信息表统计</div>
+  <div class="k">数据来源</div><div>全量预警台账（含已作废）+ 分派异常清单</div>
+  <div class="k">两个 Tab</div><div>预警台账（默认）/ 分派异常（角标 = 待指派条数）</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>管理员视角的<b>全量台账</b>：查所有预警（含已作废）、批量作废、导出归档；并从「处理人」逐层下钻，看清<b>每个人什么时候处理、处理成什么样</b>；同时在「分派异常」中处理解析失败的预警。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>Tab 预警台账</b>：筛选条 + 工具栏（导出 Excel、作废）+ 12 列表格（含勾选列），点「预警工作项」展开命中明细，点「处理人」打开<b>处理人明细</b>，点「预警编号」打开<b>任务详情</b>。</li>
+  <li><b>Tab 分派异常</b>：筛选条（状态 / 失败原因）+ 导出异常清单 + 8 列表格，行操作「重新指派 / 查看」。</li>
+  <li><b>层级</b>：台账（列表）→ <b>任务详情</b>（整条任务：处理人列表 + 处理日志）→ <b>个人处置详情</b>（某个人处理成什么样，只读）。日志只挂在任务详情，不进个人详情。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用规则</b>：长度按字符计；文本提交前执行 <code>trim()</code>；必填为空时按钮置灰并提示「请输入/请选择{字段名}」；日期时间一律 <code>YYYY-MM-DD HH:mm</code>（带年份，不省略），精确到分钟。</p>
+
+<h5>4.1 台账筛选条</h5>
+<table class="devdoc-table">
+  <thead><tr><th>字段</th><th>控件</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>时间维度</td><td>下拉</td><td>触发时间 / 处理期限，决定右侧日期范围作用于哪个字段；默认「触发时间」</td></tr>
+    <tr><td>开始 / 结束日期</td><td>日期</td><td>默认当月 1 日至今天；起 ≤ 止；自然日闭区间（含首尾两天）</td></tr>
+    <tr><td>工作表</td><td>下拉</td><td>全部工作表 / 具体表名，精确匹配</td></tr>
+    <tr><td>表单提交人</td><td>输入框</td><td>≤ 20 字；按姓名<b>包含匹配</b>，去首尾空格</td></tr>
+    <tr><td>状态</td><td>下拉</td><td>全部状态 / 未处理 / 处理中 / 已完成 / 已作废</td></tr>
+    <tr><td>查询</td><td>按钮</td><td>按当前条件刷新台账，回到第 1 页</td></tr>
+  </tbody>
+</table>
+
+<h5>4.2 台账列表（12 列，含勾选列）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>勾选列</td><td>复选框</td><td>—</td><td>—</td><td>表头可全选当前页；<b>已作废行不可勾选</b>；勾选 ≥ 1 条后「作废」按钮才可用；翻页 / 重新查询后清空勾选</td></tr>
+    <tr><td>预警编号</td><td>链接·只读</td><td>—</td><td>WRN-YYYYMMDD-NNN</td><td>系统生成，全局唯一，单行不换行；<b>点击进入任务详情</b>（含处理人列表与处理日志）；点「处理人」则打开轻量的处理人明细</td></tr>
+    <tr><td>工作表 / 预警内容</td><td>文本·只读</td><td>—</td><td>≤ 30 / ≤ 50 字</td><td>同任务列表口径；超长换行显示，不截断</td></tr>
+    <tr><td>预警工作项</td><td>可点击格</td><td>—</td><td>首项 ≤ 20 字</td><td>命中多项显示「共 N 项」徽标；<b>点击整格展开命中明细</b>（工作项 / 判定 / 预警值（阈值）/ 触发值（实测）），展开行 colspan = 12</td></tr>
+    <tr><td>风险等级</td><td>标签·只读</td><td>—</td><td>一级 ~ 四级</td><td>取条件组「属于几级风险」；未指定时显示灰色「未分级」；颜色按等级固定</td></tr>
+    <tr><td>类型</td><td>文本·只读</td><td>—</td><td>2 ~ 4 字</td><td>取规则条件组配置的类型（系统字典项，如 灼烫 / 触电 / 高处坠落）</td></tr>
+    <tr><td>触发时间</td><td>文本·只读</td><td>—</td><td>YYYY-MM-DD HH:mm</td><td>= 预警生成时间（= 表单提交并通过判定的时间），单行不换行</td></tr>
+    <tr><td>提交人</td><td>文本·只读</td><td>—</td><td>—</td><td>源表单提交人的真实姓名</td></tr>
+    <tr><td>处理人</td><td>折叠格</td><td>—</td><td>首人 + 等 N 人</td><td>真实人员（快照）；仅 1 人不显示徽标；悬浮显示「姓名（来源类别）· 处置状态」；<b>点击打开处理人明细</b>（见 4.3）</td></tr>
+    <tr><td>处理期限</td><td>文本·只读</td><td>—</td><td>YYYY-MM-DD HH:mm</td><td>只存时间，不写状态文字、不标红；是否超期由「状态」后的徽标表达（见 4.6）</td></tr>
+    <tr><td>状态</td><td>标签 + 徽标</td><td>—</td><td>未处理 / 处理中 / 已完成 / 已作废</td><td><b>台账是唯一展示「已作废」的列表</b>；超期时在标签后追加「已超期 / 超期完成」徽标；判定规则见 4.7</td></tr>
+  </tbody>
+</table>
+
+<h5>4.3 处理人明细弹窗（点「处理人」打开）</h5>
+<p><b>入口</b>：台账 / 下钻明细 / 预警任务列表的「处理人」单元格 → 点击整格打开。这是「只看人」的快捷路径：<b>不打开任务详情、不带日志</b>。</p>
+<ul>
+  <li><b>单元格展示</b>：首个处理人姓名 +「等 N 人」徽标（仅 1 人不显示）；鼠标悬浮显示全部处理人的「姓名（来源类别）· 处置状态」。</li>
+  <li><b>弹窗标题</b>：「处理人明细 - WRN-YYYYMMDD-NNN」；标题行右侧显示<b>派单快照时间</b>（人员解析固化的时刻）。</li>
+</ul>
+<h6>4.3.1 字段</h6>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>格式</th><th>取值与交互</th></tr></thead>
+  <tbody>
+    <tr><td>处理人</td><td>文本·只读</td><td>2 ~ 20 字</td><td>真实姓名；重名时悬浮补「部门 · 岗位」；顺序按<b>派单顺序</b>（规则解析顺序），不按姓名或状态排序</td></tr>
+    <tr><td>来源角色类别</td><td>文本·只读</td><td>≤ 30 字</td><td>该人由哪条规则类别解析而来：表单提交人 / 预警所在事事号的负责人 / 预警所在事事号的成员 / 表单提交人的部门负责人 / 表单提交人的部门成员 / 表单内@成员「字段名」；管理员在「分派异常」中指派后进入的，显示<b>「企业管理员指派（原类别 X 解析失败）」</b>；经他人转发而来的显示<b>「转发自 XX」</b></td></tr>
+    <tr><td>处置状态</td><td>标签·只读</td><td>未处理 / 已处理</td><td>按<b>该处理人</b>是否有处置记录判定：有 →「已处理」（绿），无 →「未处理」（红）。这是<b>个人状态</b>，不是整条预警状态</td></tr>
+    <tr><td>提交时间</td><td>文本·只读</td><td>YYYY-MM-DD HH:mm</td><td><b>该处理人自己</b>提交处置的时间；未提交显示「—」；与「触发时间」「处理期限」含义不同</td></tr>
+    <tr><td>处理详情</td><td>链接</td><td>—</td><td>已提交 → 蓝色「查看」，打开<b>个人处置详情</b>（4.5）；未提交 → 灰色「未提交」，<b>不可点</b></td></tr>
+  </tbody>
+</table>
+<p><b>空态与限制</b>：无数据时显示「暂无数据」；弹窗只读——不提供改派、删除或批量操作（改派只能在「分派异常」里做）；底部只有「关闭」。</p>
+
+<h5>4.4 任务详情（只读，点「预警编号」打开）</h5>
+<p><b>入口</b>：点<b>预警编号</b>（台账 / 下钻明细 / 预警任务列表均可）；或在预警任务「通知我 / 已处理 / 我转发」页签点「查看」。<b>标题</b>「任务详情 - WRN-YYYYMMDD-NNN」。</p>
+<table class="devdoc-table">
+  <thead><tr><th>区块</th><th>内容</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>① 预警基础信息（只读）</td><td>工作表名称 / 预警内容 / 预警发生时间 / 风险等级 · 类型 / 处理人 / 处理期限</td><td>系统自动抓取；「处理人」显示整条任务的全部处理人</td></tr>
+    <tr><td>② 命中明细（只读表）</td><td>工作项 / 判定 / 预警值（阈值）/ 触发值（实测）</td><td>按规则子条件顺序列出全部命中项；触发值标红；无结论行</td></tr>
+    <tr><td>③ 处理人列表</td><td>字段与 4.3.1 完全一致</td><td>内嵌在任务上下文里，标题显示「处理人（N 人）」+ 派单快照时间；点「查看」进入个人处置详情</td></tr>
+    <tr><td>④ 处理日志</td><td>见 4.6</td><td>固定在弹窗底部，默认收起；<b>日志只有这一处入口</b></td></tr>
+  </tbody>
+</table>
+<p><b>本弹窗没有处置区</b>：不能在这里填写或提交处置，页脚只有「关闭」。</p>
+<p>与 4.3 的分工：<b>只想看谁在处理</b> → 点处理人单元格（4.3，轻量）；<b>想看整条任务发生了什么</b> → 点预警编号（4.4，含日志）。</p>
+
+<h5>4.5 个人处置详情（只读，处理人明细 / 任务详情 → 处理人行「查看」）</h5>
+<p>与「预警任务 → 处理」使用<b>同一个组件</b>，只读态仅隐藏编辑能力。标题「处理详情 - WRN-YYYYMMDD-NNN（姓名）」。<b>只放这个人的东西</b>：</p>
+<table class="devdoc-table">
+  <thead><tr><th>区块</th><th>内容</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>① 预警基础信息（只读）</td><td>同 4.4 第①区块</td><td>沿用任务的基础信息，便于单独核对上下文</td></tr>
+    <tr><td>② 命中明细（只读表）</td><td>同 4.4 第②区块</td><td>同上</td></tr>
+    <tr><td>③ 该处理人的处置内容</td><td>姓名 + 来源角色类别 + 提交时间；处理情况；整改照片 / 附件；电子签字</td><td>只显示被点击的这位处理人的记录，不合并其他人；附件以标签列出，<b>可预览 / 下载、不可删除</b></td></tr>
+  </tbody>
+</table>
+<p><b>不含「处理人列表」、不含「处理日志」</b>——这两项属于任务层，统一在 4.3 / 4.4 看，避免同一份日志多处重复。</p>
+<p><b>异常态</b>：尚未提交 → 「该处理人尚未提交处置，无处置内容」；查不到记录 → 「未找到该处理人的处置记录」。</p>
+<p><b>按钮与权限</b>：底部只有「<b>返回</b>」（关闭本层，回到处理人明细或任务详情），<b>没有「提交处置」</b>、没有可编辑输入框；管理员不能代处理人提交、不能修改处理情况、不能删除附件；附件可下载（审计留档）。</p>
+
+<h5>4.6 处理日志（任务详情底部，只读）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>项</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>归属</td><td><b>属于预警任务，一条任务一份日志</b>；只出现在「任务详情」与「处理（编辑）」两个界面，<b>个人处置详情、处理人明细里都不显示</b>。日志记录整条任务从触发到闭环的全过程，不属于某一个处理人</td></tr>
+    <tr><td>位置</td><td>任务详情弹窗<b>最底部</b>、页脚按钮之上；<b>默认收起</b>，点标题行展开 / 收起</td></tr>
+    <tr><td>摘要行</td><td>「处理日志 · 共 N 条 · 最新动作 YYYY-MM-DD HH:mm · 只读留痕」</td></tr>
+    <tr><td>每条内容</td><td>时间 / 操作人 / 来源角色类别 / 动作 / 说明；按时间<b>正序</b>排列（早 → 晚）</td></tr>
+    <tr><td>记录哪些动作</td><td>仅四类关键节点：<b>触发预警</b>（系统）、<b>处理预警</b>（处理人提交处置）、<b>转发预警</b>（转发人 + 被转交人 + 转办说明）、<b>作废预警</b>（作废人 + 原因）</td></tr>
+    <tr><td>可见范围</td><td>处理人与管理员<b>都能看到</b>，包括他人提交处置的摘要（如「已提交处置（已补装防护栏并加固）」），便于相互了解进度</td></tr>
+    <tr><td>不记录</td><td>查看详情、下发通知、派单解析、超期提醒等过程动作，避免日志被噪音淹没</td></tr>
+    <tr><td>不可篡改</td><td>只读、不可修改、不可删除；人员按派单快照显示（组织架构变动不改变历史记录）</td></tr>
+    <tr><td>转发历史</td><td><b>转发只在这里展示</b>：每次转发生成一条「转发预警」日志，含转发人 / 被转交人 / 时间 / 转办说明（说明 ≤ 200 字，可为空）</td></tr>
+  </tbody>
+</table>
+
+<h5>4.7 状态与超期（台账口径）</h5>
+<p>台账展示的是<b>整条预警的任务状态</b>，由处置子表汇总得出（状态不是手工填写的字段）。</p>
+<table class="devdoc-table">
+  <thead><tr><th>状态</th><th>判定条件</th><th>展示</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>未处理</td><td>已提交人数 = 0</td><td>红色标签「未处理」</td><td>处理期限内未提交时追加「已超期」徽标</td></tr>
+    <tr><td>处理中</td><td>0 &lt; 已提交人数 &lt; 处理人总数</td><td>橙色标签「处理中」</td><td>只在「全部完成」模式且处理人 ≥ 2 时出现；单人任务不会出现</td></tr>
+    <tr><td>已完成</td><td>达到处置模式的完成条件</td><td>绿色标签「已完成」</td><td>超过期限完成时追加「超期完成」徽标</td></tr>
+    <tr><td>已作废</td><td>管理员执行作废</td><td>灰色标签「已作废」</td><td>终态、不可恢复；<b>只在台账与导出中保留</b>，预警任务页不展示</td></tr>
+  </tbody>
+</table>
+<h6>4.7.1 处置模式对完成条件的影响</h6>
+<table class="devdoc-table">
+  <thead><tr><th>处置模式（规则里配置）</th><th>完成条件</th><th>其余处理人</th></tr></thead>
+  <tbody>
+    <tr><td>并行处置 · 任一完成</td><td>任意 1 人提交处置即「已完成」</td><td>未提交者的待办自动关闭，不再要求提交</td></tr>
+    <tr><td>并行处置 · 全部完成</td><td>全部处理人都提交才算「已完成」</td><td>少一人即为「处理中」，未提交者继续保留待办</td></tr>
+  </tbody>
+</table>
+<h6>4.7.2 超期：台账用「任务口径」，任务页用「个人口径」</h6>
+<table class="devdoc-table">
+  <thead><tr><th>使用位置</th><th>口径</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td><b>台账 / 下钻明细 / 分级看板</b></td><td><b>任务口径</b></td><td>未完成且当前时间 &gt; 处理期限 →「已超期」；已完成且<b>最后一位</b>处理人的提交时间 &gt; 处理期限 →「超期完成」；其余不显示徽标</td></tr>
+    <tr><td>预警任务页</td><td>个人口径</td><td>本人未提交且当前时间 &gt; 处理期限 →「已超期」；本人已提交且<b>本人的</b>提交时间 &gt; 处理期限 →「超期完成」；随登录人不同而不同</td></tr>
+  </tbody>
+</table>
+<ul>
+  <li>「处理期限」字段<b>只存时间</b>：不写「已超期」等文字、不标红；是否超期一律由独立徽标表达。</li>
+  <li>超期是<b>动态值</b>：未完成任务随时间推移会自动由「未超期」变成「已超期」，因此读取时实时计算，不在主表固化。</li>
+  <li>状态<b>不可回退</b>：已完成后不能回到处理中；处置有误需作废后重新触发。任意状态均可被管理员作废（已完成也可），作废时处置记录保留。</li>
+</ul>
+
+<h5>4.8 分派异常列表（8 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>字段</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>预警编号 / 预警内容 / 工作表 / 触发时间</td><td>同台账口径</td></tr>
+    <tr><td>原角色类别</td><td>解析失败的规则类别（如「表单提交人的部门负责人」「表单内@成员（巡检负责人）」）</td></tr>
+    <tr><td>失败原因</td><td>固定三类：组织架构未配置 / 表单字段为空 / 人员已离职（含一行明细说明）</td></tr>
+    <tr><td>状态</td><td>只有两种：<b>待指派</b>（尚未指派）/ <b>已指派</b>（已指定具体处理人）</td></tr>
+    <tr><td>操作</td><td>待指派 → 「重新指派」；已指派 → 「查看」（打开指派详情，可再次重新指派）</td></tr>
+  </tbody>
+</table>
+<p><b>分派异常不出现在任何人待办</b>：解析失败的任务不派发给任何人，只在本 Tab 中由企业管理员指派；指派后才进入被指派人待办。</p>
+
+<h5>4.9 重新指派 / 指派详情弹窗</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>预警内容 / 原角色类别 / 失败原因</td><td>只读</td><td>—</td><td>—</td><td>由异常记录带出</td></tr>
+    <tr><td>当前处理人</td><td>只读</td><td>—</td><td>—</td><td>待指派时显示「暂无（待指派，未派发给任何人）」</td></tr>
+    <tr><td>指派给</td><td>组织架构选人</td><td>是</td><td>单人</td><td>按部门树展开，支持姓名筛选；不可选自己；未选提示「请选择要指派的人员」</td></tr>
+    <tr><td>指派原因</td><td>多行文本</td><td>是</td><td>≤ 200 字</td><td>非空校验，为空提示「请填写指派原因」</td></tr>
+    <tr><td>指派详情（已指派）</td><td>只读</td><td>—</td><td>—</td><td>指派给谁 / 指派时间 / 指派操作人 / 指派原因；底部按钮变「重新指派」，再次指派覆盖为最新一次</td></tr>
+  </tbody>
+</table>
+
+<h5>4.10 作废弹窗</h5>
+<table class="devdoc-table">
+  <thead><tr><th>字段</th><th>控件</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>作废条数</td><td>文本·只读</td><td>= 当前勾选行数，勾选为 0 时「作废」按钮禁用</td></tr>
+    <tr><td>作废原因</td><td>多行文本</td><td>必填，≤ 200 字；为空时提示「请填写作废原因后再确认」</td></tr>
+  </tbody>
+</table>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>Tab 切换</b>：台账 / 分派异常数据独立，角标数字 = 待指派条数。</li>
+  <li><b>展开命中明细</b>：点「预警工作项」整格展开／收起，交互与预警任务一致，展开行 colspan = 12。</li>
+  <li><b>点预警编号 → 任务详情</b>：打开 4.4，看整条任务的基础信息、命中明细、全部处理人与处理日志。</li>
+  <li><b>点处理人 → 处理人明细</b>：「只看人」的快捷路径，打开 4.3 的轻量弹窗，不加载任务详情、不带日志。</li>
+  <li><b>处理人行「查看」→ 个人处置详情</b>：仅已提交的行可点（处理人明细与任务详情两处都可点），打开 4.5，只显示该人的处置内容与附件；未提交行不可点。</li>
+  <li><b>转发历史</b>：只在任务详情的处理日志中查看，处理人列表里以「转发自 XX」标注来路。</li>
+  <li><b>处理日志</b>：在任务详情最底部，默认收起，点标题行展开；无筛选、不可编辑；<b>处理人明细与个人处置详情里都没有日志</b>。</li>
+  <li><b>作废</b>：勾选 → 点「作废」→ 填原因 → 确认；这些预警状态变「已作废」，从预警任务全部页签移除，台账保留。</li>
+  <li><b>导出</b>：台账导 Excel；异常 Tab 单独导出异常清单；导出内容与列表字段一致，不含日志与处置明细。</li>
+  <li><b>指派</b>：确认后状态变「已指派」、生成指派记录；本条进入被指派人待办，<b>不写入处理日志</b>，只刷新异常清单。</li>
+  <li><b>只读边界</b>：本页所有操作均为管理动作（作废 / 指派），<b>不能代替处理人提交处置</b>，也不能修改处置内容或删除附件。</li>
+</ol>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-warning-stats-aggr">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div>page-warning-stats-aggr</div>
+  <div class="k">菜单路径</div><div>预警统计 / 预警统计（按工作表）</div>
+  <div class="k">数据来源</div><div>预警任务表，按工作表分组聚合</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>看「哪张表最容易触发预警、哪张表处理最慢」，用于定位表单填写质量与责任分工问题。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>筛选条</b>：日期范围 + 工作表 + 状态 + 查询。</li>
+  <li><b>聚合表</b>：每张工作表一行，展示触发总数、各状态数量与处理率。</li>
+  <li><b>下钻</b>：点行或「下钻」查看该工作表的预警明细。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用规则</b>：长度按字符计；文本提交前执行 <code>trim()</code>；必填为空时按钮置灰并提示「请输入/请选择{字段名}」；日期时间一律 <code>YYYY-MM-DD HH:mm</code>（带年份，不省略），精确到分钟。</p>
+<h5>4.1 筛选条</h5>
+<table class="devdoc-table">
+  <thead><tr><th>字段</th><th>控件</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>开始 / 结束日期</td><td>日期</td><td>默认当月 1 日至今天；起 ≤ 止；按触发时间过滤</td></tr>
+    <tr><td>工作表</td><td>下拉</td><td>全部工作表 / 具体表名</td></tr>
+    <tr><td>状态</td><td>下拉</td><td>全部状态 / 未处理 / 处理中 / 已完成 / 已作废</td></tr>
+    <tr><td>查询</td><td>按钮</td><td>刷新聚合表</td></tr>
+  </tbody>
+</table>
+
+<h5>4.2 聚合表</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>工作表</td><td>文本·只读</td><td>—</td><td>≤ 30 字</td><td>业务表单名称</td></tr>
+    <tr><td>预警触发总数</td><td>数字·只读</td><td>—</td><td>整数</td><td>该表在筛选范围内的预警条数（含已作废）</td></tr>
+    <tr><td>已处理 / 未处理 / 处理中 / 已作废</td><td>数字·只读</td><td>—</td><td>整数</td><td>按任务状态分别计数，四者之和 = 触发总数</td></tr>
+    <tr><td>处理率</td><td>百分比·只读</td><td>—</td><td>0%–100%，保留 1 位小数</td><td>= 已处理 ÷（触发总数 − 已作废）× 100%；分母为 0 时显示「—」，避免除零</td></tr>
+  </tbody>
+</table>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>下钻</b>：点行或「下钻」打开该工作表的预警明细，明细列与台账保持一致。</li>
+  <li><b>导出</b>：「导出 Excel」按当前筛选条件导出聚合表。</li>
+  <li><b>口径</b>：全部按任务数统计；一条任务命中多个工作项仍计 1 条；已作废计入总数但不计入处理率分母。</li>
+</ol>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-warning-task">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div>page-warning-task</div>
+  <div class="k">菜单路径</div><div>预警分级管控 / 预警任务</div>
+  <div class="k">数据来源</div><div>预警任务表：一条预警一行，按「当前登录人与该预警的关系」过滤出四个页签的数据</div>
+  <div class="k">生成方式</div><div>无新增入口，任务由规则引擎在表单提交并命中条件时自动生成</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>把「已触发、需要人处理」的预警派给具体的人，并让每个人只看与自己有关的任务。页面按当前登录人的四种身份拆成四个页签；四个页签的<b>列结构完全一致</b>，只改变数据范围与可执行的操作。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>页签栏</b>：未处理 / 通知我 / 已处理 / 我转发。「未处理」「通知我」带数量角标，数字为当前登录人在该页签下的待办条数，实时计算。</li>
+  <li><b>查询条</b>：时间维度 + 日期范围 + 预警工作项 + 风险等级 + 查询。筛选只作用于当前页签。</li>
+  <li><b>任务列表</b>：10 列固定结构，见 4.1。</li>
+  <li><b>命中明细展开行</b>：点「预警工作项」整格展开，插在该行下方，不新开弹窗。</li>
+  <li><b>处理人列表 / 处理人明细</b>：点「处理人」单元格打开轻量弹窗（见 4.5）；任务详情第③区块是同一份数据的内嵌版。</li>
+  <li><b>任务详情弹窗</b>：点「处理 / 查看」打开；编辑态与只读态共用同一组件，见 4.4。</li>
+  <li><b>转发弹窗</b>：仅「未处理」页签点「转发」打开，见 4.6。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用校验规则</b>：长度一律按字符计（中文、英文、标点各计 1 个）；所有文本在提交前执行 <code>trim()</code> 去首尾空格；必填为空时按钮置灰不可提交，并提示「请输入{字段名}」/「请选择{字段名}」；错误提示统一为字段下方红色 12px 文案；日期时间一律 <code>YYYY-MM-DD HH:mm</code>（<b>带年份，不省略年份</b>），精确到分钟，秒不展示；列表、台账、下钻、处理人列表、日志等所有展示位置统一使用该格式。</p>
+
+<h5>4.1 任务列表（四个页签一致）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>预警编号</td><td>文本·只读</td><td>—</td><td>WRN-YYYYMMDD-NNN</td><td>系统生成：<code>WRN</code> + 触发日期 8 位 + 当日 3 位流水（从 001 递增，跨天重置，作废号不复用）。全表唯一，不可编辑；<b>点击打开任务详情</b></td></tr>
+    <tr><td>工作表</td><td>文本·只读</td><td>—</td><td>≤ 30 字</td><td>取触发本次预警的源工作表名称</td></tr>
+    <tr><td>预警内容</td><td>文本·只读</td><td>—</td><td>≤ 50 字</td><td>取规则条件组的「预警内容」，作为任务标题；超长显示省略号，悬浮显示全文</td></tr>
+    <tr><td>预警工作项</td><td>可点击格</td><td>—</td><td>首项 ≤ 20 字</td><td>取命中明细第 1 条的工作项名；命中 ≥ 2 项时追加徽标「共 N 项」；点击整格展开/收起命中明细；无命中数据时显示「—」</td></tr>
+    <tr><td>风险等级</td><td>标签·只读</td><td>—</td><td>一级 / 二级 / 三级 / 四级</td><td>取条件组「属于几级风险」；规则未指定时显示灰色「未分级」；颜色按等级固定（一级红、二级橙、三级黄、四级蓝）</td></tr>
+    <tr><td>处理人</td><td>折叠格</td><td>—</td><td>首人姓名 + 「等 N 人」</td><td>触发时按角色类别解析出的<b>真实人员</b>并<b>快照固化</b>，组织架构后续变动不影响本条任务；仅 1 人不显示徽标；悬浮显示「姓名（来源类别）· 处置状态」；点击打开处理人明细。解析不到人员的任务（分派异常）<b>不会进入本页任何页签</b>，只在「预警信息表统计 → 分派异常」中由企业管理员处理</td></tr>
+    <tr><td>触发时间</td><td>文本·只读</td><td>—</td><td>YYYY-MM-DD HH:mm</td><td>= 表单提交并通过条件判定的时间，即预警生成时间；列表默认按该字段倒序</td></tr>
+    <tr><td>处理期限</td><td>文本·只读</td><td>—</td><td>YYYY-MM-DD HH:mm</td><td>= 触发时间 + 规则配置的处理期限（按分钟/小时累加），或取表单中指定的日期字段值。<b>该字段只存时间，不写任何状态文字，也<b>不做标红</b>；是否超期由「超期」徽标单独表达</td></tr>
+    <tr><td>状态</td><td>标签</td><td>—</td><td>未处理 / 处理中 / 已完成</td><td>按「已提交处置人数 / 处理人总数」计算：0 → 未处理；部分已提交 → 处理中；全部已提交 → 已完成。仅 1 个处理人时不会出现「处理中」。<b>已作废不属于任务状态</b>，作废预警不出现在本页任何页签</td></tr>
+    <tr><td>超期</td><td>徽标·紧跟状态</td><td>—</td><td>已超期 / 超期完成</td><td><b>按当前登录人个人判定，不看整条任务</b>：本人未提交且当前时间 &gt; 处理期限 → 「已超期」；本人已提交且本人的提交时间 &gt; 处理期限 → 「超期完成」；本人按期完成或尚未到期则不显示徽标（按期完成只显示状态「已完成」）</td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>—</td><td>—</td><td>未处理页签：「处理」打开详情编辑态、「转发」打开转发弹窗；通知我 / 已处理 / 我转发：「查看」打开详情只读态</td></tr>
+  </tbody>
+</table>
+
+<h5>4.2 查询条件</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>默认值</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>时间维度</td><td>下拉</td><td>—</td><td>触发时间</td><td>可选「触发时间 / 处理期限」，决定右侧日期范围作用于哪个字段；切换后不自动重查</td></tr>
+    <tr><td>开始 / 结束日期</td><td>日期</td><td>否</td><td>空</td><td><code>YYYY-MM-DD</code>；起 ≤ 止，否则提示「开始日期不能晚于结束日期」；按自然日闭区间比较（含当日 00:00—23:59）</td></tr>
+    <tr><td>预警工作项</td><td>输入框</td><td>否</td><td>空</td><td>≤ 30 字；<b>包含匹配</b>（对任务的任一命中工作项名做子串匹配），非精确匹配</td></tr>
+    <tr><td>风险等级</td><td>下拉</td><td>否</td><td>全部等级</td><td>全部等级 / <b>未分级</b> / 一级 / 二级 / 三级 / 四级，精确匹配；选「未分级」只返回规则未指定风险等级的预警</td></tr>
+    <tr><td>查询</td><td>按钮</td><td>—</td><td>—</td><td>按当前条件刷新当前页签数据（只作用于当前页签）</td></tr>
+    <tr><td>重置</td><td>按钮</td><td>—</td><td>—</td><td>清空全部查询条件并恢复默认（时间维度=触发时间、日期为空、工作项为空、等级=全部等级），并重新查询当前页签</td></tr>
+  </tbody>
+</table>
+
+<h5>4.3 命中明细（展开行）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>列</th><th>取值</th></tr></thead>
+  <tbody>
+    <tr><td>工作项</td><td>子条件的工作项名（来自本表单字段），按规则中子条件的配置顺序排列</td></tr>
+    <tr><td>判定</td><td>大于 / 大于等于 / 小于 / 小于等于 / 等于 / 不等于</td></tr>
+    <tr><td>预警值（阈值）</td><td>规则中配置的判定阈值，含单位；文本型字段直接显示原值</td></tr>
+    <tr><td>触发值（实测）</td><td>触发时源表单的实际值，红色加粗</td></tr>
+  </tbody>
+</table>
+
+<h5>4.4 任务详情弹窗（三种模式共用同一组件）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>模式</th><th>怎么进入</th><th>显示内容</th></tr></thead>
+  <tbody>
+    <tr><td><b>处理</b>（编辑）</td><td>「未处理」页签点「处理」</td><td>基础信息（含处理人，只读）+ 命中明细 + 本人处置填写区 + 处理日志；<b>不显示「处理人列表」区块</b>（不展开其他人的处置进度）；页脚「取消 / 提交处置」</td></tr>
+    <tr><td><b>任务详情</b>（只读）</td><td>点<b>预警编号</b>；「通知我 / 已处理 / 我转发」页签点「查看」</td><td>基础信息 + 命中明细 + <b>处理人列表</b> + <b>处理日志</b>；<b>无处置区</b>，页脚只有「关闭」</td></tr>
+    <tr><td><b>个人处置详情</b>（只读）</td><td>处理人明细的「查看」；任务详情处理人列表的「查看」</td><td>基础信息 + 命中明细 + <b>该处理人的处置内容</b>（处理情况 / 附件 / 签字 / 提交时间）；<b>不含处理人列表、不含处理日志</b>，页脚只有「返回」（回到处理人明细或任务详情）</td></tr>
+  </tbody>
+</table>
+<p><b>填写项（仅「处理」模式可编辑）</b>：</p>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>校验与取值</th></tr></thead>
+  <tbody>
+    <tr><td>处理情况</td><td>多行文本</td><td>是</td><td>≤ 500 字</td><td>去首尾空格后非空；<b>不做最少字数限制</b>；提交后写入该处理人的处置记录，<b>不可修改</b></td></tr>
+    <tr><td>整改照片 / 附件</td><td>上传</td><td>否</td><td>≤ 9 个，单个 ≤ 10MB</td><td>格式限 jpg / jpeg / png / pdf；支持点击与拖拽；可预览、可下载；<b>提交后不可删除</b>；超出数量或体积时提示「最多上传 9 个附件」/「单个文件不能超过 10MB」</td></tr>
+    <tr><td>实际处理人</td><td>只读</td><td>—</td><td>—</td><td>提交时自动写入当前登录人姓名，未提交显示「提交处置时自动记录」</td></tr>
+    <tr><td>实际处理时间</td><td>只读</td><td>—</td><td>YYYY-MM-DD HH:mm</td><td>提交时自动写入服务器当前时间，未提交显示「提交处置时自动记录」</td></tr>
+    <tr><td>电子签字</td><td>手写画布</td><td>是</td><td>—</td><td>点击弹出手写板，签字后生成图片存证；未签字不可提交，提示「请签名」</td></tr>
+  </tbody>
+</table>
+<p><b>日志归属</b>：处理日志是<b>任务级</b>的，只出现在「处理」与「任务详情」两种模式下，<b>个人处置详情里不重复出现</b>；默认收起，点标题行展开，按时间正序展示触发 / 处理 / 转发 / 作废四类节点，只读、不可删改。</p>
+<p><b>「处理人」的两处区别</b>：基础信息里的「处理人」<b>只读字段三种模式都显示</b>（本条任务派给了谁，一眼可见）；<b>「处理人列表」区块只在「任务详情」模式显示</b>——「处理」与「个人处置详情」模式不展开列表，只看自己那一条，不暴露其他处理人的处置进度与提交内容。</p>
+
+<h5>4.5 处理人明细弹窗（点「处理人」打开，轻量版）</h5>
+<p>点列表「处理人」单元格打开，<b>只列人、不带日志</b>，用于快速核对"谁在办、办了没、什么时候交的"。任务详情的第③区块是同一份数据的内嵌版，两处字段一致。</p>
+<table class="devdoc-table">
+  <thead><tr><th>字段</th><th>控件</th><th>取值</th></tr></thead>
+  <tbody>
+    <tr><td>派单快照时间</td><td>只读</td><td>标题行右侧显示，任务生成时解析处理人的时间点，说明人员已固化</td></tr>
+    <tr><td>处理人</td><td>只读</td><td>真实姓名；重名时悬浮补「部门 · 岗位」；按派单顺序排列</td></tr>
+    <tr><td>来源角色类别</td><td>只读</td><td>该人由哪条规则类别解析而来（如「表单提交人」「预警所在事事号的负责人」）；由管理员在「分派异常」中指派后进入的，显示「企业管理员指派（原类别 X 解析失败）」；经他人转发的显示「转发自 XX」</td></tr>
+    <tr><td>处置状态</td><td>标签</td><td>未处理 / 已处理（个人状态，不是整条任务状态）</td></tr>
+    <tr><td>提交时间</td><td>只读</td><td><b>该处理人自己</b>提交处置的时间，未提交显示「—」</td></tr>
+    <tr><td>处理详情</td><td>链接</td><td>已提交显示「查看」，打开<b>个人处置详情</b>（该人处置内容 / 附件 / 签字，<b>不含日志</b>）；未提交显示灰色「未提交」，不可点</td></tr>
+  </tbody>
+</table>
+
+<h5>4.6 转发弹窗</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>校验与取值</th></tr></thead>
+  <tbody>
+    <tr><td>转发给</td><td>组织架构树</td><td>是</td><td>单人</td><td>按部门树展开，支持姓名实时筛选；<b>只能选一名具体人员</b>；未选提示「请选择转交人」；不能选自己</td></tr>
+    <tr><td>转办说明</td><td>多行文本</td><td>否</td><td>≤ 200 字</td><td>选填；写入处理日志的「转发预警」条目</td></tr>
+  </tbody>
+</table>
+<p><b>前置限制</b>：仅「未处理」状态且当前登录人是处理人时可转发；<b>单条预警只允许转发 1 次</b>，转发后按钮消失，原处理人退出该任务并在「我转发」页签留痕。</p>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>页签切换</b>：只换数据，列结构不变；切换时保留查询条件，不保留滚动位置。</li>
+  <li><b>展开命中明细</b>：点「预警工作项」整格展开/收起，鼠标悬浮整格变主色；命中 1 项与多项交互完全一致。</li>
+  <li><b>打开处理人明细</b>：点「处理人」单元格任意位置，打开只列人的轻量弹窗；点其中「查看」进入个人处置详情（叠在其上，关闭后回到处理人明细）；要看整条任务则点预警编号。</li>
+  <li><b>处理</b>：进详情编辑态 → 填写处理情况 → 上传附件 → 签字 → 提交。提交成功后：该处理人状态置为已处理、写提交时间；若全部处理人已提交，任务状态转「已完成」，从所有待办中消失；超期判断同步刷新。</li>
+  <li><b>查看</b>：进详情只读态，隐藏填写区与「提交处置」，页脚只有「关闭」。</li>
+  <li><b>转发</b>：选定人员 + 可选说明 → 确认 → 新处理人进入待办、原处理人退出、写入一条「转发预警」日志；操作不可撤回。</li>
+  <li><b>提交防重</b>：提交按钮点击后置灰并显示 loading，接口返回前不可重复提交；重复请求按「同一处理人同一预警」幂等处理。</li>
+</ol>
+
+</div>
+
+<script>
+// ====== Navigation ======
+function navigateTo(pageId) {
+  // 已隐藏的页面（html 上带 hidden 属性）不允许进入；恢复页面时去掉 hidden 即自动生效
+  const target = document.getElementById('page-' + pageId);
+  if (!target || target.hasAttribute('hidden')) return;
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  target.classList.add('active');
+  document.querySelectorAll('.menu-item').forEach(m => m.classList.remove('active'));
+  document.querySelector(\`.menu-item[data-page="\${pageId}"]\`).classList.add('active');
+
+  const breadcrumbMap = {
+    'warning-info-table': '工作表 / <span>预警信息表</span>',
+    'warning-rule': '工作表管理 / <span>预警规则设置</span>',
+    'warning-dashboard': '预警分级管控 / <span>预警分级看板</span>',
+    'warning-task': '预警分级管控 / <span>预警任务</span>',
+    'warning-stats': '预警统计 / <span>预警信息表统计</span>',
+    'warning-stats-aggr': '预警统计 / <span>预警统计（按工作表）</span>'
+  };
+  document.getElementById('breadcrumb').innerHTML = breadcrumbMap[pageId] || '';
+  _curPageId = pageId;
+  if (_devDocOpen) renderDevDoc(pageId);
+
+  // 重置预警信息表到列表视图
+  if (pageId === 'warning-info-table') backToWitList();
+  // 进入预警规则设置时展示工作表列表
+  if (pageId === 'warning-rule') { showRulesList(); renderWsRuleList(); }
+}
+
+// ====== Switch Toggle ======
+function toggleSwitch(el) {
+  el.classList.toggle('on');
+  const label = el.querySelector('.switch-label');
+  if (label) {
+    if (el.classList.contains('on')) {
+      label.textContent = label.textContent.replace('否', '是').replace('关闭', '开启') || '是';
+    } else {
+      label.textContent = label.textContent.replace('是', '否').replace('开启', '关闭') || '否';
+    }
+  }
+}
+
+// ====== Tabs ======
+function switchTab(el, contentId) {
+  const tabContainer = el.parentElement;
+  tabContainer.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // Find parent card body and toggle tab content
+  const cardBody = el.closest('.card-body');
+  cardBody.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+  document.getElementById(contentId).classList.add('active');
+}
+
+function switchTaskTab(el, tabId) {
+  const tabContainer = el.parentElement;
+  tabContainer.querySelectorAll('.tab-item').forEach(t => t.classList.remove('active'));
+  el.classList.add('active');
+  // Switch all task-tab-content divs
+  document.querySelectorAll('.task-tab-content').forEach(c => c.classList.remove('active'));
+  const contentEl = document.getElementById(tabId + '-content');
+  if (contentEl) contentEl.classList.add('active');
+}
+
+// ====== Warning Info Table Views ======
+function enterWitEditView() {
+  document.getElementById('wit-list-view').style.display = 'none';
+  document.getElementById('wit-view-mode').style.display = 'none';
+  document.getElementById('wit-edit-view').style.display = 'block';
+}
+function enterWitViewMode() {
+  document.getElementById('wit-list-view').style.display = 'none';
+  document.getElementById('wit-edit-view').style.display = 'none';
+  document.getElementById('wit-view-mode').style.display = 'block';
+}
+function backToWitList() {
+  document.getElementById('wit-edit-view').style.display = 'none';
+  document.getElementById('wit-view-mode').style.display = 'none';
+  document.getElementById('wit-list-view').style.display = 'block';
+}
+
+// ====== Add/Remove Disposal Row ======
+function addDisposalRow() {
+  const tbody = document.getElementById('disposalTableBody');
+  const tr = document.createElement('tr');
+  tr.innerHTML = \`
+    <td><input class="sub-input" placeholder="请输入处理情况..."></td>
+    <td><span class="tag tag-info" style="cursor:pointer;">📎 上传</span></td>
+    <td><input class="sub-input" placeholder="选择人员..."></td>
+    <td><span class="text-muted">待签字</span></td>
+    <td><button class="btn-text btn-sm text-danger" onclick="removeDisposalRow(this)">删除</button></td>
+  \`;
+  tbody.appendChild(tr);
+}
+function removeDisposalRow(btn) {
+  const tbody = document.getElementById('disposalTableBody');
+  if (tbody.children.length <= 1) {
+    alert('至少保留一行处置记录');
+    return;
+  }
+  btn.closest('tr').remove();
+}
+
+// ====== 工作表预警配置（视图1 列表 / 视图2 编辑器）======
+let wsRuleData = [
+  { name:'安全巡检记录表', condCount:3, type:'灼烫 等 3 类', enabled:true, updated:'2026-07-08 10:23' },
+  { name:'设备运行日检表', condCount:2, type:'触电、火灾', enabled:true, updated:'2026-07-07 09:15' },
+  { name:'隐患排查治理表', condCount:2, type:'高处坠落、物体打击', enabled:false, updated:'2026-07-06 16:00' }
+];
+function renderWsRuleList(){
+  const tb = document.getElementById('wsRuleBody');
+  if(!tb) return;
+  tb.innerHTML = wsRuleData.map(w=>\`
+    <tr>
+      <td>\${w.name}</td>
+      <td>\${w.condCount>0? w.condCount+' 条':'<span class="text-muted">未配置</span>'}</td>
+      <td>\${w.type==='—'?'<span class="text-muted">—</span>':w.type}</td>
+      <td>\${w.enabled?'<span class="tag tag-success">已启用</span>':'<span class="tag tag-info">未启用</span>'}</td>
+      <td>\${w.updated}</td>
+      <td style="text-align:right;"><button class="btn-text btn-sm" onclick="openRuleEdit('\${w.name}')">预警规则设置</button></td>
+    </tr>\`).join('');
+}
+function showRulesList(){
+  const ev = document.getElementById('rulesEditView'); if(ev) ev.classList.add('hide');
+  const lv = document.getElementById('rulesListView'); if(lv) lv.classList.remove('hide');
+}
+function openRuleEdit(wsName){
+  document.getElementById('rulesListView').classList.add('hide');
+  document.getElementById('rulesEditView').classList.remove('hide');
+  document.getElementById('ruleEditTitle').textContent = '预警设置 · ' + wsName;
+  switchRtab('cond');
+  renderCondGroups();
+  updateRuleNums();
+}
+function closeRuleEdit(){
+  document.getElementById('rulesEditView').classList.add('hide');
+  document.getElementById('rulesListView').classList.remove('hide');
+}
+function switchRtab(tab){
+  document.querySelectorAll('#page-warning-rule .rtab').forEach(t=>t.classList.toggle('active', t.dataset.rtab===tab));
+  document.querySelectorAll('#page-warning-rule .rtab-pane').forEach(p=>p.classList.toggle('active', p.id==='pane-'+tab));
+}
+function updateRuleNums(){
+  const rc = document.getElementById('rtCondNum'); if(rc) rc.textContent = conditionGroups.length;
+  const nn = document.getElementById('rtNotifyNum'); if(nn) nn.textContent = document.querySelectorAll('#notifyConfigList tr').length;
+}
+
+// ====== 预警条件组（条件组 + 子条件 两级）======
+let condGroupSeq = 0;
+let conditionGroups = [];
+function seedCondGroups(){
+  conditionGroups = [
+    { id: ++condGroupSeq, content:'设备温度超限预警', relation:'any', riskLevel:'一级', type:'灼烫', subs:[{field:'设备温度',logic:'大于',value:'80°C'}] },
+    { id: ++condGroupSeq, content:'CO 浓度超限预警', relation:'any', riskLevel:'二级', type:'中毒窒息', subs:[{field:'CO 浓度',logic:'大于等于',value:'24ppm'}] },
+    { id: ++condGroupSeq, content:'管道压力异常预警', relation:'all', riskLevel:'一级', type:'触电', subs:[{field:'管道压力',logic:'大于',value:'3.0MPa'},{field:'设备状态',logic:'等于',value:'故障'}] }
+  ];
+}
+function renderCondGroups(){
+  if(conditionGroups.length===0) seedCondGroups();
+  const c = document.getElementById('condContainer');
+  if(c) c.innerHTML = conditionGroups.map(g=>condGroupHtml(g)).join('');
+}
+function condGroupHtml(g){
+  const relOpt = (v,txt)=>\`<option value="\${v}" \${g.relation===v?'selected':''}>\${txt}</option>\`;
+  const subs = g.subs.map((s,i)=>subCondRowHtml(g.id,i,s)).join('');
+  const riskOpts = ['','一级','二级','三级','四级'].map(l=>{
+    const t = l===''? '不指定（不进入分级看板）' : l+'风险';
+    return \`<option value="\${l}" \${g.riskLevel===l?'selected':''}>\${t}</option>\`;
+  }).join('');
+  const typeOpts = ['','物体打击','高处坠落','冒顶片帮','中毒窒息','放炮','触电','火灾','灼烫','机械伤害','坍塌','其他'].map(t=>\`<option value="\${t}" \${g.type===t?'selected':''}>\${t||'请选择类型...'}</option>\`).join('');
+  const seq = conditionGroups.findIndex(x=>x.id===g.id)+1;
+  return \`<div class="cond-group" id="cond-\${g.id}">
+    <div class="cg-head">
+      <span class="cg-seq" data-gid="\${g.id}">组 \${seq}</span>
+      <div class="cg-content">
+        <label>预警内容 <span class="text-danger">*</span></label>
+        <input type="text" value="\${g.content||''}" placeholder="请输入预警内容（将作为预警任务标题），如：设备温度超限预警" oninput="setGroupContent(\${g.id}, this.value)">
+      </div>
+      <div class="group-rel">组内子条件关系
+        <select onchange="setGroupRel(\${g.id}, this.value)">\${relOpt('all','全部')}\${relOpt('any','任一')}</select>
+      </div>
+      <button class="btn-text text-danger" onclick="removeCondGroup(\${g.id})">删除</button>
+    </div>
+    <div class="sub-cond-hint">一条子条件 = 选择<b>工作项</b>（本表单字段） → 选择<b>判定方式</b> → 填写<b>阈值</b></div>
+    <div class="sub-cond-list">\${subs}</div>
+    <button class="btn btn-sm cg-add" onclick="addSubCond(\${g.id})"><i class="bi bi-plus"></i> 添加子条件</button>
+    <div class="risk-attr-area">
+      <div class="ra-row mb-8">
+        <div class="form-item">
+          <label class="form-label">属于几级风险</label>
+          <select onchange="setGroupRisk(\${g.id}, this.value)">\${riskOpts}</select>
+        </div>
+        <div class="form-item">
+          <label class="form-label">类型 <span class="text-danger">*</span></label>
+          <select onchange="setGroupType(\${g.id}, this.value)">\${typeOpts}</select>
+        </div>
+      </div>
+    </div>
+  </div>\`;
+}
+function subCondRowHtml(gid, idx, s){
+  const conn = idx>0 ? \`<div class="sub-cond-connector"><span class="sc-conn-tag">\${groupRelText(gid)}</span></div>\` : '';
+  const fields = ['','回风流瓦斯浓度','CO 浓度','顶板离层量','设备温度','管道压力','设备状态','防护栏状态','堆垛高度','噪音值','接地电阻','风机运行状态'];
+  const logics = ['大于','小于','等于','不等于','大于等于','小于等于','包含','不包含'];
+  const fieldOpts = fields.map(f=>\`<option value="\${f}" \${s.field===f?'selected':''}>\${f||'请选择工作项'}</option>\`).join('');
+  const logicOpts = logics.map(l=>\`<option \${s.logic===l?'selected':''}>\${l}</option>\`).join('');
+  return conn + \`<div class="sub-cond-row" data-gid="\${gid}" data-sidx="\${idx}">
+    <select class="sc-field">\${fieldOpts}</select>
+    <select class="sc-logic">\${logicOpts}</select>
+    <input class="sc-value" value="\${s.value}" placeholder="阈值">
+    <button class="btn-text text-danger" onclick="removeSubCond(\${gid}, \${idx})">✕</button>
+  </div>\`;
+}
+function groupRelText(gid){
+  const g = conditionGroups.find(x=>x.id===gid);
+  return g && g.relation==='any' ? '任一' : '全部';
+}
+function addCondition(){
+  const g = { id: ++condGroupSeq, content:'', relation:'all', riskLevel:'', type:'', subs:[{field:'',logic:'大于',value:''}] };
+  conditionGroups.push(g);
+  const c = document.getElementById('condContainer');
+  if(c) c.insertAdjacentHTML('beforeend', condGroupHtml(g));
+  updateRuleNums();
+}
+function removeCondGroup(id){
+  conditionGroups = conditionGroups.filter(g=>g.id!==id);
+  const el = document.getElementById('cond-'+id); if(el) el.remove();
+  renumberGroups(); updateRuleNums();
+}
+function renumberGroups(){
+  conditionGroups.forEach((g,i)=>{ const el=document.getElementById('cond-'+g.id); if(el){ const s=el.querySelector('.cg-seq'); if(s) s.textContent='组 '+(i+1); } });
+}
+function setGroupRel(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g){ g.relation=v; refreshConnectors(id); } }
+function refreshConnectors(id){
+  const list=document.querySelector('#cond-'+id+' .sub-cond-list'); if(!list) return;
+  const txt = groupRelText(id);
+  list.querySelectorAll('.sc-conn-tag').forEach(t=>t.textContent=txt);
+}
+function setGroupRisk(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.riskLevel=v; }
+function setGroupType(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.type=v; }
+function setGroupContent(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.content=v; }
+function addSubCond(id){
+  const g=conditionGroups.find(x=>x.id===id); if(!g) return;
+  const idx=g.subs.length;
+  g.subs.push({field:'',logic:'大于',value:''});
+  const list=document.querySelector('#cond-'+id+' .sub-cond-list');
+  if(list) list.insertAdjacentHTML('beforeend', subCondRowHtml(id, idx, g.subs[idx]));
+  updateRuleNums();
+}
+function removeSubCond(id, idx){
+  const g=conditionGroups.find(x=>x.id===id); if(!g) return;
+  if(g.subs.length<=1){ alert('至少保留一个子条件！'); return; }
+  g.subs.splice(idx,1);
+  const list=document.querySelector('#cond-'+id+' .sub-cond-list');
+  if(list) list.innerHTML = g.subs.map((s,i)=>subCondRowHtml(id,i,s)).join('');
+}
+function saveRule(){ toast('success','预警规则已启用'); }
+
+// ====== 组织架构选择（转发）======
+let orgData = [
+  { dept:'安全环保部', members:['张安全','李巡检','王监察','刘防护'] },
+  { dept:'生产技术部', members:['赵技术','钱工程','孙设计'] },
+  { dept:'机电运输部', members:['周机电','吴运维','郑维修','冯电气'] },
+  { dept:'通风防尘部', members:['陈通风','褚防尘','卫测风'] },
+  { dept:'调度室', members:['沈调度','韩值班'] }
+];
+let selectedForwardPerson = '';
+function renderOrgTree(filter){
+  filter = (filter||'').trim();
+  const tree = document.getElementById('orgTree');
+  if(!tree) return;
+  let html='';
+  orgData.forEach((d,di)=>{
+    const members = d.members.filter(m=>!filter || m.indexOf(filter)>=0);
+    if(filter && members.length===0) return;
+    html += \`<div class="org-dept">
+      <div class="org-dept-head" onclick="toggleOrgDept(\${di})"><i class="bi bi-chevron-down"></i> \${d.dept} <span class="org-count">\${d.members.length}</span></div>
+      <div class="org-people" id="orgPeople-\${di}">\${members.map(m=>\`<div class="org-person" onclick="selectForwardPerson('\${m}', this)"><i class="bi bi-person-circle"></i> \${m}</div>\`).join('')}</div>
+    </div>\`;
+  });
+  if(!html) html = '<div class="empty-tip">未找到匹配人员</div>';
+  tree.innerHTML = html;
+}
+function toggleOrgDept(di){ const p=document.getElementById('orgPeople-'+di); if(p) p.classList.toggle('hide'); }
+function filterOrg(){ renderOrgTree(document.getElementById('orgFilter').value); }
+function selectForwardPerson(name, el){
+  selectedForwardPerson = name;
+  const label = document.getElementById('orgSelectedName'); if(label) label.textContent = name;
+  document.querySelectorAll('.org-person').forEach(p=>p.classList.remove('active'));
+  if(el) el.classList.add('active');
+}
+function confirmForward(){
+  if(!selectedForwardPerson){ alert('请选择转发人'); return; }
+  closeModal('modal-forward');
+  toast('success','已转发给 ' + selectedForwardPerson);
+}
+
+// ====== 轻量 Toast ======
+function toast(type, msg){
+  let wrap = document.getElementById('wbToastWrap');
+  if(!wrap){ wrap=document.createElement('div'); wrap.id='wbToastWrap'; wrap.style.cssText='position:fixed;top:20px;right:20px;z-index:99999;display:flex;flex-direction:column;gap:8px;'; document.body.appendChild(wrap); }
+  const colors={success:'#2ba471',warning:'#e6a23c',info:'#0f6cbd',error:'#f5655b'};
+  const t=document.createElement('div');
+  t.textContent=msg; t.style.cssText='padding:10px 16px;border-radius:8px;color:#fff;font-size:13px;box-shadow:0 2px 12px rgba(23,36,55,.15);background:'+(colors[type]||'#0f6cbd')+';';
+  wrap.appendChild(t);
+  setTimeout(function(){ t.style.transition='opacity .3s'; t.style.opacity='0'; setTimeout(function(){ t.remove(); },300); }, 1800);
+}
+
+// ====== 处置记录（只读 · 按人分块）======
+const disposalData = {
+  'WRN-20260708-001': {trigger:'2026-07-08 10:23:45', records:[
+    {name:'王五', from:'表单提交人', status:'未提交'},
+    {name:'李国强', from:'预警所在事事号的负责人', status:'未提交'}]},
+  'WRN-20260708-002': {trigger:'2026-07-08 09:15:20', records:[
+    {name:'王五', from:'表单提交人的部门负责人', status:'未提交'}]},
+  'WRN-20260708-003': {trigger:'2026-07-07 16:00:12', records:[
+    {name:'赵六', from:'预警所在事事号的管理员', status:'未提交'},
+    {name:'孙立', from:'预警所在事事号的成员', status:'已提交', time:'2026-07-07 17:40:22',
+     content:'已补装防护栏并加固立柱，现场复测合格，防护高度 1.2m 符合要求。',
+     files:['整改照片.jpg','复测记录.pdf'], signed:'已签字'}]},
+  'WRN-20260707-005': {trigger:'2026-07-06 11:00:08', records:[
+    {name:'孙立', from:'表单提交人', status:'已提交', time:'2026-07-06 15:30:10',
+     content:'已更换接地极并复测接地电阻，作业过程无异常。', files:['检测记录.pdf'], signed:'已签字'},
+    {name:'周伟', from:'预警所在事事号的成员', status:'已提交', time:'2026-07-06 16:10:45',
+     content:'现场复核接地电阻 2.8Ω，符合要求，同意闭环。', files:['复核照片.jpg'], signed:'已签字'}]},
+  'WRN-20260707-006': {trigger:'2026-07-05 15:00:30', records:[
+    {name:'孙立', from:'预警所在事事号的成员', status:'已提交', time:'2026-07-05 16:00:12',
+     content:'已重新码放，堆垛高度降至 2.5m 并加设防倾倒措施。', files:['整改后照片.jpg'], signed:'已签字'}]},
+  'WRN-20260707-007': {trigger:'2026-07-04 10:00:00', records:[
+    {name:'李国强', from:'转发自 周伟', status:'已提交', time:'2026-07-04 10:45:10',
+     content:'已恢复风机运行并清理风筒，排风恢复正常。', files:['检修记录.pdf'], signed:'已签字'}]},
+  'WRN-20260708-008': {trigger:'2026-07-08 11:00:22', records:[
+    {name:'王五', from:'预警所在事事号的成员', status:'已提交', time:'2026-07-08 11:46:30',
+     content:'已补挂「当心高温」警示标识 2 处，位置符合要求。', files:['现场照片.jpg'], signed:'已签字'}]},
+  'WRN-20260706-009': {trigger:'2026-07-06 09:40:15', records:[
+    {name:'李国强', from:'转发自 陈海波', status:'已提交', time:'2026-07-06 10:45:20',
+     content:'已加装隔声罩并复测噪音 82 分贝，达标。', files:['复测记录.pdf'], signed:'已签字'}]},
+  'WRN-20260708-010': {trigger:'2026-07-08 09:45:10', records:[
+    {name:'李国强', from:'预警所在事事号的负责人', status:'已提交', time:'2026-07-08 10:40:05',
+     content:'已更换法兰密封垫并试压合格，无渗漏。', files:['检修记录.pdf'], signed:'已签字'}]}
+};
+
+// ====== 分派异常清单 + 重新指派 ======
+const exceptionData = [
+  {id:'WRN-20260708-011', content:'皮带机滚筒温度异常预警', sheet:'设备运行日检表', time:'2026-07-08 14:20',
+   cat:'表单提交人的部门负责人', reason:'组织架构未配置', reasonDetail:'该事事号未设置负责人',
+   status:'待指派'},
+  {id:'WRN-20260708-012', content:'顶板离层量超限预警', sheet:'安全巡检记录表', time:'2026-07-08 15:05',
+   cat:'表单内@成员（巡检负责人）', reason:'表单字段为空', reasonDetail:'提交时「巡检负责人」字段未填写',
+   status:'待指派'},
+  {id:'WRN-20260707-013', content:'临时用电漏电预警', sheet:'隐患排查治理表', time:'2026-07-07 17:30',
+   cat:'预警所在事事号的负责人', reason:'人员已离职', reasonDetail:'原负责人 陈海波 已离职并停用',
+   status:'已指派', fixedTo:'李国强', fixedAt:'2026-07-07 18:20',
+   fixedBy:'张建国（企业管理员）', fixReason:'原负责人已离职，由我指派机电队李国强跟进'}
+];
+
+function renderExceptions(){
+  const tb = document.getElementById('excTableBody');
+  if(!tb) return;
+  tb.innerHTML = exceptionData.map(function(e, i){
+    const assigned = e.status === '已指派';
+    const st = assigned
+      ? '<span class="tag tag-success">已指派</span>'
+      : '<span class="tag" style="background:#fdf6ec;color:var(--warning);border:1px solid #f5dab1;">待指派</span>';
+    const op = assigned
+      ? '<button class="btn-text btn-sm" onclick="openReassignModal(' + i + ')">查看</button>'
+      : '<button class="btn-text btn-sm text-primary" onclick="openReassignModal(' + i + ')">重新指派</button>';
+    return '<tr>'
+      + '<td>' + e.id + '</td>'
+      + '<td><span class="wc-title">' + e.content + '</span></td>'
+      + '<td>' + e.sheet + '</td>'
+      + '<td>' + e.time + '</td>'
+      + '<td>' + e.cat + '</td>'
+      + '<td>' + e.reason + '<div class="hit-sub">' + e.reasonDetail + '</div></td>'
+      + '<td>' + st + '</td>'
+      + '<td style="text-align:right;">' + op + '</td>'
+      + '</tr>';
+  }).join('');
+  const c = document.getElementById('excTabCount');
+  if(c) c.textContent = exceptionData.filter(function(e){ return e.status === '待指派'; }).length;
+}
+
+function switchStatsTab(key, el){
+  const l = document.getElementById('statsPaneLedger');
+  const x = document.getElementById('statsPaneException');
+  if(l) l.style.display = (key === 'ledger') ? '' : 'none';
+  if(x) x.style.display = (key === 'exception') ? '' : 'none';
+  document.querySelectorAll('.stats-tab').forEach(function(t){ t.classList.remove('active'); });
+  if(el) el.classList.add('active');
+  if(key === 'exception') renderExceptions();
+}
+
+let _rsIndex = -1, _rsPick = '';
+
+function openReassignModal(i){
+  const e = exceptionData[i];
+  if(!e) return;
+  _rsIndex = i; _rsPick = '';
+  const assigned = e.status === '已指派';
+  const set = function(id, txt){ const el = document.getElementById(id); if(el) el.textContent = txt; };
+  set('rsTitle', (assigned ? '指派详情 - ' : '重新指派 - ') + e.id);
+  set('rsContent', e.content);
+  set('rsCat', e.cat);
+  set('rsReason', e.reason + '（' + e.reasonDetail + '）');
+  // 详情区
+  set('rsDetailTo', e.fixedTo || '—');
+  set('rsDetailAt', e.fixedAt || '—');
+  set('rsDetailBy', e.fixedBy || '企业管理员');
+  set('rsDetailReason', e.fixReason || '—');
+  const detail = document.getElementById('rsDetail');
+  const edit = document.getElementById('rsEditArea');
+  const viewBtn = document.getElementById('rsViewBtn');
+  const okBtn = document.getElementById('rsConfirmBtn');
+  if(detail) detail.style.display = assigned ? '' : 'none';
+  if(edit) edit.style.display = assigned ? 'none' : '';
+  if(viewBtn) viewBtn.style.display = assigned ? '' : 'none';
+  if(okBtn) okBtn.style.display = assigned ? 'none' : '';
+  // 编辑区重置
+  const f = document.getElementById('rsFilter'); if(f) f.value = '';
+  const ta = document.getElementById('rsReasonInput'); if(ta) ta.value = '';
+  renderReassignPeople('');
+  showModal('modal-reassign');
+}
+
+// 从「已指派」详情切到再次指派
+function switchToReassignEdit(){
+  const e = exceptionData[_rsIndex];
+  if(!e) return;
+  _rsPick = '';
+  const set = function(id, txt){ const el = document.getElementById(id); if(el) el.textContent = txt; };
+  set('rsTitle', '重新指派 - ' + e.id);
+  const detail = document.getElementById('rsDetail');
+  const edit = document.getElementById('rsEditArea');
+  const viewBtn = document.getElementById('rsViewBtn');
+  const okBtn = document.getElementById('rsConfirmBtn');
+  if(detail) detail.style.display = 'none';
+  if(edit) edit.style.display = '';
+  if(viewBtn) viewBtn.style.display = 'none';
+  if(okBtn) okBtn.style.display = '';
+  const f = document.getElementById('rsFilter'); if(f) f.value = '';
+  const ta = document.getElementById('rsReasonInput'); if(ta) ta.value = '';
+  renderReassignPeople('');
+}
+
+function nowShort(){
+  const d = new Date();
+  const p = function(n){ return (n < 10 ? '0' : '') + n; };
+  return p(d.getMonth() + 1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+}
+
+function renderReassignPeople(filter){
+  filter = (filter || '').trim();
+  const box = document.getElementById('rsPeople');
+  if(!box) return;
+  let html = '';
+  orgData.forEach(function(d){
+    const ms = d.members.filter(function(m){ return !filter || m.indexOf(filter) >= 0; });
+    if(!ms.length) return;
+    html += '<div class="rp-dept">' + d.dept + '</div>'
+      + ms.map(function(m){
+          return '<span class="rp-person' + (m === _rsPick ? ' active' : '') + '" onclick="pickReassignPerson(\\'' + m + '\\', this)">' + m + '</span>';
+        }).join('');
+  });
+  box.innerHTML = html || '<div class="dis-empty">未找到匹配人员</div>';
+}
+
+function pickReassignPerson(name, el){
+  _rsPick = name;
+  document.querySelectorAll('#rsPeople .rp-person').forEach(function(p){ p.classList.remove('active'); });
+  if(el) el.classList.add('active');
+}
+
+function confirmReassign(){
+  const e = exceptionData[_rsIndex];
+  if(!e) return;
+  if(!_rsPick){ alert('请选择要指派的人员'); return; }
+  const r = document.getElementById('rsReasonInput');
+  if(!r || !r.value.trim()){ alert('请填写指派原因'); return; }
+  e.status = '已指派';
+  e.fixedTo = _rsPick;
+  e.fixedAt = nowShort();
+  e.fixedBy = '企业管理员';
+  e.fixReason = r.value.trim();
+  renderExceptions();
+  closeModal('modal-reassign');
+  toast('success', '已指派给 ' + _rsPick + '，状态更新为「已指派」');
+}
+
+// ====== 处理人明细（运行态真实人员）======
+const assigneeData = {
+  'WRN-20260708-001': { snapshot:'2026-07-08 10:23', assignees:[
+    {name:'王五', from:'表单提交人', status:'未处理', time:'—'},
+    {name:'李国强', from:'预警所在事事号的负责人', status:'未处理', time:'—'}] },
+  'WRN-20260708-002': { snapshot:'2026-07-08 09:15', assignees:[
+    {name:'王五', from:'表单提交人的部门负责人', status:'未处理', time:'—'}] },
+  'WRN-20260708-003': { snapshot:'2026-07-07 16:00', assignees:[
+    {name:'赵六', from:'预警所在事事号的管理员', status:'未处理', time:'—'},
+    {name:'孙立', from:'预警所在事事号的成员', status:'已处理', time:'2026-07-07 17:40'}] },
+  'WRN-20260707-005': { snapshot:'2026-07-06 11:00', assignees:[
+    {name:'孙立', from:'表单提交人', status:'已处理', time:'2026-07-06 15:30'},
+    {name:'周伟', from:'预警所在事事号的成员', status:'已处理', time:'2026-07-06 16:10'}] },
+  'WRN-20260707-006': { snapshot:'2026-07-05 15:00', assignees:[
+    {name:'孙立', from:'预警所在事事号的成员', status:'已处理', time:'2026-07-05 16:00'}] },
+  'WRN-20260708-008': { snapshot:'2026-07-08 11:00', assignees:[
+    {name:'王五', from:'表单提交人', status:'已处理', time:'2026-07-08 11:46'}] },
+  'WRN-20260708-010': { snapshot:'2026-07-08 09:45', assignees:[
+    {name:'李国强', from:'预警所在事事号的负责人', status:'已处理', time:'2026-07-08 10:40'}] },
+  'WRN-20260707-007': { snapshot:'2026-07-04 10:00', assignees:[
+    {name:'李国强', from:'转发自 周伟', status:'已处理', time:'2026-07-04 10:45'}] },
+  'WRN-20260706-009': { snapshot:'2026-07-06 09:40', assignees:[
+    {name:'李国强', from:'转发自 陈海波', status:'已处理', time:'2026-07-06 10:45'}] }
+};
+
+let _currentAssigneeId = 'WRN-20260708-001';
+function showAssigneeModal(warnId){
+  // 点「处理人」→ 独立的人列表弹窗（只看人，不含日志）；点「查看」再进个人处置详情
+  const d = assigneeData[warnId];
+  const title = document.getElementById('assigneeTitle');
+  if(title) title.textContent = '处理人明细 - ' + warnId;
+  const snap = document.getElementById('assigneeSnapshot');
+  if(snap) snap.textContent = (d && d.snapshot) ? d.snapshot : '—';
+  const tb = document.getElementById('assigneeTbody');
+  if(tb){
+    tb.innerHTML = (d && d.assignees && d.assignees.length)
+      ? d.assignees.map(function(a){
+          const cls = a.status === '已处理' ? 'text-success' : (a.status === '未处理' ? 'text-danger' : 'text-muted');
+          const act = a.status === '已处理'
+            ? '<span class="link" onclick="showTaskDetailModal(\\'' + warnId + '\\', \\'person\\', \\'' + a.name + '\\')">查看</span>'
+            : '<span class="text-muted">未提交</span>';
+          return '<tr><td>' + a.name + '</td><td>' + a.from + '</td><td class="' + cls + '">' + a.status + '</td><td>' + a.time + '</td><td>' + act + '</td></tr>';
+        }).join('')
+      : '<tr><td colspan="5" class="text-muted">暂无数据</td></tr>';
+  }
+  showModal('modal-assignee');
+}
+
+// ====== 处理日志（运行态全量操作留痕）======
+const logData = {
+  'WRN-20260708-001': [
+    {at:'2026-07-08 10:23', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'设备温度超限预警 · 命中 2 个工作项'}
+  ],
+  'WRN-20260708-002': [
+    {at:'2026-07-08 09:15', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'管道压力异常预警 · 命中 2 个工作项'}
+  ],
+  'WRN-20260708-003': [
+    {at:'2026-07-07 16:00', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'防护设施缺失预警 · 命中 1 个工作项'},
+    {at:'2026-07-07 17:40', actor:'孙立', role:'预警所在事事号的成员', type:'submit', action:'处理预警', detail:'已提交处置（已补装防护栏并加固）'}
+  ],
+  'WRN-20260707-005': [
+    {at:'2026-07-06 11:00', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'接地电阻超标预警 · 命中 1 个工作项'},
+    {at:'2026-07-06 15:30', actor:'孙立', role:'表单提交人', type:'submit', action:'处理预警', detail:'已提交处置（已更换接地极并复测）'},
+    {at:'2026-07-06 16:10', actor:'周伟', role:'预警所在事事号的成员', type:'submit', action:'处理预警', detail:'已提交处置（现场复核合格）'}
+  ],
+  'WRN-20260707-006': [
+    {at:'2026-07-05 15:00', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'物料堆放超高预警 · 命中 1 个工作项'},
+    {at:'2026-07-05 16:00', actor:'孙立', role:'预警所在事事号的成员', type:'submit', action:'处理预警', detail:'已提交处置（重新码放并加设防倾倒措施）'}
+  ],
+  'WRN-20260707-007': [
+    {at:'2026-07-04 10:00', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'通风排风故障预警 · 命中 1 个工作项'},
+    {at:'2026-07-04 10:20', actor:'周伟', role:'表单提交人的部门负责人', type:'forward', action:'转发预警', detail:'转交给 李国强（转办说明：该风机由机电队管辖，转交机电队复核处理）'},
+    {at:'2026-07-04 10:45', actor:'李国强', role:'转发自 周伟', type:'submit', action:'处理预警', detail:'已提交处置（已恢复风机运行并清理风筒）'},
+    {at:'2026-07-04 11:05', actor:'张建国', role:'企业管理员', type:'void', action:'作废预警', detail:'作废原因：风机已于当日 09:00 完成检修并恢复运行，本条为重复触发，作废留档'}
+  ],
+  'WRN-20260706-009': [
+    {at:'2026-07-06 09:40', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'噪音超标预警 · 命中 1 个工作项'},
+    {at:'2026-07-06 10:30', actor:'陈海波', role:'预警所在事事号的负责人', type:'forward', action:'转发预警', detail:'转交给 李国强（转办说明：该隐患由我牵头，转交复核处理）'},
+    {at:'2026-07-06 10:45', actor:'李国强', role:'转发自 陈海波', type:'submit', action:'处理预警', detail:'已提交处置（已加装隔声罩并复测噪音 82 分贝）'}
+  ],
+  'WRN-20260708-008': [
+    {at:'2026-07-08 11:00', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'高温区域标识缺失预警 · 命中 1 个工作项'},
+    {at:'2026-07-08 11:46', actor:'王五', role:'预警所在事事号的成员', type:'submit', action:'处理预警', detail:'已提交处置（已补挂警示标识 2 处）'}
+  ],
+  'WRN-20260708-010': [
+    {at:'2026-07-08 09:45', actor:'系统', role:'系统', type:'system', action:'触发预警', detail:'管道泄漏预警 · 命中 1 个工作项'},
+    {at:'2026-07-08 10:40', actor:'李国强', role:'预警所在事事号的负责人', type:'submit', action:'处理预警', detail:'已提交处置（已更换法兰密封垫并试压合格）'}
+  ]
+};
+
+function logGroup(type){
+  if(type === 'forward') return 'forward';
+  if(type === 'submit') return 'submit';
+  if(type === 'void') return 'void';
+  return 'sys';
+}
+
+// 取某条预警的日志；示例数据未覆盖的任务按下钻数据兜底生成关键节点
+function getWarnLog(warnId){
+  if(logData[warnId]) return logData[warnId];
+  const all = (typeof drillData !== 'undefined') ? drillData : [];
+  const d = all.filter(function(x){ return x.id === warnId; })[0];
+  if(!d){
+    return [{at:'—', actor:'系统', role:'系统', type:'system', action:'触发预警',
+      detail:'该预警任务已触发（示例数据未提供其日志）。'}];
+  }
+  const arr = [{at:d.time, actor:'系统', role:'系统', type:'system', action:'触发预警',
+    detail:d.content + ' · 命中 ' + ((d.items || []).length) + ' 个工作项'}];
+  if(d.actual && d.actual !== '-'){
+    arr.push({at:(d.actualTime || '—'), actor:d.actual, role:'', type:'submit', action:'处理预警', detail:'已提交处置'});
+  }
+  return arr;
+}
+
+function logItemHtml(e){
+  const roleHtml = (e.actor && e.actor !== '系统' && e.role) ? '<span class="log-role">' + e.role + '</span>' : '';
+  return '<div class="log-item t-' + e.type + '"><span class="log-dot"></span>'
+    + '<div class="log-head"><span class="log-time">' + e.at + '</span>'
+    + '<span class="log-actor">' + e.actor + '</span>' + roleHtml
+    + '<span class="log-action a-' + e.type + '">' + e.action + '</span></div>'
+    + '<div class="log-detail">' + e.detail + '</div></div>';
+}
+
+function warnLogHtml(warnId, limit, filterKey){
+  let arr = getWarnLog(warnId) || [];
+  if(filterKey && filterKey !== 'all'){ arr = arr.filter(function(e){ return logGroup(e.type) === filterKey; }); }
+  if(!arr.length) return '<div class="log-empty">暂无日志记录</div>';
+  if(limit) arr = arr.slice(0, limit);
+  return arr.map(logItemHtml).join('');
+}
+
+// 详情底部「处理日志」：默认收起，点击展开（不设筛选）
+let _detailWarnId = 'WRN-20260708-001';
+
+function toggleDetailLog(){
+  const box = document.getElementById('taskDetailLogBox');
+  if(!box) return;
+  const open = box.style.display !== 'block';
+  box.style.display = open ? 'block' : 'none';
+  const tg = document.getElementById('taskDetailLogToggle');
+  if(tg) tg.textContent = open ? '收起' : '展开';
+  const caret = document.getElementById('taskDetailLogCaret');
+  if(caret) caret.style.transform = open ? 'rotate(180deg)' : 'none';
+}
+
+function renderDetailLog(){
+  const box = document.getElementById('taskDetailLog');
+  if(!box) return;
+  const all = getWarnLog(_detailWarnId) || [];
+  box.innerHTML = all.length ? all.map(logItemHtml).join('') : '<div class="log-empty">暂无日志记录</div>';
+  const meta = document.getElementById('taskDetailLogMeta');
+  if(meta) meta.textContent = all.length
+    ? ('共 ' + all.length + ' 条 · 最新动作 ' + all[all.length - 1].at + ' · 只读留痕，不可修改')
+    : '只读留痕 · 触发 / 处理 / 转发 / 作废';
+}
+
+// ====== 命中明细展开（任务列表「等 N 项」）======
+function toggleHitDetail(id){
+  const el = document.getElementById(id);
+  if(!el) return;
+  el.style.display = (el.style.display === 'none' || !el.style.display) ? '' : 'none';
+}
+
+// ====== 表单内@成员 字段选择（组件类型为@成员的表单字段）======
+let _atMemberSourceRow = null;
+
+function openAtMemberPicker(rowEl){
+  _atMemberSourceRow = rowEl;
+  const prev = (rowEl.getAttribute('data-selected')||'').split(',').filter(Boolean);
+  const boxes = document.querySelectorAll('#atMemberFieldList input[type="checkbox"]');
+  boxes.forEach(cb=>{
+    const label = cb.closest('label').textContent.trim();
+    cb.checked = prev.indexOf(label) !== -1;
+  });
+  const all = document.getElementById('atMemberSelectAll');
+  if(all){ all.checked = boxes.length>0 && Array.prototype.every.call(boxes, b=>b.checked); }
+  showModal('modal-at-member-select');
+}
+
+function confirmAtMemberSelect(){
+  const checked = [];
+  document.querySelectorAll('#atMemberFieldList input[type="checkbox"]:checked').forEach(cb=>{
+    checked.push(cb.closest('label').textContent.trim());
+  });
+  if(checked.length===0){ alert('请至少选择一个@成员字段'); return; }
+  if(_atMemberSourceRow){
+    _atMemberSourceRow.setAttribute('data-selected', checked.join(','));
+    const st = _atMemberSourceRow.querySelector('.person-cat-state span.text-primary');
+    if(st) st.textContent = '已选 ' + checked.length + ' 项';
+  }
+  closeModal('modal-at-member-select');
+}
+
+// 「＋」再加一行@成员：新增行可独立选字段并独立指定处理人/通知人
+function addAtMemberRow(btn){
+  const row = btn.closest('.person-cat-row');
+  if(!row) return;
+  const clone = row.cloneNode(true);
+  clone.removeAttribute('data-selected');
+  const st = clone.querySelector('.person-cat-state span.text-primary');
+  if(st) st.textContent = '已选 0 项';
+  clone.querySelectorAll('input[type="checkbox"]').forEach(cb => { cb.checked = false; });
+  // 新行把行尾「＋」换成「−」（删除该行），保证各行按钮列等宽对齐
+  const tail = clone.querySelector('.person-cat-actions .btn-icon');
+  if(tail){
+    tail.textContent = '−';
+    tail.title = '删除该行';
+    tail.classList.add('at-member-del');
+    tail.setAttribute('onclick', 'removeAtMemberRow(this)');
+  }
+  row.insertAdjacentElement('afterend', clone);
+}
+
+function removeAtMemberRow(btn){
+  const row = btn.closest('.person-cat-row');
+  if(row) row.remove();
+}
+
+// ====== Approval Mode Selection 已移除（审批模块取消）======
+
+// ====== Modals ======
+function showModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+
+if (document.getElementById('excTableBody')) { renderExceptions(); }
+function showNotifyConfigModal() { showModal('modal-notify-config'); }
+function showPersonSelectModal() { closeModal('modal-notify-config'); closeModal('modal-forward'); showModal('modal-person-select'); }
+// ====== 处理预警详情：按点击的预警渲染（每条预警的基础信息 / 命中明细 / 处理人 / 期限 / 实际处理 / 日志）======
+const detailData = {
+  'WRN-20260708-001': {sheet:'安全巡检记录表', content:'设备温度超限预警', time:'2026-07-08 10:23:45', level:'一级', levelClass:'risk-1', type:'灼烫', handler:'王五、李国强', due:'2026-07-08 18:00:00', dueDanger:true, actual:'—', actualTime:'—',
+    items:[{name:'设备温度',judge:'大于',thr:'80°C',act:'85°C'}]},
+  'WRN-20260708-002': {sheet:'设备运行日检表', content:'管道压力异常预警', time:'2026-07-08 09:15:20', level:'二级', levelClass:'risk-2', type:'触电', handler:'王五', due:'2026-07-09 09:00:00', actual:'—', actualTime:'—',
+    items:[{name:'管道压力',judge:'大于',thr:'3.0MPa',act:'3.2MPa'},{name:'设备状态',judge:'等于',thr:'故障',act:'故障'}]},
+  'WRN-20260708-003': {sheet:'隐患排查治理表', content:'防护设施缺失预警', time:'2026-07-07 16:00:12', level:'一级', levelClass:'risk-1', type:'高处坠落', handler:'赵六、孙立', due:'2026-07-07 18:00:00', dueDanger:true, actual:'孙立', actualTime:'2026-07-07 17:40:00',
+    items:[{name:'防护栏状态',judge:'等于',thr:'缺失',act:'缺失'}]},
+  'WRN-20260707-005': {sheet:'设备运行日检表', content:'接地电阻超标预警', time:'2026-07-06 11:00:08', level:'二级', levelClass:'risk-2', type:'触电', handler:'孙立、周伟', due:'2026-07-06 15:00:00', actual:'孙立 等 2 人', actualTime:'2026-07-06 16:10:00',
+    items:[{name:'接地电阻',judge:'大于',thr:'4Ω',act:'6Ω'}]},
+  'WRN-20260707-006': {sheet:'隐患排查治理表', content:'物料堆放超高预警', time:'2026-07-05 15:00:30', level:'三级', levelClass:'risk-3', type:'物体打击', handler:'孙立', due:'2026-07-06 15:00:00', actual:'孙立', actualTime:'2026-07-05 16:00:00',
+    items:[{name:'堆垛高度',judge:'大于',thr:'2m',act:'2.5m'}]},
+  'WRN-20260707-007': {sheet:'安全巡检记录表', content:'通风排风故障预警', time:'2026-07-04 10:00:00', level:'四级', levelClass:'risk-4', type:'中毒窒息', handler:'李国强（经周伟转发）', due:'2026-07-05 10:00:00', actual:'李国强', actualTime:'2026-07-04 10:45:00',
+    items:[{name:'风机运行状态',judge:'等于',thr:'故障',act:'故障'}]},
+  'WRN-20260708-008': {sheet:'安全巡检记录表', content:'高温区域标识缺失预警', time:'2026-07-08 11:00:22', level:'一级', levelClass:'risk-1', type:'灼烫', handler:'王五', due:'2026-07-08 18:00:00', actual:'王五', actualTime:'2026-07-08 11:46:00',
+    items:[{name:'警示标识状态',judge:'等于',thr:'缺失',act:'缺失'}]},
+  'WRN-20260708-010': {sheet:'设备运行日检表', content:'管道泄漏预警', time:'2026-07-08 09:45:10', level:'一级', levelClass:'risk-1', type:'灼烫', handler:'李国强', due:'2026-07-08 15:00:00', actual:'李国强', actualTime:'2026-07-08 10:40:00',
+    items:[{name:'管道压力',judge:'小于',thr:'1.0MPa',act:'0.6MPa'}]},
+  'WRN-20260706-009': {sheet:'安全巡检记录表', content:'噪音超标预警', time:'2026-07-06 09:40:15', level:'二级', levelClass:'risk-2', type:'触电', handler:'李国强（经陈海波转发）', due:'2026-07-07 10:00:00', actual:'李国强', actualTime:'2026-07-06 10:45:00',
+    items:[{name:'噪音值',judge:'大于',thr:'85分贝',act:'92分贝'}]}
+};
+
+function renderTaskAssignees(warnId){
+  const d = assigneeData[warnId];
+  const tb = document.getElementById('tdAssigneeBody');
+  const cnt = document.getElementById('tdAssigneeCount');
+  const snap = document.getElementById('tdAssigneeSnapshot');
+  if(cnt) cnt.textContent = (d && d.assignees) ? d.assignees.length : 0;
+  if(snap) snap.textContent = '派单快照 ' + ((d && d.snapshot) ? d.snapshot : '—');
+  if(!tb) return;
+  tb.innerHTML = (d && d.assignees && d.assignees.length)
+    ? d.assignees.map(function(a){
+        const cls = a.status === '已处理' ? 'text-success' : (a.status === '未处理' ? 'text-danger' : 'text-muted');
+        const act = a.status === '已处理'
+          ? '<span class="link" onclick="showTaskDetailModal(\\'' + warnId + '\\', \\'person\\', \\'' + a.name + '\\')">查看</span>'
+          : '<span class="text-muted">未提交</span>';
+        return '<tr><td>' + a.name + '</td><td>' + a.from + '</td><td class="' + cls + '">' + a.status + '</td><td>' + a.time + '</td><td>' + act + '</td></tr>';
+      }).join('')
+    : '<tr><td colspan="5" class="text-muted">暂无处理人</td></tr>';
+}
+
+// 三种模式：edit 处理（当前人填写） / person 个人处置详情（只读，无日志） / task 任务详情（只读，含处理人列表与日志）
+function showTaskDetailModal(warnId, mode, person, focusAssignees) {
+  mode = (mode === 'view') ? 'person' : (mode || 'edit');
+  const isTask = (mode === 'task');
+  const isPerson = (mode === 'person');
+  const isEdit = (mode === 'edit');
+  _detailWarnId = (warnId && detailData[warnId]) ? warnId : 'WRN-20260708-001';
+  const d = detailData[_detailWarnId];
+  const setTxt = function(id, txt){ const el = document.getElementById(id); if(el) el.textContent = txt; };
+  setTxt('tdTitle', (isTask ? '任务详情 - ' : (isPerson ? '处理详情 - ' : '处理预警 - ')) + _detailWarnId + (isPerson && person ? '（' + person + '）' : ''));
+  setTxt('tdSheet', d.sheet);
+  setTxt('tdContent', d.content);
+  setTxt('tdTime', d.time);
+  const lv = document.getElementById('tdLevel');
+  if(lv) lv.innerHTML = '<span class="' + d.levelClass + '">● ' + d.level + '风险</span>　｜　' + d.type;
+  setTxt('tdHandler', d.handler);
+  const due = document.getElementById('tdDue');
+  if(due){ due.textContent = d.due; due.className = 'readonly-field' + (d.dueDanger ? ' text-danger' : ''); }
+  const a1 = document.getElementById('tdActual'), a2 = document.getElementById('tdActualTime');
+  if(a1) a1.value = d.actual;
+  if(a2) a2.value = d.actualTime;
+
+  // 处置区：任务详情不显示；处理为填写态；个人处置为只读态
+  const sec = document.getElementById('tdDisposalSection');
+  if(sec) sec.style.display = isTask ? 'none' : '';
+  const ed = document.getElementById('tdDisposalEdit'), vw = document.getElementById('tdDisposalView');
+  if(ed) ed.style.display = isEdit ? '' : 'none';
+  if(vw) vw.style.display = isEdit ? 'none' : '';
+  const zt = document.getElementById('tdDisposalZoneTitle'), zg = document.getElementById('tdDisposalZoneTag');
+  if(zt) zt.textContent = isPerson ? '预警处置（只读）' : '预警处置（人工填写）';
+  if(zg) zg.textContent = isPerson ? ('处理人：' + (person || '—') + ' · 只读') : '支持增行';
+  if(isPerson && vw){
+    const recs = (disposalData[_detailWarnId] || {records:[]}).records || [];
+    const r = recs.filter(function(x){ return x.name === person; })[0];
+    if(!r){
+      vw.innerHTML = '<div class="dis-empty">未找到该处理人的处置记录。</div>';
+    } else if(r.status !== '已提交'){
+      vw.innerHTML = '<div class="dis-block"><div class="dis-head"><span class="dis-name">' + r.name + '</span>'
+        + '<span class="dis-from">' + r.from + '</span><span class="dis-time" style="color:#e6a23c;">未提交处置</span></div>'
+        + '<div class="dis-empty">该处理人尚未提交处置，无处置内容。</div></div>';
+    } else {
+      const files = (r.files || []).length
+        ? r.files.map(function(f){ return '<span class="hit-badge" style="background:#f4f4f5;color:var(--text-regular);">' + f + '</span>'; }).join(' ')
+        : '<span class="text-muted">无附件</span>';
+      vw.innerHTML = '<div class="dis-block"><div class="dis-head"><span class="dis-name">' + r.name + '</span>'
+        + '<span class="dis-from">' + r.from + '</span><span class="dis-time">提交时间 ' + r.time + '</span></div>'
+        + '<div class="dis-label">处理情况</div><div class="dis-text">' + r.content + '</div>'
+        + '<div class="dis-label">整改照片 / 附件</div><div class="dis-text">' + files
+        + ' <span class="text-muted" style="font-size:11px;">可预览 / 下载，不可删除</span></div>'
+        + '<div class="dis-label">电子签字</div><div class="dis-text"><span class="text-success">' + r.signed + '</span></div></div>';
+    }
+  }
+
+  // 处理人：基础信息里的「处理人」字段三种模式都保留；只有「处理人列表」区块仅在任务详情展示
+  const asec = document.getElementById('tdAssigneesSection');
+  if(asec) asec.style.display = isTask ? '' : 'none';
+  renderTaskAssignees(_detailWarnId);
+
+  // 日志：只属于任务 —— 任务详情、处理页可见；个人处置详情不显示
+  const logSec = document.getElementById('tdLogSection');
+  if(logSec) logSec.style.display = isPerson ? 'none' : '';
+
+  // 页脚：仅处理态有「提交处置」
+  const sb = document.getElementById('tdSubmitBtn'), cbtn = document.getElementById('tdCancelBtn');
+  if(sb) sb.style.display = isEdit ? '' : 'none';
+  // 个人处置详情是叠在处理人明细/任务详情之上的子层，关闭即“返回”上一层
+  if(cbtn) cbtn.textContent = isEdit ? '取消' : (isPerson ? '返回' : '关闭');
+
+  const note = document.getElementById('tdNote');
+  if(note){
+    note.innerHTML = isTask
+      ? '<span class="note-title">任务详情（只读）：</span>本页是<b>整条预警任务</b>的详情——基础信息、命中明细、<b>全部处理人及其处置进度</b>、<b>处理日志</b>都在这里。日志按任务记录（触发 / 处理 / 转发 / 作废），<b>不属于某个人</b>；点处理人行的「查看」进入该人的个人处置详情。'
+      : (isPerson
+        ? '<span class="note-title">个人处置详情（只读）：</span>当前展示的是处理人「' + person + '」提交的处置记录，<b>不可编辑、不可重新提交</b>。处理日志属于整条预警任务，请看「任务详情」；本页不含日志。'
+        : '<span class="note-title">处置流程逻辑：</span>上半区为预警基础信息、命中明细与处理人进度（只读）；下半处置区填写处理情况、上传整改照片/附件、添加电子签字。提交后本条按处置模式判定是否闭环。<br><b>命中明细</b>：逐项列出命中的工作项及其「判定 / 预警值（阈值）/ 触发值（实测）」；<b>处理人</b>：列出全部处理人及各自进度，已提交的可点「查看」；<b>处理日志</b>：固定在任务详情底部，记录触发、处理、转发、作废四类关键节点。');
+  }
+
+  const tb = document.getElementById('tdHitBody');
+  if(tb) tb.innerHTML = (d.items || []).map(function(it){
+    return '<tr><td>' + it.name + '</td><td>' + it.judge + '</td><td>' + it.thr + '</td><td class="text-danger">' + it.act + '</td></tr>';
+  }).join('');
+
+  // 日志默认收起
+  const box = document.getElementById('taskDetailLogBox');
+  if(box) box.style.display = 'none';
+  const tg = document.getElementById('taskDetailLogToggle');
+  if(tg) tg.textContent = '展开';
+  const caret = document.getElementById('taskDetailLogCaret');
+  if(caret) caret.style.transform = 'none';
+  renderDetailLog();
+
+  showModal('modal-task-detail');
+  const body = document.querySelector('#modal-task-detail .modal-body');
+  if(body) body.scrollTop = 0;
+  if(focusAssignees && body){
+    const blk = document.getElementById('tdAssigneesBlock');
+    if(blk) body.scrollTop = Math.max(0, blk.offsetTop - 12);
+  }
+}
+
+// 从所在行（首列即预警编号）取编号后打开详情
+function showTaskDetailModalFromRow(btn){
+  let id = 'WRN-20260708-001';
+  const tr = (btn && btn.closest) ? btn.closest('tr') : null;
+  if(tr){
+    const td = tr.querySelector('td');
+    if(td && /^WRN-/.test(td.textContent.trim())) id = td.textContent.trim();
+  }
+  const label = (btn && btn.textContent || '').trim();
+  showTaskDetailModal(id, label.indexOf('处理') === 0 ? 'edit' : 'task');
+}
+function showForwardModal() { selectedForwardPerson=''; var lbl=document.getElementById('orgSelectedName'); if(lbl) lbl.textContent='未选择'; var f=document.getElementById('orgFilter'); if(f) f.value=''; renderOrgTree(''); showModal('modal-forward'); }
+
+// Close modal on overlay click
+document.querySelectorAll('.modal-overlay').forEach(overlay => {
+  overlay.addEventListener('click', function(e) {
+    if (e.target === this) this.classList.remove('show');
+  });
+});
+
+// ====== Checkbox Select All ======
+function toggleSelectAll(masterCheckbox, listId) {
+  const list = document.getElementById(listId);
+  const checkboxes = list.querySelectorAll('input[type="checkbox"]');
+  checkboxes.forEach(cb => {
+    cb.checked = masterCheckbox.checked;
+    cb.dispatchEvent(new Event('change'));
+  });
+}
+
+// ====== Update Selected Display ======
+function updateSelectedDisplay(checkbox, displayId) {
+  const display = document.getElementById(displayId);
+  if (!display) return;
+  const label = checkbox.parentElement;
+  const text = label.textContent.trim();
+  if (checkbox.checked) {
+    // Check if already exists
+    const existing = display.querySelector(\`[data-cond="\${text}"]\`);
+    if (!existing) {
+      const tag = document.createElement('span');
+      tag.className = 'selected-item-tag';
+      tag.setAttribute('data-cond', text);
+      tag.innerHTML = \`\${text}<span class="remove" onclick="removeSelectedTag(this, '\${displayId}')">×</span>\`;
+      display.appendChild(tag);
+    }
+  } else {
+    const existing = display.querySelector(\`[data-cond="\${text}"]\`);
+    if (existing) existing.remove();
+  }
+}
+
+function removeSelectedTag(removeEl, displayId) {
+  const tag = removeEl.parentElement;
+  const condText = tag.getAttribute('data-cond');
+  tag.remove();
+  // Uncheck the corresponding checkbox
+  document.querySelectorAll('.checkbox-item input[type="checkbox"]').forEach(cb => {
+    if (cb.parentElement.textContent.trim() === condText) {
+      cb.checked = false;
+    }
+  });
+}
+
+// ====== Drill-down Modal ======
+const drillData = [
+  {id:'WRN-20260708-001', sheet:'安全巡检记录表', content:'设备温度超限预警', level:'一级', levelClass:'risk-1', type:'灼烫', time:'2026-07-08 10:23', due:'2026-07-08 18:00', submitter:'王五', handler:'王五 等 2 人', actual:'-', actualTime:'-', status:'未处理', statusClass:'tag-danger',
+    items:[{name:'设备温度',judge:'大于',thr:'80°C',act:'85°C'}]},
+  {id:'WRN-20260708-002', sheet:'设备运行日检表', content:'管道压力异常预警', level:'二级', levelClass:'risk-2', type:'触电', time:'2026-07-08 09:15', due:'2026-07-09 09:00', submitter:'赵六', handler:'王五', actual:'-', actualTime:'-', status:'未处理', statusClass:'tag-danger',
+    items:[{name:'管道压力',judge:'大于',thr:'3.0MPa',act:'3.2MPa'},{name:'设备状态',judge:'等于',thr:'故障',act:'故障'}]},
+  {id:'WRN-20260708-003', sheet:'隐患排查治理表', content:'防护设施缺失预警', level:'一级', levelClass:'risk-1', type:'高处坠落', time:'2026-07-07 16:00', due:'2026-07-07 18:00', ovd:'已超期', submitter:'王五', handler:'赵六 等 2 人', actual:'孙立', actualTime:'2026-07-07 17:40', status:'处理中', statusClass:'tag-warning',
+    items:[{name:'防护栏状态',judge:'等于',thr:'缺失',act:'缺失'}]},
+  {id:'WRN-20260708-004', sheet:'安全巡检记录表', content:'消防通道堵塞预警', level:'二级', levelClass:'risk-2', type:'火灾', time:'2026-07-07 14:30', due:'2026-07-08 14:30', submitter:'王五', handler:'孙立', actual:'-', actualTime:'-', status:'处理中', statusClass:'tag-warning',
+    items:[{name:'消防通道状态',judge:'等于',thr:'堵塞',act:'堵塞'}]},
+  {id:'WRN-20260707-005', sheet:'设备运行日检表', content:'接地电阻超标预警', level:'二级', levelClass:'risk-2', type:'触电', time:'2026-07-06 11:00', due:'2026-07-06 15:00', ovd:'超期完成', submitter:'赵六', handler:'孙立 等 2 人', actual:'孙立 等 2 人', actualTime:'2026-07-06 16:10', status:'已完成', statusClass:'tag-success',
+    items:[{name:'接地电阻',judge:'大于',thr:'4Ω',act:'6Ω'}]},
+  {id:'WRN-20260707-006', sheet:'隐患排查治理表', content:'物料堆放超高预警', level:'三级', levelClass:'risk-3', type:'物体打击', time:'2026-07-05 15:00', due:'2026-07-06 15:00', submitter:'王五', handler:'孙立', actual:'孙立', actualTime:'2026-07-05 16:00', status:'已完成', statusClass:'tag-success',
+    items:[{name:'堆垛高度',judge:'大于',thr:'2m',act:'2.5m'}]},
+  {id:'WRN-20260707-007', sheet:'安全巡检记录表', content:'通风排风故障预警', level:'四级', levelClass:'risk-4', type:'中毒窒息', time:'2026-07-04 10:00', due:'2026-07-05 10:00', submitter:'赵六', handler:'李国强', actual:'-', actualTime:'-', status:'已作废', statusClass:'tag-info',
+    items:[{name:'风机运行状态',judge:'等于',thr:'故障',act:'故障'}]},
+  {id:'WRN-20260706-008', sheet:'设备运行日检表', content:'设备过热预警', level:'一级', levelClass:'risk-1', type:'灼烫', time:'2026-07-06 08:00', due:'2026-07-06 18:00', submitter:'王五', handler:'周伟', actual:'周伟', actualTime:'2026-07-06 09:20', status:'已完成', statusClass:'tag-success',
+    items:[{name:'设备温度',judge:'大于',thr:'80°C',act:'96°C'}]},
+];
+
+// 下钻明细行：与「预警信息表统计」台账保持同一套表头与展示形式
+function drillRowHtml(d, i){
+  const items = d.items || [];
+  const badge = items.length > 1 ? '<span class="hit-badge">共 ' + items.length + ' 项</span>' : '';
+  const firstItem = items.length ? items[0].name : '—';
+  const handlerText = d.handler || '—';
+  const multi = handlerText.match(/等\\s*(\\d+)\\s*人/);
+  const firstName = handlerText.replace(/\\s*等\\s*\\d+\\s*人/, '');
+  const ag = (typeof assigneeData !== 'undefined') ? assigneeData[d.id] : null;
+  let tip = '';
+  if (ag && ag.assignees && ag.assignees.length) {
+    tip = '<div class="cond-tip"><div class="cond-tip-title">处理人（共 ' + ag.assignees.length + ' 人）</div>'
+      + ag.assignees.map(function(a){ return '<div>· ' + a.name + '（' + a.from + '）· ' + a.status + '</div>'; }).join('')
+      + '</div>';
+  }
+  return '<tr>'
+    + '<td class="wrn-link" onclick="showTaskDetailModal(\\'' + d.id + '\\', \\'task\\')">' + d.id + '</td>'
+    + '<td>' + d.sheet + '</td>'
+    + '<td><span class="wc-title">' + d.content + '</span></td>'
+    + '<td class="hit-cell" onclick="toggleHitDetail(\\'hd-drill-' + i + '\\')">' + firstItem + badge + '<span class="hit-caret"></span></td>'
+    + '<td><span class="' + d.levelClass + '">● ' + d.level + '</span></td>'
+    + '<td>' + (d.type || '—') + '</td>'
+    + '<td>' + d.time + '</td>'
+    + '<td>' + (d.submitter || '—') + '</td>'
+    + '<td class="cond-cell hit-cell" onclick="showAssigneeModal(\\'' + d.id + '\\')"><span class="cond-main">' + firstName + '</span>'
+    + (multi ? '<span class="hit-badge">等 ' + multi[1] + ' 人</span>' : '') + tip + '</td>'
+    + '<td>' + (d.due || '—') + '</td>'
+    + '<td><span class="tag ' + d.statusClass + '">' + d.status + '</span>'
+    + (d.ovd ? '<span class="ovd ' + (d.ovd === '已超期' ? 'ovd-late' : 'ovd-done') + '">' + d.ovd + '</span>' : '')
+    + '</td>'
+    + '</tr>'
+    + '<tr class="hit-detail-row" id="hd-drill-' + i + '" style="display:none;">'
+    + '<td colspan="11"><div class="hit-detail-inner"><table class="hit-detail-table">'
+    + '<thead><tr><th>工作项</th><th>判定</th><th>预警值（阈值）</th><th>触发值（实测）</th></tr></thead><tbody>'
+    + items.map(function(it){ return '<tr><td>' + it.name + '</td><td>' + it.judge + '</td><td>' + it.thr + '</td><td class="text-danger">' + it.act + '</td></tr>'; }).join('')
+    + '</tbody></table></div></td></tr>';
+}
+
+function showDrillModal(status, dimension) {
+  const title = document.getElementById('drillTitle');
+  const filterInfo = document.getElementById('drillFilterInfo');
+  const tbody = document.getElementById('drillTableBody');
+
+  title.textContent = \`预警明细 - \${dimension} / \${status}\`;
+  filterInfo.innerHTML = \`<span class="tag tag-primary" style="padding:6px 12px;">筛选维度：\${dimension === '全部等级' ? '全部风险等级' : dimension} ｜ 状态：\${status}</span>\`;
+
+  // Filter data
+  let filtered = drillData;
+  if (status !== '全部') {
+    filtered = filtered.filter(d => d.status === status);
+  }
+  if (dimension !== '全部等级') {
+    // Check if dimension is a risk level
+    const riskMap = {'一级风险':'一级','二级风险':'二级','三级风险':'三级','四级风险':'四级'};
+    if (riskMap[dimension]) {
+      filtered = filtered.filter(d => d.level === riskMap[dimension]);
+    } else {
+      // It's an accident type
+      filtered = filtered.filter(d => d.type === dimension);
+    }
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="10" class="text-muted" style="text-align:center;padding:20px;">暂无数据</td></tr>';
+  } else {
+    tbody.innerHTML = filtered.map(function(d, i){ return drillRowHtml(d, i); }).join('');
+  }
+
+  showModal('modal-drill');
+}
+
+// ====== Deadline Type Change ======
+function onDeadlineTypeChange(radio) {
+  const fixedArea = document.getElementById('deadline-fixed-area');
+  const fieldArea = document.getElementById('deadline-field-area');
+  if (radio.value === 'fixed') {
+    if (fixedArea) fixedArea.style.display = 'flex';
+    if (fieldArea) fieldArea.style.display = 'none';
+  } else {
+    if (fixedArea) fixedArea.style.display = 'none';
+    if (fieldArea) fieldArea.style.display = 'flex';
+  }
+}
+
+// ====== Add Reminder Rule ======
+// 当前正在编辑的超期提醒人行（由 openOverdueReminderPicker 设置）
+let _currentReminderRowBtn = null;
+
+function addReminderRule() {
+  const tableBody = document.querySelector('#modal-notify-config .sub-form-table tbody');
+  if (!tableBody) return;
+  const tr = document.createElement('tr');
+  tr.innerHTML = \`
+    <td><button class="btn-text btn-sm text-danger" onclick="removeReminderRule(this)"><i class="bi bi-trash"></i></button></td>
+    <td>
+      <div class="flex gap-4 items-center">
+        <input class="sub-input" value="1" style="width:60px;">
+        <select class="select" style="width:90px;">
+          <option>分钟</option>
+          <option>小时</option>
+          <option>天</option>
+        </select>
+      </div>
+    </td>
+    <td>
+      <button type="button" class="btn btn-sm btn-outline-primary" onclick="openOverdueReminderPicker(this)" data-reminder-cats="">设置</button>
+    </td>
+  \`;
+  tableBody.appendChild(tr);
+}
+
+function openOverdueReminderPicker(btn) {
+  _currentReminderRowBtn = btn;
+  const prevCats = (btn.getAttribute('data-reminder-cats') || '').split(',').filter(Boolean);
+  // 重置 checkbox 状态
+  const modal = document.getElementById('modal-overdue-reminder-select');
+  if (!modal) return;
+  modal.querySelectorAll('.person-cat-row').forEach(row => {
+    const cb = row.querySelector('input[type="checkbox"]');
+    if (!cb) return;
+    const label = row.querySelector('.person-cat-label').textContent.trim();
+    // 与 confirmOverdueReminder 同口径：@成员行带上已选字段，保证再次打开可回显勾选
+    const fields = (row.getAttribute('data-selected') || '').split(',').filter(Boolean);
+    const text = fields.length ? label + '：' + fields.join('、') : label;
+    cb.checked = prevCats.indexOf(text) !== -1;
+  });
+  showModal('modal-overdue-reminder-select');
+}
+
+function confirmOverdueReminder() {
+  const modal = document.getElementById('modal-overdue-reminder-select');
+  const checked = [];
+  modal.querySelectorAll('.person-cat-row').forEach(row => {
+    const cb = row.querySelector('input[type="checkbox"]');
+    if (cb && cb.checked) {
+      const label = row.querySelector('.person-cat-label').textContent.trim();
+      // 表单内@成员行：把已选的@成员字段一并列出（多行各自独立）
+      const fields = (row.getAttribute('data-selected') || '').split(',').filter(Boolean);
+      const text = fields.length ? label + '：' + fields.join('、') : label;
+      if (checked.indexOf(text) === -1) checked.push(text);
+    }
+  });
+  if (checked.length === 0) {
+    alert('请至少选择一项超期提醒人');
+    return;
+  }
+  if (_currentReminderRowBtn) {
+    _currentReminderRowBtn.setAttribute('data-reminder-cats', checked.join(','));
+    _currentReminderRowBtn.textContent = '已设置 (' + checked.length + ')';
+  }
+  closeModal('modal-overdue-reminder-select');
+}
+
+function removeReminderRule(btn) {
+  // 不限制最少条数：允许删除全部提醒规则
+  btn.closest('tr').remove();
+}
+
+// ====== Sheet Drill-down ======
+function showSheetDrillModal(sheetName, status) {
+  const title = document.getElementById('drillTitle');
+  const filterInfo = document.getElementById('drillFilterInfo');
+  const tbody = document.getElementById('drillTableBody');
+
+  title.textContent = \`预警明细 - \${sheetName} / \${status === '全部' ? '全部状态' : status}\`;
+  filterInfo.innerHTML = \`<span class="tag tag-primary" style="padding:6px 12px;">工作表：\${sheetName} ｜ 状态：\${status === '全部' ? '全部状态' : status}</span>\`;
+
+  // Filter data by sheet and status
+  let filtered = drillData.filter(d => d.sheet === sheetName);
+  if (status !== '全部') {
+    filtered = filtered.filter(d => d.status === status);
+  }
+
+  if (filtered.length === 0) {
+    tbody.innerHTML = '<tr><td colspan="10" class="text-muted" style="text-align:center;padding:20px;">暂无匹配数据</td></tr>';
+  } else {
+    tbody.innerHTML = filtered.map(function(d, i){ return drillRowHtml(d, i); }).join('');
+  }
+
+  showModal('modal-drill');
+}
+
+// ====== Void (作废) Functions ======
+function toggleSelectAllRows(masterCheckbox) {
+  document.querySelectorAll('.row-check').forEach(cb => {
+    cb.checked = masterCheckbox.checked;
+  });
+}
+
+function showVoidConfirmModal() {
+  const checked = document.querySelectorAll('.row-check:checked');
+  if (checked.length === 0) {
+    alert('请先勾选需要作废的预警记录');
+    return;
+  }
+  document.getElementById('voidCountDisplay').textContent = \`\${checked.length} 条\`;
+  showModal('modal-void-confirm');
+}
+
+function confirmVoid() {
+  const reasonEl = document.querySelector('#modal-void-confirm textarea');
+  if (!reasonEl || !reasonEl.value.trim()) {
+    alert('请填写作废原因后再确认！');
+    return;
+  }
+  const checked = document.querySelectorAll('.row-check:checked');
+  alert(\`已成功作废 \${checked.length} 条预警记录，作废原因：\${reasonEl.value.trim()}，状态已变更为「已作废」\`);
+  closeModal('modal-void-confirm');
+  // Reset
+  document.querySelectorAll('.row-check').forEach(cb => { cb.checked = false; });
+  if (reasonEl) reasonEl.value = '';
+}
+
+// Initialize
+// (selectWarnMode 已移除：预警不再区分「自定义」与「关联标准风险」两种模式)
+
+// ====== 开发说明抽屉（页面级逻辑备注统一入口）======
+var _devDocOpen = false;
+var _curPageId = 'warning-task';
+var DEV_DOC_TITLES = {
+  'warning-info-table': '预警信息表',
+  'warning-rule': '预警规则设置',
+  'warning-dashboard': '预警分级看板',
+  'warning-task': '预警任务',
+  'warning-stats': '预警信息表统计',
+  'warning-stats-aggr': '预警统计（按工作表）'
+};
+
+function toggleDevDoc(){ if (_devDocOpen) { closeDevDoc(); } else { openDevDoc(); } }
+
+function openDevDoc(){
+  _devDocOpen = true;
+  var d = document.getElementById('devDocDrawer');
+  if (d) d.classList.add('open');
+  document.body.classList.add('devdoc-open');
+  renderDevDoc(_curPageId);
+}
+
+function closeDevDoc(){
+  _devDocOpen = false;
+  var d = document.getElementById('devDocDrawer');
+  if (d) d.classList.remove('open');
+  document.body.classList.remove('devdoc-open');
+}
+
+function renderDevDoc(pageId){
+  pageId = pageId || _curPageId;
+  var nameEl = document.getElementById('devDocPageName');
+  if (nameEl) nameEl.textContent = DEV_DOC_TITLES[pageId] || '';
+  var body = document.getElementById('devDocBody');
+  if (!body) return;
+  var src = document.getElementById('devdoc-' + pageId);
+  if (src) {
+    body.innerHTML = src.innerHTML;
+  } else {
+    body.innerHTML = '<div class="devdoc-empty">本页开发说明待补充。<br>当前已完成：<b>预警任务</b>；其余页面按顺序逐个补充。</div>';
+  }
+  body.scrollTop = 0;
+}
+
+document.addEventListener('keydown', function(e){
+  if (e.key === 'Escape' && _devDocOpen) closeDevDoc();
+});
+
+// The host system opens this page through individual warning-module entries.
+// Keep the standalone prototype's hidden entries available only when requested.
+const embeddedWarningView = new URLSearchParams(window.location.search).get('view');
+const embeddedWarningViews = [
+  'warning-info-table',
+  'warning-rule',
+  'warning-dashboard',
+  'warning-task',
+  'warning-stats',
+  'warning-stats-aggr',
+];
+if (embeddedWarningViews.includes(embeddedWarningView)) {
+  document.getElementById(\`page-\${embeddedWarningView}\`)?.removeAttribute('hidden');
+  document
+    .querySelector(\`.menu-item[data-page="\${embeddedWarningView}"]\`)
+    ?.removeAttribute('hidden');
+}
+navigateTo(
+  embeddedWarningViews.includes(embeddedWarningView)
+    ? embeddedWarningView
+    : 'warning-task',
+);
+
+<\/script>
+</body>
+</html>
+`,jz=[`人事管理`,`财务管理`,`安全管理`,`生产管理`,`设备管理`,`综合管理`],Mz=`./prototype-annotations.json`,Nz=`https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e`;function Pz(e){let t=Array.isArray(e)?e:e?.annotations;return Array.isArray(t)?t:[]}DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Fz=[{label:`工作台`,icon:yz},{label:`应用`,icon:rz},{label:`任务`,icon:Cz},{label:`流程`,icon:cz},{label:`动态`,icon:pz},{label:`预警`,icon:Sz},{label:`看板`,icon:ZR}],Iz=[{id:`home`,label:`首页`,icon:yz},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:pz},{id:`task`,label:`任务`,icon:Cz},{id:`flow`,label:`流程`,icon:cz},{id:`warning`,label:`预警`,icon:Sz},{id:`message`,label:`消息`,icon:mz},{id:`equipment`,label:`设备`,icon:vz},{id:`production`,label:`生产`,icon:xz},{id:`fire`,label:`消防`,icon:Tz},{id:`explosive`,label:`火工品`,icon:uz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:hz},{id:`people`,label:`人员`,icon:Ez},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:bz},{id:`idea`,label:`提示`,icon:dz},{id:`edit`,label:`编辑`,icon:lz},{id:`delete`,label:`删除`,icon:wz},{id:`arrow`,label:`前往`,icon:fz}];function Lz({name:e=`apps`,className:t,customIcons:n=[]}){let r=n.find(t=>t.id===e);return r?(0,Q.jsx)(`img`,{className:t,src:r.src,alt:``,"aria-hidden":`true`}):(0,Q.jsx)(Iz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var Rz=`./xiaodong/`,zz=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:mz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:Cz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:Sz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],Bz=[{name:`双重预防机制`,description:`风险与隐患`,icon:pz},{name:`安全管理`,description:`检查与整改`,icon:Sz},{name:`设备管理`,description:`点检与维修`,icon:vz},{name:`火工品管理`,description:`领用与追溯`,icon:uz},{name:`生产管理`,description:`计划与日报`,icon:xz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Tz},{name:`应急管理`,description:`预案与响应`,icon:dz}],Vz=[{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}],Hz=[`安全管理员`,`设备工程师`,`生产主管`],Uz=[{id:`workbench`,label:`工作台`,icon:yz,pinned:!0}],Wz=[{id:`msg-1`,source:`流程审批`,type:`审批提醒`,sender:`矿山应急照明设备采购申请`,time:`今天 10:12`,initiator:`王建国`,initiatedAt:`今天 09:12`,application:`机电管理`,processNumber:`202608310001`,title:`矿山应急照明设备采购申请`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`blue`},{id:`msg-2`,source:`流程超时`,type:`超时提醒`,sender:`南区 2# 采场动火作业申请`,time:`今天 09:38`,initiator:`张宇`,initiatedAt:`今天 08:46`,application:`安全管理`,processNumber:`202608310002`,title:`南区 2# 采场动火作业申请`,content:`当前审批节点已超时，请尽快处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`流程结束`,type:`结束提醒`,sender:`碎矿车间停机检修计划`,time:`昨天 16:45`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,application:`设备管理`,processNumber:`202608300003`,title:`碎矿车间停机检修计划`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:Sz,tone:`red`},{id:`msg-4`,source:`流程审批`,type:`审批提醒`,sender:`外协队入场资格审核`,time:`昨天 14:20`,initiator:`周敏`,initiatedAt:`昨天 10:20`,application:`双重预防机制`,processNumber:`202608300004`,title:`外协队入场资格审核`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-5`,source:`流程结束`,type:`结束提醒`,sender:`井下设备检修采购申请`,time:`7 月 28 日 09:16`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,application:`设备管理`,processNumber:`202608260006`,title:`井下设备检修采购申请`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!0,icon:hz,tone:`blue`}],Gz=`20260831`;function Kz(e=``){let t=String(e).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);if(t)return`${t[1]}${t[2].padStart(2,`0`)}${t[3].padStart(2,`0`)}`;let n=String(e).match(/(\d{1,2})\s*月\s*(\d{1,2})\s*日/);return n?`2026${n[1].padStart(2,`0`)}${n[2].padStart(2,`0`)}`:String(e).includes(`昨天`)?`20260830`:Gz}function qz(e){let t=String(e.id??``),n=Number(t.match(/(\d+)(?!.*\d)/)?.[1]),r=Number(e.sequence)||n%9999||1;return`${Kz(e.initiatedAt)}${String(r).padStart(4,`0`)}`}var Jz=[`待审批`,`审批中`,`已通过`,`已拒绝`,`已撤销`,`已驳回`],Yz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`审批中`,application:`设备管理`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`张宇`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`审批中`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,startedByMe:!0},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`流程已结束`,approver:`刘海`,status:`已通过`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`张宇`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0},{id:`flow-5`,name:`东区临时用电申请`,initiator:`陈伟`,initiatedAt:`昨天 11:16`,currentNode:`流程已结束`,approver:`张宇`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,handledByMe:!0,handledResult:`驳回`},{id:`flow-6`,name:`井下设备检修采购申请`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,currentNode:`流程已撤销`,approver:`张宇`,status:`已撤销`,application:`设备管理`,amount:`42,800 元`,department:`机电管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`,revokedBy:`刘海`,revokedAt:`2026-08-26 17:08:00`},{id:`flow-7`,name:`高处作业审批申请`,initiator:`孙宁`,initiatedAt:`8 月 25 日 09:34`,currentNode:`分管领导审批`,approver:`张宇`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`紧急`,handledByMe:!0,handledResult:`驳回`},{id:`flow-8`,name:`井下通风设施改造申请`,initiator:`李明`,initiatedAt:`8 月 27 日 14:18`,currentNode:`流程已结束`,approver:`陈伟`,status:`已通过`,application:`应急管理`,amount:`26,000 元`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,finalOperator:`陈伟`},{id:`flow-9`,name:`采场临时封闭申请`,initiator:`王强`,initiatedAt:`8 月 27 日 10:05`,currentNode:`流程已结束`,approver:`赵磊`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,ccToMe:!0,finalOperator:`赵磊`},{id:`flow-10`,name:`消防器材增补采购申请`,initiator:`周敏`,initiatedAt:`8 月 26 日 13:26`,currentNode:`流程已撤销`,approver:`孙宁`,status:`已撤销`,application:`消防管理`,amount:`18,600 元`,department:`综合管理部`,urgency:`常规`,ccToMe:!0,revokedBy:`周敏`,revokedAt:`2026-08-26 15:20:00`},{id:`flow-11`,name:`爆破作业人员调整申请`,initiator:`何勇`,initiatedAt:`8 月 25 日 16:50`,currentNode:`分管领导审批`,approver:`周杰伦`,status:`已驳回`,application:`火工品管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,ccToMe:!0,rejectedBy:`周杰伦`},{id:`flow-12`,name:`东翼通风系统整改申请`,initiator:`张宇`,initiatedAt:`2026-09-02 09:18:00`,currentNode:`已驳回至发起人`,approver:`周杰伦`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,startedByMe:!0,rejectedBy:`周杰伦`,rejectionOpinion:`请补充整改方案及现场照片后重新提交。`},{id:`flow-draft-1`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-28 10:36:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已完成离职原因与交接安排说明，待补充附件后提交。`,draft:!0},{id:`flow-draft-2`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-27 16:18:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已填写基本离职信息，待确认最后工作日期。`,draft:!0}],Xz=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`,children:[]},{id:`equipment`,name:`设备管理部`,children:[]},{id:`production`,name:`生产技术部`,children:[]}]}]}],Zz=[{id:`transfer-zhao`,name:`赵六`,account:`zhaoliu`,department:`安全管理部`,organizationId:`safety`},{id:`transfer-wang`,name:`王五`,account:`wangwu`,department:`生产技术部`,organizationId:`production`},{id:`transfer-li`,name:`李四`,account:`lisi`,department:`设备管理部`,organizationId:`equipment`}],Qz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:pz,tone:`green`},{name:`平巷凿岩作业隐患排查审批流程`,time:`昨天 16:40`,icon:nz,tone:`blue`},{name:`生产管理`,time:`7 月 25 日`,icon:xz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:pz,tone:`violet`}],$z=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:hz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:Cz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:vz}];function eB({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function tB({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Fz.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)(eB,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function nB({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o,onOpenSpecification:s}){let[c,l]=(0,Z.useState)(!1),u=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{if(!c)return;let e=e=>{u.current?.contains(e.target)||l(!1)},t=e=>{e.key===`Escape`&&l(!1)};return document.addEventListener(`pointerdown`,e),document.addEventListener(`keydown`,t),()=>{document.removeEventListener(`pointerdown`,e),document.removeEventListener(`keydown`,t)}},[c]),(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{type:`button`,className:`prototype-annotation-toggle`,onClick:s,children:[(0,Q.jsx)(lz,{}),(0,Q.jsx)(`span`,{children:`标注`})]}),(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsxs)(`div`,{className:`top-profile-control`,ref:u,children:[(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":c,onClick:()=>l(e=>!e),children:`张`}),c?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{l(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{l(!1),o()},children:`退出登录`})]}):null]})]})]})}function rB({visible:e,managing:t,pageId:n,pageLabel:r,annotations:i,onCloseManager:a,onAdd:o,onUpdate:s,onRemove:c,onReposition:l}){let[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(``),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(null),S=()=>{let e=document.querySelector(`.page-shell`),t=e?.getBoundingClientRect();return{left:t?.left??80,top:t?.top??0,width:Math.max(t?.width??window.innerWidth-80,1),height:Math.max(e?.scrollHeight??0,t?.height??window.innerHeight,1)}},[C,w]=(0,Z.useState)(()=>({left:80,top:0,width:Math.max(window.innerWidth-80,1),height:Math.max(window.innerHeight,1)})),T=(0,Z.useRef)(!1),E=i.filter(e=>e.pageId===n),D=E.find(e=>e.id===m),O=(e,t=0)=>{let n=Math.min(980,window.innerWidth-37),r=156+t*42,i=e.leftPercent!==null&&e.leftPercent!==void 0&&e.topPercent!==null&&e.topPercent!==void 0&&Number.isFinite(Number(e.leftPercent))&&Number.isFinite(Number(e.topPercent)),a=i&&e.positionSpace===`page`,o=i?Number(e.leftPercent)/100*window.innerWidth:e.left??n,s=i?Number(e.topPercent)/100*window.innerHeight:e.top??r;return{left:a?Number(e.leftPercent)/100*C.width:o-C.left,top:a?Number(e.topPercent)/100*C.height:s-C.top,hasRelativePosition:i,isPagePosition:a}},k=(e,t,n=C)=>({leftPercent:Number((e/n.width*100).toFixed(3)),topPercent:Number((t/n.height*100).toFixed(3)),positionSpace:`page`}),A=(e,t)=>{if(b?.id===e.id)return{left:`${b.left}px`,top:`${b.top}px`};let n=O(e,t);return{left:`${n.left}px`,top:`${n.top}px`}};(0,Z.useEffect)(()=>{let e=()=>w(S()),t=document.querySelector(`.page-shell`),n=typeof ResizeObserver>`u`?null:new ResizeObserver(e);return e(),t&&n?.observe(t),window.addEventListener(`resize`,e),window.visualViewport?.addEventListener(`resize`,e),()=>{n?.disconnect(),window.removeEventListener(`resize`,e),window.visualViewport?.removeEventListener(`resize`,e)}},[n]),(0,Z.useEffect)(()=>{E.forEach((e,t)=>{let{isPagePosition:n,left:r,top:i}=O(e,t);n||l(e.id,k(r,i))})},[i,n,C.width,C.height]),(0,Z.useEffect)(()=>{if(!b)return;let e=e=>{let t=S(),n=Math.min(Math.max(12,Math.round(e.clientX-t.left-b.offsetX)),t.width-37),r=Math.min(Math.max(64,Math.round(e.clientY-t.top-b.offsetY)),t.height-37);(Math.abs(n-b.startLeft)>3||Math.abs(r-b.startTop)>3)&&(T.current=!0),x(e=>e&&{...e,left:n,top:r})},t=()=>{l(b.id,k(b.left,b.top,S())),x(null)};return window.addEventListener(`mousemove`,e),window.addEventListener(`mouseup`,t,{once:!0}),()=>{window.removeEventListener(`mousemove`,e),window.removeEventListener(`mouseup`,t)}},[b,l]);let j=()=>{let e=u.trim();if(e){if(f){s(f,e),d(``),p(``);return}_(!0)}},M=()=>{d(``),p(``),y(``),_(!1)};return(0,Q.jsxs)(Q.Fragment,{children:[e?E.map((e,t)=>(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-tag`,style:A(e,t),"aria-label":`查看备注 ${t+1}`,onMouseDown:n=>{n.preventDefault();let{left:r,top:i}=O(e,t),a=S();T.current=!1,x({id:e.id,left:r,top:i,startLeft:r,startTop:i,offsetX:n.clientX-a.left-r,offsetY:n.clientY-a.top-i})},onClick:()=>{if(T.current){T.current=!1;return}h(e.id)},children:t+1},e.id)):null,e&&D?(0,Q.jsxs)(`section`,{className:`prototype-annotation-popover`,style:{left:`${Math.min(O(D).left+32,C.width-286)}px`,top:`${Math.min(O(D).top+30,C.height-160)}px`},"aria-label":`备注内容`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:`备注内容`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭备注内容`,onClick:()=>h(``),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:D.content})]}):null,g?(0,Q.jsx)(`div`,{className:`prototype-annotation-placement-layer`,onClick:e=>{let t=S(),i=Math.min(Math.max(12,Math.round(e.clientX-t.left)),t.width-37),a=Math.min(Math.max(64,Math.round(e.clientY-t.top)),t.height-37),s=k(i,a,t);v?l(v,s):o({pageId:n,pageLabel:r,content:u.trim(),...s}),M()},role:`presentation`,children:(0,Q.jsx)(`span`,{children:v?`请点击页面任意位置重新放置标签`:`请点击页面任意位置放置备注标签`})}):null,t?(0,Q.jsxs)(`aside`,{className:`prototype-annotation-panel`,"aria-label":`原型标注管理`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`原型标注管理`}),(0,Q.jsx)(`b`,{children:r})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭标注管理`,onClick:a,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-editor`,children:[(0,Q.jsx)(`p`,{className:`prototype-annotation-source-note`,children:`标注从部署文件读取；在线调整仅用于当前预览。`}),(0,Q.jsx)(`label`,{htmlFor:`prototype-annotation-content`,children:f?`编辑备注`:`新增备注`}),(0,Q.jsx)(`textarea`,{id:`prototype-annotation-content`,value:u,maxLength:240,placeholder:`例如：此处提交后需校验审批人是否存在，并记录操作日志。`,onChange:e=>d(e.target.value)}),(0,Q.jsxs)(`footer`,{children:[f||g?(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-cancel`,onClick:M,children:g?`取消放置`:`取消编辑`}):null,(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-save`,onClick:j,disabled:!u.trim(),children:f?`保存备注`:`点击页面放置标签`})]})]}),(0,Q.jsx)(`div`,{className:`prototype-annotation-list`,children:E.length?E.map((e,t)=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:String(t+1).padStart(2,`0`)}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-entry`,children:[(0,Q.jsx)(`p`,{children:e.content}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑备注`,onClick:()=>{d(e.content),p(e.id),_(!1)},children:`编辑`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`重新放置备注`,onClick:()=>{y(e.id),_(!0)},children:`重新放置`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除备注`,onClick:()=>{m===e.id&&h(``),c(e.id)},children:`删除`})]})]})]},e.id)):(0,Q.jsx)(`div`,{className:`prototype-annotation-empty`,children:`当前页面还没有备注，输入内容后即可在页面任意位置放置。`})})]}):null]})}function iB({total:e,page:t,pageSize:n,onPageChange:r,onPageSizeChange:i,className:a=``,itemLabel:o=`条`}){let s=Math.max(1,Math.ceil(e/n)),c=Math.min(t,s);return(0,Q.jsxs)(`footer`,{className:`system-pagination ${a}`.trim(),children:[(0,Q.jsxs)(`span`,{children:[`共 `,e,` `,o]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页${o}数`,value:n,onChange:e=>i(Number(e.target.value)),children:[(0,Q.jsxs)(`option`,{value:10,children:[`10 `,o]}),(0,Q.jsxs)(`option`,{value:20,children:[`20 `,o]}),(0,Q.jsxs)(`option`,{value:50,children:[`50 `,o]})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:c===1,onClick:()=>r(Math.max(1,c-1)),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[c,` / `,s]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:c===s,onClick:()=>r(Math.min(s,c+1)),children:`下一页`})]})}function aB({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r,onOpenProcess:i}){let[a,o]=(0,Z.useState)(`全部`),[s,c]=(0,Z.useState)(`全部`),[l,u]=(0,Z.useState)(`未读`),[d,f]=(0,Z.useState)(10),[p,m]=(0,Z.useState)(1),h=e=>e.source.startsWith(`流程`)?`流程`:e.source,g=e.filter(e=>(a===`全部`||h(e)===a)&&(a!==`流程`||s===`全部`||e.source===s)&&(l===`全部`||(l===`未读`?!e.read:e.read))),_=Math.max(1,Math.ceil(g.length/d)),v=Math.min(p,_),y=g.slice((v-1)*d,v*d),b=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,b,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:b===0,children:[(0,Q.jsx)(hz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:a,onChange:e=>{let t=e.target.value;o(t),c([`流程`,`全部`].includes(t)?`全部`:``),m(1)},children:[(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`动态`}),(0,Q.jsx)(`option`,{children:`全部`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsx)(`select`,{value:s,disabled:![`流程`,`全部`].includes(a),onChange:e=>{c(e.target.value),m(1)},children:a===`流程`?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`流程审批`}),(0,Q.jsx)(`option`,{children:`流程超时`}),(0,Q.jsx)(`option`,{children:`流程结束`}),(0,Q.jsx)(`option`,{children:`流程驳回`}),(0,Q.jsx)(`option`,{children:`流程抄送`})]}):a===`全部`?(0,Q.jsx)(`option`,{children:`全部`}):(0,Q.jsx)(`option`,{value:``,children:` `})})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:l,onChange:e=>{u(e.target.value),m(1)},children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:y.length?y.map(e=>{let{id:n,source:r,type:a,sender:o,time:s,initiator:c,initiatedAt:l,application:u,processNumber:d,read:f,icon:p,tone:m}=e;return(0,Q.jsxs)(`button`,{className:f?`message-row read`:`message-row`,onClick:()=>{t(n),i(a===`结束提醒`?`我发起的`:`待审批`,d)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${m}`,children:(0,Q.jsx)(p,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`time`,{children:s}),f?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsx)(`strong`,{children:(0,Q.jsx)(`em`,{children:r})}),(0,Q.jsxs)(`p`,{className:`message-process-origin`,children:[c,`于`,l,`通过`,u,`应用发起的流程编号为：`,d]})]}),(0,Q.jsx)(fz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(iB,{className:`message-pagination`,total:g.length,page:v,pageSize:d,onPageChange:m,onPageSizeChange:e=>{f(e),m(1)}})]})}function oB({process:e,onClose:t,onApprove:n,viewOnly:r=!1,canRevoke:i=!1,canResumeDraft:a=!1,hideFinalLog:o=!1,onResumeDraft:s,onResubmit:c}){let[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(!1),[h,g]=(0,Z.useState)(null),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(!1),[x,S]=(0,Z.useState)(!1),[C,w]=(0,Z.useState)([]),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(null),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)(`initiator`),[N,P]=(0,Z.useState)(!1),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(``),ne=()=>{u(!1),f(!1),m(!1),b(!1),S(!1),w([]),E(``),O(null),A(``),P(!1),F(!1),te(``),t()};if(!e)return null;let re=e.status===`已驳回`,ie=e.status===`已撤销`,ae=e.status===`已通过`,oe=e.status===`已拒绝`,se=e.resubmitted,L=D===`initiator`?{label:`发起人`,name:e.initiator}:{label:`上一节点`,name:e.previousApprover??`张七`},R=[{time:`2026-08-23 12:00:00`,title:`系统发起`,details:[`${e.initiator}发起了${e.name}`],action:`发起`,state:`done`},{time:`2026-08-23 12:00:00`,title:`主管领导审批`,details:[`李四已同意`,`审批意见：请按流程办理`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`分管领导审批`,details:[`王五已转办`,`转办原因：赵总定夺`,`流程到达时间：2026-08-23 12:00:00`],action:`转办`,state:`done`},{time:`2026-08-23 12:00:00`,title:`转办审批`,details:[`赵六已加签`,`流程到达时间：2026-08-23 12:00:00`],action:`加签`,state:`done`},{time:`2026-08-23 12:00:00`,title:`加签审批`,details:[`张七已同意`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`抄送`,details:[`系统已抄送`,`流程到达时间：2026-08-23 12:00:00`],action:`抄送`,state:`done`},{time:re||se||ae||oe?`2026-08-23 12:00:00`:ie?e.revokedAt??`2026-08-28 10:36:00`:`当前`,title:re||se||ae||oe?`分管领导审批`:ie?`撤销`:`结束`,details:re||se?[`${e.rejectedBy??`周杰伦`}已驳回`,`审批意见：${e.rejectionOpinion??`请核对清楚再提交`}`,`流程到达时间：2026-08-23 12:00:00`]:ae?[`${e.finalOperator??`张宇`}已同意`,`审批意见：同意办理`,`流程完成时间：2026-08-23 12:00:00`]:oe?[`${e.finalOperator??`张宇`}已拒绝`,`审批意见：${e.refusalOpinion||`未填写`}`,`流程完成时间：2026-08-23 12:00:00`]:ie?[`${e.revokedBy??`张宇`}已撤销该流程`]:[[`待审批`,`审批中`].includes(e.status)?`当前待 ${e.approver} 审批`:`流程已结束`],action:re||se?`驳回`:ae?`同意`:oe?`拒绝`:ie?`撤销`:void 0,state:se?`done`:`current`},...se?[{time:`2026-08-23 12:30:00`,title:`重新提交`,details:[`${e.initiator}已重新提交`],action:`重新提交`,state:`done`},{time:``,hideTime:!0,title:`分管领导审批`,details:[`周杰伦`,`流程到达时间：2026-08-23 12:30:00`],state:ie?`done`:`current`},...ie?[{time:e.revokedAt??`2026-08-28 10:36:00`,title:`撤销`,details:[`${e.revokedBy??`张宇`}已撤销该流程`],action:`撤销`,state:`current`}]:[]]:[],...e.actionLogs??[]],z=[[`所属部门`,e.department],[`发起人`,e.initiator],[`发起时间`,e.initiatedAt]],ce=e=>{if(e===`撤销`){P(!0);return}if(e===`转办`){f(!0);return}if(e===`加签`){w([]),E(``),b(!0);return}if(e===`退回`){A(``),O(j),M(e=>e===`initiator`?`previous`:`initiator`);return}if(e===`拒绝`){te(``),F(!0);return}n(`已${e}`)},B=o&&!re&&!ie&&!se&&!ae&&!oe&&!e.actionLogs?.length?R.slice(0,-1):R;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:ne,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:ne,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body${a?` draft-detail`:``}`,children:[(0,Q.jsxs)(`div`,{className:`process-approval-main`,children:[(0,Q.jsxs)(`section`,{className:`process-approval-form`,children:[(0,Q.jsx)(`h3`,{children:`申请单`}),(0,Q.jsx)(`div`,{className:`process-approval-fields`,children:z.map(([e,t])=>(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),t||`-`]},e))}),(0,Q.jsxs)(`label`,{className:`process-approval-description`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,readOnly:!0,defaultValue:`${e.name}相关事项，请按流程审核处理。`})]}),i&&!re&&!ie?(0,Q.jsx)(`div`,{className:`process-initiated-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`})}):null]}),re&&i?(0,Q.jsxs)(`div`,{className:`process-rejected-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>c?.(e),children:`重新提交`})]}):r?null:(0,Q.jsxs)(`section`,{className:`process-approval-opinion`,children:[(0,Q.jsx)(`h3`,{children:`审批意见`}),(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请输入审批意见`}),(0,Q.jsxs)(`div`,{className:`process-approval-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`转办`),children:`转办`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`加签`),children:`加签`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`退回`),children:`驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`拒绝`),children:`拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>ce(`同意`),children:`同意`})]})]})]}),a?null:(0,Q.jsxs)(`section`,{className:`process-approval-log`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`流程日志`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(!0),children:`流程图`})]}),(0,Q.jsx)(`ol`,{children:B.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`div`,{className:`process-log-entry-heading`,children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsxs)(`span`,{className:`process-log-entry-meta`,children:[e.hideTime?null:(0,Q.jsx)(`time`,{children:e.time}),e.action?(0,Q.jsx)(`span`,{className:`process-log-action`,children:e.action}):null]})]}),e.details.map(e=>(0,Q.jsx)(`p`,{children:e},e))]})]},e.title))})]})]})]})}),l?(0,Q.jsx)(`div`,{className:`process-flowchart-map-layer`,role:`presentation`,onMouseDown:()=>u(!1),children:(0,Q.jsxs)(`section`,{className:`process-flowchart-map-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-flowchart-map-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-flowchart-map-title`,children:`流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程图`,onClick:()=>u(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart-map`,"aria-label":`${e.name}流程图`,children:[(0,Q.jsx)(`i`,{className:`flowchart-map-link start-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-right`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link secondary-right`}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node start`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`b`,{children:e.name})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval active`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`设备主管审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy first-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval manager`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`总经理审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy second-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]})]})]})}):null,N?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>P(!1),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>P(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>P(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{P(!1),n(`已撤销`)},children:`确定撤销`})]})]})}):null,ee?(0,Q.jsx)(`div`,{className:`process-refuse-layer`,role:`presentation`,onMouseDown:()=>F(!1),children:(0,Q.jsxs)(`section`,{className:`process-refuse-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-refuse-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-refuse-title`,children:`确认拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭拒绝确认`,onClick:()=>F(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-refuse-body`,children:[(0,Q.jsxs)(`label`,{children:[`拒绝意见`,(0,Q.jsx)(`textarea`,{rows:`4`,value:I,onChange:e=>te(e.target.value),placeholder:`请输入拒绝意见`})]}),(0,Q.jsx)(`p`,{children:`拒绝后该流程终止，无法修改，确认要拒绝吗？`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>F(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已拒绝`,I.trim()),F(!1),te(``)},children:`确定拒绝`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>f(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),h&&(n(`已转办`,{target:h,reason:_}),f(!1),m(!1),v(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-transfer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-transfer-title`,children:`转办流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭转办弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 转办人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>m(!0),children:[h?`${h.name} · ${h.department}`:`请选择转办人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`转办原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:_,onChange:e=>v(e.target.value),placeholder:`请输入转办原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!h,children:`确认转办`})]})]})}):null,y?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>b(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),C.length&&(n(`已加签`,{targets:C,reason:T}),b(!1),S(!1),w([]),E(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-add-signer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-add-signer-title`,children:`加签流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭加签弹窗`,onClick:()=>b(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 加签人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>S(!0),children:[C.length?C.map(e=>e.name).join(`、`):`请选择加签人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`加签原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:T,onChange:e=>E(e.target.value),placeholder:`请输入加签原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>b(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!C.length,children:`确认加签`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>O(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-return-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-return-confirm-title`,children:`确认驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭驳回确认`,onClick:()=>O(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-return-body`,children:[(0,Q.jsxs)(`label`,{children:[`驳回意见`,(0,Q.jsx)(`textarea`,{rows:`3`,value:k,maxLength:200,placeholder:`请输入驳回意见（选填）`,onChange:e=>A(e.target.value)})]}),(0,Q.jsxs)(`p`,{children:[`驳回后，流程将退回至`,L.label,`，确认要驳回吗？`]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{O(null),A(``)},children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已驳回`,{target:L,reason:k.trim()}),O(null),A(``)},children:`确认驳回`})]})]})}):null,p?(0,Q.jsx)(HB,{organizations:Xz,users:Zz,selectedUser:h,onSelect:g,onClose:()=>m(!1),title:`选择转办人`,selectedLabel:`已选转办人`}):null,x?(0,Q.jsx)(UB,{organizations:Xz,users:Zz,selectedUsers:C,onSelect:w,onClose:()=>S(!1),title:`选择加签人`,selectedLabel:`已选加签人`}):null]})}function sB({onAction:e,initialFilter:t=`待审批`,initialProcessNumber:n=``,processRecords:r,setProcessRecords:i}){let[a,o]=(0,Z.useState)(null),[s,c]=(0,Z.useState)(null),[l,u]=(0,Z.useState)(t),[d,f]=(0,Z.useState)({number:n,title:``,application:``,type:``,status:``}),[p,m]=(0,Z.useState)(`全部`),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(null),[y,b]=(0,Z.useState)(null),[x,S]=(0,Z.useState)(`new`),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),j=(0,Z.useRef)(null),M=[{category:`人资管理`,application:`消防管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,application:`机电管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,application:`双重预防机制`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,application:`生产管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,application:`应急管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,application:`设备管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,application:`火工品管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,application:`安全管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,application:`双重预防机制`,tone:`red`,name:`材料采购流程`}],N={待审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`arrivalAt`,`status`]},已审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`completedAt`,`result`,`status`]},抄送我的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`sentAt`,`status`]},我发起的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiatedAt`,`currentNode`,`status`]},草稿箱:{filters:[`title`],columns:[`title`,`type`,`application`,`initiatedAt`,`status`]}},P={number:`流程编号`,title:`标题`,application:`所属应用`,type:`流程类型`,initiator:`发起人`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},ee=e=>l===`待审批`&&e===`title`?`流程名称`:l===`待审批`&&e===`status`?`当前状态`:l===`已审批`&&e===`title`?`流程名称`:l===`已审批`&&e===`completedAt`?`处理时间`:l===`已审批`&&e===`result`?`我的处理`:l===`已审批`&&e===`status`?`当前状态`:l===`抄送我的`&&e===`title`?`流程名称`:l===`抄送我的`&&e===`sentAt`?`抄送时间`:l===`抄送我的`&&e===`status`?`当前状态`:l===`我发起的`&&e===`title`?`流程名称`:l===`我发起的`&&e===`status`?`当前状态`:l===`草稿箱`&&e===`title`?`流程名称`:l===`草稿箱`&&e===`initiatedAt`?`保存时间`:l===`草稿箱`&&e===`status`?`状态`:P[e],F=N[l],I=[...new Set(r.map(e=>e.application??`综合管理`))],te=M.filter(e=>(p===`全部`||p===`最近使用`&&e.recent)&&(!h.trim()||e.name.includes(h.trim()))),ne=e=>({number:qz(e),title:e.name,application:e.application??`综合管理`,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?e.handledResult??`同意`:`-`,sentAt:e.initiatedAt,endedAt:[`审批中`,`已撤销`].includes(e.status)||e.draft?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),re=r.filter(e=>{let t=l===`待审批`&&[`待审批`,`审批中`].includes(e.status)&&e.approver===`张宇`||l===`已审批`&&e.handledByMe||l===`抄送我的`&&e.ccToMe||l===`我发起的`&&e.startedByMe||l===`草稿箱`&&e.draft,n=ne(e);return t&&(!d.number||n.number.includes(d.number))&&(!d.title||n.title.includes(d.title))&&(!d.application||n.application===d.application)&&(!d.type||n.type===d.type)&&(!d.status||n.status===d.status)}),ie=(t,n={})=>{let r=typeof n==`string`?{opinion:n}:n;t===`已撤销`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已撤销`,startedByMe:!0,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-08-28 10:36:00`}:e)),t===`已拒绝`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已拒绝`,handledByMe:!0,handledResult:`拒绝`,finalOperator:`张宇`,refusalOpinion:r.opinion??``,currentNode:`流程已结束`}:e)),t===`已转办`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`审批中`,approver:r.target?.name??e.approver,currentNode:`转办审批`,handledByMe:!0,handledResult:`转办`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:00:00`,title:`转办`,details:[`张宇已转办给${r.target?.name??`处理人`}`,`转办原因：${r.reason||`未填写`}`],action:`转办`,state:`done`}]}:e)),t===`已加签`&&i(e=>e.map(e=>e.id===a.id?{...e,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:02:00`,title:`加签`,details:[`张宇已加签给${r.targets?.map(e=>e.name).join(`、`)||`处理人`}`,`加签原因：${r.reason||`未填写`}`],action:`加签`,state:`done`}]}:e)),t===`已驳回`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已驳回`,currentNode:`已驳回至${r.target?.label??`上一节点`}`,handledByMe:!0,handledResult:`驳回`,rejectedBy:`张宇`,rejectionOpinion:r.reason||`未填写`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:05:00`,title:`驳回`,details:[`张宇已驳回至${r.target?.label??`上一节点`}`,`驳回原因：${r.reason||`未填写`}`],action:`驳回`,state:`current`}]}:e)),e(`${a.name}${t}`),o(null)},ae=()=>{s&&(i(e=>e.map(e=>e.id===s.id?{...e,status:`已撤销`,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-09-02 10:36:00`}:e)),e(`${s.name}已撤销`),c(null))},oe=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),u(`发起流程`),L(t,e)},se=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),L({...t,name:e.name},{...e,description:`请根据驳回意见核对并完善申请信息后重新提交。`},`resubmit`)},L=(e,t=null,n=`restore`)=>{v(e),b(t),S(t?n:`new`),w(null),O(!1),A(!1)},R=e=>{L(e)},z=()=>{v(null),b(null),A(!1)},ce=()=>{if(!_)return;let t=new FormData(j.current),n={id:y?.draft?y.id:`flow-draft-${Date.now()}`,name:_.name,initiator:`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,application:_.application,department:t.get(`department`)||`安全管理部`,description:t.get(`description`)||``,draft:!0,startedByMe:!0,sequence:y?.sequence??r.filter(e=>Kz(e.initiatedAt)===Gz).length+1};i(e=>y?.draft?e.map(e=>e.id===n.id?n:e):[n,...e]),b(n),e(`${_.name}已暂存到草稿箱`),z()};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsx)(`header`,{className:`task-list-header`,children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]})}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(N)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":l===e,className:l===e?`active`:``,onClick:()=>u(e),children:e},e))})}),l===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":p===e,className:p===e?`active`:``,onClick:()=>m(e),children:e},e))}),(0,Q.jsx)(`input`,{value:h,onChange:e=>g(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=te.filter(t=>t.category===e),n=M.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsxs)(`button`,{onClick:()=>R(e),children:[e.name,`（`,e.application,`）`]},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[F.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:d.number,onChange:e=>f(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,F.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程名称`}),(0,Q.jsx)(`input`,{value:d.title,onChange:e=>f(t=>({...t,title:e.target.value})),placeholder:`请输入流程名称`})]}):null,F.filters.includes(`application`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`所属应用`}),(0,Q.jsxs)(`select`,{value:d.application,onChange:e=>f(t=>({...t,application:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择所属应用`}),I.map(e=>(0,Q.jsx)(`option`,{children:e},e))]})]}):null,F.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:d.type,onChange:e=>f(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,F.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:d.status,onChange:e=>f(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>f({number:``,title:``,application:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(e=>(0,Q.jsx)(`span`,{children:ee(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),re.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(t=>{let n=ne(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>o(e),children:n},t):t===`status`||t===`result`?(0,Q.jsx)(`i`,{className:[`已驳回`,`已拒绝`].includes(n)?`rejected`:[`待审批`,`审批中`].includes(n)?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),l===`我发起的`?(0,Q.jsxs)(`span`,{className:`process-list-actions initiated-actions`,children:[(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:e.status===`已驳回`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>se(e),children:`重新提交`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:[`待审批`,`审批中`,`已驳回`].includes(e.status)?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action danger`,onClick:()=>c(e),children:`撤销`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),`查看`]})})]}):(0,Q.jsxs)(`span`,{className:`process-list-actions`,children:[l===`草稿箱`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>oe(e),children:`继续填报`}):null,(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),l===`待审批`?`审批`:`查看`]})]})]},e.id)),re.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(oB,{process:a,onClose:()=>o(null),onApprove:ie,viewOnly:l!==`待审批`,canRevoke:!1,canResumeDraft:l===`草稿箱`,hideFinalLog:[`已审批`,`我发起的`].includes(l),onResumeDraft:oe,onResubmit:se}),s?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>c(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-list-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-list-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>c(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:ae,children:`确定撤销`})]})]})}):null,C?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>w(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsx)(`h2`,{id:`draft-restore-title`,children:`发现同名流程草稿`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>w(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,C.drafts.length,` 条“`,C.template.name,`”草稿，请选择恢复继续填报，或重新发起新的流程。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:C.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>L(C.template),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=C.drafts.find(e=>e.id===T);L(C.template,e)},children:`恢复并继续填报`})]})]})}):null,_?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:z,role:`presentation`,children:(0,Q.jsxs)(`form`,{ref:j,className:`process-form-dialog${D?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),x===`resubmit`&&y?.id&&i(e=>e.map(e=>e.id===y.id?{...e,status:`审批中`,currentNode:`分管领导审批`,resubmitted:!0}:e)),e(`${x===`resubmit`?`已重新提交流程`:`已发起流程`}：${_.name}`),z()},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:y?x===`resubmit`?`重新提交`:`恢复草稿`:`发起流程`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>A(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>O(e=>!e),children:D?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:z,children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{name:`title`,defaultValue:_.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{name:`department`,defaultValue:y?.department??`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`5`,defaultValue:y?.description??``,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:y?x===`resubmit`?`请根据驳回意见核对信息后重新提交。`:`正在恢复 ${y.initiatedAt} 保存的草稿。`:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:z,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-draft-action`,onClick:ce,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:x===`resubmit`?`重新提交`:`发起流程`})]})]})]})}):null,_&&k?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>A(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>A(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function cB({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(fz,{})]})})}function lB({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),...Bz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(fz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(fz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(bz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function uB({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Qz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(fz,{})]},t))})]})}function dB({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(Bz.find(t=>t.name===e)??Bz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(gz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:Bz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(hz,{}):null]},n))}):null]})}var fB=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:pz,nested:!0},{label:`隐患排查治理`,icon:Sz,expanded:!0}],pB=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查审批流程`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],mB=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:Cz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`}],hB=[{title:`员工离职申请`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`平巷凿岩作业隐患排查审批流程`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`掘进工作面隐患整改审批流程`,detail:`隐患排查审批`,icon:nz,tone:`lime`,kind:`approval`}],gB=[{id:`inspection-001`,reporter:`张宇`,date:`2026-07-29`,shift:`早班`,location:`西翼 3# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`现场检查正常，无需整改。`,status:`已提交`,flowStatus:`审批中`},{id:`inspection-002`,reporter:`李明`,date:`2026-07-28`,shift:`中班`,location:`西翼 2# 平巷`,equipment:`正常`,environment:`发现问题`,protection:`正常`,description:`照明灯具亮度不足，已通知机电班处理。`,status:`已复核`,flowStatus:`已通过`}];function _B({onAction:e,onSwitchApplication:t,approvalDrafts:n,setApprovalDrafts:r,onSaveProcessDraft:i,onDeleteProcessDraft:a,initialFormTitle:o=mB[0].title,initialOpenForm:s=!1,initialFormSource:c=hB.some(e=>e.title===o)?`隐患排查审批流程`:`岗位隐患排查清单`}){let[l,u]=(0,Z.useState)(c),[d,f]=(0,Z.useState)(s),[p,m]=(0,Z.useState)(o),[h,g]=(0,Z.useState)(!1),[_,v]=(0,Z.useState)(`页面`),[y,b]=(0,Z.useState)(c),[x,S]=(0,Z.useState)(null),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),[j,M]=(0,Z.useState)(null),[N,P]=(0,Z.useState)(gB),[ee,F]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[I,te]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[ne,re]=(0,Z.useState)(1),[ie,ae]=(0,Z.useState)(10),oe=(0,Z.useRef)(null),se=(0,Z.useRef)(null),L=l,R=[...mB,...hB].find(e=>e.title===p)??mB[0],z=R.kind===`approval`,ce=n.filter(e=>e.kind===(z?`approval`:`inspection`)&&e.name===R.title),B=(e=mB[0],t=`岗位隐患排查清单`,n=null)=>{m(e.title),b(t),w(n),S(null),f(!0),g(!1),v(`页面`),A(!1),M(null)},le=(e=mB[0],t=`岗位隐患排查清单`)=>{let r=n.filter(t=>t.draft&&t.name===e.title&&t.kind===(e.kind===`approval`?`approval`:`inspection`));if(r.length){S({form:e,source:t,drafts:r}),E(r[0].id);return}B(e,t)},ue=()=>O(!0),de=()=>{O(!1),f(!1),g(!1),A(!1)},fe=t=>{t.preventDefault(),g(!0),A(!1),e(`${R.title}已提交${z?`，已进入审批流程`:``}`)},V=()=>{if(!z)return;let t=new FormData(se.current),n={id:C?.id?.startsWith(`approval-draft-`)?C.id:`approval-draft-${Date.now()}`,processDraftId:C?.processDraftId??`flow-draft-${Date.now()}`,kind:`approval`,name:R.title,initiator:t.get(`reporter`)||`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:t.get(`description`)||``,draft:!0};r(e=>C?.id?.startsWith(`approval-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),i({id:n.processDraftId,name:n.name,initiator:n.initiator,initiatedAt:n.initiatedAt,currentNode:n.currentNode,status:n.status,department:n.department,description:n.description,application:`双重预防机制`,draft:!0,startedByMe:!0}),A(!1),e(`${R.title}已暂存到草稿箱`)},H=()=>{let t=new FormData(se.current),n={id:C?.id?.startsWith(`inspection-draft-`)?C.id:`inspection-draft-${Date.now()}`,kind:`inspection`,name:R.title,reporter:t.get(`reporter`)||`张宇`,inspectionDate:t.get(`inspectionDate`)||`2026-09-02`,shift:t.get(`shift`)||`早班`,location:t.get(`location`)||``,equipment:t.get(`equipment`)||``,environment:t.get(`environment`)||``,protection:t.get(`protection`)||``,description:t.get(`description`)||``,initiatedAt:`2026-09-02 10:00:00`,status:`草稿`,draft:!0};r(e=>C?.id?.startsWith(`inspection-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),A(!1),e(`${R.title}已暂存到草稿箱`)},pe=e=>{if(e===`页面`&&_!==`页面`&&ce.length){S({form:R,source:y,drafts:ce}),E(ce[0].id);return}v(e)},me=e=>{if(e!==_){if(_===`页面`&&k){M({type:`tab`,tab:e});return}pe(e)}},he=e=>{if(d&&_===`页面`&&k){M({type:`page`,item:e});return}u(e),f(!1),g(!1)},ge=e=>{if(d&&_===`页面`&&k){M({type:`application`,application:e});return}t(e)},_e=()=>{let e=j;if(M(null),A(!1),e?.type===`tab`){pe(e.tab);return}e?.type===`page`&&(u(e.item),f(!1),g(!1)),e?.type===`application`&&t(e.application)},ve=N.filter(e=>(!I.reporter||e.reporter.includes(I.reporter))&&(!I.date||e.date===I.date)&&(!I.shift||e.shift===I.shift)&&(!z||!I.flowStatus||e.flowStatus===I.flowStatus)),ye=Math.max(1,Math.ceil(ve.length/ie)),U=Math.min(ne,ye),W=ve.slice((U-1)*ie,U*ie),G=(t=N)=>{let n=[[`填报人`,`检查日期`,`作业班次`,`作业地点`,`凿岩设备防护装置完好`,`作业面通风与照明符合要求`,`人员防护用品佩戴规范`,`隐患描述与整改建议`,`填报状态`],...t.map(e=>[e.reporter,e.date,e.shift,e.location,e.equipment,e.environment,e.protection,e.description,e.status])].map(e=>e.map(e=>`"${String(e).replaceAll(`"`,`""`)}"`).join(`,`)).join(`
+`),r=document.createElement(`a`);r.href=URL.createObjectURL(new Blob([`\ufeff${n}`],{type:`text/csv;charset=utf-8`})),r.download=`${R.title}-历史数据.csv`,r.click(),URL.revokeObjectURL(r.href),e(`历史填报数据已导出`)};return(0,Q.jsxs)(`section`,{className:`prevention-page`,"aria-labelledby":`prevention-page-title`,children:[(0,Q.jsxs)(`aside`,{className:`prevention-sidebar`,"aria-label":`双重预防机制功能导航`,children:[(0,Q.jsx)(dB,{currentName:`双重预防机制`,onSelect:ge}),(0,Q.jsx)(`nav`,{className:`prevention-nav`,children:fB.map(({label:t,icon:n,nested:r,expanded:i})=>(0,Q.jsxs)(`button`,{className:i?`prevention-nav-item expanded`:`prevention-nav-item`,onClick:()=>e(t),children:[(0,Q.jsx)(n,{}),(0,Q.jsx)(`span`,{children:t}),r?(0,Q.jsx)(_z,{}):i?(0,Q.jsx)(gz,{}):null]},t))}),(0,Q.jsx)(`div`,{className:`prevention-submenu`,children:pB.map(e=>(0,Q.jsxs)(`button`,{className:l===e?`selected`:``,onClick:()=>he(e),children:[(0,Q.jsx)(`span`,{children:e}),[`隐患排查任务发布`,`隐患排查工作表`,`隐患整改通知单`,`隐患汇报`].includes(e)?(0,Q.jsx)(_z,{}):null]},e))}),(0,Q.jsxs)(`nav`,{className:`prevention-nav prevention-nav-bottom`,children:[(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险告知卡`),children:[(0,Q.jsx)(QR,{}),(0,Q.jsx)(`span`,{children:`风险告知卡`}),(0,Q.jsx)(_z,{})]}),(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险四色图`),children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`风险四色图`}),(0,Q.jsx)(_z,{})]})]})]}),(0,Q.jsx)(`div`,{className:`prevention-content`,children:d?(0,Q.jsxs)(`section`,{className:`inspection-form-view`,"aria-labelledby":`inspection-form-title`,children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`span`,{children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>he(y),children:y}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:`在线填报`})]}),(0,Q.jsx)(`nav`,{className:`inspection-view-tabs`,"aria-label":`表单视图`,children:[`页面`,`数据`,`草稿箱`].map(e=>(0,Q.jsx)(`button`,{className:_===e?`active`:``,onClick:()=>me(e),children:e},e))}),_===`页面`?(0,Q.jsxs)(`form`,{ref:se,className:`inspection-form`,onChange:()=>A(!0),onSubmit:fe,children:[(0,Q.jsxs)(`header`,{className:`inspection-form-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`inspection-form-title`,children:R.title}),(0,Q.jsx)(`span`,{children:z?`请如实填写隐患情况，提交后将进入审批流程。`:`请如实填写现场检查情况，带 * 的项目为必填项。`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`form-back`,onClick:ue,children:`返回清单`})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`填报信息`}),(0,Q.jsxs)(`div`,{className:`form-fields`,children:[(0,Q.jsxs)(`label`,{children:[`填报人 *`,(0,Q.jsx)(`input`,{name:`reporter`,defaultValue:C?.reporter??`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`检查日期 *`,(0,Q.jsx)(`input`,{name:`inspectionDate`,type:`date`,defaultValue:C?.inspectionDate??`2026-07-29`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`作业班次 *`,(0,Q.jsxs)(`select`,{name:`shift`,defaultValue:C?.shift??`早班`,required:!0,children:[(0,Q.jsx)(`option`,{children:`早班`}),(0,Q.jsx)(`option`,{children:`中班`}),(0,Q.jsx)(`option`,{children:`夜班`})]})]}),(0,Q.jsxs)(`label`,{children:[`作业地点 *`,(0,Q.jsx)(`input`,{name:`location`,defaultValue:C?.location??``,placeholder:`例如：西翼 3# 平巷`,required:!0})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`现场检查`}),(0,Q.jsxs)(`div`,{className:`inspection-items`,children:[(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`凿岩设备防护装置完好`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`normal`,required:!0,defaultChecked:C?.equipment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`issue`,defaultChecked:C?.equipment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`作业面通风与照明符合要求`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`normal`,required:!0,defaultChecked:C?.environment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`issue`,defaultChecked:C?.environment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`人员防护用品佩戴规范`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`normal`,required:!0,defaultChecked:C?.protection===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`issue`,defaultChecked:C?.protection===`issue`}),` `,`发现问题`]})]})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`问题说明`}),(0,Q.jsxs)(`label`,{className:`wide-field`,children:[`隐患描述与整改建议`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`3`,defaultValue:C?.description??``,placeholder:`如发现隐患，请填写具体位置、问题描述及建议措施。`})]})]}),(0,Q.jsxs)(`footer`,{className:`form-actions`,children:[h?(0,Q.jsxs)(`span`,{className:`submit-status`,children:[(0,Q.jsx)(hz,{}),` `,z?`已提交，等待审批流程处理`:`已提交，等待负责人复核`]}):(0,Q.jsx)(`span`,{children:z?`填写完成后将提交至隐患排查审批流程。`:`填写完成后可直接提交至隐患排查记录。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`form-secondary`,onClick:ue,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`form-draft`,onClick:z?V:H,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`form-primary`,children:`提交`})]})]})]},C?.id??p):_===`数据`?(0,Q.jsxs)(`section`,{className:`inspection-data-view`,"aria-label":`${R.title}历史数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`历史填报数据`}),(0,Q.jsx)(`h2`,{children:R.title})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ve.length,` 条记录`]})]}),(0,Q.jsxs)(`form`,{className:`inspection-data-filter`,onSubmit:e=>{e.preventDefault(),te(ee),re(1)},children:[(0,Q.jsxs)(`label`,{children:[`填报人`,(0,Q.jsx)(`input`,{value:ee.reporter,maxLength:10,placeholder:`请输入填报人`,onChange:e=>F(t=>({...t,reporter:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`检查日期`,(0,Q.jsx)(`input`,{type:`date`,value:ee.date,onChange:e=>F(t=>({...t,date:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`作业班次`,(0,Q.jsxs)(`select`,{value:ee.shift,onChange:e=>F(t=>({...t,shift:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部班次`}),(0,Q.jsx)(`option`,{value:`早班`,children:`早班`}),(0,Q.jsx)(`option`,{value:`中班`,children:`中班`}),(0,Q.jsx)(`option`,{value:`夜班`,children:`夜班`})]})]}),z?(0,Q.jsxs)(`label`,{children:[`流程状态`,(0,Q.jsxs)(`select`,{value:ee.flowStatus,onChange:e=>F(t=>({...t,flowStatus:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),Jz.map(e=>(0,Q.jsx)(`option`,{value:e,children:e},e))]})]}):null,(0,Q.jsxs)(`div`,{className:`inspection-filter-actions`,children:[(0,Q.jsx)(`button`,{type:`submit`,className:`inspection-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{let e={reporter:``,date:``,shift:``,flowStatus:``};F(e),te(e),re(1)},children:`重置`})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-data-actions`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>oe.current?.click(),children:`导入`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>G(ve),children:`导出`})]}),(0,Q.jsx)(`input`,{ref:oe,className:`inspection-import-input`,type:`file`,accept:`.csv,.xlsx,.xls`,onChange:t=>{let n=t.target.files?.[0];if(!n)return;let r={id:`inspection-${Date.now()}`,reporter:`导入用户`,date:`2026-07-30`,shift:`早班`,location:`西翼 1# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`已从 ${n.name} 导入填报记录。`,status:`已导入`,flowStatus:`待审批`};P(e=>[r,...e]),t.target.value=``,e(`已导入 ${n.name}`)}})]}),(0,Q.jsx)(`div`,{className:`inspection-data-scroll`,children:(0,Q.jsxs)(`table`,{className:z?`inspection-approval-data-table`:``,children:[(0,Q.jsx)(`thead`,{children:(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`th`,{children:`发起人`}),(0,Q.jsx)(`th`,{children:`发起时间`}),(0,Q.jsx)(`th`,{children:`流程状态`})]}):null,(0,Q.jsx)(`th`,{children:`填报人`}),(0,Q.jsx)(`th`,{children:`检查日期`}),(0,Q.jsx)(`th`,{children:`作业班次`}),(0,Q.jsx)(`th`,{children:`作业地点`}),(0,Q.jsx)(`th`,{children:`凿岩设备防护装置完好`}),(0,Q.jsx)(`th`,{children:`作业面通风与照明符合要求`}),(0,Q.jsx)(`th`,{children:`人员防护用品佩戴规范`}),(0,Q.jsx)(`th`,{children:`隐患描述与整改建议`})]})}),(0,Q.jsx)(`tbody`,{children:W.length?W.map(e=>(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`td`,{children:e.initiator??e.reporter}),(0,Q.jsx)(`td`,{children:e.initiatedAt??`${e.date} 08:00`}),(0,Q.jsx)(`td`,{children:e.flowStatus??`待审批`})]}):null,(0,Q.jsx)(`td`,{children:e.reporter}),(0,Q.jsx)(`td`,{children:e.date}),(0,Q.jsx)(`td`,{children:e.shift}),(0,Q.jsx)(`td`,{children:e.location}),(0,Q.jsx)(`td`,{children:e.equipment}),(0,Q.jsx)(`td`,{children:e.environment}),(0,Q.jsx)(`td`,{children:e.protection}),(0,Q.jsx)(`td`,{className:`inspection-description-cell`,children:e.description})]},e.id)):(0,Q.jsx)(`tr`,{children:(0,Q.jsx)(`td`,{colSpan:z?11:8,className:`inspection-data-empty`,children:`暂无历史填报数据`})})})]})}),(0,Q.jsx)(iB,{className:`inspection-data-pagination`,total:ve.length,page:U,pageSize:ie,onPageChange:re,onPageSizeChange:e=>{ae(e),re(1)}})]}):(0,Q.jsxs)(`section`,{className:`inspection-draft-view`,"aria-label":`${R.title}草稿箱`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`暂存记录`}),(0,Q.jsx)(`h2`,{children:`草稿箱`})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ce.length,` 条草稿`]})]}),ce.length?(0,Q.jsx)(`div`,{className:`inspection-draft-list`,children:ce.map(t=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{className:`inspection-draft-title`,children:[(0,Q.jsx)(`b`,{children:t.name}),(0,Q.jsx)(`i`,{children:`草稿`})]}),(0,Q.jsxs)(`span`,{children:[`填报人：`,t.reporter||`张宇`]}),(0,Q.jsxs)(`time`,{children:[`保存时间：`,t.initiatedAt]})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>B(R,y,t),children:`继续填报`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>{r(e=>e.filter(e=>e.id!==t.id)),t.processDraftId&&a(t.processDraftId),C?.id===t.id&&w(null),e(`已删除草稿：${t.name}`)},children:`删除`})]})]},t.id))}):(0,Q.jsx)(`div`,{className:`inspection-draft-empty`,children:`暂无草稿，页面内暂存的填报数据会显示在这里。`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>u(`隐患排查治理`),children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:L})]}),(0,Q.jsx)(`div`,{className:`prevention-strip`}),[`岗位隐患排查清单`,`隐患排查审批流程`].includes(l)?(0,Q.jsxs)(`section`,{className:`prevention-list prevention-menu-catalog`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`全部`})}),(0,Q.jsx)(`div`,{className:`prevention-catalog-grid`,children:(l===`隐患排查审批流程`?hB:mB).map(e=>{let{title:t,icon:n,tone:r}=e;return(0,Q.jsxs)(`button`,{type:`button`,className:`prevention-catalog-card`,onClick:()=>le(e,l),children:[(0,Q.jsx)(`span`,{className:`prevention-form-icon ${r}`,children:(0,Q.jsx)(n,{})}),(0,Q.jsx)(`b`,{children:t})]},t)})})]}):(0,Q.jsxs)(`section`,{className:`prevention-list prevention-empty-content`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`功能页面`})}),(0,Q.jsx)(`p`,{children:`请从左侧菜单选择需要处理的业务。`})]})]})}),x?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>S(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`approval-draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsxs)(`h2`,{id:`approval-draft-restore-title`,children:[`发现同名`,x.form.kind===`approval`?`流程`:`表单`,`草稿`]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>S(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,x.drafts.length,` 条“`,x.form.title,`”草稿，请选择恢复继续填报，或重新发起新的`,x.form.kind===`approval`?`流程`:`表单`,`。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:x.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`approval-process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>B(x.form,x.source),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=x.drafts.find(e=>e.id===T);B(x.form,x.source,e)},children:`恢复并继续填报`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>O(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`cancel-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭取消确认`,onClick:()=>O(!1),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`取消填写`}),(0,Q.jsx)(`h2`,{id:`cancel-inspection-form-title`,children:`确认取消吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，取消后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>O(!1),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:de,children:`确认取消`})]})]})}):null,j?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>M(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`unsaved-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭未保存提醒`,onClick:()=>M(null),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`未保存内容`}),(0,Q.jsx)(`h2`,{id:`unsaved-inspection-form-title`,children:`确认切换吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，切换后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>M(null),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:_e,children:`确认切换`})]})]})}):null]})}function vB({app:e,onReturn:t,onAction:n,onSwitchApplication:r}){let i=e.icon,a=[`核对今日${e.name}记录`,`完成本周${e.description}复核`,`查看待处理异常提醒`];return(0,Q.jsxs)(`section`,{className:`mock-app-page`,"aria-labelledby":`mock-app-title`,children:[(0,Q.jsxs)(`aside`,{className:`mock-app-sidebar`,"aria-label":`${e.name}功能导航`,children:[(0,Q.jsx)(dB,{currentName:e.name,onSelect:r}),(0,Q.jsxs)(`nav`,{children:[(0,Q.jsxs)(`button`,{className:`mock-nav-item active`,children:[(0,Q.jsx)(yz,{}),`应用概览`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}待办`),children:[(0,Q.jsx)(Cz,{}),`待办处理`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}记录`),children:[(0,Q.jsx)(QR,{}),`业务记录`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}统计`),children:[(0,Q.jsx)(ZR,{}),`数据统计`]})]})]}),(0,Q.jsxs)(`div`,{className:`mock-app-content`,children:[(0,Q.jsxs)(`div`,{className:`mock-app-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`应用中心`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{children:e.name})]}),(0,Q.jsxs)(`header`,{className:`mock-app-header`,children:[(0,Q.jsx)(`span`,{className:`mock-app-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h1`,{id:`mock-app-title`,children:[e.name,`工作台`]}),(0,Q.jsx)(`p`,{children:`示例业务页面，数据仅用于界面演示。`})]}),(0,Q.jsxs)(`button`,{className:`mock-primary-action`,onClick:()=>n(`新建${e.name}记录`),children:[(0,Q.jsx)(az,{}),`新建记录`]})]}),(0,Q.jsxs)(`section`,{className:`mock-metrics`,"aria-label":`${e.name}概览`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`待处理`}),(0,Q.jsx)(`b`,{children:`6`}),(0,Q.jsx)(`small`,{children:`需你跟进`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`今日记录`}),(0,Q.jsx)(`b`,{children:`14`}),(0,Q.jsx)(`small`,{children:`已同步更新`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`异常提醒`}),(0,Q.jsx)(`b`,{children:`2`}),(0,Q.jsx)(`small`,{children:`等待复核`})]})]}),(0,Q.jsxs)(`section`,{className:`mock-work-list`,"aria-labelledby":`mock-work-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`mock-work-title`,children:`待处理事项`}),(0,Q.jsxs)(`button`,{onClick:()=>n(`${e.name}全部事项`),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),a.map((e,t)=>(0,Q.jsxs)(`button`,{onClick:()=>n(e),children:[(0,Q.jsx)(`span`,{className:`mock-row-icon tone-${t}`,children:(0,Q.jsx)(Cz,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsx)(`small`,{children:t===0?`今天需完成`:`已分配给你`})]}),(0,Q.jsx)(fz,{})]},e))]}),(0,Q.jsxs)(`button`,{className:`prevention-back`,onClick:t,children:[`返回工作台 `,(0,Q.jsx)(fz,{})]})]})]})}function yB({onOpen:e,onOpenAll:t}){return(0,Q.jsxs)(`section`,{className:`activity-feed`,"aria-labelledby":`activity-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`activity-title`,children:`动态`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:t,children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`feed-list`,children:$z.length?$z.map(({person:t,tone:n,avatar:r,headline:i,detail:a,time:o,icon:s})=>(0,Q.jsxs)(`button`,{className:`feed-item`,onClick:()=>e(i),children:[(0,Q.jsx)(`span`,{className:`feed-avatar ${n}`,children:r}),(0,Q.jsxs)(`span`,{className:`feed-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`strong`,{children:i})]}),(0,Q.jsx)(`p`,{children:a}),(0,Q.jsx)(`time`,{children:o})]}),(0,Q.jsx)(s,{className:`feed-icon`})]},i)):(0,Q.jsxs)(`div`,{className:`empty-feed`,children:[(0,Q.jsx)(iz,{}),(0,Q.jsx)(`p`,{children:`这一类动态已全部处理。`})]})})]})}function bB({onAction:e,onOpenTask:t,onOpenProcess:n,onOpenDynamics:r}){return(0,Q.jsxs)(`aside`,{className:`command-panel`,"aria-label":`快捷操作`,children:[(0,Q.jsx)(`p`,{children:`快捷入口`}),(0,Q.jsxs)(`button`,{className:`command-primary`,onClick:t,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(az,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起任务`}),(0,Q.jsx)(`small`,{children:`交办或跟进一项工作`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:n,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(cz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起流程`}),(0,Q.jsx)(`small`,{children:`提交一次审批或申请`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:r,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(mz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发动态`}),(0,Q.jsx)(`small`,{children:`发布一条安全工作动态`})]}),(0,Q.jsx)(fz,{})]})]})}function xB({title:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e===`发起任务`;return(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`action-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`dialog-close`,"aria-label":`关闭`,onClick:t,children:`×`}),n?(0,Q.jsxs)(`div`,{className:`dialog-success`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`h2`,{children:`已准备好继续`}),(0,Q.jsx)(`p`,{children:`这是工作台演示状态，实际接入后将在此进入对应业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`完成`})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`快速创建`}),(0,Q.jsx)(`h2`,{id:`action-dialog-title`,children:e}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:i?`填写最小必要信息，将工作直接交给相应负责人。`:`从授权模板中选择流程，减少重复填写。`}),(0,Q.jsxs)(`label`,{children:[i?`任务名称`:`流程模板`,(0,Q.jsx)(`input`,{autoFocus:!0,placeholder:i?`例如：完成现场安全检查`:`例如：选择设备检修申请`})]}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{className:`secondary-button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`primary-button`,onClick:()=>r(!0),children:`继续`})]})]})]})})}var SB=[{id:`safety`,name:`安全风险总览`,description:`风险等级、隐患整改与作业预警的综合视图`,metrics:[[`今日检查`,`28`,`较昨日 +4`],[`待整改隐患`,`16`,`4 项临近逾期`],[`高风险作业`,`3`,`均在监控中`],[`整改完成率`,`86%`,`本月累计`]],charts:[`risk`,`rectification`,`sources`,`trend`]},{id:`device`,name:`设备运行态势`,description:`关键设备运行状态、点检执行与故障分布`,metrics:[[`设备总数`,`248`,`当前在线 243`],[`待点检`,`12`,`今日需完成`],[`异常设备`,`5`,`等待处理`],[`设备完好率`,`97.8%`,`较上月 +0.6%`]],charts:[`device`,`trend`,`sources`,`risk`]},{id:`production`,name:`生产进度跟踪`,description:`产量计划、班组进度与生产指标完成情况`,metrics:[[`本月产量`,`12.6 万吨`,`计划完成 91%`],[`今日进尺`,`186 米`,`较计划 +12 米`],[`作业班组`,`8`,`全部已开工`],[`生产达成率`,`94%`,`较上周 +3%`]],charts:[`progress`,`trend`,`device`,`rectification`]},{id:`emergency`,name:`应急管理看板`,description:`应急物资、演练计划和预案执行情况`,metrics:[[`应急物资`,`356`,`库存充足`],[`本月演练`,`4`,`已完成 3 项`],[`应急预案`,`18`,`均为有效版本`],[`响应及时率`,`100%`,`本季度累计`]],charts:[`sources`,`progress`,`risk`,`trend`]}];function CB({type:e}){let t=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let n=t.current;if(!n)return;let r=oC(n),i={axisLine:{lineStyle:{color:`#dce4ec`}},axisLabel:{color:`#7b8998`,fontSize:10},splitLine:{lineStyle:{color:`#eef2f6`}}},a={risk:{title:{text:`风险等级分布`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},legend:{bottom:8,textStyle:{fontSize:10,color:`#7b8998`}},series:[{type:`pie`,radius:[`42%`,`66%`],center:[`50%`,`51%`],label:{show:!1},data:[{value:4,name:`重大`,itemStyle:{color:`#d95745`}},{value:12,name:`较大`,itemStyle:{color:`#e89b3e`}},{value:31,name:`一般`,itemStyle:{color:`#3c98d3`}},{value:47,name:`低风险`,itemStyle:{color:`#5bb287`}}]}]},rectification:{title:{text:`隐患整改闭环`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:16,top:49,bottom:26},xAxis:{type:`category`,data:[`一车间`,`二车间`,`南区`,`北区`,`选矿`],...i},yAxis:{type:`value`,...i},series:[{type:`bar`,barWidth:15,itemStyle:{color:`#1779ba`,borderRadius:[3,3,0,0]},data:[16,22,13,18,25]},{type:`bar`,barWidth:15,itemStyle:{color:`#a9d8c3`,borderRadius:[3,3,0,0]},data:[12,18,10,15,21]}]},sources:{title:{text:`问题来源占比`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},series:[{type:`pie`,radius:`62%`,center:[`50%`,`55%`],label:{formatter:`{b}
+{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function wB(){let[e,t]=(0,Z.useState)(`safety`),n=SB.find(t=>t.id===e)??SB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:SB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(_z,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(gz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(CB,{type:e})},`${n.id}-${e}`))})]})]})})}function TB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(`iframe`,{className:`embedded-dynamics-frame`,src:`${Rz}index.html`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function EB({view:e,title:t,className:n}){let r=JSON.stringify({view:e});return(0,Q.jsx)(`iframe`,{className:n,srcDoc:kz.replace(`</head>`,`<style>
         /* Navigation and context are provided by the host system. */
         .sidebar, .topbar, .logic { display: none !important; }
         .app, .stage { height: 100dvh !important; }
@@ -7601,7 +12413,35 @@ syncLogic('template');
             window.switchView(request.view);
           }
         })();
-      <\/script></body>`),title:t},e)}function EB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`},{label:`人员明细`,view:`view-personnel`}],[n,r]=(0,Z.useState)(e),i=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsx)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label))}),(0,Q.jsx)(TB,{view:i.view,className:`embedded-tasks-frame`,title:i.label})]})}function DB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`},{label:`预警统计`,view:`warning-stats-aggr`}],[t,n]=(0,Z.useState)(`预警任务`),r=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsx)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label))}),(0,Q.jsx)(`iframe`,{className:`embedded-warnings-frame`,src:`${Lz}预警.html?view=${r.view}`,title:r.label},r.view)]})}function OB({module:e,view:t,showDescription:n=!1}){let r=new URLSearchParams({module:e,...t?{view:t}:{}}),i=JSON.stringify({module:e,view:t,dictionaries:{flowCategory:Az}}),a=`<head><style>${`
+      <\/script></body>`),title:t},e)}function DB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`},{label:`人员明细`,view:`view-personnel`}],[n,r]=(0,Z.useState)(e),i=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsx)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label))}),(0,Q.jsx)(EB,{view:i.view,className:`embedded-tasks-frame`,title:i.label})]})}function OB({checked:e,onChange:t}){return(0,Q.jsxs)(`label`,{className:`settings-lowcode-description-switch`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:e,onChange:e=>t(e.target.checked)}),(0,Q.jsx)(`span`,{"aria-hidden":`true`}),`显示说明`]})}function kB({view:e,title:t,showDescription:n=!1}){let r=`<head><style>${`
+    .sidebar, .top-bar, .dev-doc-btn { display: none !important; }
+    .main-container { width: 100%; }
+    .content-area { top: 0; padding: 16px 20px 32px; }
+    .app-container { padding-right: ${n?`360px`:`0`} !important; }
+    #devDocDrawer {
+      display: ${n?`flex`:`none`} !important;
+      width: 360px;
+      max-width: none;
+      transform: translateX(0) !important;
+      z-index: 20;
+    }
+  `}</style>`;return(0,Q.jsx)(`iframe`,{className:`embedded-warnings-frame`,srcDoc:Az.replace(`<head>`,r).replace(`</body>`,`<script>
+        window.addEventListener("load", function () {
+          var hostWarningView = ${JSON.stringify(e)};
+          var hostWarningPage = document.getElementById("page-" + hostWarningView);
+          var hostWarningMenu = document.querySelector(
+            '.menu-item[data-page="' + hostWarningView + '"]',
+          );
+          if (hostWarningPage) hostWarningPage.removeAttribute("hidden");
+          if (hostWarningMenu) hostWarningMenu.removeAttribute("hidden");
+          if (typeof window.navigateTo === "function") {
+            window.navigateTo(hostWarningView);
+          }
+          if (${n} && typeof window.renderDevDoc === "function") {
+            window.renderDevDoc(hostWarningView);
+          }
+        });
+      <\/script></body>`),title:t},`${e}-${n?`with-description`:`workspace-only`}`)}function AB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}预警页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(kB,{view:e,title:t,showDescription:r})})]})}function jB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`},{label:`预警统计`,view:`warning-stats-aggr`}],[t,n]=(0,Z.useState)(`预警任务`),[r,i]=(0,Z.useState)(!1),a=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:[e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-warning-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})})]}),(0,Q.jsx)(kB,{view:a.view,title:a.label,showDescription:r})]})}function MB({module:e,view:t,showDescription:n=!1}){let r=new URLSearchParams({module:e,...t?{view:t}:{}}),i=JSON.stringify({module:e,view:t,dictionaries:{flowCategory:jz}}),a=`<head><style>${`
     #topbar, #appMenu, #left-panel > aside:first-child, .sidebar { display: none !important; }
     #left-panel { width: ${n?`80%`:`100%`} !important; }
     #right-panel, #divider, #notes { display: ${n?`block`:`none`} !important; }
@@ -7612,6 +12452,6 @@ syncLogic('template');
             if (typeof window.switchModule === "function") window.switchModule(${JSON.stringify(e)});
           }, 80);
         });
-      <\/script>`),title:`低代码平台`},`${r.toString()}-${n?`with-description`:`workspace-only`}`)})}function kB({module:e,view:t,label:n}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page`,"aria-label":`${n}低代码页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsxs)(`label`,{className:`settings-lowcode-description-switch`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:r,onChange:e=>i(e.target.checked)}),(0,Q.jsx)(`span`,{"aria-hidden":`true`}),`显示说明`]})}),(0,Q.jsx)(OB,{module:e,view:t,showDescription:r})]})}var AB=[{id:`task`,label:`待执行任务`,tone:`blue`,icon:Cz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`},{title:`核对井下作业人员定位数据`,source:`安全管理`,deadline:`7 月 31 日 10:00 前`,owner:`调度室`,note:`补充人员定位异常情况说明`,action:`执行任务`},{title:`更新选矿车间设备保养记录`,source:`设备管理`,deadline:`7 月 31 日 17:00 前`,owner:`刘海`,note:`同步本周关键设备保养信息`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`双重预防机制管理`,deadline:`2026-08-31 16:00:00`,owner:`王建国`,note:`流程到达时间：2026-08-31 09:12:00`,action:`去审批`,processNumber:`202608310001`},{title:`南区 2# 采场动火作业申请`,source:`生产管理`,deadline:`2026-08-31 15:00:00`,owner:`李明`,note:`流程到达时间：2026-08-31 08:46:00`,action:`去审批`,processNumber:`202608310002`},{title:`碎矿车间停机检修计划`,source:`设备管理`,deadline:`2026-09-01 09:00:00`,owner:`赵磊`,note:`流程到达时间：2026-08-30 15:28:00`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,tone:`red`,icon:Sz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`},{title:`井下局部通风机风量波动预警`,source:`通风监测`,deadline:`今天 18:00 前`,owner:`通风区`,note:`连续 15 分钟低于设定风量阈值`,action:`查看处置`},{title:`尾矿库在线监测数据中断`,source:`安全预警`,deadline:`明天 09:00 前`,owner:`环保部`,note:`请核实数据采集设备与通信链路`,action:`查看处置`}]}];function jB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let r=AB,i=AB.reduce((e,t)=>e+t.items.length,0),a=(r,i)=>{r.id===`task`?e():r.id===`approval`?t(`待审批`,i?.processNumber):n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:i}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:r.map(e=>{let t=e.icon,n=e.items.slice(0,5);return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.items.length,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(e),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{children:n.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row ${e.id===`approval`?`without-deadline`:``}`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),e.id===`approval`?null:(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>a(e,t),children:[t.action,(0,Q.jsx)(fz,{})]})]},t.title))})]},e.id)})})]})}var MB=[{label:`安全动态`,icon:pz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:Cz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:cz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:Sz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function NB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:NB(e.children,t,n)})}function PB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:PB(e.children,t,n)})}function FB(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:FB(e.children,t)}))}function IB(e){return e.flatMap(e=>[e,...IB(e.children)])}function LB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(LB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function RB({organizations:e,users:t,selectedUser:n,onSelect:r,onClose:i,title:a=`选择人员`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(s?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=l?t.filter(e=>e.organizationId===l):t,f=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(f,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`single-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`single-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(f,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[d.length,` 人`]})]}),d.length?d.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`single-person-picker`,checked:s?.id===e.id,onChange:()=>c(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsx)(`span`,{children:s?`1 人`:`0 人`})]}),s?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:s.name}),(0,Q.jsx)(`small`,{children:s.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(s),i()},children:`确认选择`})]})]})})}function zB({organizations:e,users:t,selectedUsers:n,onSelect:r,onClose:i,title:a=`分配用户`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n.map(e=>e.id)),[l,u]=(0,Z.useState)(n[0]?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=e=>e.organizationId??e.organization,f=l?t.filter(e=>d(e)===l):t,p=t.filter(e=>s.includes(e.id)),m=f.length>0&&f.every(e=>s.includes(e.id)),h=e=>c(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),g=()=>c(e=>[...new Set([...e,...f.map(e=>e.id)])]),_=()=>c(e=>e.filter(e=>!f.some(t=>t.id===e))),v=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(v,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`multi-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`multi-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(v,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:`人员`}),(0,Q.jsxs)(`span`,{children:[f.length,` 人`]})]}),f.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:g,disabled:m,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:_,disabled:!f.some(e=>s.includes(e.id)),children:`全不选`})]}):null]}),f.length?f.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s.includes(e.id),onChange:()=>h(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsxs)(`span`,{children:[p.length,` 人`]})]}),p.length?p.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>h(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(p),i()},children:`确认选择`})]})]})})}function BB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(`尚未建立组织架构，可手动新增根组织。`),h=e.length>0,g=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),_=()=>f(!0),v=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},y=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},b=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},x=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=g?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>PB(e,r.node.id,c)),m(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?NB(t,r.node.id,e):[...t,e]),m(`已新增组织：${n}`)}o(``),u(null),i(null)},S=e=>{t(t=>FB(t,e.id)),m(`已删除组织：${e.name}`)},C=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsx)(`div`,{className:`organization-toolbar`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})})}),(0,Q.jsxs)(`div`,{className:h?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:p})]}),h?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(LB,{nodes:e,onAddChild:y,onEdit:b,onDelete:S})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:v,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:x,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:C}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),g?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:_,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(RB,{organizations:e,users:n,selectedUser:l,onSelect:u,onClose:()=>f(!1),title:`选择负责人`,selectedLabel:`已选负责人`}):null]})}function VB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(VB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function HB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=HB(r.children,t,e);if(i)return i}return``}function UB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=e=>typeof e==`string`?e:e.value,c=e=>typeof e==`string`?e:e.label,l=t.filter(e=>n.includes(s(e))).map(c),u=e=>{let t=s(e);r(n.includes(t)?n.filter(e=>e!==t):[...n,t])};return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:l.length?l.join(`、`):`请选择${e}`}),(0,Q.jsx)(gz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>{let t=s(e);return(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(t),onChange:()=>u(e)}),(0,Q.jsx)(`span`,{children:c(e)})]},t)})}):null]})}function WB({organizations:e,setOrganizations:t,users:n,setUsers:r,roles:i}){let[a,o]=(0,Z.useState)(`users`),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(null),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(``),[x,S]=(0,Z.useState)(`abc123#`),[C,w]=(0,Z.useState)(``),[T,E]=(0,Z.useState)([]),[D,O]=(0,Z.useState)([]),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)({}),[N,P]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[ee,F]=(0,Z.useState)(``),I=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!ee)return;let e=window.setTimeout(()=>F(``),3e3);return()=>window.clearTimeout(e)},[ee]);let te=IB(e),ne=te.find(e=>e.id===s),re=n.filter(e=>(!s||e.organizationId===s)&&(!N.name||e.name.includes(N.name))&&(!N.account||e.account.includes(N.account))&&(!N.phone||e.phone.includes(N.phone))&&(!N.status||e.status===N.status)),ie=()=>{m(null),g(``),v(``),b(``),S(`abc123#`),w(s||te[0]?.id||``),E([]),O([]),M({}),A(``),u(`create`)},ae=e=>{m(e),g(e.name),v(e.account),b(e.phone===`未填写`?``:e.phone),S(e.password||`abc123#`),w(e.organizationId||te[0]?.id||``),E(e.positions||[]),O(e.roles||[]),M({}),A(``),u(`create`)},oe=e=>M(t=>t[e]?{...t,[e]:``}:t),se=t=>{t.preventDefault();let n=h.trim(),i=_.trim(),a={name:n?``:`请输入用户名称`,phone:!y||/^\d{11}$/.test(y)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:x.trim()?``:`请输入密码`,organization:C?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){M(a);return}let o=HB(e,C),s={name:n,account:i,phone:y||`未填写`,password:x,organizationId:C,department:o,positions:T,roles:D};r(e=>p?e.map(e=>e.id===p.id?{...e,...s}:e):[...e,{id:`user-${Date.now()}`,...s,status:`启用`}]),c(C),u(null),F(`${p?`已保存用户`:`已新增用户`}：${n}`)},L=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
+      <\/script>`),title:`低代码平台`},`${r.toString()}-${n?`with-description`:`workspace-only`}`)})}function NB({module:e,view:t,label:n}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page`,"aria-label":`${n}低代码页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(MB,{module:e,view:t,showDescription:r})]})}var PB=[{id:`task`,label:`待执行任务`,tone:`blue`,icon:Cz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`},{title:`核对井下作业人员定位数据`,source:`安全管理`,deadline:`7 月 31 日 10:00 前`,owner:`调度室`,note:`补充人员定位异常情况说明`,action:`执行任务`},{title:`更新选矿车间设备保养记录`,source:`设备管理`,deadline:`7 月 31 日 17:00 前`,owner:`刘海`,note:`同步本周关键设备保养信息`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`双重预防机制管理`,deadline:`2026-08-31 16:00:00`,owner:`王建国`,note:`流程到达时间：2026-08-31 09:12:00`,action:`去审批`,processNumber:`202608310001`},{title:`南区 2# 采场动火作业申请`,source:`生产管理`,deadline:`2026-08-31 15:00:00`,owner:`李明`,note:`流程到达时间：2026-08-31 08:46:00`,action:`去审批`,processNumber:`202608310002`},{title:`碎矿车间停机检修计划`,source:`设备管理`,deadline:`2026-09-01 09:00:00`,owner:`赵磊`,note:`流程到达时间：2026-08-30 15:28:00`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,tone:`red`,icon:Sz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`},{title:`井下局部通风机风量波动预警`,source:`通风监测`,deadline:`今天 18:00 前`,owner:`通风区`,note:`连续 15 分钟低于设定风量阈值`,action:`查看处置`},{title:`尾矿库在线监测数据中断`,source:`安全预警`,deadline:`明天 09:00 前`,owner:`环保部`,note:`请核实数据采集设备与通信链路`,action:`查看处置`}]}];function FB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let r=PB,i=PB.reduce((e,t)=>e+t.items.length,0),a=(r,i)=>{r.id===`task`?e():r.id===`approval`?t(`待审批`,i?.processNumber):n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:i}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:r.map(e=>{let t=e.icon,n=e.items.slice(0,5);return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.items.length,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(e),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{children:n.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row ${e.id===`approval`?`without-deadline`:``}`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),e.id===`approval`?null:(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>a(e,t),children:[t.action,(0,Q.jsx)(fz,{})]})]},t.title))})]},e.id)})})]})}var IB=[{label:`安全动态`,icon:pz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:Cz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:cz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:Sz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function LB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:LB(e.children,t,n)})}function RB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:RB(e.children,t,n)})}function zB(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:zB(e.children,t)}))}function BB(e){return e.flatMap(e=>[e,...BB(e.children)])}function VB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(VB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function HB({organizations:e,users:t,selectedUser:n,onSelect:r,onClose:i,title:a=`选择人员`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(s?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=l?t.filter(e=>e.organizationId===l):t,f=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(f,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`single-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`single-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(f,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[d.length,` 人`]})]}),d.length?d.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`single-person-picker`,checked:s?.id===e.id,onChange:()=>c(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsx)(`span`,{children:s?`1 人`:`0 人`})]}),s?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:s.name}),(0,Q.jsx)(`small`,{children:s.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(s),i()},children:`确认选择`})]})]})})}function UB({organizations:e,users:t,selectedUsers:n,onSelect:r,onClose:i,title:a=`分配用户`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n.map(e=>e.id)),[l,u]=(0,Z.useState)(n[0]?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=e=>e.organizationId??e.organization,f=l?t.filter(e=>d(e)===l):t,p=t.filter(e=>s.includes(e.id)),m=f.length>0&&f.every(e=>s.includes(e.id)),h=e=>c(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),g=()=>c(e=>[...new Set([...e,...f.map(e=>e.id)])]),_=()=>c(e=>e.filter(e=>!f.some(t=>t.id===e))),v=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(v,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`multi-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`multi-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(v,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:`人员`}),(0,Q.jsxs)(`span`,{children:[f.length,` 人`]})]}),f.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:g,disabled:m,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:_,disabled:!f.some(e=>s.includes(e.id)),children:`全不选`})]}):null]}),f.length?f.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s.includes(e.id),onChange:()=>h(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsxs)(`span`,{children:[p.length,` 人`]})]}),p.length?p.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>h(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(p),i()},children:`确认选择`})]})]})})}function WB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(`尚未建立组织架构，可手动新增根组织。`),h=e.length>0,g=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),_=()=>f(!0),v=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},y=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},b=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},x=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=g?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>RB(e,r.node.id,c)),m(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?LB(t,r.node.id,e):[...t,e]),m(`已新增组织：${n}`)}o(``),u(null),i(null)},S=e=>{t(t=>zB(t,e.id)),m(`已删除组织：${e.name}`)},C=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsx)(`div`,{className:`organization-toolbar`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})})}),(0,Q.jsxs)(`div`,{className:h?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:p})]}),h?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(VB,{nodes:e,onAddChild:y,onEdit:b,onDelete:S})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:v,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:x,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:C}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),g?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:_,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(HB,{organizations:e,users:n,selectedUser:l,onSelect:u,onClose:()=>f(!1),title:`选择负责人`,selectedLabel:`已选负责人`}):null]})}function GB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(GB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function KB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=KB(r.children,t,e);if(i)return i}return``}function qB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=e=>typeof e==`string`?e:e.value,c=e=>typeof e==`string`?e:e.label,l=t.filter(e=>n.includes(s(e))).map(c),u=e=>{let t=s(e);r(n.includes(t)?n.filter(e=>e!==t):[...n,t])};return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:l.length?l.join(`、`):`请选择${e}`}),(0,Q.jsx)(gz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>{let t=s(e);return(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(t),onChange:()=>u(e)}),(0,Q.jsx)(`span`,{children:c(e)})]},t)})}):null]})}function JB({organizations:e,setOrganizations:t,users:n,setUsers:r,roles:i}){let[a,o]=(0,Z.useState)(`users`),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(null),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(``),[x,S]=(0,Z.useState)(`abc123#`),[C,w]=(0,Z.useState)(``),[T,E]=(0,Z.useState)([]),[D,O]=(0,Z.useState)([]),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)({}),[N,P]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[ee,F]=(0,Z.useState)(``),I=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!ee)return;let e=window.setTimeout(()=>F(``),3e3);return()=>window.clearTimeout(e)},[ee]);let te=BB(e),ne=te.find(e=>e.id===s),re=n.filter(e=>(!s||e.organizationId===s)&&(!N.name||e.name.includes(N.name))&&(!N.account||e.account.includes(N.account))&&(!N.phone||e.phone.includes(N.phone))&&(!N.status||e.status===N.status)),ie=()=>{m(null),g(``),v(``),b(``),S(`abc123#`),w(s||te[0]?.id||``),E([]),O([]),M({}),A(``),u(`create`)},ae=e=>{m(e),g(e.name),v(e.account),b(e.phone===`未填写`?``:e.phone),S(e.password||`abc123#`),w(e.organizationId||te[0]?.id||``),E(e.positions||[]),O(e.roles||[]),M({}),A(``),u(`create`)},oe=e=>M(t=>t[e]?{...t,[e]:``}:t),se=t=>{t.preventDefault();let n=h.trim(),i=_.trim(),a={name:n?``:`请输入用户名称`,phone:!y||/^\d{11}$/.test(y)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:x.trim()?``:`请输入密码`,organization:C?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){M(a);return}let o=KB(e,C),s={name:n,account:i,phone:y||`未填写`,password:x,organizationId:C,department:o,positions:T,roles:D};r(e=>p?e.map(e=>e.id===p.id?{...e,...s}:e):[...e,{id:`user-${Date.now()}`,...s,status:`启用`}]),c(C),u(null),F(`${p?`已保存用户`:`已新增用户`}：${n}`)},L=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
 zhangyu,张宇,13800000000,安全管理部
-`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},R=t=>{let n=t.target.files?.[0];if(!n||!te.length)return;let i=s||te[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123#`,organizationId:i,department:HB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),F(`已导入 ${t.length} 位用户`)):F(`未识别到可导入的用户数据`),u(null)},a.readAsText(n,`utf-8`),t.target.value=``},z=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),ce=e=>{r(t=>t.filter(t=>t.id!==e)),F(`已删除用户`)},B=e=>f({type:`status`,user:e}),le=e=>{if(e.status===`启用`){F(`用户“${e.name}”处于启用状态，请先停用后再删除`);return}f({type:`delete`,user:e})},ue=e=>f({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`organization`,className:a===`organization`?`active`:``,onClick:()=>o(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`users`,className:a===`users`?`active`:``,onClick:()=>o(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),a===`organization`?(0,Q.jsx)(BB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[te.length,` 个组织`]})]}),e.length?(0,Q.jsx)(VB,{nodes:e,selectedId:s,onSelect:c}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:ne?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:N.name,onChange:e=>P(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:N.account,onChange:e=>P(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:N.phone,onChange:e=>P(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:N.status,onChange:e=>P(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>F(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>P({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsx)(`div`,{className:`user-directory-actions`,children:(0,Q.jsxs)(`button`,{className:`user-add`,onClick:ie,disabled:!te.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})}),te.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),re.length?re.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>B(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ae(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),l?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>u(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:l===`create`?(0,Q.jsxs)(`form`,{onSubmit:se,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:p?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||A(``)},children:[(0,Q.jsxs)(`label`,{className:j.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:h,maxLength:10,onChange:e=>{g(e.target.value),oe(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),j.name?(0,Q.jsx)(`em`,{children:j.name}):null]}),(0,Q.jsxs)(`label`,{className:j.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:y,maxLength:11,inputMode:`numeric`,onChange:e=>{b(e.target.value.replace(/\D/g,``).slice(0,11)),oe(`phone`)},placeholder:`例如：13800000000`}),j.phone?(0,Q.jsx)(`em`,{children:j.phone}):null]}),(0,Q.jsxs)(`label`,{className:j.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:_,onChange:e=>{v(e.target.value),oe(`account`)},placeholder:`例如：zhangyu`}),j.account?(0,Q.jsx)(`em`,{children:j.account}):null]}),(0,Q.jsxs)(`label`,{className:j.password?`field-error`:``,children:[`密码`,(0,Q.jsx)(`input`,{type:p?`password`:`text`,value:x,placeholder:p?`请输入密码`:void 0,onChange:e=>{S(e.target.value),oe(`password`)}}),j.password?(0,Q.jsx)(`em`,{children:j.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${j.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:C,onChange:e=>{w(e.target.value),oe(`organization`)},children:te.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:HB(e,t.id)},t.id))}),j.organization?(0,Q.jsx)(`em`,{children:j.organization}):null]}),(0,Q.jsx)(UB,{label:`岗位`,options:Vz,value:T,onChange:E,activeMenu:k,setActiveMenu:A}),(0,Q.jsx)(UB,{label:`角色`,options:i.map(e=>({value:e.name,label:e.status===`停用`?`${e.name}（已停用）`:e.name})),value:D,onChange:O,activeMenu:k,setActiveMenu:A})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:ne?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:I,type:`file`,accept:`.csv,text/csv`,onChange:R})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:L,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>u(null),children:`取消`})})]})})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:d.type===`cancel-create`?`确定取消${p?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:d.type===`delete`?`确定删除用户“${d.user.name}”吗？删除后无法恢复。`:d.type===`reset-password`?`确定将用户“${d.user.name}”的密码重置为默认密码 abc123# 吗？`:`确定${d.user.status===`启用`?`停用`:`启用`}用户“${d.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{d.type===`cancel-create`?(u(null),A(``)):d.type===`status`?(z(d.user.id),F(`已${d.user.status===`启用`?`停用`:`启用`}用户：${d.user.name}`)):d.type===`reset-password`?(r(e=>e.map(e=>e.id===d.user.id?{...e,password:`abc123#`}:e)),F(`已将 ${d.user.name} 的密码重置为 abc123#`)):ce(d.user.id),f(null)},children:`确定`})]})]})}):null,ee?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[ee,(0,Q.jsx)(`button`,{onClick:()=>F(``),children:`×`})]}):null]})}function GB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function KB({onAction:e,roles:t,setRoles:n}){let r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`,children:[{name:`法律法规`},{name:`制度文件`},{name:`隐患排查任务发布`},{name:`岗位隐患排查清单`,children:pB.map(e=>({name:e.title}))},{name:`隐患排查治理记录`},{name:`隐患排查审批流程`,children:mB.map(e=>({name:e.title}))},{name:`隐患排查工作表`},{name:`隐患整改通知单`},{name:`隐患整改台账`},{name:`隐患信息统计`},{name:`隐患汇报`}]},{name:`风险告知卡`},{name:`风险四色图`}]},{name:`安全管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`设备管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`火工品管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`生产管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`机电管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`消防管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`应急管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`,children:[{name:`我发起的`},{name:`已执行`},{name:`已转发`},{name:`我撤回的`},{name:`我参与的`}]},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`,children:[{name:`人资管理`,children:[{name:`员工离职申请`},{name:`职员晋升审批`},{name:`职员调岗审批`}]},{name:`基建管理`,children:[{name:`地表基建项目报建申请`},{name:`年度工程计划编制审批`},{name:`项目合同申报审批`}]},{name:`选矿管理`,children:[{name:`换矿申请`},{name:`选厂药剂领用申请`},{name:`材料采购流程`}]}]},{name:`待审批`},{name:`已审批`},{name:`抄送我的`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:xB.map(e=>({name:e.name}))},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务`},{name:`流程`},{name:`预警`,children:[{name:`预警信息表`},{name:`预警规则设置`}]},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`菜单管理`},{name:`字典管理`},{name:`企业设置`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={"设置中心/系统设置/角色权限":[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`]},o=new Set(pB.map(e=>`应用/双重预防机制/隐患排查治理/岗位隐患排查清单/${e.title}`)),s=new Set([...o,...mB.map(e=>`应用/双重预防机制/隐患排查治理/隐患排查审批流程/${e.title}`)]),c=e=>(a[e]??[]).map(t=>`button:${e}:${t}`),l=e=>o.has(e)?[`新增`,`导入`,`导出`].map(t=>`button:${e}:数据:${t}`):[],u=e=>s.has(e)?[`页面`,`数据`,...o.has(e)?[`草稿箱`]:[]]:[],d=e=>u(e).map(t=>`tab:${e}:${t}`),f=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:f(e.children,n)};let i=a[r]??[],o=u(r);return{id:`page:${r}`,name:e.name,type:`page`,children:i.length||o.length?[...i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`})),...o.map(e=>{let t=e===`数据`?l(r):[];return{id:`tab:${r}:${e}`,name:e,type:`tab`,children:t.length?t.map(e=>({id:e,name:e.split(`:`).at(-1),type:`button`})):void 0}})]:void 0}}),p=f(r),m=e=>e.children?.length?e.children.flatMap(m):[e.id],h=p.flatMap(m),g=()=>{let e=t=>t.flatMap(t=>t.children?.length?[t.id,...e(t.children)]:[]);return new Set(e(p))},_=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[v,y]=(0,Z.useState)(null),[b,x]=(0,Z.useState)(``),[S,C]=(0,Z.useState)(`启用`),[w,T]=(0,Z.useState)(new Set(h.slice(0,18))),[E,D]=(0,Z.useState)(`menu`),[O,k]=(0,Z.useState)(g),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(null),[P,ee]=(0,Z.useState)(_),[F,I]=(0,Z.useState)(null),[te,ne]=(0,Z.useState)(`group`),[re,ie]=(0,Z.useState)([`u-zhang`]),[ae,oe]=(0,Z.useState)({admin:[`u-zhang`],safety:[`u-zhao`],executor:[`u-li`],viewer:[]}),se=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],L=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],R=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],z=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],ce=()=>{x(``),C(`启用`),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`create`})},B=e=>{x(e.name),C(e.status),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`edit`,role:e})},le=t=>{t.preventDefault();let r=b.trim();r&&(v.mode===`edit`?n(e=>e.map(e=>e.id===v.role.id?{...e,name:r,status:S}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:S,createdAt:`2026-08-12 10:30`}]),y(null),e(v.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},ue=e=>T(t=>{let n=new Set(t),r=m(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),de=e=>k(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),fe=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=fe(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return w.has(`page:${r}`)||c(r).some(e=>w.has(e))||d(r).some(e=>w.has(e))||l(r).some(e=>w.has(e))?[e]:[]}),V=fe(r),H=i(V).length,pe=e=>ee(t=>({...t,...Object.fromEntries(i(V).map(t=>[t,e]))})),me=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:e.type===`tab`?`role-menu-tab`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:e.type===`tab`?`role-menu-tab-label`:``,children:[(0,Q.jsx)(GB,{node:e,selectedIds:w,getLeafIds:m,onToggle:ue}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${O.has(e.id)?`expanded`:``}`,"aria-label":`${O.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>de(e.id),children:(0,Q.jsx)(_z,{})}):null]}),e.children&&O.has(e.id)?(0,Q.jsx)(me,{nodes:e.children}):null]},`${e.id}-${t}`))}),he=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:te===e.id?`active`:``,onClick:()=>ne(e.id),children:e.name}),e.children?(0,Q.jsx)(he,{nodes:e.children}):null]},e.id))}),ge=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:ge(n.children??[],t)),null),_e=e=>e.children?.length?e.children.flatMap(_e):[e.id],ve=ge(se,te),ye=L.filter(e=>e.organization===te),U=ye.map(e=>e.id),W=U.some(e=>re.includes(e)),G=U.length>0&&U.every(e=>re.includes(e)),be=M?.dataPermissionOrganizationIds??[],xe=z.filter(e=>be.includes(e.organization)),K=L.filter(e=>re.includes(e.id)),Se=e=>ie(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),Ce=()=>ie(e=>[...new Set([...e,...U])]),we=()=>ie(e=>e.filter(e=>!U.includes(e))),Te=e=>{I(e),ne(`group`),ie(ae[e.id]??[])},Ee=e=>{let t=_e(e);N(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=z.filter(e=>i.includes(e.organization)).map(e=>e.id),o=z.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},De=e=>N(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Oe=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:_e(e).some(e=>be.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:_e(e).every(e=>be.includes(e)),ref:t=>{if(!t)return;let n=_e(e),r=n.filter(e=>be.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>Ee(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Oe,{nodes:e.children}):null]},e.id))}),q=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:O.has(r)?`expanded`:``,"aria-label":`${O.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>de(r),children:(0,Q.jsx)(_z,{})})]}),O.has(r)?(0,Q.jsx)(`ul`,{children:q(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:P[e.name]??`全部`,onChange:t=>ee(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`所在组织及下级`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)}),ke=()=>{let t=ae[A.id]??[];if(t.length){e(`角色“${A.name}”已分配 ${t.length} 位用户，无法删除`),j(null);return}n(e=>e.filter(e=>e.id!==A.id)),oe(e=>{let t={...e};return delete t[A.id],t}),e(`已删除角色：${A.name}`),j(null)},Ae=!!(A&&(ae[A.id]??[]).length),je=A?(ae[A.id]??[]).length:0;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:ce,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>B(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>j(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>Te(e),children:`分配用户`})]})]},e.id))]})]}),v?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>y(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:le,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:v.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>y(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:b,onChange:e=>x(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:S,onChange:e=>C(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`menu`,className:E===`menu`?`active`:``,onClick:()=>D(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`data`,className:E===`data`?`active`:``,onClick:()=>D(`data`),children:`数据权限`})]}),E===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单与页面选择可访问范围`})]}),(0,Q.jsx)(me,{nodes:p})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`所在组织及下级`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>pe(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>y(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,M?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>N(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>N(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:M.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Oe,{nodes:R})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!xe.length&&xe.every(e=>M.dataAuthorizedUserIds.includes(e.id)),onChange:()=>N(e=>{let t=xe.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:xe.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:M.dataAuthorizedUserIds.includes(e.id),onChange:()=>De(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[H,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>N(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${M.name}的数据权限`),N(null)},children:`保存权限`})]})]})}):null,F?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>I(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>I(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(he,{nodes:se})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:ve?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[ye.length,` 人`]})]}),ye.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:Ce,disabled:G,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:we,disabled:!W,children:`全不选`})]}):null]}),ye.length?ye.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:re.includes(e.id),onChange:()=>Se(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[K.length,` 人`]})]}),K.length?K.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>Se(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>I(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{oe(e=>({...e,[F.id]:re})),e(`已为${F.name}分配 ${K.length} 位用户`),I(null)},children:`确认分配`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:Ae?`无法删除`:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:Ae?`角色“${A.name}”下已分配 ${je} 位用户，无法删除。请先移除该角色下的用户后再试。`:`确定删除角色“${A.name}”吗？`})}),(0,Q.jsx)(`footer`,{children:Ae?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>j(null),children:`知道了`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:ke,children:`确认删除`})]})})]})}):null]})}function qB({onAction:e,roles:t}){let[n,r]=(0,Z.useState)(!1),[i,a]=(0,Z.useState)(!1),[o,s]=(0,Z.useState)(!1),[c,l]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[u,d]=(0,Z.useState)({current:``,next:``,confirm:``}),[f,p]=(0,Z.useState)(``),m=[`安全管理员`,`数据查看员`].map(e=>t.find(t=>t.name===e)).filter(Boolean).map(e=>e.status===`停用`?`${e.name}（已停用）`:e.name).join(`、`),h=()=>{r(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:c.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>s(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>n?h():r(!0),children:n?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>a(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.name,onChange:e=>l(t=>({...t,name:e.target.value}))}):c.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.phone,onChange:e=>l(t=>({...t,phone:e.target.value}))}):c.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.email,onChange:e=>l(t=>({...t,email:e.target.value}))}):c.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:m||`安全管理员、数据查看员（已停用）`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),i?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>a(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!u.current||!u.next||!u.confirm){p(`请完整填写密码信息`);return}if(u.next!==u.confirm){p(`两次输入的新密码不一致`);return}if(u.current!==`123456`){p(`旧密码输入错误，请重新输入`);return}a(!1),d({current:``,next:``,confirm:``}),p(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>a(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.current,onChange:e=>d(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.next,onChange:e=>d(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.confirm,onChange:e=>d(t=>({...t,confirm:e.target.value}))})]}),f?(0,Q.jsx)(`p`,{className:`password-error`,children:f}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>a(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,o?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>s(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>s(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>s(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{s(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function JB({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,type:`系统字典`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,type:`业务字典`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-1-1`,parentId:`type-1`,code:`0101`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2-1`,parentId:`type-2`,code:`0201`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,type:`系统字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,type:`业务字典`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,type:`系统字典`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]},{id:`dict-6`,code:`FLOW_CATEGORY`,name:`流程分类`,type:`业务字典`,remark:`用于流程中心的流程归类。`,references:2,updater:`张宇`,updatedAt:`2026-08-24 10:30`,data:Az.map((e,t)=>({id:`flow-category-${t+1}`,code:String(t+1).padStart(2,`0`),name:e,updater:`张宇`,updatedAt:`2026-08-24 10:30`}))}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,type:`业务字典`,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),[y,b]=(0,Z.useState)(null),x=p.trim().toLowerCase(),S=s.filter(e=>e.name.toLowerCase().includes(x)),C=[...S.filter(e=>!e.parentId).flatMap(e=>[e,...y===e.id?S.filter(t=>t.parentId===e.id):[]])],w=Math.max(1,Math.ceil(C.length/_)),T=Math.min(h,w),E=C.slice((T-1)*_,T*_),D=(e=null)=>{o(e?{code:e.code,name:e.name,type:e.type??`业务字典`,remark:e.remark??``}:{code:``,name:``,type:`业务字典`,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),b(null),i({type:`editor`,dictionary:e})},O=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim(),c=a.type;if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,type:c,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,type:c,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,type:c,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},k=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},A=(e=null)=>{g(1),f(null),e&&b(e),c(t=>t.some(e=>e.isDraft)?t:[{id:`data-${Date.now()}`,code:``,name:``,parentId:e,updater:``,updatedAt:``,isDraft:!0},...t])},j=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},M=({id:t,code:n,name:r})=>{let i=n.trim(),a=r.trim();return i?a?s.some(e=>e.id!==t&&e.code.trim().toLocaleLowerCase()===i.toLocaleLowerCase())?(e(`数据编码“${i}”已存在，请修改后保存`),null):{code:i,name:a}:(e(`数据名称不能为空`),null):(e(`数据编码不能为空`),null)},N=e=>{let t=s.find(t=>t.id===e);if(!t)return!1;let n=M(t);return n?(c(t=>t.map(t=>t.id===e?{...t,...n,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t)),!0):!1},P=e=>{f({id:e.id,code:e.code,name:e.name})},ee=()=>{if(!d)return!1;let e=M(d);return e?(c(t=>t.map(t=>t.id===d.id?{...t,...e,updater:`张宇`,updatedAt:`刚刚`}:t)),f(null),!0):!1},F=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},I=e=>{let t=new Set(e);s.forEach(e=>{e.parentId&&t.has(e.parentId)&&t.add(e.id)}),c(e=>e.filter(e=>!t.has(e.id))),u(e=>e.filter(e=>!t.has(e))),f(e=>e&&t.has(e.id)?null:e),y&&t.has(y)&&b(null)},te=e=>s.find(t=>t.id===e)?.name||`-`;return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>D(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`类型`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.type??`业务字典`}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>D(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(wz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:k,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`类型`}),(0,Q.jsxs)(`select`,{value:a.type,disabled:!!r.dictionary,title:r.dictionary?`编辑字典时不能修改类型`:void 0,onChange:e=>o(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{children:`系统字典`}),(0,Q.jsx)(`option`,{children:`业务字典`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:A,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>I(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!C.filter(e=>!e.isDraft).length&&l.length===C.filter(e=>!e.isDraft).length,onChange:()=>{let e=C.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`上级数据`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),E.map(e=>{let t=d?.id===e.id,n=!e.parentId&&y===e.id;return(0,Q.jsxs)(Z.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``} ${e.parentId?`dictionary-data-row-child`:`dictionary-data-row-root`}`,onBlur:n=>{n.currentTarget.contains(n.relatedTarget)||(e.isDraft&&N(e.id),t&&ee())},children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>F(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?j(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?j(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{className:e.parentId?`dictionary-data-child-name`:``,children:e.name}),(0,Q.jsx)(`span`,{className:e.parentId?`dictionary-parent-data`:`dictionary-root-data`,children:e.parentId?te(e.parentId):`-`}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>N(e.id),children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>I([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:ee,children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[e.parentId?null:(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-toggle-child`,"aria-label":`${n?`收起`:`展开`}${e.name}的子级数据`,"aria-expanded":n,title:n?`收起子级`:`展开子级`,onClick:()=>b(t=>t===e.id?null:e.id),children:`子级`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>P(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>I([e.id]),children:(0,Q.jsx)(wz,{})})]})]},e.id),n?(0,Q.jsxs)(`div`,{className:`dictionary-child-add-row`,children:[(0,Q.jsx)(`span`,{className:`dictionary-child-add-label`,children:`子级数据`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>A(e.id),children:`新增子级`})]},`${e.id}-child-add`):null]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,S.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:T===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[T,` / `,w]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:T===w,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:r.dictionary.type===`系统字典`?`提示`:`确认删除`}),r.dictionary.type===`系统字典`?null:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:r.dictionary.type===`系统字典`?`系统字典“${r.dictionary.name}”不能删除，只能修改字典值。`:`确定删除字典“${r.dictionary.name}”吗？删除后无法恢复。`})}),(0,Q.jsx)(`footer`,{children:r.dictionary.type===`系统字典`?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>i(null),children:`关闭`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})})]})}):null]})}function YB({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),a=(0,Z.useRef)(null),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(!1),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(null),[v,y]=(0,Z.useState)(``),b=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){s(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){s(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),s(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},x=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},S=e=>{t(t=>({...t,systemIcon:e.id})),l(!1),n(`已选择系统图标：${e.label}`)},C=()=>{p(e=>(e&&(h(``),_(null),y(``)),!e))},w=e=>{let t=e.target.files?.[0];if(e.target.value=``,t){if(!t.type.startsWith(`image/`)){y(`请选择图片格式的图标文件`);return}if(t.size>512*1024){y(`图标文件不能超过 512KB`);return}_(t),y(``)}},T=()=>{if(!m.trim()){y(`请输入图标名称`);return}if(!g){y(`请选择图标文件`);return}let e=new FileReader;e.onload=()=>{let r={id:`custom-icon-${Date.now()}`,label:m.trim().slice(0,20),src:String(e.result)};t(e=>({...e,customSystemIcons:[...e.customSystemIcons??[],r]})),y(``),h(``),_(null),p(!1),n(`图标“${r.label}”已上传`)},e.readAsDataURL(g)},E=e=>{t(t=>({...t,customSystemIcons:e.src?(t.customSystemIcons??[]).filter(t=>t.id!==e.id):t.customSystemIcons??[],hiddenSystemIconIds:e.src?t.hiddenSystemIconIds??[]:[...new Set([...t.hiddenSystemIconIds??[],e.id])],systemIcon:t.systemIcon===e.id?`apps`:t.systemIcon})),d(null),n(`图标“${e.label}”已删除`)},D=[...Fz.filter(t=>!(e.hiddenSystemIconIds??[]).includes(t.id)),...e.customSystemIcons??[]];return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(Iz,{name:e.systemIcon,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>l(!0),children:`管理图标`})})]})]}),o?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:o}):null,c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>l(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`图标库`}),(0,Q.jsxs)(`div`,{className:`system-icon-picker-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:C,children:f?`取消上传`:`上传图标`}),(0,Q.jsx)(`span`,{children:`支持 PNG、JPG、WebP、SVG，最大 512KB`})]}),f?(0,Q.jsxs)(`div`,{className:`system-icon-upload-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{children:[`图标名称 `,(0,Q.jsx)(`i`,{children:`*`})]}),(0,Q.jsx)(`input`,{value:m,maxLength:20,placeholder:`请输入图标名称`,onChange:e=>{h(e.target.value),y(``)}})]}),(0,Q.jsxs)(`div`,{className:`system-icon-upload-file`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>a.current?.click(),children:`选择文件`}),(0,Q.jsx)(`span`,{children:g?.name??`未选择文件`}),(0,Q.jsx)(`button`,{type:`button`,onClick:T,children:`确认上传`})]}),v?(0,Q.jsx)(`p`,{role:`alert`,children:v}):null]}):null,(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:D.map(t=>(0,Q.jsxs)(`div`,{className:`system-icon-picker-item`,children:[(0,Q.jsxs)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>S(t),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Iz,{name:t.id,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`b`,{children:t.label})]}),(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-delete`,"aria-label":`删除${t.label}图标`,title:`删除图标`,onClick:()=>d(t),children:(0,Q.jsx)(wz,{})})]},t.id))}),(0,Q.jsx)(`input`,{ref:a,type:`file`,accept:`image/png,image/jpeg,image/webp,image/svg+xml`,onChange:w,hidden:!0})]})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-system-icon-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{id:`delete-system-icon-title`,children:`确认删除图标`})}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除图标“`,u.label,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>E(u),children:`确认删除`})]})]})}):null]})}function XB({onAction:e}){let t=[{id:`workbench`,name:`工作台`,type:`菜单`,icon:`home`,sort:1,path:`/workbench`,component:`WorkbenchPage`,perms:`workbench:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`applications`,name:`应用`,type:`目录`,icon:`apps`,sort:2,path:`/applications`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-dual-prevention`,name:`双重预防机制`,type:`目录`,icon:`shield`,sort:1,path:`dual-prevention`,component:``,perms:`application:dual-prevention:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-risk-control`,name:`风险分级管控`,type:`菜单`,icon:`shield`,sort:1,path:`risk-control`,component:`DualPreventionPage`,perms:`application:risk-control:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-list`,name:`岗位隐患排查清单`,type:`菜单`,icon:`document`,sort:2,path:`inspection-list`,component:`DualPreventionPage`,perms:`application:inspection-list:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-flow`,name:`隐患排查审批流程`,type:`菜单`,icon:`approval`,sort:3,path:`inspection-flow`,component:`DualPreventionPage`,perms:`application:inspection-flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`application-safety`,name:`安全管理`,type:`菜单`,icon:`shield`,sort:2,path:`safety`,component:`ApplicationPage`,perms:`application:safety:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-equipment`,name:`设备管理`,type:`菜单`,icon:`equipment`,sort:3,path:`equipment`,component:`ApplicationPage`,perms:`application:equipment:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-explosive`,name:`火工品管理`,type:`菜单`,icon:`explosive`,sort:4,path:`explosive`,component:`ApplicationPage`,perms:`application:explosive:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-production`,name:`生产管理`,type:`菜单`,icon:`production`,sort:5,path:`production`,component:`ApplicationPage`,perms:`application:production:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-electromechanical`,name:`机电管理`,type:`菜单`,icon:`equipment`,sort:6,path:`electromechanical`,component:`ApplicationPage`,perms:`application:electromechanical:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-fire`,name:`消防管理`,type:`菜单`,icon:`fire`,sort:7,path:`fire`,component:`ApplicationPage`,perms:`application:fire:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-emergency`,name:`应急管理`,type:`菜单`,icon:`warning`,sort:8,path:`emergency`,component:`ApplicationPage`,perms:`application:emergency:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`tasks`,name:`任务`,type:`目录`,icon:`task`,sort:3,path:`/tasks`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`processes`,name:`流程`,type:`目录`,icon:`flow`,sort:4,path:`/processes`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dynamics`,name:`动态`,type:`目录`,icon:`message`,sort:5,path:`/dynamics`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`warnings`,name:`预警`,type:`目录`,icon:`warning`,sort:6,path:`/warnings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dashboards`,name:`看板`,type:`目录`,icon:`dashboard`,sort:7,path:`/dashboards`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:xB.map((e,t)=>({id:`dashboard-${t+1}`,name:e.name,type:`菜单`,icon:`dashboard`,sort:t+1,path:`dashboard-${t+1}`,component:`DashboardPage`,perms:`dashboard:${t+1}:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}))},{id:`settings`,name:`设置中心`,type:`目录`,icon:`settings`,sort:8,path:`/settings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`settings-dynamics`,name:`安全动态`,type:`菜单`,icon:`message`,sort:1,path:`dynamics`,component:`DynamicsSettings`,perms:`settings:dynamics:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-worksheet`,name:`工作表`,type:`菜单`,icon:`document`,sort:2,path:`worksheet`,component:`EmbeddedLowCodePage`,perms:`settings:worksheet:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-task`,name:`任务`,type:`菜单`,icon:`task`,sort:3,path:`task`,component:`EmbeddedTaskFrame`,perms:`settings:task:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-flow`,name:`流程`,type:`菜单`,icon:`flow`,sort:4,path:`flow`,component:`EmbeddedLowCodePage`,perms:`settings:flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`system-settings`,name:`系统设置`,type:`目录`,icon:`settings`,sort:8,path:`system`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`organization-users`,name:`组织用户`,type:`菜单`,icon:`people`,sort:1,path:`organization-users`,component:`UserManagementCenter`,perms:`system:user:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`role-permission`,name:`角色权限`,type:`菜单`,icon:`approval`,sort:2,path:`role-permission`,component:`RbacPage`,perms:`system:role:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`menu-management`,name:`菜单管理`,type:`菜单`,icon:`sort`,sort:3,path:`menu-management`,component:`MenuManagementPage`,perms:`system:menu:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-31 09:00`,children:[]},{id:`dictionary`,name:`字典管理`,type:`菜单`,icon:`document`,sort:4,path:`dictionary`,component:`DictionaryManagement`,perms:`system:dictionary:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`enterprise`,name:`企业设置`,type:`菜单`,icon:`briefcase`,sort:5,path:`enterprise`,component:`EnterpriseSettings`,perms:`system:enterprise:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]}]}],n=(e=`settings`)=>({parentId:e,name:``,type:`菜单`,icon:`apps`,sort:1,path:``,component:``,perms:``,visible:`显示`,status:`启用`}),[r,i]=(0,Z.useState)(t),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(()=>new Set([`settings`,`system-settings`])),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(n()),[h,g]=(0,Z.useState)(``),_=(e,t=0,n=`0`)=>e.flatMap(e=>[{...e,depth:t,parentId:n},..._(e.children??[],t+1,e.id)]),v=_(r),y=e=>{if(e.id===`applications`)return!0;let t=e.parentId;for(;t!==`0`;){if(t===`applications`)return!0;t=v.find(e=>e.id===t)?.parentId??`0`}return!1},b=v.filter(e=>e.type!==`按钮`&&!y(e)),x=v.filter(e=>(!a||e.name.includes(a.trim()))&&(!s||e.status===s)?!0:v.some(t=>t.id!==e.id&&t.depth>e.depth&&t.parentId===e.id&&(!a||t.name.includes(a.trim()))&&(!s||t.status===s))),S=e=>{let t=e.parentId;for(;t!==`0`;){if(!l.has(t))return!1;t=v.find(e=>e.id===t)?.parentId??`0`}return!0},C=(e,t,n)=>e.map(e=>e.id===t?{...e,...n}:{...e,children:C(e.children??[],t,n)}),w=(e,t,n)=>t===`0`?[...e,n]:e.map(e=>e.id===t?{...e,children:[...e.children??[],n]}:{...e,children:w(e.children??[],t,n)}),T=(e,t)=>e.filter(e=>e.id!==t).map(e=>({...e,children:T(e.children??[],t)})),E=(e=`settings`)=>{let t=v.find(t=>t.id===e);m({...n(e),sort:(t?.children?.length??r.length)+1}),g(``),f({mode:`create`,parentId:e})},D=e=>{m({...e}),g(``),f({mode:`edit`,id:e.id})},O=t=>{t.preventDefault();let n=p.name.trim();if(!n){g(`请输入菜单名称`);return}let r={...p,name:n,sort:Number(p.sort)||1};d?.mode===`edit`?i(e=>C(e,d.id,r)):i(e=>w(e,r.parentId,{...r,id:`menu-${Date.now()}`,createdAt:`2026-08-31 10:00`,children:[]})),f(null),e(`${d?.mode===`edit`?`保存`:`新增`}菜单成功`)},k=t=>{let n=t.status===`启用`?`停用`:`启用`;i(e=>C(e,t.id,{status:n})),e(`${t.name}已${n}`)},A=()=>{i(e=>T(e,d.id)),f(null),e(`删除菜单成功`)},j=()=>u(new Set(v.filter(e=>e.children?.length).map(e=>e.id))),M=()=>u(new Set),N=(e,t)=>{m(n=>({...n,[e]:t})),g(``)};return(0,Q.jsxs)(`section`,{className:`menu-management`,"aria-labelledby":`menu-management-title`,children:[(0,Q.jsxs)(`header`,{className:`menu-management-toolbar`,children:[(0,Q.jsx)(`h1`,{id:`menu-management-title`,children:`菜单管理`}),(0,Q.jsxs)(`button`,{type:`button`,className:`menu-management-primary`,onClick:()=>E(`settings`),children:[(0,Q.jsx)(az,{}),`新增菜单`]})]}),(0,Q.jsxs)(`section`,{className:`menu-management-panel`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-filters`,children:[(0,Q.jsxs)(`label`,{children:[`菜单名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),maxLength:20,placeholder:`请输入菜单名称`})]}),(0,Q.jsxs)(`label`,{children:[`状态`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{value:``,children:`全部`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-reset`,onClick:()=>{o(``),c(``)},children:`重置`}),(0,Q.jsx)(`span`,{}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:j,children:`展开`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:M,children:`折叠`})]}),(0,Q.jsxs)(`div`,{className:`menu-management-table`,role:`table`,"aria-label":`菜单列表`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-table-head`,role:`row`,children:[(0,Q.jsx)(`span`,{children:`菜单名称`}),(0,Q.jsx)(`span`,{children:`图标`}),(0,Q.jsx)(`span`,{children:`排序`}),(0,Q.jsx)(`span`,{children:`权限标识`}),(0,Q.jsx)(`span`,{children:`组件路径`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),x.filter(S).map(e=>{let t=(e.children??[]).length>0,n=y(e);return(0,Q.jsxs)(`div`,{className:`menu-management-table-row`,role:`row`,children:[(0,Q.jsxs)(`div`,{className:`menu-tree-name`,style:{"--menu-depth":e.depth},children:[t?(0,Q.jsx)(`button`,{type:`button`,className:l.has(e.id)?`expanded`:``,onClick:()=>u(t=>{let n=new Set(t);return n.has(e.id)?n.delete(e.id):n.add(e.id),n}),children:(0,Q.jsx)(_z,{})}):(0,Q.jsx)(`i`,{}),(0,Q.jsx)(Iz,{name:e.icon}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`em`,{children:e.type})]}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Iz,{name:e.icon})}),(0,Q.jsx)(`span`,{children:e.sort}),(0,Q.jsx)(`code`,{children:e.perms||`-`}),(0,Q.jsx)(`code`,{children:e.component||`-`}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`i`,{className:e.status===`启用`?`menu-status enabled`:`menu-status`,children:e.status})}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsx)(`div`,{className:`menu-row-actions`,children:n?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>E(e.id),disabled:e.type===`按钮`,children:`新增`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>D(e),children:`修改`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>k(e),children:e.status===`启用`?`停用`:`启用`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,disabled:e.id===`settings`,onClick:()=>f({mode:`delete`,id:e.id,name:e.name}),children:`删除`})]})})]},e.id)})]})]}),d?.mode===`create`||d?.mode===`edit`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog menu-editor-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`menu-editor-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`menu-editor-title`,children:d.mode===`edit`?`修改菜单`:`新增菜单`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭菜单编辑弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body menu-editor-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`上级菜单`}),(0,Q.jsxs)(`select`,{value:p.parentId,onChange:e=>N(`parentId`,e.target.value),disabled:d.mode===`edit`,children:[d.mode===`edit`&&p.parentId===`0`?(0,Q.jsx)(`option`,{value:`0`,children:`主类目`}):null,b.filter(e=>e.id!==d.id).map(e=>(0,Q.jsxs)(`option`,{value:e.id,children:[`　`.repeat(e.depth),e.name]},e.id))]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单类型`}),(0,Q.jsxs)(`select`,{value:p.type,onChange:e=>N(`type`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`目录`}),(0,Q.jsx)(`option`,{children:`菜单`}),(0,Q.jsx)(`option`,{children:`按钮`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单名称`}),(0,Q.jsx)(`input`,{value:p.name,onChange:e=>N(`name`,e.target.value),maxLength:20,placeholder:`请输入菜单名称`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示排序`}),(0,Q.jsx)(`input`,{value:p.sort,onChange:e=>N(`sort`,e.target.value.replace(/\D/g,``).slice(0,4)),inputMode:`numeric`,maxLength:4,placeholder:`请输入排序号`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`路由地址`}),(0,Q.jsx)(`input`,{value:p.path,onChange:e=>N(`path`,e.target.value),maxLength:60,placeholder:`例如：system/menu`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`组件路径`}),(0,Q.jsx)(`input`,{value:p.component,onChange:e=>N(`component`,e.target.value),maxLength:60,placeholder:`例如：system/menu/index`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`权限标识`}),(0,Q.jsx)(`input`,{value:p.perms,onChange:e=>N(`perms`,e.target.value),maxLength:60,placeholder:`例如：system:menu:view`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单图标`}),(0,Q.jsx)(`select`,{value:p.icon,onChange:e=>N(`icon`,e.target.value),children:Fz.map(e=>(0,Q.jsx)(`option`,{value:e.id,children:e.label},e.id))})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示状态`}),(0,Q.jsxs)(`select`,{value:p.visible,onChange:e=>N(`visible`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`显示`}),(0,Q.jsx)(`option`,{children:`隐藏`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单状态`}),(0,Q.jsxs)(`select`,{value:p.status,onChange:e=>N(`status`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),h?(0,Q.jsx)(`p`,{className:`menu-editor-error`,children:h}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存`})]})]})}):null,d?.mode===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-menu-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-menu-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除菜单“`,d.name,`”吗？其下级菜单也将一并删除。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:A,children:`确认删除`})]})]})}):null]})}function ZB({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r,roles:i,setRoles:a}){let[o,s]=(0,Z.useState)(t),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)([]),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),[b,x]=(0,Z.useState)(!1),S=[{label:`工作表单`,module:`form`}],C=[{label:`流程中心`,module:`flow`}],w=S.find(e=>e.label===o);C.find(e=>e.label===o);let T=(o===`工作表`?{label:`工作表`,module:`form`}:o===`流程`?{label:`流程`,module:`flow`}:null)??(o===`应用中心`?{label:`应用中心`,module:`app`}:null),E=o===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===o),D=[{label:`预警信息表`,view:`warning-info-table`},{label:`预警规则设置`,view:`warning-rule`}],O=D.find(e=>e.label===o),k=[`组织用户`,`角色权限`,`菜单管理`,`字典管理`,`企业设置`],A=MB.find(e=>e.label===o)??w??E??O??MB[0],j=A.icon??QR,M={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[o]??[],N=o===`组织用户`,P=o===`角色权限`,ee=o===`菜单管理`,F=o===`安全动态`,I=o===`字典管理`,te=o===`企业设置`,ne=!!T;w?.module;let re=!!E,ie=!!O,ae=k.includes(o),oe=e=>{let t=e===`worksheet`?!f:e===`process`?!m:e===`task`?!g:e===`warning`?!v:!b;p(e===`worksheet`&&t),h(e===`process`&&t),_(e===`task`&&t),y(e===`warning`&&t),x(e===`system`&&t),t&&(e===`worksheet`&&s(`工作表单`),e===`process`&&s(`流程中心`),e===`task`&&s(`任务模版`),e===`warning`&&s(`预警信息表`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:MB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`].includes(e)?(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`预警`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${o===`预警`||ie?`active`:``}`,onClick:()=>oe(`warning`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:D.map(e=>(0,Q.jsx)(`button`,{className:o===e.label?`active`:``,onClick:()=>s(e.label),children:e.label},e.label))}):null]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ae?`active`:``}`,onClick:()=>oe(`system`),"aria-expanded":b,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:b?`expanded`:``})]}),b?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:k.map(e=>(0,Q.jsx)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(_z,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!N&&!P&&!ee&&!te&&!F&&!I&&!ne&&!re&&!ie?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(j,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:A.title}),(0,Q.jsx)(`p`,{children:A.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${A.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,F?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(`iframe`,{src:`${Lz}index.html?view=feedno`,title:`动态圈管理`})}):te?(0,Q.jsx)(YB,{branding:n,onBrandingChange:r,onAction:e}):I?(0,Q.jsx)(JB,{onAction:e}):ne?(0,Q.jsx)(kB,{module:T.module,view:T.view,label:T.label}):re?(0,Q.jsx)(`section`,{className:`settings-task-embed`,"aria-label":E.label,children:(0,Q.jsx)(TB,{view:E.view,title:E.label})}):ie?(0,Q.jsx)(`section`,{className:`settings-warning-embed`,"aria-label":O.label,children:(0,Q.jsx)(`iframe`,{src:`${Lz}预警.html?view=${O.view}`,title:O.label})}):N?(0,Q.jsx)(WB,{organizations:c,setOrganizations:l,users:u,setUsers:d,roles:i}):P?(0,Q.jsx)(KB,{onAction:e,roles:i,setRoles:a}):ee?(0,Q.jsx)(XB,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[A.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${A.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),M.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function QB({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(``),[p,m]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){f(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){f(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}f(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),f(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsxs)(`span`,{className:`login-password-field`,children:[(0,Q.jsx)(`input`,{type:l?`text`:`password`,value:a,onChange:e=>{o(e.target.value),f(``)},autoComplete:`current-password`,placeholder:`请输入密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`login-password-visibility`,"aria-label":l?`隐藏密码`:`显示密码`,title:l?`隐藏密码`:`显示密码`,onClick:()=>u(e=>!e),children:l?(0,Q.jsx)(sz,{}):(0,Q.jsx)(oz,{})})]})]}),d?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:d}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>m(!0),children:`忘记密码`})]}),p?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(fz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function $B(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function eV(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>Bz.map(e=>({...e}))),[i,a]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`,customSystemIcons:Array.isArray(e.customSystemIcons)?e.customSystemIcons.filter(e=>e&&typeof e.id==`string`&&typeof e.label==`string`&&typeof e.src==`string`):[],hiddenSystemIconIds:Array.isArray(e.hiddenSystemIconIds)?e.hiddenSystemIconIds.filter(e=>typeof e==`string`):[]}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`,customSystemIcons:[],hiddenSystemIconIds:[]}}}),[o,s]=(0,Z.useState)(`工作台`),[c,l]=(0,Z.useState)(`task`),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(``),m=(0,Z.useRef)(null),[h,g]=(0,Z.useState)(Hz),[_,v]=(0,Z.useState)(`workbench`),[y,b]=(0,Z.useState)(()=>zz.map(e=>e.name)),[x,S]=(0,Z.useState)(`我的任务`),[C,w]=(0,Z.useState)(`待审批`),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(Jz),[k,A]=(0,Z.useState)([]),[j,M]=(0,Z.useState)(`动态`),[N,P]=(0,Z.useState)(pB[0].title),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(`安全动态`),[ne,re]=(0,Z.useState)(Uz),[ie,ae]=(0,Z.useState)(null),[oe,se]=(0,Z.useState)(!0),[L,R]=(0,Z.useState)([]);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(i))}catch{}},[i]),(0,Z.useEffect)(()=>{let e=!1;return fetch(jz,{cache:`no-store`}).then(e=>{if(!e.ok)throw Error(`Unable to load prototype annotations`);return e.json()}).then(t=>{e||R(Nz(t))}).catch(()=>{e||R([])}),()=>{e=!0}},[]);let z=e=>{p(`已选择 ${e}`),window.clearTimeout(m.current),m.current=window.setTimeout(()=>p(``),3e3)},ce=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{v(e),s(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},B=e=>{let t=[...pB,...mB].find(t=>t.title===e);if(t){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{P(t.title),F(!0),g(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:pz}]),v(`双重预防机制`),s(`应用`)});return}let n=e===`应用中心`?`双重预防机制`:e,r=zz.find(e=>e.name===n);if(!r){z(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{n===`双重预防机制`&&F(!1),g(e=>e.some(e=>e.id===n)?e:[...e,{id:n,label:n,icon:r.icon}]),v(n),s(`应用`)})},le=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:mz}]),v(`messages`),s(`工作台`)})},ue=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{ae(null),S(e),g(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:Cz}]),v(`tasks`),s(`任务`)})},de=(e=`待审批`,t=``)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),E(t),g(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:cz}]),v(`processes`),s(`流程`)})},fe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),v(`dashboard`),s(`看板`)})},V=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(e),g(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:pz}]),v(`safety-dynamics`),s(`动态`)})},H=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:Sz}]),v(`warnings`),s(`预警`)})},pe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:Cz}]),v(`todos`),s(`工作台`)})},me=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{te(e),g(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),v(`settings`),s(`设置`)})},he=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:Ez}]),v(`personal-center`),s(``)})},ge=e=>re(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),_e=()=>re(e=>e.map(e=>({...e,read:!0}))),ve=e=>{let t=h.findIndex(t=>t.id===e),n=h.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(g(n),_===e){let e=n[Math.max(0,t-1)]??Hz[0];v(e.id),s(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ye=zz.find(e=>e.name===_);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)($B,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(eB,{active:o,brandLogo:i.logo,onOpenSettings:me,onChange:e=>{if(e===`工作台`){ce(`workbench`);return}if(e===`应用`){B(`应用中心`);return}if(e===`任务`){ue();return}if(e===`流程`){de();return}if(e===`动态`){V();return}if(e===`预警`){H();return}if(e===`看板`){fe();return}s(e),z(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(tB,{tabs:h,activeTab:_,onSelect:ce,onClose:ve,onOpenMessages:le,onOpenPersonal:he,onLogout:()=>t(!1),onOpenSpecification:()=>window.open(Mz,`_blank`,`noopener,noreferrer`)}),(0,Q.jsx)(`main`,{children:_===`messages`?(0,Q.jsx)(iB,{messages:ne,onMarkRead:ge,onMarkAllRead:_e,onReturn:()=>ce(`workbench`),onOpenProcess:de}):_===`todos`?(0,Q.jsx)(jB,{onOpenTasks:ue,onOpenProcesses:de,onOpenSafety:V}):_===`tasks`?(0,Q.jsx)(EB,{initialTab:x},x):_===`processes`?(0,Q.jsx)(oB,{initialFilter:C,initialProcessNumber:T,processRecords:D,setProcessRecords:O,onAction:z},`${C}-${T}`):_===`safety-dynamics`?(0,Q.jsx)(wB,{initialTab:j,onAction:z},j):_===`warnings`?(0,Q.jsx)(DB,{}):_===`dashboard`?(0,Q.jsx)(CB,{}):_===`settings`?(0,Q.jsx)(ZB,{initialSelected:I,onAction:z,branding:i,onBrandingChange:a,roles:n,setRoles:r},I):_===`personal-center`?(0,Q.jsx)(qB,{onAction:z,roles:n}):ye?.name===`双重预防机制`?(0,Q.jsx)(gB,{initialFormTitle:N,initialOpenForm:ee,approvalDrafts:k,setApprovalDrafts:A,onSaveProcessDraft:e=>O(t=>t.some(t=>t.id===e.id)?t.map(t=>t.id===e.id?e:t):[e,...t]),onDeleteProcessDraft:e=>O(t=>t.filter(t=>t.id!==e)),onAction:z,onSwitchApplication:B},`${N}-${ee?`form`:`catalog`}`):ye?(0,Q.jsx)(_B,{app:ye,onReturn:()=>ce(`workbench`),onAction:z,onSwitchApplication:B}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsxs)(`h1`,{children:[`智慧应急安全管理平台欢迎您，`,(0,Q.jsx)(`button`,{className:`workbench-user-link`,onClick:he,children:`张宇`})]})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:pe,children:[`待办总览 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:Rz.map(e=>(0,Q.jsx)(sB,{item:e,active:c===e.id,onSelect:()=>l(e.id),onOpen:e=>{e===`message`&&le(),e===`task`&&ue(),e===`approval`&&de(),e===`warning`&&H()}},e.id))})]}),(0,Q.jsx)(lB,{onOpen:B}),(0,Q.jsx)(cB,{onOpen:B,favoriteApps:y,onCustomize:b})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(yB,{onAction:d,onOpenTask:()=>ue(`发布任务`),onOpenProcess:()=>de(`发起流程`),onOpenDynamics:()=>V(`发动态`)}),(0,Q.jsx)(vB,{onOpen:z,onOpenAll:V})]})]})]})}),(0,Q.jsx)(nB,{visible:oe,managing:!1,pageId:_,pageLabel:h.find(e=>e.id===_)?.label??`工作台`,annotations:L,onCloseManager:()=>{},onAdd:({pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a})=>{se(!0),R(o=>[...o,{id:`annotation-${Date.now()}`,pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a}])},onUpdate:(e,t)=>R(n=>n.map(n=>n.id===e?{...n,content:t}:n)),onRemove:e=>R(t=>t.filter(t=>t.id!==e)),onReposition:(e,t)=>{se(!0),R(n=>n.map(n=>n.id===e?{...n,...t}:n))}})]}),f?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":f,children:[(0,Q.jsx)(hz,{}),f]}):null,(0,Q.jsx)(bB,{title:u,onClose:()=>d(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)($B,{}),(0,Q.jsx)(QB,{branding:i,onLogin:()=>t(!0)})]})}(0,Dz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(eV,{}));
+`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},R=t=>{let n=t.target.files?.[0];if(!n||!te.length)return;let i=s||te[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123#`,organizationId:i,department:KB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),F(`已导入 ${t.length} 位用户`)):F(`未识别到可导入的用户数据`),u(null)},a.readAsText(n,`utf-8`),t.target.value=``},z=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),ce=e=>{r(t=>t.filter(t=>t.id!==e)),F(`已删除用户`)},B=e=>f({type:`status`,user:e}),le=e=>{if(e.status===`启用`){F(`用户“${e.name}”处于启用状态，请先停用后再删除`);return}f({type:`delete`,user:e})},ue=e=>f({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`organization`,className:a===`organization`?`active`:``,onClick:()=>o(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`users`,className:a===`users`?`active`:``,onClick:()=>o(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),a===`organization`?(0,Q.jsx)(WB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[te.length,` 个组织`]})]}),e.length?(0,Q.jsx)(GB,{nodes:e,selectedId:s,onSelect:c}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:ne?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:N.name,onChange:e=>P(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:N.account,onChange:e=>P(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:N.phone,onChange:e=>P(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:N.status,onChange:e=>P(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>F(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>P({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsx)(`div`,{className:`user-directory-actions`,children:(0,Q.jsxs)(`button`,{className:`user-add`,onClick:ie,disabled:!te.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})}),te.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),re.length?re.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>B(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ae(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),l?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>u(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:l===`create`?(0,Q.jsxs)(`form`,{onSubmit:se,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:p?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||A(``)},children:[(0,Q.jsxs)(`label`,{className:j.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:h,maxLength:10,onChange:e=>{g(e.target.value),oe(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),j.name?(0,Q.jsx)(`em`,{children:j.name}):null]}),(0,Q.jsxs)(`label`,{className:j.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:y,maxLength:11,inputMode:`numeric`,onChange:e=>{b(e.target.value.replace(/\D/g,``).slice(0,11)),oe(`phone`)},placeholder:`例如：13800000000`}),j.phone?(0,Q.jsx)(`em`,{children:j.phone}):null]}),(0,Q.jsxs)(`label`,{className:j.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:_,onChange:e=>{v(e.target.value),oe(`account`)},placeholder:`例如：zhangyu`}),j.account?(0,Q.jsx)(`em`,{children:j.account}):null]}),(0,Q.jsxs)(`label`,{className:j.password?`field-error`:``,children:[`密码`,(0,Q.jsx)(`input`,{type:p?`password`:`text`,value:x,placeholder:p?`请输入密码`:void 0,onChange:e=>{S(e.target.value),oe(`password`)}}),j.password?(0,Q.jsx)(`em`,{children:j.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${j.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:C,onChange:e=>{w(e.target.value),oe(`organization`)},children:te.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:KB(e,t.id)},t.id))}),j.organization?(0,Q.jsx)(`em`,{children:j.organization}):null]}),(0,Q.jsx)(qB,{label:`岗位`,options:Hz,value:T,onChange:E,activeMenu:k,setActiveMenu:A}),(0,Q.jsx)(qB,{label:`角色`,options:i.map(e=>({value:e.name,label:e.status===`停用`?`${e.name}（已停用）`:e.name})),value:D,onChange:O,activeMenu:k,setActiveMenu:A})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:ne?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:I,type:`file`,accept:`.csv,text/csv`,onChange:R})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:L,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>u(null),children:`取消`})})]})})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:d.type===`cancel-create`?`确定取消${p?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:d.type===`delete`?`确定删除用户“${d.user.name}”吗？删除后无法恢复。`:d.type===`reset-password`?`确定将用户“${d.user.name}”的密码重置为默认密码 abc123# 吗？`:`确定${d.user.status===`启用`?`停用`:`启用`}用户“${d.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{d.type===`cancel-create`?(u(null),A(``)):d.type===`status`?(z(d.user.id),F(`已${d.user.status===`启用`?`停用`:`启用`}用户：${d.user.name}`)):d.type===`reset-password`?(r(e=>e.map(e=>e.id===d.user.id?{...e,password:`abc123#`}:e)),F(`已将 ${d.user.name} 的密码重置为 abc123#`)):ce(d.user.id),f(null)},children:`确定`})]})]})}):null,ee?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[ee,(0,Q.jsx)(`button`,{onClick:()=>F(``),children:`×`})]}):null]})}function YB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function XB({onAction:e,roles:t,setRoles:n}){let r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`,children:[{name:`法律法规`},{name:`制度文件`},{name:`隐患排查任务发布`},{name:`岗位隐患排查清单`,children:mB.map(e=>({name:e.title}))},{name:`隐患排查治理记录`},{name:`隐患排查审批流程`,children:hB.map(e=>({name:e.title}))},{name:`隐患排查工作表`},{name:`隐患整改通知单`},{name:`隐患整改台账`},{name:`隐患信息统计`},{name:`隐患汇报`}]},{name:`风险告知卡`},{name:`风险四色图`}]},{name:`安全管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`设备管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`火工品管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`生产管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`机电管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`消防管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`应急管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`,children:[{name:`我发起的`},{name:`已执行`},{name:`已转发`},{name:`我撤回的`},{name:`我参与的`}]},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`,children:[{name:`人资管理`,children:[{name:`员工离职申请`},{name:`职员晋升审批`},{name:`职员调岗审批`}]},{name:`基建管理`,children:[{name:`地表基建项目报建申请`},{name:`年度工程计划编制审批`},{name:`项目合同申报审批`}]},{name:`选矿管理`,children:[{name:`换矿申请`},{name:`选厂药剂领用申请`},{name:`材料采购流程`}]}]},{name:`待审批`},{name:`已审批`},{name:`抄送我的`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:SB.map(e=>({name:e.name}))},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务`},{name:`流程`},{name:`预警`,children:[{name:`预警信息表`},{name:`预警规则设置`}]},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`菜单管理`},{name:`字典管理`},{name:`企业设置`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={"设置中心/系统设置/角色权限":[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`]},o=new Set(mB.map(e=>`应用/双重预防机制/隐患排查治理/岗位隐患排查清单/${e.title}`)),s=new Set([...o,...hB.map(e=>`应用/双重预防机制/隐患排查治理/隐患排查审批流程/${e.title}`)]),c=e=>(a[e]??[]).map(t=>`button:${e}:${t}`),l=e=>o.has(e)?[`新增`,`导入`,`导出`].map(t=>`button:${e}:数据:${t}`):[],u=e=>s.has(e)?[`页面`,`数据`,...o.has(e)?[`草稿箱`]:[]]:[],d=e=>u(e).map(t=>`tab:${e}:${t}`),f=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:f(e.children,n)};let i=a[r]??[],o=u(r);return{id:`page:${r}`,name:e.name,type:`page`,children:i.length||o.length?[...i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`})),...o.map(e=>{let t=e===`数据`?l(r):[];return{id:`tab:${r}:${e}`,name:e,type:`tab`,children:t.length?t.map(e=>({id:e,name:e.split(`:`).at(-1),type:`button`})):void 0}})]:void 0}}),p=f(r),m=e=>e.children?.length?e.children.flatMap(m):[e.id],h=p.flatMap(m),g=()=>{let e=t=>t.flatMap(t=>t.children?.length?[t.id,...e(t.children)]:[]);return new Set(e(p))},_=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[v,y]=(0,Z.useState)(null),[b,x]=(0,Z.useState)(``),[S,C]=(0,Z.useState)(`启用`),[w,T]=(0,Z.useState)(new Set(h.slice(0,18))),[E,D]=(0,Z.useState)(`menu`),[O,k]=(0,Z.useState)(g),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(null),[P,ee]=(0,Z.useState)(_),[F,I]=(0,Z.useState)(null),[te,ne]=(0,Z.useState)(`group`),[re,ie]=(0,Z.useState)([`u-zhang`]),[ae,oe]=(0,Z.useState)({admin:[`u-zhang`],safety:[`u-zhao`],executor:[`u-li`],viewer:[]}),se=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],L=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],R=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],z=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],ce=()=>{x(``),C(`启用`),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`create`})},B=e=>{x(e.name),C(e.status),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`edit`,role:e})},le=t=>{t.preventDefault();let r=b.trim();r&&(v.mode===`edit`?n(e=>e.map(e=>e.id===v.role.id?{...e,name:r,status:S}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:S,createdAt:`2026-08-12 10:30`}]),y(null),e(v.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},ue=e=>T(t=>{let n=new Set(t),r=m(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),de=e=>k(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),fe=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=fe(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return w.has(`page:${r}`)||c(r).some(e=>w.has(e))||d(r).some(e=>w.has(e))||l(r).some(e=>w.has(e))?[e]:[]}),V=fe(r),H=i(V).length,pe=e=>ee(t=>({...t,...Object.fromEntries(i(V).map(t=>[t,e]))})),me=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:e.type===`tab`?`role-menu-tab`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:e.type===`tab`?`role-menu-tab-label`:``,children:[(0,Q.jsx)(YB,{node:e,selectedIds:w,getLeafIds:m,onToggle:ue}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${O.has(e.id)?`expanded`:``}`,"aria-label":`${O.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>de(e.id),children:(0,Q.jsx)(_z,{})}):null]}),e.children&&O.has(e.id)?(0,Q.jsx)(me,{nodes:e.children}):null]},`${e.id}-${t}`))}),he=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:te===e.id?`active`:``,onClick:()=>ne(e.id),children:e.name}),e.children?(0,Q.jsx)(he,{nodes:e.children}):null]},e.id))}),ge=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:ge(n.children??[],t)),null),_e=e=>e.children?.length?e.children.flatMap(_e):[e.id],ve=ge(se,te),ye=L.filter(e=>e.organization===te),U=ye.map(e=>e.id),W=U.some(e=>re.includes(e)),G=U.length>0&&U.every(e=>re.includes(e)),be=M?.dataPermissionOrganizationIds??[],xe=z.filter(e=>be.includes(e.organization)),K=L.filter(e=>re.includes(e.id)),Se=e=>ie(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),Ce=()=>ie(e=>[...new Set([...e,...U])]),we=()=>ie(e=>e.filter(e=>!U.includes(e))),Te=e=>{I(e),ne(`group`),ie(ae[e.id]??[])},Ee=e=>{let t=_e(e);N(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=z.filter(e=>i.includes(e.organization)).map(e=>e.id),o=z.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},De=e=>N(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Oe=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:_e(e).some(e=>be.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:_e(e).every(e=>be.includes(e)),ref:t=>{if(!t)return;let n=_e(e),r=n.filter(e=>be.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>Ee(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Oe,{nodes:e.children}):null]},e.id))}),q=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:O.has(r)?`expanded`:``,"aria-label":`${O.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>de(r),children:(0,Q.jsx)(_z,{})})]}),O.has(r)?(0,Q.jsx)(`ul`,{children:q(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:P[e.name]??`全部`,onChange:t=>ee(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`所在组织及下级`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)}),ke=()=>{let t=ae[A.id]??[];if(t.length){e(`角色“${A.name}”已分配 ${t.length} 位用户，无法删除`),j(null);return}n(e=>e.filter(e=>e.id!==A.id)),oe(e=>{let t={...e};return delete t[A.id],t}),e(`已删除角色：${A.name}`),j(null)},Ae=!!(A&&(ae[A.id]??[]).length),je=A?(ae[A.id]??[]).length:0;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:ce,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>B(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>j(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>Te(e),children:`分配用户`})]})]},e.id))]})]}),v?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>y(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:le,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:v.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>y(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:b,onChange:e=>x(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:S,onChange:e=>C(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`menu`,className:E===`menu`?`active`:``,onClick:()=>D(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`data`,className:E===`data`?`active`:``,onClick:()=>D(`data`),children:`数据权限`})]}),E===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单与页面选择可访问范围`})]}),(0,Q.jsx)(me,{nodes:p})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`所在组织及下级`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>pe(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>y(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,M?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>N(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>N(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:M.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Oe,{nodes:R})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!xe.length&&xe.every(e=>M.dataAuthorizedUserIds.includes(e.id)),onChange:()=>N(e=>{let t=xe.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:xe.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:M.dataAuthorizedUserIds.includes(e.id),onChange:()=>De(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[H,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>N(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${M.name}的数据权限`),N(null)},children:`保存权限`})]})]})}):null,F?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>I(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>I(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(he,{nodes:se})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:ve?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[ye.length,` 人`]})]}),ye.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:Ce,disabled:G,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:we,disabled:!W,children:`全不选`})]}):null]}),ye.length?ye.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:re.includes(e.id),onChange:()=>Se(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[K.length,` 人`]})]}),K.length?K.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>Se(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>I(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{oe(e=>({...e,[F.id]:re})),e(`已为${F.name}分配 ${K.length} 位用户`),I(null)},children:`确认分配`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:Ae?`无法删除`:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:Ae?`角色“${A.name}”下已分配 ${je} 位用户，无法删除。请先移除该角色下的用户后再试。`:`确定删除角色“${A.name}”吗？`})}),(0,Q.jsx)(`footer`,{children:Ae?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>j(null),children:`知道了`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:ke,children:`确认删除`})]})})]})}):null]})}function ZB({onAction:e,roles:t}){let[n,r]=(0,Z.useState)(!1),[i,a]=(0,Z.useState)(!1),[o,s]=(0,Z.useState)(!1),[c,l]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[u,d]=(0,Z.useState)({current:``,next:``,confirm:``}),[f,p]=(0,Z.useState)(``),m=[`安全管理员`,`数据查看员`].map(e=>t.find(t=>t.name===e)).filter(Boolean).map(e=>e.status===`停用`?`${e.name}（已停用）`:e.name).join(`、`),h=()=>{r(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:c.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>s(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>n?h():r(!0),children:n?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>a(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.name,onChange:e=>l(t=>({...t,name:e.target.value}))}):c.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.phone,onChange:e=>l(t=>({...t,phone:e.target.value}))}):c.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.email,onChange:e=>l(t=>({...t,email:e.target.value}))}):c.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:m||`安全管理员、数据查看员（已停用）`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),i?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>a(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!u.current||!u.next||!u.confirm){p(`请完整填写密码信息`);return}if(u.next!==u.confirm){p(`两次输入的新密码不一致`);return}if(u.current!==`123456`){p(`旧密码输入错误，请重新输入`);return}a(!1),d({current:``,next:``,confirm:``}),p(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>a(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.current,onChange:e=>d(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.next,onChange:e=>d(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.confirm,onChange:e=>d(t=>({...t,confirm:e.target.value}))})]}),f?(0,Q.jsx)(`p`,{className:`password-error`,children:f}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>a(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,o?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>s(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>s(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>s(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{s(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function QB({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,type:`系统字典`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,type:`业务字典`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-1-1`,parentId:`type-1`,code:`0101`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2-1`,parentId:`type-2`,code:`0201`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,type:`系统字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,type:`业务字典`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,type:`系统字典`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]},{id:`dict-6`,code:`FLOW_CATEGORY`,name:`流程分类`,type:`业务字典`,remark:`用于流程中心的流程归类。`,references:2,updater:`张宇`,updatedAt:`2026-08-24 10:30`,data:jz.map((e,t)=>({id:`flow-category-${t+1}`,code:String(t+1).padStart(2,`0`),name:e,updater:`张宇`,updatedAt:`2026-08-24 10:30`}))}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,type:`业务字典`,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),[y,b]=(0,Z.useState)(null),x=p.trim().toLowerCase(),S=s.filter(e=>e.name.toLowerCase().includes(x)),C=[...S.filter(e=>!e.parentId).flatMap(e=>[e,...y===e.id?S.filter(t=>t.parentId===e.id):[]])],w=Math.max(1,Math.ceil(C.length/_)),T=Math.min(h,w),E=C.slice((T-1)*_,T*_),D=(e=null)=>{o(e?{code:e.code,name:e.name,type:e.type??`业务字典`,remark:e.remark??``}:{code:``,name:``,type:`业务字典`,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),b(null),i({type:`editor`,dictionary:e})},O=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim(),c=a.type;if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,type:c,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,type:c,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,type:c,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},k=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},A=(e=null)=>{g(1),f(null),e&&b(e),c(t=>t.some(e=>e.isDraft)?t:[{id:`data-${Date.now()}`,code:``,name:``,parentId:e,updater:``,updatedAt:``,isDraft:!0},...t])},j=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},M=({id:t,code:n,name:r})=>{let i=n.trim(),a=r.trim();return i?a?s.some(e=>e.id!==t&&e.code.trim().toLocaleLowerCase()===i.toLocaleLowerCase())?(e(`数据编码“${i}”已存在，请修改后保存`),null):{code:i,name:a}:(e(`数据名称不能为空`),null):(e(`数据编码不能为空`),null)},N=e=>{let t=s.find(t=>t.id===e);if(!t)return!1;let n=M(t);return n?(c(t=>t.map(t=>t.id===e?{...t,...n,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t)),!0):!1},P=e=>{f({id:e.id,code:e.code,name:e.name})},ee=()=>{if(!d)return!1;let e=M(d);return e?(c(t=>t.map(t=>t.id===d.id?{...t,...e,updater:`张宇`,updatedAt:`刚刚`}:t)),f(null),!0):!1},F=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},I=e=>{let t=new Set(e);s.forEach(e=>{e.parentId&&t.has(e.parentId)&&t.add(e.id)}),c(e=>e.filter(e=>!t.has(e.id))),u(e=>e.filter(e=>!t.has(e))),f(e=>e&&t.has(e.id)?null:e),y&&t.has(y)&&b(null)},te=e=>s.find(t=>t.id===e)?.name||`-`;return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>D(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`类型`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.type??`业务字典`}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>D(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(wz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:k,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`类型`}),(0,Q.jsxs)(`select`,{value:a.type,disabled:!!r.dictionary,title:r.dictionary?`编辑字典时不能修改类型`:void 0,onChange:e=>o(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{children:`系统字典`}),(0,Q.jsx)(`option`,{children:`业务字典`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:A,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>I(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!C.filter(e=>!e.isDraft).length&&l.length===C.filter(e=>!e.isDraft).length,onChange:()=>{let e=C.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`上级数据`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),E.map(e=>{let t=d?.id===e.id,n=!e.parentId&&y===e.id;return(0,Q.jsxs)(Z.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``} ${e.parentId?`dictionary-data-row-child`:`dictionary-data-row-root`}`,onBlur:n=>{n.currentTarget.contains(n.relatedTarget)||(e.isDraft&&N(e.id),t&&ee())},children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>F(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?j(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?j(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{className:e.parentId?`dictionary-data-child-name`:``,children:e.name}),(0,Q.jsx)(`span`,{className:e.parentId?`dictionary-parent-data`:`dictionary-root-data`,children:e.parentId?te(e.parentId):`-`}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>N(e.id),children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>I([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:ee,children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[e.parentId?null:(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-toggle-child`,"aria-label":`${n?`收起`:`展开`}${e.name}的子级数据`,"aria-expanded":n,title:n?`收起子级`:`展开子级`,onClick:()=>b(t=>t===e.id?null:e.id),children:`子级`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>P(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>I([e.id]),children:(0,Q.jsx)(wz,{})})]})]},e.id),n?(0,Q.jsxs)(`div`,{className:`dictionary-child-add-row`,children:[(0,Q.jsx)(`span`,{className:`dictionary-child-add-label`,children:`子级数据`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>A(e.id),children:`新增子级`})]},`${e.id}-child-add`):null]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,S.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:T===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[T,` / `,w]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:T===w,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:r.dictionary.type===`系统字典`?`提示`:`确认删除`}),r.dictionary.type===`系统字典`?null:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:r.dictionary.type===`系统字典`?`系统字典“${r.dictionary.name}”不能删除，只能修改字典值。`:`确定删除字典“${r.dictionary.name}”吗？删除后无法恢复。`})}),(0,Q.jsx)(`footer`,{children:r.dictionary.type===`系统字典`?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>i(null),children:`关闭`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})})]})}):null]})}function $B({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),a=(0,Z.useRef)(null),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(!1),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(null),[v,y]=(0,Z.useState)(``),b=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){s(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){s(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),s(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},x=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},S=e=>{t(t=>({...t,systemIcon:e.id})),l(!1),n(`已选择系统图标：${e.label}`)},C=()=>{p(e=>(e&&(h(``),_(null),y(``)),!e))},w=e=>{let t=e.target.files?.[0];if(e.target.value=``,t){if(!t.type.startsWith(`image/`)){y(`请选择图片格式的图标文件`);return}if(t.size>512*1024){y(`图标文件不能超过 512KB`);return}_(t),y(``)}},T=()=>{if(!m.trim()){y(`请输入图标名称`);return}if(!g){y(`请选择图标文件`);return}let e=new FileReader;e.onload=()=>{let r={id:`custom-icon-${Date.now()}`,label:m.trim().slice(0,20),src:String(e.result)};t(e=>({...e,customSystemIcons:[...e.customSystemIcons??[],r]})),y(``),h(``),_(null),p(!1),n(`图标“${r.label}”已上传`)},e.readAsDataURL(g)},E=e=>{t(t=>({...t,customSystemIcons:e.src?(t.customSystemIcons??[]).filter(t=>t.id!==e.id):t.customSystemIcons??[],hiddenSystemIconIds:e.src?t.hiddenSystemIconIds??[]:[...new Set([...t.hiddenSystemIconIds??[],e.id])],systemIcon:t.systemIcon===e.id?`apps`:t.systemIcon})),d(null),n(`图标“${e.label}”已删除`)},D=[...Iz.filter(t=>!(e.hiddenSystemIconIds??[]).includes(t.id)),...e.customSystemIcons??[]];return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(Lz,{name:e.systemIcon,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>l(!0),children:`管理图标`})})]})]}),o?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:o}):null,c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>l(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`图标库`}),(0,Q.jsxs)(`div`,{className:`system-icon-picker-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:C,children:f?`取消上传`:`上传图标`}),(0,Q.jsx)(`span`,{children:`支持 PNG、JPG、WebP、SVG，最大 512KB`})]}),f?(0,Q.jsxs)(`div`,{className:`system-icon-upload-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{children:[`图标名称 `,(0,Q.jsx)(`i`,{children:`*`})]}),(0,Q.jsx)(`input`,{value:m,maxLength:20,placeholder:`请输入图标名称`,onChange:e=>{h(e.target.value),y(``)}})]}),(0,Q.jsxs)(`div`,{className:`system-icon-upload-file`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>a.current?.click(),children:`选择文件`}),(0,Q.jsx)(`span`,{children:g?.name??`未选择文件`}),(0,Q.jsx)(`button`,{type:`button`,onClick:T,children:`确认上传`})]}),v?(0,Q.jsx)(`p`,{role:`alert`,children:v}):null]}):null,(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:D.map(t=>(0,Q.jsxs)(`div`,{className:`system-icon-picker-item`,children:[(0,Q.jsxs)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>S(t),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:t.id,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`b`,{children:t.label})]}),(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-delete`,"aria-label":`删除${t.label}图标`,title:`删除图标`,onClick:()=>d(t),children:(0,Q.jsx)(wz,{})})]},t.id))}),(0,Q.jsx)(`input`,{ref:a,type:`file`,accept:`image/png,image/jpeg,image/webp,image/svg+xml`,onChange:w,hidden:!0})]})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-system-icon-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{id:`delete-system-icon-title`,children:`确认删除图标`})}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除图标“`,u.label,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>E(u),children:`确认删除`})]})]})}):null]})}function eV({onAction:e}){let t=[{id:`workbench`,name:`工作台`,type:`菜单`,icon:`home`,sort:1,path:`/workbench`,component:`WorkbenchPage`,perms:`workbench:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`applications`,name:`应用`,type:`目录`,icon:`apps`,sort:2,path:`/applications`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-dual-prevention`,name:`双重预防机制`,type:`目录`,icon:`shield`,sort:1,path:`dual-prevention`,component:``,perms:`application:dual-prevention:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-risk-control`,name:`风险分级管控`,type:`菜单`,icon:`shield`,sort:1,path:`risk-control`,component:`DualPreventionPage`,perms:`application:risk-control:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-list`,name:`岗位隐患排查清单`,type:`菜单`,icon:`document`,sort:2,path:`inspection-list`,component:`DualPreventionPage`,perms:`application:inspection-list:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-flow`,name:`隐患排查审批流程`,type:`菜单`,icon:`approval`,sort:3,path:`inspection-flow`,component:`DualPreventionPage`,perms:`application:inspection-flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`application-safety`,name:`安全管理`,type:`菜单`,icon:`shield`,sort:2,path:`safety`,component:`ApplicationPage`,perms:`application:safety:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-equipment`,name:`设备管理`,type:`菜单`,icon:`equipment`,sort:3,path:`equipment`,component:`ApplicationPage`,perms:`application:equipment:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-explosive`,name:`火工品管理`,type:`菜单`,icon:`explosive`,sort:4,path:`explosive`,component:`ApplicationPage`,perms:`application:explosive:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-production`,name:`生产管理`,type:`菜单`,icon:`production`,sort:5,path:`production`,component:`ApplicationPage`,perms:`application:production:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-electromechanical`,name:`机电管理`,type:`菜单`,icon:`equipment`,sort:6,path:`electromechanical`,component:`ApplicationPage`,perms:`application:electromechanical:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-fire`,name:`消防管理`,type:`菜单`,icon:`fire`,sort:7,path:`fire`,component:`ApplicationPage`,perms:`application:fire:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-emergency`,name:`应急管理`,type:`菜单`,icon:`warning`,sort:8,path:`emergency`,component:`ApplicationPage`,perms:`application:emergency:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`tasks`,name:`任务`,type:`目录`,icon:`task`,sort:3,path:`/tasks`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`processes`,name:`流程`,type:`目录`,icon:`flow`,sort:4,path:`/processes`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dynamics`,name:`动态`,type:`目录`,icon:`message`,sort:5,path:`/dynamics`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`warnings`,name:`预警`,type:`目录`,icon:`warning`,sort:6,path:`/warnings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dashboards`,name:`看板`,type:`目录`,icon:`dashboard`,sort:7,path:`/dashboards`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:SB.map((e,t)=>({id:`dashboard-${t+1}`,name:e.name,type:`菜单`,icon:`dashboard`,sort:t+1,path:`dashboard-${t+1}`,component:`DashboardPage`,perms:`dashboard:${t+1}:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}))},{id:`settings`,name:`设置中心`,type:`目录`,icon:`settings`,sort:8,path:`/settings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`settings-dynamics`,name:`安全动态`,type:`菜单`,icon:`message`,sort:1,path:`dynamics`,component:`DynamicsSettings`,perms:`settings:dynamics:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-worksheet`,name:`工作表`,type:`菜单`,icon:`document`,sort:2,path:`worksheet`,component:`EmbeddedLowCodePage`,perms:`settings:worksheet:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-task`,name:`任务`,type:`菜单`,icon:`task`,sort:3,path:`task`,component:`EmbeddedTaskFrame`,perms:`settings:task:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-flow`,name:`流程`,type:`菜单`,icon:`flow`,sort:4,path:`flow`,component:`EmbeddedLowCodePage`,perms:`settings:flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`system-settings`,name:`系统设置`,type:`目录`,icon:`settings`,sort:8,path:`system`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`organization-users`,name:`组织用户`,type:`菜单`,icon:`people`,sort:1,path:`organization-users`,component:`UserManagementCenter`,perms:`system:user:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`role-permission`,name:`角色权限`,type:`菜单`,icon:`approval`,sort:2,path:`role-permission`,component:`RbacPage`,perms:`system:role:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`menu-management`,name:`菜单管理`,type:`菜单`,icon:`sort`,sort:3,path:`menu-management`,component:`MenuManagementPage`,perms:`system:menu:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-31 09:00`,children:[]},{id:`dictionary`,name:`字典管理`,type:`菜单`,icon:`document`,sort:4,path:`dictionary`,component:`DictionaryManagement`,perms:`system:dictionary:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`enterprise`,name:`企业设置`,type:`菜单`,icon:`briefcase`,sort:5,path:`enterprise`,component:`EnterpriseSettings`,perms:`system:enterprise:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]}]}],n=(e=`settings`)=>({parentId:e,name:``,type:`菜单`,icon:`apps`,sort:1,path:``,component:``,perms:``,visible:`显示`,status:`启用`}),[r,i]=(0,Z.useState)(t),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(()=>new Set([`settings`,`system-settings`])),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(n()),[h,g]=(0,Z.useState)(``),_=(e,t=0,n=`0`)=>e.flatMap(e=>[{...e,depth:t,parentId:n},..._(e.children??[],t+1,e.id)]),v=_(r),y=e=>{if(e.id===`applications`)return!0;let t=e.parentId;for(;t!==`0`;){if(t===`applications`)return!0;t=v.find(e=>e.id===t)?.parentId??`0`}return!1},b=v.filter(e=>e.type!==`按钮`&&!y(e)),x=v.filter(e=>(!a||e.name.includes(a.trim()))&&(!s||e.status===s)?!0:v.some(t=>t.id!==e.id&&t.depth>e.depth&&t.parentId===e.id&&(!a||t.name.includes(a.trim()))&&(!s||t.status===s))),S=e=>{let t=e.parentId;for(;t!==`0`;){if(!l.has(t))return!1;t=v.find(e=>e.id===t)?.parentId??`0`}return!0},C=(e,t,n)=>e.map(e=>e.id===t?{...e,...n}:{...e,children:C(e.children??[],t,n)}),w=(e,t,n)=>t===`0`?[...e,n]:e.map(e=>e.id===t?{...e,children:[...e.children??[],n]}:{...e,children:w(e.children??[],t,n)}),T=(e,t)=>e.filter(e=>e.id!==t).map(e=>({...e,children:T(e.children??[],t)})),E=(e=`settings`)=>{let t=v.find(t=>t.id===e);m({...n(e),sort:(t?.children?.length??r.length)+1}),g(``),f({mode:`create`,parentId:e})},D=e=>{m({...e}),g(``),f({mode:`edit`,id:e.id})},O=t=>{t.preventDefault();let n=p.name.trim();if(!n){g(`请输入菜单名称`);return}let r={...p,name:n,sort:Number(p.sort)||1};d?.mode===`edit`?i(e=>C(e,d.id,r)):i(e=>w(e,r.parentId,{...r,id:`menu-${Date.now()}`,createdAt:`2026-08-31 10:00`,children:[]})),f(null),e(`${d?.mode===`edit`?`保存`:`新增`}菜单成功`)},k=t=>{let n=t.status===`启用`?`停用`:`启用`;i(e=>C(e,t.id,{status:n})),e(`${t.name}已${n}`)},A=()=>{i(e=>T(e,d.id)),f(null),e(`删除菜单成功`)},j=()=>u(new Set(v.filter(e=>e.children?.length).map(e=>e.id))),M=()=>u(new Set),N=(e,t)=>{m(n=>({...n,[e]:t})),g(``)};return(0,Q.jsxs)(`section`,{className:`menu-management`,"aria-labelledby":`menu-management-title`,children:[(0,Q.jsxs)(`header`,{className:`menu-management-toolbar`,children:[(0,Q.jsx)(`h1`,{id:`menu-management-title`,children:`菜单管理`}),(0,Q.jsxs)(`button`,{type:`button`,className:`menu-management-primary`,onClick:()=>E(`settings`),children:[(0,Q.jsx)(az,{}),`新增菜单`]})]}),(0,Q.jsxs)(`section`,{className:`menu-management-panel`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-filters`,children:[(0,Q.jsxs)(`label`,{children:[`菜单名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),maxLength:20,placeholder:`请输入菜单名称`})]}),(0,Q.jsxs)(`label`,{children:[`状态`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{value:``,children:`全部`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-reset`,onClick:()=>{o(``),c(``)},children:`重置`}),(0,Q.jsx)(`span`,{}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:j,children:`展开`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:M,children:`折叠`})]}),(0,Q.jsxs)(`div`,{className:`menu-management-table`,role:`table`,"aria-label":`菜单列表`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-table-head`,role:`row`,children:[(0,Q.jsx)(`span`,{children:`菜单名称`}),(0,Q.jsx)(`span`,{children:`图标`}),(0,Q.jsx)(`span`,{children:`排序`}),(0,Q.jsx)(`span`,{children:`权限标识`}),(0,Q.jsx)(`span`,{children:`组件路径`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),x.filter(S).map(e=>{let t=(e.children??[]).length>0,n=y(e);return(0,Q.jsxs)(`div`,{className:`menu-management-table-row`,role:`row`,children:[(0,Q.jsxs)(`div`,{className:`menu-tree-name`,style:{"--menu-depth":e.depth},children:[t?(0,Q.jsx)(`button`,{type:`button`,className:l.has(e.id)?`expanded`:``,onClick:()=>u(t=>{let n=new Set(t);return n.has(e.id)?n.delete(e.id):n.add(e.id),n}),children:(0,Q.jsx)(_z,{})}):(0,Q.jsx)(`i`,{}),(0,Q.jsx)(Lz,{name:e.icon}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`em`,{children:e.type})]}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:e.icon})}),(0,Q.jsx)(`span`,{children:e.sort}),(0,Q.jsx)(`code`,{children:e.perms||`-`}),(0,Q.jsx)(`code`,{children:e.component||`-`}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`i`,{className:e.status===`启用`?`menu-status enabled`:`menu-status`,children:e.status})}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsx)(`div`,{className:`menu-row-actions`,children:n?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>E(e.id),disabled:e.type===`按钮`,children:`新增`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>D(e),children:`修改`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>k(e),children:e.status===`启用`?`停用`:`启用`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,disabled:e.id===`settings`,onClick:()=>f({mode:`delete`,id:e.id,name:e.name}),children:`删除`})]})})]},e.id)})]})]}),d?.mode===`create`||d?.mode===`edit`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog menu-editor-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`menu-editor-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`menu-editor-title`,children:d.mode===`edit`?`修改菜单`:`新增菜单`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭菜单编辑弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body menu-editor-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`上级菜单`}),(0,Q.jsxs)(`select`,{value:p.parentId,onChange:e=>N(`parentId`,e.target.value),disabled:d.mode===`edit`,children:[d.mode===`edit`&&p.parentId===`0`?(0,Q.jsx)(`option`,{value:`0`,children:`主类目`}):null,b.filter(e=>e.id!==d.id).map(e=>(0,Q.jsxs)(`option`,{value:e.id,children:[`　`.repeat(e.depth),e.name]},e.id))]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单类型`}),(0,Q.jsxs)(`select`,{value:p.type,onChange:e=>N(`type`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`目录`}),(0,Q.jsx)(`option`,{children:`菜单`}),(0,Q.jsx)(`option`,{children:`按钮`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单名称`}),(0,Q.jsx)(`input`,{value:p.name,onChange:e=>N(`name`,e.target.value),maxLength:20,placeholder:`请输入菜单名称`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示排序`}),(0,Q.jsx)(`input`,{value:p.sort,onChange:e=>N(`sort`,e.target.value.replace(/\D/g,``).slice(0,4)),inputMode:`numeric`,maxLength:4,placeholder:`请输入排序号`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`路由地址`}),(0,Q.jsx)(`input`,{value:p.path,onChange:e=>N(`path`,e.target.value),maxLength:60,placeholder:`例如：system/menu`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`组件路径`}),(0,Q.jsx)(`input`,{value:p.component,onChange:e=>N(`component`,e.target.value),maxLength:60,placeholder:`例如：system/menu/index`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`权限标识`}),(0,Q.jsx)(`input`,{value:p.perms,onChange:e=>N(`perms`,e.target.value),maxLength:60,placeholder:`例如：system:menu:view`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单图标`}),(0,Q.jsx)(`select`,{value:p.icon,onChange:e=>N(`icon`,e.target.value),children:Iz.map(e=>(0,Q.jsx)(`option`,{value:e.id,children:e.label},e.id))})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示状态`}),(0,Q.jsxs)(`select`,{value:p.visible,onChange:e=>N(`visible`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`显示`}),(0,Q.jsx)(`option`,{children:`隐藏`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单状态`}),(0,Q.jsxs)(`select`,{value:p.status,onChange:e=>N(`status`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),h?(0,Q.jsx)(`p`,{className:`menu-editor-error`,children:h}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存`})]})]})}):null,d?.mode===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-menu-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-menu-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除菜单“`,d.name,`”吗？其下级菜单也将一并删除。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:A,children:`确认删除`})]})]})}):null]})}function tV({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r,roles:i,setRoles:a}){let[o,s]=(0,Z.useState)(t),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)([]),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),[b,x]=(0,Z.useState)(!1),S=[{label:`工作表单`,module:`form`}],C=[{label:`流程中心`,module:`flow`}],w=S.find(e=>e.label===o);C.find(e=>e.label===o);let T=(o===`工作表`?{label:`工作表`,module:`form`}:o===`流程`?{label:`流程`,module:`flow`}:null)??(o===`应用中心`?{label:`应用中心`,module:`app`}:null),E=o===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===o),D=[{label:`预警信息表`,view:`warning-info-table`},{label:`预警规则设置`,view:`warning-rule`}],O=D.find(e=>e.label===o),k=[`组织用户`,`角色权限`,`菜单管理`,`字典管理`,`企业设置`],A=IB.find(e=>e.label===o)??w??E??O??IB[0],j=A.icon??QR,M={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[o]??[],N=o===`组织用户`,P=o===`角色权限`,ee=o===`菜单管理`,F=o===`安全动态`,I=o===`字典管理`,te=o===`企业设置`,ne=!!T;w?.module;let re=!!E,ie=!!O,ae=k.includes(o),oe=e=>{let t=e===`worksheet`?!f:e===`process`?!m:e===`task`?!g:e===`warning`?!v:!b;p(e===`worksheet`&&t),h(e===`process`&&t),_(e===`task`&&t),y(e===`warning`&&t),x(e===`system`&&t),t&&(e===`worksheet`&&s(`工作表单`),e===`process`&&s(`流程中心`),e===`task`&&s(`任务模版`),e===`warning`&&s(`预警信息表`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:IB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`].includes(e)?(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`预警`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${o===`预警`||ie?`active`:``}`,onClick:()=>oe(`warning`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:D.map(e=>(0,Q.jsx)(`button`,{className:o===e.label?`active`:``,onClick:()=>s(e.label),children:e.label},e.label))}):null]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ae?`active`:``}`,onClick:()=>oe(`system`),"aria-expanded":b,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:b?`expanded`:``})]}),b?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:k.map(e=>(0,Q.jsx)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(_z,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!N&&!P&&!ee&&!te&&!F&&!I&&!ne&&!re&&!ie?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(j,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:A.title}),(0,Q.jsx)(`p`,{children:A.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${A.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,F?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(`iframe`,{src:`${Rz}index.html?view=feedno`,title:`动态圈管理`})}):te?(0,Q.jsx)($B,{branding:n,onBrandingChange:r,onAction:e}):I?(0,Q.jsx)(QB,{onAction:e}):ne?(0,Q.jsx)(NB,{module:T.module,view:T.view,label:T.label}):re?(0,Q.jsx)(`section`,{className:`settings-task-embed`,"aria-label":E.label,children:(0,Q.jsx)(EB,{view:E.view,title:E.label})}):ie?(0,Q.jsx)(AB,{view:O.view,label:O.label,className:`settings-warning-embed`}):N?(0,Q.jsx)(JB,{organizations:c,setOrganizations:l,users:u,setUsers:d,roles:i}):P?(0,Q.jsx)(XB,{onAction:e,roles:i,setRoles:a}):ee?(0,Q.jsx)(eV,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[A.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${A.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),M.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function nV({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(``),[p,m]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){f(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){f(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}f(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),f(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsxs)(`span`,{className:`login-password-field`,children:[(0,Q.jsx)(`input`,{type:l?`text`:`password`,value:a,onChange:e=>{o(e.target.value),f(``)},autoComplete:`current-password`,placeholder:`请输入密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`login-password-visibility`,"aria-label":l?`隐藏密码`:`显示密码`,title:l?`隐藏密码`:`显示密码`,onClick:()=>u(e=>!e),children:l?(0,Q.jsx)(sz,{}):(0,Q.jsx)(oz,{})})]})]}),d?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:d}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>m(!0),children:`忘记密码`})]}),p?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(fz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function rV(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function iV(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>Vz.map(e=>({...e}))),[i,a]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`,customSystemIcons:Array.isArray(e.customSystemIcons)?e.customSystemIcons.filter(e=>e&&typeof e.id==`string`&&typeof e.label==`string`&&typeof e.src==`string`):[],hiddenSystemIconIds:Array.isArray(e.hiddenSystemIconIds)?e.hiddenSystemIconIds.filter(e=>typeof e==`string`):[]}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`,customSystemIcons:[],hiddenSystemIconIds:[]}}}),[o,s]=(0,Z.useState)(`工作台`),[c,l]=(0,Z.useState)(`task`),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(``),m=(0,Z.useRef)(null),[h,g]=(0,Z.useState)(Uz),[_,v]=(0,Z.useState)(`workbench`),[y,b]=(0,Z.useState)(()=>Bz.map(e=>e.name)),[x,S]=(0,Z.useState)(`我的任务`),[C,w]=(0,Z.useState)(`待审批`),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(Yz),[k,A]=(0,Z.useState)([]),[j,M]=(0,Z.useState)(`动态`),[N,P]=(0,Z.useState)(mB[0].title),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(`安全动态`),[ne,re]=(0,Z.useState)(Wz),[ie,ae]=(0,Z.useState)(null),[oe,se]=(0,Z.useState)(!0),[L,R]=(0,Z.useState)([]);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(i))}catch{}},[i]),(0,Z.useEffect)(()=>{let e=!1;return fetch(Mz,{cache:`no-store`}).then(e=>{if(!e.ok)throw Error(`Unable to load prototype annotations`);return e.json()}).then(t=>{e||R(Pz(t))}).catch(()=>{e||R([])}),()=>{e=!0}},[]);let z=e=>{p(`已选择 ${e}`),window.clearTimeout(m.current),m.current=window.setTimeout(()=>p(``),3e3)},ce=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{v(e),s(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},B=e=>{let t=[...mB,...hB].find(t=>t.title===e);if(t){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{P(t.title),F(!0),g(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:pz}]),v(`双重预防机制`),s(`应用`)});return}let n=e===`应用中心`?`双重预防机制`:e,r=Bz.find(e=>e.name===n);if(!r){z(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{n===`双重预防机制`&&F(!1),g(e=>e.some(e=>e.id===n)?e:[...e,{id:n,label:n,icon:r.icon}]),v(n),s(`应用`)})},le=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:mz}]),v(`messages`),s(`工作台`)})},ue=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{ae(null),S(e),g(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:Cz}]),v(`tasks`),s(`任务`)})},de=(e=`待审批`,t=``)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),E(t),g(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:cz}]),v(`processes`),s(`流程`)})},fe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),v(`dashboard`),s(`看板`)})},V=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(e),g(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:pz}]),v(`safety-dynamics`),s(`动态`)})},H=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:Sz}]),v(`warnings`),s(`预警`)})},pe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:Cz}]),v(`todos`),s(`工作台`)})},me=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{te(e),g(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),v(`settings`),s(`设置`)})},he=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:Ez}]),v(`personal-center`),s(``)})},ge=e=>re(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),_e=()=>re(e=>e.map(e=>({...e,read:!0}))),ve=e=>{let t=h.findIndex(t=>t.id===e),n=h.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(g(n),_===e){let e=n[Math.max(0,t-1)]??Uz[0];v(e.id),s(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ye=Bz.find(e=>e.name===_);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(rV,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(tB,{active:o,brandLogo:i.logo,onOpenSettings:me,onChange:e=>{if(e===`工作台`){ce(`workbench`);return}if(e===`应用`){B(`应用中心`);return}if(e===`任务`){ue();return}if(e===`流程`){de();return}if(e===`动态`){V();return}if(e===`预警`){H();return}if(e===`看板`){fe();return}s(e),z(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(nB,{tabs:h,activeTab:_,onSelect:ce,onClose:ve,onOpenMessages:le,onOpenPersonal:he,onLogout:()=>t(!1),onOpenSpecification:()=>window.open(Nz,`_blank`,`noopener,noreferrer`)}),(0,Q.jsx)(`main`,{children:_===`messages`?(0,Q.jsx)(aB,{messages:ne,onMarkRead:ge,onMarkAllRead:_e,onReturn:()=>ce(`workbench`),onOpenProcess:de}):_===`todos`?(0,Q.jsx)(FB,{onOpenTasks:ue,onOpenProcesses:de,onOpenSafety:V}):_===`tasks`?(0,Q.jsx)(DB,{initialTab:x},x):_===`processes`?(0,Q.jsx)(sB,{initialFilter:C,initialProcessNumber:T,processRecords:D,setProcessRecords:O,onAction:z},`${C}-${T}`):_===`safety-dynamics`?(0,Q.jsx)(TB,{initialTab:j,onAction:z},j):_===`warnings`?(0,Q.jsx)(jB,{}):_===`dashboard`?(0,Q.jsx)(wB,{}):_===`settings`?(0,Q.jsx)(tV,{initialSelected:I,onAction:z,branding:i,onBrandingChange:a,roles:n,setRoles:r},I):_===`personal-center`?(0,Q.jsx)(ZB,{onAction:z,roles:n}):ye?.name===`双重预防机制`?(0,Q.jsx)(_B,{initialFormTitle:N,initialOpenForm:ee,approvalDrafts:k,setApprovalDrafts:A,onSaveProcessDraft:e=>O(t=>t.some(t=>t.id===e.id)?t.map(t=>t.id===e.id?e:t):[e,...t]),onDeleteProcessDraft:e=>O(t=>t.filter(t=>t.id!==e)),onAction:z,onSwitchApplication:B},`${N}-${ee?`form`:`catalog`}`):ye?(0,Q.jsx)(vB,{app:ye,onReturn:()=>ce(`workbench`),onAction:z,onSwitchApplication:B}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsxs)(`h1`,{children:[`智慧应急安全管理平台欢迎您，`,(0,Q.jsx)(`button`,{className:`workbench-user-link`,onClick:he,children:`张宇`})]})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:pe,children:[`待办总览 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:zz.map(e=>(0,Q.jsx)(cB,{item:e,active:c===e.id,onSelect:()=>l(e.id),onOpen:e=>{e===`message`&&le(),e===`task`&&ue(),e===`approval`&&de(),e===`warning`&&H()}},e.id))})]}),(0,Q.jsx)(uB,{onOpen:B}),(0,Q.jsx)(lB,{onOpen:B,favoriteApps:y,onCustomize:b})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(bB,{onAction:d,onOpenTask:()=>ue(`发布任务`),onOpenProcess:()=>de(`发起流程`),onOpenDynamics:()=>V(`发动态`)}),(0,Q.jsx)(yB,{onOpen:z,onOpenAll:V})]})]})]})}),(0,Q.jsx)(rB,{visible:oe,managing:!1,pageId:_,pageLabel:h.find(e=>e.id===_)?.label??`工作台`,annotations:L,onCloseManager:()=>{},onAdd:({pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a})=>{se(!0),R(o=>[...o,{id:`annotation-${Date.now()}`,pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a}])},onUpdate:(e,t)=>R(n=>n.map(n=>n.id===e?{...n,content:t}:n)),onRemove:e=>R(t=>t.filter(t=>t.id!==e)),onReposition:(e,t)=>{se(!0),R(n=>n.map(n=>n.id===e?{...n,...t}:n))}})]}),f?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":f,children:[(0,Q.jsx)(hz,{}),f]}):null,(0,Q.jsx)(xB,{title:u,onClose:()=>d(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(rV,{}),(0,Q.jsx)(nV,{branding:i,onLogin:()=>t(!0)})]})}(0,Dz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(iV,{}));

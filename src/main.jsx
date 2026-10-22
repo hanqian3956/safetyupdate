@@ -58,6 +58,7 @@ import "./login.css";
 import "./enterprise-settings.css";
 import lowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
 import newTaskPrototypeHtml from "../xiaodong/新任务.html?raw";
+import warningPrototypeHtml from "../xiaodong/预警.html?raw";
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "人事管理",
@@ -5099,6 +5100,93 @@ function EmbeddedTasksPage({ initialTab = "我的任务" }) {
   );
 }
 
+function EmbeddedDescriptionSwitch({ checked, onChange }) {
+  return (
+    <label className="settings-lowcode-description-switch">
+      <input
+        type="checkbox"
+        checked={checked}
+        onChange={(event) => onChange(event.target.checked)}
+      />
+      <span aria-hidden="true" />
+      显示说明
+    </label>
+  );
+}
+
+function EmbeddedWarningFrame({ view, title, showDescription = false }) {
+  const descriptionWidth = 360;
+  const embeddedWarningStyles = `
+    .sidebar, .top-bar, .dev-doc-btn { display: none !important; }
+    .main-container { width: 100%; }
+    .content-area { top: 0; padding: 16px 20px 32px; }
+    .app-container { padding-right: ${showDescription ? `${descriptionWidth}px` : "0"} !important; }
+    #devDocDrawer {
+      display: ${showDescription ? "flex" : "none"} !important;
+      width: ${descriptionWidth}px;
+      max-width: none;
+      transform: translateX(0) !important;
+      z-index: 20;
+    }
+  `;
+  const embeddedHead = `<head><style>${embeddedWarningStyles}</style>`;
+  const srcDoc = warningPrototypeHtml
+    .replace("<head>", embeddedHead)
+    .replace(
+      "</body>",
+      `<script>
+        window.addEventListener("load", function () {
+          var hostWarningView = ${JSON.stringify(view)};
+          var hostWarningPage = document.getElementById("page-" + hostWarningView);
+          var hostWarningMenu = document.querySelector(
+            '.menu-item[data-page="' + hostWarningView + '"]',
+          );
+          if (hostWarningPage) hostWarningPage.removeAttribute("hidden");
+          if (hostWarningMenu) hostWarningMenu.removeAttribute("hidden");
+          if (typeof window.navigateTo === "function") {
+            window.navigateTo(hostWarningView);
+          }
+          if (${showDescription} && typeof window.renderDevDoc === "function") {
+            window.renderDevDoc(hostWarningView);
+          }
+        });
+      </script></body>`,
+    );
+
+  return (
+    <iframe
+      key={`${view}-${showDescription ? "with-description" : "workspace-only"}`}
+      className="embedded-warnings-frame"
+      srcDoc={srcDoc}
+      title={title}
+    />
+  );
+}
+
+function WarningEmbeddedWorkspace({ view, label, className = "" }) {
+  const [showDescription, setShowDescription] = useState(false);
+  return (
+    <section
+      className={`settings-lowcode-page ${className}`.trim()}
+      aria-label={`${label}预警页面`}
+    >
+      <div className="settings-lowcode-toolbar">
+        <EmbeddedDescriptionSwitch
+          checked={showDescription}
+          onChange={setShowDescription}
+        />
+      </div>
+      <div className="settings-lowcode-embed">
+        <EmbeddedWarningFrame
+          view={view}
+          title={label}
+          showDescription={showDescription}
+        />
+      </div>
+    </section>
+  );
+}
+
 function EmbeddedWarningsPage() {
   const warningTabs = [
     { label: "预警分级看板", view: "warning-dashboard" },
@@ -5107,6 +5195,7 @@ function EmbeddedWarningsPage() {
     { label: "预警统计", view: "warning-stats-aggr" },
   ];
   const [activeWarningTab, setActiveWarningTab] = useState("预警任务");
+  const [showDescription, setShowDescription] = useState(false);
   const activeWarning = warningTabs.find(
     (item) => item.label === activeWarningTab,
   );
@@ -5123,12 +5212,17 @@ function EmbeddedWarningsPage() {
             {tab.label}
           </button>
         ))}
+        <div className="embedded-warning-toolbar">
+          <EmbeddedDescriptionSwitch
+            checked={showDescription}
+            onChange={setShowDescription}
+          />
+        </div>
       </nav>
-      <iframe
-        key={activeWarning.view}
-        className="embedded-warnings-frame"
-        src={`${prototypeBase}预警.html?view=${activeWarning.view}`}
+      <EmbeddedWarningFrame
+        view={activeWarning.view}
         title={activeWarning.label}
+        showDescription={showDescription}
       />
     </section>
   );
@@ -5180,15 +5274,10 @@ function LowCodeEmbeddedWorkspace({ module, view, label }) {
   return (
     <section className="settings-lowcode-page" aria-label={`${label}低代码页面`}>
       <div className="settings-lowcode-toolbar">
-        <label className="settings-lowcode-description-switch">
-          <input
-            type="checkbox"
-            checked={showDescription}
-            onChange={(event) => setShowDescription(event.target.checked)}
-          />
-          <span aria-hidden="true" />
-          显示说明
-        </label>
+        <EmbeddedDescriptionSwitch
+          checked={showDescription}
+          onChange={setShowDescription}
+        />
       </div>
       <EmbeddedLowCodePage
         module={module}
@@ -9876,15 +9965,11 @@ function SettingsPage({
               />
             </section>
           ) : isWarningPageSetting ? (
-            <section
+            <WarningEmbeddedWorkspace
+              view={warningPageMenu.view}
+              label={warningPageMenu.label}
               className="settings-warning-embed"
-              aria-label={warningPageMenu.label}
-            >
-              <iframe
-                src={`${prototypeBase}预警.html?view=${warningPageMenu.view}`}
-                title={warningPageMenu.label}
-              />
-            </section>
+            />
           ) : isUserCenter ? (
             <UserManagementCenter
               organizations={organizations}
