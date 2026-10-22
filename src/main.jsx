@@ -209,7 +209,36 @@ const apps = [
   { name: "应急管理", description: "预案与响应", icon: Lightbulb24Regular },
 ];
 
-const managedRoleOptions = ["系统管理员", "安全管理员", "任务执行人", "数据查看员"];
+const initialManagedRoles = [
+  {
+    id: "admin",
+    name: "系统管理员",
+    creator: "系统管理员",
+    status: "启用",
+    createdAt: "2026-07-01 09:20",
+  },
+  {
+    id: "safety",
+    name: "安全管理员",
+    creator: "张宇",
+    status: "启用",
+    createdAt: "2026-07-08 14:35",
+  },
+  {
+    id: "executor",
+    name: "任务执行人",
+    creator: "李明",
+    status: "启用",
+    createdAt: "2026-07-12 10:16",
+  },
+  {
+    id: "viewer",
+    name: "数据查看员",
+    creator: "王强",
+    status: "停用",
+    createdAt: "2026-07-15 16:42",
+  },
+];
 const managedPositionOptions = ["安全管理员", "设备工程师", "生产主管"];
 
 const initialTabs = [
@@ -6086,13 +6115,21 @@ function organizationPath(nodes, id, trail = []) {
 
 function UserMultiSelect({ label, options, value, onChange, activeMenu, setActiveMenu }) {
   const open = activeMenu === label;
-  const selectedLabels = options.filter((option) => value.includes(option));
-  const toggleOption = (option) =>
+  const optionValue = (option) =>
+    typeof option === "string" ? option : option.value;
+  const optionLabel = (option) =>
+    typeof option === "string" ? option : option.label;
+  const selectedLabels = options
+    .filter((option) => value.includes(optionValue(option)))
+    .map(optionLabel);
+  const toggleOption = (option) => {
+    const nextValue = optionValue(option);
     onChange(
-      value.includes(option)
-        ? value.filter((item) => item !== option)
-        : [...value, option],
+      value.includes(nextValue)
+        ? value.filter((item) => item !== nextValue)
+        : [...value, nextValue],
     );
+  };
 
   return (
     <div className="user-multi-select">
@@ -6108,23 +6145,26 @@ function UserMultiSelect({ label, options, value, onChange, activeMenu, setActiv
       </button>
       {open ? (
         <div className="user-multi-options" role="listbox" aria-label={label}>
-          {options.map((option) => (
-            <label key={option}>
-              <input
-                type="checkbox"
-                checked={value.includes(option)}
-                onChange={() => toggleOption(option)}
-              />
-              <span>{option}</span>
-            </label>
-          ))}
+          {options.map((option) => {
+            const nextValue = optionValue(option);
+            return (
+              <label key={nextValue}>
+                <input
+                  type="checkbox"
+                  checked={value.includes(nextValue)}
+                  onChange={() => toggleOption(option)}
+                />
+                <span>{optionLabel(option)}</span>
+              </label>
+            );
+          })}
         </div>
       ) : null}
     </div>
   );
 }
 
-function UserManagementCenter({ organizations, setOrganizations, users, setUsers }) {
+function UserManagementCenter({ organizations, setOrganizations, users, setUsers, roles }) {
   const [activeTab, setActiveTab] = useState("users");
   const [selectedOrganization, setSelectedOrganization] = useState("");
   const [dialog, setDialog] = useState(null);
@@ -6629,7 +6669,13 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
                   />
                   <UserMultiSelect
                     label="角色"
-                    options={managedRoleOptions}
+                    options={roles.map((role) => ({
+                      value: role.name,
+                      label:
+                        role.status === "停用"
+                          ? `${role.name}（已停用）`
+                          : role.name,
+                    }))}
                     value={userRoles}
                     onChange={setUserRoles}
                     activeMenu={activeUserMultiSelect}
@@ -6786,37 +6832,7 @@ function RolePermissionCheckbox({ node, selectedIds, getLeafIds, onToggle }) {
   );
 }
 
-function RbacPage({ onAction }) {
-  const [roles, setRoles] = useState([
-    {
-      id: "admin",
-      name: "系统管理员",
-      creator: "系统管理员",
-      status: "启用",
-      createdAt: "2026-07-01 09:20",
-    },
-    {
-      id: "safety",
-      name: "安全管理员",
-      creator: "张宇",
-      status: "启用",
-      createdAt: "2026-07-08 14:35",
-    },
-    {
-      id: "executor",
-      name: "任务执行人",
-      creator: "李明",
-      status: "启用",
-      createdAt: "2026-07-12 10:16",
-    },
-    {
-      id: "viewer",
-      name: "数据查看员",
-      creator: "王强",
-      status: "停用",
-      createdAt: "2026-07-15 16:42",
-    },
-  ]);
+function RbacPage({ onAction, roles, setRoles }) {
   const menuTree = [
     { name: "工作台" },
     {
@@ -8094,7 +8110,7 @@ const organizationLeafIds = (node) =>
   );
 }
 
-function PersonalCenter({ onAction }) {
+function PersonalCenter({ onAction, roles }) {
   const [editing, setEditing] = useState(false);
   const [passwordDialog, setPasswordDialog] = useState(false);
   const [logoutDialog, setLogoutDialog] = useState(false);
@@ -8109,6 +8125,14 @@ function PersonalCenter({ onAction }) {
     confirm: "",
   });
   const [passwordError, setPasswordError] = useState("");
+  const currentRoleNames = ["安全管理员", "数据查看员"];
+  const currentRoleLabel = currentRoleNames
+    .map((roleName) => roles.find((role) => role.name === roleName))
+    .filter(Boolean)
+    .map((role) =>
+      role.status === "停用" ? `${role.name}（已停用）` : role.name,
+    )
+    .join("、");
   const saveProfile = () => {
     setEditing(false);
     onAction("个人资料已保存");
@@ -8225,7 +8249,7 @@ function PersonalCenter({ onAction }) {
             </div>
             <div>
               <dt>角色</dt>
-              <dd>安全管理员</dd>
+              <dd>{currentRoleLabel || "安全管理员、数据查看员（已停用）"}</dd>
             </div>
             <div>
               <dt>账号状态</dt>
@@ -9572,7 +9596,14 @@ function MenuManagementPage({ onAction }) {
   );
 }
 
-function SettingsPage({ onAction, initialSelected = "安全动态", branding, onBrandingChange }) {
+function SettingsPage({
+  onAction,
+  initialSelected = "安全动态",
+  branding,
+  onBrandingChange,
+  roles,
+  setRoles,
+}) {
   const [selected, setSelected] = useState(initialSelected);
   const [organizations, setOrganizations] = useState([]);
   const [users, setUsers] = useState([]);
@@ -9860,9 +9891,10 @@ function SettingsPage({ onAction, initialSelected = "安全动态", branding, on
               setOrganizations={setOrganizations}
               users={users}
               setUsers={setUsers}
+              roles={roles}
             />
           ) : isRbac ? (
-            <RbacPage onAction={onAction} />
+            <RbacPage onAction={onAction} roles={roles} setRoles={setRoles} />
           ) : isMenuManagement ? (
             <MenuManagementPage onAction={onAction} />
           ) : (
@@ -10172,6 +10204,9 @@ function InputLengthGuard() {
 
 function App() {
   const [authenticated, setAuthenticated] = useState(false);
+  const [managedRoles, setManagedRoles] = useState(() =>
+    initialManagedRoles.map((role) => ({ ...role })),
+  );
   const [enterpriseBranding, setEnterpriseBranding] = useState(() => {
     try {
       const stored = JSON.parse(localStorage.getItem("enterprise-branding") ?? "{}");
@@ -10611,9 +10646,11 @@ function App() {
                 onAction={showNotice}
                 branding={enterpriseBranding}
                 onBrandingChange={setEnterpriseBranding}
+                roles={managedRoles}
+                setRoles={setManagedRoles}
               />
             ) : activeTab === "personal-center" ? (
-              <PersonalCenter onAction={showNotice} />
+              <PersonalCenter onAction={showNotice} roles={managedRoles} />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
                 key={`${preventionInitial}-${preventionFormOpen ? "form" : "catalog"}`}
