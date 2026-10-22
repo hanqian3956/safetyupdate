@@ -7101,12 +7101,7 @@ function RbacPage({ onAction, roles, setRoles }) {
         { name: "工作表" },
         { name: "任务" },
         { name: "流程" },
-        {
-          name: "预警",
-          children: [
-            { name: "预警规则设置" },
-          ],
-        },
+        { name: "预警" },
         { name: "数据台" },
         { name: "数据看板" },
         { name: "应用中心" },
@@ -9697,7 +9692,6 @@ function SettingsPage({
   const [worksheetExpanded, setWorksheetExpanded] = useState(false);
   const [processExpanded, setProcessExpanded] = useState(false);
   const [taskExpanded, setTaskExpanded] = useState(false);
-  const [warningExpanded, setWarningExpanded] = useState(false);
   const [systemExpanded, setSystemExpanded] = useState(false);
   const worksheetMenus = [
     { label: "工作表单", module: "form" },
@@ -9720,12 +9714,8 @@ function SettingsPage({
   const taskPageMenu = selected === "任务"
     ? { label: "任务", view: "view-template" }
     : taskPageMenus.find((entry) => entry.label === selected);
-  const warningPageMenus = [
-    { label: "预警规则设置", view: "warning-rule" },
-  ];
-  const warningPageMenu = warningPageMenus.find(
-    (entry) => entry.label === selected,
-  );
+  const warningPageMenu =
+    selected === "预警" ? { label: "预警", view: "warning-rule" } : null;
   const systemSettingsMenus = ["组织用户", "角色权限", "菜单管理", "字典管理", "企业设置"];
   const item =
     settingsItems.find((entry) => entry.label === selected) ??
@@ -9796,22 +9786,18 @@ function SettingsPage({
         : menu === "process"
           ? !processExpanded
           : menu === "task"
-          ? !taskExpanded
-          : menu === "warning"
-            ? !warningExpanded
+            ? !taskExpanded
             : !systemExpanded;
 
     setWorksheetExpanded(menu === "worksheet" && expanded);
     setProcessExpanded(menu === "process" && expanded);
     setTaskExpanded(menu === "task" && expanded);
-    setWarningExpanded(menu === "warning" && expanded);
     setSystemExpanded(menu === "system" && expanded);
 
     if (!expanded) return;
     if (menu === "worksheet") setSelected("工作表单");
     if (menu === "process") setSelected("流程中心");
     if (menu === "task") setSelected("任务模版");
-    if (menu === "warning") setSelected("预警规则设置");
   };
   return (
     <section className="settings-page" aria-labelledby="settings-title">
@@ -9823,7 +9809,7 @@ function SettingsPage({
           </header>
           <nav>
             {settingsItems.map(({ label, icon: MenuIcon }) =>
-              ["工作表", "任务", "流程"].includes(label) ? (
+              ["工作表", "任务", "流程", "预警"].includes(label) ? (
                 <button
                   key={label}
                   className={selected === label ? "active" : ""}
@@ -9832,37 +9818,6 @@ function SettingsPage({
                   <MenuIcon />
                   <span>{label}</span>
                 </button>
-              ) : label === "预警" ? (
-                <div className="settings-menu-group" key={label}>
-                  <button
-                    className={`settings-parent-menu ${
-                      selected === "预警" || isWarningPageSetting
-                        ? "active"
-                        : ""
-                    }`}
-                    onClick={() => toggleSettingsSubmenu("warning")}
-                    aria-expanded={warningExpanded}
-                  >
-                    <MenuIcon />
-                    <span>{label}</span>
-                    <ChevronRight24Regular
-                      className={warningExpanded ? "expanded" : ""}
-                    />
-                  </button>
-                  {warningExpanded ? (
-                    <div className="settings-submenu-list">
-                      {warningPageMenus.map((entry) => (
-                        <button
-                          key={entry.label}
-                          className={selected === entry.label ? "active" : ""}
-                          onClick={() => setSelected(entry.label)}
-                        >
-                          {entry.label}
-                        </button>
-                      ))}
-                    </div>
-                  ) : null}
-                </div>
               ) : label === "系统设置" ? (
                 <div className="settings-menu-group" key={label}>
                   <button
