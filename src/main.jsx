@@ -5192,7 +5192,6 @@ function EmbeddedWarningsPage() {
     { label: "预警分级看板", view: "warning-dashboard" },
     { label: "预警任务", view: "warning-task" },
     { label: "预警信息表统计", view: "warning-stats" },
-    { label: "预警统计", view: "warning-stats-aggr" },
   ];
   const [activeWarningTab, setActiveWarningTab] = useState("预警任务");
   const [showDescription, setShowDescription] = useState(false);
@@ -7105,7 +7104,6 @@ function RbacPage({ onAction, roles, setRoles }) {
         {
           name: "预警",
           children: [
-            { name: "预警信息表" },
             { name: "预警规则设置" },
           ],
         },
@@ -9723,7 +9721,6 @@ function SettingsPage({
     ? { label: "任务", view: "view-template" }
     : taskPageMenus.find((entry) => entry.label === selected);
   const warningPageMenus = [
-    { label: "预警信息表", view: "warning-info-table" },
     { label: "预警规则设置", view: "warning-rule" },
   ];
   const warningPageMenu = warningPageMenus.find(
@@ -9814,7 +9811,7 @@ function SettingsPage({
     if (menu === "worksheet") setSelected("工作表单");
     if (menu === "process") setSelected("流程中心");
     if (menu === "task") setSelected("任务模版");
-    if (menu === "warning") setSelected("预警信息表");
+    if (menu === "warning") setSelected("预警规则设置");
   };
   return (
     <section className="settings-page" aria-labelledby="settings-title">
