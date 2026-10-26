@@ -5908,1683 +5908,4591 @@ ___SCEND___\r
 <\/script>\r
 </body>\r
 </html>\r
-`,kz=`<!DOCTYPE html>\r
-<html lang="zh-CN">\r
-<head>\r
-<meta charset="UTF-8">\r
-<meta name="viewport" content="width=device-width, initial-scale=1.0">\r
-<title>矿山安全任务管理系统 · 任务模块 PC 端原型（交互版）</title>\r
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">\r
-<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">\r
-<style>\r
-:root {\r
-    /* ===== X项目 · 澄明工作台 design tokens ===== */\r
-    --accent: #0f6cbd;\r
-    --accent-soft: #e7f2fb;\r
-    --accent-glow: rgba(15,108,189,.20);\r
-    --nav: #172437;\r
-    --nav-hover: #223a56;\r
-    --canvas: #f5f7fa;\r
-    --surface: #ffffff;\r
-    --surface-soft: #f4f7fb;\r
-    --text-primary: #182334;\r
-    --text-secondary: #44526a;\r
-    --text-muted: #657386;\r
-    --line: #e1e7ef;\r
-    --line-soft: #eef2f6;\r
-    --danger: #c73d32;\r
-    --danger-soft: #fdeceb;\r
-    --ok: #287d69;\r
-    --ok-soft: #e3f4ef;\r
-    --warn: #ad6037;\r
-    --warn-soft: #fff0e8;\r
-    --violet: #7259a4;\r
-    --violet-soft: #eeeafa;\r
-    /* legacy aliases — component rules keep resolving to the new palette */\r
-    --amber: var(--accent);\r
-    --amber-soft: var(--accent-soft);\r
-    --amber-glow: var(--accent-glow);\r
-    --verdigris: var(--ok);\r
-    --verdigris-soft: var(--ok-soft);\r
-    --shaft-deep: var(--nav);\r
-    --shaft-mid: var(--nav-hover);\r
-    --anthracite: var(--text-primary);\r
-    --card: var(--surface);\r
-    --border: var(--line);\r
-    --border-light: var(--line-soft);\r
-    --radius: 12px;\r
-    --radius-sm: 8px;\r
-    --shadow-sm: 0 1px 2px rgba(23,35,55,.04), 0 6px 18px rgba(23,35,55,.05);\r
-    --shadow-md: 0 8px 24px rgba(23,35,55,.07);\r
-    --shadow-lg: 0 18px 45px rgba(35,58,88,.07);\r
-    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);\r
-    --logic-bg: #f2f7fc;\r
-    --logic-bg2: #e7f2fb;\r
-    --logic-line: #cfe0f1;\r
-    --logic-head: var(--accent);\r
-    --logic-text: #3a4a5e;\r
-}\r
-/* 深色主题（与 X项目 工作台一致；默认不启用，给 body 添加 class="theme-dark" 即可切换） */\r
-body.theme-dark {\r
-    --canvas: #141c27; --surface: #1b2635; --surface-soft: #202d3e;\r
-    --text-primary: #f0f5fb; --text-secondary: #c4cfdc; --text-muted: #a8b6c8;\r
-    --line: #334255; --line-soft: #2a3848;\r
-    --accent: #63b0f4; --accent-soft: #183a5a; --accent-glow: rgba(99,176,244,.25);\r
-    --nav: #101722; --nav-hover: #243a55;\r
-    --danger: #e8857c; --danger-soft: #3a2320;\r
-    --ok: #5fb9a4; --ok-soft: #1f3a34;\r
-    --warn: #d99a6c; --warn-soft: #3a2c20;\r
-    --violet: #b6a3e0; --violet-soft: #2c2540;\r
-    --logic-bg: #1b2635; --logic-bg2: #18304a; --logic-line: #2c4258;\r
-    --logic-text: #b6c2d2;\r
-}\r
-* { margin: 0; padding: 0; box-sizing: border-box; }\r
-body { font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei", sans-serif; background: var(--canvas); color: var(--text-primary); height: 100vh; overflow: hidden; transition: background .25s ease, color .25s ease; }\r
-.mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: -0.3px; }\r
-\r
-/* ===== 三栏布局 ===== */\r
-.app { display: flex; height: 100vh; }\r
-\r
-/* --- 侧边导航 --- */\r
-.sidebar { width: 220px; flex: none; background: var(--shaft-deep); display: flex; flex-direction: column; position: relative; overflow: hidden; z-index: 5; }\r
-.sidebar::after { content: ''; position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: linear-gradient(180deg, rgba(15,108,189,0.35) 0%, transparent 50%, rgba(15,108,189,0.12) 100%); }\r
-.sidebar-brand { padding: 22px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }\r
-.sidebar-brand h1 { font-family: 'Noto Sans SC', sans-serif; font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0.5px; line-height: 1.4; }\r
-.sidebar-brand .brand-sub { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 4px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }\r
-.sidebar-nav { flex: 1; padding: 14px 10px; overflow-y: auto; }\r
-.nav-group-label { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; padding: 12px 12px 6px; font-weight: 600; }\r
-.nav-item { display: flex; align-items: center; padding: 10px 13px; margin: 2px 0; border-radius: 8px; cursor: pointer; transition: var(--transition); color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 500; position: relative; }\r
-.nav-item:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.9); }\r
-.nav-item.active { background: #204260; color: #fff; }\r
-.nav-item.active::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; background: #82c4fa; border-radius: 0 3px 3px 0; }\r
-.nav-item i { width: 20px; margin-right: 9px; font-size: 15px; text-align: center; }\r
-.nav-item .badge { margin-left: auto; background: var(--danger); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: 600; }\r
-.sidebar-footer { padding: 14px; border-top: 1px solid rgba(255,255,255,0.06); }\r
-.role-select { width: 100%; padding: 8px 10px; background: var(--shaft-mid); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 500; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='rgba(255,255,255,0.5)' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }\r
-.role-select option { background: var(--shaft-deep); color: #fff; }\r
-\r
-/* --- 主界面 --- */\r
-.stage { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; position: relative; z-index: 2; }\r
-.topbar { height: 56px; flex: none; background: var(--surface); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }\r
-.topbar-left { display: flex; align-items: center; gap: 14px; }\r
-.topbar-left h2 { font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); }\r
-.breadcrumb-hint { font-size: 12px; color: var(--text-muted); }\r
-.topbar-right { display: flex; align-items: center; gap: 18px; }\r
-.safety-ring { position: relative; width: 34px; height: 34px; }\r
-.safety-ring svg { transform: rotate(-90deg); }\r
-.safety-ring .ring-bg { fill: none; stroke: var(--border); stroke-width: 3; }\r
-.safety-ring .ring-value { fill: none; stroke: var(--verdigris); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 94.2; stroke-dashoffset: 18.8; }\r
-.safety-ring .ring-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--verdigris); }\r
-.user-block { display: flex; align-items: center; gap: 9px; }\r
-.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--shaft-deep), var(--shaft-mid)); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; font-family: 'Noto Sans SC'; }\r
-.user-meta { line-height: 1.3; }\r
-.user-meta .name { font-size: 12px; font-weight: 600; color: var(--text-primary); }\r
-.user-meta .role { font-size: 10px; color: var(--text-muted); }\r
-.content { flex: 1; padding: 22px 26px; overflow-y: auto; }\r
-\r
-/* 视图切换 */\r
-.view { display: none; }\r
-.view.active { display: block; animation: fade .25s ease; }\r
-@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }\r
-\r
-/* --- 模板创建/编辑页（导航进入，非长列表内联） --- */\r
-.editor-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: var(--card); border: 1px solid var(--border-light); border-radius: var(--radius); margin-bottom: 12px; position: sticky; top: 0; z-index: 6; }\r
-.editor-bar-left { display: flex; align-items: center; gap: 14px; }\r
-.editor-title { font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); }\r
-.editor-bar-right { display: flex; align-items: center; gap: 8px; }\r
-.editor-tabs { margin-bottom: 14px; }\r
-.editor-tabpane { animation: fade .2s ease; }\r
-.editor-tabpane .card { margin-bottom: 0; }\r
-\r
-/* --- 右侧逻辑面板 --- */\r
-.logic { width: 360px; flex: none; background: var(--logic-bg); border-left: 3px solid var(--accent); overflow-y: auto; padding: 18px 18px 60px; position: relative; z-index: 4; transition: transform .25s ease; }\r
-.logic-head { position: sticky; top: -18px; background: var(--logic-bg); padding: 6px 0 12px; margin: -18px -18px 14px; padding-left: 18px; padding-right: 18px; border-bottom: 2px dashed var(--logic-line); z-index: 3; }\r
-.logic-head h2 { font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; color: var(--logic-head); display: flex; align-items: center; gap: 8px; }\r
-.logic-head p { font-size: 11px; color: var(--logic-text); opacity: .8; margin-top: 4px; line-height: 1.5; }\r
-.note { background: var(--surface); border: 1px solid var(--logic-line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 12px 13px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(15,108,189,.08); transition: opacity .2s, box-shadow .2s, transform .2s; }\r
-.note.dim { opacity: .6; }\r
-.note.active { box-shadow: 0 0 0 3px var(--accent-glow); border-left-color: var(--accent); }\r
-.note.flash { animation: flash 1s ease; }\r
-@keyframes flash { 0% { box-shadow: 0 0 0 3px var(--accent-glow); } 100% { box-shadow: 0 1px 3px rgba(15,108,189,.08); } }\r
-.note h4 { font-size: 13px; font-weight: 700; color: var(--logic-head); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }\r
-.note h4 .tag { background: var(--amber); color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex: none; }\r
-.note p, .note li { font-size: 11.5px; color: var(--logic-text); line-height: 1.65; }\r
-.note ul { padding-left: 16px; }\r
-.note li { margin-bottom: 3px; }\r
-.note .hl { color: var(--danger); font-weight: 600; }\r
-.note .ok { color: var(--ok); font-weight: 600; }\r
-.note .em { color: var(--logic-head); font-weight: 700; }\r
-\r
-/* 流程图通用 */\r
-.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0; }\r
-.fnode { font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 6px; background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary); white-space: nowrap; }\r
-.fnode.s-draft { background: #eef1f5; border-color: #d6dbe2; color: #5a6577; }\r
-.fnode.s-wei { background: var(--accent-soft); border-color: #bcd6ee; color: var(--accent); }\r
-.fnode.s-zx { background: var(--violet-soft); border-color: #d9cdf0; color: var(--violet); }\r
-.fnode.s-sp { background: var(--accent-soft); border-color: #bcd6ee; color: var(--accent); }\r
-.fnode.s-bh { background: var(--danger-soft); border-color: #f0b3b8; color: var(--danger); }\r
-.fnode.s-done { background: var(--ok-soft); border-color: #a9ddd0; color: var(--ok); }\r
-.farrow { color: var(--text-muted); font-size: 12px; }\r
-.flabel { width: 100%; font-size: 10.5px; color: var(--logic-text); opacity: .85; margin-top: 2px; }\r
-\r
-/* ===== Cards ===== */\r
-.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); overflow: hidden; margin-bottom: 18px; }\r
-.card-top { display: none; }\r
-.card-top.green { display: none; }\r
-.card-top.deep { display: none; }\r
-.card-head { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-light); }\r
-.card-head h3 { font-size: 14px; font-weight: 700; font-family: 'Noto Sans SC'; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }\r
-.card-head .sub { font-size: 12px; color: var(--text-muted); }\r
-.card-body { padding: 0; }\r
-.section-title { font-family: 'Noto Sans SC', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 6px 0 14px; display: flex; align-items: center; gap: 8px; }\r
-.section-title .idx { background: var(--shaft-deep); color: var(--amber); font-size: 12px; width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }\r
-\r
-/* ===== Buttons ===== */\r
-.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; border: none; cursor: pointer; transition: var(--transition); white-space: nowrap; font-family: inherit; }\r
-.btn-amber { background: var(--accent); color: #fff; }\r
-.btn-amber:hover { background: #0d5ca3; }\r
-.btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--line); }\r
-.btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }\r
-.btn-success { background: var(--ok); color: #fff; }\r
-.btn-success:hover { background: #1f6453; }\r
-.btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(230,57,70,0.3); }\r
-.btn-danger:hover { background: var(--danger-soft); }\r
-.btn-sm { padding: 8px 16px; font-size: 12px; }\r
-.btn-xs { padding: 6px 12px; font-size: 11px; border-radius: 4px; }\r
-.btn:active { transform: translateY(1px); }\r
-\r
-/* ===== Tables ===== */\r
-.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }\r
-.data-table th { background: var(--surface-soft); padding: 11px 13px; font-weight: 600; color: var(--text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }\r
-.data-table td { padding: 11px 13px; border-bottom: 1px solid var(--line-soft); color: var(--text-primary); vertical-align: middle; }\r
+`,kz=`<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>矿山安全任务管理系统 · 任务模块 PC 端原型（交互版）</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Noto+Sans+SC:wght@400;500;700;900&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.0/font/bootstrap-icons.css" rel="stylesheet">
+<style>
+:root {
+    /* ===== X项目 · 澄明工作台 design tokens ===== */
+    --accent: #0f6cbd;
+    --accent-soft: #e7f2fb;
+    --accent-glow: rgba(15,108,189,.20);
+    --nav: #172437;
+    --nav-hover: #223a56;
+    --canvas: #f5f7fa;
+    --surface: #ffffff;
+    --surface-soft: #f4f7fb;
+    --text-primary: #182334;
+    --text-secondary: #44526a;
+    --text-muted: #657386;
+    --line: #e1e7ef;
+    --line-soft: #eef2f6;
+    --danger: #c73d32;
+    --danger-soft: #fdeceb;
+    --ok: #287d69;
+    --ok-soft: #e3f4ef;
+    --warn: #ad6037;
+    --warn-soft: #fff0e8;
+    --violet: #7259a4;
+    --violet-soft: #eeeafa;
+    /* legacy aliases — component rules keep resolving to the new palette */
+    --amber: var(--accent);
+    --amber-soft: var(--accent-soft);
+    --amber-glow: var(--accent-glow);
+    --verdigris: var(--ok);
+    --verdigris-soft: var(--ok-soft);
+    --shaft-deep: var(--nav);
+    --shaft-mid: var(--nav-hover);
+    --anthracite: var(--text-primary);
+    --card: var(--surface);
+    --border: var(--line);
+    --border-light: var(--line-soft);
+    --radius: 12px;
+    --radius-sm: 8px;
+    --shadow-sm: 0 1px 2px rgba(23,35,55,.04), 0 6px 18px rgba(23,35,55,.05);
+    --shadow-md: 0 8px 24px rgba(23,35,55,.07);
+    --shadow-lg: 0 18px 45px rgba(35,58,88,.07);
+    --transition: 0.2s cubic-bezier(0.4, 0, 0.2, 1);
+    --logic-bg: #f2f7fc;
+    --logic-bg2: #e7f2fb;
+    --logic-line: #cfe0f1;
+    --logic-head: var(--accent);
+    --logic-text: #3a4a5e;
+}
+/* 深色主题（与 X项目 工作台一致；默认不启用，给 body 添加 class="theme-dark" 即可切换） */
+body.theme-dark {
+    --canvas: #141c27; --surface: #1b2635; --surface-soft: #202d3e;
+    --text-primary: #f0f5fb; --text-secondary: #c4cfdc; --text-muted: #a8b6c8;
+    --line: #334255; --line-soft: #2a3848;
+    --accent: #63b0f4; --accent-soft: #183a5a; --accent-glow: rgba(99,176,244,.25);
+    --nav: #101722; --nav-hover: #243a55;
+    --danger: #e8857c; --danger-soft: #3a2320;
+    --ok: #5fb9a4; --ok-soft: #1f3a34;
+    --warn: #d99a6c; --warn-soft: #3a2c20;
+    --violet: #b6a3e0; --violet-soft: #2c2540;
+    --logic-bg: #1b2635; --logic-bg2: #18304a; --logic-line: #2c4258;
+    --logic-text: #b6c2d2;
+}
+* { margin: 0; padding: 0; box-sizing: border-box; }
+body { font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei", sans-serif; background: var(--canvas); color: var(--text-primary); height: 100vh; overflow: hidden; transition: background .25s ease, color .25s ease; }
+.mono { font-family: 'JetBrains Mono', monospace; font-size: 12px; letter-spacing: -0.3px; }
+
+/* ===== 三栏布局 ===== */
+.app { display: flex; height: 100vh; }
+
+/* --- 侧边导航 --- */
+.sidebar { width: 220px; flex: none; background: var(--shaft-deep); display: flex; flex-direction: column; position: relative; overflow: hidden; z-index: 5; }
+.sidebar::after { content: ''; position: absolute; top: 0; right: 0; width: 1px; height: 100%; background: linear-gradient(180deg, rgba(15,108,189,0.35) 0%, transparent 50%, rgba(15,108,189,0.12) 100%); }
+.sidebar-brand { padding: 22px 18px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+.sidebar-brand h1 { font-family: 'Noto Sans SC', sans-serif; font-size: 14px; font-weight: 700; color: #fff; letter-spacing: 0.5px; line-height: 1.4; }
+.sidebar-brand .brand-sub { font-size: 10px; color: rgba(255,255,255,0.4); margin-top: 4px; font-weight: 400; letter-spacing: 1px; text-transform: uppercase; }
+.sidebar-nav { flex: 1; padding: 14px 10px; overflow-y: auto; }
+.nav-group-label { font-size: 10px; color: rgba(255,255,255,0.3); text-transform: uppercase; letter-spacing: 1.5px; padding: 12px 12px 6px; font-weight: 600; }
+.nav-item { display: flex; align-items: center; padding: 10px 13px; margin: 2px 0; border-radius: 8px; cursor: pointer; transition: var(--transition); color: rgba(255,255,255,0.6); font-size: 13px; font-weight: 500; position: relative; }
+.nav-item:hover { background: rgba(255,255,255,0.05); color: rgba(255,255,255,0.9); }
+.nav-item.active { background: #204260; color: #fff; }
+.nav-item.active::before { content: ''; position: absolute; left: 0; top: 50%; transform: translateY(-50%); width: 3px; height: 20px; background: #82c4fa; border-radius: 0 3px 3px 0; }
+.nav-item i { width: 20px; margin-right: 9px; font-size: 15px; text-align: center; }
+.nav-item .badge { margin-left: auto; background: var(--danger); color: #fff; font-size: 10px; padding: 2px 6px; border-radius: 10px; font-weight: 600; }
+.sidebar-footer { padding: 14px; border-top: 1px solid rgba(255,255,255,0.06); }
+.role-select { width: 100%; padding: 8px 10px; background: var(--shaft-mid); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-sm); color: rgba(255,255,255,0.8); font-size: 12px; font-weight: 500; cursor: pointer; appearance: none; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' fill='rgba(255,255,255,0.5)' viewBox='0 0 16 16'%3E%3Cpath d='M8 11L3 6h10l-5 5z'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 10px center; }
+.role-select option { background: var(--shaft-deep); color: #fff; }
+
+/* --- 主界面 --- */
+.stage { flex: 1; display: flex; flex-direction: column; overflow: hidden; min-width: 0; position: relative; z-index: 2; }
+.topbar { height: 56px; flex: none; background: var(--surface); border-bottom: 1px solid var(--line); display: flex; align-items: center; justify-content: space-between; padding: 0 24px; }
+.topbar-left { display: flex; align-items: center; gap: 14px; }
+.topbar-left h2 { font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.breadcrumb-hint { font-size: 12px; color: var(--text-muted); }
+.topbar-right { display: flex; align-items: center; gap: 18px; }
+.safety-ring { position: relative; width: 34px; height: 34px; }
+.safety-ring svg { transform: rotate(-90deg); }
+.safety-ring .ring-bg { fill: none; stroke: var(--border); stroke-width: 3; }
+.safety-ring .ring-value { fill: none; stroke: var(--verdigris); stroke-width: 3; stroke-linecap: round; stroke-dasharray: 94.2; stroke-dashoffset: 18.8; }
+.safety-ring .ring-label { position: absolute; inset: 0; display: flex; align-items: center; justify-content: center; font-size: 10px; font-weight: 700; color: var(--verdigris); }
+.user-block { display: flex; align-items: center; gap: 9px; }
+.user-avatar { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, var(--shaft-deep), var(--shaft-mid)); color: var(--amber); display: flex; align-items: center; justify-content: center; font-size: 12px; font-weight: 700; font-family: 'Noto Sans SC'; }
+.user-meta { line-height: 1.3; }
+.user-meta .name { font-size: 12px; font-weight: 600; color: var(--text-primary); }
+.user-meta .role { font-size: 10px; color: var(--text-muted); }
+.content { flex: 1; padding: 22px 26px; overflow-y: auto; }
+
+/* 视图切换 */
+.view { display: none; }
+.view.active { display: block; animation: fade .25s ease; }
+@keyframes fade { from { opacity: 0; transform: translateY(6px); } to { opacity: 1; transform: none; } }
+
+/* --- 模板创建/编辑页（导航进入，非长列表内联） --- */
+.editor-bar { display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 16px; background: var(--card); border: 1px solid var(--border-light); border-radius: var(--radius); margin-bottom: 12px; position: sticky; top: 0; z-index: 6; }
+.editor-bar-left { display: flex; align-items: center; gap: 14px; }
+.editor-title { font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; color: var(--text-primary); }
+.editor-bar-right { display: flex; align-items: center; gap: 8px; }
+.editor-tabs { margin-bottom: 14px; }
+.editor-tabpane { animation: fade .2s ease; }
+.editor-tabpane .card { margin-bottom: 0; }
+
+/* --- 右侧逻辑面板 --- */
+.logic { width: 360px; flex: none; background: var(--logic-bg); border-left: 3px solid var(--accent); overflow-y: auto; padding: 18px 18px 60px; position: relative; z-index: 4; transition: transform .25s ease; }
+.logic-head { position: sticky; top: -18px; background: var(--logic-bg); padding: 6px 0 12px; margin: -18px -18px 14px; padding-left: 18px; padding-right: 18px; border-bottom: 2px dashed var(--logic-line); z-index: 3; }
+.logic-head h2 { font-family: 'Noto Sans SC', sans-serif; font-size: 15px; font-weight: 700; color: var(--logic-head); display: flex; align-items: center; gap: 8px; }
+.logic-head p { font-size: 11px; color: var(--logic-text); opacity: .8; margin-top: 4px; line-height: 1.5; }
+.note { background: var(--surface); border: 1px solid var(--logic-line); border-left: 4px solid var(--accent); border-radius: 10px; padding: 12px 13px; margin-bottom: 14px; box-shadow: 0 1px 3px rgba(15,108,189,.08); transition: opacity .2s, box-shadow .2s, transform .2s; }
+.note.dim { opacity: .6; }
+.note.active { box-shadow: 0 0 0 3px var(--accent-glow); border-left-color: var(--accent); }
+.note.flash { animation: flash 1s ease; }
+@keyframes flash { 0% { box-shadow: 0 0 0 3px var(--accent-glow); } 100% { box-shadow: 0 1px 3px rgba(15,108,189,.08); } }
+.note h4 { font-size: 13px; font-weight: 700; color: var(--logic-head); margin-bottom: 8px; display: flex; align-items: center; gap: 7px; }
+.note h4 .tag { background: var(--amber); color: #fff; font-size: 10px; font-weight: 700; width: 18px; height: 18px; border-radius: 50%; display: inline-flex; align-items: center; justify-content: center; flex: none; }
+.note p, .note li { font-size: 11.5px; color: var(--logic-text); line-height: 1.65; }
+.note ul { padding-left: 16px; }
+.note li { margin-bottom: 3px; }
+.note .hl { color: var(--danger); font-weight: 600; }
+.note .ok { color: var(--ok); font-weight: 600; }
+.note .em { color: var(--logic-head); font-weight: 700; }
+
+/* 流程图通用 */
+.flow { display: flex; flex-wrap: wrap; align-items: center; gap: 6px; margin: 8px 0; }
+.fnode { font-size: 11px; font-weight: 600; padding: 5px 9px; border-radius: 6px; background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary); white-space: nowrap; }
+.fnode.s-draft { background: #eef1f5; border-color: #d6dbe2; color: #5a6577; }
+.fnode.s-wei { background: var(--accent-soft); border-color: #bcd6ee; color: var(--accent); }
+.fnode.s-zx { background: var(--violet-soft); border-color: #d9cdf0; color: var(--violet); }
+.fnode.s-sp { background: var(--accent-soft); border-color: #bcd6ee; color: var(--accent); }
+.fnode.s-bh { background: var(--danger-soft); border-color: #f0b3b8; color: var(--danger); }
+.fnode.s-done { background: var(--ok-soft); border-color: #a9ddd0; color: var(--ok); }
+.farrow { color: var(--text-muted); font-size: 12px; }
+.flabel { width: 100%; font-size: 10.5px; color: var(--logic-text); opacity: .85; margin-top: 2px; }
+
+/* ===== Cards ===== */
+.card { background: var(--card); border-radius: var(--radius); box-shadow: var(--shadow-sm); border: 1px solid var(--border-light); overflow: hidden; margin-bottom: 18px; }
+.card-top { display: none; }
+.card-top.green { display: none; }
+.card-top.deep { display: none; }
+.card-head { padding: 16px 20px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid var(--border-light); }
+.card-head h3 { font-size: 14px; font-weight: 700; font-family: 'Noto Sans SC'; color: var(--text-primary); display: flex; align-items: center; gap: 8px; }
+.card-head .sub { font-size: 12px; color: var(--text-muted); }
+.card-body { padding: 0; }
+.section-title { font-family: 'Noto Sans SC', sans-serif; font-size: 18px; font-weight: 700; color: var(--text-primary); margin: 6px 0 14px; display: flex; align-items: center; gap: 8px; }
+.section-title .idx { background: var(--shaft-deep); color: var(--amber); font-size: 12px; width: 22px; height: 22px; border-radius: 6px; display: inline-flex; align-items: center; justify-content: center; font-weight: 700; }
+
+/* ===== Buttons ===== */
+.btn { display: inline-flex; align-items: center; gap: 6px; padding: 8px 16px; border-radius: var(--radius-sm); font-size: 13px; font-weight: 500; border: none; cursor: pointer; transition: var(--transition); white-space: nowrap; font-family: inherit; }
+.btn-amber { background: var(--accent); color: #fff; }
+.btn-amber:hover { background: #0d5ca3; }
+.btn-ghost { background: transparent; color: var(--text-secondary); border: 1px solid var(--line); }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.btn-success { background: var(--ok); color: #fff; }
+.btn-success:hover { background: #1f6453; }
+.btn-danger { background: transparent; color: var(--danger); border: 1px solid rgba(230,57,70,0.3); }
+.btn-danger:hover { background: var(--danger-soft); }
+.btn-sm { padding: 8px 16px; font-size: 12px; }
+.btn-xs { padding: 6px 12px; font-size: 11px; border-radius: 4px; }
+.btn:active { transform: translateY(1px); }
+
+/* ===== Tables ===== */
+.data-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.data-table th { background: var(--surface-soft); padding: 11px 13px; font-weight: 600; color: var(--text-secondary); font-size: 11px; text-transform: uppercase; letter-spacing: 0.3px; border-bottom: 1px solid var(--line); text-align: left; white-space: nowrap; }
+.data-table td { padding: 11px 13px; border-bottom: 1px solid var(--line-soft); color: var(--text-primary); vertical-align: middle; }
 .data-table tbody tr { transition: background .15s; }
 .data-table tbody tr:hover { background: rgba(15,108,189,.05); }
 .data-table .actions { display: flex; gap: 4px; flex-wrap: wrap; }
 
-/* 与系统消息、数据列表保持一致的分页组件。 */
-.task-pagination { min-height: 48px; padding: 0 18px; display: flex; align-items: center; justify-content: flex-end; gap: 9px; border-top: 1px solid var(--line); background: var(--surface); color: var(--text-muted); font-size: 11px; }
-.task-pagination > span { margin-right: auto; }
-.task-pagination label { display: inline-flex; align-items: center; gap: 5px; }
-.task-pagination select, .task-pagination button { height: 28px; padding: 0 8px; border: 1px solid #d6e0e8; border-radius: 4px; background: #fff; color: #536579; font: inherit; }
-.task-pagination select { width: 72px; padding: 0 6px; }
-.task-pagination button { cursor: pointer; }
-.task-pagination button:hover:not(:disabled) { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
-.task-pagination button:disabled { opacity: .45; cursor: not-allowed; }
-.task-pagination b { min-width: 35px; color: var(--text-primary); font-weight: 650; text-align: center; }
-\r
-/* ===== Status Badges ===== */\r
-.status { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }\r
-.status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }\r
-.status-enabled { background: var(--ok-soft); color: var(--ok); } .status-enabled::before { background: var(--ok); }\r
-.status-disabled { background: rgba(101,115,134,0.12); color: var(--text-muted); } .status-disabled::before { background: var(--text-muted); }\r
-.status-draft { background: rgba(101,115,134,0.10); color: var(--text-muted); } .status-draft::before { background: var(--text-muted); }\r
-.status-pending { background: var(--accent-soft); color: var(--accent); } .status-pending::before { background: var(--accent); }\r
-.status-executing { background: var(--violet-soft); color: var(--violet); } .status-executing::before { background: var(--violet); }\r
-.status-done { background: var(--ok-soft); color: var(--ok); } .status-done::before { background: var(--ok); }\r
-.overdue-mark { color: var(--danger); font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }\r
-\r
-\r
-\r
-/* ===== Tabs ===== */\r
-.tabs { display: flex; gap: 0; border-bottom: 2px solid var(--line); padding: 0 20px; overflow-x: auto; }\r
-.tab { padding: 13px 13px; font-size: 12.5px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: var(--transition); white-space: nowrap; display: flex; align-items: center; gap: 6px; }\r
-.tab:hover { color: var(--accent); }\r
-.tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }\r
-.tab .num { background: var(--surface-soft); color: var(--text-muted); padding: 1px 6px; border-radius: 8px; font-size: 10px; font-weight: 600; }\r
-.tab.active .num { background: var(--accent-soft); color: var(--accent); }\r
-\r
-/* ===== Forms ===== */\r
-.form-group { margin-bottom: 14px; }\r
-.form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }\r
-.form-label .required { color: var(--danger); margin-left: 2px; }\r
-.form-input { width: 100%; padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 12.5px; color: var(--text-primary); transition: var(--transition); background: var(--surface); font-family: inherit; }\r
-.form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }\r
-.form-input[readonly] { background: var(--surface-soft); color: var(--text-muted); }\r
-textarea.form-input { resize: vertical; }\r
-\r
-/* ===== 编辑器三栏 ===== */\r
-.three-col { display: grid; grid-template-columns: 170px 1fr 220px; gap: 14px; }\r
-.toolbox { background: var(--surface); border-radius: var(--radius); padding: 14px; }\r
-.toolbox h5 { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }\r
-.tool-item { padding: 7px 9px; margin-bottom: 4px; border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; background:#fff; border:1px solid var(--border-light); cursor: grab; }\r
-.tool-item:hover { border-color: var(--accent); }\r
-.tool-item i { font-size: 14px; width: 16px; text-align: center; color: var(--amber); }\r
-.canvas { background: var(--surface); border: 2px dashed var(--line); border-radius: var(--radius); padding: 16px; }\r
-.field-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); }\r
-.field-table { border-collapse: collapse; white-space: nowrap; min-width: 100%; }\r
-.field-table th { background: var(--accent-soft); padding: 9px 16px; font-size: 11px; font-weight: 600; color: var(--accent); border: 1px solid #cfe0f1; text-align: center; min-width: 110px; }\r
-.field-table th.required::before { content: '* '; color: var(--danger); }\r
-.field-table td { padding: 12px 16px; border: 1px solid var(--line-soft); text-align: center; font-size: 11.5px; color: var(--text-secondary); background: var(--surface-soft); min-width: 110px; vertical-align: middle; }\r
-.props-panel { background: var(--surface); border-radius: var(--radius); padding: 14px; }\r
-.props-panel h5 { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }\r
-.editor-tabs { display: flex; gap: 0; margin: 14px 0; background: var(--surface); border-radius: 8px; padding: 4px; width: fit-content; }\r
-.editor-tab { padding: 8px 16px; font-size: 12.5px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-radius: 6px; }\r
-.editor-tab.active { background: var(--card); color: var(--text-primary); box-shadow: var(--shadow-sm); font-weight: 600; }\r
-.section-block { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border-light); padding: 16px; margin-bottom: 14px; }\r
-.section-block h5 { font-size: 13px; font-weight: 700; font-family: 'Noto Sans SC'; color: var(--text-primary); margin-bottom: 12px; padding-bottom: 9px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 8px; }\r
-.section-block h5 i { color: var(--amber); font-size: 14px; }\r
-.switch-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; }\r
-.switch { position: relative; width: 36px; height: 20px; flex: none; cursor: pointer; }\r
-.switch .slider { position: absolute; inset: 0; background: var(--line); border-radius: 10px; transition: .2s; }\r
-.switch .slider::before { content: ''; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: .2s; }\r
-.switch.on .slider { background: var(--amber); } .switch.on .slider::before { transform: translateX(16px); }\r
-.switch-label { font-size: 12.5px; color: var(--text-primary); }\r
-.switch-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }\r
-.remind-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border-light); flex-wrap: wrap; }\r
-.remind-row:last-child { border-bottom: none; }\r
-.remind-label { font-size: 12px; color: var(--text-primary); min-width: 96px; font-weight: 500; }\r
-.remind-select { padding: 6px 9px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 12px; min-width: 110px; }\r
-.repeat-inline { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 8px 0; }\r
-.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }\r
-.form-grid .full { grid-column: 1 / -1; }\r
-.form-hint { font-size: 11px; color: var(--text-muted); padding: 9px 13px; background: var(--surface-soft); border-radius: var(--radius-sm); margin-top: 10px; display: flex; align-items: center; gap: 6px; }\r
-.approval-flow { display: flex; align-items: center; gap: 10px; padding: 12px 0; }\r
-.flow-node { display: flex; flex-direction: column; align-items: center; gap: 4px; }\r
-.flow-node .node-icon { width: 38px; height: 38px; border-radius: 50%; background: var(--surface); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--text-muted); }\r
-.flow-node .node-label { font-size: 11px; color: var(--text-secondary); }\r
-.flow-arrow { color: var(--text-muted); font-size: 15px; }\r
-.flow-add { width: 38px; height: 38px; border-radius: 50%; border: 2px dashed var(--amber); background: var(--amber-soft); display: flex; align-items: center; justify-content: center; font-size: 17px; color: var(--amber); cursor: pointer; }\r
-\r
-/* ===== 图例卡 ===== */\r
-.legend-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 18px; box-shadow: var(--shadow-sm); cursor: pointer; transition: border-color .2s; }\r
-.legend-card:hover { border-color: var(--accent); }\r
-.legend-card .lc-title { font-size: 12px; font-weight: 700; color: var(--logic-head); margin-bottom: 10px; display:flex; align-items:center; gap:7px; }\r
-.legend-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }\r
-.legend-row:last-child { margin-bottom: 0; }\r
-.legend-row .lr-label { font-size: 11px; color: var(--text-muted); width: 64px; flex: none; font-weight: 600; }\r
-.chip { font-size: 11px; padding: 3px 10px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary); font-weight: 500; }\r
-.chip.ft-none { background:#eef1f5; border-color:#d6dbe2; color:#5a6577; }\r
-.chip.ft-form { background:var(--accent-soft); border-color:#bcd6ee; color:var(--accent); }\r
-.chip.ft-bpm { background:var(--violet-soft); border-color:#d9cdf0; color:var(--violet); }\r
-\r
-/* ===== 弹窗（真正的 overlay） ===== */\r
-.overlay { position: fixed; inset: 0; background: rgba(16,24,36,.5); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }\r
-.overlay.show { display: flex; animation: fade .2s ease; }\r
-.modal { background: var(--card); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,.32); width: min(600px, 94vw); max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; }\r
-.modal.lg { width: min(720px, 96vw); }\r
-.modal-head { padding: 16px 20px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; }\r
-.modal-head h4 { font-family: 'Noto Sans SC'; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }\r
-.modal-head .x { width: 30px; height: 30px; border-radius: 8px; border: none; background: var(--surface); color: var(--text-muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .15s; }\r
-.modal-head .x:hover { background: var(--danger-soft); color: var(--danger); }\r
-.modal-body { padding: 20px; overflow-y: auto; }\r
+/* ===== Status Badges ===== */
+.status { display: inline-flex; align-items: center; gap: 5px; padding: 4px 10px; border-radius: 20px; font-size: 11px; font-weight: 600; }
+.status::before { content: ''; width: 6px; height: 6px; border-radius: 50%; }
+.status-enabled { background: var(--ok-soft); color: var(--ok); } .status-enabled::before { background: var(--ok); }
+.status-disabled { background: rgba(101,115,134,0.12); color: var(--text-muted); } .status-disabled::before { background: var(--text-muted); }
+.status-draft { background: rgba(101,115,134,0.10); color: var(--text-muted); } .status-draft::before { background: var(--text-muted); }
+.status-pending { background: var(--accent-soft); color: var(--accent); } .status-pending::before { background: var(--accent); }
+.status-executing { background: var(--violet-soft); color: var(--violet); } .status-executing::before { background: var(--violet); }
+.status-done { background: var(--ok-soft); color: var(--ok); } .status-done::before { background: var(--ok); }
+.overdue-mark { color: var(--danger); font-size: 11px; font-weight: 600; display: inline-flex; align-items: center; gap: 3px; }
+
+
+
+/* ===== Tabs ===== */
+.tabs { display: flex; gap: 0; border-bottom: 2px solid var(--line); padding: 0 20px; overflow-x: auto; }
+.tab { padding: 13px 13px; font-size: 12.5px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-bottom: 2px solid transparent; margin-bottom: -2px; transition: var(--transition); white-space: nowrap; display: flex; align-items: center; gap: 6px; }
+.tab:hover { color: var(--accent); }
+.tab.active { color: var(--accent); border-bottom-color: var(--accent); font-weight: 600; }
+.tab .num { background: var(--surface-soft); color: var(--text-muted); padding: 1px 6px; border-radius: 8px; font-size: 10px; font-weight: 600; }
+.tab.active .num { background: var(--accent-soft); color: var(--accent); }
+
+/* ===== Forms ===== */
+.form-group { margin-bottom: 14px; }
+.form-label { display: block; font-size: 12px; font-weight: 600; color: var(--text-secondary); margin-bottom: 6px; }
+.form-label .required { color: var(--danger); margin-left: 2px; }
+.form-input { width: 100%; padding: 9px 12px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 12.5px; color: var(--text-primary); transition: var(--transition); background: var(--surface); font-family: inherit; }
+.form-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.form-input[readonly] { background: var(--surface-soft); color: var(--text-muted); }
+textarea.form-input { resize: vertical; }
+
+/* ===== 编辑器三栏 ===== */
+.three-col { display: grid; grid-template-columns: 158px minmax(0, 1fr) 268px; gap: 14px; align-items: start; }
+.canvas { min-width: 0; }
+.section-block.rep-off .repeat-inline, .section-block.rep-off .repeat-extra { display: none; }
+.cfg-lock { font-size: 11.5px; color: var(--text-muted); background: var(--surface-soft); border: 1px dashed var(--line); border-radius: 6px; padding: 5px 8px; }
+.cfg-switch { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); }
+.toolbox { background: var(--surface); border-radius: var(--radius); padding: 14px; }
+.toolbox h5 { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 10px; }
+.tool-item { padding: 7px 9px; margin-bottom: 4px; border-radius: var(--radius-sm); font-size: 12px; color: var(--text-secondary); display: flex; align-items: center; gap: 8px; background:#fff; border:1px solid var(--border-light); cursor: grab; }
+.tool-item:hover { border-color: var(--accent); }
+.tool-item i { font-size: 14px; width: 16px; text-align: center; color: var(--amber); }
+.canvas { background: var(--surface); border: 2px dashed var(--line); border-radius: var(--radius); padding: 16px; }
+.field-table-wrap { overflow-x: auto; border: 1px solid var(--border); border-radius: var(--radius-sm); }
+.field-table { border-collapse: collapse; white-space: nowrap; min-width: 100%; }
+.field-table th { background: var(--accent-soft); padding: 9px 16px; font-size: 11px; font-weight: 600; color: var(--accent); border: 1px solid #cfe0f1; text-align: center; min-width: 110px; }
+.field-table th.required::before { content: '* '; color: var(--danger); }
+.field-table td { padding: 12px 16px; border: 1px solid var(--line-soft); text-align: center; font-size: 11.5px; color: var(--text-secondary); background: var(--surface-soft); min-width: 110px; vertical-align: middle; }
+.props-panel { background: var(--surface); border-radius: var(--radius); padding: 14px; }
+.props-panel h5 { font-size: 11px; font-weight: 700; color: var(--text-muted); text-transform: uppercase; letter-spacing: 1px; margin-bottom: 12px; }
+.editor-tabs { display: flex; gap: 0; margin: 14px 0; background: var(--surface); border-radius: 8px; padding: 4px; width: fit-content; }
+.editor-tab { padding: 8px 16px; font-size: 12.5px; font-weight: 500; color: var(--text-muted); cursor: pointer; border-radius: 6px; }
+.editor-tab.active { background: var(--card); color: var(--text-primary); box-shadow: var(--shadow-sm); font-weight: 600; }
+.section-block { background: var(--card); border-radius: var(--radius); border: 1px solid var(--border-light); padding: 16px; margin-bottom: 14px; }
+.section-block h5 { font-size: 13px; font-weight: 700; font-family: 'Noto Sans SC'; color: var(--text-primary); margin-bottom: 12px; padding-bottom: 9px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; gap: 8px; }
+.section-block h5 i { color: var(--amber); font-size: 14px; }
+.switch-row { display: flex; align-items: center; gap: 10px; padding: 8px 0; }
+.switch { position: relative; width: 36px; height: 20px; flex: none; cursor: pointer; }
+.switch .slider { position: absolute; inset: 0; background: var(--line); border-radius: 10px; transition: .2s; }
+.switch .slider::before { content: ''; position: absolute; left: 3px; top: 3px; width: 14px; height: 14px; background: #fff; border-radius: 50%; transition: .2s; }
+.switch.on .slider { background: var(--amber); } .switch.on .slider::before { transform: translateX(16px); }
+.switch-label { font-size: 12.5px; color: var(--text-primary); }
+.switch-desc { font-size: 11px; color: var(--text-muted); margin-top: 2px; }
+.remind-row { display: flex; align-items: center; gap: 10px; padding: 9px 0; border-bottom: 1px solid var(--border-light); flex-wrap: wrap; }
+.remind-row:last-child { border-bottom: none; }
+.remind-label { font-size: 12px; color: var(--text-primary); min-width: 96px; font-weight: 500; }
+.remind-select { padding: 6px 9px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 12px; min-width: 110px; }
+.repeat-inline { display: flex; align-items: center; flex-wrap: wrap; gap: 12px; padding: 8px 0; }
+.form-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 14px; }
+.form-grid .full { grid-column: 1 / -1; }
+.form-hint { font-size: 11px; color: var(--text-muted); padding: 9px 13px; background: var(--surface-soft); border-radius: var(--radius-sm); margin-top: 10px; display: flex; align-items: center; gap: 6px; }
+.approval-flow { display: flex; align-items: center; gap: 10px; padding: 12px 0; }
+.flow-node { display: flex; flex-direction: column; align-items: center; gap: 4px; }
+.flow-node .node-icon { width: 38px; height: 38px; border-radius: 50%; background: var(--surface); border: 2px solid var(--border); display: flex; align-items: center; justify-content: center; font-size: 15px; color: var(--text-muted); }
+.flow-node .node-label { font-size: 11px; color: var(--text-secondary); }
+.flow-arrow { color: var(--text-muted); font-size: 15px; }
+.flow-add { width: 38px; height: 38px; border-radius: 50%; border: 2px dashed var(--amber); background: var(--amber-soft); display: flex; align-items: center; justify-content: center; font-size: 17px; color: var(--amber); cursor: pointer; }
+
+/* ===== 图例卡 ===== */
+.legend-card { background: var(--surface); border: 1px solid var(--line); border-radius: var(--radius); padding: 16px 18px; margin-bottom: 18px; box-shadow: var(--shadow-sm); cursor: pointer; transition: border-color .2s; }
+.legend-card:hover { border-color: var(--accent); }
+.legend-card .lc-title { font-size: 12px; font-weight: 700; color: var(--logic-head); margin-bottom: 10px; display:flex; align-items:center; gap:7px; }
+.legend-row { display: flex; align-items: center; flex-wrap: wrap; gap: 8px; margin-bottom: 12px; }
+.legend-row:last-child { margin-bottom: 0; }
+.legend-row .lr-label { font-size: 11px; color: var(--text-muted); width: 64px; flex: none; font-weight: 600; }
+.chip { font-size: 11px; padding: 3px 10px; border-radius: 14px; background: var(--surface); border: 1px solid var(--border); color: var(--text-secondary); font-weight: 500; }
+.chip.ft-none { background:#eef1f5; border-color:#d6dbe2; color:#5a6577; }
+.chip.ft-form { background:var(--accent-soft); border-color:#bcd6ee; color:var(--accent); }
+.chip.ft-bpm { background:var(--violet-soft); border-color:#d9cdf0; color:var(--violet); }
+
+/* ===== 弹窗（真正的 overlay） ===== */
+.overlay { position: fixed; inset: 0; background: rgba(16,24,36,.5); backdrop-filter: blur(2px); display: none; align-items: center; justify-content: center; z-index: 200; padding: 20px; }
+.overlay.show { display: flex; animation: fade .2s ease; }
+.modal { background: var(--card); border-radius: 12px; box-shadow: 0 24px 60px rgba(0,0,0,.32); width: min(600px, 94vw); max-height: 88vh; display: flex; flex-direction: column; overflow: hidden; }
+.modal.lg { width: min(720px, 96vw); }
+.modal-head { padding: 16px 20px; border-bottom: 1px solid var(--border-light); display: flex; align-items: center; justify-content: space-between; }
+.modal-head h4 { font-family: 'Noto Sans SC'; font-size: 15px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.modal-head .x { width: 30px; height: 30px; border-radius: 8px; border: none; background: var(--surface); color: var(--text-muted); font-size: 18px; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: .15s; }
+.modal-head .x:hover { background: var(--danger-soft); color: var(--danger); }
+.modal-body { padding: 20px; overflow-y: auto; }
 .modal-foot { padding: 14px 20px; border-top: 1px solid var(--border-light); display: flex; justify-content: flex-end; gap: 9px; }
 .modal-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; }
 .modal-box { background: var(--surface); border-radius: var(--radius-sm); padding: 12px; font-size: 12.5px; color: var(--text-secondary); line-height: 1.7; }
 .modal-box.danger-zone { background: var(--danger-soft); border-radius: var(--radius-sm); border: 1px solid rgba(230,57,70,0.2); padding: 12px; }
 .modal-box.danger-zone .dz-title { font-size: 11px; font-weight: 700; color: var(--danger); margin-bottom: 8px; }
-.modal.task-detail-modal { width: min(760px, calc(100vw - 32px)); max-height: calc(100dvh - 44px); }
-.task-detail-modal .modal-head { padding: 14px 18px; }
-.task-detail-modal .modal-head h4 { font-size: 14px; }
-.task-detail-modal .modal-body { padding: 12px 18px 14px; background: #fbfcfe; }
-.task-detail-modal .modal-foot { padding: 10px 18px; background: #fff; }
-.task-detail-section { padding: 14px 16px; border: 1px solid var(--line); border-radius: 10px; background: #fff; margin-bottom: 10px; }
-.task-detail-section:last-child { margin-bottom: 0; }
-.task-detail-section h5 { display: flex; align-items: center; gap: 7px; padding-bottom: 10px; margin: 0 0 12px; border-bottom: 1px solid var(--line-soft); color: var(--text-primary); font-family: 'Noto Sans SC', sans-serif; font-size: 13px; font-weight: 700; }
-.task-detail-section h5 i { color: #f2a52b; font-size: 14px; }
-.task-detail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px 30px; }
-.task-detail-field { display: flex; align-items: baseline; gap: 6px; min-width: 0; color: var(--text-secondary); font-size: 12px; line-height: 1.45; }
-.task-detail-field b { flex: none; color: var(--text-primary); font-weight: 700; }
-.task-detail-field span { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
-.task-detail-status { display: inline-flex; align-items: center; gap: 4px; padding: 2px 7px; border-radius: 99px; background: var(--accent-soft); color: var(--accent); font-size: 11px; font-weight: 700; }
-.task-detail-status::before { width: 6px; height: 6px; border-radius: 50%; background: currentColor; content: ''; }
-.task-detail-rules { display: flex; flex-wrap: wrap; gap: 10px 22px; color: var(--text-secondary); font-size: 12px; }
-.task-detail-rules span { display: inline-flex; align-items: center; gap: 6px; }
-.task-detail-rules i { color: #20b8b4; font-size: 15px; }
-.task-detail-rules i:first-child { color: #f2a52b; }
-.task-detail-timeline { position: relative; padding-left: 24px; }
-.task-detail-timeline::before { position: absolute; top: 4px; bottom: 5px; left: 5px; width: 1px; background: #dbe4ef; content: ''; }
-.task-detail-log { position: relative; display: flex; flex-wrap: wrap; align-items: baseline; gap: 5px 8px; min-height: 24px; padding-bottom: 10px; color: #8795a8; font-size: 11px; }
-.task-detail-log:last-child { min-height: 15px; padding-bottom: 0; }
-.task-detail-log::before { position: absolute; top: 3px; left: -23px; width: 11px; height: 11px; border: 3px solid #fff; border-radius: 50%; background: #f2a52b; box-shadow: 0 0 0 1px #f2a52b; content: ''; }
-.task-detail-log.execute::before { background: #20b8b4; box-shadow: 0 0 0 1px #20b8b4; }
-.task-detail-log.update::before { background: var(--accent); box-shadow: 0 0 0 1px var(--accent); }
-.task-detail-log strong { color: #e8991d; font-size: 12px; }
-.task-detail-log.execute strong { color: #18a6a2; }
-.task-detail-log.update strong { color: var(--accent); }
-@media (max-width: 720px) { .task-detail-grid { grid-template-columns: 1fr; gap: 12px; } .task-detail-section { padding: 16px; } .task-detail-modal .modal-body { padding: 12px; } }
 .kv { display: flex; gap: 8px; padding: 5px 0; font-size: 12.5px; border-bottom: 1px dashed var(--border-light); }
-.kv:last-child { border-bottom: none; }\r
-.kv .k { color: var(--text-muted); min-width: 84px; flex: none; }\r
-.kv .v { color: var(--text-primary); font-weight: 500; }\r
-\r
-/* ===== Toast ===== */\r
-.toast-wrap { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 400; display: flex; flex-direction: column; gap: 10px; align-items: center; }\r
-.toast { background: var(--shaft-deep); color: #fff; padding: 11px 18px; border-radius: 10px; font-size: 12.5px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,.28); display: flex; align-items: center; gap: 9px; animation: toastIn .25s ease; border-left: 3px solid var(--amber); }\r
-.toast.ok { border-left-color: var(--verdigris); }\r
-.toast.err { border-left-color: var(--danger); }\r
-.toast i { font-size: 15px; }\r
-@keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }\r
-\r
-/* ===== Empty ===== */\r
-.empty { text-align: center; padding: 50px 20px; }\r
-.empty i { font-size: 36px; color: var(--line); display: block; margin-bottom: 10px; }\r
-.btn-xs[data-remind] { color: var(--accent) !important; border: 1px solid var(--accent) !important; background: transparent !important; }\r
-.empty p { color: var(--text-muted); font-size: 12.5px; }\r
-\r
-.mview-toggle { display: none; }\r
-@media (max-width: 1100px) {\r
-    .app { flex-direction: column; }\r
-    .sidebar { width: 100%; flex-direction: row; height: auto; }\r
-    .sidebar-nav { display: flex; overflow-x: auto; }\r
-    .sidebar-footer { display: none; }\r
-    .logic { display: none; width: 100%; position: fixed; top: 0; right: 0; height: 100%; z-index: 150; }\r
-    .logic.show { display: block; }\r
-    .mview-toggle { display: inline-flex; }\r
-}\r
-</style>\r
-</head>\r
-<body>\r
-<div class="app">\r
-\r
-<!-- ===================== 侧边导航 ===================== -->\r
-<aside class="sidebar">\r
-    <div class="sidebar-brand">\r
-        <h1>矿山安全<br>任务管理系统</h1>\r
-        <div class="brand-sub">Mine Safety Task</div>\r
-    </div>\r
-    <nav class="sidebar-nav">\r
-        <div class="nav-group-label">核心模块</div>\r
-        <div class="nav-item active" data-view="view-template"><i class="bi bi-layers"></i>任务模板</div>\r
-        <div class="nav-item" data-view="view-publish"><i class="bi bi-send-check"></i>发布任务</div>\r
-        <div class="nav-item" data-view="view-mytask"><i class="bi bi-kanban"></i>我的任务<span class="badge" id="navBadge">5</span></div>\r
-        <div class="nav-group-label">数据统计</div>\r
-        <div class="nav-item" data-view="view-ledger"><i class="bi bi-graph-up"></i>任务总台账</div>\r
-        <div class="nav-item" data-view="view-personnel"><i class="bi bi-person-lines-fill"></i>人员明细</div>\r
-    </nav>\r
-    <div class="sidebar-footer">\r
-        <select class="role-select" id="roleSelect">\r
-            <option>超级管理员</option>\r
-            <option>任务发布者</option>\r
-            <option>普通执行者</option>\r
-        </select>\r
-    </div>\r
-</aside>\r
-\r
-<!-- ===================== 主界面 ===================== -->\r
-<div class="stage">\r
-<header class="topbar">\r
-    <div class="topbar-left">\r
-        <h2 id="pageTitle">任务模板</h2>\r
-        <span class="breadcrumb-hint" id="crumb">PC 端 · 任务模块原型（交互版）</span>\r
-    </div>\r
-    <div class="topbar-right">\r
-        <button class="btn btn-ghost btn-sm mview-toggle" id="mToggle"><i class="bi bi-card-text"></i>逻辑面板</button>\r
-        <div class="safety-ring" title="安全任务完成率 80%">\r
-            <svg width="34" height="34"><circle class="ring-bg" cx="17" cy="17" r="14"/><circle class="ring-value" cx="17" cy="17" r="14"/></svg>\r
-            <span class="ring-label">80%</span>\r
-        </div>\r
-        <div class="user-block">\r
-            <div class="user-avatar">张</div>\r
-            <div class="user-meta"><div class="name">张伟明</div><div class="role" id="roleLabel">超级管理员</div></div>\r
-        </div>\r
-    </div>\r
-</header>\r
-\r
-<div class="content">\r
-\r
-<!-- ===================== 视图一：任务模板 ===================== -->\r
-<div class="view active" id="view-template">\r
-<div class="section-title"><span class="idx">1</span>任务模板模块</div>\r
-\r
-<div class="card">\r
-    <div class="card-top"></div>\r
-    <div class="card-head"><h3><i class="bi bi-list-ul"></i>模板列表</h3><button class="btn btn-amber btn-sm" id="btnNewTpl"><i class="bi bi-plus-lg"></i>创建任务模板</button></div>\r
-    <div class="card-body">\r
-        <table class="data-table"><thead><tr>\r
-            <th>模板ID</th><th>模板名称</th><th>表单类型</th><th>状态</th><th>创建人</th><th>创建时间</th><th>操作</th>\r
-        </tr></thead><tbody id="tplBody">\r
-            <tr data-tid="TPL001"><td class="mono">TPL001</td><td>日常巡检任务模板</td><td>普通业务表单</td><td><span class="status status-enabled tpl-status">启用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-15 09:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--amber);border:1px solid var(--amber);">停用</button></div></td></tr>\r
-            <tr data-tid="TPL002"><td class="mono">TPL002</td><td>设备维修任务模板</td><td>无</td><td><span class="status status-enabled tpl-status">启用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-18 14:30</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--amber);border:1px solid var(--amber);">停用</button></div></td></tr>\r
-            <tr data-tid="TPL003"><td class="mono">TPL003</td><td>隐患整改任务模板</td><td>BPM流程表单</td><td><span class="status status-enabled tpl-status">启用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-20 10:15</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--amber);border:1px solid var(--amber);">停用</button></div></td></tr>\r
-            <tr data-tid="TPL004"><td class="mono">TPL004</td><td>应急演练任务模板</td><td>普通业务表单</td><td><span class="status status-disabled tpl-status">停用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-22 16:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--verdigris);border:1px solid var(--verdigris);">启用</button><button class="btn btn-danger btn-xs act-del-tpl">删除</button></div></td></tr>\r
-        </tbody></table>\r
-    </div>\r
-</div>\r
-\r
-</div><!-- /view-template -->\r
-\r
-<!-- ===================== 任务模板创建 / 编辑页（点击「创建任务模板/编辑」进入） ===================== -->\r
-<div class="view" id="view-template-editor">\r
-  <div class="editor-bar">\r
-    <div class="editor-bar-left">\r
-      <button class="btn btn-ghost btn-sm" id="btnBackTpl"><i class="bi bi-arrow-left"></i> 返回模板列表</button>\r
-      <span class="editor-title" id="editorTitle">创建任务模板</span>\r
-    </div>\r
-    <div class="editor-bar-right">\r
-      <button class="btn btn-ghost btn-sm" id="btnCancelTpl">取消</button>\r
-      <button class="btn btn-amber btn-sm" id="btnSaveTpl"><i class="bi bi-check-lg"></i> 保存模板</button>\r
-    </div>\r
-  </div>\r
-\r
-  <div class="tabs editor-tabs" id="tplEditorTabs">\r
-    <div class="tab active" data-tab="ed-basic">基本信息配置</div>\r
-    <div class="tab" data-tab="ed-perm">权限配置</div>\r
-    <div class="tab" data-tab="ed-rule">全局规则配置</div>\r
-  </div>\r
-\r
-  <!-- Tab 1：基本信息配置（参照低代码平台工作表单左右画布） -->\r
-  <div id="ed-basic" class="editor-tabpane">\r
-    <style>\r
-    .tz-designer{display:flex;height:calc(100vh - 205px);min-height:520px;border:1px solid var(--border-light);border-radius:var(--radius);overflow:hidden;background:var(--surface);box-shadow:var(--shadow-sm);}\r
-    .tz-palette{width:218px;flex:none;background:var(--surface-soft);border-right:1px solid var(--line);overflow-y:auto;}\r
-    .tz-palette-head{padding:14px 16px;border-bottom:1px solid var(--border-light);}\r
-    .tz-palette-grp{margin:14px 12px;}\r
-    .tz-palette-grp .gh{font-size:10px;font-weight:700;color:var(--text-muted);text-transform:uppercase;letter-spacing:1px;margin-bottom:8px;display:flex;align-items:center;gap:6px;}\r
-    .tz-palette-grp .gh i{color:var(--accent);}\r
-    .tz-palette-item{display:flex;align-items:center;gap:8px;padding:8px 10px;margin-bottom:6px;background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius-sm);font-size:12.5px;color:var(--text-secondary);cursor:pointer;transition:var(--transition);}\r
-    .tz-palette-item:hover{border-color:var(--accent);color:var(--accent);background:var(--accent-soft);}\r
-    .tz-palette-item i{font-size:14px;width:18px;text-align:center;}\r
-    .tz-canvas-wrap{flex:1;display:flex;flex-direction:column;min-width:0;background:var(--canvas);}\r
-    .tz-canvas-head{display:flex;align-items:center;justify-content:space-between;gap:12px;padding:12px 18px;background:var(--surface);border-bottom:1px solid var(--line);}\r
-    .tz-name-input{border:none;background:transparent;font-size:16px;font-weight:700;color:var(--text-primary);width:100%;max-width:320px;font-family:inherit;}\r
-    .tz-name-input:focus{outline:none;}\r
-    .tz-pill{font-size:11px;font-weight:600;padding:2px 9px;border-radius:999px;background:var(--warn-soft);color:var(--warn);}\r
-    .tz-tools{display:flex;gap:6px;}\r
-    .tz-tool{font-size:12px;color:var(--text-secondary);background:var(--surface-soft);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:5px 10px;cursor:pointer;transition:var(--transition);}\r
-    .tz-tool:hover{color:var(--accent);border-color:var(--accent);background:var(--accent-soft);}\r
-    .tz-canvas-body{flex:1;overflow-y:auto;padding:18px;}\r
-    .tz-canvas-inner{max-width:880px;margin:0 auto;}\r
-    .tz-meta-block{background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius);margin-bottom:18px;overflow:hidden;}\r
-    .tz-meta-block-head{padding:12px 16px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text-primary);}\r
-    .tz-meta-block-head .tag{font-size:10px;font-weight:600;color:var(--accent);background:var(--accent-soft);padding:2px 7px;border-radius:6px;}\r
-    .tz-meta-grid{display:grid;grid-template-columns:repeat(3,1fr);}\r
-    .tz-meta-cell{padding:11px 16px;border-right:1px solid var(--line-soft);border-bottom:1px solid var(--line-soft);}\r
-    .tz-meta-cell:nth-child(3n){border-right:none;}\r
-    .tz-meta-label{font-size:11px;color:var(--text-muted);margin-bottom:5px;}\r
-    .tz-meta-val{display:flex;align-items:center;gap:6px;font-size:12.5px;color:var(--text-primary);}\r
-    .tz-meta-val i{color:var(--accent);}\r
-    .tz-fields-block{background:var(--surface);border:1px solid var(--border-light);border-radius:var(--radius);overflow:hidden;}\r
-    .tz-fields-head{padding:12px 16px;border-bottom:1px solid var(--border-light);font-size:13px;font-weight:700;color:var(--text-primary);display:flex;align-items:center;gap:8px;}\r
-    .tz-fields-head .hint{font-size:11px;font-weight:400;color:var(--text-muted);margin-left:auto;}\r
-    .tz-fields-body{padding:16px;}\r
-    .tz-grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px;align-items:start;}\r
-    .tz-field-card{background:var(--surface-soft);border:1px solid var(--border-light);border-radius:var(--radius-sm);padding:12px 14px;grid-column:span 12;position:relative;cursor:pointer;transition:var(--transition);}\r
-    .tz-field-card:hover{border-color:var(--accent);}\r
-    .tz-field-card.selected{border-color:var(--accent);box-shadow:0 0 0 2px var(--accent-glow);background:var(--accent-soft);}\r
-    .tz-field-card .fc-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:8px;}\r
-    .tz-field-card .fc-type{font-size:10px;color:var(--text-muted);border:1px solid var(--border-light);border-radius:5px;padding:1px 6px;display:flex;align-items:center;gap:4px;}\r
-    .tz-field-card .fc-type i{color:var(--accent);}\r
-    .tz-field-card .fc-del{color:var(--text-muted);cursor:pointer;opacity:0;transition:var(--transition);}\r
-    .tz-field-card:hover .fc-del{opacity:1;}\r
-    .tz-field-card .fc-del:hover{color:var(--danger);}\r
-    .tz-empty{text-align:center;color:var(--text-muted);font-size:13px;padding:36px 0;}\r
-    .tz-empty i{font-size:24px;display:block;margin-bottom:8px;color:var(--line);}\r
-    .tz-config{width:330px;flex:none;background:var(--surface);border-left:1px solid var(--line);overflow-y:auto;display:flex;flex-direction:column;}\r
-    .tz-config-head{padding:14px 16px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:8px;font-size:13px;font-weight:700;color:var(--text-primary);}\r
-    .tz-config-head i{color:var(--accent);}\r
-    .tz-config-head .ctx{margin-left:auto;font-size:11px;color:var(--text-muted);font-weight:400;}\r
-    .tz-cfg-tabs{display:flex;gap:4px;padding:8px 12px;background:var(--surface-soft);}\r
-    .tz-cfg-tab{flex:1;text-align:center;font-size:12px;font-weight:500;color:var(--text-muted);padding:7px;border-radius:6px;cursor:pointer;transition:var(--transition);}\r
-    .tz-cfg-tab.active{background:var(--surface);color:var(--text-primary);box-shadow:var(--shadow-sm);font-weight:600;}\r
-    .tz-cfg-tab:disabled{opacity:.45;cursor:not-allowed;}\r
-    .tz-cfg-body{padding:14px 16px;flex:1;}\r
-    .tz-cfg-sec{font-size:12px;font-weight:700;color:var(--text-primary);margin:14px 0 10px;padding-bottom:7px;border-bottom:1px solid var(--border-light);display:flex;align-items:center;gap:6px;}\r
-    .tz-cfg-sec:first-child{margin-top:0;}\r
-    .tz-chips{display:flex;flex-wrap:wrap;gap:6px;margin-top:4px;}\r
-    .tz-chip{font-size:12px;padding:4px 11px;border:1px solid var(--border-light);border-radius:14px;cursor:pointer;color:var(--text-secondary);transition:var(--transition);}\r
-    .tz-chip.on{background:var(--accent-soft);border-color:var(--accent);color:var(--accent);font-weight:600;}\r
-    .tz-reserved{font-size:10px;font-weight:600;color:var(--text-muted);background:var(--surface-soft);border:1px solid var(--border-light);padding:1px 7px;border-radius:6px;margin-left:6px;}\r
-    </style>\r
-    <div class="tz-designer">\r
-      <!-- 左：控件库 -->\r
-      <aside class="tz-palette">\r
-        <div class="tz-palette-head">\r
-          <div style="font-size:12px;font-weight:700;color:var(--text-primary);">控件库</div>\r
-          <div style="font-size:11px;color:var(--text-muted);margin-top:3px;">与低代码平台共用同一套组件</div>\r
-        </div>\r
-        <div class="tz-palette-grp"><div class="gh"><i class="bi bi-shapes"></i>基础控件</div><div id="tplGrpBasic"></div></div>\r
-        <div class="tz-palette-grp"><div class="gh"><i class="bi bi-list-ul"></i>选择控件</div><div id="tplGrpSelect"></div></div>\r
-        <div class="tz-palette-grp"><div class="gh"><i class="bi bi-layer-group"></i>高级控件</div><div id="tplGrpAdvanced"></div></div>\r
-        <div class="tz-palette-grp"><div class="gh"><i class="bi bi-briefcase"></i>业务控件</div><div id="tplGrpBiz"></div></div>\r
-      </aside>\r
-      <!-- 中：画布（恢复为你原版的任务字段表，未改动） -->\r
-      <main class="tz-canvas-wrap">\r
-        <div class="tz-canvas-head">\r
-          <div style="display:flex;align-items:center;gap:12px;">\r
-            <span class="tz-pill">草稿</span>\r
-            <span style="font-size:13px;color:var(--text-secondary);">任务模板画布</span>\r
-          </div>\r
-          <div class="tz-tools">\r
-            <span class="tz-tool" onclick="toast('运行态预览（原型演示）','ok')"><i class="bi bi-eye"></i> 预览</span>\r
-            <span class="tz-tool" onclick="toast('查看 JSON Schema（原型演示）','ok')"><i class="bi bi-code"></i> Schema</span>\r
-            <span class="tz-tool" onclick="toast('查看已发布任务数据（原型演示）','ok')"><i class="bi bi-table"></i> 数据</span>\r
-          </div>\r
-        </div>\r
-        <div class="tz-canvas-body">\r
-          <div class="tz-canvas-inner">\r
-            <div class="canvas" style="max-height:none;height:auto;border:none;box-shadow:none;background:transparent;padding:0;">\r
-              <div class="form-group"><label class="form-label">任务名称<span class="required">*</span></label><input class="form-input" id="tplName" placeholder="输入任务名称"></div>\r
-              <div style="margin-top:14px;font-size:12.5px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">任务</div>\r
-              <div class="field-table-wrap">\r
-                <table class="field-table"><thead><tr>\r
-                  <th class="required">发起人</th><th>参与人员</th><th class="required">执行人</th><th class="required">执行任务@表单</th><th>执行工种</th><th>执行地点</th><th>计划开始</th><th>计划结束</th><th>执行说明</th>\r
-                </tr></thead><tbody><tr>\r
-                  <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-person"></i>@成员</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;">当前操作人</div></td>\r
-                  <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-people"></i>@成员</div></td>\r
-                  <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-person-check"></i>@成员</div></td>\r
-                  <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-file-earmark"></i>@工作表单</div><select class="form-input" style="width:110px;padding:4px 7px;margin-top:6px;font-size:11px;"><option>无</option><option>普通业务表单</option><option>BPM流程表单</option></select></td>\r
-                  <td>请输入</td><td>请输入</td>\r
-                  <td><i class="bi bi-calendar3"></i>日期时间</td><td><i class="bi bi-calendar3"></i>日期时间</td><td>请输入</td>\r
-                </tr></tbody></table>\r
-              </div>\r
-            </div>\r
-          </div>\r
-        </div>\r
-      </main>\r
-      <!-- 右：配置面板（对齐工作表单「表单配置 → 一、基础信息」） -->\r
-      <aside class="tz-config">\r
-        <div class="tz-config-head"><i class="bi bi-sliders-h"></i>配置面板<span class="ctx" id="tzCfgCtx">表单配置</span></div>\r
-        <div class="tz-cfg-tabs">\r
-          <div class="tz-cfg-tab active" id="tzTabForm">表单配置</div>\r
-        </div>\r
-        <div class="tz-cfg-body" id="tplConfigBody"></div>\r
-      </aside>\r
-    </div>\r
-  </div>\r
-\r
-  <!-- Tab 2：权限配置 -->\r
-  <div id="ed-perm" class="editor-tabpane" style="display:none;">\r
-    <div class="card">\r
-      <div class="card-head"><h3><i class="bi bi-shield-lock"></i>权限配置</h3><span class="sub">发布权限</span></div>\r
-      <div class="card-body" style="padding:18px;">\r
-        <div class="section-block"><h5><i class="bi bi-send-check"></i>发布权限（可发布范围）</h5>\r
-            <div class="form-group"><label class="form-label">谁可以发布此模板</label>\r
-              <select class="form-input" id="tplPubScope">\r
-                <option value="all">所有人（需拥有「发布任务」按钮权限）</option>\r
-                <option value="dept">指定部门</option>\r
-                <option value="role">指定角色</option>\r
-                <option value="member">指定成员</option>\r
-              </select>\r
-            </div>\r
-            <div id="tplPubScopeBox"></div>\r
-            <div class="form-hint"><i class="bi bi-info-circle"></i>发布权限 = 角色权限管理·「发布任务」按钮权限（L4 动作权限）＋ 本模板可发布范围（按模板细分）。发布任务时，仅「可发布范围」包含当前登录人的<b>启用</b>模板才会出现在候选列表；提交发布时还会再次校验。</div>\r
-        </div>\r
-        <style>.scope-chip{display:inline-flex;align-items:center;gap:4px;padding:4px 10px;border:1px solid #e2e8f0;border-radius:14px;font-size:12px;margin:0 6px 6px 0;cursor:pointer;}.scope-chip.on{background:#fff4e0;border-color:#f59e0b;color:#b45309;}</style>\r
-      </div>\r
-    </div>\r
-  </div>\r
-\r
-  <!-- Tab 3：全局规则配置 -->\r
-  <div id="ed-rule" class="editor-tabpane" style="display:none;">\r
-    <div class="card">\r
-      <div class="card-head"><h3><i class="bi bi-gear"></i>全局规则配置</h3></div>\r
-      <div class="card-body" style="padding:18px;">\r
-        <div class="section-block"><h5><i class="bi bi-clock-history"></i>执行控制</h5>\r
-            <div class="switch-row"><span class="switch" data-sw="exec"><span class="slider"></span></span><div><div class="switch-label">开始时间后才可执行任务</div><div class="switch-desc">开启后，只有在计划开始时间后才可执行</div></div></div>\r
-        </div>\r
-        <div class="section-block"><h5><i class="bi bi-bell"></i>任务提醒</h5>\r
-            <div class="switch-row"><span class="switch on" data-sw="remind"><span class="slider"></span></span><div><div class="switch-label">自动推送提醒</div><div class="switch-desc">开启后，系统自动给提醒人推送通知</div></div></div>\r
-            <div class="remind-row"><span class="remind-label">计划开始时间前：</span><select class="remind-select"><option>请选择</option><option>15分钟</option><option>30分钟</option><option>1小时</option><option>2小时</option><option>自定义</option></select><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>\r
-            <div class="remind-row"><span class="remind-label">计划结束时间前：</span><select class="remind-select"><option>请选择</option><option>15分钟</option><option>30分钟</option><option>1小时</option><option>2小时</option><option>自定义</option></select><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>\r
-            <div class="remind-row"><span class="remind-label">超期未处理：</span><select class="remind-select"><option>请选择</option><option>每天提醒</option><option>每2天</option><option>每3天</option><option>自定义</option></select><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>\r
-        </div>\r
-        <div class="section-block"><h5><i class="bi bi-arrow-repeat"></i>重复发布</h5>\r
-            <div class="switch-row"><span class="switch" data-sw="repeat"><span class="slider"></span></span><div><div class="switch-label">开启重复发布</div><div class="switch-desc">开启后，系统自动发布任务</div></div></div>\r
-            <div class="repeat-inline"><div class="form-group" style="margin-bottom:0;"><label class="form-label">重复执行时间</label><select class="form-input"><option>不重复</option><option>按天</option><option>按周</option><option>按月</option><option>按年</option></select></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">发布时间</label><input class="form-input" type="time" value="08:00"></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">截止发布时间</label><input class="form-input" type="date"></div></div>\r
-            <div class="switch-row" style="margin-top:8px;"><span class="switch" data-sw="imm"><span class="slider"></span></span><div><div class="switch-label">立即发布第一条任务</div><div class="switch-desc">开启后，系统会在定时任务创建时发布第一条任务</div></div></div>\r
-        </div>\r
-      </div>\r
-    </div>\r
-  </div>\r
-</div><!-- /view-template-editor -->\r
-\r
-<!-- ===================== 视图二：发布任务 ===================== -->\r
-<div class="view" id="view-publish">\r
-<div class="section-title"><span class="idx">2</span>发布任务模块</div>\r
-\r
-<!-- 步骤一：选择任务模板 -->\r
-<div id="pubTplList">\r
-  <div class="card">\r
-    <div class="card-top green"></div>\r
-    <div class="card-head"><h3><i class="bi bi-list-check"></i>选择任务模板</h3><span class="sub">仅展示启用状态的模板</span></div>\r
-    <div class="card-body">\r
-      <table class="data-table"><thead><tr><th>模板ID</th><th>模板名称</th><th>表单类型</th><th>创建人</th><th>操作</th></tr></thead><tbody id="pubBody">
-        <tr data-tid="TPL001"><td class="mono">TPL001</td><td>日常巡检任务模板</td><td>普通业务表单</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>\r
-        <tr data-tid="TPL002"><td class="mono">TPL002</td><td>设备维修任务模板</td><td>无</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>\r
-        <tr data-tid="TPL003"><td class="mono">TPL003</td><td>隐患整改任务模板</td><td>BPM流程表单</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>\r
+.kv:last-child { border-bottom: none; }
+.kv .k { color: var(--text-muted); min-width: 84px; flex: none; }
+.kv .v { color: var(--text-primary); font-weight: 500; }
+
+/* ===== Toast ===== */
+.toast-wrap { position: fixed; bottom: 26px; left: 50%; transform: translateX(-50%); z-index: 400; display: flex; flex-direction: column; gap: 10px; align-items: center; }
+.toast { background: var(--shaft-deep); color: #fff; padding: 11px 18px; border-radius: 10px; font-size: 12.5px; font-weight: 500; box-shadow: 0 8px 24px rgba(0,0,0,.28); display: flex; align-items: center; gap: 9px; animation: toastIn .25s ease; border-left: 3px solid var(--amber); }
+.toast.ok { border-left-color: var(--verdigris); }
+.toast.err { border-left-color: var(--danger); }
+.toast i { font-size: 15px; }
+@keyframes toastIn { from { opacity: 0; transform: translateY(12px); } to { opacity: 1; transform: none; } }
+
+/* ===== Empty ===== */
+.empty { text-align: center; padding: 50px 20px; }
+.empty i { font-size: 36px; color: var(--line); display: block; margin-bottom: 10px; }
+.btn-xs[data-remind] { color: var(--accent) !important; border: 1px solid var(--accent) !important; background: transparent !important; }
+.empty p { color: var(--text-muted); font-size: 12.5px; }
+
+.mview-toggle { display: none; }
+@media (max-width: 1100px) {
+    .app { flex-direction: column; }
+    .sidebar { width: 100%; flex-direction: row; height: auto; }
+    .sidebar-nav { display: flex; overflow-x: auto; }
+    .sidebar-footer { display: none; }
+    .logic { display: none; width: 100%; position: fixed; top: 0; right: 0; height: 100%; z-index: 150; }
+    .logic.show { display: block; }
+    .mview-toggle { display: inline-flex; }
+}
+
+/* ===== 组件可点击高亮（模板编辑器） ===== */
+.field-table th { cursor: pointer; transition: background .15s, box-shadow .15s; user-select: none; }
+.field-table th:hover { background: #d4e6f7; }
+.field-table th.comp-sel { background: var(--accent); color: #fff; box-shadow: inset 0 -3px 0 var(--verdigris); }
+.field-table th.comp-sel::after { content: ' ⚙'; font-size: 10px; }
+.tplname-field { cursor: pointer; }
+.tplname-field:hover .form-input { border-color: var(--accent); }
+.tplname-field.comp-sel .form-input { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.cfg-back { font-size: 11px; color: var(--accent); cursor: pointer; margin-left: auto; font-weight: 500; }
+.cfg-back:hover { text-decoration: underline; }
+.cfg-scope-tags { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 8px; }
+.cfg-scope-tags label { display: inline-flex; align-items: center; gap: 4px; font-size: 11px; padding: 4px 9px; border: 1px solid var(--border); border-radius: 14px; cursor: pointer; background: var(--surface-soft); transition: .15s; }
+.cfg-scope-tags label input { accent-color: var(--accent); }
+.cfg-scope-tags label.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.cfg-type-tag { font-size: 10px; padding: 2px 8px; border-radius: 10px; background: var(--violet-soft); color: var(--violet); font-weight: 600; }
+
+/* ===== 组织架构多选弹窗 ===== */
+.org-wrap { display: grid; grid-template-columns: 1fr 230px; gap: 14px; }
+.org-search { margin-bottom: 12px; }
+.org-tree { max-height: 48vh; overflow: auto; border: 1px solid var(--border); border-radius: 8px; padding: 8px; background: var(--surface); }
+.org-dept { margin-bottom: 2px; }
+.org-dept-head { display: flex; align-items: center; gap: 6px; padding: 7px 8px; border-radius: 6px; cursor: pointer; font-weight: 600; font-size: 12.5px; color: var(--text-primary); }
+.org-dept-head:hover { background: var(--surface-soft); }
+.org-dept-head .caret { transition: .2s; color: var(--text-muted); }
+.org-dept.collapsed .caret { transform: rotate(-90deg); }
+.org-dept-head .allchk { margin-left: auto; accent-color: var(--accent); }
+.org-members { padding: 2px 0 6px 24px; }
+.org-dept.collapsed .org-members { display: none; }
+.org-member { display: flex; align-items: center; gap: 8px; padding: 5px 8px; border-radius: 6px; font-size: 12.5px; }
+.org-member:hover { background: var(--surface-soft); }
+.org-member input { accent-color: var(--accent); }
+.org-member .mname { flex: 1; }
+.org-member .mdept { font-size: 10px; color: var(--text-muted); }
+.org-chips { border: 1px dashed var(--border); border-radius: 8px; padding: 10px; min-height: 80px; max-height: 48vh; overflow: auto; }
+.org-chips .chip-x { background: var(--accent-soft); border: 1px solid #bcd6ee; color: var(--accent); padding: 3px 8px; border-radius: 14px; font-size: 11px; display: inline-flex; align-items: center; gap: 5px; margin: 3px; }
+.org-chips .chip-x i { cursor: pointer; }
+.org-chips .empty-hint { color: var(--text-muted); font-size: 11px; }
+
+/* ===== 分类表单弹窗 ===== */
+.catform-wrap { display: grid; grid-template-columns: 150px 1fr; gap: 14px; height: 54vh; }
+.catform-cats { border-right: 1px solid var(--border); padding-right: 10px; overflow: auto; }
+.catform-cat { padding: 9px 10px; border-radius: 8px; cursor: pointer; font-size: 12.5px; color: var(--text-secondary); display: flex; align-items: center; justify-content: space-between; }
+.catform-cat:hover { background: var(--surface-soft); }
+.catform-cat.on { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.catform-cat .cnt { font-size: 10px; background: var(--surface-soft); padding: 1px 7px; border-radius: 8px; }
+.catform-cat.on .cnt { background: #fff; }
+.catform-forms { overflow: auto; padding-left: 6px; }
+.catform-search { margin-bottom: 10px; }
+.catform-form { padding: 11px 12px; border: 1px solid var(--border); border-radius: 8px; margin-bottom: 8px; cursor: pointer; display: flex; align-items: center; gap: 10px; font-size: 12.5px; }
+.catform-form:hover { border-color: var(--accent); background: var(--accent-soft); }
+.catform-form.sel { border-color: var(--accent); background: var(--accent-soft); box-shadow: 0 0 0 2px var(--accent-glow); }
+.catform-form .ftype { font-size: 10px; color: var(--text-muted); }
+.catform-form .radio { width: 16px; height: 16px; border-radius: 50%; border: 2px solid var(--border); flex: none; }
+.catform-form.sel .radio { border-color: var(--accent); background: radial-gradient(circle, var(--accent) 0 4px, transparent 5px); }
+.catform-empty { text-align: center; color: var(--text-muted); padding: 40px 10px; font-size: 12px; }
+
+/* ===== 预览弹窗 ===== */
+.prev-head { display: flex; align-items: center; gap: 10px; margin-bottom: 14px; padding-bottom: 12px; border-bottom: 1px solid var(--border-light); }
+.prev-field { padding: 9px 0; border-bottom: 1px dashed var(--border-light); display: flex; gap: 12px; }
+.prev-field .pk { color: var(--text-muted); font-size: 12px; min-width: 96px; flex: none; font-weight: 500; }
+.prev-field .pv { font-size: 12.5px; color: var(--text-primary); flex: 1; }
+.prev-readonly { background: var(--surface-soft); border: 1px solid var(--border-light); border-radius: 6px; padding: 6px 10px; font-size: 12px; color: var(--text-secondary); }
+/* ===== 一期新增：双维度 / 双视角 / 计划管理 ===== */
+.group-tabs { background: var(--surface); border: 1px solid var(--border-light); border-radius: var(--radius); padding: 5px; gap: 5px; margin: 0 0 14px; width: fit-content; }
+.group-tabs .tab { border-bottom: none; margin-bottom: 0; border-radius: 6px; padding: 9px 16px; }
+.group-tabs .tab.active { background: var(--accent); color: #fff; }
+.group-tabs .tab.active:hover { color: #fff; }
+.dim-hint { font-size: 12px; color: var(--text-secondary); background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 9px 14px; margin: 0 0 14px; line-height: 1.6; }
+.dim-hint .mono { color: var(--accent); font-weight: 600; }
+.seg { display: inline-flex; background: var(--surface-soft); border: 1px solid var(--border-light); border-radius: 8px; padding: 3px; gap: 3px; }
+.seg-btn { border: none; background: transparent; padding: 6px 13px; font-size: 12px; font-weight: 500; color: var(--text-secondary); border-radius: 6px; cursor: pointer; font-family: inherit; }
+.seg-btn.active { background: var(--accent); color: #fff; }
+.filter-bar { display: flex; gap: 14px; flex-wrap: wrap; font-size: 11.5px; color: var(--text-muted); padding: 10px 20px; border-bottom: 1px solid var(--border-light); background: var(--surface-soft); }
+.filter-bar b { color: var(--text-secondary); font-weight: 600; }
+.status-paused { background: #fff4e0; color: #a05a00; } .status-paused::before { background: #a05a00; }
+.status-ended { background: rgba(101,115,134,0.12); color: var(--text-muted); } .status-ended::before { background: var(--text-muted); }
+.status-signing { background: var(--violet-soft); color: var(--violet); } .status-signing::before { background: var(--violet); }
+.tree-toggle { border: none; background: var(--surface-soft); width: 20px; height: 20px; border-radius: 5px; cursor: pointer; color: var(--text-muted); font-size: 11px; line-height: 1; }
+.tree-toggle:hover { background: var(--accent-soft); color: var(--accent); }
+.lg-child { background: var(--surface-soft); }
+.lg-child:hover { background: #eef4fb; }
+.sign-progress { font-size: 11px; font-weight: 600; color: var(--violet); }
+/* ===== 提醒选择器 / 重复发布扩展 ===== */
+.remind-picker { position: relative; display: inline-block; }
+.rp-btn { display: flex; align-items: center; justify-content: space-between; gap: 8px; min-width: 150px; padding: 6px 10px; border: 1px solid var(--line); border-radius: var(--radius-sm); background: var(--surface); font-size: 12px; color: var(--text-secondary); cursor: pointer; font-family: inherit; text-align: left; }
+.rp-btn i { font-size: 10px; color: var(--text-muted); }
+.remind-picker.open .rp-btn { border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.rp-pop { display: none; position: absolute; z-index: 60; top: calc(100% + 4px); left: 0; background: #fff; border: 1px solid var(--line); border-radius: 8px; box-shadow: 0 8px 24px rgba(0,0,0,.14); padding: 6px; min-width: 200px; max-height: 270px; overflow: auto; }
+.remind-picker.open .rp-pop { display: block; }
+.rp-item { display: flex; align-items: center; gap: 8px; padding: 6px 8px; border-radius: 6px; font-size: 12px; color: var(--text-primary); cursor: pointer; white-space: nowrap; }
+.rp-item:hover { background: var(--surface-soft); }
+.rp-item input { accent-color: var(--accent); }
+.rp-custom { border-top: 1px solid var(--border-light); margin-top: 4px; padding: 8px 4px 2px; display: flex; align-items: center; gap: 6px; font-size: 12px; flex-wrap: wrap; color: var(--text-secondary); }
+.rp-num, .rp-unit, .rp-repeat { padding: 4px 6px; border: 1px solid var(--line); border-radius: 4px; font-size: 12px; color: var(--text-primary); }
+.rp-num { width: 62px; }
+.rp-repeat { width: 56px; }
+.rp-actions { display: flex; gap: 6px; margin-left: auto; }
+.repeat-extra { margin-top: 10px; padding: 12px 14px; background: var(--surface-soft); border-radius: var(--radius-sm); }
+.rep-rows-head { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin-bottom: 9px; }
+.rep-dims { display: flex; gap: 6px; flex-wrap: wrap; align-items: center; }
+.rep-dim { font-size: 12px; padding: 4px 10px; border-radius: 6px; border: 1px solid var(--line); background: var(--surface); color: var(--text-secondary); cursor: pointer; line-height: 1.4; }
+.rep-dim:hover { border-color: var(--accent); }
+.rep-dim.on { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); font-weight: 600; }
+#repDims1 .rp-btn, #repDims2 .rp-btn { min-width: 186px; justify-content: space-between; }
+#repDims1 .rp-pop, #repDims2 .rp-pop { min-width: 230px; max-height: 262px; overflow-y: auto; }
+#repDims1 .rp-pop .rp-item, #repDims2 .rp-pop .rp-item { font-size: 12.5px; padding: 5px 10px; }
+.rep-rows-head .form-label { margin-bottom: 0; }
+.rep-tip { font-size: 11px; color: var(--text-muted); }
+.rep-rows { display: flex; flex-direction: column; gap: 8px; margin-bottom: 10px; }
+.rep-row { display: flex; align-items: center; gap: 8px; }
+.rr-sel, .rep-row input[type=time] { padding: 6px 9px; border: 1px solid var(--line); border-radius: var(--radius-sm); font-size: 12px; background: #fff; color: var(--text-primary); font-family: inherit; }
+.rr-dim { font-size: 12px; color: var(--text-secondary); min-width: 48px; }
+.rr-del { border: 1px solid var(--border); background: #fff; color: var(--text-muted); width: 28px; height: 28px; border-radius: 6px; cursor: pointer; font-size: 11px; }
+.rr-del:hover { border-color: var(--danger); color: var(--danger); }
+.chk-inline { display: inline-flex; align-items: center; gap: 6px; font-size: 12px; color: var(--text-secondary); cursor: pointer; margin-left: 12px; }
+.chk-inline input { accent-color: var(--accent); }
+.inst-link { color: var(--accent); text-decoration: underline; text-underline-offset: 2px; background: none; border: none; padding: 0; font: inherit; cursor: pointer; }
+.inst-link:hover { color: #0d5ca3; }
+.inst-row-head, .inst-row { display: grid; grid-template-columns: 128px minmax(120px, 1fr) 104px 76px 156px; gap: 8px; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--border-light); }
+.person-row-head, .person-row { display: grid; grid-template-columns: 96px 92px 110px 74px 1fr; gap: 8px; align-items: center; padding: 8px 4px; border-bottom: 1px solid var(--border-light); }
+.person-row-head { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.person-row span { font-size: 12px; color: var(--text-primary); }
+.modal-filters { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 12px; }
+.inst-row-head { font-size: 11px; color: var(--text-muted); font-weight: 600; }
+.inst-row span { font-size: 12px; color: var(--text-primary); }
+.mode-tag { font-size: 11px; padding: 2px 9px; border-radius: 10px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.mode-tag.ro { background: rgba(101,115,134,0.12); color: var(--text-muted); }
+.pub-notice { font-size: 12px; color: var(--text-secondary); background: var(--accent-soft); border-left: 3px solid var(--accent); border-radius: 0 8px 8px 0; padding: 9px 14px; margin: 0 0 12px; line-height: 1.6; }
+#pubForm.ro .editor-tabpane input, #pubForm.ro .editor-tabpane select, #pubForm.ro .editor-tabpane textarea,
+#pubForm.ro .editor-tabpane button, #pubForm.ro .editor-tabpane .switch, #pubForm.ro .editor-tabpane .field-table th { pointer-events: none; }
+#pubForm.ro .editor-tabpane input, #pubForm.ro .editor-tabpane select, #pubForm.ro .editor-tabpane textarea { background: var(--surface-soft); color: var(--text-secondary); }
+#pubForm.ro .editor-tabpane button { opacity: .75; }
+#pubForm.ro .switch { opacity: .45; }
+#view-exec .card-body.ro input, #view-exec .card-body.ro select, #view-exec .card-body.ro textarea { pointer-events: none; background: var(--surface-soft); color: var(--text-secondary); }
+/* ===== 下一次任务详情：右侧抽屉 ===== */
+.drawer-mask { position: fixed; inset: 0; background: rgba(15,23,42,.36); opacity: 0; pointer-events: none; transition: opacity .18s ease; z-index: 90; }
+.drawer-mask.show { opacity: 1; pointer-events: auto; }
+.drawer { position: fixed; top: 0; right: 0; height: 100vh; width: min(1080px, 86vw); background: #fff; box-shadow: -10px 0 28px rgba(15,23,42,.14); border-left: 1px solid var(--border-light); transform: translateX(102%); transition: transform .22s ease; z-index: 91; display: flex; flex-direction: column; }
+.drawer.show { transform: translateX(0); }
+.drawer-head { display: flex; align-items: center; gap: 10px; padding: 13px 20px; border-bottom: 1px solid var(--border-light); background: #fff; }
+.drawer-title { font-size: 15px; font-weight: 600; color: var(--text-primary); }
+.drawer-body { flex: 1; overflow: auto; padding: 18px 20px; background: #F5F7FA; }
+.drawer-body > * { min-width: 880px; }
+.drawer-body .canvas { border: 1px solid var(--border-light); background: var(--surface); }
+.submit-line { display: flex; align-items: center; gap: 9px; font-size: 12.5px; color: var(--text-secondary); background: var(--surface-soft); border-radius: 8px; padding: 9px 12px; }
+.submit-line b { color: var(--text-primary); font-weight: 600; }
+.submit-line .bi { color: var(--accent); }
+.idetail-head { display: flex; align-items: center; gap: 10px; flex-wrap: wrap; padding-bottom: 12px; border-bottom: 1px solid var(--border-light); margin-bottom: 14px; }
+.idetail-head b { font-size: 15px; }
+.pill { font-size: 11px; padding: 2px 9px; border-radius: 20px; background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.pill.ok { background: var(--ok-soft); color: var(--ok); }
+.pill.warn { background: var(--danger-soft); color: var(--danger); }
+.idetail-sec { font-size: 12px; font-weight: 600; color: var(--text-secondary); margin: 14px 0 8px; }
+.idetail-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 8px 20px; font-size: 12.5px; }
+.idetail-grid .full { grid-column: 1 / -1; }
+.idetail-grid .k { color: var(--text-muted); margin-right: 6px; }
+.idetail-table { width: 100%; border-collapse: collapse; font-size: 12.5px; }
+.idetail-table th { text-align: left; padding: 7px 8px; background: var(--surface-soft); color: var(--text-secondary); font-size: 11px; font-weight: 600; border-bottom: 1px solid var(--line); }
+.idetail-table td { padding: 7px 8px; border-bottom: 1px solid var(--line-soft); }
+.idetail-box { font-size: 12.5px; background: var(--surface-soft); border-radius: 8px; padding: 10px 12px; line-height: 1.8; color: var(--text-secondary); }
+.exec-pills { display: flex; gap: 8px; flex-wrap: wrap; margin-bottom: 14px; }
+.exec-info { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 6px 18px; font-size: 12.5px; color: var(--text-secondary); padding-bottom: 14px; border-bottom: 1px solid var(--border-light); }
+.exec-info .k { color: var(--text-muted); margin-right: 6px; }
+.exec-sec { font-size: 12.5px; font-weight: 600; color: var(--text-secondary); margin: 16px 0 10px; }
+.exec-sec .mut { font-weight: 400; color: var(--text-muted); font-size: 11.5px; }
+.modal-grid .full { grid-column: 1 / -1; }
+
+/* 按年：可添加多条规则，每条内 月份 / 日期 均可多选 */
+.ry-wrap { display: flex; flex-direction: column; gap: 6px; min-width: 320px; }
+.ry-row { display: flex; align-items: center; gap: 6px; }
+.ry-row .remind-picker { flex: 1; min-width: 0; display: block; }
+#repDims1 .ry-row .rp-btn, #repDims2 .ry-row .rp-btn { min-width: 0; width: 100%; padding: 4px 8px; height: 30px; }
+#repDims1 .ry-row .rp-pop, #repDims2 .ry-row .rp-pop { min-width: 156px; }
+.ry-del { border: none; background: none; color: var(--text-muted); cursor: pointer; font-size: 12px; padding: 2px 4px; line-height: 1; }
+.ry-del:hover { color: var(--danger, #c0392b); }
+.ry-add { font-size: 12px; color: var(--accent); cursor: pointer; user-select: none; padding: 2px 0; }
+.ry-add:hover { text-decoration: underline; }
+
+/* 执行页：任务基本信息 / 任务执行填写 两块分区 */
+.exec-block { background: var(--surface-soft); border-radius: 10px; padding: 14px 16px; margin-bottom: 12px; }
+.exec-block-head { display: flex; align-items: center; gap: 6px; font-size: 13px; font-weight: 600; color: var(--text-primary); margin-bottom: 12px; padding-left: 9px; border-left: 3px solid var(--accent); line-height: 1.3; }
+.exec-block-head i { color: var(--accent); font-size: 13px; }
+.exec-block-head .mut { font-weight: 400; font-size: 11.5px; color: var(--text-muted); }
+.exec-block .exec-info { padding-bottom: 0; border-bottom: none; }
+.exec-info .full { grid-column: 1 / -1; }
+
+/* 列表查询条件 */
+.fb-bar { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; padding: 10px 0; }
+.fb-input { width: 186px; padding: 6px 10px; font-size: 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--text-primary); font-family: inherit; }
+.fb-input:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-glow); }
+.fb-sel { padding: 6px 8px; font-size: 12px; border: 1px solid var(--line); border-radius: 6px; background: var(--surface); color: var(--text-secondary); font-family: inherit; cursor: pointer; }
+.fb-sel:focus { outline: none; border-color: var(--accent); }
+.fb-count { margin-left: auto; font-size: 11.5px; color: var(--text-muted); }
+.fb-reset { padding: 5px 10px; font-size: 12px; border: 1px solid var(--line); border-radius: 6px; background: transparent; color: var(--text-secondary); cursor: pointer; font-family: inherit; }
+.fb-reset:hover { color: var(--accent); border-color: var(--accent); }
+
+/* 逻辑面板：按页面/标签显示 + 通用规则切换 */
+.note { display: none; }
+.note.on { display: block; }
+.lg-switch { display: flex; gap: 6px; margin-top: 9px; }
+.lg-switch button { font-family: inherit; font-size: 11.5px; padding: 4px 11px; border-radius: 12px; border: 1px solid var(--logic-line); background: var(--surface); color: var(--logic-text); cursor: pointer; transition: .15s; }
+.lg-switch button.on { background: var(--accent); color: #fff; border-color: var(--accent); }
+.note .lead { font-size: 11px; opacity: .82; margin-bottom: 7px; }
+.note .sub { font-size: 11.5px; font-weight: 700; color: var(--logic-head); margin: 10px 0 4px; }
+.note .sub:first-child { margin-top: 0; }
+.note table.mini { width: 100%; border-collapse: collapse; font-size: 10.5px; margin: 5px 0 8px; }
+.note table.mini th, .note table.mini td { border: 1px solid var(--logic-line); padding: 4px 5px; text-align: left; vertical-align: top; line-height: 1.5; }
+.note table.mini th { background: var(--logic-bg2); font-weight: 600; }
+.note .kv2 { display: flex; gap: 6px; margin-bottom: 4px; }
+.note .kv2 b { flex: none; }
+.note code { font-family: ui-monospace, Menlo, monospace; font-size: 10.5px; background: var(--logic-bg2); padding: 0 3px; border-radius: 3px; }
+/* ====================== 开发说明抽屉（页面级逻辑备注） ====================== */
+.dev-doc-btn { display:inline-flex; align-items:center; gap:6px; height:32px; padding:0 12px; font-size:12.5px; font-weight:600; color:var(--accent); background:var(--accent-soft); border:1px solid var(--logic-line); border-radius:8px; cursor:pointer; font-family:inherit; transition:var(--transition); }
+.dev-doc-btn:hover { filter:brightness(.97); box-shadow:0 2px 8px rgba(23,35,55,.06); }
+.dev-doc-drawer { position:fixed; left:0; right:0; bottom:0; width:auto; height:var(--devdoc-h, 40vh); background:var(--surface); border-top:1px solid var(--line); box-shadow:0 -12px 30px rgba(23,35,55,.13); transform:translateY(103%); transition:transform .24s ease; z-index:900; display:flex; flex-direction:column; }
+.dev-doc-resizer { position:absolute; top:-4px; left:0; right:0; height:10px; cursor:ns-resize; z-index:3; }
+.dev-doc-resizer::after { content:''; position:absolute; left:50%; top:4px; width:64px; height:4px; margin-left:-32px; border-radius:3px; background:var(--line); transition:background .15s; }
+.dev-doc-resizer:hover::after, .dev-doc-resizer.dragging::after { background:var(--accent); }
+.dev-doc-drawer.open { transform:translateY(0); }
+.dev-doc-head { flex-shrink:0; display:flex; align-items:center; justify-content:space-between; gap:12px; padding:9px 22px; border-bottom:1px solid var(--line); background:var(--surface-soft); }
+.dev-doc-head .t { font-size:14px; font-weight:700; color:var(--text-primary); }
+.dev-doc-head .s { font-size:12px; color:var(--text-muted); margin-left:8px; font-weight:400; }
+.dev-doc-head .r { display:flex; align-items:center; gap:8px; }
+.dev-doc-switch { display:flex; border:1px solid var(--line); border-radius:8px; overflow:hidden; }
+.dev-doc-switch button { border:0; background:var(--surface); color:var(--text-secondary); font-size:11.5px; padding:5px 10px; cursor:pointer; font-family:inherit; }
+.dev-doc-switch button.on { background:var(--accent); color:#fff; font-weight:600; }
+.dev-doc-close { width:28px; height:28px; line-height:26px; text-align:center; border-radius:8px; cursor:pointer; color:var(--text-muted); font-size:18px; }
+.dev-doc-close:hover { background:var(--line-soft); color:var(--text-primary); }
+.dev-doc-body { flex:1; overflow-y:auto; width:100%; padding:16px 26px 48px; font-size:13px; line-height:1.78; color:var(--text-secondary); }
+.dev-doc-body h4 { font-size:13.5px; color:var(--text-primary); margin:22px 0 8px; padding-left:9px; border-left:3px solid var(--accent); line-height:1.4; font-weight:700; }
+.dev-doc-body h4:first-child { margin-top:0; }
+.dev-doc-body h5 { font-size:12.5px; color:var(--text-primary); margin:14px 0 6px; font-weight:700; }
+.dev-doc-body p { margin:0 0 8px; }
+.dev-doc-body ul, .dev-doc-body ol { margin:0 0 8px; padding-left:20px; }
+.dev-doc-body li { margin:3px 0; }
+.dev-doc-body b { color:var(--text-primary); font-weight:600; }
+.dev-doc-body code { font-family:Consolas,Menlo,monospace; font-size:11.5px; background:var(--line-soft); padding:1px 5px; border-radius:4px; color:var(--accent); }
+.devdoc-table { width:100%; border-collapse:collapse; font-size:12px; margin:4px 0 12px; }
+.devdoc-table th { background:var(--surface-soft); color:var(--text-muted); font-weight:600; text-align:left; padding:6px 8px; border:1px solid var(--line); white-space:nowrap; }
+.devdoc-table td { padding:6px 8px; border:1px solid var(--line); vertical-align:top; line-height:1.62; }
+.devdoc-table td:first-child { color:var(--text-primary); white-space:nowrap; }
+.devdoc-table--spec th:nth-child(2), .devdoc-table--spec td:nth-child(2) { width:84px; }
+.devdoc-table--spec th:nth-child(3), .devdoc-table--spec td:nth-child(3) { width:42px; }
+.devdoc-table--spec th:nth-child(4), .devdoc-table--spec td:nth-child(4) { width:124px; }
+.devdoc-table td { word-break:break-word; }
+.devdoc-table code { white-space:normal; word-break:break-all; }
+.devdoc-table--spec td:nth-child(2), .devdoc-table--spec td:nth-child(3) { font-size:11.5px; color:var(--text-muted); }
+.devdoc-table--spec td:nth-child(4) { font-size:11px; color:var(--text-muted); }
+.devdoc-kv { display:grid; grid-template-columns:88px 1fr; gap:5px 12px; font-size:12.5px; margin:0 0 6px; }
+.devdoc-kv .k { color:var(--text-muted); }
+.devdoc-tip { background:var(--accent-soft); border:1px solid var(--logic-line); border-radius:8px; padding:8px 11px; font-size:12px; margin:8px 0 12px; color:var(--text-secondary); }
+.devdoc-empty { color:var(--text-muted); font-size:13px; padding:28px 0; }
+.devdoc-src { display:none; }
+/* 底部上下分屏：原型区自动让出高度，不被说明遮挡；高度由拖拽条控制 */
+body.devdoc-open .app { padding-bottom:var(--devdoc-h, 40vh); }
+.dd-hint { font-size:11px; color:var(--text-muted); }
+
+</style>
+</head>
+<body>
+<div class="app">
+
+<!-- ===================== 侧边导航 ===================== -->
+<aside class="sidebar">
+    <div class="sidebar-brand">
+        <h1>矿山安全<br>任务管理系统</h1>
+        <div class="brand-sub">Mine Safety Task</div>
+    </div>
+    <nav class="sidebar-nav">
+        <div class="nav-group-label">核心模块</div>
+        <div class="nav-item active" data-view="view-template"><i class="bi bi-layers"></i>任务模板</div>
+        <div class="nav-item" data-view="view-publish"><i class="bi bi-send-check"></i>发布任务</div>
+        <div class="nav-item" data-view="view-mytask"><i class="bi bi-kanban"></i>我的任务<span class="badge" id="navBadge">5</span></div>
+        <div class="nav-group-label">数据统计</div>
+        <div class="nav-item" data-view="view-ledger"><i class="bi bi-graph-up"></i>任务总台账</div>
+    </nav>
+    <div class="sidebar-footer">
+        <select class="role-select" id="roleSelect">
+            <option>超级管理员</option>
+            <option>任务发布者</option>
+            <option>普通执行者</option>
+        </select>
+    </div>
+</aside>
+
+<!-- ===================== 主界面 ===================== -->
+<div class="stage">
+<header class="topbar">
+    <div class="topbar-left">
+        <h2 id="pageTitle">任务模板</h2>
+        <span class="breadcrumb-hint" id="crumb">PC 端 · 任务模块原型（交互版）</span>
+    </div>
+    <div class="topbar-right">
+        <button class="dev-doc-btn" onclick="toggleDevDoc()"><i class="bi bi-file-earmark-text"></i>开发说明</button>
+        <div class="safety-ring" title="安全任务完成率 80%">
+            <svg width="34" height="34"><circle class="ring-bg" cx="17" cy="17" r="14"/><circle class="ring-value" cx="17" cy="17" r="14"/></svg>
+            <span class="ring-label">80%</span>
+        </div>
+        <div class="user-block">
+            <div class="user-avatar">张</div>
+            <div class="user-meta"><div class="name">张伟明</div><div class="role" id="roleLabel">超级管理员</div></div>
+        </div>
+    </div>
+</header>
+
+<div class="content">
+
+<!-- ===================== 视图一：任务模板 ===================== -->
+<div class="view active" id="view-template">
+<div class="section-title"><span class="idx">1</span>任务模板模块</div>
+
+<div class="card">
+    <div class="card-top"></div>
+    <div class="card-head"><h3><i class="bi bi-list-ul"></i>模板列表</h3><button class="btn btn-amber btn-sm" id="btnNewTpl"><i class="bi bi-plus-lg"></i>创建任务模板</button></div>
+    <div class="card-body">
+        <div class="fb-bar" data-fb="tplTable"><input class="fb-input" data-k="q" placeholder="搜索模板名称 / 编号"><select class="fb-sel" data-k="sel" data-col="2"><option value="">表单类型</option><option value="普通业务表单">普通业务表单</option><option value="无">无</option><option value="BPM流程表单">BPM流程表单</option></select><select class="fb-sel" data-k="sel" data-col="3"><option value="">状态</option><option value="启用">启用</option><option value="停用">停用</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="tplTable"><thead><tr>
+            <th>模板ID</th><th>模板名称</th><th>表单类型</th><th>状态</th><th>创建人</th><th>创建时间</th><th>操作</th>
+        </tr></thead><tbody id="tplBody">
+            <tr data-tid="TPL001"><td class="mono">TPL001</td><td>日常巡检任务模板</td><td>普通业务表单</td><td><span class="status status-enabled tpl-status">启用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-15 09:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--amber);border:1px solid var(--amber);">停用</button></div></td></tr>
+            <tr data-tid="TPL002"><td class="mono">TPL002</td><td>设备维修任务模板</td><td>无</td><td><span class="status status-enabled tpl-status">启用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-18 14:30</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--amber);border:1px solid var(--amber);">停用</button></div></td></tr>
+            <tr data-tid="TPL003"><td class="mono">TPL003</td><td>隐患整改任务模板</td><td>BPM流程表单</td><td><span class="status status-enabled tpl-status">启用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-20 10:15</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--amber);border:1px solid var(--amber);">停用</button></div></td></tr>
+            <tr data-tid="TPL004"><td class="mono">TPL004</td><td>应急演练任务模板</td><td>普通业务表单</td><td><span class="status status-disabled tpl-status">停用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-22 16:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--verdigris);border:1px solid var(--verdigris);">启用</button><button class="btn btn-danger btn-xs act-del-tpl">删除</button></div></td></tr>
+            <tr data-tid="TPL005"><td class="mono">TPL005</td><td>班前会记录模板</td><td>无</td><td><span class="status status-disabled tpl-status">停用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-06-18 09:30</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--verdigris);border:1px solid var(--verdigris);">启用</button><button class="btn btn-danger btn-xs act-del-tpl">删除</button></div></td></tr>
+        </tbody></table>
+    </div>
+</div>
+
+</div><!-- /view-template -->
+
+<!-- ===================== 任务模板创建 / 编辑页（点击「创建任务模板/编辑」进入） ===================== -->
+<div class="view" id="view-template-editor">
+  <div class="editor-bar">
+    <div class="editor-bar-left">
+      <button class="btn btn-ghost btn-sm" id="btnBackTpl"><i class="bi bi-arrow-left"></i> 返回模板列表</button>
+      <span class="editor-title" id="editorTitle">创建任务模板</span>
+    </div>
+    <div class="editor-bar-right">
+      <button class="btn btn-ghost btn-sm" id="btnCancelTpl">取消</button>
+      <button class="btn btn-amber btn-sm" id="btnSaveTpl"><i class="bi bi-check-lg"></i> 保存模板</button>
+    </div>
+  </div>
+
+  <div class="tabs editor-tabs" id="tplEditorTabs">
+    <div class="tab active" data-tab="ed-basic">基本信息配置</div>
+    <div class="tab" data-tab="ed-rule">全局规则配置</div>
+  </div>
+
+  <!-- Tab 1：基本信息配置 -->
+  <div id="ed-basic" class="editor-tabpane">
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-head"><h3><i class="bi bi-sliders"></i>基本信息配置（三栏布局）</h3></div>
+      <div class="card-body" style="padding:18px;">
+        <div class="three-col">
+            <div class="toolbox">
+                <h5>控件工具栏</h5>
+                <div class="tool-item" data-type="text"><i class="bi bi-type"></i>单行文本</div>
+                <div class="tool-item" data-type="textarea"><i class="bi bi-text-paragraph"></i>多行文本</div>
+                <div class="tool-item" data-type="number"><i class="bi bi-123"></i>数字</div>
+                <div class="tool-item" data-type="radio"><i class="bi bi-ui-radios"></i>单选</div>
+                <div class="tool-item" data-type="check"><i class="bi bi-ui-checks"></i>多选</div>
+                <div class="tool-item" data-type="member"><i class="bi bi-person-badge"></i>@成员</div>
+                <div class="tool-item" data-type="dept"><i class="bi bi-diagram-3"></i>@部门</div>
+                <div class="tool-item" data-type="date"><i class="bi bi-calendar3"></i>日期时间</div>
+                <div class="tool-item" data-type="file"><i class="bi bi-paperclip"></i>附件</div>
+                <p class="form-hint" style="margin-top:8px;line-height:1.6;"><i class="bi bi-info-circle"></i>点击控件即追加到画布末尾</p>
+            </div>
+            <div class="canvas" id="tplCanvas" onclick="if(event.target===this){resetCompPanel();}">
+                <div class="form-group tplname-field" data-comp="taskName" onclick="selectComponent('taskName')"><label class="form-label">任务名称<span class="required">*</span></label><input class="form-input" id="tplName" placeholder="输入任务名称"></div>
+                <div style="margin-top:14px;font-size:12.5px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">任务</div>
+                <div class="field-table-wrap">
+                    <table class="field-table"><thead><tr>
+                        <th class="required" data-comp="initiator" onclick="selectComponent('initiator')">发起人</th>
+                        <th data-comp="participant" onclick="selectComponent('participant')">参与人员</th>
+                        <th class="required" data-comp="executor" onclick="selectComponent('executor')">执行人</th>
+                        <th class="required" data-comp="execForm" onclick="selectComponent('execForm')">执行任务@表单</th>
+                        <th data-comp="workType" onclick="selectComponent('workType')">执行工种</th>
+                        <th data-comp="location" onclick="selectComponent('location')">执行地点</th>
+                        <th class="required" data-comp="planStart" onclick="selectComponent('planStart')">计划开始</th>
+                        <th class="required" data-comp="planEnd" onclick="selectComponent('planEnd')">计划结束</th>
+                        <th data-comp="desc" onclick="selectComponent('desc')">执行说明</th>
+                    </tr></thead><tbody><tr>
+                        <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-person"></i>@成员</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;">当前操作人</div></td>
+                        <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-people"></i>@成员</div></td>
+                        <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-person-check"></i>@成员</div></td>
+                        <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-file-earmark"></i>@工作表单</div><select class="form-input" style="width:110px;padding:4px 7px;margin-top:6px;font-size:11px;"><option>无</option><option>普通业务表单</option><option>BPM流程表单</option></select></td>
+                        <td>请输入</td><td>请输入</td>
+                        <td><i class="bi bi-calendar3"></i>日期时间</td><td><i class="bi bi-calendar3"></i>日期时间</td><td>请输入</td>
+                    </tr></tbody></table>
+                </div>
+            </div>
+            <div class="props-panel" id="compPanel">
+                <h5 id="compTitle">模板属性</h5>
+                <div id="compBody">
+                    <div class="form-group"><label class="form-label">模板名称</label><input class="form-input" id="tplCodeName" placeholder="输入模板名称"></div>
+                    <div class="form-group"><label class="form-label">模板编码</label><input class="form-input" id="tplCode" value="（保存后自动生成）" readonly></div>
+                    <div class="form-group"><label class="form-label">用途描述</label><textarea class="form-input" rows="3" id="tplDesc" placeholder="描述模板用途"></textarea></div>
+                    <p class="form-hint" style="margin-top:6px;"><i class="bi bi-info-circle"></i>点击左侧表格任一「列」或上方「任务名称」，在此配置该组件属性（标题 / 描述 / 可选成员范围 / 默认值）。</p>
+                </div>
+            </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tab 2：全局规则配置 -->
+  <div id="ed-rule" class="editor-tabpane" style="display:none;">
+    <div class="card">
+      <div class="card-top"></div>
+      <div class="card-head"><h3><i class="bi bi-gear"></i>全局规则配置</h3></div>
+      <div class="card-body" style="padding:18px;">
+        <div class="section-block"><h5><i class="bi bi-clock-history"></i>执行控制</h5>
+            <div class="switch-row"><span class="switch" data-sw="exec"><span class="slider"></span></span><div><div class="switch-label">开始时间后才可执行任务</div><div class="switch-desc">开启后，只有在计划开始时间后才可执行</div></div></div>
+        </div>
+        <div class="section-block"><h5><i class="bi bi-bell"></i>任务提醒</h5>
+            <div class="switch-row"><span class="switch on" data-sw="remind"><span class="slider"></span></span><div><div class="switch-label">自动推送提醒</div><div class="switch-desc">开启后，系统自动给提醒人推送通知</div></div></div>
+            <div class="remind-row"><span class="remind-label">计划开始时间前：</span><div class="remind-picker" id="rpStart1"><button type="button" class="rp-btn" onclick="rpToggle('rpStart1')"><span class="rp-val">请选择</span><i class="bi bi-caret-down-fill"></i></button><div class="rp-pop"><label class="rp-item"><input type="checkbox" onchange="rpOnly(this)">不提醒</label><label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart1')">准时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart1')">提前10分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart1')">提前30分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart1')">提前1小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart1')">提前2小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart1')">提前1天</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart1')">提前2天</label><div class="rp-custom">提前 <input type="number" class="rp-num" min="0" placeholder="0"><select class="rp-unit"><option>分钟</option><option>小时</option><option>天</option></select><div class="rp-actions"><button type="button" class="btn btn-ghost btn-xs" onclick="rpClose('rpStart1')">取消</button><button type="button" class="btn btn-amber btn-xs" onclick="rpCustom('rpStart1')">确定</button></div></div></div></div><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>
+            <div class="remind-row"><span class="remind-label">计划结束时间前：</span><div class="remind-picker" id="rpEnd1"><button type="button" class="rp-btn" onclick="rpToggle('rpEnd1')"><span class="rp-val">请选择</span><i class="bi bi-caret-down-fill"></i></button><div class="rp-pop"><label class="rp-item"><input type="checkbox" onchange="rpOnly(this)">不提醒</label><label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd1')">准时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd1')">提前10分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd1')">提前30分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd1')">提前1小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd1')">提前2小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd1')">提前1天</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd1')">提前2天</label><div class="rp-custom">提前 <input type="number" class="rp-num" min="0" placeholder="0"><select class="rp-unit"><option>分钟</option><option>小时</option><option>天</option></select><div class="rp-actions"><button type="button" class="btn btn-ghost btn-xs" onclick="rpClose('rpEnd1')">取消</button><button type="button" class="btn btn-amber btn-xs" onclick="rpCustom('rpEnd1')">确定</button></div></div></div></div><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>
+            <div class="remind-row"><span class="remind-label">超期未处理：</span><div class="remind-picker" id="rpOverdue1"><button type="button" class="rp-btn" onclick="rpToggle('rpOverdue1')"><span class="rp-val">请选择</span><i class="bi bi-caret-down-fill"></i></button><div class="rp-pop">
+      <label class="rp-item"><input type="radio" name="rpOverdue1" onchange="rpRadio('rpOverdue1')">不提醒</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue1" onchange="rpRadio('rpOverdue1')">每10分钟</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue1" onchange="rpRadio('rpOverdue1')">每30分钟</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue1" onchange="rpRadio('rpOverdue1')">每1小时</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue1" onchange="rpRadio('rpOverdue1')">每1天</label><div class="rp-custom">每 <input type="number" class="rp-num" min="0" placeholder="0"><select class="rp-unit"><option>分钟</option><option>小时</option><option>天</option></select><div class="rp-actions"><button type="button" class="btn btn-ghost btn-xs" onclick="rpClose('rpOverdue1')">取消</button><button type="button" class="btn btn-amber btn-xs" onclick="rpCustom('rpOverdue1')">确定</button></div></div></div></div><label class="chk-inline">重复次数 <input class="rp-repeat" type="number" value="2" min="1"></label><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>
+        </div>
+        <div class="section-block"><h5><i class="bi bi-arrow-repeat"></i>重复发布</h5>
+            <div class="switch-row"><span class="switch" data-sw="repeat"><span class="slider"></span></span><div><div class="switch-label">开启重复发布</div><div class="switch-desc">开启后，系统自动发布任务</div></div></div>
+            <div class="repeat-inline"><div class="form-group" style="margin-bottom:0;"><label class="form-label">重复频率</label><select class="form-input" id="repFreq1" onchange="repFreqChange('repFreq1')" style="width:110px;"><option>按天</option><option>按周</option><option>按月</option><option>按年</option></select></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">重复日期</label><div class="rep-dims" id="repDims1"></div></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">停止日期</label><input class="form-input" type="date" id="repEnd1" style="width:150px;"><label class="chk-inline"><input type="checkbox" onchange="repNoEnd('repEnd1',this)">永不截止</label></div></div><div class="repeat-extra" id="repExtra1" data-freq="按天"><div class="rep-rows-head"><span class="form-label">发布时间</span><select class="form-input" id="repDelay1" onchange="repDelayChange('repDelay1')" style="width:132px;padding:4px 8px;font-size:12px;"><option value="0">准时</option><option value="60">提前 1 小时</option><option value="120">提前 2 小时</option><option value="1440">提前 1 天</option><option value="2880">提前 2 天</option><option value="-1">自定义…</option></select><span id="repDelayBox1" style="display:none;align-items:center;gap:6px;"><span style="font-size:12px;color:var(--text-secondary);">提前</span><input class="form-input" type="number" id="repDelayNum1" style="width:66px;padding:4px 8px;font-size:12px;" oninput="updateNextTaskBtn()"><select class="form-input" id="repDelayUnit1" style="width:78px;padding:4px 8px;font-size:12px;" onchange="updateNextTaskBtn()"><option value="60">分钟</option><option value="3600" selected>小时</option><option value="86400">天</option></select></span><span class="rep-tip" id="repTip1"></span></div></div>
+            <div class="switch-row" style="margin-top:8px;"><span class="switch" data-sw="imm"><span class="slider"></span></span><div><div class="switch-label">立即发布第一条任务</div><div class="switch-desc">开启后，系统会在定时任务创建时发布第一条任务</div></div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+
+</div><!-- /view-template-editor -->
+
+<!-- ===================== 视图二：发布任务 ===================== -->
+<div class="view" id="view-publish">
+<div class="section-title"><span class="idx">2</span>发布任务（任务级 · 发起侧）</div>
+
+<div id="pubPageHead">
+<div class="card">
+    <div class="card-top green"></div>
+    <div class="tabs" id="pubPageTabs">
+        <div class="tab active" data-ptab="pt-new">发布任务</div>
+        <div class="tab" data-ptab="pt-draft">草稿任务<span class="num">2</span></div>
+        <div class="tab" data-ptab="pt-launch">我发起的<span class="num">6</span></div>
+    </div>
+    <div class="card-body">
+
+      <div id="pubTplList">
+        <div class="card-head" style="padding-top:0;"><h3><i class="bi bi-list-check"></i>选择任务模板</h3><span class="sub">仅展示启用状态的模板</span></div>
+        <table class="data-table"><thead><tr><th>模板ID</th><th>模板名称</th><th>表单类型</th><th>创建人</th><th>操作</th></tr></thead><tbody id="pubBody">
+        <tr data-tid="TPL001"><td class="mono">TPL001</td><td>日常巡检任务模板</td><td>普通业务表单</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>
+        <tr data-tid="TPL002"><td class="mono">TPL002</td><td>设备维修任务模板</td><td>无</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>
+        <tr data-tid="TPL003"><td class="mono">TPL003</td><td>隐患整改任务模板</td><td>BPM流程表单</td><td>张伟明</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="pt-draft" style="display:none;">
+        <div class="fb-bar" data-fb="pubDraftTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="1"><option value="">类型</option><option value="单次">单次</option><option value="周期">周期</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="pubDraftTable"><thead><tr>
+            <th>任务名称</th><th>类型</th><th>执行人</th><th>已发布次数</th><th>状态</th><th>创建时间</th><th>操作</th>
+        </tr></thead>
+        <tbody id="draftBody">
+            <tr data-tid="T20260701006" data-ft="普通业务表单"><td>东区3号矿井日常巡检</td><td>单次</td><td>李强</td><td style="font-size:11px">0</td><td><span class="status status-draft">草稿</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-07-01 09:20</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-draft">编辑</button><button class="btn btn-amber btn-xs act-pub-draft">发布</button><button class="btn btn-danger btn-xs act-del-draft">删除</button></div></td></tr>
+            <tr data-tid="T20260701008" data-ft="无"><td>瓦斯浓度监测</td><td>单次</td><td>李强</td><td style="font-size:11px">0</td><td><span class="status status-draft">草稿</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-07-01 10:05</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-draft">编辑</button><button class="btn btn-amber btn-xs act-pub-draft">发布</button><button class="btn btn-danger btn-xs act-del-draft">删除</button></div></td></tr>
+        </tbody></table>
+      </div>
+
+      <div id="pt-launch" style="display:none;">
+        <div class="fb-bar" data-fb="pubLaunchTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="1"><option value="">类型</option><option value="单次">单次</option><option value="周期">周期</option></select><select class="fb-sel" data-k="sel" data-col="4"><option value="">状态</option><option value="进行中">进行中</option><option value="已暂停">已暂停</option><option value="已完成">已完成</option><option value="已终止">已终止</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="pubLaunchTable"><thead><tr>
+            <th>任务名称</th><th>类型</th><th>执行人</th><th>已发布次数</th><th>状态</th><th>创建时间</th><th>操作</th>
+        </tr></thead>
+        <tbody id="launchBody">
+            <tr data-tid="REC20260625"><td>东区3号矿井日常巡检</td><td>周期</td><td>李强、王建国</td><td><button class="inst-link act-inst-list" data-tid="REC20260625">8 次</button></td><td><span class="status status-pending">进行中</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-25 09:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-plan">编辑计划</button><button class="btn btn-xs act-pause" style="color:#a05a00;border:1px solid #e0b070;">暂停</button><button class="btn btn-ghost btn-xs act-copy-plan">复制</button><button class="btn btn-danger btn-xs act-stop-plan">终止</button></div></td></tr>
+            <tr data-tid="T20260627005"><td>中央水泵房安全检查</td><td>单次</td><td>陈安平、李强</td><td><button class="inst-link act-inst-list" data-tid="T20260627005">1 次</button></td><td><span class="status status-done">已完成</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-27 08:30</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看</button><button class="btn btn-ghost btn-xs act-copy-plan">复制</button></div></td></tr>
+            <tr data-tid="T20260701007"><td>瓦斯浓度监测</td><td>单次</td><td>李强</td><td><button class="inst-link act-inst-list" data-tid="T20260701007">1 次</button></td><td><span class="status status-done">已完成</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-07-01 10:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看</button><button class="btn btn-ghost btn-xs act-copy-plan">复制</button></div></td></tr>
+            <tr data-tid="T20260901001"><td>南区排水系统巡检</td><td>单次</td><td>赵志远</td><td><button class="inst-link act-inst-list" data-tid="T20260901001">0 次</button></td><td><span class="status status-pending">进行中</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-09-01 08:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-plan">编辑计划</button><button class="btn btn-xs act-pause" style="color:#a05a00;border:1px solid #e0b070;">暂停</button><button class="btn btn-ghost btn-xs act-copy-plan">复制</button><button class="btn btn-danger btn-xs act-stop-plan">终止</button></div></td></tr>
+            <tr data-tid="REC20260701"><td>西区通风系统巡检</td><td>周期</td><td>刘明辉</td><td><button class="inst-link act-inst-list" data-tid="REC20260701">12 次</button></td><td><span class="status status-paused">已暂停</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-01 09:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-plan">编辑计划</button><button class="btn btn-xs act-pause" style="color:#a05a00;border:1px solid #e0b070;" data-paused="1">恢复</button><button class="btn btn-ghost btn-xs act-copy-plan">复制</button><button class="btn btn-danger btn-xs act-stop-plan">终止</button></div></td></tr>
+            <tr data-tid="REC20260520"><td>北区提升机检修</td><td>周期</td><td>李强、赵志远</td><td><button class="inst-link act-inst-list" data-tid="REC20260520">5 次</button></td><td><span class="status status-ended">已终止</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-05-20 07:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看</button><button class="btn btn-ghost btn-xs act-copy-plan">复制</button></div></td></tr>
+        </tbody></table>
+      </div>
+
+    </div>
+</div>
+</div>
+
+<!-- 步骤二：填写发布表单（点击模板后展开，分两个 Tab） -->
+<div id="pubForm" style="display:none;">
+  <div class="editor-bar">
+    <div class="editor-bar-left">
+      <button class="btn btn-ghost btn-sm" id="btnBackPub"><i class="bi bi-arrow-left"></i> 返回</button>
+      <span class="editor-title" id="pubTitle">发布任务</span>
+      <span class="mode-tag" id="pubModeTag" style="display:none;"></span>
+    </div>
+    <div class="editor-bar-right">
+      <button class="btn btn-ghost btn-sm" id="btnPubDraft">保存草稿</button>
+      <button class="btn btn-amber btn-sm" id="btnPubSave" style="display:none;"><i class="bi bi-check-lg"></i> 保存</button>
+      <button class="btn btn-amber btn-sm" id="btnPubSubmit"><i class="bi bi-send-check"></i> 发布任务</button>
+    </div>
+  </div>
+  <div class="pub-notice" id="pubNotice" style="display:none;"></div>
+
+  <div class="tabs editor-tabs" id="pubTabs">
+    <div class="tab active" data-tab="pub-basic">基本信息配置</div>
+    <div class="tab" data-tab="pub-rule">全局规则配置</div>
+  </div>
+
+  <div id="pub-basic" class="editor-tabpane">
+    <div class="card">
+      <div class="card-top green"></div>
+      <div class="card-head"><h3><i class="bi bi-sliders"></i>基本信息配置</h3></div>
+      <div class="card-body" style="padding:18px;">
+        <div class="canvas" style="max-height:none;height:auto;">
+          <div class="form-group"><label class="form-label">任务名称<span class="required">*</span></label><input class="form-input" id="pTaskName" placeholder="输入任务名称"></div>
+          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">任务</div>
+          <div class="field-table-wrap">
+            <table class="field-table"><thead><tr>
+              <th class="required">发起人</th><th>参与人员</th><th class="required">执行人</th><th class="required">执行任务@表单</th><th>执行工种</th><th>执行地点</th><th>计划开始</th><th>计划结束</th><th>执行说明</th>
+            </tr></thead><tbody><tr>
+              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pInitiator" value="张伟明" readonly></td>
+              <td><button class="form-input" style="padding:4px 8px;font-size:11px;width:130px;cursor:pointer;text-align:left;color:var(--text-muted);" id="pParticipant" onclick="openOrgSelect('pParticipant','参与人员')">点击选择参与人</button></td>
+              <td><button class="form-input" style="padding:4px 8px;font-size:11px;width:130px;cursor:pointer;text-align:left;color:var(--text-muted);" id="pExecutor" onclick="openOrgSelect('pExecutor','执行人')">点击选择执行人</button></td>
+              <td><button class="form-input" style="padding:4px 8px;font-size:11px;width:130px;cursor:pointer;text-align:left;" id="pFormType" onclick="openCatForm()">普通业务表单</button></td>
+              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pWork" placeholder="工种"></td>
+              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pLocation" placeholder="地点"></td>
+              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:130px;" type="datetime-local" id="pStart"></td>
+              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:130px;" type="datetime-local" id="pEnd"></td>
+              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pDesc" placeholder="说明"></td>
+            </tr></tbody></table>
+          </div>
+          <div class="form-hint"><i class="bi bi-info-circle"></i>表单结构由所选模板固定，仅可填写内容，无法修改字段</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <div id="pub-rule" class="editor-tabpane" style="display:none;">
+    <div class="card">
+      <div class="card-top green"></div>
+      <div class="card-head"><h3><i class="bi bi-gear"></i>全局规则配置</h3></div>
+      <div class="card-body" style="padding:18px;">
+        <div class="section-block"><h5><i class="bi bi-clock-history"></i>执行控制</h5>
+          <div class="switch-row"><span class="switch" data-sw="pexec"><span class="slider"></span></span><div><div class="switch-label">开始时间后才可执行任务</div><div class="switch-desc">开启后，只有在计划开始时间后才可执行</div></div></div>
+        </div>
+        <div class="section-block"><h5><i class="bi bi-bell"></i>任务提醒</h5>
+          <div class="switch-row"><span class="switch on" data-sw="premind"><span class="slider"></span></span><div><div class="switch-label">自动推送提醒</div><div class="switch-desc">开启后，系统自动给提醒人推送通知</div></div></div>
+          <div class="remind-row"><span class="remind-label">计划开始时间前：</span><div class="remind-picker" id="rpStart2"><button type="button" class="rp-btn" onclick="rpToggle('rpStart2')"><span class="rp-val">请选择</span><i class="bi bi-caret-down-fill"></i></button><div class="rp-pop"><label class="rp-item"><input type="checkbox" onchange="rpOnly(this)">不提醒</label><label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart2')">准时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart2')">提前10分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart2')">提前30分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart2')">提前1小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart2')">提前2小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart2')">提前1天</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpStart2')">提前2天</label><div class="rp-custom">提前 <input type="number" class="rp-num" min="0" placeholder="0"><select class="rp-unit"><option>分钟</option><option>小时</option><option>天</option></select><div class="rp-actions"><button type="button" class="btn btn-ghost btn-xs" onclick="rpClose('rpStart2')">取消</button><button type="button" class="btn btn-amber btn-xs" onclick="rpCustom('rpStart2')">确定</button></div></div></div></div><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>
+          <div class="remind-row"><span class="remind-label">计划结束时间前：</span><div class="remind-picker" id="rpEnd2"><button type="button" class="rp-btn" onclick="rpToggle('rpEnd2')"><span class="rp-val">请选择</span><i class="bi bi-caret-down-fill"></i></button><div class="rp-pop"><label class="rp-item"><input type="checkbox" onchange="rpOnly(this)">不提醒</label><label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd2')">准时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd2')">提前10分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd2')">提前30分钟</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd2')">提前1小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd2')">提前2小时</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd2')">提前1天</label>
+      <label class="rp-item"><input type="checkbox" onchange="rpMulti('rpEnd2')">提前2天</label><div class="rp-custom">提前 <input type="number" class="rp-num" min="0" placeholder="0"><select class="rp-unit"><option>分钟</option><option>小时</option><option>天</option></select><div class="rp-actions"><button type="button" class="btn btn-ghost btn-xs" onclick="rpClose('rpEnd2')">取消</button><button type="button" class="btn btn-amber btn-xs" onclick="rpCustom('rpEnd2')">确定</button></div></div></div></div><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>
+          <div class="remind-row"><span class="remind-label">超期未处理：</span><div class="remind-picker" id="rpOverdue2"><button type="button" class="rp-btn" onclick="rpToggle('rpOverdue2')"><span class="rp-val">请选择</span><i class="bi bi-caret-down-fill"></i></button><div class="rp-pop">
+      <label class="rp-item"><input type="radio" name="rpOverdue2" onchange="rpRadio('rpOverdue2')">不提醒</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue2" onchange="rpRadio('rpOverdue2')">每10分钟</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue2" onchange="rpRadio('rpOverdue2')">每30分钟</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue2" onchange="rpRadio('rpOverdue2')">每1小时</label>
+      <label class="rp-item"><input type="radio" name="rpOverdue2" onchange="rpRadio('rpOverdue2')">每1天</label><div class="rp-custom">每 <input type="number" class="rp-num" min="0" placeholder="0"><select class="rp-unit"><option>分钟</option><option>小时</option><option>天</option></select><div class="rp-actions"><button type="button" class="btn btn-ghost btn-xs" onclick="rpClose('rpOverdue2')">取消</button><button type="button" class="btn btn-amber btn-xs" onclick="rpCustom('rpOverdue2')">确定</button></div></div></div></div><label class="chk-inline">重复次数 <input class="rp-repeat" type="number" value="2" min="1"></label><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>
+        </div>
+        <div class="section-block"><h5><i class="bi bi-arrow-repeat"></i>重复发布</h5>
+          <div class="switch-row"><span class="switch" data-sw="prepeat"><span class="slider"></span></span><div><div class="switch-label">开启重复发布</div><div class="switch-desc">开启后，系统自动发布任务</div></div></div>
+          <div class="repeat-inline"><div class="form-group" style="margin-bottom:0;"><label class="form-label">重复频率</label><select class="form-input" id="repFreq2" onchange="repFreqChange('repFreq2')" style="width:110px;"><option>按天</option><option>按周</option><option>按月</option><option>按年</option></select></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">重复日期</label><div class="rep-dims" id="repDims2"></div></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">停止日期</label><input class="form-input" type="date" id="repEnd2" style="width:150px;"><label class="chk-inline"><input type="checkbox" onchange="repNoEnd('repEnd2',this)">永不截止</label></div></div><div class="repeat-extra" id="repExtra2" data-freq="按天"><div class="rep-rows-head"><span class="form-label">发布时间</span><select class="form-input" id="repDelay2" onchange="repDelayChange('repDelay2')" style="width:132px;padding:4px 8px;font-size:12px;"><option value="0">准时</option><option value="60">提前 1 小时</option><option value="120">提前 2 小时</option><option value="1440">提前 1 天</option><option value="2880">提前 2 天</option><option value="-1">自定义…</option></select><span id="repDelayBox2" style="display:none;align-items:center;gap:6px;"><span style="font-size:12px;color:var(--text-secondary);">提前</span><input class="form-input" type="number" id="repDelayNum2" style="width:66px;padding:4px 8px;font-size:12px;" oninput="updateNextTaskBtn()"><select class="form-input" id="repDelayUnit2" style="width:78px;padding:4px 8px;font-size:12px;" onchange="updateNextTaskBtn()"><option value="60">分钟</option><option value="3600" selected>小时</option><option value="86400">天</option></select></span><span class="rep-tip" id="repTip2"></span><button type="button" class="btn btn-ghost btn-xs" id="btnNextTask" style="margin-left:auto;" onclick="openNextTaskPreview()"><i class="bi bi-eye"></i> 下一次任务详情</button></div></div>
+          <div class="switch-row" style="margin-top:8px;"><span class="switch" data-sw="pimm"><span class="slider"></span></span><div><div class="switch-label">立即发布第一条任务</div><div class="switch-desc">开启后，系统会在定时任务创建时发布第一条任务</div></div></div>
+        </div>
+
+      </div>
+    </div>
+  </div>
+</div>
+</div>
+
+<!-- ===================== 执行任务（整页） ===================== -->
+<div class="view" id="view-exec">
+  <div class="editor-bar">
+    <div class="editor-bar-left">
+      <button class="btn btn-ghost btn-sm" id="btnBackExec"><i class="bi bi-arrow-left"></i> 返回</button>
+      <span class="editor-title" id="execTitle">执行任务</span>
+      <span class="mode-tag" id="execModeTag" style="display:none;"></span>
+    </div>
+    <div class="editor-bar-right">
+      <button class="btn btn-ghost btn-sm" id="btnExecDraft">暂存</button>
+      <button class="btn btn-amber btn-sm" id="btnExecSubmit"><i class="bi bi-send-check"></i> 提交</button>
+    </div>
+  </div>
+  <div class="pub-notice" id="execNotice" style="display:none;"></div>
+  <div class="card">
+    <div class="card-top"></div>
+    <div class="card-body" id="execBody" style="padding:18px;">
+      <div id="execMeta"></div>
+      <div id="execFormArea"></div>
+    </div>
+  </div>
+</div>
+
+
+<!-- ===================== 任务详情（我的任务 · 查看） ===================== -->
+<div class="view" id="view-tdetail">
+  <div class="editor-bar">
+    <div class="editor-bar-left">
+      <button class="btn btn-ghost btn-sm" id="btnBackTd"><i class="bi bi-arrow-left"></i> 返回</button>
+      <span class="editor-title" id="tdTitle">任务详情</span>
+      <span class="mode-tag ro">只读</span>
+    </div>
+  </div>
+  <div class="card">
+    <div class="card-top"></div>
+    <div class="card-body" style="padding:18px;">
+      <div id="tdMeta"></div>
+      <div id="tdLog"></div>
+    </div>
+  </div>
+</div>
+
+<!-- ===================== 视图三：我的任务 ===================== -->
+<div class="view" id="view-mytask">
+<div class="section-title"><span class="idx">3</span>我的任务</div>
+<div class="card">
+    <div class="card-top"></div>
+    <div class="tabs" id="myTabs">
+        <div class="tab active" data-tab="t-exec">待我执行<span class="num">2</span></div>
+        <div class="tab" data-tab="t-done">已执行<span class="num">2</span></div>
+        <div class="tab" data-tab="t-forward">已转发<span class="num">1</span></div>
+        <div class="tab" data-tab="t-join">我参与的<span class="num">2</span></div>
+    </div>
+    <div class="card-body">
+                        <div class="myinst-pane" id="t-exec">
+        <div class="fb-bar" data-fb="myExecTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="3"><option value="">状态</option><option value="未执行">未执行</option><option value="执行中">执行中</option><option value="已完成">已完成</option></select><select class="fb-sel" data-k="sel" data-mode="overdue"><option value="">是否超期</option><option value="1">仅超期</option><option value="0">未超期</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="myExecTable"><thead><tr><th>任务名称</th><th>发布时间</th><th>执行人</th><th>状态</th><th>超期</th><th>操作</th></tr></thead>
+        <tbody>
+<tr data-tid="I20260714001" data-prog="1/2" data-name="东区3号矿井日常巡检" data-ft="普通业务表单"><td>东区3号矿井日常巡检</td><td style="font-size:11px;">2026-07-14 08:00</td><td>李强、王建国</td><td><span class="status status-signing">执行中 1/2</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-amber btn-xs act-exec">执行</button><button class="btn btn-ghost btn-xs act-forward">转办</button></div></td></tr>
+<tr data-tid="I20260701007" data-prog="0/1" data-name="瓦斯浓度监测" data-ft="无"><td>瓦斯浓度监测</td><td style="font-size:11px;">2026-07-02 08:00</td><td>李强</td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-amber btn-xs act-exec">执行</button><button class="btn btn-ghost btn-xs act-forward">转办</button></div></td></tr>
+        </tbody></table>
+      </div>
+      <div class="myinst-pane" id="t-done" style="display:none;">
+        <div class="fb-bar" data-fb="myDoneTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="3"><option value="">状态</option><option value="已完成">已完成</option><option value="已作废">已作废</option><option value="已撤回">已撤回</option></select><select class="fb-sel" data-k="sel" data-mode="overdue"><option value="">是否超期</option><option value="1">仅超期</option><option value="0">未超期</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="myDoneTable"><thead><tr><th>任务名称</th><th>发布时间</th><th>执行人</th><th>状态</th><th>我的提交时间</th><th>超期</th><th>操作</th></tr></thead>
+        <tbody>
+<tr data-tid="I20260626004" data-prog="2/2" data-name="北区提升机检修" data-ft="无"><td>北区提升机检修</td><td style="font-size:11px;">2026-06-28 08:00</td><td>李强、赵志远</td><td><span class="status status-done">已完成</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-29 10:12</td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
+<tr data-tid="I20260627005" data-prog="2/2" data-name="中央水泵房安全检查" data-ft="普通业务表单"><td>中央水泵房安全检查</td><td style="font-size:11px;">2026-06-27 09:00</td><td>陈安平、李强</td><td><span class="status status-done">已完成</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-27 15:20</td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
+        <tr data-tid="I20260620013" data-prog="1/2" data-name="西区回风巷巡检" data-ft="普通业务表单"><td>西区回风巷巡检</td><td style="font-size:11px;">2026-06-20 08:00</td><td>李强、刘明辉</td><td><span class="status status-draft">已作废</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-20 09:00</td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
+        </tbody></table>
+      </div>
+      <div class="myinst-pane" id="t-forward" style="display:none;">
+        <div class="fb-bar" data-fb="myFwdTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="2"><option value="">转给</option><option value="李强">李强</option><option value="王建国">王建国</option><option value="赵志远">赵志远</option><option value="刘明辉">刘明辉</option><option value="陈安平">陈安平</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="myFwdTable"><thead><tr><th>任务名称</th><th>发布时间</th><th>转给</th><th>转出时间</th><th>操作</th></tr></thead>
+        <tbody>
+<tr data-tid="I20260625003" data-name="东区3号矿井巡检"><td>东区3号矿井巡检</td><td style="font-size:11px;">2026-06-30 08:00</td><td>王建国</td><td style="font-size:11px;color:var(--text-secondary);">2026-06-30 09:15</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
+        </tbody></table>
+      </div>
+      <div class="myinst-pane" id="t-join" style="display:none;">
+        <div class="fb-bar" data-fb="myJoinTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="3"><option value="">状态</option><option value="未执行">未执行</option><option value="执行中">执行中</option><option value="已完成">已完成</option></select><select class="fb-sel" data-k="sel" data-mode="overdue"><option value="">是否超期</option><option value="1">仅超期</option><option value="0">未超期</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="myJoinTable"><thead><tr><th>任务名称</th><th>发布时间</th><th>执行人</th><th>状态</th><th>超期</th><th>操作</th></tr></thead>
+        <tbody>
+<tr data-tid="I20260630008" data-prog="0/1" data-name="南区排水系统巡检" data-ft="普通业务表单"><td>南区排水系统巡检</td><td style="font-size:11px;">2026-06-30 14:00</td><td>赵志远</td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
+<tr data-tid="I20260628002" data-prog="1/1" data-name="西区通风系统巡检" data-ft="普通业务表单"><td>西区通风系统巡检</td><td style="font-size:11px;">2026-06-28 09:00</td><td>刘明辉</td><td><span class="status status-done">已完成</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
+        </tbody></table>
+      </div>
+    </div>
+</div>
+</div>
+
+<!-- ===================== 视图四：任务总台账 ===================== -->
+<div class="view" id="view-ledger">
+<div class="section-title"><span class="idx">4</span>任务总台账（仅超级管理员）</div>
+<div class="card">
+    <div class="card-top green"></div>
+    <div class="card-head">
+      <h3><i class="bi bi-graph-up"></i>任务总台账</h3>
+      <button class="btn btn-success btn-sm" id="btnExportLedger"><i class="bi bi-download"></i>导出Excel</button>
+    </div>
+    <div class="tabs" id="ledgerTabs">
+        <div class="tab active" data-ltab="lt-task">任务总览<span class="num">6</span></div>
+        <div class="tab" data-ltab="lt-inst">执行明细<span class="num">5</span></div>
+    </div>
+    <div class="card-body">
+
+      <div class="fb-bar" data-fb="lgTaskTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="1"><option value="">类型</option><option value="单次">单次</option><option value="周期">周期</option></select><select class="fb-sel" data-k="sel" data-col="2"><option value="">发起人</option><option value="张伟明">张伟明</option><option value="王建国">王建国</option><option value="李强">李强</option></select><select class="fb-sel" data-k="sel" data-col="5"><option value="">状态</option><option value="进行中">进行中</option><option value="已暂停">已暂停</option><option value="已完成">已完成</option><option value="已终止">已终止</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="lgTaskTable"><thead><tr>
+        <th>任务名称</th><th>类型</th><th>发起人</th><th>执行人</th><th>已发布次数</th><th>状态</th><th>操作</th>
+      </tr></thead>
+      <tbody id="lt-task">
+        <tr data-tid="REC20260625" data-name="东区3号矿井日常巡检"><td>东区3号矿井日常巡检</td><td>周期</td><td>张伟明</td><td>李强、王建国</td><td><button class="inst-link act-inst-list" data-tid="REC20260625">8 次</button></td><td><span class="status status-pending plan-status">进行中</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看计划</button><button class="btn btn-xs act-pause" style="color:#a05a00;border:1px solid #e0b070;">暂停</button><button class="btn btn-danger btn-xs act-stop-plan">终止</button></div></td></tr>
+        <tr data-tid="T20260627005" data-name="中央水泵房安全检查"><td>中央水泵房安全检查</td><td>单次</td><td>张伟明</td><td>陈安平、李强</td><td><button class="inst-link act-inst-list" data-tid="T20260627005">1 次</button></td><td><span class="status status-done plan-status">已完成</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看计划</button></div></td></tr>
+        <tr data-tid="T20260701007" data-name="瓦斯浓度监测"><td>瓦斯浓度监测</td><td>单次</td><td>李强</td><td>李强</td><td><button class="inst-link act-inst-list" data-tid="T20260701007">1 次</button></td><td><span class="status status-done plan-status">已完成</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看计划</button></div></td></tr>
+        <tr data-tid="T20260901001" data-name="南区排水系统巡检"><td>南区排水系统巡检</td><td>单次</td><td>王建国</td><td>赵志远</td><td><button class="inst-link act-inst-list" data-tid="T20260901001">0 次</button></td><td><span class="status status-pending plan-status">进行中</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看计划</button><button class="btn btn-xs act-pause" style="color:#a05a00;border:1px solid #e0b070;">暂停</button><button class="btn btn-danger btn-xs act-stop-plan">终止</button></div></td></tr>
+        <tr data-tid="REC20260701" data-name="西区通风系统巡检"><td>西区通风系统巡检</td><td>周期</td><td>张伟明</td><td>刘明辉</td><td><button class="inst-link act-inst-list" data-tid="REC20260701">12 次</button></td><td><span class="status status-paused plan-status">已暂停</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看计划</button><button class="btn btn-xs act-pause" style="color:#a05a00;border:1px solid #e0b070;" data-paused="1">恢复</button><button class="btn btn-danger btn-xs act-stop-plan">终止</button></div></td></tr>
+        <tr data-tid="REC20260520" data-name="北区提升机检修"><td>北区提升机检修</td><td>周期</td><td>张伟明</td><td>李强、赵志远</td><td><button class="inst-link act-inst-list" data-tid="REC20260520">5 次</button></td><td><span class="status status-ended plan-status">已终止</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-view-plan">查看计划</button></div></td></tr>
       </tbody></table>
-      <footer class="task-pagination" data-pagination-target="#pubBody">
-        <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页发布模板条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
-      </footer>
-    </div>\r
-  </div>\r
-</div>\r
-\r
-<!-- 步骤二：填写发布表单（点击模板后展开，分两个 Tab） -->\r
-<div id="pubForm" style="display:none;">\r
-  <div class="editor-bar">\r
-    <div class="editor-bar-left">\r
-      <button class="btn btn-ghost btn-sm" id="btnBackPub"><i class="bi bi-arrow-left"></i> 返回</button>\r
-      <span class="editor-title" id="pubTitle">发布任务</span>\r
-    </div>\r
-    <div class="editor-bar-right">\r
-      <button class="btn btn-ghost btn-sm" id="btnPubDraft">保存草稿</button>\r
-      <button class="btn btn-amber btn-sm" id="btnPubSubmit"><i class="bi bi-send-check"></i> 发布任务</button>\r
-    </div>\r
-  </div>\r
-\r
-  <div class="tabs editor-tabs" id="pubTabs">\r
-    <div class="tab active" data-tab="pub-basic">基本信息配置</div>\r
-    <div class="tab" data-tab="pub-rule">全局规则配置</div>\r
-  </div>\r
-\r
-  <div id="pub-basic" class="editor-tabpane">\r
-    <div class="card">\r
-      <div class="card-top green"></div>\r
-      <div class="card-head"><h3><i class="bi bi-sliders"></i>基本信息配置</h3></div>\r
-      <div class="card-body" style="padding:18px;">\r
-        <div class="canvas" style="max-height:none;height:auto;">\r
-          <div class="form-group"><label class="form-label">任务名称<span class="required">*</span></label><input class="form-input" id="pTaskName" placeholder="输入任务名称"></div>\r
-          <div style="margin-top:16px;font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:8px;">任务</div>\r
-          <div class="field-table-wrap">\r
-            <table class="field-table"><thead><tr>\r
-              <th class="required">发起人</th><th>参与人员</th><th class="required">执行人</th><th class="required">执行任务@表单</th><th>执行工种</th><th>执行地点</th><th>计划开始</th><th>计划结束</th><th>执行说明</th>\r
-            </tr></thead><tbody><tr>\r
-              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pInitiator" value="张伟明" readonly></td>\r
-              <td><select class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pParticipant"><option>选择</option><option>周文博</option><option>孙建华</option><option>马永刚</option></select></td>\r
-              <td><select class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pExecutor"><option value="">选择</option><option>李强</option><option>王建国</option><option>赵志远</option><option>刘明辉</option><option>陈安平</option></select></td>\r
-              <td><button class="form-input" style="padding:4px 8px;font-size:11px;width:120px;cursor:pointer;text-align:left;" id="pFormType" onclick="toast('选择执行表单（原型演示）')">普通业务表单</button></td>\r
-              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pWork" placeholder="工种"></td>\r
-              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pLocation" placeholder="地点"></td>\r
-              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:130px;" type="datetime-local" id="pStart"></td>\r
-              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:130px;" type="datetime-local" id="pEnd"></td>\r
-              <td><input class="form-input" style="padding:4px 8px;font-size:11px;width:100px;" id="pDesc" placeholder="说明"></td>\r
-            </tr></tbody></table>\r
-          </div>\r
-          <div class="form-hint"><i class="bi bi-info-circle"></i>表单结构由所选模板固定，仅可填写内容，无法修改字段</div>\r
-        </div>\r
-      </div>\r
-    </div>\r
-  </div>\r
-\r
-  <div id="pub-rule" class="editor-tabpane" style="display:none;">\r
-    <div class="card">\r
-      <div class="card-top green"></div>\r
-      <div class="card-head"><h3><i class="bi bi-gear"></i>全局规则配置</h3></div>\r
-      <div class="card-body" style="padding:18px;">\r
-        <div class="section-block"><h5><i class="bi bi-clock-history"></i>执行控制</h5>\r
-          <div class="switch-row"><span class="switch" data-sw="pexec"><span class="slider"></span></span><div><div class="switch-label">开始时间后才可执行任务</div><div class="switch-desc">开启后，只有在计划开始时间后才可执行</div></div></div>\r
-        </div>\r
-        <div class="section-block"><h5><i class="bi bi-bell"></i>任务提醒</h5>\r
-          <div class="switch-row"><span class="switch on" data-sw="premind"><span class="slider"></span></span><div><div class="switch-label">自动推送提醒</div><div class="switch-desc">开启后，系统自动给提醒人推送通知</div></div></div>\r
-          <div class="remind-row"><span class="remind-label">计划开始时间前：</span><select class="remind-select"><option>请选择</option><option>15分钟</option><option>30分钟</option><option>1小时</option><option>2小时</option><option>自定义</option></select><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>\r
-          <div class="remind-row"><span class="remind-label">计划结束时间前：</span><select class="remind-select"><option>请选择</option><option>15分钟</option><option>30分钟</option><option>1小时</option><option>2小时</option><option>自定义</option></select><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>\r
-          <div class="remind-row"><span class="remind-label">超期未处理：</span><select class="remind-select"><option>请选择</option><option>每天提醒</option><option>每2天</option><option>每3天</option><option>自定义</option></select><span style="margin-left:auto;font-size:11px;color:var(--text-secondary);">设置提醒人：</span><button class="btn btn-xs" style="color:#1a73e8;border:1px solid #1a73e8;background:transparent;" data-remind>点击选择</button></div>\r
-        </div>\r
-        <div class="section-block"><h5><i class="bi bi-arrow-repeat"></i>重复发布</h5>\r
-          <div class="switch-row"><span class="switch" data-sw="prepeat"><span class="slider"></span></span><div><div class="switch-label">开启重复发布</div><div class="switch-desc">开启后，系统自动发布任务</div></div></div>\r
-          <div class="repeat-inline"><div class="form-group" style="margin-bottom:0;"><label class="form-label">重复执行时间</label><select class="form-input"><option>不重复</option><option>按天</option><option>按周</option><option>按月</option><option>按年</option></select></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">发布时间</label><input class="form-input" type="time" value="08:00"></div><div class="form-group" style="margin-bottom:0;"><label class="form-label">截止发布时间</label><input class="form-input" type="date"></div></div>\r
-          <div class="switch-row" style="margin-top:8px;"><span class="switch" data-sw="pimm"><span class="slider"></span></span><div><div class="switch-label">立即发布第一条任务</div><div class="switch-desc">开启后，系统会在定时任务创建时发布第一条任务</div></div></div>\r
-        </div>\r
-\r
-      </div>\r
-    </div>\r
-  </div>\r
-</div>\r
-</div>\r
-\r
-<!-- ===================== 视图三：我的任务 ===================== -->\r
-<div class="view" id="view-mytask">\r
-<div class="section-title"><span class="idx">3</span>我的任务模块（7 个标签页）</div>\r
-<div class="card">\r
-    <div class="card-top"></div>\r
-    <div class="tabs" id="myTabs">\r
-        <div class="tab active" data-tab="t-draft">草稿任务<span class="num">2</span></div>\r
-        <div class="tab" data-tab="t-launch">我发起的<span class="num">3</span></div>\r
-        <div class="tab" data-tab="t-exec">待我执行<span class="num">2</span></div>\r
-        <div class="tab" data-tab="t-done">已执行<span class="num">2</span></div>\r
-        <div class="tab" data-tab="t-forward">已转发<span class="num">1</span></div>\r
-        <div class="tab" data-tab="t-withdraw">我撤回的<span class="num">1</span></div>\r
-        <div class="tab" data-tab="t-join">我参与的<span class="num">2</span></div>\r
-    </div>\r
-    <div class="card-body">\r
-        <table class="data-table"><thead><tr><th>任务ID</th><th>任务名称</th><th>执行人</th><th>计划时间</th><th>表单类型</th><th>状态</th><th>操作</th></tr></thead>\r
-        <tbody id="t-draft">\r
-            <tr data-tid="T20260701006" data-ft="普通业务表单"><td class="mono">T20260701006</td><td>东区3号矿井日常巡检</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-07-01 08:00<br>2026-07-01 17:00</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-draft">编辑</button><button class="btn btn-amber btn-xs act-pub-draft">发布</button><button class="btn btn-danger btn-xs act-del-draft">删除</button></div></td></tr>\r
-            <tr data-tid="T20260701007" data-ft="无"><td class="mono">T20260701007</td><td>瓦斯浓度监测</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-07-02 08:00<br>2026-07-02 12:00</td><td>无</td><td><span class="status status-pending">未执行</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-draft">编辑</button><button class="btn btn-amber btn-xs act-pub-draft">发布</button><button class="btn btn-danger btn-xs act-del-draft">删除</button></div></td></tr>\r
-        </tbody>\r
-        <tbody id="t-launch" style="display:none;">\r
-            <tr data-tid="T20260625003"><td class="mono">T20260625003</td><td>东区3号矿井日常巡检</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-06-30</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-withdraw">撤回</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-            <tr data-tid="T20260627005"><td class="mono">T20260627005</td><td>中央水泵房安全检查</td><td>陈安平</td><td style="font-size:11px;color:var(--text-secondary)">2026-06-27</td><td>普通业务表单</td><td><span class="status status-done">已完成</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-            <tr data-tid="T20260701007"><td class="mono">T20260701007</td><td>瓦斯浓度监测</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-07-02</td><td>无</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-withdraw">撤回</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-        </tbody>\r
-        <tbody id="t-exec" style="display:none;">\r
-            <tr data-tid="T20260701006" data-ft="普通业务表单"><td class="mono">T20260701006</td><td>东区3号矿井日常巡检</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-07-01 08:00<br>2026-07-01 17:00</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-amber btn-xs act-exec">执行</button><button class="btn btn-ghost btn-xs act-forward">转发</button></div></td></tr>\r
-            <tr data-tid="T20260701007" data-ft="无"><td class="mono">T20260701007</td><td>瓦斯浓度监测</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-07-02 08:00<br>2026-07-02 12:00</td><td>无</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-amber btn-xs act-exec">执行</button><button class="btn btn-ghost btn-xs act-forward">转发</button></div></td></tr>\r
-        </tbody>\r
-\r
-        <tbody id="t-done" style="display:none;">\r
-            <tr data-tid="T20260626004"><td class="mono">T20260626004</td><td>北区提升机检修</td><td>王建国</td><td style="font-size:11px;color:var(--text-secondary)">2026-06-28~29</td><td>无</td><td><span class="status status-executing">执行中</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button></div></td></tr>\r
-            <tr data-tid="T20260627005"><td class="mono">T20260627005</td><td>中央水泵房安全检查</td><td>陈安平</td><td style="font-size:11px;color:var(--text-secondary)">2026-06-27</td><td>普通业务表单</td><td><span class="status status-done">已完成</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button></div></td></tr>\r
-        </tbody>\r
-\r
-        <tbody id="t-forward" style="display:none;">\r
-            <tr data-tid="T20260625003"><td class="mono">T20260625003</td><td>东区3号矿井巡检</td><td>李强 → 王建国</td><td style="font-size:11px;color:var(--text-secondary)">2026-06-30</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button></div></td></tr>\r
-        </tbody>\r
-        <tbody id="t-withdraw" style="display:none;">\r
-            <tr data-tid="T20260620002"><td class="mono">T20260620002</td><td>运输巷支护检查</td><td>孙建华</td><td style="font-size:11px;color:var(--text-secondary)">2026-06-20</td><td>普通业务表单</td><td><span class="status status-draft">已撤回</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-edit-recalled">编辑</button><button class="btn btn-amber btn-xs act-resend">重新发布</button></div></td></tr>\r
-        </tbody>\r
-        <tbody id="t-join" style="display:none;">\r
-            <tr data-tid="T20260625003"><td class="mono">T20260625003</td><td>东区3号矿井巡检</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-06-30</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button></div></td></tr>\r
-            <tr data-tid="T20260701007"><td class="mono">T20260701007</td><td>瓦斯浓度监测</td><td>李强</td><td style="font-size:11px;color:var(--text-secondary)">2026-07-02</td><td>无</td><td><span class="status status-pending">未执行</span><br><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button></div></td></tr>\r
-        </tbody>
-        </table>
-        <footer class="task-pagination" data-pagination-mode="mytask">
-          <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页任务条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
-        </footer>
-    </div>\r
-</div>\r
-</div>\r
-\r
-<!-- ===================== 视图四：任务总台账 ===================== -->\r
-<div class="view" id="view-ledger">\r
-<div class="section-title"><span class="idx">4</span>任务总台账（仅超级管理员）</div>\r
-<div class="card">\r
-    <div class="card-top green"></div>\r
-    <div class="card-head"><h3><i class="bi bi-graph-up"></i>任务总台账</h3><button class="btn btn-success btn-sm" id="btnExportLedger"><i class="bi bi-download"></i>导出Excel</button></div>\r
-    <div class="card-body">\r
-        <table class="data-table"><thead><tr><th>任务ID</th><th>任务名称</th><th>发起人</th><th>执行人</th><th>计划起止</th><th>表单类型</th><th>状态</th><th>超期</th><th>发布</th><th>闭环</th><th>操作</th></tr></thead>\r
-        <tbody id="ledgerBody">\r
-            <tr data-tid="T20260625003" data-ft="普通业务表单"><td class="mono">T20260625003</td><td>东区3号矿井日常巡检</td><td>张伟明</td><td>李强</td><td style="font-size:11px">06-30</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td class="mono" style="font-size:11px">06-25</td><td class="mono" style="font-size:11px">-</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-adj-exec">调整执行人</button><button class="btn btn-danger btn-xs act-end">结束</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-            <tr data-tid="T20260626004" data-ft="无"><td class="mono">T20260626004</td><td>北区提升机检修</td><td>张伟明</td><td>王建国</td><td style="font-size:11px">06-28~29</td><td>无</td><td><span class="status status-executing">执行中</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td class="mono" style="font-size:11px">06-26</td><td class="mono" style="font-size:11px">-</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-adj-exec">调整执行人</button><button class="btn btn-danger btn-xs act-end">结束</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-            <tr data-tid="T20260627005" data-ft="普通业务表单"><td class="mono">T20260627005</td><td>中央水泵房安全检查</td><td>张伟明</td><td>陈安平</td><td style="font-size:11px">06-27</td><td>普通业务表单</td><td><span class="status status-done">已完成</span></td><td><span style="color:var(--verdigris);font-size:11px;">正常</span></td><td class="mono" style="font-size:11px">06-27</td><td class="mono" style="font-size:11px">06-27</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-            <tr data-tid="T20260630008" data-ft="普通业务表单"><td class="mono">T20260630008</td><td>南区排水系统巡检</td><td>张伟明</td><td>赵志远</td><td style="font-size:11px">06-30</td><td>普通业务表单</td><td><span class="status status-executing">执行中</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td class="mono" style="font-size:11px">06-30</td><td class="mono" style="font-size:11px">-</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-adj-exec">调整执行人</button><button class="btn btn-danger btn-xs act-end">结束</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-            <tr data-tid="T20260701006" data-ft="普通业务表单"><td class="mono">T20260701006</td><td>东区3号矿井巡检</td><td>张伟明</td><td>李强</td><td style="font-size:11px">07-01</td><td>普通业务表单</td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td class="mono" style="font-size:11px">07-01</td><td class="mono" style="font-size:11px">-</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-adj-exec">调整执行人</button><button class="btn btn-danger btn-xs act-end">结束</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-            <tr data-tid="T20260701007" data-ft="无"><td class="mono">T20260701007</td><td>瓦斯浓度监测</td><td>周文博</td><td>李强</td><td style="font-size:11px">07-02</td><td>无</td><td><span class="status status-pending">未执行</span></td><td><span style="color:var(--verdigris);font-size:11px;">正常</span></td><td class="mono" style="font-size:11px">07-01</td><td class="mono" style="font-size:11px">-</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-detail">详情</button><button class="btn btn-ghost btn-xs act-adj-exec">调整执行人</button><button class="btn btn-danger btn-xs act-end">结束</button><button class="btn btn-ghost btn-xs act-copy">复制</button></div></td></tr>\r
-        </tbody></table>
-        <footer class="task-pagination" data-pagination-target="#ledgerBody">
-          <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页任务总台账条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
-        </footer>
-    </div>\r
-</div>\r
-</div>\r
-\r
-<!-- ===================== 视图五：人员明细 ===================== -->\r
-<div class="view" id="view-personnel">\r
-<div class="section-title"><span class="idx">5</span>人员任务明细台账（仅超级管理员）</div>\r
-<div class="card">\r
-    <div class="card-top green"></div>\r
-    <div class="card-head"><h3><i class="bi bi-person-lines-fill"></i>人员任务明细台账</h3><button class="btn btn-success btn-sm" id="btnExportPerson"><i class="bi bi-download"></i>导出Excel</button></div>\r
-    <div class="card-body">\r
-        <table class="data-table"><thead><tr><th>任务ID</th><th>任务名称</th><th>执行人</th><th>提交时间</th><th>状态</th><th>计划起止</th><th>超期</th><th>操作</th></tr></thead>\r
-        <tbody id="personBody">\r
-            <tr data-tid="T20260625003"><td class="mono">T20260625003</td><td>东区3号矿井巡检</td><td>李强</td><td style="font-size:11px">-</td><td><span class="status status-pending">未执行</span></td><td style="font-size:11px">06-30</td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>\r
-            <tr data-tid="T20260626004"><td class="mono">T20260626004</td><td>北区提升机检修</td><td>王建国</td><td style="font-size:11px">06-28 16:00</td><td><span class="status status-executing">执行中</span></td><td style="font-size:11px">06-28~29</td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>\r
-            <tr data-tid="T20260627005"><td class="mono">T20260627005</td><td>中央水泵房检查</td><td>陈安平</td><td style="font-size:11px">06-27 15:00</td><td><span class="status status-done">已完成</span></td><td style="font-size:11px">06-27</td><td><span style="color:var(--verdigris);font-size:11px;">正常</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>\r
-            <tr data-tid="T20260630008"><td class="mono">T20260630008</td><td>南区排水巡检</td><td>赵志远</td><td style="font-size:11px">06-30 14:30</td><td><span class="status status-executing">执行中</span></td><td style="font-size:11px">06-30</td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>\r
-            <tr data-tid="T20260701006"><td class="mono">T20260701006</td><td>东区巡检</td><td>李强</td><td style="font-size:11px">-</td><td><span class="status status-pending">未执行</span></td><td style="font-size:11px">07-01</td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>\r
-            <tr data-tid="T20260701007"><td class="mono">T20260701007</td><td>瓦斯监测</td><td>李强</td><td style="font-size:11px">-</td><td><span class="status status-pending">未执行</span></td><td style="font-size:11px">07-02</td><td><span style="color:var(--verdigris);font-size:11px;">正常</span></td><td><button class="btn btn-ghost btn-xs act-detail">详情</button></td></tr>\r
-        </tbody></table>
-        <footer class="task-pagination" data-pagination-target="#personBody">
-          <span data-pagination-total>共 0 条</span><label>每页<select aria-label="每页人员明细条数" data-pagination-size><option value="10">10 条</option><option value="20">20 条</option><option value="50">50 条</option></select></label><button type="button" aria-label="上一页" data-pagination-prev>上一页</button><b data-pagination-current>1 / 1</b><button type="button" aria-label="下一页" data-pagination-next>下一页</button>
-        </footer>
-    </div>\r
-</div>\r
-</div>\r
-\r
-</div><!-- /content -->\r
-</div><!-- /stage -->\r
-\r
-<!-- ===================== 右侧逻辑面板 ===================== -->\r
-<aside class="logic" id="logicPanel">\r
-<div class="logic-head">\r
-    <h2><i class="bi bi-journal-code"></i> 任务模块逻辑说明</h2>\r
-    <p>切换左侧模块时，本面板自动定位并高亮对应规则；鼠标悬停界面元素可联动高亮逻辑。</p>\r
-</div>\r
-\r
-<div class="note" id="note1" data-views="all">\r
-    <h4><span class="tag">1</span>五大任务状态定义（含权限）</h4>\r
-    <table style="width:100%;border-collapse:collapse;font-size:10.5px;">\r
-    <tr style="background:var(--logic-bg2)"><th style="padding:5px 6px;text-align:left;border:1px solid var(--logic-line);">状态</th><th style="padding:5px 6px;text-align:left;border:1px solid var(--logic-line);">定义</th><th style="padding:5px 6px;text-align:left;border:1px solid var(--logic-line);">允许操作</th></tr>\r
-    <tr><td style="padding:5px 6px;border:1px solid var(--logic-line);font-weight:600;">草稿</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">未发布，仅保存</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">编辑 / 发布 / 删除</td></tr>\r
-    <tr><td style="padding:5px 6px;border:1px solid var(--logic-line);font-weight:600;">未执行</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">已发布，执行人未提交</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">执行 / 转发 / 撤回 / 调整执行人</td></tr>\r
-    <tr><td style="padding:5px 6px;border:1px solid var(--logic-line);font-weight:600;">执行中</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">部分提交，未全部完成</td><td style="padding:5px 6px;border:1px solid var(--logic-line);"><span class="hl">禁止撤回</span>；未提交人可提交/转交</td></tr>\r
-    <tr><td style="padding:5px 6px;border:1px solid var(--logic-line);font-weight:600;">已完成</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">执行人提交后闭环，数据锁定归档</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">仅查看 / 复制，不可改</td></tr>\r
-    <tr><td style="padding:5px 6px;border:1px solid var(--logic-line);font-weight:600;">已撤回</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">发起人主动撤回</td><td style="padding:5px 6px;border:1px solid var(--logic-line);">详情 / 编辑 / 重新发布</td></tr>\r
-    </table>\r
-    <p style="margin-top:8px;"><span class="em">关键：</span>所有任务类型均由执行人提交后直接闭环，<span class="hl">不存在审批环节</span>。</p>\r
-</div>\r
-\r
-<div class="note" id="note2" data-views="all">\r
-    <h4><span class="tag">2</span>两类任务流转规则总览</h4>\r
-    <ul>\r
-        <li><span class="ok">① 普通业务表单任务</span>：表单类型=「普通业务表单」。执行人提交表单即闭环为「已完成」。</li>\r
-        <li><span class="ok">② 无表单任务</span>：表单类型=「无」。执行人填写完成情况并提交即闭环为「已完成」。</li>\r
-        <li><span class="em">③ BPM 流程表单任务</span>：表单类型=「BPM流程表单」。执行人提交即闭环为「已完成」；BPM 流程自身状态另行驱动。</li>\r
-    </ul>\r
-</div>\r
-\r
-<div class="note" id="note3" data-views="mytask publish">\r
-    <h4><span class="tag">3</span>任务流转：执行人提交 → 已完成（无审批、无动态发布环节）</h4>\r
-    <div class="flow">\r
-        <span class="fnode s-wei">未执行</span><span class="farrow">— 执行人提交 —▶</span><span class="fnode s-done">已完成</span>\r
-        <span class="flabel">单人：提交即闭环（无审批）。</span>\r
-    </div>\r
-    <div class="flow">\r
-        <span class="fnode s-wei">未执行</span><span class="farrow">— 任一提交 —▶</span><span class="fnode s-zx">执行中</span><span class="farrow">— 全员提交 —▶</span><span class="fnode s-done">已完成</span>\r
-        <span class="flabel">多人：部分提交保持「执行中」，<span class="hl">禁止撤回</span>；末人提交后闭环。</span>\r
-    </div>\r
-</div>\r
-\r
-\r
-\r
-<div class="note" id="note5" data-views="mytask publish">\r
-    <h4><span class="tag">4</span>BPM 流程表单任务流转</h4>\r
-    <div class="flow">\r
-        <span class="fnode s-wei">未执行</span><span class="farrow">—发起BPM—▶</span><span class="fnode s-zx">执行中</span><span class="farrow">—提交—▶</span><span class="fnode s-done">已完成</span>\r
-        <span class="flabel">执行人提交即闭环为「已完成」（无动态发布环节）。</span>\r
-    </div>\r
-</div>\r
-\r
-<div class="note" id="note6" data-views="all">\r
-    <h4><span class="tag">6</span>角色权限说明</h4>\r
-    <ul>\r
-        <li><span class="em">超级管理员：</span>全部权限——创建/编辑模板、启停模板、发布任务、查看所有台账、调整人员、结束任务。</li>\r
-        <li><span class="ok">任务发布者：</span>发布任务、保存草稿、管理自己发布的任务；<b>无</b>模板、台账权限。</li>\r
-        <li><span class="hl">普通执行者：</span>仅查看个人任务、执行、转发；<b>无</b>模板、发布、台账权限。</li>\r
-    </ul>\r
-</div>\r
-\r
-<div class="note" id="note7" data-views="template publish mytask ledger">\r
-    <h4><span class="tag">7</span>五大模块交互逻辑</h4>\r
-    <p style="font-weight:700;margin-bottom:4px;"><i class="bi bi-layers"></i> ① 任务模板</p>\r
-    <ul>\r
-        <li>「创建任务模板」进入编辑页（基本信息 + 全局规则两个 Tab）。</li>\r
-        <li>保存校验：模板名称非空，通过后回填列表。</li>\r
-        <li><span class="hl">停用模板不可发布</span>；启用状态模板不可直接删除（需先停用）。</li>\r
-        <li>模板编辑不影响已发布任务，仅对后续引用生效。</li>\r
-    </ul>\r
-    <p style="font-weight:700;margin:6px 0 4px;"><i class="bi bi-send-check"></i> ② 发布任务</p>\r
-    <ul>\r
-        <li>前置：先选「启用」模板，再进入填写页（基本信息配置 / 全局规则配置 两个 Tab）。</li>\r
-        <li>表单结构由模板固定，仅可填内容，不可改字段。</li>\r
-        <li>全局规则默认读模板，可二次覆盖。</li>\r
-        <li>保存草稿→进草稿列表；正式发布→同时写入「我发起的 / 待我执行 / 我参与的」。</li>\r
-    </ul>\r
-    <p style="font-weight:700;margin:6px 0 4px;"><i class="bi bi-kanban"></i> ③ 我的任务（7 标签）</p>\r
-    <ul>\r
-        <li><b>草稿任务</b>：编辑（预填发布页）/ 直接发布 / 删除。</li>\r
-        <li><b>我发起的</b>：详情 / 撤回（仅未执行）/ 复制。</li>\r
-        <li><b>待我执行</b>：执行（无表单填情况 / 有表单填表单）/ 转发。</li>\r
-        <li><b>已执行</b>：查看已提交任务的详情。</li>\r
-        <li><b>我撤回的</b>：详情 / 编辑重发 / 直接重发。</li>\r
-        <li>其他（已转发 / 我参与的）：仅查看详情。</li>\r
-    </ul>\r
-    <p style="font-weight:700;margin:6px 0 4px;"><i class="bi bi-graph-up"></i> ④ 台账（仅管理员）</p>\r
-    <ul>\r
-        <li>总台账：查看 / 调整执行人 / 结束 / 复制 / 导出。</li>\r
-        <li>人员明细：查看 / 导出。</li>\r
-        <li>调整执行人：未执行可调整；执行中仅调未提交人员。</li>\r
-        <li>结束任务：未完成的任务可强制结束（二次确认）。</li>\r
-    </ul>\r
-</div>\r
-\r
-<div class="note" id="note8" data-views="ledger people mytask">\r
-    <h4><span class="tag">8</span>超期标记机制</h4>\r
-    <ul>\r
-        <li><span class="em">判定：</span>当前时间 ＞ 计划结束时间 <b>且</b> 状态 ≠ 已完成 → 自动追加「已超期」。</li>\r
-        <li><span class="em">操作：</span>超期仅用于标红、提醒、台账统计，<span class="hl">不限制</span>任何提交 / 重提。</li>\r
-        <li><span class="em">留存：</span>超期后完成的任务永久保留超期记录，用于绩效考核与追溯。</li>\r
-    </ul>\r
-</div>\r
-\r
-<div class="note" id="note9" data-views="all">\r
-    <h4><span class="tag">8</span>全局规则配置说明</h4>\r
-    <ul>\r
-        <li><b>执行控制</b>：开启后仅计划开始时间后才可执行；关闭则收到即可执行。</li>\r
-        <li><b>周期重复</b>：不重复 / 按天 / 按周 / 按月 / 按年 + 发布时间 + 截止日期。</li>\r
-        <li><b>消息提醒</b>：自动推送、开始前/结束前时长、超期督办、接收人多选。</li>\r
-        <li>模板预设为默认值，发布时可二次覆盖，灵活适配单次差异。</li>\r
-    </ul>\r
-</div>\r
-\r
-<div class="note" id="note10" data-views="all">\r
-    <h4><span class="tag">9</span>任务 ID 生成规则</h4>\r
-    <p>固定格式：<span class="mono">T + 时间戳后 8 位 + 3 位随机数字</span>，全局唯一。示例：<span class="mono">T26874512345</span>（模板 ID 为 <span class="mono">TPL001</span> 等）。</p>\r
-</div>\r
-\r
-<div class="note" id="note10" data-views="all">\r
-    <h4><span class="tag">10</span>任务状态流转全景图</h4>\r
-    <div class="flow" style="flex-direction:column;align-items:stretch;gap:4px;">\r
-        <div style="text-align:center;"><span class="fnode s-draft">草稿</span> <span class="farrow">─发布─▶</span> <span class="fnode s-wei">未执行</span></div>\r
-        <div style="text-align:center;"><span class="fnode s-wei">未执行</span> <span class="farrow">─任一提交─▶</span> <span class="fnode s-zx">执行中</span> <span class="farrow">─全员提交─▶</span> <span class="fnode s-done">已完成（闭环）</span></div>\r
-        <div style="text-align:center;"><span class="fnode s-wei">未执行</span> <span class="farrow">─撤回─▶</span> <span class="fnode s-draft">已撤回</span></div>\r
-    </div>\r
-    <p style="margin-top:6px;"><span class="em">说明：</span>所有任务执行人提交后直接闭环为「已完成」，<span class="hl">无审批、无动态发布环节</span>。</p>\r
-</div>\r
-\r
-</aside>\r
-</div><!-- /app -->\r
-\r
-<!-- ===================== 弹窗 overlay ===================== -->\r
-<div class="overlay" id="overlay">\r
-    <div class="modal" id="modalEl">\r
-        <div class="modal-head"><h4 id="modalTitle"></h4><button class="x" id="modalX">&times;</button></div>\r
-        <div class="modal-body" id="modalBody"></div>\r
-        <div class="modal-foot" id="modalFoot"></div>\r
-    </div>\r
-</div>\r
-\r
-<div class="toast-wrap" id="toastWrap"></div>\r
-\r
-<script>\r
-"use strict";\r
-var overlay = document.getElementById('overlay');\r
-var modalEl = document.getElementById('modalEl');\r
-var modalTitle = document.getElementById('modalTitle');\r
-var modalBody = document.getElementById('modalBody');\r
-var modalFoot = document.getElementById('modalFoot');\r
-var logicPanel = document.getElementById('logicPanel');\r
-\r
-/* ---------- 视图切换 ---------- */\r
-var titles = {\r
-    'view-template': ['任务模板','模板管理 · 创建与配置任务模板'],\r
-    'view-template-editor': ['任务模板','模板管理 · 创建与配置任务模板'],\r
-    'view-publish': ['发布任务','从启用模板发布新任务'],\r
-    'view-mytask': ['我的任务','个人任务中心 · 7 类视图'],\r
-    'view-ledger': ['任务总台账','全局任务统计（仅管理员）'],\r
-    'view-personnel': ['人员明细','按执行人维度的任务明细（仅管理员）']\r
-};\r
-function switchView(view){\r
-    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });\r
-    document.getElementById(view).classList.add('active');\r
-    var navKey = (view==='view-template-editor') ? 'view-template' : view;\r
-    document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.toggle('active', n.dataset.view===navKey); });\r
-    document.getElementById('pageTitle').textContent = titles[view][0];\r
-    document.getElementById('crumb').textContent = titles[view][1];\r
-    document.querySelector('.content').scrollTop = 0;\r
-    var base = (view==='view-template-editor') ? 'template' : view.replace('view-','');\r
-    syncLogic(base);\r
-}\r
-document.querySelectorAll('.nav-item[data-view]').forEach(function(el){\r
-    el.addEventListener('click', function(){ switchView(this.dataset.view); });\r
-});\r
-\r
-/* ---------- 逻辑面板联动 ---------- */\r
-function syncLogic(view){\r
-    var first = null;\r
-    document.querySelectorAll('.note').forEach(function(n){\r
-        var views = (n.dataset.views||'').split(' ');\r
-        var match = views.indexOf('all')>=0 || views.indexOf(view)>=0;\r
-        n.classList.toggle('dim', !match);\r
-        n.classList.remove('active');\r
-        if(match && !first) first = n;\r
-    });\r
-    if(first){\r
-        logicPanel.scrollTo({ top: Math.max(0, first.offsetTop - 70), behavior:'smooth' });\r
-        first.classList.add('active');\r
-        first.classList.remove('flash'); void first.offsetWidth; first.classList.add('flash');\r
-    }\r
-}\r
-/* 悬停联动 */\r
-function bindHoverLink(selector, noteId){\r
-    document.querySelectorAll(selector).forEach(function(el){\r
-        el.addEventListener('mouseenter', function(){ var n=document.getElementById(noteId); if(n){ n.classList.add('active'); n.classList.remove('dim'); } });\r
-        el.addEventListener('mouseleave', function(){ syncLogic(currentView()); });\r
-    });\r
-}\r
-function currentView(){ var a=document.querySelector('.view.active'); return a? a.id.replace('view-','') : 'template'; }\r
-\r
-/* ---------- 弹窗通用 ---------- */\r
-function showModal(title, bodyHtml, footHtml, large, variant){
+
+      <div class="fb-bar" style="display:none;" data-fb="lgInstTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="2"><option value="">执行人</option><option value="李强">李强</option><option value="王建国">王建国</option><option value="赵志远">赵志远</option><option value="刘明辉">刘明辉</option><option value="陈安平">陈安平</option></select><select class="fb-sel" data-k="sel" data-col="3"><option value="">状态</option><option value="未执行">未执行</option><option value="执行中">执行中</option><option value="已完成">已完成</option><option value="已撤回">已撤回</option><option value="已作废">已作废</option></select><select class="fb-sel" data-k="sel" data-mode="overdue"><option value="">是否超期</option><option value="1">仅超期</option><option value="0">未超期</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="lgInstTable" style="display:none;"><thead><tr>
+        <th>任务名称</th><th>发布时间</th><th>执行人</th><th>状态</th><th>超期</th><th>操作</th>
+      </tr></thead>
+      <tbody id="lt-inst">
+        <tr data-tid="I20260714001" data-prog="1/2" data-name="东区3号矿井日常巡检" data-ft="普通业务表单" data-exec="李强、王建国" data-pending="李强"><td>东区3号矿井日常巡检</td><td style="font-size:11px;">2026-07-14 08:00</td><td><button class="inst-link act-person-list">李强、王建国</button></td><td><span class="status status-signing">执行中 1/2</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">详情</button><button class="btn btn-danger btn-xs act-void" style="margin-left:6px;">作废</button><button class="btn btn-ghost btn-xs" style="margin-left:6px;" onclick="openAdjustInst(this.closest('tr'))">调整</button></div></td></tr>
+        <tr data-tid="I20260701007" data-prog="0/1" data-name="瓦斯浓度监测" data-ft="无" data-exec="李强" data-pending="李强"><td>瓦斯浓度监测</td><td style="font-size:11px;">2026-07-02 08:00</td><td><button class="inst-link act-person-list">李强</button></td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">详情</button><button class="btn btn-ghost btn-xs act-withdraw" style="margin-left:6px;">撤回</button><button class="btn btn-ghost btn-xs" style="margin-left:6px;" onclick="openAdjustInst(this.closest('tr'))">调整</button></div></td></tr>
+        <tr data-tid="I20260625003" data-prog="0/2" data-name="东区3号矿井巡检" data-ft="普通业务表单" data-exec="李强、王建国" data-pending="李强、王建国"><td>东区3号矿井巡检</td><td style="font-size:11px;">2026-06-30 08:00</td><td><button class="inst-link act-person-list">李强、王建国</button></td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">详情</button><button class="btn btn-ghost btn-xs act-withdraw" style="margin-left:6px;">撤回</button><button class="btn btn-ghost btn-xs" style="margin-left:6px;" onclick="openAdjustInst(this.closest('tr'))">调整</button></div></td></tr>
+        <tr data-tid="I20260626004" data-prog="2/2" data-name="北区提升机检修" data-ft="无" data-exec="李强、赵志远" data-pending=""><td>北区提升机检修</td><td style="font-size:11px;">2026-06-28 08:00</td><td><button class="inst-link act-person-list">李强、赵志远</button></td><td><span class="status status-done">已完成</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">详情</button></div></td></tr>
+        <tr data-tid="I20260627005" data-prog="2/2" data-name="中央水泵房安全检查" data-ft="普通业务表单" data-exec="陈安平、李强" data-pending=""><td>中央水泵房安全检查</td><td style="font-size:11px;">2026-06-27 09:00</td><td><button class="inst-link act-person-list">陈安平、李强</button></td><td><span class="status status-done">已完成</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">详情</button></div></td></tr>
+      </tbody></table>
+    </div>
+</div>
+</div>
+
+</div><!-- /content -->
+</div><!-- /stage -->
+
+<!-- ===================== 右侧逻辑面板 ===================== -->
+<!-- 逻辑备注已迁移到右上角「开发说明」抽屉（页面级），原右侧常驻面板已移除 -->
+</div><!-- /app -->
+
+<!-- ===================== 弹窗 overlay ===================== -->
+<div class="overlay" id="overlay">
+    <div class="modal" id="modalEl">
+        <div class="modal-head"><h4 id="modalTitle"></h4><button class="x" id="modalX">&times;</button></div>
+        <div class="modal-body" id="modalBody"></div>
+        <div class="modal-foot" id="modalFoot"></div>
+    </div>
+</div>
+
+<div class="toast-wrap" id="toastWrap"></div>
+
+<script>
+"use strict";
+var overlay = document.getElementById('overlay');
+var modalEl = document.getElementById('modalEl');
+var modalTitle = document.getElementById('modalTitle');
+var modalBody = document.getElementById('modalBody');
+var modalFoot = document.getElementById('modalFoot');
+/* 逻辑说明改为顶部「开发说明」抽屉，相关实现见本文件末尾 */
+
+/* ---------- 视图切换 ---------- */
+var titles = {
+    'view-template': ['任务模板','模板管理 · 创建与配置任务模板'],
+    'view-template-editor': ['任务模板','模板管理 · 创建与配置任务模板'],
+    'view-publish': ['发布任务','从启用模板发布新任务'],
+    'view-mytask': ['我的任务','个人任务中心'],
+    'view-ledger': ['任务总台账','全局任务统计（仅管理员）'],
+    'view-exec': ['执行任务','填写并提交本次执行'],
+    'view-tdetail': ['任务详情','我的任务 · 查看任务与执行日志']
+};
+function switchView(view){
+    document.querySelectorAll('.view').forEach(function(v){ v.classList.remove('active'); });
+    document.getElementById(view).classList.add('active');
+    var navKey = (view==='view-template-editor') ? 'view-template' : ((view==='view-exec' || view==='view-tdetail') ? 'view-mytask' : view);
+    document.querySelectorAll('.nav-item').forEach(function(n){ n.classList.toggle('active', n.dataset.view===navKey); });
+    document.getElementById('pageTitle').textContent = titles[view][0];
+    document.getElementById('crumb').textContent = titles[view][1];
+    document.querySelector('.content').scrollTop = 0;
+    if(view === 'view-mytask'){ myTabSwitch('t-exec'); }
+    if(view === 'view-publish'){ pubPageTab('pt-new'); }
+    _curPageId = DEV_PAGE_MAP[view] || 'template';
+    if(_devDocOpen && _ddMode === 'page'){ renderDevDoc(_curPageId); }
+}
+document.querySelectorAll('.nav-item[data-view]').forEach(function(el){
+    el.addEventListener('click', function(){ switchView(this.dataset.view); });
+});
+
+/* ====================== 开发说明抽屉（页面级逻辑备注统一入口） ====================== */
+var _devDocOpen = false;
+var _curPageId = 'template';
+var _ddMode = 'page';
+var DEV_DOC_TITLES = {
+    'template': '任务模板 · 列表',
+    'template-editor': '任务模板 · 编辑',
+    'publish': '发布任务',
+    'mytask': '我的任务',
+    'exec': '执行任务',
+    'tdetail': '任务详情',
+    'ledger': '任务总台账',
+    'common': '通用规则（全模块）'
+};
+var DEV_PAGE_MAP = {
+    'view-template': 'template',
+    'view-template-editor': 'template-editor',
+    'view-publish': 'publish',
+    'view-mytask': 'mytask',
+    'view-exec': 'exec',
+    'view-tdetail': 'tdetail',
+    'view-ledger': 'ledger'
+};
+function ddMode(m){
+    _ddMode = m;
+    var a = document.getElementById('ddBtnPage'), b = document.getElementById('ddBtnCommon');
+    if(a) a.classList.toggle('on', m === 'page');
+    if(b) b.classList.toggle('on', m === 'common');
+    renderDevDoc(m === 'common' ? 'common' : _curPageId);
+}
+function toggleDevDoc(){ if(_devDocOpen){ closeDevDoc(); } else { openDevDoc(); } }
+var _ddH = 0;
+function ddSetHeight(px){
+    var min = 200, max = Math.round(window.innerHeight * 0.74);
+    px = Math.max(min, Math.min(max, Math.round(px)));
+    _ddH = px;
+    document.documentElement.style.setProperty('--devdoc-h', px + 'px');
+}
+function ddBindResizer(){
+    var hd = document.getElementById('ddResizer');
+    if(!hd || hd.dataset.bound) return;
+    hd.dataset.bound = '1';
+    var dragging = false;
+    hd.addEventListener('mousedown', function(e){
+        dragging = true; e.preventDefault();
+        hd.classList.add('dragging');
+        document.body.style.userSelect = 'none';
+    });
+    document.addEventListener('mousemove', function(e){
+        if(!dragging) return;
+        ddSetHeight(window.innerHeight - e.clientY);
+    });
+    document.addEventListener('mouseup', function(){
+        if(!dragging) return;
+        dragging = false;
+        hd.classList.remove('dragging');
+        document.body.style.userSelect = '';
+    });
+    hd.addEventListener('dblclick', function(){
+        ddSetHeight(_ddH < window.innerHeight * 0.45 ? window.innerHeight * 0.64 : window.innerHeight * 0.28);
+    });
+    window.addEventListener('resize', function(){ if(_devDocOpen) ddSetHeight(_ddH || window.innerHeight * 0.40); });
+}
+function openDevDoc(){
+    _devDocOpen = true;
+    if(!_ddH) ddSetHeight(window.innerHeight * 0.40); else ddSetHeight(_ddH);
+    var d = document.getElementById('devDocDrawer');
+    if(d) d.classList.add('open');
+    document.body.classList.add('devdoc-open');
+    ddBindResizer();
+    ddMode('page');
+}
+function closeDevDoc(){
+    _devDocOpen = false;
+    var d = document.getElementById('devDocDrawer');
+    if(d) d.classList.remove('open');
+    document.body.classList.remove('devdoc-open');
+}
+function renderDevDoc(pageId){
+    pageId = pageId || _curPageId;
+    var nameEl = document.getElementById('devDocPageName');
+    if(nameEl) nameEl.textContent = DEV_DOC_TITLES[pageId] || '';
+    var body = document.getElementById('devDocBody');
+    if(!body) return;
+    var src = document.getElementById('devdoc-' + pageId);
+    body.innerHTML = src ? src.innerHTML : '<div class="devdoc-empty">本页开发说明待补充。</div>';
+    body.scrollTop = 0;
+}
+document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape' && _devDocOpen) closeDevDoc();
+});
+
+function currentView(){ return _curPageId; }
+
+/* ---------- 弹窗通用 ---------- */
+function showModal(title, bodyHtml, footHtml, large){
     modalTitle.innerHTML = title;
     modalBody.innerHTML = bodyHtml;
     modalFoot.innerHTML = footHtml;
     modalEl.classList.toggle('lg', !!large);
-    modalEl.classList.toggle('task-detail-modal', variant==='task-detail');
     overlay.classList.add('show');
 }
-function closeModal(){ overlay.classList.remove('show'); }\r
-document.getElementById('modalX').addEventListener('click', closeModal);\r
-overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });\r
-document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });\r
-\r
-/* ---------- Toast ---------- */\r
-function toast(msg, type){\r
-    var t = document.createElement('div');\r
-    t.className = 'toast' + (type? ' '+type : '');\r
-    var icon = type==='ok' ? 'bi-check-circle-fill' : (type==='err' ? 'bi-x-circle-fill' : 'bi-info-circle-fill');\r
-    t.innerHTML = '<i class="bi '+icon+'"></i>'+msg;\r
-    document.getElementById('toastWrap').appendChild(t);\r
-    setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; t.style.transition='.3s'; setTimeout(function(){ t.remove(); },300); }, 2200);\r
-}\r
-\r
-/* ---------- 状态徽章辅助 ---------- */\r
-function setStatus(row, cls, text){\r
-    var cell = row.querySelector('td:nth-child(6) .status') || row.querySelector('.status');\r
-    if(cell){ cell.className = 'status '+cls; cell.textContent = text; }\r
-}\r
-function statusCell(row){ return row.querySelector('td:nth-child(6)'); }\r
-\r
-/* ====================== 模板视图交互 ====================== */\r
-function enterTplEditor(mode, row){\r
-    document.getElementById('editorTitle').textContent = (mode==='edit') ? '编辑任务模板' : '创建任务模板';\r
-    document.getElementById('tplName').value = '';\r
-    TZ_FORM = { name:'', desc:'', icon:'📄 通用任务', cat:'未分类', allowMulti:true, afterPublish:'tip', visScope:'all', visDepts:[], visRoles:[], visRules:[{who:'角色',whoVal:'华东督导组',field:'地区',op:'=',val:'华东'}] };\r
-    var descEl=document.getElementById('tzTplDesc'); if(descEl) descEl.value='';\r
-    if(mode==='edit' && row){\r
-        document.getElementById('tplName').value = row.children[1].textContent;\r
-        if(descEl && row.children[2]) descEl.value = row.children[2].textContent;\r
-    }\r
-    tplEditorSwitch('ed-basic');\r
-    switchView('view-template-editor');\r
-    setTimeout(function(){ var n=document.getElementById('tplName'); if(n) n.focus(); }, 60);\r
-}\r
-document.getElementById('btnNewTpl').addEventListener('click', function(){ enterTplEditor('new'); });\r
-document.getElementById('btnBackTpl').addEventListener('click', function(){ switchView('view-template'); });\r
-document.getElementById('btnCancelTpl').addEventListener('click', function(){ switchView('view-template'); });\r
-document.getElementById('btnSaveTpl').addEventListener('click', function(){\r
-    var nm = document.getElementById('tplName').value.trim();\r
-    if(!nm){ toast('模板名称不能为空','err'); return; }\r
-    toast('模板「'+nm+'」已保存','ok');\r
-    switchView('view-template');\r
-});\r
-/* 开关切换 */\r
-document.querySelectorAll('.switch[data-sw]').forEach(function(s){\r
-    s.addEventListener('click', function(){ this.classList.toggle('on'); });\r
-});\r
-/* 提醒人选择 */\r
-document.querySelectorAll('[data-remind]').forEach(function(b){\r
-    b.addEventListener('click', function(){ toast('打开成员选择器（原型演示）'); });\r
-});\r
-/* 启停 / 删除 模板 */\r
-document.getElementById('tplBody').addEventListener('click', function(e){\r
-    var toggleBtn = e.target.closest('.btn-toggle-tpl');\r
-    var delBtn = e.target.closest('.act-del-tpl');\r
-    var editBtn = e.target.closest('.act-edit-tpl');\r
-    var row = e.target.closest('tr');\r
-    if(toggleBtn){\r
-        var st = row.querySelector('.tpl-status');\r
-        if(st.classList.contains('status-enabled')){\r
-            st.className='status status-disabled tpl-status'; st.textContent='停用';\r
-            toggleBtn.textContent='启用'; toggleBtn.style.color='var(--verdigris)'; toggleBtn.style.borderColor='var(--verdigris)';\r
-            toast('模板已停用（停用后不可发布）','ok');\r
-        } else {\r
-            st.className='status status-enabled tpl-status'; st.textContent='启用';\r
-            toggleBtn.textContent='停用'; toggleBtn.style.color='var(--amber)'; toggleBtn.style.borderColor='var(--amber)';\r
-            toast('模板已启用','ok');\r
-        }\r
-    }\r
-    if(delBtn){ row.remove(); toast('模板已删除','ok'); }\r
-    if(editBtn){ enterTplEditor('edit', row); }\r
-});\r
-\r
-/* 模板编辑器 Tab 切换（基本信息配置 / 全局规则配置） */\r
-function tplEditorSwitch(tab){\r
-    document.querySelectorAll('#tplEditorTabs .tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab===tab); });\r
-    ['ed-basic','ed-perm','ed-rule'].forEach(function(id){\r
-        var el=document.getElementById(id); if(el) el.style.display = (id===tab) ? '' : 'none';\r
-    });\r
-}\r
-document.getElementById('tplEditorTabs').addEventListener('click', function(e){\r
-    var tab = e.target.closest('.tab');\r
-    if(!tab) return;\r
-    tplEditorSwitch(tab.dataset.tab);\r
-});\r
-\r
-/* ====================== 任务模板设计器（参照低代码平台工作表单左右画布） ====================== */\r
-var TZ_CONTROLS = {\r
-  text:{group:'basic',icon:'bi-type',label:'单行文本'},\r
-  textarea:{group:'basic',icon:'bi-text-paragraph',label:'多行文本'},\r
-  number:{group:'basic',icon:'bi-123',label:'数字'},\r
-  select:{group:'select',icon:'bi-caret-down-square',label:'下拉单选'},\r
-  radio:{group:'select',icon:'bi-ui-radios',label:'单选'},\r
-  checkbox:{group:'select',icon:'bi-ui-checks',label:'多选'},\r
-  date:{group:'select',icon:'bi-calendar3',label:'日期时间'},\r
-  subform:{group:'advanced',icon:'bi-table',label:'子表单'},\r
-  file:{group:'advanced',icon:'bi-paperclip',label:'附件'},\r
-  member:{group:'biz',icon:'bi-person-badge',label:'@成员'},\r
-  dept:{group:'biz',icon:'bi-diagram-3',label:'@部门'}\r
-};\r
-var TZ_GROUPS=[['basic','基础控件','bi-shapes'],['select','选择控件','bi-list-ul'],['advanced','高级控件','bi-layer-group'],['biz','业务控件','bi-briefcase']];\r
-var TZ_DEPTS=['华东矿区','华北矿区','华南矿区'];\r
-var TZ_ROLES=['超级管理员','任务发布者','华东督导组','华北督导组'];\r
-var TZ_MEMBERS=['张伟明','李红','王强'];\r
-var tplFields=[];\r
-var tplSelectedId=null;\r
-var TZ_FORM=null;\r
-var _tzUid=1;\r
-function tplNid(){ return 'tf'+(_tzUid++); }\r
-function tplGet(id){ return tplFields.find(function(f){return f.id===id;}); }\r
-function tzEsc(s){ return (s==null?'':String(s)).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;'); }\r
-function tplInitDesigner(){\r
-  tplRenderPalette();\r
-  tplRenderConfig();\r
-}\r
-function tplRenderPalette(){\r
-  TZ_GROUPS.forEach(function(g){\r
-    var cap=g[0].charAt(0).toUpperCase()+g[0].slice(1);\r
-    var box=document.getElementById('tplGrp'+cap);\r
-    if(!box) return;\r
-    box.innerHTML = Object.keys(TZ_CONTROLS).filter(function(k){return TZ_CONTROLS[k].group===g[0];}).map(function(k){\r
-      var c=TZ_CONTROLS[k];\r
-      return '<div class="tz-palette-item" onclick="tplAddField(\\''+k+'\\')"><i class="bi '+c.icon+'"></i>'+c.label+'</div>';\r
-    }).join('');\r
-  });\r
-}\r
-function tplAddField(type){\r
-  // 任务模板的业务字段由关联的「执行任务@表单」承载，左侧控件库仅展示与低代码平台同源的组件\r
-  toast('业务字段请在关联的「执行任务@表单」中搭建，左侧控件库与平台组件库同源','ok');\r
-}\r
-function tplDeleteField(id){\r
-  tplFields=tplFields.filter(function(f){return f.id!==id;});\r
-  if(tplSelectedId===id) tplSelectedId=null;\r
-  tplRenderCanvas(); tplRenderConfig();\r
-}\r
-function tplSelectField(id){\r
-  tplSelectedId=(id===null)?null:id;\r
-  tplRenderCanvas(); tplRenderConfig();\r
-}\r
-function tplPreviewHTML(f){\r
-  var ph=f.placeholder||'';\r
-  if(f.type==='text'||f.type==='number') return '<input disabled class="form-input" placeholder="'+tzEsc(ph)+'">';\r
-  if(f.type==='textarea') return '<textarea disabled class="form-input" placeholder="'+tzEsc(ph)+'"></textarea>';\r
-  if(f.type==='date') return '<input disabled class="form-input" placeholder="年/月/日 时:分">';\r
-  if(f.type==='select'){ var ops=(f.options||[]).map(function(o){return '<option>'+tzEsc(o.label)+'</option>';}).join(''); return '<select disabled class="form-input">'+(ops||'<option>请选择</option>')+'</select>'; }\r
-  if(f.type==='radio'||f.type==='checkbox'){ var chips=(f.options||[]).map(function(o){return '<label style="margin-right:14px;font-size:12.5px;color:var(--text-secondary);"><input type="'+(f.type==='radio'?'radio':'checkbox')+'" disabled> '+tzEsc(o.label)+'</label>';}).join(''); return '<div style="padding:4px 0;">'+chips+'</div>'; }\r
-  if(f.type==='file') return '<div class="tz-meta-val" style="border:1px dashed var(--border);border-radius:6px;padding:10px;color:var(--text-muted);"><i class="bi bi-paperclip"></i> 点击上传附件</div>';\r
-  if(f.type==='subform') return '<div class="tz-meta-val" style="border:1px solid var(--border-light);border-radius:6px;padding:10px;color:var(--text-muted);"><i class="bi bi-table"></i> 子表单（明细行）</div>';\r
-  if(f.type==='member'){ var sc=f.range==='all'?'全部成员':(f.range==='dept'?((f.depts||[]).join('/')||'指定部门'):((f.roles||[]).join('/')||'指定角色')); return '<div class="tz-meta-val"><i class="bi bi-person-plus"></i> 选择成员<span style="margin-left:auto;font-size:11px;color:var(--text-muted);">'+sc+'</span></div>'; }\r
-  if(f.type==='dept'){ var sd=f.range==='all'?'全部部门':(f.range==='dept'?((f.depts||[]).join('/')||'指定部门'):((f.roles||[]).join('/')||'指定角色')); return '<div class="tz-meta-val"><i class="bi bi-diagram-3"></i> 选择部门<span style="margin-left:auto;font-size:11px;color:var(--text-muted);">'+sd+'</span></div>'; }\r
-  return '';\r
-}\r
-function tplFieldCardHTML(f){\r
-  var sel=(tplSelectedId===f.id)?' selected':'';\r
-  var req=f.required?' <span style="color:var(--danger);">*</span>':'';\r
-  return '<div class="tz-field-card'+sel+'" style="grid-column:span '+(f.span||12)+'" onclick="tplSelectField(\\''+f.id+'\\')">'\r
-    +'<div class="fc-top"><span class="fc-type"><i class="bi '+TZ_CONTROLS[f.type].icon+'"></i>'+TZ_CONTROLS[f.type].label+'</span>'\r
-    +'<i class="bi bi-trash fc-del" onclick="event.stopPropagation();tplDeleteField(\\''+f.id+'\\')"></i></div>'\r
-    +'<div style="font-size:13px;font-weight:600;color:var(--text-primary);margin-bottom:6px;">'+tzEsc(f.label)+req+'</div>'\r
-    +tplPreviewHTML(f)+'</div>';\r
-}\r
-function tplRenderCanvas(){\r
-  var wrap=document.getElementById('tplCanvasFields');\r
-  var empty=document.getElementById('tplCanvasEmpty');\r
-  if(!wrap) return;\r
-  if(tplFields.length===0){ wrap.innerHTML=''; empty.style.display='block'; return; }\r
-  empty.style.display='none';\r
-  wrap.innerHTML=tplFields.map(tplFieldCardHTML).join('');\r
-}\r
-function tplShowCfg(which){\r
-  if(which==='form'){ tplSelectedId=null; }\r
-  tplRenderCanvas(); tplRenderConfig();\r
-}\r
-function tplRow(label,ctrl){\r
-  return '<div style="margin-bottom:14px;"><label class="form-label">'+label+'</label>'+ctrl+'</div>';\r
-}\r
-function tplRenderConfig(){\r
-  var body=document.getElementById('tplConfigBody'); if(!body) return;\r
-  // 任务模板「基本信息配置」对齐低代码平台工作表单的「一、基础信息」\r
-  body.innerHTML=tplFormConfigHTML();\r
-}\r
-function tplFormConfigHTML(){\r
-  return '<div class="tz-cfg-sec"><i class="bi bi-info-circle"></i>一、基础信息</div>'\r
-    + tplRow('模板名称', '<input class="form-input" id="tzTplName" placeholder="请输入模板名称">')\r
-    + tplRow('模板描述', '<textarea class="form-input" id="tzTplDesc" rows="3" placeholder="运行态展示的说明文字，帮助用户理解用途"></textarea>')\r
-    + tplRow('模板图标', '<select class="form-input" id="tzTplIcon"><option>📄 通用任务</option><option>🔧 设备巡检</option><option>⚠️ 隐患整改</option><option>🛡️ 安全督导</option></select>')\r
-    + tplRow('模板分类', '<select class="form-input" id="tzTplCat"><option>未分类</option><option>人事</option><option>财务</option><option>行政</option><option>安全</option></select>')\r
-    + '<div class="form-hint" style="margin:0;"><i class="bi bi-info-circle"></i>对齐工作表单「一、基础信息」。任务配置区（发起人/执行人等）为系统固定字段；业务字段由关联的「执行任务@表单」承载。</div>';\r
-}\r
-function tplFieldConfigHTML(f){\r
-  if(!f) return '';\r
-  var h='<div class="tz-cfg-sec"><i class="bi '+TZ_CONTROLS[f.type].icon+'"></i>'+TZ_CONTROLS[f.type].label+' · 通用配置</div>';\r
-  h+=tplRow('标签', '<input class="form-input" value="'+tzEsc(f.label)+'" oninput="tplUpd(\\''+f.id+'\\',\\'label\\',this.value)">');\r
-  h+=tplRow('必填', '<label style="display:flex;align-items:center;gap:8px;font-size:12.5px;color:var(--text-secondary);cursor:pointer;"><input type="checkbox" '+(f.required?'checked':'')+' onchange="tplUpd(\\''+f.id+'\\',\\'required\\',this.checked)"> 此项为必填</label>');\r
-  if(f.type!=='member'&&f.type!=='dept'&&f.type!=='subform'&&f.type!=='file'&&f.type!=='date'){\r
-    h+=tplRow('占位提示', '<input class="form-input" value="'+tzEsc(f.placeholder||'')+'" oninput="tplUpd(\\''+f.id+'\\',\\'placeholder\\',this.value)">');\r
-  }\r
-  if(f.type==='select'||f.type==='radio'||f.type==='checkbox'){\r
-    var optTxt=(f.options||[]).map(function(o){return o.label;}).join('\\n');\r
-    h+=tplRow('选项（每行一个）', '<textarea class="form-input" rows="3" oninput="tplUpdOptions(\\''+f.id+'\\',this.value)">'+tzEsc(optTxt)+'</textarea>');\r
-  }\r
-  h+=tplRow('默认值来源', tplDefaultCtrl(f));\r
-  h+=tplRow('画布宽度', '<select class="form-input" onchange="tplUpd(\\''+f.id+'\\',\\'span\\',parseInt(this.value))">'+[[12,'整行 (100%)'],[6,'1/2 行 (50%)'],[4,'1/3 行 (33%)'],[3,'1/4 行 (25%)']].map(function(o){return '<option value="'+o[0]+'" '+((f.span||12)==o[0]?'selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>');\r
-  if(f.type==='member'||f.type==='dept'){\r
-    h+='<div class="tz-cfg-sec"><i class="bi bi-people"></i>可选项范围</div>';\r
-    h+=tplRow('范围', '<select class="form-input" onchange="tplUpd(\\''+f.id+'\\',\\'range\\',this.value);tplRenderConfig();"><option value="all" '+(f.range==='all'?'selected':'')+'>全部</option><option value="dept" '+(f.range==='dept'?'selected':'')+'>指定部门</option><option value="role" '+(f.range==='role'?'selected':'')+'>指定角色</option></select>');\r
-    if(f.range==='dept'){ h+=tplRow('可选部门', tplChipsCtrl(f,'depts',TZ_DEPTS)); }\r
-    else if(f.range==='role'){ h+=tplRow('可选角色', tplChipsCtrl(f,'roles',TZ_ROLES)); }\r
-  }\r
-  return h;\r
-}\r
-function tplDefaultCtrl(f){\r
-  var dt=f.defaultType||'manual';\r
-  var opts=[['manual','手动填写'],['currentUser','当前用户'],['today','当前日期']];\r
-  var sel='<select class="form-input" onchange="tplUpd(\\''+f.id+'\\',\\'defaultType\\',this.value);tplRenderConfig();">'+opts.map(function(o){return '<option value="'+o[0]+'" '+(dt===o[0]?'selected':'')+'>'+o[1]+'</option>';}).join('')+'</select>';\r
-  if(dt==='manual'){ return sel+'<input class="form-input" style="margin-top:6px;" placeholder="默认值" value="'+tzEsc(f.defaultValue||'')+'" oninput="tplUpd(\\''+f.id+'\\',\\'defaultValue\\',this.value)">'; }\r
-  return sel;\r
-}\r
-function tplChipsCtrl(f,key,list){\r
-  return '<div class="tz-chips">'+list.map(function(v){ var on=(f[key]||[]).indexOf(v)>=0; return '<span class="tz-chip '+(on?'on':'')+'" onclick="tplToggle(\\''+f.id+'\\',\\''+key+'\\',\\''+v+'\\',this)">'+v+'</span>'; }).join('')+'</div>';\r
-}\r
-function tplUpd(id,key,val){ var f=tplGet(id); if(!f) return; f[key]=val; tplRenderCanvas(); }\r
-function tplUpdOptions(id,val){ var f=tplGet(id); if(!f) return; f.options=val.split('\\n').filter(function(s){return s.trim();}).map(function(s,i){return {label:s.trim(),value:'opt'+(i+1)};}); tplRenderCanvas(); }\r
-function tplToggle(id,key,v,el){ var f=tplGet(id); if(!f) return; if(!f[key]) f[key]=[]; var i=f[key].indexOf(v); if(i>=0) f[key].splice(i,1); else f[key].push(v); el.classList.toggle('on'); }\r
-tplInitDesigner();\r
-\r
-/* ====================== 发布视图交互 ====================== */\r
-function pubTabSwitch(tab){\r
-    document.querySelectorAll('#pubTabs .tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab===tab); });\r
-    document.getElementById('pub-basic').style.display = (tab==='pub-basic')?'':'none';\r
-    document.getElementById('pub-rule').style.display = (tab==='pub-rule')?'':'none';\r
-}\r
-document.getElementById('pubBody').addEventListener('click', function(e){\r
-    var btn = e.target.closest('.act-publish');\r
-    if(!btn) return;\r
-    var row = e.target.closest('tr');\r
-    var name = row.children[1].textContent;\r
-    var ft = row.children[2].textContent;\r
-    document.getElementById('pubTitle').textContent = '发布任务 · '+name;\r
-    document.getElementById('pTaskName').value = name;\r
-    document.getElementById('pFormType').textContent = ft;\r
-    pubTabSwitch('pub-basic');\r
-    document.getElementById('pubTplList').style.display = 'none';\r
-    document.getElementById('pubForm').style.display = '';\r
-    document.querySelector('.content').scrollTop = 0;\r
-});\r
-document.getElementById('btnBackPub').addEventListener('click', function(){\r
-    document.getElementById('pubForm').style.display = 'none';\r
-    document.getElementById('pubTplList').style.display = '';\r
-});\r
-document.getElementById('pubTabs').addEventListener('click', function(e){\r
-    var tab = e.target.closest('.tab'); if(!tab) return; pubTabSwitch(tab.dataset.tab);\r
-});\r
-document.getElementById('btnPubDraft').addEventListener('click', function(){\r
-    toast('已存入草稿任务','ok');\r
-    switchView('view-mytask'); activateMyTab('t-draft');\r
-});\r
-document.getElementById('btnPubSubmit').addEventListener('click', function(){\r
-    var nm = document.getElementById('pTaskName').value.trim();\r
-    if(!nm){ toast('任务名称不能为空','err'); return; }\r
-    // 提交时再次校验：当前登录人是否仍有该模板的发布权限（防绕过）\r
-    if(currentPubTid && !canPublish(currentPubTid)){\r
-      toast('权限校验失败：当前登录人无「'+currentPubTid+'」的发布权限','err'); return;\r
-    }\r
-    toast('任务已发布 → 写入「我发起的 / 待执行 / 我参与」','ok');\r
-    switchView('view-mytask'); activateMyTab('t-launch');\r
-});\r
-\r
-/* ====================== 任务发布数据权限 ====================== */\r
-var PUB_TEMPLATES = [\r
-  {id:'TPL001', name:'日常巡检任务模板', type:'普通业务表单', creator:'张伟明'},\r
-  {id:'TPL002', name:'设备维修任务模板', type:'无', creator:'张伟明'},\r
-  {id:'TPL003', name:'隐患整改任务模板', type:'BPM流程表单', creator:'张伟明'}\r
-];\r
-var TPL_SCOPE = {\r
-  TPL001:{scope:'all', val:[]},\r
-  TPL002:{scope:'role', val:['任务发布者']},\r
-  TPL003:{scope:'role', val:['超级管理员']}\r
-};\r
-var currentPubTid = null;     // 正在发布的模板\r
-var currentEditTid = null;   // 正在编辑的模板\r
-function curRole(){ var s=document.getElementById('roleSelect'); return s?s.value:''; }\r
-function canPublish(tid){\r
-  var role = curRole();\r
-  if(role==='超级管理员') return true;\r
-  if(role==='普通执行者') return false;\r
-  var sc = TPL_SCOPE[tid] || {scope:'all', val:[]};\r
-  if(sc.scope==='all') return true;\r
-  if(sc.scope==='role'||sc.scope==='dept'||sc.scope==='member') return (sc.val||[]).indexOf(role)>=0;\r
-  return false;\r
-}\r
-function renderPubList(){
-  var body=document.getElementById('pubBody');
-  if(!body) return;
-  var rows = PUB_TEMPLATES.filter(function(t){ return canPublish(t.id); });
-  if(!rows.length){
-    body.innerHTML='<tr><td colspan="5" style="text-align:center;color:var(--text-muted);padding:18px;">当前登录人无「可发布范围」内的启用模板</td></tr>';
-    if(taskPaginationControllers) refreshTaskPagination();
-    return;
-  }
-  body.innerHTML = rows.map(function(t){
-    return '<tr data-tid="'+t.id+'"><td class="mono">'+t.id+'</td><td>'+t.name+'</td><td>'+t.type+'</td><td>'+t.creator+'</td><td><button class="btn btn-amber btn-xs act-publish"><i class="bi bi-send-check"></i>发布</button></td></tr>';
-  }).join('');
-  if(taskPaginationControllers) refreshTaskPagination();
-}\r
-/* 当前登录人角色变化时，若处于发布页则刷新候选模板列表 */\r
-var _rs=document.getElementById('roleSelect');\r
-if(_rs) _rs.addEventListener('change', function(){ var pv=document.getElementById('view-publish'); if(pv && (pv.style.display!=='none')){ renderPubList(); } });\r
-/* 模板编辑器：可发布范围 */\r
-var SCOPE_DEPTS=['华东矿区','华北矿区','华南矿区'];\r
-var SCOPE_ROLES=['超级管理员','任务发布者','华东督导组','华北督导组'];\r
-var SCOPE_MEMBERS=['张伟明','李红','王强'];\r
-function renderTplScopeBox(){\r
-  var sel=document.getElementById('tplPubScope'); if(!sel) return;\r
-  var box=document.getElementById('tplPubScopeBox'); if(!box) return;\r
-  var sc=sel.value;\r
-  var list = sc==='dept'?SCOPE_DEPTS:(sc==='member'?SCOPE_MEMBERS:SCOPE_ROLES);\r
-  var arr = (currentEditTid&&TPL_SCOPE[currentEditTid])?TPL_SCOPE[currentEditTid].val:[];\r
-  if(sc==='all'){ box.innerHTML='<div class="form-hint" style="margin:0;">所有拥有「发布任务」菜单权限的成员均可发布此模板。</div>'; return; }\r
-  box.innerHTML = '<div class="form-hint" style="margin:0 0 6px;">勾选可发布的'+(sc==='dept'?'部门':(sc==='member'?'成员':'角色'))+'：</div>'\r
-    + list.map(function(v){ var on=arr.indexOf(v)>=0; return '<label class="scope-chip'+(on?' on':'')+'"><input type="checkbox" value="'+v+'" '+(on?'checked':'')+'> '+v+'</label>'; }).join('');\r
-}\r
-var _ps=document.getElementById('tplPubScope'); if(_ps) _ps.addEventListener('change', function(){ if(currentEditTid&&TPL_SCOPE[currentEditTid]) TPL_SCOPE[currentEditTid].scope=this.value; renderTplScopeBox(); });\r
-var _psb=document.getElementById('tplPubScopeBox'); if(_psb) _psb.addEventListener('change', function(e){ if(e.target.type!=='checkbox') return; if(!currentEditTid) return; var key=currentEditTid; if(!TPL_SCOPE[key]) TPL_SCOPE[key]={scope:document.getElementById('tplPubScope').value,val:[]}; var sc=TPL_SCOPE[key]; if(e.target.checked){ if(sc.val.indexOf(e.target.value)<0) sc.val.push(e.target.value); } else { sc.val=sc.val.filter(function(x){return x!==e.target.value;}); } });\r
-/* 打开编辑器时预填可发布范围 */\r
-var _origEnter=enterTplEditor;\r
-enterTplEditor=function(mode, row){\r
-  _origEnter(mode, row);\r
-  currentEditTid = (mode==='edit'&&row)? row.children[0].textContent : null;\r
-  var sel=document.getElementById('tplPubScope'); if(!sel) return;\r
-  var sc = (currentEditTid&&TPL_SCOPE[currentEditTid])?TPL_SCOPE[currentEditTid]:{scope:'all',val:[]};\r
-  sel.value = sc.scope||'all';\r
-  renderTplScopeBox();\r
-};\r
-/* 保存模板时写回可发布范围 */\r
-document.getElementById('btnSaveTpl').addEventListener('click', function(){\r
-  if(currentEditTid && TPL_SCOPE[currentEditTid]){ TPL_SCOPE[currentEditTid].scope = document.getElementById('tplPubScope').value; }\r
-});\r
-/* 进入发布页即按登录人过滤候选模板 */\r
-var _origSwitch=switchView;\r
-switchView=function(v){ _origSwitch(v); if(v==='view-publish') renderPubList(); };\r
-/* 点击发布时记录当前模板，供提交校验 */\r
-document.getElementById('pubBody').addEventListener('click', function(e){\r
-  var btn=e.target.closest('.act-publish'); if(!btn) return;\r
-  currentPubTid = e.target.closest('tr').getAttribute('data-tid');\r
-});\r
-/* 首次渲染发布候选列表（默认角色=超级管理员，可见全部） */\r
-renderPubList();\r
-\r
-/* 进入发布页并预填（草稿「编辑」/ 撤回「编辑重发」共用） */\r
-function editDraftTask(row){\r
-    var name = row.children[1].textContent;\r
-    switchView('view-publish');\r
-    document.getElementById('pubTitle').textContent = '编辑任务 · '+name;\r
-    document.getElementById('pTaskName').value = name;\r
-    document.getElementById('pFormType').textContent = (row.children[4]?row.children[4].textContent:'普通业务表单');\r
-    pubTabSwitch('pub-basic');\r
-    document.getElementById('pubTplList').style.display = 'none';\r
-    document.getElementById('pubForm').style.display = '';\r
-    document.querySelector('.content').scrollTop = 0;\r
-}\r
-function publishDraftTask(row){\r
-    if(row) row.remove();\r
-    toast('草稿已发布','ok');\r
-    switchView('view-mytask'); activateMyTab('t-launch');\r
-}\r
-/* 切换到「我的任务」指定标签 */\r
-function activateMyTab(id){
-    var tab = document.querySelector('#myTabs .tab[data-tab="'+id+'"]');
-    if(tab) tab.click();
+function closeModal(){ overlay.classList.remove('show'); }
+document.getElementById('modalX').addEventListener('click', closeModal);
+overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
+document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
+
+/* ---------- Toast ---------- */
+function toast(msg, type){
+    var t = document.createElement('div');
+    t.className = 'toast' + (type? ' '+type : '');
+    var icon = type==='ok' ? 'bi-check-circle-fill' : (type==='err' ? 'bi-x-circle-fill' : 'bi-info-circle-fill');
+    t.innerHTML = '<i class="bi '+icon+'"></i>'+msg;
+    document.getElementById('toastWrap').appendChild(t);
+    setTimeout(function(){ t.style.opacity='0'; t.style.transform='translateY(12px)'; t.style.transition='.3s'; setTimeout(function(){ t.remove(); },300); }, 2200);
 }
 
-/* ====================== 统一分页 ====================== */
-var taskPaginationControllers = [];
-function taskPaginationRows(target){
-    if(!target) return [];
-    return Array.prototype.filter.call(target.children, function(child){ return child.tagName === 'TR'; });
-}
-function taskPaginationTarget(controller){
-    if(controller.mode === 'mytask'){
-        var activeTab = document.querySelector('#myTabs .tab.active');
-        return activeTab ? document.getElementById(activeTab.dataset.tab) : null;
+/* ====================== 模板视图交互 ====================== */
+function enterTplEditor(mode, row){
+    document.getElementById('editorTitle').textContent = (mode==='edit') ? '编辑任务模板' : '创建任务模板';
+    document.getElementById('tplName').value = '';
+    document.getElementById('tplCodeName').value = '';
+    if(mode==='edit' && row){
+        editingTid = row.children[0].textContent;
+        document.getElementById('tplName').value = row.children[1].textContent;
+        document.getElementById('tplCodeName').value = row.children[1].textContent;
+        document.getElementById('tplCode').value = row.children[0].textContent;
+    } else {
+        editingTid = null;
+        document.getElementById('tplCode').value = '（保存后自动生成）';
     }
-    return document.querySelector(controller.target);
+    resetCompState();
+    resetCompPanel();
+    // 默认进入「基本信息配置」Tab
+    tplEditorSwitch('ed-basic');
+    switchView('view-template-editor');
+    setTimeout(function(){ document.getElementById('tplName').focus(); }, 60);
 }
-function renderTaskPagination(controller){
-    var rows = taskPaginationRows(taskPaginationTarget(controller));
-    var pageCount = Math.max(1, Math.ceil(rows.length / controller.pageSize));
-    if(controller.page > pageCount) controller.page = pageCount;
-    rows.forEach(function(row, index){
-        var visible = index >= (controller.page - 1) * controller.pageSize && index < controller.page * controller.pageSize;
-        row.style.display = visible ? '' : 'none';
+document.getElementById('btnNewTpl').addEventListener('click', function(){ enterTplEditor('new'); });
+document.getElementById('btnBackTpl').addEventListener('click', function(){ switchView('view-template'); });
+document.getElementById('btnCancelTpl').addEventListener('click', function(){ switchView('view-template'); });
+document.getElementById('btnSaveTpl').addEventListener('click', function(){
+    var nm = document.getElementById('tplName').value.trim();
+    if(!nm){ toast('模板名称不能为空','err'); return; }
+    // 开发关注：任务模板名称不能重复
+    var dup = false;
+    document.querySelectorAll('#tplBody tr').forEach(function(r){
+        if(editingTid && r.dataset.tid === editingTid) return;
+        if(r.children[1].textContent.trim() === nm) dup = true;
     });
-    controller.total.textContent = '共 ' + rows.length + ' 条';
-    controller.current.textContent = controller.page + ' / ' + pageCount;
-    controller.prev.disabled = controller.page === 1;
-    controller.next.disabled = controller.page === pageCount;
+    if(dup){ toast('模板名称「'+nm+'」已存在，不可重复','err'); return; }
+    if(editingTid){
+        var row = document.querySelector('#tplBody tr[data-tid="'+editingTid+'"]');
+        if(row) row.children[1].textContent = nm;
+        toast('模板「'+nm+'」已更新','ok');
+    } else {
+        var n = document.querySelectorAll('#tplBody tr').length + 1;
+        var code = 'TPL' + String(n).padStart(3,'0');
+        var tr = document.createElement('tr');
+        tr.dataset.tid = code;
+        tr.innerHTML = '<td class="mono">'+code+'</td><td>'+escHtml(nm)+'</td><td>普通业务表单</td><td><span class="status status-disabled tpl-status">停用</span></td><td>张伟明</td><td class="mono" style="font-size:11px">2026-07-04 09:00</td><td><div class="actions"><button class="btn btn-ghost btn-xs act-edit-tpl">编辑</button><button class="btn btn-xs btn-toggle-tpl" style="color:var(--amber);border:1px solid var(--amber);">启用</button><button class="btn btn-danger btn-xs act-del-tpl">删除</button></div></td>';
+        document.getElementById('tplBody').appendChild(tr);
+        toast('模板「'+nm+'」已创建（默认停用，启用后方可发布）','ok');
+    }
+    editingTid = null;
+    switchView('view-template');
+});
+/* 开关切换 */
+function syncRepeatSwitch(sw){
+    if(!sw) return;
+    var sec = sw.closest('.section-block');
+    if(!sec) return;
+    sec.classList.toggle('rep-off', !sw.classList.contains('on'));
 }
-function refreshTaskPagination(){
-    taskPaginationControllers.forEach(renderTaskPagination);
-}
-function resetTaskPagination(mode){
-    taskPaginationControllers.forEach(function(controller){
-        if(controller.mode === mode){ controller.page = 1; renderTaskPagination(controller); }
+document.querySelectorAll('.switch[data-sw]').forEach(function(s){
+    s.addEventListener('click', function(){
+        this.classList.toggle('on');
+        syncRepeatSwitch(this);
     });
+});
+/* 初始：未开启重复发布时隐藏频率 / 日期 / 停止日期 / 发布时间 */
+document.querySelectorAll('.switch[data-sw="repeat"], .switch[data-sw="prepeat"]').forEach(function(s){ syncRepeatSwitch(s); });
+/* 提醒人选择 */
+document.querySelectorAll('[data-remind]').forEach(function(b){
+    b.addEventListener('click', function(){ toast('打开成员选择器（原型演示）'); });
+});
+/* 启停 / 删除 模板 */
+/* 模板删除：停用 + 无引用才可删；逻辑删除，编码不回收 */
+var TPL_REFS = { 'TPL004': 2 };   /* 演示：TPL004 已被 2 个任务引用 */
+var TPL_DELETED = {};
+function openDelTpl(row){
+    var code = row.children[0].textContent.trim();
+    var name = row.children[1].textContent.trim();
+    var st = row.querySelector('.tpl-status');
+    if(st && st.classList.contains('status-enabled')){
+        toast('启用状态的任务模板不可删除，请先停用', 'err');
+        return;
+    }
+    var refs = TPL_REFS[code] || 0;
+    if(refs > 0){
+        showModal('<i class="bi bi-slash-circle"></i> 无法删除',
+            '<p style="font-size:13px;line-height:1.9;">模板「<b>' + escHtml(name) + '</b>」已被 <b>' + refs + ' 个任务</b>使用，<b>不能删除</b>。<br>' +
+            '<span style="color:var(--text-muted);font-size:12px;">删除会导致草稿无法发布、历史任务无法追溯来源模板。如不再使用，保持「停用」即可——停用后不会再出现在发布页，也不影响已发布任务。</span></p>',
+            '<button class="btn btn-ghost btn-sm" onclick="closeModal()">我知道了</button>');
+        return;
+    }
+    showModal('<i class="bi bi-trash"></i> 删除模板',
+        '<p style="font-size:13px;line-height:1.9;">确定删除模板「<b>' + escHtml(name) + '</b>」（<code>' + code + '</code>）吗？</p>' +
+        '<ul style="font-size:12.5px;color:var(--text-secondary);line-height:1.9;padding-left:18px;margin-top:6px;">' +
+        '<li>删除后<b>不可恢复</b>，列表不再显示；</li>' +
+        '<li>执行<b>逻辑删除</b>，数据保留、仅加删除标记，便于追溯；</li>' +
+        '<li>编码 <code>' + code + '</code> <b>不回收、不复用</b>；</li>' +
+        '<li>该模板下没有任何任务或草稿，删除不影响历史数据。</li></ul>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button><button class="btn btn-danger btn-sm" onclick="doDelTpl(\\'' + code + '\\')">确认删除</button>');
 }
-function initTaskPagination(){
-    document.querySelectorAll('.task-pagination').forEach(function(element){
-        var controller = {
-            mode: element.dataset.paginationMode || '',
-            target: element.dataset.paginationTarget || '',
-            page: 1,
-            pageSize: Number(element.querySelector('[data-pagination-size]').value),
-            total: element.querySelector('[data-pagination-total]'),
-            current: element.querySelector('[data-pagination-current]'),
-            prev: element.querySelector('[data-pagination-prev]'),
-            next: element.querySelector('[data-pagination-next]'),
-            size: element.querySelector('[data-pagination-size]')
-        };
-        controller.size.addEventListener('change', function(){
-            controller.pageSize = Number(this.value);
-            controller.page = 1;
-            renderTaskPagination(controller);
-        });
-        controller.prev.addEventListener('click', function(){
-            controller.page = Math.max(1, controller.page - 1);
-            renderTaskPagination(controller);
-        });
-        controller.next.addEventListener('click', function(){
-            controller.page += 1;
-            renderTaskPagination(controller);
-        });
-        taskPaginationControllers.push(controller);
-        renderTaskPagination(controller);
-    });
+function doDelTpl(code){
+    var row = document.querySelector('#tplBody tr[data-tid="' + code + '"]');
+    if(row) row.remove();
+    TPL_DELETED[code] = 1;
+    delete TPL_REFS[code];
+    closeModal();
+    if(typeof fbApply === 'function') fbApply('tplTable');
+    toast('模板已删除（逻辑删除，编码不回收）', 'ok');
 }
 
-/* ====================== 我的任务：标签切换 ====================== */
-document.getElementById('myTabs').addEventListener('click', function(e){
-    var tab = e.target.closest('.tab');\r
-    if(!tab) return;\r
-    document.querySelectorAll('#myTabs .tab').forEach(function(t){ t.classList.remove('active'); });\r
-    tab.classList.add('active');\r
-    var id = tab.dataset.tab;\r
-    ['t-draft','t-launch','t-exec','t-done','t-forward','t-withdraw','t-join'].forEach(function(t){
-        document.getElementById(t).style.display = (t===id)?'':'none';
-    });
-    resetTaskPagination('mytask');
-});
-\r
-/* ====================== 我的任务 / 台账：动作分发 ====================== */\r
-function rowOf(btn){ return btn.closest('tr'); }\r
-\r
-/* 执行（无表单 / 有表单）：提交后直接闭环为「已完成」（不再弹出动态发布页） */\r
-function openExec(row){\r
-    var ft = row.dataset.ft || (row.children[4]?row.children[4].textContent:'无');\r
-    var tid = row.dataset.tid;\r
-    var tname = row.children[1].textContent;\r
-    if(ft==='无'){\r
-        showModal('<i class="bi bi-clipboard-check"></i> 填写任务执行情况（无表单）',\r
-            '<div class="kv"><span class="k">任务</span><span class="v">'+tname+'</span></div>'+\r
-            '<div class="kv"><span class="k">任务ID</span><span class="v mono">'+tid+'</span></div>'+\r
-            '<div class="form-group" style="margin-top:14px;"><label class="form-label">执行完成情况<span class="required">*</span></label><textarea class="form-input" id="execDesc" rows="3" placeholder="请详细描述任务执行完成情况"></textarea></div>'+\r
-            '<div class="form-group"><label class="form-label">现场附件</label><input class="form-input" type="file" multiple><div style="font-size:11px;color:var(--text-muted);margin-top:4px;">支持图片、文件上传</div></div>',\r
-            '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>'+\r
-            '<button class="btn btn-amber btn-sm" id="execSubmit">提交执行记录</button>'\r
-        );\r
-        document.getElementById('execSubmit').addEventListener('click', function(){\r
-            if(!document.getElementById('execDesc').value.trim()){ toast('请填写执行完成情况','err'); return; }\r
-            closeModal(); setStatus(row,'status-done','已完成'); toast('执行记录已提交，任务闭环 → 已完成','ok');\r
-        });\r
-    } else {\r
-        showModal('<i class="bi bi-file-earmark-ruled"></i> 业务表单填写（'+ft+'）',\r
-            '<div class="kv"><span class="k">任务</span><span class="v">'+tname+'</span></div>'+\r
-            '<div class="kv" style="margin-bottom:10px;"><span class="k">任务ID</span><span class="v mono">'+tid+'</span></div>'+\r
-            '<div class="modal-box" style="text-align:center;margin-bottom:12px;"><i class="bi bi-file-earmark-ruled" style="font-size:30px;color:var(--amber);"></i><p style="font-size:11px;color:var(--text-muted);margin-top:6px;">'+ft+' 加载区域</p></div>'+\r
-            '<div class="modal-grid">'+\r
-                '<div class="form-group"><label class="form-label">巡检区域</label><input class="form-input" value="东区3号矿井"></div>'+\r
-                '<div class="form-group"><label class="form-label">设备状态</label><select class="form-input"><option>正常</option><option>异常</option><option>待维修</option></select></div>'+\r
-                '<div class="form-group"><label class="form-label">安全隐患</label><select class="form-input"><option>无</option><option>轻微</option><option>严重</option></select></div>'+\r
-                '<div class="form-group"><label class="form-label">处理措施</label><input class="form-input" placeholder="填写处理措施"></div>'+\r
-                '<div class="form-group full"><label class="form-label">备注</label><textarea class="form-input" rows="2"></textarea></div>'+\r
-            '</div>',\r
-            '<button class="btn btn-ghost btn-sm" id="formSave">存草稿</button>'+
-            '<button class="btn btn-amber btn-sm" id="formSubmit">提交表单</button>'\r
-        );\r
-        document.getElementById('formSave').addEventListener('click', function(){ toast('已暂存草稿','ok'); });\r
-        document.getElementById('formSubmit').addEventListener('click', function(){\r
-            closeModal(); setStatus(row,'status-done','已完成'); toast('表单已提交，任务闭环 → 已完成','ok');\r
-        });\r
-    }\r
-}\r
-\r
-\r
-/* 转发 */\r
-function openForward(row){\r
-    var tname = row.children[1].textContent;\r
-    showModal('<i class="bi bi-arrow-right-circle"></i> 转发执行',\r
-        '<div class="kv"><span class="k">任务</span><span class="v">'+tname+'</span></div>'+\r
-        '<div class="form-group" style="margin-top:14px;"><label class="form-label">接收执行人<span class="required">*</span></label><select class="form-input" id="fwdTo"><option>选择接收人</option><option>王建国</option><option>赵志远</option><option>刘明辉</option><option>陈安平</option></select></div>'+\r
-        '<div class="form-group"><label class="form-label">转发备注</label><input class="form-input" placeholder="可选备注"></div>',\r
-        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>'+\r
-        '<button class="btn btn-amber btn-sm" id="fwdSubmit">确认转交</button>'\r
-    );\r
-    document.getElementById('fwdSubmit').addEventListener('click', function(){\r
-        if(document.getElementById('fwdTo').value==='选择接收人'){ toast('请选择接收执行人','err'); return; }\r
-        closeModal(); toast('已转交，原执行人任务流转至接收人','ok');\r
-    });\r
-}\r
-/* 撤回 */\r
-function openWithdraw(row){\r
-    var tname = row.children[1].textContent;\r
-    showModal('<i class="bi bi-arrow-return-left"></i> 撤回任务',\r
-        '<div class="kv"><span class="k">任务</span><span class="v">'+tname+'</span></div>'+\r
-        '<div class="form-group" style="margin-top:14px;"><label class="form-label">撤回原因<span class="required">*</span></label><textarea class="form-input" rows="3" placeholder="请输入撤回原因（必填）"></textarea></div>',\r
-        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+\r
-        '<button class="btn btn-danger btn-sm" id="wdSubmit">确认撤回</button>'\r
-    );\r
-    document.getElementById('wdSubmit').addEventListener('click', function(){ setStatus(row,'status-draft','已撤回'); closeModal(); toast('任务已撤回','ok'); });\r
-}\r
-/* 调整执行人 */\r
-function openAdjust(row){\r
-    var tname = row.children[1].textContent;\r
-    showModal('<i class="bi bi-people"></i> 调整执行人',\r
-        '<div class="kv"><span class="k">任务</span><span class="v">'+tname+'</span></div>'+\r
-        '<div class="form-group" style="margin-top:14px;"><label class="form-label">新执行人<span class="required">*</span></label><select class="form-input" id="adjTo"><option>请选择</option><option>李强</option><option>王建国</option><option>赵志远</option><option>刘明辉</option><option>陈安平</option></select></div>',\r
-        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+\r
-        '<button class="btn btn-amber btn-sm" id="adjSubmit">确认调整</button>'\r
-    );\r
-    document.getElementById('adjSubmit').addEventListener('click', function(){\r
-        if(document.getElementById('adjTo').value==='请选择'){ toast('请选择执行人','err'); return; }\r
-        closeModal(); toast('已调整执行人','ok');\r
-    });\r
-}\r
-/* 结束任务 */\r
-function openEnd(row){\r
-    var tname = row.children[1].textContent;\r
-    showModal('<i class="bi bi-x-octagon"></i> 结束任务',\r
-        '<div class="modal-box danger-zone"><div class="dz-title">二次确认</div>该任务尚未完成，强制结束将终止执行流程，且不可恢复。确认结束「'+tname+'」？</div>',\r
-        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+\r
-        '<button class="btn btn-danger btn-sm" id="endSubmit">确认结束</button>'\r
-    );\r
-    document.getElementById('endSubmit').addEventListener('click', function(){ setStatus(row,'status-done','已完成'); toast('任务已强制结束','ok'); closeModal(); });\r
-}\r
-function detailValue(row, labels, fallback){
-    var table = row.closest('table');
-    var heads = table ? table.querySelectorAll('thead th') : [];
-    for(var i=0;i<heads.length;i++){
-        if(labels.indexOf(heads[i].textContent.trim())!==-1 && row.children[i]){
-            return row.children[i].textContent.trim().replace(/\\s+/g,' ');
+document.getElementById('tplBody').addEventListener('click', function(e){
+    var toggleBtn = e.target.closest('.btn-toggle-tpl');
+    var delBtn = e.target.closest('.act-del-tpl');
+    var editBtn = e.target.closest('.act-edit-tpl');
+    var row = e.target.closest('tr');
+    if(toggleBtn){
+        var st = row.querySelector('.tpl-status');
+        var acts = row.querySelector('.actions');
+        if(st.classList.contains('status-enabled')){
+            st.className='status status-disabled tpl-status'; st.textContent='停用';
+            toggleBtn.textContent='启用'; toggleBtn.style.color='var(--verdigris)'; toggleBtn.style.borderColor='var(--verdigris)';
+            if(!acts.querySelector('.act-del-tpl')){
+                var db = document.createElement('button');
+                db.className='btn btn-danger btn-xs act-del-tpl'; db.textContent='删除';
+                acts.appendChild(db);
+            }
+            toast('模板已停用（停用后不可发布，可删除）','ok');
+        } else {
+            st.className='status status-enabled tpl-status'; st.textContent='启用';
+            toggleBtn.textContent='停用'; toggleBtn.style.color='var(--amber)'; toggleBtn.style.borderColor='var(--amber)';
+            var existing = acts.querySelector('.act-del-tpl'); if(existing) existing.remove();
+            toast('模板已启用（启用后不可删除，须先停用）','ok');
         }
     }
-    return fallback || '-';
+    if(delBtn){ openDelTpl(row); }
+    if(editBtn){ enterTplEditor('edit', row); }
+});
+
+/* 模板编辑器 Tab 切换（基本信息配置 / 全局规则配置） */
+function tplEditorSwitch(tab){
+    document.querySelectorAll('#tplEditorTabs .tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab===tab); });
+    document.getElementById('ed-basic').style.display = (tab==='ed-basic') ? '' : 'none';
+    document.getElementById('ed-rule').style.display = (tab==='ed-rule') ? '' : 'none';
 }
-function taskDetailMeta(row){
-    var tid=row.dataset.tid || detailValue(row,['任务ID'],'-');
-    var table=row.closest('table');
-    var name=detailValue(row,['任务名称'], row.children[1]?row.children[1].textContent.trim():'-');
-    var executor=detailValue(row,['执行人'], row.children[2]?row.children[2].textContent.trim():'-');
-    var initiator=detailValue(row,['发起人'],'张伟明');
-    var form=detailValue(row,['表单类型'], row.dataset.ft || '无');
-    var statusCell=detailValue(row,['状态'],'未执行');
-    var statusElement=row.querySelector('.status');
-    var status=statusElement ? statusElement.textContent.trim() : statusCell;
-    var plans={
-        'T20260620002':['2026-06-20 08:00','2026-06-20 17:00','运输巷'],
-        'T20260625003':['2026-06-25 08:00','2026-06-25 17:00','东区3号矿井'],
-        'T20260626004':['2026-06-28 08:00','2026-06-29 17:00','北区提升机房'],
-        'T20260627005':['2026-06-27 08:00','2026-06-27 17:00','中央水泵房'],
-        'T20260630008':['2026-06-30 08:00','2026-06-30 17:00','南区排水泵房'],
-        'T20260701006':['2026-07-01 08:00','2026-07-01 17:00','东区3号矿井'],
-        'T20260701007':['2026-07-02 08:00','2026-07-02 12:00','东区瓦斯监测点']
+document.getElementById('tplEditorTabs').addEventListener('click', function(e){
+    var tab = e.target.closest('.tab');
+    if(!tab) return;
+    tplEditorSwitch(tab.dataset.tab);
+});
+
+
+/* ====================== 发布视图交互 ====================== */
+function pubTabSwitch(tab){
+    document.querySelectorAll('#pubTabs .tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab===tab); });
+    document.getElementById('pub-basic').style.display = (tab==='pub-basic')?'':'none';
+    document.getElementById('pub-rule').style.display = (tab==='pub-rule')?'':'none';
+}
+document.getElementById('pubBody').addEventListener('click', function(e){
+    var btn = e.target.closest('.act-publish');
+    if(!btn) return;
+    var row = e.target.closest('tr');
+    var name = row.children[1].textContent;
+    var ft = row.children[2].textContent;
+    PUB_FROM = 'publish';
+    enterTaskPage('publish', null, {name: name});
+    resetPubSelect(ft);
+    document.getElementById('pTaskName').value = name;
+    document.getElementById('pFormType').textContent = ft;
+});
+document.getElementById('btnBackPub').addEventListener('click', function(){
+    if(PUB_FROM === 'ledger'){ switchView('view-ledger'); ledgerTab('lt-task'); return; }
+    backToPubPage();
+});
+document.getElementById('pubTabs').addEventListener('click', function(e){
+    var tab = e.target.closest('.tab'); if(!tab) return; pubTabSwitch(tab.dataset.tab);
+});
+document.getElementById('btnPubDraft').addEventListener('click', function(){
+    toast('已存入「草稿任务」','ok');
+    PUB_BACK_TAB = 'pt-draft';
+    switchView('view-publish'); pubPageTab('pt-draft');
+});
+document.getElementById('btnPubSave').addEventListener('click', function(){
+    var nm = document.getElementById('pTaskName').value.trim();
+    if(!nm){ toast('任务名称不能为空','err'); return; }
+    if(PUB_TID){
+        var tr = document.querySelector('#launchBody tr[data-tid="' + PUB_TID + '"]');
+        if(tr) tr.children[0].textContent = nm;
+    }
+    toast('计划已保存（修改只影响之后生成的执行记录）','ok');
+    if(PUB_FROM === 'ledger'){ switchView('view-ledger'); ledgerTab('lt-task'); }
+    else { backToPubPage(); }
+});
+document.getElementById('btnPubSubmit').addEventListener('click', function(){
+    var nm = document.getElementById('pTaskName').value.trim();
+    if(!nm){ toast('任务名称不能为空','err'); return; }
+    toast('任务已发布 → 写入「我发起的 / 待执行 / 我参与」','ok');
+    PUB_BACK_TAB = 'pt-launch';
+    switchView('view-publish'); pubPageTab('pt-launch');
+});
+
+/* 进入发布页并预填（草稿「编辑」/ 撤回「编辑重发」共用） */
+function editDraftTask(row){
+    var name = row.children[0].textContent;
+    var ft = row.dataset.ft || '普通业务表单';
+    PUB_FROM = 'publish'; PUB_BACK_TAB = 'pt-draft';
+    switchView('view-publish');
+    enterTaskPage('publish', null, {name: name});
+    resetPubSelect(ft);
+    document.getElementById('pTaskName').value = name;
+    document.getElementById('pFormType').textContent = ft;
+}
+function publishDraftTask(row){
+    if(row) row.remove();
+    toast('草稿已发布，已进入「我发起的」','ok');
+    PUB_BACK_TAB = 'pt-launch';
+    switchView('view-publish'); pubPageTab('pt-launch');
+}
+/* 我的任务：4 个实例标签 */
+var MY_TABS = ['t-exec','t-done','t-forward','t-join'];
+function myTabSwitch(id){
+    if(MY_TABS.indexOf(id) < 0) id = 't-exec';
+    document.querySelectorAll('#myTabs .tab').forEach(function(t){ t.classList.toggle('active', t.dataset.tab===id); });
+    MY_TABS.forEach(function(t){ var el=document.getElementById(t); if(el) el.style.display = (t===id)?'':'none'; });
+}
+/* 兼容老调用：任务级标签已迁到「发布任务」页 */
+function activateMyTab(id){
+    if(id === 't-launch' || id === 't-draft'){
+        switchView('view-publish');
+        pubPageTab(id === 't-draft' ? 'pt-draft' : 'pt-launch');
+        return;
+    }
+    myTabSwitch(id);
+}
+
+/* ====================== 发布任务页：发布 / 草稿 / 我发起的 ====================== */
+var PUB_BACK_TAB = 'pt-new';
+function pubPageTab(id){
+    var PANE = { 'pt-new':'pubTplList', 'pt-draft':'pt-draft', 'pt-launch':'pt-launch' };
+    if(!PANE[id]) id = 'pt-new';
+    document.querySelectorAll('#pubPageTabs .tab').forEach(function(t){ t.classList.toggle('active', t.dataset.ptab===id); });
+    Object.keys(PANE).forEach(function(k){
+        var el = document.getElementById(PANE[k]);
+        if(el) el.style.display = (k===id) ? '' : 'none';
+    });
+    var head = document.getElementById('pubPageHead'); if(head) head.style.display = '';
+}
+function backToPubPage(){
+    document.getElementById('pubForm').style.display = 'none';
+    pubPageTab(PUB_BACK_TAB || 'pt-new');
+}
+document.getElementById('pubPageTabs').addEventListener('click', function(e){
+    var tb = e.target.closest('.tab'); if(!tb) return; pubPageTab(tb.dataset.ptab);
+});
+document.getElementById('myTabs').addEventListener('click', function(e){
+    var tab = e.target.closest('.tab'); if(!tab) return; myTabSwitch(tab.dataset.tab);
+});
+
+/* ====================== 任务总台账：任务 / 实例 双标签 ====================== */
+function ledgerTab(id){
+    document.querySelectorAll('#ledgerTabs .tab').forEach(function(tb){ tb.classList.toggle('active', tb.dataset.ltab===id); });
+    var a = document.getElementById('lgTaskTable'), b = document.getElementById('lgInstTable');
+    if(a) a.style.display = (id==='lt-task')?'':'none';
+    if(b) b.style.display = (id==='lt-inst')?'':'none';
+    var fa = document.querySelector('.fb-bar[data-fb="lgTaskTable"]');
+    var fb = document.querySelector('.fb-bar[data-fb="lgInstTable"]');
+    if(fa) fa.style.display = (id==='lt-task')?'':'none';
+    if(fb) fb.style.display = (id==='lt-inst')?'':'none';
+}
+document.getElementById('ledgerTabs').addEventListener('click', function(e){
+    var tb = e.target.closest('.tab'); if(!tb) return; ledgerTab(tb.dataset.ltab);
+});
+
+/* ====================== 列表查询条件（通用） ====================== */
+function fbApply(id){
+    var bar = document.querySelector('.fb-bar[data-fb="' + id + '"]');
+    var tbl = document.getElementById(id);
+    if(!bar || !tbl) return;
+    var qEl = bar.querySelector('[data-k="q"]');
+    var q = qEl ? qEl.value.replace(/\\s+/g, '') : '';
+    var sels = Array.prototype.slice.call(bar.querySelectorAll('[data-k="sel"]'));
+    var rows = tbl.querySelectorAll('tbody tr');
+    var shown = 0;
+    Array.prototype.forEach.call(rows, function(tr){
+        var ok = true;
+        if(q && tr.textContent.replace(/\\s+/g, '').indexOf(q) < 0) ok = false;
+        for(var i = 0; ok && i < sels.length; i++){
+            var s = sels[i], v = s.value;
+            if(!v) continue;
+            if(s.getAttribute('data-mode') === 'overdue'){
+                var hasOv = !!tr.querySelector('.overdue-mark');
+                if((v === '1') !== hasOv) ok = false;
+            } else {
+                var col = parseInt(s.getAttribute('data-col'), 10);
+                var cell = tr.children[col];
+                var txt = cell ? cell.textContent.trim() : '';
+                if(txt.indexOf(v) < 0) ok = false;
+            }
+        }
+        tr.style.display = ok ? '' : 'none';
+        if(ok) shown++;
+    });
+    var cnt = bar.querySelector('.fb-count');
+    if(cnt) cnt.textContent = '共 ' + shown + ' 条';
+}
+function fbReset(id){
+    var bar = document.querySelector('.fb-bar[data-fb="' + id + '"]');
+    if(!bar) return;
+    var q = bar.querySelector('[data-k="q"]'); if(q) q.value = '';
+    Array.prototype.forEach.call(bar.querySelectorAll('[data-k="sel"]'), function(s){ s.value = ''; });
+    fbApply(id);
+}
+document.addEventListener('input', function(e){
+    var bar = e.target.closest ? e.target.closest('.fb-bar') : null; if(!bar) return;
+    if(e.target.getAttribute('data-k') === 'q') fbApply(bar.getAttribute('data-fb'));
+});
+document.addEventListener('change', function(e){
+    var bar = e.target.closest ? e.target.closest('.fb-bar') : null; if(!bar) return;
+    if(e.target.getAttribute('data-k') === 'sel') fbApply(bar.getAttribute('data-fb'));
+});
+document.addEventListener('click', function(e){
+    var r = e.target.closest ? e.target.closest('.fb-reset') : null; if(!r) return;
+    var bar = r.closest('.fb-bar'); if(bar) fbReset(bar.getAttribute('data-fb'));
+});
+Array.prototype.forEach.call(document.querySelectorAll('.fb-bar'), function(b){ fbApply(b.getAttribute('data-fb')); });
+
+/* ====================== 计划 / 实例 动作 ====================== */
+/* 计划：暂停 / 恢复（停未来·可恢复，不影响已生成实例）—— 均需二次确认 */
+function togglePlanPause(row){
+    var btn = row.querySelector('.act-pause');
+    if(!btn) return;
+    var paused = btn.getAttribute('data-paused') === '1';
+    var name = rowName(row);
+    if(paused){
+        showModal('<i class="bi bi-play-circle"></i> 恢复任务',
+            '<div class="modal-box"><div class="dz-title">二次确认</div>恢复后<b>从下一条按规则继续生成</b>，<b>暂停期间的不会补生成</b>；已生成的执行不受影响。<br><br>确认恢复「'+name+'」？</div>',
+            '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+
+            '<button class="btn btn-amber btn-sm" id="pausePlanOk">确认恢复</button>');
+    } else {
+        showModal('<i class="bi bi-pause-circle"></i> 暂停任务',
+            '<div class="modal-box"><div class="dz-title">二次确认</div>暂停后<b>不再生成新的执行</b>，<b>已生成的照常进行</b>，可随时恢复。<br><br>确认暂停「'+name+'」？</div>',
+            '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+
+            '<button class="btn btn-amber btn-sm" id="pausePlanOk">确认暂停</button>');
+    }
+    document.getElementById('pausePlanOk').addEventListener('click', function(){ doPlanPause(row, paused); });
+}
+function doPlanPause(row, paused){
+    var st = row.querySelector('.plan-status') || row.querySelector('.status');
+    var btn = row.querySelector('.act-pause');
+    if(!st){ closeModal(); return; }
+    if(paused){
+        st.className = 'status ' + (st.getAttribute('data-oncls') || 'status-pending') + ' plan-status';
+        st.textContent = st.getAttribute('data-ontext') || '进行中';
+        btn.setAttribute('data-paused','0'); btn.textContent = '暂停';
+        closeModal();
+        toast('任务已恢复，将按规则继续生成执行记录','ok');
+    } else {
+        var cls = st.classList.contains('status-enabled') ? 'status-enabled' : 'status-pending';
+        st.setAttribute('data-oncls', cls);
+        st.setAttribute('data-ontext', st.textContent.trim());
+        st.className = 'status status-paused plan-status';
+        st.textContent = '已暂停';
+        if(btn){ btn.setAttribute('data-paused','1'); btn.textContent = '恢复'; }
+        closeModal();
+        toast('任务已暂停：即刻起不再生成执行记录，已有的照常执行','ok');
+    }
+}
+/* 计划：终止（停未来·不可逆，已生成实例照常走完） */
+function openStopPlan(row){
+    var name = rowName(row);
+    showModal('<i class="bi bi-stop-circle"></i> 终止计划',
+        '<div class="modal-box danger-zone"><div class="dz-title">二次确认</div>终止后该任务<b>不再生成任何新的执行记录</b>，且<b>不可恢复</b>；<b>已生成的执行不受影响，将继续进行</b>。若要收回已发出的，请到「执行明细」里单独「撤回 / 作废」。'
+        + '<br><br>确认终止「<b>'+name+'</b>」？'
+        + '<div class="form-group" style="margin-top:14px;"><label class="form-label">终止原因<span class="required">*</span></label>'
+        + '<textarea class="form-input" id="stopReason" rows="3" maxlength="200" placeholder="请填写终止原因，2–200 字" style="background:#fff;"></textarea>'
+        + '<div class="form-hint" style="margin-top:6px;"><i class="bi bi-info-circle"></i>必填，2–200 字；写入任务操作记录，便于后续追溯</div></div>'
+        + '</div>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+
+        '<button class="btn btn-danger btn-sm" id="stopPlanOk">确认终止</button>');
+    document.getElementById('stopPlanOk').addEventListener('click', function(){
+        var rsn = document.getElementById('stopReason');
+        var v = rsn ? rsn.value.trim() : '';
+        if(v.length < 2){ toast('请填写终止原因（2–200 字）','err'); if(rsn) rsn.focus(); return; }
+        if(v.length > 200){ toast('终止原因不能超过 200 字','err'); return; }
+        if(row.dataset) row.dataset.stopReason = v;
+        var st = row.querySelector('.plan-status') || row.querySelector('.status');
+        if(st){ st.className='status status-ended plan-status'; st.textContent='已终止'; }
+        var b1=row.querySelector('.act-pause'); if(b1) b1.remove();
+        var b2=row.querySelector('.act-stop-plan'); if(b2) b2.remove();
+        var b3=row.querySelector('.act-edit-plan');
+        if(b3){ b3.className='btn btn-ghost btn-xs act-view-plan'; b3.textContent='查看'; }
+        closeModal(); toast('任务已终止，不再生成新的执行记录','ok');
+    });
+}
+/* 实例：撤回 / 作废做完后的统一落点（进度列改文字、清空操作） */
+function markInstGone(row, text){
+    if(row.dataset) row.dataset.prog = '';
+    var c = row.children[3];
+    if(c) c.innerHTML = '<span class="status status-draft">' + text + '</span>';
+    var acts = row.querySelector('.actions');
+    if(acts) acts.innerHTML = '<span style="color:var(--text-muted);font-size:11px;">—</span>';
+}
+/* 实例：作废（"执行中"及以后，需理由并通知执行人） */
+function openVoid(row){
+    var name = rowName(row);
+    showModal('<i class="bi bi-slash-circle"></i> 作废本次执行',
+        '<div class="kv"><span class="k">任务</span><span class="v">'+name+'</span></div>'+
+        '<div class="form-group" style="margin-top:14px;"><label class="form-label">作废原因<span class="required">*</span></label><textarea class="form-input" rows="3" placeholder="本次执行已有人提交，作废需填写原因并通知执行人" id="voidReason"></textarea></div>'+
+        '<p class="form-hint"><i class="bi bi-info-circle"></i>作废后本次执行失效，不再计入统计；原因将通知执行人。</p>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+
+        '<button class="btn btn-danger btn-sm" id="voidOk">确认作废</button>');
+    document.getElementById('voidOk').addEventListener('click', function(){
+        var r = document.getElementById('voidReason');
+        if(!r || !r.value.trim()){ toast('请填写作废原因','err'); return; }
+        logInstEvent(row, '已作废', '原因：' + r.value.trim());
+        markInstGone(row,'已作废'); closeModal(); toast('已作废（已通知执行人，已记入执行日志）','ok');
+    });
+}
+/* ====================== 我的任务 / 台账：动作分发 ====================== */
+function rowOf(btn){ return btn.closest('tr'); }
+/* 实例状态：未执行 / 执行中 n/m / 已完成（撤回、作废由 markInstGone 处理） */
+function instStatusHtml(prog){
+    var m = String(prog || '').match(/(\\d+)\\s*\\/\\s*(\\d+)/);
+    if(!m) return '<span class="status status-draft">\\u2014</span>';
+    var c = parseInt(m[1], 10), tot = parseInt(m[2], 10);
+    if(tot && c >= tot) return '<span class="status status-done">已完成</span>';
+    if(c === 0) return '<span class="status status-pending">未执行</span>';
+    return '<span class="status status-signing">执行中 ' + c + '/' + tot + '</span>';
+}
+/* 取完成进度：行上 data-prog 为准，回退按 class / 列文本 */
+function rowProg(row){
+    if(row.dataset && row.dataset.prog) return row.dataset.prog;
+    var p = row.querySelector('.sign-progress');
+    if(p) return p.textContent.trim();
+    var c = row.children[3];
+    var s = c ? c.textContent.trim() : '';
+    var m = s.match(/(\\d+)\\s*\\/\\s*(\\d+)/);
+    return m ? (m[1] + '/' + m[2]) : '\\u2014';
+}
+
+/* ====================== 执行任务（整页） ====================== */
+var EXEC_ROW = null, EXEC_BACK_TAB = 't-exec', EXEC_DRAFT = {}, EXEC_MODE = 'exec', DETAIL_ROW = null;
+var EXEC_PERSON = null, EXEC_SRC_ROW = null, EXEC_BACK_VIEW = 'view-mytask';
+var EXEC_INFO = {
+    'I20260714001': { starter:'张伟明', part:'刘明辉', work:'巡检工', loc:'东区3号矿井', span:'2026-07-14 08:00 ~ 17:00', pe:'2026-07-14 17:00', desc:'例行巡检，重点看顶板离层' },
+    'I20260701007': { starter:'张伟明', part:'—', work:'瓦检工', loc:'东区3号矿井', span:'2026-07-02 08:00 ~ 12:00', pe:'2026-07-02 12:00', desc:'监测瓦斯浓度并记录' },
+    'I20260626004': { starter:'张伟明', part:'—', work:'机电维修工', loc:'北区提升机房', span:'2026-06-28 08:00 ~ 2026-06-29 17:00', pe:'2026-06-29 17:00', desc:'更换闸瓦、试运行' },
+    'I20260627005': { starter:'张伟明', part:'刘明辉', work:'安全员', loc:'中央水泵房', span:'2026-06-27 09:00 ~ 17:00', pe:'2026-06-27 17:00', desc:'检查水泵及配电设备' },
+    'I20260630008': { starter:'张伟明', part:'李强', work:'巡检工', loc:'南区排水系统', span:'2026-06-30 14:00 ~ 2026-07-01 14:00', pe:'2026-07-01 14:00', desc:'检查排水泵与管路是否畅通' },
+    'I20260628002': { starter:'张伟明', part:'李强', work:'通风工', loc:'西区通风机房', span:'2026-06-28 09:00 ~ 2026-06-29 09:00', pe:'2026-06-29 09:00', desc:'检查主扇运行状态与风量' },
+    'I20260625003': { starter:'张伟明', part:'—', work:'巡检工', loc:'东区3号矿井', span:'2026-06-30 08:00 ~ 2026-07-01 08:00', pe:'2026-07-01 08:00', desc:'日常巡检，重点看通风与顶板' },
+    'I20260620013': { starter:'张伟明', part:'—', work:'巡检工', loc:'西区回风巷', span:'2026-06-20 08:00 ~ 2026-06-21 08:00', pe:'2026-06-21 08:00', desc:'回风巷支护与瓦斯检查' }
+};
+/* 已提交表单的演示数据（用于「查看提交」只读页） */
+var SUBMIT_DEMO = {
+    'I20260626004': { ft:'无', desc:'更换提升机闸瓦，试运行正常', files:'闸瓦照片.jpg' },
+    'I20260627005': { ft:'普通业务表单', ef1:'中央水泵房', ef2:'正常', ef3:'无', ef4:'已记录并归档', ef5:'水泵及配电设备运行正常' }
+};
+/* 按「实例 + 执行人」存提交内容（管理员从台账下钻查看某人交了什么） */
+var SUBMIT_BY = {
+    'I20260714001': {
+        '王建国': { ft:'普通业务表单', t:'2026-07-14 16:20', ef1:'东区3号矿井', ef2:'正常', ef3:'无', ef4:'已记录并归档', ef5:'顶板离层在允许范围内', files:'巡检照片.jpg' }
+    },
+    'I20260627005': {
+        '陈安平': { ft:'普通业务表单', t:'2026-06-27 15:00', ef1:'中央水泵房', ef2:'正常', ef3:'无', ef4:'已记录并归档', ef5:'水泵及配电设备运行正常', files:'—' },
+        '李强':   { ft:'普通业务表单', t:'2026-06-27 15:20', ef1:'中央水泵房', ef2:'正常', ef3:'无', ef4:'—', ef5:'复核无异常', files:'—' }
+    },
+    'I20260626004': {
+        '李强':   { ft:'无', t:'2026-06-29 10:12', desc:'更换提升机闸瓦，试运行正常', files:'闸瓦照片.jpg' },
+        '赵志远': { ft:'无', t:'2026-06-29 11:40', desc:'复检闸瓦间隙正常，试运行无异常', files:'—' }
+    },
+    'I20260628002': {
+        '刘明辉': { ft:'普通业务表单', t:'2026-06-28 15:30', ef1:'西区通风机房', ef2:'正常', ef3:'轻微', ef4:'已上报并现场处理', ef5:'风机轴承需下次检修关注', files:'通风记录.pdf' }
+    },
+    'I20260620013': {
+        '李强': { ft:'普通业务表单', t:'2026-06-20 09:00', ef1:'西区回风巷', ef2:'正常', ef3:'无', ef4:'已记录', ef5:'—', files:'—' }
+    }
+};
+function openExec(row){ EXEC_PERSON = null; renderExecPage(row, 'exec'); }
+function openSubmittedForm(row){ renderExecPage(row, 'view'); }
+function viewSubmittedForm(){ closeModal(); if(DETAIL_ROW) openSubmittedForm(DETAIL_ROW); }
+function renderExecPage(row, mode){
+    EXEC_MODE = mode;
+    EXEC_ROW = row;
+    var _pane = (row.closest && row.closest('.myinst-pane')) ? row.closest('.myinst-pane').id : '';
+    EXEC_BACK_TAB = _pane || (mode === 'view' ? 't-done' : 't-exec');
+    var isView = (mode === 'view');
+    var tid = row.dataset.tid || '';
+    var name = rowName(row);
+    var prog = rowProg(row);
+    var over = !!row.querySelector('.overdue-mark');
+    var d = EXEC_INFO[tid] || instInfoOf(tid) || {};
+    var sub = EXEC_PERSON ? ((SUBMIT_BY[tid] || {})[EXEC_PERSON] || {})
+            : (((SUBMIT_BY[tid] || {})['李强']) || SUBMIT_DEMO[tid] || {});
+    EXEC_BACK_VIEW = (row.closest && row.closest('.view')) ? row.closest('.view').id : 'view-mytask';
+    var tagEl = document.getElementById('execModeTag');
+    var noticeEl = document.getElementById('execNotice');
+    var draftBtn = document.getElementById('btnExecDraft');
+    var submitBtn = document.getElementById('btnExecSubmit');
+    var body = document.getElementById('execBody');
+    if(isView){
+        document.getElementById('execTitle').textContent = '查看提交 · ' + (EXEC_PERSON ? EXEC_PERSON + ' · ' : '') + name;
+        tagEl.style.display = ''; tagEl.className = 'mode-tag ro'; tagEl.textContent = '只读';
+        noticeEl.style.display = '';
+        noticeEl.textContent = EXEC_PERSON
+            ? ('只读模式：以下为「' + EXEC_PERSON + '」在「' + name + '」这次执行上提交的内容。' + (sub.t ? '' : '（该执行人尚未提交，此处只展示任务基本信息）'))
+            : '只读模式：以下为我本次提交的内容，不可修改。';
+        draftBtn.style.display = 'none'; submitBtn.style.display = 'none';
+    } else {
+        document.getElementById('execTitle').textContent = '执行任务 · ' + name;
+        tagEl.style.display = 'none'; noticeEl.style.display = 'none';
+        draftBtn.style.display = ''; submitBtn.style.display = '';
+    }
+    body.classList.toggle('ro', isView);
+    var gi = taskInfoGrid(row, tid, sub.ft);
+    var ft = gi.ft;
+    var stText = statusTextOf(row, prog);
+    document.getElementById('execMeta').innerHTML =
+        '<div class="exec-pills"><span class="pill">状态 · ' + stText + '</span>'
+        + (over ? '<span class="pill warn">超期</span>' : '<span class="pill ok">未超期</span>') + '</div>'
+        + '<div class="exec-block">'
+        +   '<div class="exec-block-head"><i class="bi bi-info-circle"></i> 任务基本信息</div>'
+        +   gi.html
+        + '</div>';
+    var notSubmitted = (isView && EXEC_PERSON && !sub.t);
+    var secTitle = isView ? '提交内容' : '任务执行填写';
+    var area = '<div class="exec-block">'
+             + '<div class="exec-block-head"><i class="bi bi-pencil-square"></i> ' + secTitle
+             + ((ft === '无' || notSubmitted) ? '' : ' <span class="mut">（表单由模板固定，不可增删字段）</span>') + '</div>';
+    if(notSubmitted){
+        area += '<div class="submit-line"><i class="bi bi-hourglass-split"></i>' + EXEC_PERSON + ' 尚未提交，本次没有可查看的提交内容；上方任务基本信息照常展示。</div>';
+    } else {
+        if(isView && sub.t){
+            area += '<div class="submit-line" style="margin-bottom:12px;"><i class="bi bi-person-check"></i><b>' + (EXEC_PERSON || '我') + '</b><span>提交于 ' + sub.t + '</span></div>';
+        }
+        if(ft === '无'){
+            if(!isView){
+                area += '<div class="form-hint" style="margin-bottom:12px;"><i class="bi bi-info-circle"></i>本任务<b>未绑定固定表单</b>：只需填写执行完成情况，并可上传现场附件。</div>';
+            }
+            if(isView){
+                area += '<div class="form-group"><label class="form-label">执行完成情况</label>'
+                      + '<textarea class="form-input" id="execDesc" rows="4" readonly>' + (sub.desc || '') + '</textarea></div>';
+            } else {
+                area += '<div class="form-group"><label class="form-label">执行完成情况<span class="required">*</span></label>'
+                      + '<textarea class="form-input" id="execDesc" rows="4" placeholder="请详细描述任务执行完成情况"></textarea></div>';
+            }
+        } else if(isView){
+            area += '<div class="modal-grid">'
+                  + '<div class="form-group"><label class="form-label">巡检区域</label><input class="form-input" id="ef1" readonly value="' + (sub.ef1 || '') + '"></div>'
+                  + '<div class="form-group"><label class="form-label">设备状态</label><input class="form-input" id="ef2" readonly value="' + (sub.ef2 || '') + '"></div>'
+                  + '<div class="form-group"><label class="form-label">安全隐患</label><input class="form-input" id="ef3" readonly value="' + (sub.ef3 || '') + '"></div>'
+                  + '<div class="form-group"><label class="form-label">处理措施</label><input class="form-input" id="ef4" readonly value="' + (sub.ef4 || '') + '"></div>'
+                  + '<div class="form-group full"><label class="form-label">备注</label><textarea class="form-input" id="ef5" rows="2" readonly>' + (sub.ef5 || '') + '</textarea></div>'
+                  + '</div>';
+        } else {
+            area += '<div class="modal-grid">'
+                  + '<div class="form-group"><label class="form-label">巡检区域</label><input class="form-input" id="ef1" value="东区3号矿井"></div>'
+                  + '<div class="form-group"><label class="form-label">设备状态</label><select class="form-input" id="ef2"><option>正常</option><option>异常</option><option>待维修</option></select></div>'
+                  + '<div class="form-group"><label class="form-label">安全隐患</label><select class="form-input" id="ef3"><option>无</option><option>轻微</option><option>严重</option></select></div>'
+                  + '<div class="form-group"><label class="form-label">处理措施</label><input class="form-input" id="ef4" placeholder="填写处理措施"></div>'
+                  + '<div class="form-group full"><label class="form-label">备注</label><textarea class="form-input" id="ef5" rows="2"></textarea></div>'
+                  + '</div>';
+        }
+        if(isView){
+            area += '<div class="form-group"><label class="form-label">现场附件</label>'
+                  + '<div class="form-hint"><i class="bi bi-paperclip"></i> ' + (sub.files || '无附件') + '</div></div>';
+        } else {
+            area += '<div class="form-group"><label class="form-label">现场附件</label><input class="form-input" type="file" multiple>'
+                  + '<div class="form-hint" style="margin-top:8px;"><i class="bi bi-info-circle"></i>支持图片、文件上传</div></div>';
+        }
+    }
+    area += '</div>';
+    document.getElementById('execFormArea').innerHTML = area;
+    if(!isView) restoreExecDraft(tid);
+    switchView('view-exec');
+    if(isView){
+        document.getElementById('pageTitle').textContent = '查看提交';
+        document.getElementById('crumb').textContent = EXEC_PERSON ? ('只读 · ' + EXEC_PERSON + ' 的提交') : '只读 · 我本次提交的内容';
+    }
+    document.querySelector('.content').scrollTop = 0;
+}
+function collectExecDraft(){
+    var o = {};
+    var d = document.getElementById('execDesc'); if(d) o.execDesc = d.value;
+    ['ef1','ef2','ef3','ef4','ef5'].forEach(function(id){ var el = document.getElementById(id); if(el) o[id] = el.value; });
+    return o;
+}
+function restoreExecDraft(tid){
+    var o = EXEC_DRAFT[tid]; if(!o) return;
+    Object.keys(o).forEach(function(k){ var el = document.getElementById(k); if(el) el.value = o[k]; });
+}
+document.getElementById('btnExecDraft').addEventListener('click', function(){
+    var tid = EXEC_ROW ? EXEC_ROW.dataset.tid : '';
+    EXEC_DRAFT[tid] = collectExecDraft();
+    toast('已暂存，下次进入会自动带出','ok');
+});
+document.getElementById('btnExecSubmit').addEventListener('click', function(){
+    var row = EXEC_ROW; if(!row) return;
+    if((row.dataset.ft || '无') === '无'){
+        var d = document.getElementById('execDesc');
+        if(!d || !d.value.trim()){ toast('请填写执行完成情况','err'); return; }
+    }
+    delete EXEC_DRAFT[row.dataset.tid];
+    completeMyTask(row);
+    EXEC_ROW = null;
+    switchView('view-mytask'); activateMyTab('t-exec');
+});
+document.getElementById('btnBackExec').addEventListener('click', function(){
+    if(EXEC_BACK_VIEW === 'view-tdetail'){ switchView('view-tdetail'); return; }
+    if(EXEC_BACK_VIEW === 'view-publish'){ switchView('view-publish'); pubPageTab('pt-launch'); return; }
+    if(EXEC_BACK_VIEW === 'view-ledger'){
+        switchView('view-ledger'); ledgerTab('lt-inst');
+        if(EXEC_SRC_ROW) openExecPersonList(EXEC_SRC_ROW);
+        return;
+    }
+    switchView('view-mytask'); activateMyTab(EXEC_BACK_TAB || 't-exec');
+});
+
+/* 待办行内流动：提交 → 已执行；转办 → 已转发
+   注意：四个标签的表头不同（列数不同），所以不能整行搬，要按目标表结构重建一行 */
+function myNow(){
+    var d = new Date(), p = function(v){ return (v < 10 ? '0' : '') + v; };
+    return p(d.getMonth()+1) + '-' + p(d.getDate()) + ' ' + p(d.getHours()) + ':' + p(d.getMinutes());
+}
+function myCell(row, i){ return row.children[i] ? row.children[i].innerHTML : ''; }
+function moveToDone(row){
+    var tb = document.querySelector('#t-done tbody'); if(!tb) return;
+    var tr = document.createElement('tr');
+    tr.dataset.tid = row.dataset.tid || '';
+    tr.dataset.name = row.dataset.name || '';
+    tr.dataset.ft = row.dataset.ft || '';
+    tr.dataset.prog = row.dataset.prog || '';
+    tr.innerHTML = '<td>' + myCell(row,0) + '</td>'
+                 + '<td style="font-size:11px;">' + myCell(row,1) + '</td>'
+                 + '<td>' + myCell(row,2) + '</td>'
+                 + '<td>' + myCell(row,3) + '</td>'
+                 + '<td style="font-size:11px;color:var(--text-secondary);">' + myNow() + '</td>'
+                 + '<td>' + myCell(row,4) + '</td>'
+                 + '<td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td>';
+    tb.appendChild(tr);
+    if(row.parentNode) row.parentNode.removeChild(row);
+}
+function moveToForward(row, to){
+    var tb = document.querySelector('#t-forward tbody'); if(!tb) return;
+    var tr = document.createElement('tr');
+    tr.dataset.tid = row.dataset.tid || '';
+    tr.dataset.name = row.dataset.name || '';
+    tr.dataset.ft = row.dataset.ft || '';
+    tr.innerHTML = '<td>' + myCell(row,0) + '</td>'
+                 + '<td style="font-size:11px;">' + myCell(row,1) + '</td>'
+                 + '<td>' + to + '</td>'
+                 + '<td style="font-size:11px;color:var(--text-secondary);">' + myNow() + '</td>'
+                 + '<td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td>';
+    tb.appendChild(tr);
+    if(row.parentNode) row.parentNode.removeChild(row);
+}
+function completeMyTask(row){
+    var m = rowProg(row).match(/(\\d+)\\s*\\/\\s*(\\d+)/);
+    if(m){
+        var np = (parseInt(m[1], 10) + 1) + '/' + m[2];
+        row.dataset.prog = np;
+        if(row.children[3]) row.children[3].innerHTML = instStatusHtml(np);
+    }
+    moveToDone(row);
+}
+
+/* 转发 */
+function openForward(row){
+    var tname = rowName(row);
+    showModal('<i class="bi bi-arrow-right-circle"></i> 转发执行',
+        '<div class="kv"><span class="k">任务</span><span class="v">'+tname+'</span></div>'+
+        '<div class="form-group" style="margin-top:14px;"><label class="form-label">接收执行人<span class="required">*</span></label><select class="form-input" id="fwdTo"><option>选择接收人</option><option>王建国</option><option>赵志远</option><option>刘明辉</option><option>陈安平</option></select></div>'+
+        '<div class="form-group"><label class="form-label">转发备注</label><input class="form-input" placeholder="可选备注"></div>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>'+
+        '<button class="btn btn-amber btn-sm" id="fwdSubmit">确认转交</button>'
+    );
+    document.getElementById('fwdSubmit').addEventListener('click', function(){
+        var to = document.getElementById('fwdTo').value;
+        if(to === '选择接收人'){ toast('请选择接收执行人','err'); return; }
+        logInstEvent(row, '已转办', '我 → ' + to);
+        closeModal(); moveToForward(row, to); toast('已转办，本条移入「已转发」','ok');
+    });
+}
+/* 实例操作留痕：写入执行日志（撤回 / 作废都记一行，可审计） */
+var INST_EVENTS = {};
+var WITHDRAW_REASONS = ['内容有误','时间冲突','任务取消','重复发布'];
+function logInstEvent(target, act, note){
+    var tid = (typeof target === 'string') ? target : ((target && target.dataset) ? (target.dataset.tid || '') : '');
+    if(!tid) return;
+    var d = new Date(), pad = function(n){ return (n<10?'0':'')+n; };
+    INST_EVENTS[tid] = {
+        who: '张伟明', act: act, note: note || '',
+        time: pad(d.getMonth()+1)+'-'+pad(d.getDate())+' '+pad(d.getHours())+':'+pad(d.getMinutes())
     };
-    var plan=plans[tid] || ['2026-07-01 08:00','2026-07-01 17:00','-'];
-    return { tid:tid, name:name, executor:executor, initiator:initiator, form:form, status:status, start:plan[0], end:plan[1], site:plan[2], tab:row.parentElement ? row.parentElement.id : '', table:table ? table.closest('.view')?.id : '' };
 }
-function taskDetailField(label, value){ return '<div class="task-detail-field"><b>'+label+'：</b><span>'+value+'</span></div>'; }
-function taskDetailLogs(meta){
-    var action='提交执行记录', actor=meta.executor, actionClass='execute', time='2026-06-28 15:00';
-    if(meta.tab==='t-forward'){ action='转发任务给 '+meta.executor; actor='张宇'; actionClass='update'; time='2026-06-26 10:20'; }
-    else if(meta.tab==='t-withdraw'){ action='撤回任务'; actor=meta.initiator; actionClass='update'; time='2026-06-21 14:30'; }
-    else if(meta.status.indexOf('完成')!==-1){ action='提交执行记录，任务闭环'; time='2026-06-27 15:00'; }
-    else if(meta.status.indexOf('执行中')!==-1){ action='开始执行任务'; time='2026-06-28 09:30'; }
-    return '<div class="task-detail-timeline">'+
-      '<div class="task-detail-log"><strong>任务发起</strong><span>2026-06-25 张伟明 创建并发布任务</span></div>'+
-      '<div class="task-detail-log '+actionClass+'"><strong>'+action+'</strong><span>'+time+' '+actor+'</span></div>'+
-      '<div class="task-detail-log update"><strong>任务状态</strong><span>当前状态：'+meta.status+'</span></div>'+
-    '</div>';
+/* 实例：撤回弹窗（通用）——必填原因、写日志、不通知执行人 */
+function withdrawModal(name, cb, opts){
+    opts = opts || {};
+    var chips = WITHDRAW_REASONS.map(function(r){
+        return '<button type="button" class="btn btn-ghost btn-xs" onclick="document.getElementById(\\'wdReason\\').value=\\''+r+'\\'">'+r+'</button>';
+    }).join(' ');
+    showModal('<i class="bi bi-arrow-return-left"></i> 撤回本次执行',
+        '<div class="modal-box"><div class="dz-title">二次确认</div>本次执行<b>尚未有人执行</b>，撤回后不再出现于待办，状态记为「已撤回」；<b>撤回原因会写入执行日志</b>，并从统计中剔除（不再计入应完成 / 超期）。<br>撤回<b>不会通知</b>执行人；若要收回<b>已有人提交</b>的这次执行，请改用「作废」。<br><br>撤回「'+name+'」的这次执行？</div>'+
+        (opts.overdue ? '<div class="modal-box danger-zone" style="margin-top:10px;"><div class="dz-title">注意</div>本次执行<b>已超期</b>：撤回后不再计入「应完成」与「超期」统计，<b>执行日志仍保留</b>，可追溯。</div>' : '')+
+        '<div class="form-group" style="margin-top:14px;"><label class="form-label">撤回原因<span class="required">*</span></label>'+
+        '<div style="display:flex;gap:6px;flex-wrap:wrap;margin-bottom:8px;">'+chips+'</div>'+
+        '<textarea class="form-input" id="wdReason" rows="3" placeholder="请填写撤回原因（必填，将记入执行日志）"></textarea></div>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+
+        '<button class="btn btn-danger btn-sm" id="wdSubmit">确认撤回</button>'
+    );
+    document.getElementById('wdSubmit').addEventListener('click', function(){
+        var r = document.getElementById('wdReason');
+        if(!r || !r.value.trim()){ toast('请填写撤回原因','err'); return; }
+        var reason = r.value.trim();
+        closeModal();
+        cb(reason);
+    });
 }
-/* 详情：适配我发起的、已执行、已转发、我撤回的、我参与的、任务总台账和人员明细。 */
-function openDetail(row){
-    var meta=taskDetailMeta(row);
-    var body='<section class="task-detail-section"><h5><i class="bi bi-info-circle"></i>任务基本信息</h5><div class="task-detail-grid">'+
-      taskDetailField('任务ID',meta.tid)+taskDetailField('任务名称',meta.name)+
-      taskDetailField('发起人',meta.initiator)+taskDetailField('执行人',meta.executor)+
-      taskDetailField('计划开始',meta.start)+taskDetailField('计划结束',meta.end)+
-      taskDetailField('执行地点',meta.site)+taskDetailField('执行工种','-')+
-      taskDetailField('表单类型',meta.form)+taskDetailField('当前状态','<em class="task-detail-status">'+meta.status+'</em>')+
-    '</div></section>'+
-    '<section class="task-detail-section"><h5><i class="bi bi-gear"></i>任务规则配置</h5><div class="task-detail-rules">'+
-      '<span><i class="bi bi-bell"></i>任务提醒：已开启</span><span><i class="bi bi-arrow-repeat"></i>重复发布：不重复</span><span><i class="bi bi-shield-check"></i>任务审批：未开启</span>'+ 
-    '</div></section>'+
-    '<section class="task-detail-section"><h5><i class="bi bi-clock-history"></i>任务日志</h5>'+taskDetailLogs(meta)+'</section>';
-    showModal('任务详情', body, '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>', true, 'task-detail');
+/* 台账「实例」tab 的撤回按钮 */
+function openWithdraw(row){
+    withdrawModal(rowName(row), function(reason){
+        logInstEvent(row, '已撤回', '原因：' + reason);
+        markInstGone(row, '已撤回');
+        toast('已撤回（已记入执行日志）','ok');
+    });
 }
-/* 复制 */\r
-function doCopy(row){ closeModal(); toast('已复制任务（生成新任务ID）','ok'); }\r
-\r
-/* 事件委托：所有表格动作按钮 */\r
-document.querySelectorAll('.content').forEach(function(container){\r
-    container.addEventListener('click', function(e){\r
-        var btn = e.target.closest('button');\r
-        if(!btn) return;\r
-        var row = rowOf(btn);\r
-        if(btn.classList.contains('act-exec')){ openExec(row); }\r
-        else if(btn.classList.contains('act-forward')){ openForward(row); }\r
-        else if(btn.classList.contains('act-withdraw')){ openWithdraw(row); }\r
-        else if(btn.classList.contains('act-detail')){ openDetail(row); }\r
-        else if(btn.classList.contains('act-copy')){ doCopy(row); }\r
-        else if(btn.classList.contains('act-resend')){ setStatus(row,'status-pending','未执行'); toast('已重新发布','ok'); closeModal(); }\r
-        else if(btn.classList.contains('act-edit-draft')){ editDraftTask(row); }\r
-        else if(btn.classList.contains('act-pub-draft')){ publishDraftTask(row); }\r
-        else if(btn.classList.contains('act-del-draft')){ row.remove(); toast('草稿已删除','ok'); }\r
-        else if(btn.classList.contains('act-edit-recalled')){ editDraftTask(row); }
-        else if(btn.classList.contains('act-adj-exec')){ openAdjust(row); }
-        else if(btn.classList.contains('act-end')){ openEnd(row); }
-        refreshTaskPagination();
-    });\r
-});\r
-\r
-/* 导出 */\r
-document.getElementById('btnExportLedger').addEventListener('click', function(){ toast('正在导出任务总台账 Excel…','ok'); });\r
-document.getElementById('btnExportPerson').addEventListener('click', function(){ toast('正在导出人员明细 Excel…','ok'); });\r
-\r
-/* 角色切换 */\r
-document.getElementById('roleSelect').addEventListener('change', function(){\r
-    document.getElementById('roleLabel').textContent = this.value;\r
-    toast('当前角色：'+this.value);\r
-});\r
-\r
+function rowName(row){
+    if(row.dataset && row.dataset.name) return row.dataset.name;
+    return row.children[1] ? row.children[1].textContent.trim() : '';
+}
+
+/* 事件委托：所有表格动作按钮 */
+document.querySelectorAll('.content').forEach(function(container){
+    container.addEventListener('click', function(e){
+        var btn = e.target.closest('button');
+        if(!btn) return;
+        var row = rowOf(btn);
+        if(btn.classList.contains('act-exec')){ openExec(row); }
+        else if(btn.classList.contains('act-forward')){ openForward(row); }
+        else if(btn.classList.contains('act-withdraw')){ openWithdraw(row); }
+        else if(btn.classList.contains('act-edit-draft')){ editDraftTask(row); }
+        else if(btn.classList.contains('act-pub-draft')){ publishDraftTask(row); }
+        else if(btn.classList.contains('act-del-draft')){ row.remove(); toast('草稿已删除','ok'); }
+        else if(btn.classList.contains('act-pause')){ togglePlanPause(row); }
+        else if(btn.classList.contains('act-stop-plan')){ openStopPlan(row); }
+        else if(btn.classList.contains('act-void')){ openVoid(row); }
+        else if(btn.classList.contains('act-inst-list')){ openInstList(row); }
+        else if(btn.classList.contains('act-edit-plan')){ openPlanEdit(row); }
+        else if(btn.classList.contains('act-view-plan')){ openPlanView(row); }
+        else if(btn.classList.contains('act-inst-detail')){
+            var _pane = row.closest ? row.closest('.myinst-pane') : null;
+            if(_pane && _pane.id === 't-done'){          /* 已执行：看我自己提交的内容 */
+                EXEC_PERSON = null; EXEC_SRC_ROW = row; renderExecPage(row, 'view');
+            } else {                                      /* 已转发 / 我参与的 / 台账：看整条任务 */
+                openTaskDetail(row);
+            }
+        }
+        else if(btn.classList.contains('act-person-list')){ openExecPersonList(row); }
+        else if(btn.classList.contains('act-copy-plan')){ openPlanCopy(row); }
+    });
+});
+
+/* 导出 */
+document.getElementById('btnExportLedger').addEventListener('click', function(){ toast('正在导出任务总台账 Excel…','ok'); });
+
+/* 角色切换：按 角色 × 关系 × 状态 调整可见范围 */
+function applyRole(role){
+    document.getElementById('roleLabel').textContent = role;
+    var isAdmin = (role==='超级管理员');
+    var navLedger = document.querySelector('.nav-item[data-view="view-ledger"]');
+    var navPub = document.querySelector('.nav-item[data-view="view-publish"]');
+    if(navLedger) navLedger.style.display = isAdmin?'':'none';
+    if(navPub) navPub.style.display = (role==='普通执行者')?'none':'';
+    if(role === '普通执行者'){ myTabSwitch('t-exec'); }
+    if(!isAdmin){ var cv=currentView(); if(cv==='ledger') switchView('view-mytask'); }
+}
+document.getElementById('roleSelect').addEventListener('change', function(){
+    applyRole(this.value);
+    toast('当前角色：'+this.value+'（已按权限调整可见范围）');
+});
+
 /* 移动端逻辑面板切换 */
-document.getElementById('mToggle').addEventListener('click', function(){ logicPanel.classList.toggle('show'); });
+
+
+/* ====================== 模板组件配置（每一列 = 一个组件） ====================== */
+var DEPTS = ['安全监察部','机电运输部','通风防突部','地测防治水部','采掘一队','调度室'];
+var FORM_CATS = [
+    { cat:'巡检类', forms:[{id:'F101',name:'日常巡检记录表'},{id:'F102',name:'瓦斯浓度记录表'},{id:'F103',name:'顶板离层观测表'}] },
+    { cat:'检修类', forms:[{id:'F201',name:'设备维修报告表'},{id:'F202',name:'提升机检修记录表'}] },
+    { cat:'隐患类', forms:[{id:'F301',name:'隐患排查登记表'},{id:'F302',name:'整改验收表'}] },
+    { cat:'演练类', forms:[{id:'F401',name:'应急演练评估表'},{id:'F402',name:'应急预案演练记录'}] }
+];
+var COMP_CONFIG = {
+    taskName:    { title:'任务名称', desc:'任务的标题名称，便于辨识与检索；同一模板内唯一，必填', type:'text', scope:false, def:'' },
+    initiator:   { title:'发起人', desc:'发起本任务的人员，默认取当前操作人', type:'member', scope:true, def:'当前操作人' },
+    participant: { title:'参与人员', desc:'协助执行任务的人员，可多人', type:'member', scope:true, def:'' },
+    executor:    { title:'执行人', desc:'负责执行并提交任务结果的人员，可多人，必填', type:'member', scope:true, def:'' },
+    execForm:    { title:'执行任务@表单', desc:'执行任务时填写的业务表单，按分类选取', type:'form', scope:true, def:'普通业务表单' },
+    workType:    { title:'执行工种', desc:'执行任务所需的工种类型', type:'text', scope:false, def:'' },
+    location:    { title:'执行地点', desc:'任务执行的具体地点/区域', type:'text', scope:false, def:'' },
+    planStart:   { title:'计划开始', desc:'任务计划开始时间；开启执行控制后须到时方可执行', type:'date', scope:false, def:'' },
+    planEnd:     { title:'计划结束', desc:'任务计划结束时间，超期判定基准', type:'date', scope:false, def:'' },
+    desc:        { title:'执行说明', desc:'对执行内容的补充说明', type:'text', scope:false, def:'' }
+};
+var COMP_STATE = {};   // 组件运行时配置（覆盖默认）
+var editingTid = null;
+
+function compTypeLabel(t){ return t==='member'?'成员':(t==='form'?'表单':(t==='date'?'时间':'文本')); }
+function escHtml(s){ return (s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+function escAttr(s){ return (s||'').replace(/&/g,'&amp;').replace(/"/g,'&quot;'); }
+function getComp(key){ return Object.assign({}, COMP_CONFIG[key], COMP_STATE[key] || {}); }
+function cfgVal(key, field){ return (COMP_STATE[key] && COMP_STATE[key][field]!==undefined) ? COMP_STATE[key][field] : COMP_CONFIG[key][field]; }
+function formNameById(id){ var r=null; FORM_CATS.forEach(function(c){ c.forms.forEach(function(f){ if(f.id===id) r=f.name; }); }); return r; }
+
+function resetCompState(){
+    COMP_STATE = {};
+    document.querySelectorAll('.field-table th.comp-sel').forEach(function(th){ th.classList.remove('comp-sel'); });
+    var tf = document.querySelector('.tplname-field'); if(tf) tf.classList.remove('comp-sel');
+}
+function resetCompPanel(){
+    document.querySelectorAll('.field-table th.comp-sel').forEach(function(th){ th.classList.remove('comp-sel'); });
+    var tf = document.querySelector('.tplname-field'); if(tf) tf.classList.remove('comp-sel');
+    document.getElementById('compTitle').textContent = '模板属性';
+    var cn = document.getElementById('tplCodeName') ? document.getElementById('tplCodeName').value : '';
+    var cc = document.getElementById('tplCode') ? document.getElementById('tplCode').value : '';
+    var cd = document.getElementById('tplDesc') ? document.getElementById('tplDesc').value : '';
+    document.getElementById('compBody').innerHTML =
+        '<div class="form-group"><label class="form-label">模板名称</label><input class="form-input" id="tplCodeName" value="'+escAttr(cn)+'"></div>'+
+        '<div class="form-group"><label class="form-label">模板编码</label><input class="form-input" id="tplCode" value="'+escAttr(cc)+'" readonly></div>'+
+        '<div class="form-group"><label class="form-label">用途描述</label><textarea class="form-input" rows="3" id="tplDesc" placeholder="描述模板用途">'+escHtml(cd)+'</textarea></div>'+
+        '<p class="form-hint" style="margin-top:6px;"><i class="bi bi-info-circle"></i>点击左侧表格任一「列」或上方「任务名称」，在此配置该组件属性（标题 / 描述 / 可选成员范围 / 默认值）。</p>';
+}
+function selectComponent(key){
+    var cfg = COMP_CONFIG[key];
+    document.querySelectorAll('.field-table th.comp-sel').forEach(function(th){ th.classList.remove('comp-sel'); });
+    var tf = document.querySelector('.tplname-field'); if(tf) tf.classList.remove('comp-sel');
+    if(key!=='taskName'){
+        var th = document.querySelector('.field-table th[data-comp="'+key+'"]');
+        if(th) th.classList.add('comp-sel');
+    } else if(tf){ tf.classList.add('comp-sel'); }
+    renderCompConfig(key);
+}
+var FIXED_REQUIRED = ['taskName','initiator','executor','execForm','planStart','planEnd'];
+function isFixedComp(key){ return FIXED_REQUIRED.indexOf(key) >= 0; }
+function renderCompConfig(key){
+    var cfg = COMP_CONFIG[key];
+    if(!cfg){ resetCompPanel(); return; }
+    var TYPE_LABEL = { text:'单行文本', textarea:'多行文本', number:'数字', radio:'单选', check:'多选', member:'@成员', dept:'@部门', date:'日期时间', file:'附件' };
+    var typeName = TYPE_LABEL[cfg.ctype] || compTypeLabel(cfg.type);
+    document.getElementById('compTitle').innerHTML = '组件配置 · <span class="cfg-type-tag">'+typeName+'</span> <span class="cfg-back" onclick="resetCompPanel()">返回模板属性</span>';
+    var title = cfgVal(key,'title');
+    var desc = cfgVal(key,'desc');
+    var def = cfgVal(key,'def')||'';
+    var html = '';
+    html += '<div class="form-group"><label class="form-label">标题<span class="required">*</span></label><input class="form-input" id="cfgTitle" value="'+escAttr(title)+'"></div>';
+    html += '<div class="form-group"><label class="form-label">描述</label><textarea class="form-input" rows="2" id="cfgDesc" placeholder="组件说明">'+escHtml(desc)+'</textarea></div>';
+    if(isFixedComp(key)){
+        html += '<div class="form-group"><label class="form-label">是否必填</label><div class="cfg-lock">必填（系统固定组件，不可关闭）</div></div>';
+    } else {
+        var req = !!(COMP_STATE[key] && COMP_STATE[key].required);
+        html += '<div class="form-group"><label class="form-label">是否必填</label><label class="cfg-switch"><input type="checkbox" id="cfgReq" '+(req?'checked':'')+'> 必填（勾选后执行页提交时校验）</label></div>';
+    }
+    if(cfg.scope){
+        if(cfg.type==='form'){
+            html += '<div class="form-group"><label class="form-label">可选表单范围</label><div class="cfg-scope-tags" id="cfgScope">';
+            FORM_CATS.forEach(function(c){ var on = isScopeOn(key,c.cat)?'on':''; html += '<label class="'+on+'"><input type="checkbox" value="'+c.cat+'" '+(on?'checked':'')+' onchange="toggleScope(\\''+key+'\\',this)">'+c.cat+'</label>'; });
+            html += '</div><p class="form-hint" style="margin-top:6px;">未勾选则默认全部表单分类可选</p></div>';
+        } else {
+            html += '<div class="form-group"><label class="form-label">可选成员范围</label><div class="cfg-scope-tags" id="cfgScope">';
+            DEPTS.forEach(function(d){ var on = isScopeOn(key,d)?'on':''; html += '<label class="'+on+'"><input type="checkbox" value="'+d+'" '+(on?'checked':'')+' onchange="toggleScope(\\''+key+'\\',this)">'+d+'</label>'; });
+            html += '</div><p class="form-hint" style="margin-top:6px;">未勾选则默认全公司成员可选</p></div>';
+        }
+    }
+    if(cfg.type==='member'){
+        html += '<div class="form-group"><label class="form-label">默认值</label><input class="form-input" id="cfgDef" value="'+escAttr(def)+'" placeholder="留空表示发布时必填，或填具体成员"></div>';
+    } else if(cfg.type==='form'){
+        var opts = '<option value="">不预设（发布时选择）</option>';
+        FORM_CATS.forEach(function(c){ c.forms.forEach(function(f){ opts += '<option value="'+f.id+'" '+(def===f.id?'selected':'')+'>'+f.name+'</option>'; }); });
+        html += '<div class="form-group"><label class="form-label">默认值</label><select class="form-input" id="cfgDef">'+opts+'</select></div>';
+    } else if(cfg.type==='date'){
+        html += '<div class="form-group"><label class="form-label">默认值</label><input class="form-input" type="datetime-local" id="cfgDef" value="'+escAttr(def)+'"></div>';
+    } else {
+        html += '<div class="form-group"><label class="form-label">默认值</label><input class="form-input" id="cfgDef" value="'+escAttr(def)+'" placeholder="留空表示无默认"></div>';
+    }
+    if(cfg.type==='text'){
+        var maxv = (COMP_STATE[key] && COMP_STATE[key].max) || '';
+        html += '<div class="form-group"><label class="form-label">最大字符数</label><input class="form-input" type="number" id="cfgMax" min="1" max="500" value="'+escAttr(String(maxv))+'" placeholder="留空表示不限制"><p class="form-hint" style="margin-top:4px;">执行页按此长度校验，超出提示「不能超过 N 个字」</p></div>';
+    }
+    if(!isFixedComp(key)){
+        html += '<div style="margin-top:14px;padding-top:12px;border-top:1px dashed var(--line);"><button class="btn btn-danger btn-sm" style="width:100%;" onclick="deleteComp(\\''+key+'\\')"><i class="bi bi-trash"></i> 删除组件</button><p class="form-hint" style="margin-top:6px;">删除后该列从画布移除，保存后不再出现在任务中</p></div>';
+    }
+    document.getElementById('compBody').innerHTML = html;
+
+    var tEl = document.getElementById('cfgTitle');
+    tEl.addEventListener('input', function(){
+        COMP_STATE[key] = COMP_STATE[key]||{}; COMP_STATE[key].title = this.value;
+        if(key!=='taskName'){
+            var th=document.querySelector('.field-table th[data-comp="'+key+'"]');
+            if(th) th.childNodes[0].nodeValue = this.value;
+        }
+    });
+    var dEl = document.getElementById('cfgDesc');
+    if(dEl) dEl.addEventListener('input', function(){ COMP_STATE[key]=COMP_STATE[key]||{}; COMP_STATE[key].desc=this.value; });
+    var defEl = document.getElementById('cfgDef');
+    if(defEl){
+        defEl.addEventListener('input', function(){ COMP_STATE[key]=COMP_STATE[key]||{}; COMP_STATE[key].def=this.value; });
+        defEl.addEventListener('change', function(){ COMP_STATE[key]=COMP_STATE[key]||{}; COMP_STATE[key].def=this.value; });
+    }
+    var rEl = document.getElementById('cfgReq');
+    if(rEl) rEl.addEventListener('change', function(){ COMP_STATE[key]=COMP_STATE[key]||{}; COMP_STATE[key].required=this.checked; });
+    var mEl = document.getElementById('cfgMax');
+    if(mEl) mEl.addEventListener('input', function(){ COMP_STATE[key]=COMP_STATE[key]||{}; COMP_STATE[key].max=this.value; });
+}
+
+/* 画布增删 */
+var CUSTOM_SEQ = 0;
+var TOOL_META = {
+    text:{label:'单行文本', type:'text'}, textarea:{label:'多行文本', type:'text'}, number:{label:'数字', type:'text'},
+    radio:{label:'单选', type:'text'}, check:{label:'多选', type:'text'}, member:{label:'@成员', type:'member'},
+    dept:{label:'@部门', type:'member'}, date:{label:'日期时间', type:'date'}, file:{label:'附件', type:'text'}
+};
+function compCellHtml(type, ctype){
+    if(type==='member') return '<div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-people"></i>@成员</div>';
+    if(type==='form') return '<div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-file-earmark"></i>@工作表单</div>';
+    if(type==='date') return '<div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-calendar3"></i>日期时间</div>';
+    if(ctype==='number') return '请输入数字';
+    if(ctype==='radio' || ctype==='check') return '请选择';
+    if(ctype==='file') return '<i class="bi bi-paperclip"></i> 上传附件';
+    if(ctype==='textarea') return '<span class="muted">多行文本</span>';
+    return '请输入';
+}
+function addCustomComp(ctype){
+    var meta = TOOL_META[ctype] || TOOL_META.text;
+    CUSTOM_SEQ++;
+    var key = 'custom' + CUSTOM_SEQ;
+    COMP_CONFIG[key] = { title: meta.label + ' ' + CUSTOM_SEQ, desc: '', type: meta.type, scope: (meta.type==='member'), def: '', ctype: ctype, custom: true };
+    var th = document.createElement('th');
+    th.dataset.comp = key;
+    th.appendChild(document.createTextNode(COMP_CONFIG[key].title));
+    th.onclick = function(){ selectComponent(key); };
+    var td = document.createElement('td');
+    td.innerHTML = compCellHtml(meta.type, ctype);
+    var thead = document.querySelector('#tplEditorTabs + #ed-basic .field-table thead tr') || document.querySelector('#ed-basic .field-table thead tr');
+    var tbody = document.querySelector('#ed-basic .field-table tbody tr');
+    thead.appendChild(th);
+    tbody.appendChild(td);
+    selectComponent(key);
+    toast('已添加「' + COMP_CONFIG[key].title + '」到画布末尾', 'ok');
+}
+function deleteComp(key){
+    if(isFixedComp(key)){ toast('该组件为必填固定组件，不可删除', 'err'); return; }
+    var th = document.querySelector('#ed-basic .field-table th[data-comp="'+key+'"]');
+    if(!th) return;
+    showModal('<i class="bi bi-trash"></i> 删除组件',
+        '<p style="font-size:13px;line-height:1.8;">确定从画布删除「<b>' + escHtml(COMP_CONFIG[key].title) + '</b>」吗？<br><span style="color:var(--text-muted);font-size:12px;">删除后保存，该字段不再出现在任务中；已发布的历史任务不受影响。</span></p>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button><button class="btn btn-danger btn-sm" onclick="doDeleteComp(\\'' + key + '\\')">确认删除</button>');
+}
+function doDeleteComp(key){
+    var th = document.querySelector('#ed-basic .field-table th[data-comp="'+key+'"]');
+    if(th){
+        var idx = Array.prototype.indexOf.call(th.parentNode.children, th);
+        var td = document.querySelectorAll('#ed-basic .field-table tbody tr td')[idx];
+        th.remove();
+        if(td) td.remove();
+    }
+    delete COMP_CONFIG[key];
+    delete COMP_STATE[key];
+    closeModal();
+    resetCompPanel();
+    toast('组件已删除', 'ok');
+}
+document.querySelectorAll('#view-template-editor .tool-item').forEach(function(el){
+    el.addEventListener('click', function(){ addCustomComp(this.dataset.type || 'text'); });
+});
+
+function isScopeOn(key,val){ return COMP_STATE[key] && COMP_STATE[key].scope && COMP_STATE[key].scope.indexOf(val)>=0; }
+function toggleScope(key, el){
+    COMP_STATE[key] = COMP_STATE[key]||{}; COMP_STATE[key].scope = COMP_STATE[key].scope || [];
+    var arr = COMP_STATE[key].scope;
+    if(el.checked){ if(arr.indexOf(el.value)<0) arr.push(el.value); el.closest('label').classList.add('on'); }
+    else { COMP_STATE[key].scope = arr.filter(function(x){return x!==el.value;}); el.closest('label').classList.remove('on'); }
+}
+
+/* 预览模板按钮已按需求移除（原型不再提供预览入口） */
+
+/* ====================== 组织架构多选 / 分类表单弹窗（发布任务） ====================== */
+var ORG_DATA = [
+    { dept:'安全监察部', members:['张伟明','李强','王建国','赵志远'] },
+    { dept:'机电运输部', members:['刘明辉','陈安平','周文博'] },
+    { dept:'通风防突部', members:['孙建华','马永刚','吴海涛'] },
+    { dept:'地测防治水部', members:['郑文斌','冯国强'] },
+    { dept:'采掘一队', members:['何志勇','许立军','邓超'] },
+    { dept:'调度室', members:['钱锋','韩雪松'] }
+];
+var PUB_SELECTED = { pExecutor:[], pParticipant:[], permUseUsers:[] };
+var PUB_FORM = '';
+var ORG_FIELD = null;
+
+function resetPubSelect(ft){
+    PUB_SELECTED = { pExecutor:[], pParticipant:[], permUseUsers:[] };
+    PUB_FORM = '';
+    var ex = document.getElementById('pExecutor'); ex.textContent = '点击选择执行人'; ex.style.color = 'var(--text-muted)';
+    var pa = document.getElementById('pParticipant'); pa.textContent = '点击选择参与人'; pa.style.color = 'var(--text-muted)';
+    document.getElementById('pFormType').textContent = ft || '普通业务表单';
+}
+function openOrgSelect(fieldId, label){
+    ORG_FIELD = fieldId;
+    var sel = PUB_SELECTED[fieldId];
+    var html = '<div class="org-wrap"><div><div class="org-search"><input class="form-input" id="orgSearch" placeholder="搜索姓名 / 部门…"></div><div class="org-tree" id="orgTree">';
+    ORG_DATA.forEach(function(d){
+        html += '<div class="org-dept" data-dept="'+d.dept+'"><div class="org-dept-head" onclick="toggleOrgDept(this)"><i class="bi bi-chevron-down caret"></i>'+d.dept+'<input type="checkbox" class="allchk" onclick="event.stopPropagation();toggleOrgAll(this,\\''+d.dept+'\\')"></div><div class="org-members">';
+        d.members.forEach(function(m){
+            var on = sel.indexOf(m)>=0?'checked':'';
+            html += '<label class="org-member"><input type="checkbox" value="'+m+'" '+on+' onchange="toggleOrgMember(this)"><span class="mname">'+m+'</span><span class="mdept">'+d.dept+'</span></label>';
+        });
+        html += '</div></div>';
+    });
+    html += '</div></div><div><div class="form-hint" style="margin-bottom:8px;">已选 <b id="orgCount">'+sel.length+'</b> 人</div><div class="org-chips" id="orgChips">'+orgChipsHtml()+'</div></div></div>';
+    showModal('<i class="bi bi-diagram-3"></i> 选择'+label+'（组织架构多选）', html,
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button><button class="btn btn-amber btn-sm" onclick="confirmOrgSelect(\\''+fieldId+'\\')">确定（<span id="orgCount2">'+sel.length+'</span>）</button>');
+    document.getElementById('orgSearch').addEventListener('input', function(){
+        var q = this.value.trim();
+        document.querySelectorAll('#orgTree .org-member').forEach(function(l){
+            l.style.display = (!q || l.querySelector('.mname').textContent.indexOf(q)>=0) ? '' : 'none';
+        });
+        document.querySelectorAll('#orgTree .org-dept').forEach(function(dep){
+            var any=false; dep.querySelectorAll('.org-member').forEach(function(l){ if(l.style.display!=='none') any=true; });
+            dep.style.display = any ? '' : 'none';
+        });
+    });
+}
+function toggleOrgDept(head){ head.closest('.org-dept').classList.toggle('collapsed'); }
+function toggleOrgAll(cb, dept){
+    var d = ORG_DATA.find(function(x){return x.dept===dept;});
+    if(cb.checked){ d.members.forEach(function(m){ if(PUB_SELECTED[ORG_FIELD].indexOf(m)<0) PUB_SELECTED[ORG_FIELD].push(m); }); }
+    else { PUB_SELECTED[ORG_FIELD] = PUB_SELECTED[ORG_FIELD].filter(function(m){ return d.members.indexOf(m)<0; }); }
+    cb.closest('.org-dept').querySelectorAll('.org-member input').forEach(function(i){ i.checked = cb.checked; });
+    refreshOrgChips();
+}
+function toggleOrgMember(cb){
+    var m = cb.value;
+    if(cb.checked){ if(PUB_SELECTED[ORG_FIELD].indexOf(m)<0) PUB_SELECTED[ORG_FIELD].push(m); }
+    else { PUB_SELECTED[ORG_FIELD] = PUB_SELECTED[ORG_FIELD].filter(function(x){return x!==m;}); }
+    refreshOrgChips();
+}
+function orgChipsHtml(){
+    var sel = PUB_SELECTED[ORG_FIELD];
+    if(!sel.length) return '<span class="empty-hint">尚未选择人员</span>';
+    return sel.map(function(m){ return '<span class="chip-x">'+m+' <i class="bi bi-x-circle" onclick="removeOrg(\\''+m+'\\')"></i></span>'; }).join('');
+}
+function refreshOrgChips(){
+    var box = document.getElementById('orgChips'); if(!box) return;
+    box.innerHTML = orgChipsHtml();
+    var n = PUB_SELECTED[ORG_FIELD].length;
+    var c = document.getElementById('orgCount'); if(c) c.textContent = n;
+    var c2 = document.getElementById('orgCount2'); if(c2) c2.textContent = n;
+}
+function removeOrg(m){
+    PUB_SELECTED[ORG_FIELD] = PUB_SELECTED[ORG_FIELD].filter(function(x){return x!==m;});
+    var cb = document.querySelector('#orgTree .org-member input[value="'+m+'"]'); if(cb) cb.checked=false;
+    refreshOrgChips();
+}
+function confirmOrgSelect(fieldId){
+    var sel = PUB_SELECTED[fieldId];
+    var btn = document.getElementById(fieldId);
+    if(sel.length){ btn.textContent = '已选 '+sel.length+' 人：'+sel.join('、'); btn.style.color = 'var(--text-primary)'; }
+    else { btn.textContent = (fieldId==='pParticipant'?'点击选择参与人':(fieldId==='permUseUsers'?'点击选择人员':'点击选择执行人')); btn.style.color = 'var(--text-muted)'; }
+    closeModal();
+}
+
+function openCatForm(){
+    window.__catCur = PUB_FORM;
+    var html = '<div class="catform-wrap"><div class="catform-cats" id="catList"></div><div><div class="catform-search"><input class="form-input" id="catSearch" placeholder="搜索表单名称…"></div><div class="catform-forms" id="catForms"></div></div></div>';
+    showModal('<i class="bi bi-file-earmark"></i> 选择执行任务@表单（按分类）', html,
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button><button class="btn btn-amber btn-sm" onclick="confirmCatForm()">确定</button>');
+    renderCatList();
+    renderCatForms(FORM_CATS[0].cat, '');
+    document.getElementById('catSearch').addEventListener('input', function(){
+        var q = this.value.trim();
+        var on = document.querySelector('.catform-cat.on');
+        renderCatForms(on ? on.dataset.cat : FORM_CATS[0].cat, q);
+    });
+}
+function renderCatList(){
+    var box = document.getElementById('catList'); if(!box) return;
+    var html = '';
+    FORM_CATS.forEach(function(c){
+        var on = (window.__catCur && isFormInCat(window.__catCur,c)) ? 'on' : '';
+        html += '<div class="catform-cat '+on+'" data-cat="'+c.cat+'" onclick="selectCat(\\''+c.cat+'\\')">'+c.cat+'<span class="cnt">'+c.forms.length+'</span></div>';
+    });
+    box.innerHTML = html;
+    if(!box.querySelector('.catform-cat.on')){ var f=box.querySelector('.catform-cat'); if(f) f.classList.add('on'); }
+}
+function isFormInCat(formId, c){ return c.forms.some(function(f){return f.id===formId;}); }
+function selectCat(cat){ document.querySelectorAll('.catform-cat').forEach(function(el){ el.classList.toggle('on', el.dataset.cat===cat); }); var q=document.getElementById('catSearch').value.trim(); renderCatForms(cat, q); }
+function renderCatForms(cat, q){
+    var box = document.getElementById('catForms'); if(!box) return;
+    var c = FORM_CATS.find(function(x){return x.cat===cat;}) || FORM_CATS[0];
+    var forms = c.forms.filter(function(f){ return !q || f.name.indexOf(q)>=0; });
+    if(!forms.length){ box.innerHTML = '<div class="catform-empty">无匹配表单</div>'; return; }
+    box.innerHTML = forms.map(function(f){
+        var sel = (window.__catCur===f.id)?'sel':'';
+        return '<div class="catform-form '+sel+'" data-id="'+f.id+'" data-name="'+f.name+'" onclick="pickCatForm(\\''+f.id+'\\')"><span class="radio"></span><div><div>'+f.name+'</div><div class="ftype">'+c.cat+' · '+f.id+'</div></div></div>';
+    }).join('');
+}
+function pickCatForm(id){
+    window.__catCur = id;
+    document.querySelectorAll('.catform-form').forEach(function(el){ el.classList.toggle('sel', el.dataset.id===id); });
+}
+function confirmCatForm(){
+    if(!window.__catCur){ toast('请选择一个表单','err'); return; }
+    var f = null; FORM_CATS.forEach(function(c){ c.forms.forEach(function(x){ if(x.id===window.__catCur) f=x; }); });
+    PUB_FORM = window.__catCur;
+    document.getElementById('pFormType').textContent = f ? f.name : '普通业务表单';
+    closeModal(); toast('已选择表单：'+(f?f.name:'普通业务表单'),'ok');
+}
+
+/* ====================== 提醒选择器 / 重复发布 交互 ====================== */
+function rpToggle(id){
+    var p = document.getElementById(id); if(!p) return;
+    var isOpen = p.classList.contains('open');
+    document.querySelectorAll('.remind-picker.open').forEach(function(x){ x.classList.remove('open'); });
+    if(!isOpen) p.classList.add('open');
+}
+function rpMulti(id){
+    var p = document.getElementById(id); if(!p) return;
+    var v = [];
+    p.querySelectorAll('.rp-pop .rp-item input[type=checkbox]:checked').forEach(function(c){ v.push(c.parentNode.textContent.trim()); });
+    p.querySelector('.rp-val').textContent = v.length ? v.join('、') : '请选择';
+}
+function rpOnly(cb){
+    var p = cb.closest('.remind-picker');
+    if(cb.checked){ p.querySelectorAll('.rp-pop input[type=checkbox]').forEach(function(c){ if(c!==cb) c.checked=false; }); }
+    rpMulti(p.id);
+}
+function rpRadio(id){
+    var p = document.getElementById(id); if(!p) return;
+    var c = p.querySelector('.rp-pop input[type=radio]:checked');
+    p.querySelector('.rp-val').textContent = c ? c.parentNode.textContent.trim() : '请选择';
+}
+function rpCustom(id){
+    var p = document.getElementById(id); if(!p) return;
+    var n = p.querySelector('.rp-custom .rp-num').value;
+    var u = p.querySelector('.rp-custom .rp-unit').value;
+    if(n === ''){ toast('请输入自定义数量','err'); return; }
+    var pre = (id.indexOf('Overdue') >= 0) ? '每' : '提前';
+    p.querySelector('.rp-val').textContent = pre + n + u;
+    p.classList.remove('open');
+}
+function rpClose(id){
+    var p = document.getElementById(id); if(!p) return;
+    p.querySelector('.rp-custom .rp-num').value = '';
+    p.classList.remove('open');
+}
+document.addEventListener('click', function(e){
+    if(!e.target.closest('.remind-picker')) document.querySelectorAll('.remind-picker.open').forEach(function(x){ x.classList.remove('open'); });
+});
+var WEEK_LIST = ['周一','周二','周三','周四','周五','周六','周日'];
+/* 某频率下可选的日期项 */
+function repDimItems(freq){
+    var a = [], i;
+    if(freq === '按周') return WEEK_LIST.slice();
+    if(freq === '按月'){ for(i = 1; i <= 31; i++) a.push(i + '号'); a.push('最后一天'); return a; }
+    return [];
+}
+/* 渲染"重复日期"：按周/按月＝下拉多选；按年＝月 + 日 两个下拉；按天＝每天 */
+function repDimsRender(n){
+    var sel = document.getElementById('repFreq' + n), box = document.getElementById('repDims' + n);
+    if(!sel || !box) return;
+    var prev = repDimsGet(n);
+    var f = sel.value, h = '', i;
+
+    if(f === '按天'){
+        h = '<span class="rr-dim">每天</span>';
+    } else if(f === '按年'){
+        var rows = [];
+        if(prev && prev.length && typeof prev[0] === 'object') rows = prev;
+        if(!rows.length) rows = [{ ms: ['1月'], ds: ['1日'] }];
+        h = repYearHtml(n, rows);
+    } else {
+        var items = repDimItems(f);
+        var picked = (prev && prev.length) ? prev : [];
+        var lis = items.map(function(v){
+            return '<label class="rp-item"><input type="checkbox" value="' + v + '"'
+                 + (picked.indexOf(v) >= 0 ? ' checked' : '')
+                 + ' onchange="repDimCheck(' + n + ')">' + v + '</label>';
+        }).join('');
+        h = '<div class="remind-picker" id="repDimPick' + n + '">'
+          + '<button type="button" class="rp-btn" onclick="rpToggle(\\'repDimPick' + n + '\\')">'
+          + '<span class="rp-val" id="repDimVal' + n + '">请选择</span><i class="bi bi-caret-down-fill"></i></button>'
+          + '<div class="rp-pop">' + lis
+          + '<div class="rp-actions">'
+          + '<button type="button" class="btn btn-ghost btn-xs" onclick="repDimAll(' + n + ',1)">全选</button>'
+          + '<button type="button" class="btn btn-ghost btn-xs" onclick="repDimAll(' + n + ',0)">清空</button>'
+          + '<button type="button" class="btn btn-amber btn-xs" onclick="rpToggle(\\'repDimPick' + n + '\\')">确定</button>'
+          + '</div></div></div>';
+    }
+    box.innerHTML = h;
+    repDimSummary(n);
+    if(f === '按年') repYearSync(n);
+}
+/* 读当前选中项 */
+function repDimsGet(n){
+    var sel = document.getElementById('repFreq' + n);
+    if(!sel) return [];
+    var f = sel.value;
+    if(f === '按年'){
+        var wrap = document.getElementById('repYear' + n);
+        if(!wrap){
+            window.__yearState = window.__yearState || {};
+            return window.__yearState[n] || [];
+        }
+        var rows = repYearRowsRaw(n).filter(function(r){ return r.ms.length && r.ds.length; });
+        if(rows.length){ window.__yearState = window.__yearState || {}; window.__yearState[n] = rows; }
+        return rows;
+    }
+    if(f === '按天') return [];
+    var out = [];
+    document.querySelectorAll('#repDims' + n + ' .rp-pop input[type=checkbox]:checked').forEach(function(c){ out.push(c.value); });
+    return out;
+}
+/* ===== 按年：可添加多条规则，每条内"月份 / 日期"都可多选 ===== */
+function repYearItems(kind){
+    var a = [], i;
+    if(kind === 'm'){ for(i = 1; i <= 12; i++) a.push(i + '月'); return a; }
+    for(i = 1; i <= 31; i++) a.push(i + '日');
+    a.push('最后一天');
+    return a;
+}
+function repYearRowsRaw(n){
+    var wrap = document.getElementById('repYear' + n); if(!wrap) return [];
+    var rows = [];
+    Array.prototype.forEach.call(wrap.querySelectorAll('.ry-row'), function(row){
+        var ms = [], ds = [];
+        Array.prototype.forEach.call(row.querySelectorAll('.rp-pop input[data-k="m"]:checked'), function(c){ ms.push(c.value); });
+        Array.prototype.forEach.call(row.querySelectorAll('.rp-pop input[data-k="d"]:checked'), function(c){ ds.push(c.value); });
+        rows.push({ ms: ms, ds: ds });
+    });
+    return rows;
+}
+function repYearRowHtml(n, idx, r){
+    var mk = function(kind, vals, id){
+        var items = repYearItems(kind).map(function(v){
+            return '<label class="rp-item"><input type="checkbox" data-k="' + kind + '" value="' + v + '"'
+                 + ((vals || []).indexOf(v) >= 0 ? ' checked' : '')
+                 + ' onchange="repYearCheck(' + n + ')">' + v + '</label>';
+        }).join('');
+        return '<div class="remind-picker" id="' + id + '">'
+             + '<button type="button" class="rp-btn" onclick="rpToggle(\\'' + id + '\\')">'
+             + '<span class="rp-val">请选择</span><i class="bi bi-caret-down-fill"></i></button>'
+             + '<div class="rp-pop">' + items
+             + '<div class="rp-actions">'
+             + '<button type="button" class="btn btn-ghost btn-xs" onclick="repYearAll(' + n + ',' + idx + ',\\'' + kind + '\\',1)">全选</button>'
+             + '<button type="button" class="btn btn-ghost btn-xs" onclick="repYearAll(' + n + ',' + idx + ',\\'' + kind + '\\',0)">清空</button>'
+             + '<button type="button" class="btn btn-amber btn-xs" onclick="rpToggle(\\'' + id + '\\')">确定</button>'
+             + '</div></div></div>';
+    };
+    return '<div class="ry-row">'
+         + mk('m', r && r.ms, 'repYM' + n + '_' + idx)
+         + mk('d', r && r.ds, 'repYD' + n + '_' + idx)
+         + '<button type="button" class="ry-del" title="删除这条" onclick="repYearDel(' + n + ',' + idx + ')">\\u2715</button>'
+         + '</div>';
+}
+function repYearHtml(n, rows){
+    var out = ['<div class="ry-wrap" id="repYear' + n + '">'];
+    rows.forEach(function(r, idx){ out.push(repYearRowHtml(n, idx, r)); });
+    out.push('<div class="ry-add" onclick="repYearAdd(' + n + ')">+ 添加一条</div>');
+    out.push('</div>');
+    return out.join('');
+}
+function repYearLabel(row, kind){
+    var vals = [];
+    Array.prototype.forEach.call(row.querySelectorAll('.rp-pop input[data-k="' + kind + '"]:checked'), function(c){ vals.push(c.value); });
+    if(!vals.length) return kind === 'm' ? '选择月份' : '选择日期';
+    if(vals.length <= 3) return vals.join('、');
+    return '已选 ' + vals.length + ' 项';
+}
+function repYearSync(n){
+    var wrap = document.getElementById('repYear' + n); if(!wrap) return;
+    Array.prototype.forEach.call(wrap.querySelectorAll('.ry-row'), function(row){
+        var vs = row.querySelectorAll('.rp-val');
+        if(vs[0]) vs[0].textContent = repYearLabel(row, 'm');
+        if(vs[1]) vs[1].textContent = repYearLabel(row, 'd');
+    });
+}
+function repYearCheck(n){ repYearSync(n); updateNextTaskBtn(); }
+function repYearAll(n, idx, kind, on){
+    var wrap = document.getElementById('repYear' + n); if(!wrap) return;
+    var row = wrap.querySelectorAll('.ry-row')[idx]; if(!row) return;
+    Array.prototype.forEach.call(row.querySelectorAll('.rp-pop input[data-k="' + kind + '"]'), function(c){ c.checked = !!on; });
+    repYearSync(n); updateNextTaskBtn();
+}
+function repYearReRender(n, rows){
+    var box = document.getElementById('repDims' + n); if(!box) return;
+    box.innerHTML = repYearHtml(n, rows);
+    repYearSync(n); updateNextTaskBtn();
+}
+function repYearAdd(n){
+    var rows = repYearRowsRaw(n);
+    rows.push({ ms: [], ds: [] });
+    repYearReRender(n, rows);
+}
+function repYearDel(n, idx){
+    var rows = repYearRowsRaw(n);
+    if(rows.length <= 1){ toast('至少保留一条规则','err'); return; }
+    rows.splice(idx, 1);
+    repYearReRender(n, rows);
+}
+/* 按钮上显示已选摘要 */
+function repDimSummary(n){
+    var el = document.getElementById('repDimVal' + n); if(!el) return;
+    var v = repDimsGet(n);
+    if(!v || !v.length){ el.textContent = '请选择'; el.style.color = 'var(--text-muted)'; return; }
+    el.style.color = '';
+    el.textContent = (v.length > 3) ? ('已选 ' + v.length + ' 项') : v.join('、');
+}
+function repDimCheck(n){
+    repDimSummary(n);
+    updateNextTaskBtn();
+}
+function repDimAll(n, on){
+    document.querySelectorAll('#repDims' + n + ' .rp-pop input[type=checkbox]').forEach(function(c){ c.checked = !!on; });
+    repDimSummary(n);
+    updateNextTaskBtn();
+}
+/* 频率切换：重建日期控件 + 提示 */
+function repFreqChange(id){
+    var sel = document.getElementById(id); if(!sel) return;
+    var n = id.replace('repFreq', '');
+    var box = document.getElementById('repExtra' + n); if(box) box.setAttribute('data-freq', sel.value);
+    repDimsRender(n);
+    var tips = {
+        '按天': '按天：每天生成一条，时间沿用首条的计划起止。',
+        '按周': '按周：可多选星期几（如周一 + 周三），每天各生成一条。',
+        '按月': '按月：可多选几号（含最后一天），每月各生成一条。',
+        '按年': '按年：选月份 + 日期，可添加多条；同一条内是"月份 × 日期"的全部组合。'
+    };
+    var tip = document.getElementById('repTip' + n);
+    if(tip) tip.textContent = tips[sel.value] || '';
+    updateNextTaskBtn();
+}
+/* 发布时间：直选或自定义 */
+function repDelayChange(id){
+    var sel = document.getElementById(id); if(!sel) return;
+    var n = id.replace('repDelay', '');
+    var box = document.getElementById('repDelayBox' + n);
+    if(box) box.style.display = (sel.value === '-1') ? 'inline-flex' : 'none';
+    updateNextTaskBtn();
+}
+/* 发布时间 → 提前多少分钟（0＝准时） */
+function repDelayMin(n){
+    var sel = document.getElementById('repDelay' + n); if(!sel) return 0;
+    if(sel.value !== '-1') return parseInt(sel.value, 10) || 0;
+    var num = document.getElementById('repDelayNum' + n), unit = document.getElementById('repDelayUnit' + n);
+    var v = num ? (parseInt(num.value, 10) || 0) : 0;
+    var u = unit ? (parseInt(unit.value, 10) || 60) : 60;
+    return v * u;
+}
+
+/* ============ 下一次任务：按频率日期递推（时刻与时长沿用首条） ============ */
+function rpvPad(n){ return (n < 10 ? '0' : '') + n; }
+function rpvFmt(d){ return rpvPad(d.getMonth()+1) + '-' + rpvPad(d.getDate()) + ' ' + rpvPad(d.getHours()) + ':' + rpvPad(d.getMinutes()); }
+function rpvDur(ms){
+    var h = Math.floor(ms / 3600000), m = Math.round((ms % 3600000) / 60000);
+    return h + ' 小时' + (m ? ' ' + m + ' 分' : '');
+}
+function rpvLastDay(y, m){ return new Date(y, m + 1, 0).getDate(); }
+function rpvSameHM(d, src){
+    var x = new Date(d.getTime());
+    x.setHours(src.getHours(), src.getMinutes(), 0, 0);
+    return x;
+}
+function rpvTriggers(ps, freq, dims, limit, cap){
+    var out = [], i, x;
+    if(freq === '按天'){
+        for(i = 1; out.length < limit && i <= 40; i++){
+            x = new Date(ps.getTime()); x.setDate(x.getDate() + i);
+            if(!cap || x <= cap) out.push(x);
+        }
+    } else if(freq === '按周'){
+        var W = { '周一':1, '周二':2, '周三':3, '周四':4, '周五':5, '周六':6, '周日':0 };
+        var set = dims.map(function(w){ return W[w]; });
+        if(!set.length) set = [1];
+        for(i = 1; out.length < limit && i <= 90; i++){
+            x = new Date(ps.getTime()); x.setDate(x.getDate() + i);
+            if(set.indexOf(x.getDay()) >= 0 && (!cap || x <= cap)) out.push(x);
+        }
+    } else if(freq === '按月'){
+        var ds = dims.map(function(v){ return v === '最后一天' ? -1 : parseInt(v, 10); }).sort(function(a, b){ return a - b; });
+        if(!ds.length) ds = [1];
+        for(var m = 1; out.length < limit && m <= 14; m++){
+            var base = new Date(ps.getFullYear(), ps.getMonth() + m, 1);
+            for(i = 0; i < ds.length && out.length < limit; i++){
+                var last = rpvLastDay(base.getFullYear(), base.getMonth());
+                var dd = (ds[i] === -1) ? last : Math.min(ds[i], last);
+                x = rpvSameHM(new Date(base.getFullYear(), base.getMonth(), dd), ps);
+                if(!cap || x <= cap) out.push(x);
+            }
+        }
+    } else {
+        var R = (dims && dims.length) ? dims : [{ ms: ['1月'], ds: ['1日'] }];
+        var pairs = [], seen = {};
+        R.forEach(function(row){
+            var mons = (row.ms || []).map(function(v){ return parseInt(v, 10) || 0; }).filter(function(v){ return v > 0; });
+            var days = (row.ds || []).map(function(v){ return v === '最后一天' ? -1 : (parseInt(v, 10) || 0); });
+            if(!mons.length) mons = [1];
+            if(!days.length) days = [1];
+            mons.forEach(function(mm){
+                days.forEach(function(dv){
+                    var k = mm + '_' + dv;
+                    if(!seen[k]){ seen[k] = 1; pairs.push({ m: mm, d: dv }); }
+                });
+            });
+        });
+        pairs.sort(function(a, b){ return a.m - b.m || a.d - b.d; });
+        for(var y = 1; out.length < limit && y <= 6; y++){
+            var yy = ps.getFullYear() + y;
+            for(i = 0; i < pairs.length && out.length < limit; i++){
+                var lastD = rpvLastDay(yy, pairs[i].m - 1);
+                var day = (pairs[i].d === -1) ? lastD : pairs[i].d;
+                if(day > lastD) continue;
+                x = rpvSameHM(new Date(yy, pairs[i].m - 1, day), ps);
+                if(!cap || x <= cap) out.push(x);
+            }
+        }
+    }
+    return out;
+}
+/* 下一次实例：{ trigger 计划开始, end 计划结束, publishAt 发布时间 } */
+function nextTaskInfo(){
+    var psEl = document.getElementById('pStart'), peEl = document.getElementById('pEnd');
+    var ps = (psEl && psEl.value) ? new Date(psEl.value) : null;
+    var pe = (peEl && peEl.value) ? new Date(peEl.value) : null;
+    if(!ps || !pe || pe <= ps) return null;
+    var sw = document.querySelector('.switch[data-sw="prepeat"]');
+    if(!sw || !sw.classList.contains('on')) return null;
+    var freq = (document.getElementById('repFreq2') || {}).value || '按天';
+    var dims = repDimsGet(2);
+    if(freq !== '按天' && (!dims || !dims.length)) return null;
+    var endEl = document.getElementById('repEnd2');
+    var cap = (endEl && endEl.value && !endEl.disabled) ? new Date(endEl.value + 'T23:59') : null;
+    var trg = rpvTriggers(ps, freq, dims, 1, cap);
+    if(!trg.length) return null;
+    var dur = pe - ps;
+    var start = trg[0];
+    return { start: start, end: new Date(start.getTime() + dur), publishAt: new Date(start.getTime() - repDelayMin(2) * 60000), dur: dur };
+}
+function updateNextTaskBtn(){
+    var btn = document.getElementById('btnNextTask'); if(!btn) return;
+    var info = nextTaskInfo();
+    btn.disabled = !info;
+    btn.style.opacity = info ? '' : '.45';
+    btn.style.cursor = info ? 'pointer' : 'not-allowed';
+    btn.title = info ? '查看按当前规则推算出的下一条任务' : '开启重复发布、选好重复日期并填写计划起止后可预览';
+}
+function closeNextDrawer(){
+    var m = document.getElementById('drMask'), d = document.getElementById('drNext');
+    if(m) m.classList.remove('show');
+    if(d) d.classList.remove('show');
+    document.body.style.overflow = '';
+}
+/* 直接把「发布任务 · 基本信息配置」那块 DOM 克隆过来，只读展示（不另写一套字段） */
+function openNextTaskPreview(){
+    var info = nextTaskInfo();
+    if(!info){ toast('开启重复发布、选好重复日期并填写计划起止后可预览','err'); return; }
+    var src = document.getElementById('pub-basic');
+    if(!src){ toast('未找到基本信息配置','err'); return; }
+
+    var clone = src.cloneNode(true);
+    clone.style.display = '';
+    var hd = clone.querySelector('.card-head'); if(hd) hd.parentNode.removeChild(hd);
+    var tp = clone.querySelector('.card-top'); if(tp) tp.parentNode.removeChild(tp);
+
+    var srcC = src.querySelectorAll('input,select,textarea,button');
+    var clC  = clone.querySelectorAll('input,select,textarea,button');
+    for(var i = 0; i < clC.length; i++){
+        var s = srcC[i], c = clC[i];
+        if(!s || !c) continue;
+        if(c.tagName === 'BUTTON'){ c.textContent = (s.textContent || '').trim(); }
+        else if(c.tagName === 'SELECT'){ c.value = s.value; }
+        else { c.value = s.value; }
+    }
+    var iso = function(d){
+        return d.getFullYear() + '-' + rpvPad(d.getMonth()+1) + '-' + rpvPad(d.getDate())
+             + 'T' + rpvPad(d.getHours()) + ':' + rpvPad(d.getMinutes());
+    };
+    var dts = clone.querySelectorAll('input[type="datetime-local"]');
+    if(dts[0]) dts[0].value = iso(info.start);
+    if(dts[1]) dts[1].value = iso(info.end);
+
+    clone.querySelectorAll('[id]').forEach(function(el){ el.removeAttribute('id'); });
+    clone.querySelectorAll('[onclick]').forEach(function(el){ el.removeAttribute('onclick'); });
+    clone.querySelectorAll('input,select,textarea,button').forEach(function(el){ el.setAttribute('disabled','disabled'); });
+    clone.querySelectorAll('.switch').forEach(function(el){ el.classList.remove('on'); });
+
+    var nm = (document.getElementById('pTaskName') || {}).value || '';
+    document.getElementById('drNextTitle').textContent = '下一次任务详情' + (nm ? ' · ' + nm : '');
+    var body = document.getElementById('drNextBody');
+    body.innerHTML = '';
+    body.appendChild(clone);
+    document.getElementById('drMask').classList.add('show');
+    document.getElementById('drNext').classList.add('show');
+    document.body.style.overflow = 'hidden';
+    body.scrollTop = 0;
+}
+document.addEventListener('keydown', function(e){
+    if(e.key === 'Escape'){ closeNextDrawer(); closeModal(); }
+});
+function repNoEnd(id, cb){
+    var i = document.getElementById(id); if(!i) return;
+    i.disabled = cb.checked; if(cb.checked) i.value = '';
+}
+
+/* ====================== 我发起的：实例列表（下钻） ====================== */
+var INST_DEMO = {
+    'REC20260625': [
+        { id:'I20260714001', time:'2026-07-14 08:00', who:'李强、王建国', prog:'1/2', over:false, pend:'李强' },
+        { id:'I20260701006', time:'2026-07-01 08:00', who:'李强', prog:'0/1', over:true },
+        { id:'I20260630012', time:'2026-06-30 08:00', who:'李强、王建国', prog:'2/2', over:'done' },
+        { id:'I20260629009', time:'2026-06-29 08:00', who:'李强', prog:'0/1', over:false, state:'已撤回' }
+    ],
+    'T20260627005': [ { id:'I20260627005', time:'2026-06-27 08:00', who:'陈安平', prog:'1/1', over:false } ],
+    'T20260701007': [ { id:'I20260701007', time:'2026-07-02 08:00', who:'李强', prog:'0/1', over:true } ],
+    'T20260901001': [],
+    'REC20260701': [
+        { id:'I20260715021', time:'2026-07-15 09:00', who:'刘明辉', prog:'1/1', over:false },
+        { id:'I20260714021', time:'2026-07-14 09:00', who:'刘明辉', prog:'0/1', over:true }
+    ],
+    'REC20260520': [
+        { id:'I20260520031', time:'2026-05-20 07:00', who:'王建国', prog:'1/1', over:'done' },
+        { id:'I20260519031', time:'2026-05-19 07:00', who:'王建国、赵志远', prog:'0/2', over:false, state:'已作废' }
+    ]
+};
+function openInstList(row){
+    var b = row.querySelector('.act-inst-list');
+    var tid = b ? b.dataset.tid : '';
+    var name = row.children[0].textContent;
+    var list = INST_DEMO[tid] || [];
+    var html;
+    if(!list.length){
+        html = '<p style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">该任务尚未到发布时间，<b>暂无执行记录</b>。<br>到点后系统会自动生成，届时在这里查看。</p>';
+    } else {
+        html = '<div class="inst-row-head"><span>发布时间</span><span>执行人</span><span>状态</span><span>超期</span><span>操作</span></div>' +
+            list.map(function(i){
+                var st = i.state ? '<span class="status status-draft">' + i.state + '</span>' : instStatusHtml(i.prog);
+                var ov;
+                if(i.over === 'done'){
+                    ov = '<span class="status" style="background:var(--amber-soft);color:var(--amber);font-size:11px;">超期完成</span>';
+                } else if(i.over){
+                    ov = '<span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span>';
+                } else {
+                    ov = '<span style="color:var(--text-muted);font-size:11px;">\\u2014</span>';
+                }
+                var names = String(i.who).split('、').filter(Boolean);
+                var mm = String(i.prog).match(/(\\d+)\\s*\\/\\s*(\\d+)/);
+                var cc = mm ? parseInt(mm[1], 10) : 0;
+                var tt = mm ? parseInt(mm[2], 10) : names.length;
+                var pend = i.state ? [] : (cc === 0 ? names.slice() : (i.pend ? String(i.pend).split('、') : names.slice(-1)));
+                var ops = '<button class="btn btn-ghost btn-xs" onclick="showInstDetail(\\'' + i.id + '\\',\\'' + name + '\\')">详情</button>';
+                if(!i.state && cc < tt){
+                    if(cc === 0){
+                        ops += '<button class="btn btn-ghost btn-xs" style="margin-left:6px;" onclick="withdrawInst(this)">撤回</button>';
+                    } else {
+                        ops += '<button class="btn btn-danger btn-xs" style="margin-left:6px;" onclick="voidInst(this)">作废</button>';
+                    }
+                    if(pend.length && cc < tt){
+                        ops += '<button class="btn btn-ghost btn-xs" style="margin-left:6px;" onclick="openAdjustInst(this.closest(\\'.inst-row\\'))">调整</button>';
+                    }
+                }
+                return '<div class="inst-row" data-tid="' + i.id + '" data-name="' + name + '" data-state="' + (i.state || '') + '" data-exec="' + i.who + '" data-pending="' + pend.join('、') + '">'
+                     + '<span>' + i.time + '</span><span>' + i.who + '</span><span>' + st + '</span><span>' + ov + '</span><span>' + ops + '</span></div>';
+            }).join('') +
+            '<p style="margin-top:10px;font-size:11px;color:var(--text-muted);line-height:1.7;">说明：<b>撤回</b>仅当无人执行（0/n），干净收回、不通知；<b>作废</b>用于已有人提交的执行，需填原因并通知执行人。<br>已超期的执行同样可撤回 / 作废，但会从「应完成 / 超期」统计中剔除（日志仍保留）。</p>';
+    }
+    showModal('<i class="bi bi-list-ul"></i> 执行明细 · '+name, html, '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>', true);
+}
+function withdrawInst(btn){
+    var rowEl = btn.closest('.inst-row');
+    if(!rowEl) return;
+    var nm = rowEl.dataset.name || '本次执行';
+    var over = !!rowEl.querySelector('.overdue-mark');
+    withdrawModal(nm, function(reason){
+        logInstEvent(rowEl.dataset.tid || '', '已撤回', '原因：' + reason);
+        var st = rowEl.children[2];
+        if(st) st.innerHTML = '<span class="status status-draft">已撤回</span>';
+        var acts = rowEl.children[4];
+        if(acts) acts.innerHTML = '<button class="btn btn-ghost btn-xs" onclick="showInstDetail(\\'' + (rowEl.dataset.tid || '') + '\\',\\'' + nm + '\\')">详情</button>';
+        rowEl.dataset.state = '已撤回';
+        toast('已撤回（已记入执行日志）','ok');
+    }, { overdue: over });
+}
+/* 实例列表里的作废（已有人提交的实例） */
+function voidInst(btn){
+    var rowEl = btn.closest('.inst-row');
+    if(!rowEl) return;
+    var nm = rowEl.dataset.name || '本次执行';
+    showModal('<i class="bi bi-slash-circle"></i> 作废本次执行',
+        '<div class="kv"><span class="k">任务</span><span class="v">'+nm+'</span></div>'+
+        '<div class="form-group" style="margin-top:14px;"><label class="form-label">作废原因<span class="required">*</span></label><textarea class="form-input" rows="3" placeholder="本次执行已有执行人提交，作废需填写原因并通知执行人" id="voidReason2"></textarea></div>'+
+        '<p class="form-hint"><i class="bi bi-info-circle"></i>作废后本次执行失效，不再计入统计；原因将通知执行人。</p>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'+
+        '<button class="btn btn-danger btn-sm" id="voidOk2">确认作废</button>');
+    document.getElementById('voidOk2').addEventListener('click', function(){
+        var r = document.getElementById('voidReason2');
+        if(!r || !r.value.trim()){ toast('请填写作废原因','err'); return; }
+        logInstEvent(rowEl.dataset.tid || '', '已作废', '原因：' + r.value.trim());
+        var st = rowEl.children[2];
+        if(st) st.innerHTML = '<span class="status status-draft">已作废</span>';
+        var acts = rowEl.children[4];
+        if(acts) acts.innerHTML = '<button class="btn btn-ghost btn-xs" onclick="showInstDetail(\\'' + (rowEl.dataset.tid || '') + '\\',\\'' + nm + '\\')">详情</button>';
+        rowEl.dataset.state = '已作废';
+        closeModal(); toast('已作废（已通知执行人，已记入执行日志）','ok');
+    });
+}
+/* 实例行：调整执行人（只换未提交的人，不动任务规则） */
+function openAdjustInst(rowEl){
+    if(!rowEl) return;
+    var tid = rowEl.dataset.tid || '';
+    var nM = rowEl.dataset.name || '';
+    var exec = String(rowEl.dataset.exec || '').split('、').filter(Boolean);
+    var pend = String(rowEl.dataset.pending || '').split('、').filter(Boolean);
+    if(!pend.length){ toast('本次执行没有可调整的执行人（都已提交）','err'); return; }
+    var cand = ['李强','王建国','赵志远','刘明辉','陈安平'].filter(function(x){ return exec.indexOf(x) < 0; });
+    if(!cand.length){ toast('暂无可指派的其他人员','err'); return; }
+    var fromHtml = (pend.length === 1)
+        ? '<div class="kv"><span class="k">原执行人</span><span class="v">' + pend[0] + '</span></div>'
+        : '<div class="form-group" style="margin-bottom:8px;"><label class="form-label">原执行人<span class="required">*</span></label><select class="form-input" id="adjFrom">'
+          + pend.map(function(x){ return '<option>' + x + '</option>'; }).join('') + '</select></div>';
+    showModal('<i class="bi bi-person-gear"></i> 调整执行人',
+        '<div class="kv"><span class="k">任务</span><span class="v">' + nM + '</span></div>'
+        + fromHtml
+        + '<div class="form-group" style="margin-top:10px;"><label class="form-label">调整给<span class="required">*</span></label>'
+        + '<select class="form-input" id="adjTo"><option value="">请选择</option>'
+        + cand.map(function(x){ return '<option>' + x + '</option>'; }).join('') + '</select></div>'
+        + '<div class="form-group"><label class="form-label">调整原因</label><input class="form-input" id="adjReason" placeholder="选填，会记入执行日志"></div>'
+        + '<p class="form-hint"><i class="bi bi-info-circle"></i>只调整<b>本次执行</b>上的这个人，<b>不改任务规则</b>、不影响其它执行；<span class="hl">已提交的人不能调整</span>。确认后通知新旧执行人，并记入执行日志。</p>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'
+        + '<button class="btn btn-amber btn-sm" id="adjInstOk">确认调整</button>');
+    document.getElementById('adjInstOk').addEventListener('click', function(){
+        var from = (pend.length === 1) ? pend[0] : ((document.getElementById('adjFrom') || {}).value || '');
+        var to = (document.getElementById('adjTo') || {}).value || '';
+        var rsn = (document.getElementById('adjReason') || {}).value || '';
+        if(!from){ toast('请选择原执行人','err'); return; }
+        if(!to){ toast('请选择调整给谁','err'); return; }
+        if(to === from){ toast('新旧执行人不能相同','err'); return; }
+        exec = exec.map(function(x){ return x === from ? to : x; });
+        pend = pend.filter(function(x){ return x !== from; });
+        rowEl.dataset.exec = exec.join('、');
+        rowEl.dataset.pending = pend.join('、');
+        if(rowEl.classList.contains('inst-row')){
+            if(rowEl.children[1]) rowEl.children[1].textContent = exec.join('、');
+        } else {
+            var c = rowEl.children[2];
+            if(c) c.innerHTML = '<button class="inst-link act-person-list">' + exec.join('、') + '</button>';
+        }
+        if(!pend.length){
+            var b = rowEl.querySelector('.act-adjust-inst');
+            if(!b){
+                Array.prototype.forEach.call(rowEl.querySelectorAll('button'), function(x){
+                    if(x.textContent.trim() === '调整') x.parentNode.removeChild(x);
+                });
+            }
+        }
+        logInstEvent(tid, '已调整执行人', from + ' → ' + to + (rsn ? '（' + rsn + '）' : ''));
+        closeModal(); toast('已调整执行人，已通知新旧执行人（已记入执行日志）','ok');
+    });
+}
+function openExecPersonList(row){
+    EXEC_SRC_ROW = row;
+    var tid = row.dataset.tid || '';
+    var name = rowName(row);
+    var trig = row.children[1] ? row.children[1].textContent.trim() : '';
+    var d = INST_DETAIL[tid] || {};
+    var signers = (d.signers || []).slice();
+    if(!signers.length){
+        showModal('<i class="bi bi-people"></i> 执行人列表 · ' + name,
+            '<p style="font-size:12.5px;color:var(--text-muted);line-height:1.7;">本次执行暂无执行人数据。</p>',
+            '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>');
+        return;
+    }
+    var whoOpts = '<option value="">执行人（全部）</option>' + signers.map(function(s){ return '<option>' + s.n + '</option>'; }).join('');
+    var rows = signers.map(function(s){
+        var submitted = (s.s === '已提交');
+        return '<div class="person-row" data-who="' + s.n + '" data-state="' + s.s + '" data-over="' + (s.o ? '1' : '0') + '">'
+             + '<span>' + s.n + '</span>'
+             + '<span>' + s.s + '</span>'
+             + '<span>' + (s.t || '—') + '</span>'
+             + '<span>' + (s.o ? '<span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span>' : '<span style="color:var(--text-muted);">—</span>') + '</span>'
+             + '<span><button class="btn btn-ghost btn-xs" data-person="' + s.n + '" onclick="openPersonSubmit(this.dataset.person)">' + (submitted ? '查看提交' : '查看') + '</button>'
+             + (submitted ? '' : '<button class="btn btn-ghost btn-xs" style="margin-left:6px;" data-person="' + s.n + '" onclick="openAdjustPerson(this.dataset.person)">调整</button>')
+             + '</span>'
+             + '</div>';
+    }).join('');
+    var html = '<p style="font-size:12px;color:var(--text-secondary);margin:0 0 10px;">本次执行共 ' + signers.length + ' 位执行人'
+             + (trig ? ' · 发布时间 ' + trig : '') + (d.span ? ' · 计划 ' + d.span : '') + '</p>'
+        + '<div class="modal-filters">'
+        + '<select class="form-input" id="pfWho" style="width:auto;padding:4px 8px;font-size:12px;" onchange="filterPersonRows()">' + whoOpts + '</select>'
+        + '<select class="form-input" id="pfState" style="width:auto;padding:4px 8px;font-size:12px;" onchange="filterPersonRows()"><option value="">提交情况（全部）</option><option>已提交</option><option>未提交</option></select>'
+        + '<select class="form-input" id="pfOver" style="width:auto;padding:4px 8px;font-size:12px;" onchange="filterPersonRows()"><option value="">是否超期（全部）</option><option value="1">仅超期</option><option value="0">未超期</option></select>'
+        + '</div>'
+        + '<div class="person-row-head"><span>执行人</span><span>提交情况</span><span>提交时间</span><span>超期</span><span>操作</span></div>'
+        + '<div id="personRows">' + rows + '</div>'
+        + '<p style="margin-top:10px;font-size:11px;color:var(--text-muted);">点「查看」看该执行人本次提交的内容（只读）；<b>未提交也可查看</b>，页面会照常展示任务基本信息。</p>';
+    showModal('<i class="bi bi-people"></i> 执行人列表 · ' + name, html, '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>');
+}
+function filterPersonRows(){
+    var g = function(id){ var el = document.getElementById(id); return el ? el.value : ''; };
+    var w = g('pfWho'), st = g('pfState'), ov = g('pfOver');
+    document.querySelectorAll('#personRows .person-row').forEach(function(r){
+        var ok = (!w || r.dataset.who === w) && (!st || r.dataset.state === st) && (!ov || r.dataset.over === ov);
+        r.style.display = ok ? '' : 'none';
+    });
+}
+/* 实例级：调整某一条实例上的某个执行人（不改任务规则；已提交者不可调） */
+function openAdjustPerson(person){
+    var row = EXEC_SRC_ROW; if(!row) return;
+    var tid = row.dataset.tid || '';
+    var peers = ['李强','王建国','赵志远','刘明辉','陈安平'].filter(function(x){ return x !== person; });
+    showModal('<i class="bi bi-person-gear"></i> 调整执行人',
+        '<div class="kv"><span class="k">任务</span><span class="v">' + rowName(row) + '</span></div>'
+        + '<div class="kv"><span class="k">原执行人</span><span class="v">' + person + '</span></div>'
+        + '<div class="form-group" style="margin-top:14px;"><label class="form-label">新执行人<span class="required">*</span></label>'
+        + '<select class="form-input" id="adjTo"><option value="">请选择</option>' + peers.map(function(x){ return '<option>' + x + '</option>'; }).join('') + '</select></div>'
+        + '<p class="form-hint"><i class="bi bi-info-circle"></i>只调整<b>本次执行</b>上的这个人，<b>不改任务规则</b>、也不影响其它执行；<span class="hl">已提交的人不能调整</span>。调整会记入执行日志。</p>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">取消</button>'
+        + '<button class="btn btn-amber btn-sm" id="adjSubmit">确认调整</button>');
+    document.getElementById('adjSubmit').addEventListener('click', function(){
+        var sel = document.getElementById('adjTo');
+        if(!sel || !sel.value){ toast('请选择新执行人','err'); return; }
+        var nn = sel.value;
+        var d = INST_DETAIL[tid] || {};
+        (d.signers || []).forEach(function(s){ if(s.n === person) s.n = nn; });
+        logInstEvent(tid, '已调整执行人', person + ' → ' + nn);
+        closeModal(); toast('已调整执行人（已记入执行日志）','ok');
+        openExecPersonList(row);
+    });
+}
+/* 二级下钻：该执行人提交的内容（只读整页；未提交也进页面，只展示基本信息） */
+function openPersonSubmit(person){
+    var row = EXEC_SRC_ROW; if(!row) return;
+    EXEC_PERSON = person;
+    closeModal();
+    renderExecPage(row, 'view');
+}
+
+/* ====================== 任务详情页：发布 / 编辑计划 / 查看 / 复制 ====================== */
+var PUB_MODE = 'publish', PUB_FROM = 'publish', PUB_TID = null;
+var PLAN_DEMO = {
+    'REC20260625': { name:'东区3号矿井日常巡检', exec:['李强','王建国'], part:['刘明辉'], form:'普通业务表单',
+        start:'2026-07-01T08:00', end:'2026-12-31T17:00', desc:'每日东区3号矿井例行巡检', repeatOn:true, freq:'按天', times:['08:00','10:00'] },
+    'T20260627005': { name:'中央水泵房安全检查', exec:['陈安平','李强'], part:[], form:'普通业务表单',
+        start:'2026-06-27T09:00', end:'2026-06-27T17:00', desc:'水泵房安全检查', repeatOn:false, freq:'按天', times:['08:00'] },
+    'T20260701007': { name:'瓦斯浓度监测', exec:['李强'], part:[], form:'无',
+        start:'2026-07-02T08:00', end:'2026-07-02T12:00', desc:'瓦斯浓度监测', repeatOn:false, freq:'按天', times:['08:00'] },
+    'T20260901001': { name:'南区排水系统巡检', exec:['赵志远'], part:[], form:'普通业务表单',
+        start:'2026-09-01T08:00', end:'2026-09-01T17:00', desc:'', repeatOn:false, freq:'按天', times:['08:00'] },
+    'REC20260701': { name:'西区通风系统巡检', exec:['刘明辉'], part:[], form:'普通业务表单',
+        start:'2026-06-01T09:00', end:'2026-12-31T17:00', desc:'', repeatOn:true, freq:'按周', times:['09:00'] },
+    'REC20260520': { name:'北区提升机检修', exec:['李强','赵志远'], part:[], form:'无',
+        start:'2026-05-01T07:00', end:'2026-06-30T17:00', desc:'', repeatOn:true, freq:'按月', times:['07:00'] }
+};
+function setRepeatPrefill(freq, dims, on){
+    var sw = document.querySelector('.switch[data-sw="prepeat"]');
+    if(sw) sw.classList.toggle('on', !!on);
+    var sel = document.getElementById('repFreq2');
+    if(sel) sel.value = freq || '按天';
+    repFreqChange('repFreq2');
+    var pick = (dims && dims.length) ? dims : ((freq === '按周') ? ['周一'] : ((freq === '按月') ? ['1号'] : null));
+    if(pick){
+        document.querySelectorAll('#repDims2 .rp-pop input[type=checkbox]').forEach(function(c){
+            c.checked = pick.indexOf(c.value) >= 0;
+        });
+        repDimSummary(2);
+    }
+    var dl = document.getElementById('repDelay2'); if(dl) dl.value = '0';
+    var db = document.getElementById('repDelayBox2'); if(db) db.style.display = 'none';
+    updateNextTaskBtn();
+}
+function fillTaskForm(tid, nameOverride){
+    var d = PLAN_DEMO[tid] || {};
+    document.getElementById('pTaskName').value = nameOverride || d.name || '';
+    document.getElementById('pInitiator').value = '张伟明';
+    PUB_SELECTED['pExecutor'] = (d.exec || []).slice();
+    PUB_SELECTED['pParticipant'] = (d.part || []).slice();
+    var ex = document.getElementById('pExecutor');
+    ex.textContent = (d.exec && d.exec.length) ? ('已选 ' + d.exec.length + ' 人：' + d.exec.join('、')) : '点击选择执行人';
+    ex.style.color = (d.exec && d.exec.length) ? 'var(--text-primary)' : 'var(--text-muted)';
+    var pa = document.getElementById('pParticipant');
+    pa.textContent = (d.part && d.part.length) ? ('已选 ' + d.part.length + ' 人：' + d.part.join('、')) : '点击选择参与人';
+    pa.style.color = (d.part && d.part.length) ? 'var(--text-primary)' : 'var(--text-muted)';
+    document.getElementById('pFormType').textContent = d.form || '普通业务表单';
+    document.getElementById('pStart').value = d.start || '';
+    document.getElementById('pEnd').value = d.end || '';
+    document.getElementById('pDesc').value = d.desc || '';
+    setRepeatPrefill(d.freq, null, d.repeatOn);
+    var rsw = document.querySelector('.switch[data-sw="premind"]');
+    if(rsw) rsw.classList.add('on');
+}
+function enterTaskPage(mode, tid, opts){
+    opts = opts || {};
+    PUB_MODE = mode; PUB_TID = tid || null;
+    var form = document.getElementById('pubForm');
+    var head = document.getElementById('pubPageHead'); if(head) head.style.display = 'none';
+    form.style.display = '';
+    form.classList.toggle('ro', mode === 'view');
+    var titleEl = document.getElementById('pubTitle');
+    var tagEl = document.getElementById('pubModeTag');
+    var noticeEl = document.getElementById('pubNotice');
+    var draft = document.getElementById('btnPubDraft');
+    var save = document.getElementById('btnPubSave');
+    var submit = document.getElementById('btnPubSubmit');
+    var nm = opts.name || (PLAN_DEMO[tid] || {}).name || '';
+    if(mode === 'edit'){
+        titleEl.textContent = '编辑计划 · ' + nm;
+        tagEl.style.display = ''; tagEl.className = 'mode-tag'; tagEl.textContent = '可编辑';
+        noticeEl.style.display = ''; noticeEl.textContent = '修改只影响之后生成的执行记录，已生成的记录不受影响。';
+        draft.style.display = 'none'; submit.style.display = 'none'; save.style.display = '';
+    } else if(mode === 'view'){
+        titleEl.textContent = '查看任务 · ' + nm;
+        tagEl.style.display = ''; tagEl.className = 'mode-tag ro'; tagEl.textContent = '只读';
+        noticeEl.style.display = ''; noticeEl.textContent = '只读模式：仅可查看，内容不可修改。';
+        draft.style.display = 'none'; submit.style.display = 'none'; save.style.display = 'none';
+    } else if(mode === 'copy'){
+        titleEl.textContent = '复制任务 · ' + nm;
+        tagEl.style.display = ''; tagEl.className = 'mode-tag'; tagEl.textContent = '新建（照抄）';
+        noticeEl.style.display = ''; noticeEl.textContent = '已照抄原任务内容（名称加了「（副本）」），确认后点「发布任务」生成一条新任务。';
+        draft.style.display = ''; submit.style.display = ''; save.style.display = 'none';
+    } else {
+        titleEl.textContent = '发布任务';
+        PUB_BACK_TAB = 'pt-new';
+        tagEl.style.display = 'none'; noticeEl.style.display = 'none';
+        draft.style.display = ''; submit.style.display = ''; save.style.display = 'none';
+    }
+    pubTabSwitch('pub-basic');
+    fillTaskForm(tid, opts.name);
+    document.querySelector('.content').scrollTop = 0;
+}
+function pubFrom(row){ return (row.closest && row.closest('#view-ledger')) ? 'ledger' : 'publish'; }
+function openPlanEdit(row){ PUB_FROM=pubFrom(row); PUB_BACK_TAB='pt-launch'; switchView('view-publish'); enterTaskPage('edit', row.dataset.tid, {name: row.children[0].textContent}); }
+function openPlanView(row){ PUB_FROM=pubFrom(row); PUB_BACK_TAB='pt-launch'; switchView('view-publish'); enterTaskPage('view', row.dataset.tid, {name: row.children[0].textContent}); }
+function openPlanCopy(row){ PUB_FROM=pubFrom(row); PUB_BACK_TAB='pt-launch'; switchView('view-publish'); enterTaskPage('copy', row.dataset.tid, {name: row.children[0].textContent + '（副本）'}); }
+
+/* ====================== 实例详情（弹窗） ====================== */
+var INST_DETAIL = {
+    'I20260714001': { form:'普通业务表单', work:'巡检工', loc:'东区3号矿井', span:'2026-07-14 08:00 ~ 17:00', plan:'东区3号矿井日常巡检（周期）', desc:'例行巡检，重点看顶板离层',
+        signers:[ {n:'李强', s:'未提交', t:'—', o:false}, {n:'王建国', s:'已提交', t:'2026-07-14 16:20', o:false} ], mine:{submitted:false} },
+    'I20260701007': { form:'无', work:'瓦检工', loc:'东区3号矿井', span:'2026-07-02 08:00 ~ 12:00', plan:'瓦斯浓度监测（单次）', desc:'监测瓦斯浓度并记录',
+        signers:[ {n:'李强', s:'未提交', t:'—', o:true} ], mine:{submitted:false} },
+    'I20260626004': { form:'无', work:'机电维修工', loc:'北区提升机房', span:'06-28 ~ 06-29', plan:'北区提升机检修（周期）', desc:'更换闸瓦、试运行',
+        signers:[ {n:'李强', s:'已提交', t:'2026-06-29 10:12', o:true}, {n:'赵志远', s:'已提交', t:'2026-06-29 11:40', o:true} ],
+        mine:{submitted:true, t:'2026-06-29 10:12', form:'设备维修报告表', desc:'更换提升机闸瓦，试运行正常', files:'闸瓦照片.jpg'} },
+    'I20260627005': { form:'普通业务表单', work:'安全员', loc:'中央水泵房', span:'2026-06-27 09:00 ~ 17:00', plan:'中央水泵房安全检查（单次）', desc:'检查水泵及配电设备',
+        signers:[ {n:'陈安平', s:'已提交', t:'2026-06-27 15:00', o:false}, {n:'李强', s:'已提交', t:'2026-06-27 15:20', o:false} ],
+        mine:{submitted:true, t:'2026-06-27 15:20', form:'日常巡检记录表', desc:'水泵房设备正常', files:'—'} },
+    'I20260625003': { form:'普通业务表单', work:'巡检工', loc:'东区3号矿井', span:'2026-06-30 08:00 ~ 17:00', pe:'2026-06-30 17:00', plan:'东区3号矿井日常巡检（周期）', desc:'例行巡检',
+        signers:[ {n:'李强', s:'未提交', t:'—', o:true}, {n:'王建国', s:'未提交', t:'—', o:true} ], mine:null, fwd:'李强 → 王建国 · 2026-06-30 09:15' },
+    'I20260630008': { form:'普通业务表单', work:'巡检工', loc:'南区排水系统', span:'2026-06-30 14:00 ~ 22:00', pe:'2026-06-30 22:00', plan:'南区排水系统巡检（周期）', desc:'排水系统例行巡检',
+        signers:[ {n:'赵志远', s:'未提交', t:'—', o:true} ], mine:null },
+    'I20260628002': { form:'普通业务表单', work:'通风工', loc:'西区通风机房', span:'2026-06-28 09:00 ~ 17:00', pe:'2026-06-28 17:00', plan:'西区通风系统巡检（周期）', desc:'通风系统例行巡检',
+        signers:[ {n:'刘明辉', s:'已提交', t:'2026-06-28 15:30', o:false} ], mine:null },
+    'I20260630012': { form:'普通业务表单', work:'巡检工', loc:'东区3号矿井', span:'2026-06-30 08:00 ~ 17:00', pe:'2026-06-30 17:00', plan:'东区3号矿井日常巡检（周期）', desc:'例行巡检，重点看顶板离层',
+        signers:[ {n:'李强', s:'已提交', t:'2026-06-30 16:20', o:false}, {n:'王建国', s:'已提交', t:'2026-06-30 17:40', o:true} ], mine:null },
+    'I20260629009': { form:'普通业务表单', work:'巡检工', loc:'东区3号矿井', span:'2026-06-29 08:00 ~ 17:00', pe:'2026-06-29 17:00', plan:'东区3号矿井日常巡检（周期）', desc:'例行巡检',
+        signers:[ {n:'李强', s:'未提交', t:'—', o:false}, {n:'王建国', s:'未提交', t:'—', o:false} ], mine:null },
+    'I20260715021': { form:'普通业务表单', work:'通风工', loc:'西区通风机房', span:'2026-07-15 09:00 ~ 17:00', pe:'2026-07-15 17:00', plan:'西区通风系统巡检（周期）', desc:'通风系统例行巡检',
+        signers:[ {n:'刘明辉', s:'已提交', t:'2026-07-15 15:10', o:false} ], mine:null },
+    'I20260714021': { form:'普通业务表单', work:'通风工', loc:'西区通风机房', span:'2026-07-14 09:00 ~ 17:00', pe:'2026-07-14 17:00', plan:'西区通风系统巡检（周期）', desc:'通风系统例行巡检',
+        signers:[ {n:'刘明辉', s:'未提交', t:'—', o:true} ], mine:null },
+    'I20260520031': { form:'无', work:'机电维修工', loc:'北区提升机房', span:'2026-05-20 07:00 ~ 12:00', pe:'2026-05-20 12:00', plan:'北区提升机检修（周期）', desc:'更换闸瓦、试运行',
+        signers:[ {n:'王建国', s:'已提交', t:'2026-05-20 12:40', o:true} ], mine:null },
+    'I20260519031': { form:'无', work:'机电维修工', loc:'北区提升机房', span:'2026-05-19 07:00 ~ 12:00', pe:'2026-05-19 12:00', plan:'北区提升机检修（周期）', desc:'更换闸瓦、试运行',
+        signers:[ {n:'王建国', s:'已提交', t:'2026-05-19 09:10', o:false}, {n:'赵志远', s:'未提交', t:'—', o:false} ], mine:null }
+};
+/* ====================== 任务基本信息（执行页 / 任务详情页共用） ====================== */
+/* 执行级信息兜底：任务信息取自执行详情数据，避免详情/提交页出现「—」 */
+var PART_OF = {
+    'I20260630012':'刘明辉', 'I20260629009':'刘明辉',
+    'I20260715021':'李强', 'I20260714021':'李强',
+    'I20260520031':'赵志远', 'I20260519031':'赵志远'
+};
+function instInfoOf(tid){
+    var q = INST_DETAIL[tid];
+    if(!q) return null;
+    return {
+        starter: '张伟明',
+        exec: (q.signers || []).map(function(s){ return s.n; }).join('、'),
+        part: PART_OF[tid] || '—',
+        form: q.form, work: q.work, loc: q.loc, span: q.span, desc: q.desc
+    };
+}
+function taskInfoGrid(row, tid, ftOverride){
+    var d = EXEC_INFO[tid] || instInfoOf(tid) || {};
+    var ft = ftOverride || row.dataset.ft || '普通业务表单';
+    var ftLabel = (ft === '无') ? '无（普通任务）' : ft;
+    var execNames = (row.children[2] && row.children[2].textContent.trim()) || d.exec || '\\u2014';
+    var html = '<div class="exec-info">'
+        + '<div><span class="k">发起人</span>' + (d.starter || '\\u2014') + '</div>'
+        + '<div><span class="k">执行人</span>' + execNames + '</div>'
+        + '<div><span class="k">参与人员</span>' + (d.part || '\\u2014') + '</div>'
+        + '<div><span class="k">执行表单</span>' + ftLabel + '</div>'
+        + '<div><span class="k">执行工种</span>' + (d.work || '\\u2014') + '</div>'
+        + '<div><span class="k">执行地点</span>' + (d.loc || '\\u2014') + '</div>'
+        + '<div><span class="k">计划时间</span>' + (d.span || '\\u2014') + '</div>'
+        + '<div class="full"><span class="k">执行说明</span>' + (d.desc || '\\u2014') + '</div>'
+        + '</div>';
+    return { ft: ft, ftLabel: ftLabel, execNames: execNames, html: html };
+}
+/* 状态文案：优先识别 已撤回 / 已作废，其余按进度算 */
+function statusTextOf(row, prog){
+    var c = row && row.children[3];
+    var s = c ? c.textContent.trim() : '';
+    if(s.indexOf('已作废') >= 0) return '已作废';
+    if(s.indexOf('已撤回') >= 0) return '已撤回';
+    var mm = String(prog).match(/(\\d+)\\s*\\/\\s*(\\d+)/);
+    if(!mm) return prog || '\\u2014';
+    var cc = parseInt(mm[1], 10), tot = parseInt(mm[2], 10);
+    if(tot && cc >= tot) return '已完成';
+    if(cc === 0) return '未执行';
+    return '执行中 ' + cc + '/' + tot;
+}
+/* ====================== 我的任务 · 任务详情（两块：基本信息 + 执行日志） ====================== */
+var TD_ROW = null, TD_TID = '', TD_NAME = '', TD_BACK_TAB = 't-done', TD_LOG = [];
+var LOG_DEMO = {
+    'I20260626004': [
+        { who:'系统', act:'已发布', time:'2026-06-28 08:00', kind:'publish' },
+        { who:'李强', act:'已提交', time:'2026-06-29 10:12', over:true, kind:'submit', person:'李强' },
+        { who:'赵志远', act:'已提交', time:'2026-06-29 11:40', over:true, kind:'submit', person:'赵志远' }
+    ],
+    'I20260627005': [
+        { who:'系统', act:'已发布', time:'2026-06-27 09:00', kind:'publish' },
+        { who:'陈安平', act:'已提交', time:'2026-06-27 15:00', kind:'submit', person:'陈安平' },
+        { who:'李强', act:'已提交', time:'2026-06-27 15:20', kind:'submit', person:'李强' }
+    ],
+    'I20260625003': [
+        { who:'系统', act:'已发布', time:'2026-06-30 08:00', kind:'publish' },
+        { who:'李强 → 王建国', act:'已转办', time:'2026-06-30 09:15', kind:'transfer', from:'李强', to:'王建国', reason:'临时下井检修，无法按时到场' },
+        { who:'王建国', act:'未提交', time:'', over:true, kind:'pending' }
+    ],
+    'I20260630008': [
+        { who:'系统', act:'已发布', time:'2026-06-30 14:00', kind:'publish' },
+        { who:'赵志远', act:'未提交', time:'', over:true, kind:'pending' }
+    ],
+    'I20260628002': [
+        { who:'系统', act:'已发布', time:'2026-06-28 09:00', kind:'publish' },
+        { who:'刘明辉', act:'已提交', time:'2026-06-28 15:30', kind:'submit', person:'刘明辉' }
+    ],
+    'I20260620013': [
+        { who:'系统', act:'已发布', time:'2026-06-20 08:00', kind:'publish' },
+        { who:'李强', act:'已提交', time:'2026-06-20 09:00', kind:'submit', person:'李强' },
+        { who:'张伟明', act:'已作废', time:'2026-06-21 10:00', kind:'void', reason:'安排有误，取消本次' }
+    ]
+};
+function openTaskDetail(row){
+    TD_ROW = row;
+    TD_TID = row.dataset.tid || '';
+    TD_NAME = rowName(row);
+    var pane = row.closest ? row.closest('.myinst-pane') : null;
+    TD_BACK_TAB = pane ? pane.id : 't-done';
+    var prog = rowProg(row);
+    var over = !!row.querySelector('.overdue-mark');
+    /* 「已转发」这类表没有进度列，按执行日志的签字人现算，避免出现「状态 · —」 */
+    var _info = INST_DETAIL[TD_TID] || {};
+    var _sigs = _info.signers || [];
+    if(!row.dataset.prog && _sigs.length){
+        var _done = 0;
+        _sigs.forEach(function(s){ if(s.s === '已提交') _done++; });
+        prog = _done + '/' + _sigs.length;
+        over = over || _sigs.some(function(s){ return !!s.o; });
+    }
+    var gi = taskInfoGrid(row, TD_TID, row.dataset.ft);
+    document.getElementById('tdTitle').textContent = '任务详情 · ' + TD_NAME;
+    document.getElementById('tdMeta').innerHTML =
+        '<div class="exec-pills"><span class="pill">状态 · ' + statusTextOf(row, prog) + '</span>'
+        + (over ? '<span class="pill warn">超期</span>' : '<span class="pill ok">未超期</span>') + '</div>'
+        + '<div class="exec-block">'
+        +   '<div class="exec-block-head"><i class="bi bi-info-circle"></i> 任务基本信息</div>'
+        +   gi.html
+        + '</div>';
+    document.getElementById('tdLog').innerHTML =
+        '<div class="exec-block">'
+        +   '<div class="exec-block-head"><i class="bi bi-journal-text"></i> 执行日志</div>'
+        +   taskLogHtml()
+        + '</div>';
+    switchView('view-tdetail');
+    document.querySelector('.content').scrollTop = 0;
+}
+function taskLogHtml(){
+    var list = (LOG_DEMO[TD_TID] || []).slice();
+    var ev = INST_EVENTS[TD_TID];
+    if(ev) list.push({ who: ev.who, act: ev.act, time: ev.time, kind: 'event', note: ev.note });
+    var pend = list.filter(function(x){ return x.kind === 'pending'; });
+    var rest = list.filter(function(x){ return x.kind !== 'pending'; })
+                   .sort(function(a, b){ return String(b.time || '').localeCompare(String(a.time || '')); });
+    TD_LOG = pend.concat(rest);
+    if(!TD_LOG.length) return '<div style="font-size:12px;color:var(--text-muted);padding:6px 0;">暂无执行记录</div>';
+    var h = '<table class="idetail-table"><thead><tr><th>执行人 / 对象</th><th>动作</th><th>时间</th><th>超期</th><th>操作</th></tr></thead><tbody>';
+    TD_LOG.forEach(function(x, i){
+        var cls = (x.kind === 'submit') ? 'ok' : (x.kind === 'pending' ? 'warn' : '');
+        var act = (cls ? '<span class="' + cls + '">' + x.act + '</span>' : x.act) + (x.note ? ' · ' + x.note : '');
+        var op = '<span style="color:var(--text-muted);">\\u2014</span>';
+        if(x.kind === 'submit'){
+            op = '<button class="btn btn-ghost btn-xs" onclick="tdViewSubmit(' + i + ')">查看提交</button>';
+        } else if(x.kind === 'transfer'){
+            op = '<button class="btn btn-ghost btn-xs" onclick="tdTransferDetail(' + i + ')">转办详情</button>';
+        } else if(x.kind === 'void' || x.kind === 'withdraw' || x.kind === 'event'){
+            op = '<button class="btn btn-ghost btn-xs" onclick="tdEventDetail(' + i + ')">详情</button>';
+        }
+        h += '<tr><td>' + x.who + '</td><td>' + act + '</td><td>' + (x.time || '\\u2014') + '</td><td>'
+           + (x.over ? '<span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span>'
+                     : '<span style="color:var(--text-muted);">\\u2014</span>')
+           + '</td><td>' + op + '</td></tr>';
+    });
+    return h + '</tbody></table>';
+}
+function tdViewSubmit(i){
+    var x = TD_LOG[i]; if(!x || !TD_ROW) return;
+    EXEC_PERSON = x.person || x.who;
+    EXEC_MODE = 'view'; EXEC_ROW = TD_ROW; EXEC_BACK_TAB = TD_BACK_TAB;
+    renderExecPage(TD_ROW, 'view');
+    EXEC_BACK_VIEW = 'view-tdetail';
+}
+function tdTransferDetail(i){
+    var x = TD_LOG[i]; if(!x) return;
+    showModal('<i class="bi bi-arrow-left-right"></i> 转办详情',
+        '<div class="kv"><span class="k">转出人</span><span class="v">' + (x.from || x.who) + '</span></div>'
+      + '<div class="kv"><span class="k">接收人</span><span class="v">' + (x.to || '\\u2014') + '</span></div>'
+      + '<div class="kv"><span class="k">转办时间</span><span class="v">' + (x.time || '\\u2014') + '</span></div>'
+      + '<div class="kv"><span class="k">转办原因</span><span class="v">' + (x.reason || '\\u2014') + '</span></div>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>');
+}
+function tdEventDetail(i){
+    var x = TD_LOG[i]; if(!x) return;
+    showModal('<i class="bi bi-journal-text"></i> 操作详情',
+        '<div class="kv"><span class="k">动作</span><span class="v">' + x.act + '</span></div>'
+      + '<div class="kv"><span class="k">操作人</span><span class="v">' + (x.who || '\\u2014') + '</span></div>'
+      + '<div class="kv"><span class="k">时间</span><span class="v">' + (x.time || '\\u2014') + '</span></div>'
+      + '<div class="kv"><span class="k">原因</span><span class="v">' + (x.reason || x.note || '\\u2014') + '</span></div>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>');
+}
+document.getElementById('btnBackTd').addEventListener('click', function(){
+    switchView('view-mytask'); activateMyTab(TD_BACK_TAB || 't-done');
+});
+
+function openInstDetail(row){
+    DETAIL_ROW = row;
+    var tb = row.parentNode ? row.parentNode.id : '';
+    showModal('<i class="bi bi-info-circle"></i> 执行详情 · ' + rowName(row),
+        detailHtml(row.dataset.tid || '', rowName(row), rowProg(row), !!row.querySelector('.overdue-mark'), tb),
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>');
+}
+/* 从数据构建实例详情（供「实例列表」里逐条查看，无需表格行） */
+function instProgOf(tid){
+    var d = INST_DETAIL[tid];
+    if(!d || !d.signers || !d.signers.length) return '—';
+    var done = d.signers.filter(function(x){ return x.s === '已提交'; }).length;
+    return done + '/' + d.signers.length;
+}
+function instOverOf(tid){
+    var d = INST_DETAIL[tid];
+    return !!(d && (d.signers || []).some(function(x){ return x.o; }));
+}
+/* 从执行日志打开某人的提交详情（只读整页） */
+function viewInstPersonSubmit(tid, name, person, prog){
+    closeModal();
+    var host = document.getElementById('execRowHost');
+    if(!host){
+        host = document.createElement('div');
+        host.id = 'execRowHost';
+        host.style.display = 'none';
+        document.getElementById('view-exec').appendChild(host);
+    }
+    host.innerHTML = '<table><tbody><tr></tr></tbody></table>';
+    var tr = host.querySelector('tr');
+    tr.dataset.tid = tid;
+    tr.dataset.name = name;
+    if(prog) tr.dataset.prog = prog;
+    var d = INST_DETAIL[tid] || {};
+    var sg = (d.signers || []).filter(function(x){ return x.n === person; })[0];
+    if(sg && sg.o){ var sp = document.createElement('span'); sp.className = 'overdue-mark'; tr.appendChild(sp); }
+    EXEC_PERSON = person;
+    if(sg && sg.s === '已提交' && !((SUBMIT_BY[tid] || {})[person])){
+        SUBMIT_BY[tid] = SUBMIT_BY[tid] || {};
+        SUBMIT_BY[tid][person] = {
+            t: sg.t,
+            form: (d.form === '无' ? '无（普通任务）' : d.form) || '普通业务表单',
+            desc: '已按要求完成本次执行内容并上传现场照片',
+            files: '现场照片.jpg'
+        };
+    }
+    renderExecPage(tr, 'view');
+    EXEC_BACK_VIEW = 'view-publish';
+    switchView('view-exec');
+}
+
+function showInstDetail(tid, name){
+    showModal('<i class="bi bi-info-circle"></i> 执行详情 · ' + name,
+        detailHtml(tid, name, instProgOf(tid), instOverOf(tid), ''),
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>');
+}
+function detailHtml(tid, name, prog, over, tb){
+    var d = INST_DETAIL[tid] || {};
+    var html = '';
+    var _pm = String(prog).match(/(\\d+)\\s*\\/\\s*(\\d+)/);
+    var _done = !!(_pm && _pm[1] === _pm[2] && _pm[2] !== '0');
+    html += '<div class="idetail-head"><b>' + name + '</b>'
+          + '<span class="pill">完成进度 ' + prog + '</span>'
+          + (over ? '<span class="pill warn">' + (_done ? '超期完成' : '超期') + '</span>' : '<span class="pill ok">未超期</span>')
+          + (d.pe ? '<span class="pill">计划结束 ' + d.pe + '</span>' : '')
+          + '</div>';
+    var _inf = instInfoOf(tid) || {};
+    var _formLabel = (_inf.form === '无') ? '无（普通任务）' : (_inf.form || d.form || '—');
+    html += '<div class="idetail-sec">任务信息</div><div class="idetail-grid">'
+          + '<div><span class="k">发起人</span>' + (_inf.starter || '—') + '</div>'
+          + '<div><span class="k">参与人员</span>' + (_inf.part || '—') + '</div>'
+          + '<div><span class="k">执行人</span>' + (_inf.exec || '—') + '</div>'
+          + '<div><span class="k">执行表单</span>' + _formLabel + '</div>'
+          + '<div><span class="k">任务起始时间</span>' + (d.span || '—') + '</div>'
+          + '<div><span class="k">执行地点</span>' + (d.loc || '—') + '</div>'
+          + '<div><span class="k">执行工种</span>' + (d.work || '—') + '</div>'
+          + '<div class="full"><span class="k">执行说明</span>' + (d.desc || '—') + '</div>'
+          + '</div>';
+    html += '<div class="idetail-sec">执行日志</div><table class="idetail-table"><thead><tr>'
+          + '<th>执行人</th><th>提交情况</th><th>提交时间</th><th>超期</th><th>操作</th></tr></thead><tbody>';
+    (d.signers || []).forEach(function(s){
+        var opCell;
+        if(s.s === '未提交'){
+            opCell = '<span style="color:var(--text-muted);font-size:11px;">—</span>';
+        } else {
+            opCell = '<button class="btn btn-ghost btn-xs" onclick="viewInstPersonSubmit(\\'' + tid + '\\',\\'' + String(name).replace(/'/g,'') + '\\',\\'' + s.n + '\\',\\'' + prog + '\\')">提交详情</button>';
+        }
+        html += '<tr><td>' + s.n + '</td><td>' + s.s + '</td><td>' + (s.t || '—') + '</td><td>'
+              + (s.o ? '<span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span>'
+                     : '<span style="color:var(--text-muted);">—</span>') + '</td><td>' + opCell + '</td></tr>';
+    });
+    if(d.fwd){
+        var fp = d.fwd.split(' · ');
+        html += '<tr><td>' + fp[0] + '</td><td><span class="hl">已转办</span></td><td>' + (fp[1] || '—') + '</td>'
+              + '<td><span style="color:var(--text-muted);">—</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td></tr>';
+    }
+    var ev = INST_EVENTS[tid];
+    if(ev){
+        html += '<tr><td>' + ev.who + '</td><td><span class="hl">' + ev.act + '</span>' + (ev.note ? ' · ' + ev.note : '') + '</td><td>' + ev.time + '</td><td><span style="color:var(--text-muted);">—</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td></tr>';
+    }
+    html += '</tbody></table>';
+    if(tb === 't-exec' || tb === 't-done'){
+        var m = d.mine;
+        html += '<div class="idetail-sec">我的提交</div>';
+        if(m && m.submitted){
+            html += '<div class="submit-line"><i class="bi bi-file-earmark-text"></i>'
+                  + '<b>' + m.form + '</b>'
+                  + '<span>提交于 ' + m.t + '</span>'
+                  + '<button class="btn btn-ghost btn-xs" style="margin-left:auto;" onclick="viewSubmittedForm()"><i class="bi bi-box-arrow-up-right"></i> 查看</button></div>';
+        } else {
+            html += '<div class="submit-line"><i class="bi bi-hourglass-split"></i>我尚未提交（回到列表点「执行」提交）</div>';
+        }
+    }
+    return html;
+}
+
+/* 预览联动：起止时间 / 重复时间变化 */
+['pStart','pEnd'].forEach(function(id){
+    var el = document.getElementById(id); if(!el) return;
+    el.addEventListener('change', updateNextTaskBtn);
+    el.addEventListener('input', updateNextTaskBtn);
+});
+(function(){
+    var box = document.getElementById('repDims2'); if(!box) return;
+    box.addEventListener('click', function(){ setTimeout(updateNextTaskBtn, 0); });
+})();
+(function(){
+    var sw = document.querySelector('.switch[data-sw="prepeat"]'); if(!sw) return;
+    sw.addEventListener('click', function(){ setTimeout(updateNextTaskBtn, 0); });
+})();
+['pStart','pEnd'].forEach(function(id){
+    var el = document.getElementById(id); if(!el) return;
+    el.addEventListener('change', updateNextTaskBtn);
+    el.addEventListener('input', updateNextTaskBtn);
+});
 
 /* 初始化 */
-initTaskPagination();
-syncLogic('template');
-<\/script>\r
-</body>\r
-</html>\r
+repFreqChange('repFreq1');
+repFreqChange('repFreq2');
+updateNextTaskBtn();
+
+<\/script>
+<div class="drawer-mask" id="drMask" onclick="closeNextDrawer()"></div>
+<aside class="drawer" id="drNext">
+  <div class="drawer-head">
+    <span class="drawer-title" id="drNextTitle">下一次任务详情</span>
+    <button class="btn btn-ghost btn-sm" style="margin-left:auto;" onclick="toast('演示：打印该任务单据')"><i class="bi bi-printer"></i> 打印</button>
+    <button class="btn btn-ghost btn-sm" onclick="closeNextDrawer()"><i class="bi bi-x-lg"></i></button>
+  </div>
+  <div class="drawer-body" id="drNextBody"></div>
+</aside>
+<!-- ============================================================ -->
+<!-- 开发说明抽屉 -->
+<!-- ============================================================ -->
+<div class="dev-doc-drawer" id="devDocDrawer">
+  <div class="dev-doc-resizer" id="ddResizer" title="拖动调整说明区高度"></div>
+  <div class="dev-doc-head">
+    <div><span class="t">开发说明</span><span class="s" id="devDocPageName">—</span><span class="dd-hint">（拖动上边缘可调整高度）</span></div>
+    <div class="r">
+      <div class="dev-doc-switch">
+        <button type="button" id="ddBtnPage" class="on" onclick="ddMode('page')">本页</button>
+        <button type="button" id="ddBtnCommon" onclick="ddMode('common')">通用规则</button>
+      </div>
+      <div class="dev-doc-close" onclick="closeDevDoc()" title="收起">×</div>
+    </div>
+  </div>
+  <div class="dev-doc-body" id="devDocBody"></div>
+</div>
+
+<!-- 文档正文源（按页面，隐藏；抽屉按当前页面渲染对应一份） -->
+
+<div class="devdoc-src" id="devdoc-common">
+
+<h4>1. 术语与对象模型</h4>
+<p>整个任务模块只有四层对象，页面上的每一行都能对应到其中一层。<b>除「模板编码」外，界面不展示任何编号</b>；任务编号、执行编号、待办 ID 只用于后台、日志与导出。</p>
+<table class="devdoc-table">
+  <thead><tr><th>对象</th><th>主键</th><th>产生方式</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>模板</td><td><code>tpl_code</code></td><td>在模板设计器中保存</td><td>可复用的一套低代码表单 + 全局规则；<b>唯一在界面上展示编号的对象</b></td></tr>
+    <tr><td>任务</td><td><code>task_id</code></td><td>一次「发布任务」产生</td><td>承载发起人、执行人、规则与状态；单次任务只生成 1 条执行，周期任务按规则持续生成</td></tr>
+    <tr><td>执行</td><td><code>exec_id</code></td><td>任务按规则到点生成（或「立即发布第一条」）</td><td>一次具体要干的活，有自己的计划起止与超期判定；界面统一称「本次执行」</td></tr>
+    <tr><td>待办</td><td><code>todo_id</code></td><td>执行 × 执行人，一人一条</td><td>会签的最小单位；各人独立提交、独立超期；转办、调整执行人改变的是待办上的人</td></tr>
+  </tbody>
+</table>
+
+<h5>1.1 编码生成规则</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:88px;">编码</th><th style="width:150px;">格式</th><th>生成时机与规则</th></tr></thead>
+  <tbody>
+    <tr><td>模板编码</td><td><code>TPL</code> + 3 位序号<br>例 <code>TPL001</code></td><td>租户内自增，从 001 起；<b>首次保存成功时由服务端生成</b>，前端只读、占位文案「（保存后自动生成）」；删除后序号<b>不回收、不复用</b>；超过 999 自动扩为 4 位（<code>TPL1000</code>）；并发用数据库序列 / Redis INCR 分配，<b>禁止 max(code)+1</b>；写入前校验唯一索引，冲突重试分配最多 3 次；生成后永不修改，编辑模板不改编码，复制模板生成新编码</td></tr>
+    <tr><td>任务编号</td><td>单次 <code>T</code>+<code>yyyyMMdd</code>+3 位<br>周期 <code>REC</code>+<code>yyyyMMdd</code>+3 位</td><td>发布日期 + 当日流水，跨天重置；仅后台与导出使用，<b>界面不展示</b></td></tr>
+    <tr><td>执行编号</td><td>任务编号 + <code>-</code> + 3 位序号<br>例 <code>T20260701007-001</code></td><td>同一任务下递增；生成后<b>不可变</b>；界面不展示</td></tr>
+    <tr><td>待办 ID</td><td>执行编号 + <code>-</code> + 人员序号</td><td>调整执行人时<b>保留原 todo_id</b>，只替换 person_id，便于追溯该待办的历史提交</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip">所有编码只增不减；跨租户不共享序列；原型中的编号均为演示占位，开发按上表规则生成。</p>
+
+<h4>2. 状态定义与流转</h4>
+<h5>2.1 任务级 4 态（界面上只会出现这 4 个词）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>状态</th><th>判定条件</th><th>允许操作</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>进行中</td><td>未到停止日期、未终止，且仍会生成执行</td><td>编辑计划 · 暂停 · 终止</td><td>单次任务在「实例尚未生成」时也是进行中</td></tr>
+    <tr><td>已暂停</td><td>用户手动暂停，尚未恢复</td><td>编辑计划 · 恢复 · 终止</td><td><b>暂停即刻生效</b>：当天未到点的执行不再生成；已生成的执行照常走完</td></tr>
+    <tr><td>已完成</td><td>到达停止日期，不再生成新的执行</td><td>查看 · 复制</td><td><b>「已完成」只代表这个任务的执行已全部生成完毕，不代表执行都做完了</b>；做完与否看执行层</td></tr>
+    <tr><td>已终止</td><td>人工终止，不可恢复</td><td>查看 · 复制</td><td>停未来生成，已生成的执行照常走完</td></tr>
+  </tbody>
+</table>
+<h5>2.2 执行级 5 态（取值带进度）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>状态</th><th>判定条件</th><th>说明</th></tr></thead>
+  <tbody>
+    <tr><td>未执行</td><td>已提交人数 = 0</td><td>可撤回（0/n）</td></tr>
+    <tr><td>执行中 n/m</td><td>0 &lt; 已提交 &lt; 执行人总数</td><td>列内必须是 <code>1/2</code> 这种格式，n＝已提交人数、m＝执行人总数；<b>不允许只显示「执行中」</b>，否则看不出还差几个</td></tr>
+    <tr><td>已完成</td><td>已提交人数 = 执行人总数</td><td>会签闭环</td></tr>
+    <tr><td>已撤回</td><td>未被任何人执行时被撤回</td><td>不可再流转，仅可查看；从统计中剔除</td></tr>
+    <tr><td>已作废</td><td>已有人提交后被作废</td><td>不可再流转，仅可查看；从统计中剔除，但日志与提交记录保留</td></tr>
+  </tbody>
+</table>
+<ol>
+  <li><b>状态由服务端计算下发</b>，前端不自行推导，只用于控制按钮显隐与标签颜色。</li>
+  <li><b>任务级不出现超期</b>；超期只挂在执行级与人级（我的任务列表行＝我的待办）。</li>
+  <li><b>撤回 / 作废的后置效果</b>：该执行从「应完成」统计中剔除，其超期一并剔除；执行日志永久保留。</li>
+  <li><b>撤回 vs 作废</b>：只按状态二选一出现，不会同时出现。撤回＝无人动手时干净收回，需填原因、<b>不通知</b>执行人；作废＝已有人提交时强制失效，需填原因、<b>通知</b>执行人、不计入统计。</li>
+</ol>
+
+<h4>3. 超期判定</h4>
+<p><b>基准是「该条执行自己的计划结束时间」</b>，不是任务整体的计划结束。每条执行的计划起止由首条按重复规则递推得出，生成时固化，之后改规则不回改历史。</p>
+<table class="devdoc-table">
+  <thead><tr><th>维度</th><th>用在哪</th><th>判定</th></tr></thead>
+  <tbody>
+    <tr><td>执行级</td><td>台账执行明细、任务总览下钻、我的任务「我参与的」</td><td>当前时间 &gt; 该执行计划结束，且未闭环（仍有人未提交）→ 超期</td></tr>
+    <tr><td>人级</td><td>我的任务「待我执行」「已执行」、执行人列表</td><td><b>我没提交</b>且当前时间 &gt; 计划结束 → 我这条超期；<b>我已提交</b>则看我自己的提交时间是否晚于计划结束 → 晚于则标「超期完成」</td></tr>
+  </tbody>
+</table>
+<ul>
+  <li><b>同一执行两处可以不一致</b>：计划 17:00 结束，我 16:20 交、他人 18:00 交 → 我的任务里我未超期，台账里该执行超期。这是刻意的——一个回答「我有没有按时」，一个回答「这一趟有没有按时」。</li>
+  <li><b>超期完成后仍永久保留标记</b>（绩效追溯需要），不做清除；撤回 / 作废后随统计剔除。</li>
+  <li><b>允许并存</b>：上一条未闭环、下一条已到开始时间，各自计算、互不影响。</li>
+  <li><b>超期只影响</b>标红、提醒、统计，<b>不限制</b>提交、转办、调整执行人、撤回、作废。</li>
+  <li><b>计算时机</b>：写入时打标 + 定时任务（建议每 5 分钟）刷新；前端只读，不做超期计算。</li>
+</ul>
+
+<h4>4. 统计口径</h4>
+<table class="devdoc-table">
+  <thead><tr><th>指标</th><th>口径</th></tr></thead>
+  <tbody>
+    <tr><td>应完成执行数</td><td>执行<b>一生成即计入</b>；撤回 / 作废后剔除（不再计入应完成，其超期一并剔除）</td></tr>
+    <tr><td>完成率</td><td>已完成执行数 ÷ 应完成执行数；分母不含已撤回 / 已作废</td></tr>
+    <tr><td>超期数</td><td>按执行条数计：一条执行无论几人超期只算 1 条；人员维度另算「超期待办数」</td></tr>
+    <tr><td>会签完成</td><td>以整条执行闭环为准，不看谁先交、不看平均提交时间</td></tr>
+    <tr><td>数据来源</td><td>一律以服务端聚合结果为准，前端不累加、不缓存、不参与口径计算</td></tr>
+  </tbody>
+</table>
+
+
+
+<h4>5. 人员选择器（组织架构）</h4>
+<p>执行人、参与人员、转办接收人、调整后的执行人、提醒人统一使用同一个组件。</p>
+<table class="devdoc-table">
+  <thead><tr><th>项</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>形态</td><td>左侧部门树 + 右侧人员列表 + 底部已选区；支持按部门整选、按姓名 / 工号搜索</td></tr>
+    <tr><td>候选人</td><td>仅<b>在职</b>人员；停用 / 离职不出现在列表；已选人员若离职，标签标灰并提示「需更换」</td></tr>
+    <tr><td>存储</td><td>只存 <code>person_id</code>；展示名重名时追加部门，如「李强（机电队）」</td></tr>
+    <tr><td>数量</td><td>执行人 <b>≥ 1 人</b>（必填）；参与人员可为 0；转办接收人、调整目标<b>单选 1 人</b>；提醒人 ≥ 1（开启提醒时）</td></tr>
+    <tr><td>互斥</td><td>转办接收人 ≠ 转出人，且不能已在执行人名单中；调整目标不能与现有执行人重复（被替换者除外）。<b>参与人与执行人允许重复，不做互斥校验</b></td></tr>
+    <tr><td>变动</td><td>人员调岗 / 离职<b>不回溯</b>已生成的执行；只影响之后生成的执行</td></tr>
+    <tr><td>空值</td><td>未选时显示占位「点击选择执行人 / 参与人」，<b>不显示「已选 0 人」</b></td></tr>
+  </tbody>
+</table>
+
+<h4>6. 低代码表单与设计器机制</h4>
+<ul>
+  <li><b>模板即一套低代码表单</b>：字段的标题、类型、必填、长度、正则、选项、联动、默认值全部在「表单设计器」里配置，任务模块<b>不重复定义这些规则</b>。</li>
+  <li><b>存储</b>：模板保存时把画布结构序列化为 <code>components</code>（JSON）；发布任务时把 <code>tpl_code</code> + 变量值存为<b>任务快照</b>。</li>
+  <li><b>快照锁定</b>：任务发布后表单结构锁定，之后修改模板<b>不影响已发布任务</b>，只影响之后新建的发布。</li>
+  <li><b>渲染</b>：执行页、只读提交页都按快照的 <code>components</code> 顺序渲染，标题、必填、控件类型与设计器一致。</li>
+  <li><b>双重校验</b>：前端按组件规则先校验一次，服务端按同一份 schema 再校验一次，<b>不信任前端</b>。</li>
+  <li><b>无表单</b>：<code>form_id</code> 为空时，执行页只显示「执行完成情况 + 现场附件」。</li>
+  <li><b>原型说明</b>：原型里的「巡检区域 / 设备状态 / 安全隐患 / 处理措施 / 备注」是演示字段，不代表真实表单结构，开发不要写死。</li>
+</ul>
+
+<h4>7. 时间与格式化</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>格式 / 规则</th></tr></thead>
+  <tbody>
+    <tr><td>时区</td><td><code>Asia/Shanghai</code>；服务端存 UTC 时间戳，出参转本地时间字符串</td></tr>
+    <tr><td>日期</td><td><code>YYYY-MM-DD</code></td></tr>
+    <tr><td>日期时间</td><td><code>YYYY-MM-DD HH:mm</code>，<b>带年份、精确到分钟、不显示秒</b></td></tr>
+    <tr><td>列表内时间</td><td><b>全模块统一 <code>YYYY-MM-DD HH:mm</code></b>（列表、弹窗、详情、日志、导出一致），<b>不省略年份、不显示秒</b>；同一页面内不得混用两种格式</td></tr>
+    <tr><td>发布时间</td><td>该条执行<b>被生成的那一刻</b>（绝对时刻）＝ 计划开始 − 提前量；与「计划开始」是两个字段，允许 08:00 发布、13:15 才开始</td></tr>
+    <tr><td>计划起止</td><td>该条执行自己的窗口；首条＝任务上填的起止，后续按频率递推（日期后移、时刻与时长沿用首条）</td></tr>
+    <tr><td>边界</td><td>开始与结束相同视为非法；结束必须<b>严格大于</b>开始；允许跨天</td></tr>
+  </tbody>
+</table>
+
+<h4>8. 列表通用规则</h4>
+<ul>
+  <li><b>排序</b>：<b>所有列表都不提供表头排序</b>（点表头无响应、不出现升降序箭头），一律服务端固定排序，规则如下——<br>
+  · <b>执行级列表</b>（待我执行 / 已执行 / 已转发 / 我参与的 / 台账执行明细 / 执行明细弹窗）：按<b>发布时间倒序</b>，同一发布时间按执行编号倒序；<br>
+  · <b>任务级列表</b>（草稿任务 / 我发起的 / 任务总览 / 模板列表）：按<b>创建时间倒序</b>，同一时间按编码倒序；<br>
+  · <b>执行日志</b>：<b>未提交的行置顶</b>，其余按动作时间倒序；<br>
+  · 超期<b>不参与排序</b>（只做红色标记），避免列表每 5 分钟扫描一次就整体跳动。</li>
+  <li><b>分页</b>：服务端分页，默认 20 条 / 页；切换查询条件后回到第 1 页。</li>
+  <li><b>关键字</b>：模糊匹配，忽略大小写与首尾空格；多个关键字以空格分隔时按「与」匹配（归一化多余空格）。</li>
+  <li><b>筛选组合</b>：不同条件之间「与」；同一条件多选时「或」。</li>
+  <li><b>结果数</b>：筛选条右侧实时显示「共 N 条」，指<b>筛选后的总条数</b>，不是当前页条数。</li>
+  <li><b>空态</b>：无数据「暂无数据」；筛选后为空「没有符合条件的结果」+「重置」按钮。</li>
+  <li><b>导出</b>：仅任务总台账支持；导出当前筛选结果<b>全量</b>（不分页），上限 5 万行，超出提示「结果过多，请缩小范围」；文件名 <code>任务总览_yyyymmdd_HHmm.xlsx</code> / <code>执行明细_yyyymmdd_HHmm.xlsx</code>。</li>
+  <li><b>列宽</b>：时间列固定宽度、不换行；名称列自适应并可省略，hover 显示全文。</li>
+</ul>
+<h5>8.1 文本截断与人员显示（全模块统一，开发和测试按此验收）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>列类型</th><th>展示规则</th><th>示例</th></tr></thead>
+  <tbody>
+    <tr><td>任务名称 / 模板名称</td><td><b>单元格最多 20 个字符</b>（中文、英文、数字、标点各计 1），第 21 个起以「…」替代；<b>hover 显示完整名称</b>（tooltip，纯文本无延迟）</td><td>「东区3号矿井日常巡检作业任务」→「东区3号矿井日常巡检作业任务」恰好 20 字时不截断；21 字时显示前 20 字 + …</td></tr>
+    <tr><td>执行人 / 参与人 / 提醒人 / 转给</td><td><b>1 人</b>：显示完整姓名<br><b>2 人</b>：<code>A、B</code>（顿号分隔，不截断）<br><b>≥3 人</b>：<code>A、B 等 N 人</code>（N＝总人数，只显示前 2 人）<br><b>单人姓名超过 8 字</b>：截为前 8 字 + …<br><b>hover</b>：显示全部姓名（顿号分隔），不换行</td><td>李强、王建国<br>李强、王建国 等 5 人<br>欧阳长江黄河水利工程师…（8 字截断）</td></tr>
+    <tr><td>执行说明 / 描述类长文本</td><td>列表内不展示全文；需要时在详情页整段展示（详情页不截断，允许换行）</td><td>—</td></tr>
+    <tr><td>多值列</td><td>一律<b>单行展示</b>，不换行、不折行；超宽由截断规则处理，不出现「一行一个字」</td><td>—</td></tr>
+    <tr><td>空值</td><td>无内容统一显示 <code>—</code>（灰色），<b>不显示「无」「空」「null」</b></td><td>—</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>测试验收点</b>：① 20 字边界（20 字不截、21 字截）；② 3 人以上显示「等 N 人」且 N 正确；③ hover 能看到完整名单/全名；④ 单元格不因长文本被撑高（行高固定）。</p>
+
+<h4>9. 交互、异常与审计</h4>
+<table class="devdoc-table">
+  <thead><tr><th>项</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>二次确认</td><td>撤回、作废、终止、删除草稿、停用模板均需弹窗确认；危险操作按钮用红色</td></tr>
+    <tr><td>必填原因</td><td>撤回、作废<b>必须填原因</b>（2–200 字，去空格后非空）；调整执行人、转办原因选填（0–200 字）</td></tr>
+    <tr><td>防重复提交</td><td>按钮点击后立即 loading 并禁用，请求携带幂等键（前端生成 UUID）；服务端按幂等键去重</td></tr>
+    <tr><td>失败处理</td><td>Toast 展示后端 message，<b>不清空已填内容</b>；网络错误允许重试</td></tr>
+    <tr><td>并发冲突</td><td>操作时对象状态已变化（如撤回时已有人提交），返回 409 并提示「状态已变化，请刷新后重试」</td></tr>
+    <tr><td>只读态</td><td>控件 disabled，不发起写请求，hover 不显示可点样式</td></tr>
+    <tr><td>审计日志</td><td>以下动作必须落审计日志（操作人、时间、对象、前后值、原因）：暂停 / 恢复 / 终止、撤回 / 作废、调整执行人、编辑计划、模板停用、导出</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-template">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div><code>page-template</code></div>
+  <div class="k">菜单路径</div><div>任务模板（左侧导航第一项，模块默认首页）</div>
+  <div class="k">数据来源</div><div><code>tpl_list</code> 接口：模板编码 / 名称 / 表单类型 / 状态 / 创建人 / 创建时间</div>
+  <div class="k">入口与出口</div><div>入口：左侧导航；出口：点「创建任务模板」或行内「编辑」进入模板编辑页</div>
+  <div class="k">与发布的关系</div><div>模板只提供默认值；发布时覆盖的值<b>不回写模板</b></div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>维护可复用的任务模板：一套低代码表单（决定要填什么）+ 一套全局规则（决定什么时候发布、提醒谁、超期怎么办）。发布任务时选一个模板作为起点，因此这个页面的核心是「模板能不能用」「模板是不是最新」。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>页头</b>：标题「任务模板」+ 右侧「创建任务模板」按钮。</li>
+  <li><b>查询条</b>：关键字 + 表单类型 + 状态 + 结果数 + 重置。</li>
+  <li><b>模板列表</b>：7 列固定结构，见 4.1；按创建时间倒序，20 条 / 页。</li>
+  <li><b>行操作</b>：编辑、停用 / 启用（按状态切换文案）、删除（<b>仅停用且零引用时</b>出现），见 4.4。</li>
+  <li><b>空态</b>：无模板时显示「还没有模板，点右上角创建任务模板」并高亮该按钮。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用校验规则</b>：长度一律按字符计（中文、英文、标点各计 1）；文本提交前执行 <code>trim()</code>；必填为空时提示「请输入 / 请选择{字段名}」；错误提示统一为字段下方红色 12px 文案。</p>
+
+<h5>4.1 列表列定义（7 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:76px;">列</th><th style="width:96px;">字段</th><th style="width:130px;">格式</th><th>取值与展示规则</th></tr></thead>
+  <tbody>
+    <tr><td>模板ID</td><td><code>tpl_code</code></td><td><code>TPL</code>+3 位</td><td>系统生成，<b>等宽字体、可复制</b>；不可编辑；生成规则见 4.2；点击不跳转</td></tr>
+    <tr><td>模板名称</td><td><code>tpl_name</code></td><td>≤ 50 字</td><td>纯文本；<b>列表单元格最多显示 20 个字符</b>（第 21 个起以「…」截断），hover 时用 tooltip 显示完整名称；<b>同租户内唯一</b></td></tr>
+    <tr><td>表单类型</td><td><code>form_type</code></td><td>三值枚举</td><td>普通业务表单 / 无 / BPM流程表单；无表单时显示灰色「无」</td></tr>
+    <tr><td>状态</td><td><code>status</code></td><td>启用 / 停用</td><td>启用＝绿色标签，停用＝灰色标签；<b>新建默认启用</b>；停用后不可用于发布</td></tr>
+    <tr><td>创建人</td><td><code>creator_id</code></td><td>姓名</td><td>只读展示创建人姓名；<b>不区分在职 / 离职，不加任何后缀标注</b></td></tr>
+    <tr><td>创建时间</td><td><code>created_at</code></td><td><code>YYYY-MM-DD HH:mm</code></td><td>显示到分钟、不显示秒；列表<b>固定按此列倒序</b></td></tr>
+    <tr><td>操作</td><td>—</td><td>按钮组</td><td>编辑 · 停用 / 启用，见 4.4；<b>不提供删除</b>（避免历史任务引用断链）</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>排序与分页</b>：固定按创建时间倒序，每页 20 条；<b>不提供表头排序</b>——不支持点击表头切换升序 / 降序。</p>
+
+<h5>4.2 模板编码（模板ID）生成规则</h5>
+<table class="devdoc-table">
+  <thead><tr><th>项</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>格式</td><td>前缀 <code>TPL</code> + 3 位十进制序号，例 <code>TPL001</code>；超过 999 扩为 4 位 <code>TPL1000</code></td></tr>
+    <tr><td>作用域</td><td>租户内唯一；不同租户各自从 001 开始</td></tr>
+    <tr><td>生成时机</td><td><b>模板首次保存成功时</b>由服务端生成；编辑页的「模板编码」输入框只读，占位文案「（保存后自动生成）」</td></tr>
+    <tr><td>不可变</td><td>生成后永不修改；编辑模板不改编码；复制模板生成新编码</td></tr>
+    <tr><td>不回收</td><td>模板停用 / 删除后序号不复用，避免历史引用指向错误对象</td></tr>
+    <tr><td>并发</td><td>用数据库序列 / Redis INCR 分配；<b>禁止 max(code)+1</b>（并发会撞号）</td></tr>
+    <tr><td>唯一校验</td><td>写入前校验唯一索引，冲突则重试分配，最多 3 次；仍失败返回「编码分配失败，请重试」</td></tr>
+    <tr><td>展示位置</td><td>列表「模板ID」列 + 编辑页「模板编码」字段（只读）</td></tr>
+  </tbody>
+</table>
+
+<h5>4.3 查询条件</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>条件</th><th>控件</th><th>必填</th><th>默认值</th><th>匹配规则</th></tr></thead>
+  <tbody>
+    <tr><td>关键字</td><td>输入框</td><td>否</td><td>空</td><td>模糊匹配 <code>tpl_name</code> + <code>tpl_code</code>；忽略大小写与首尾空格；<b>输入即查（防抖 300ms）</b></td></tr>
+    <tr><td>表单类型</td><td>下拉单选</td><td>否</td><td>全部类型</td><td>精确匹配；选项：全部类型 / 普通业务表单 / 无 / BPM流程表单</td></tr>
+    <tr><td>状态</td><td>下拉单选</td><td>否</td><td>全部状态</td><td>精确匹配；选项：全部状态 / 启用 / 停用</td></tr>
+    <tr><td>结果数 / 重置</td><td>文本 + 按钮</td><td>—</td><td>—</td><td>右侧显示「共 N 条」；重置清空全部条件并回到第 1 页</td></tr>
+  </tbody>
+</table>
+
+<h5>4.4 行操作与状态约束</h5>
+<table class="devdoc-table">
+  <thead><tr><th>操作</th><th>出现条件</th><th>行为与校验</th></tr></thead>
+  <tbody>
+    <tr><td>编辑</td><td>任何状态都可用（停用模板也可编辑）</td><td>进入模板编辑页，带出已保存的画布结构与全局规则；停用模板编辑保存后<b>仍保持停用</b></td></tr>
+    <tr><td>停用</td><td>状态＝启用</td><td>二次确认「停用后该模板不能再用于发布任务，已发布的任务不受影响」→ 置为停用；<b>不影响</b>已发布任务与已生成执行</td></tr>
+    <tr><td>启用</td><td>状态＝停用</td><td>直接启用；若其绑定表单已被删除 / 停用，提示「表单不可用，请先修复」并<b>阻止启用</b></td></tr>
+    <tr><td>删除</td><td>状态＝停用<b>且零引用</b></td><td>二次确认 → 逻辑删除（<code>is_deleted=1</code>），列表不再显示；编码不回收；有引用时按钮不出现 / 点击返回拒绝提示</td></tr>
+  </tbody>
+</table>
+<p><b>删除规则（引用校验）</b></p>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>状态＝启用</td><td><b>不显示删除按钮</b>；直接调接口返回「请先停用」（停用是不可跳过的前置）</td></tr>
+    <tr><td>状态＝停用，且<b>有任务或草稿引用</b></td><td><b>禁止删除</b>：弹窗提示「该模板已被 N 个任务使用，不能删除」，只保留「停用」。引用计数包含<b>进行中 + 已完成 + 已终止</b>的任务，以及<b>未发布的草稿</b></td></tr>
+    <tr><td>状态＝停用，且<b>零引用</b></td><td>允许删除：二次确认后执行<b>逻辑删除</b>（<code>is_deleted=1</code>），列表默认不显示；<b>不物理删除数据</b>，编码不回收、不复用；写审计日志（操作人 / 时间 / 模板编码 / 名称）</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip">停用的效果＝<b>从发布页的模板列表消失</b>，已发布任务不受影响。删除是「零引用模板」的收纳手段，<b>不是停用的替代品</b>——有引用的模板永远只能停用，保证历史任务能追溯到来源模板。</p>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>创建</b>：点「创建任务模板」→ 进入编辑页；画布按模板的默认结构初始化，<b>组件数量与类型由模板结构决定，不做固定预置</b>；模板编码为空，保存成功后才生成。</li>
+  <li><b>编辑</b>：带出该模板最近一次保存的内容；修改并保存后立即对<b>之后新建的发布</b>生效。</li>
+  <li><b>停用 / 启用</b>：行内直接切换文案，操作后该行状态与操作按钮同步刷新，不刷新其他行。</li>
+  <li><b>查询联动</b>：三个条件与逻辑叠加，输入即查；结果数随筛选实时变化；无结果时展示空态与重置。</li>
+  <li><b>排序</b>：固定按创建时间倒序，<b>不支持点击表头切换升 / 降序</b>（原型无此排序功能，实现时不要加）。</li>
+</ol>
+
+<h4>6. 边界与异常</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>并发停用</td><td>两人同时操作同一条，以先到为准；后到返回 409 并刷新列表</td></tr>
+    <tr><td>编辑中模板被他人停用</td><td>保存时提示「模板已停用」，可选择继续保存（内容生效）或放弃</td></tr>
+    <tr><td>模板名称重复</td><td>保存时校验同租户唯一，重复提示「模板名称已存在」并聚焦该字段，不生成编码</td></tr>
+    <tr><td>删除有引用的模板</td><td>接口返回 409 并提示「该模板已被 N 个任务使用，不能删除」；前端删除按钮置灰或直接不渲染，保留「停用」</td></tr>
+    <tr><td>删除与引用并发</td><td>删除前在同一事务内做引用计数校验；若校验后立刻有人发布该模板，以发布成功为准，删除失败并提示「模板已被使用，请刷新」</td></tr>
+    <tr><td>空列表</td><td>「还没有模板，点右上角创建任务模板」</td></tr>
+    <tr><td>列表加载失败</td><td>保留查询条件，展示「加载失败，请重试」+ 重试按钮，不展示空态文案（避免误判为无数据）</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-template-editor">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div><code>page-template-editor</code></div>
+  <div class="k">入口</div><div>任务模板列表 →「创建任务模板」或行内「编辑」</div>
+  <div class="k">布局</div><div><b>三栏低代码设计器</b>：左·控件工具栏 ｜ 中·画布 ｜ 右·属性面板</div>
+  <div class="k">两个标签</div><div>基本信息配置（画布 + 模板属性）/ 全局规则配置（执行控制 / 重复发布 / 提醒 / 超期）</div>
+  <div class="k">顶栏</div><div>返回 ｜ 标题「创建任务模板 / 编辑模板 · 名称」 ｜「保存」</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>两件事：<b>定义任务长什么样</b>（有哪些字段、哪些必填，交给低代码设计器），以及<b>定义任务怎么发</b>（什么时候发布、生成多少条执行、提醒谁、超期怎么处理）。设计器只决定「字段」，全局规则只决定「节奏」，两者互不越界。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>顶栏</b>：返回、标题、「保存」；返回时若有未保存修改，二次确认。</li>
+  <li><b>标签栏</b>：基本信息配置 ｜ 全局规则配置（切换不丢值）。</li>
+  <li><b>左·控件工具栏</b>：单行文本 / 多行文本 / 数字 / 单选 / 多选 / @成员 / @部门 / 日期时间 / 附件。<b>点击任一控件 → 在画布末尾追加一列自定义组件</b>。</li>
+  <li><b>中·画布</b>：顶部「任务名称」输入框 + 下方任务信息表；<b>组件数量不固定</b>——默认 10 个（6 个必填固定组件 + 4 个可删组件），用户可继续追加、也可删除可删组件。<b>点击组件即选中</b>（列头高亮），右侧切换为该组件属性；<b>点击画布空白处</b>回到「模板属性」。列数超出宽度时画布内横向滚动。</li>
+  <li><b>右·属性面板</b>：未选中组件时显示「模板属性」（模板名称 / 编码 / 用途描述）；选中组件后显示该组件属性（标题 / 描述 / 必填 / 默认值 / 可选范围 / 最大字符数 / 删除）。</li>
+  <li><b>标签2 · 全局规则</b>：执行控制 → 重复发布 → 发布时间 → 任务提醒 → 超期未处理，五段纵向排列。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用校验规则</b>：长度按字符计；所有文本提交前 <code>trim()</code>；保存时统一校验，不通过则定位到第一个错误项并高亮；<b>原型里的「巡检区域 / 设备状态 / 安全隐患 / 处理措施 / 备注」为演示字段，开发按设计器结构渲染，不要写死</b>。</p>
+
+<h5>4.1 画布组件（默认 10 个，可增删）</h5>
+<p>默认画布＝顶部「任务名称」输入框 + 下方任务信息表，<b>共 10 个组件</b>：其中 <b>6 个是系统固定组件</b>（必填、不可删除），另外 4 个可删除；左栏控件可随时追加自定义组件，因此<b>画布组件数量不固定</b>。</p>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>组件</th><th>控件</th><th>必填</th><th>可否删除</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>单行文本</td><td>是</td><td><b>不可删</b></td><td>画布顶部的输入框；默认标题「任务名称」；发布时预填模板名、可修改；长度按组件属性「最大字符数」校验</td></tr>
+    <tr><td>发起人</td><td>@成员（单选）</td><td>是</td><td><b>不可删</b></td><td>默认值＝当前操作人；发布时只读、不可改</td></tr>
+    <tr><td>参与人员</td><td>@成员（多选）</td><td>否</td><td>可删</td><td>可为空；只读关注，不参与会签、不产生待办；<b>不与执行人做重复校验</b></td></tr>
+    <tr><td>执行人</td><td>@成员（多选）</td><td>是</td><td><b>不可删</b></td><td>≥ 1 人；可设「可选成员范围」；此处配置的是<b>默认值</b>，发布时可改</td></tr>
+    <tr><td>执行任务@表单</td><td>下拉</td><td>是</td><td><b>不可删</b></td><td>三值：无 / 普通业务表单 / BPM流程表单；非「无」时必须再选具体表单（只能选已发布表单，BPM 需流程已启用）；<b>发布后不可改</b></td></tr>
+    <tr><td>执行工种</td><td>文本或字典项</td><td>否</td><td>可删</td><td>可为空；执行页只读展示</td></tr>
+    <tr><td>执行地点</td><td>文本</td><td>否</td><td>可删</td><td>可为空；执行页只读展示</td></tr>
+    <tr><td>计划开始</td><td>日期时间</td><td>是</td><td><b>不可删</b></td><td>含义＝<b>第一条执行的开始</b>；发布时须有值且 ≥ 当前时间</td></tr>
+    <tr><td>计划结束</td><td>日期时间</td><td>是</td><td><b>不可删</b></td><td>须<b>严格大于</b>计划开始；两者差值＝每条执行的统一时长</td></tr>
+    <tr><td>执行说明</td><td>多行文本</td><td>否</td><td>可删</td><td>执行页只读展示，单独占一整行；长度由组件属性配置</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>固定组件的判定</b>：任务名称、发起人、执行人、执行任务@表单、计划开始、计划结束——<b>必填且不可删除</b>，属性面板里「是否必填」也<b>锁定为必填、不可关闭</b>；其余组件（含新追加的）可删除、可开关必填。删除时二次确认，保存后该字段不再出现在任务中；<b>已发布任务使用快照，不受影响</b>。</p>
+<p><b>追加组件</b>：左栏点击任一控件 → 在画布末尾追加一列，默认标题「控件名 + 序号」（如「数字 1」），默认<b>非必填</b>；可在右侧改标题 / 描述 / 必填 / 默认值 / 最大字符数，或删除。追加的组件同样参与执行页渲染与校验。</p>
+
+<h5>4.2 组件属性（点击组件后在右侧编辑）</h5>
+<p>点击画布任一组件（列头，或顶部「任务名称」输入框）→ 右侧切换为该组件的属性面板，列头高亮；<b>点击画布空白处</b> → 回到「模板属性」。</p>
+<table class="devdoc-table">
+  <thead><tr><th>属性</th><th>适用组件</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>标题</td><td>全部组件</td><td>必填；改动<b>实时同步到画布列头</b>（任务名称同步到顶部输入框的标题）</td></tr>
+    <tr><td>描述</td><td>全部组件</td><td>选填；执行页作为字段说明展示</td></tr>
+    <tr><td>是否必填</td><td>全部组件</td><td>6 个固定组件<b>锁定为必填、不可关闭</b>（面板显示「必填（系统固定组件，不可关闭）」）；其余组件可勾选，勾选后执行页提交时校验并提示「请填写{标题}」</td></tr>
+    <tr><td>默认值</td><td>全部组件</td><td>发布时预填；@成员类可填「当前操作人」；表单类可选具体表单或留空（发布时再选）</td></tr>
+    <tr><td>可选成员范围</td><td>@成员</td><td>按部门勾选；<b>未勾选＝全公司成员可选</b>；发布时超出范围的人不可选</td></tr>
+    <tr><td>可选表单范围</td><td>执行任务@表单</td><td>按表单分类勾选；<b>未勾选＝全部分类可选</b></td></tr>
+    <tr><td>最大字符数</td><td>文本类（单行 / 多行 / 数字）</td><td>1–500 的整数，<b>留空＝不限制</b>；执行页按此校验，超出提示「不能超过 N 个字」。<b>当前版本不支持正则校验</b>，如需要再扩展</td></tr>
+    <tr><td>删除组件</td><td>非固定组件</td><td>二次确认后从画布移除；<b>固定组件不显示该按钮</b></td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip">属性改动<b>实时反映到画布</b>，但不落库；只有点「保存模板」才写入。有未保存改动时点返回，二次确认「放弃修改 / 继续编辑」。</p>
+
+<h5>4.3 模板属性</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>校验与取值</th></tr></thead>
+  <tbody>
+    <tr><td>模板名称</td><td>单行文本</td><td>是</td><td>—</td><td>去首尾空格后非空；<b>同租户内唯一</b>（失焦 + 提交双校验），重复提示「模板名称已存在」并聚焦。<b>长度与字符规则由设计器统一配置，本页不硬编码</b></td></tr>
+    <tr><td>模板编码</td><td>文本·只读</td><td>—</td><td><code>TPL</code>+3 位</td><td>占位「（保存后自动生成）」；保存成功后回显 <code>TPLxxx</code>；永不可编辑，规则见「任务模板 · 4.2」</td></tr>
+    <tr><td>用途描述</td><td>多行文本</td><td>否</td><td>—</td><td>仅内部说明，不在列表展示、不进入任务；长度同样交由设计器配置，本页不硬编码</td></tr>
+  </tbody>
+</table>
+<p><b>保存行为</b>：</p>
+<ol>
+  <li><b>首次保存</b>：校验通过 → 分配模板编码 → 落库 → Toast「模板已保存」→ 停留在编辑页，可继续配置全局规则。</li>
+  <li><b>再次保存</b>：覆盖更新，编码不变。后端记录 <code>save_version</code>（自增）仅用于问题追溯，<b>不提供版本管理界面</b>——界面不展示版本号、不可回滚、不可对比；发布时快照记录当次 <code>save_version</code>。</li>
+  <li><b>校验失败</b>：定位第一个错误字段并高亮，Toast 说明原因，<b>不生成编码</b>。</li>
+  <li><b>离开页面</b>：有未保存修改 → 二次确认「放弃修改 / 继续编辑」。</li>
+  <li><b>版本影响</b>：改模板只影响之后新建的发布，<b>不影响已发布任务</b>（任务已存快照）。</li>
+</ol>
+
+<h5>4.4 全局规则 · 执行控制</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>默认值</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>开始时间后才可执行</td><td>开关</td><td>—</td><td><b>开启</b></td><td>开启：仅当当前时间 ≥ 该执行计划开始才允许提交，否则「执行」按钮置灰并提示「未到计划开始时间」；关闭：收到待办即可执行。校验在服务端同样执行一次</td></tr>
+    <tr><td>开启重复发布</td><td>开关</td><td>—</td><td>关闭</td><td><b>总控</b>：关闭＝只生成 1 条执行（单次任务）；开启＝按下述规则持续生成。关闭时隐藏频率 / 日期 / 停止日期，但<b>保留已填值</b>，重新开启可恢复</td></tr>
+  </tbody>
+</table>
+
+<h5>4.5 全局规则 · 重复发布</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>取值 / 格式</th><th>校验与取值逻辑</th></tr></thead>
+  <tbody>
+    <tr><td>重复频率</td><td>下拉单选</td><td>是</td><td>按天 / 按周 / 按月 / 按年</td><td><b>没有「不重复」选项</b>——是否重复由「开启重复发布」决定；切换频率时保留已填日期，仅切换维度控件</td></tr>
+    <tr><td>重复日期（按天）</td><td>文本·只读</td><td>—</td><td>每天</td><td>无输入项；一天一条（要一天多趟请建两个任务，产品口径）</td></tr>
+    <tr><td>重复日期（按周）</td><td>下拉多选</td><td>是</td><td>周一 ~ 周日</td><td>至少 1 项；按钮显示摘要（≤3 项直接列，&gt;3 项显示「已选 N 项」）；弹层含全选 / 清空 / 确定</td></tr>
+    <tr><td>重复日期（按月）</td><td>下拉多选</td><td>是</td><td>1 ~ 31 号 + 最后一天</td><td>至少 1 项；选「最后一天」时按当月实际天数取（2 月取 28/29、4 月取 30）；弹层可滚动</td></tr>
+    <tr><td>重复日期（按年）</td><td>多行规则</td><td>是</td><td>每行＝月份多选 × 日期多选</td><td>至少 1 行，最后一行不可删；行数 ≤ 10、展开的「月 × 日」组合 ≤ 60，超出提示「规则过于复杂，请精简」；<b>同一行内是笛卡尔积</b>（1月+3月 × 10日+15日 → 4 个日期），要「1月10日 + 3月15日」请拆两行；不同行展开出相同日期<b>自动去重</b>；2/30、4/31 等<b>无效日期自动跳过、不报错</b></td></tr>
+    <tr><td>停止日期</td><td>日期 + 复选框</td><td>是</td><td><code>YYYY-MM-DD</code></td><td>须 ≥ 首条发布日期；勾选「永不截止」后禁用日期输入、不设上限；到达停止日期后任务转「已完成」，不再生成执行</td></tr>
+    <tr><td>发布时间</td><td>下拉单选 + 自定义</td><td>是</td><td>准时 / 提前 1 小时 / 提前 2 小时 / 提前 1 天 / 提前 2 天 / 自定义</td><td><b>发布时间 = 计划开始 − 提前量</b>；准时＝与计划开始同一刻；自定义＝数值 1–999 + 单位（分钟 / 小时 / 天）；提前量大于距当前的间隔时提示「发布时间早于当前时间」</td></tr>
+    <tr><td>立即发布第一条任务</td><td>开关</td><td>—</td><td>默认<b>关闭</b></td><td>开启＝保存 / 发布时<b>立刻生成第一条执行</b>，不等发布时间；关闭＝严格按发布时间到点生成；<b>只影响第一条</b>，后续照规则走</td></tr>
+  </tbody>
+</table>
+
+<h5>4.6 时间递推规则（每条执行的计划起止怎么算）</h5>
+<p>任务上的「计划开始 / 结束」＝<b>第一条执行</b>的起止；两者差值＝每条执行的<b>统一时长</b>。后续每条：<b>日期按频率后推，时刻与时长沿用首条</b>。</p>
+<table class="devdoc-table">
+  <thead><tr><th>频率</th><th>首条</th><th>第 2 条及以后</th></tr></thead>
+  <tbody>
+    <tr><td>按天</td><td rowspan="4">2026-10-19 13:15 → 2026-10-20 13:15<br>（时长 24 小时）</td><td>2026-10-20 13:15 → 2026-10-21 13:15；2026-10-21 13:15 → 2026-10-22 13:15 …</td></tr>
+    <tr><td>按周（周一 + 周三）</td><td>每周 2 条，时刻均为 13:15（10-21、10-26、10-28 …）</td></tr>
+    <tr><td>按月（1 号）</td><td>2026-11-01 13:15 → 2026-11-02 13:15；2026-12-01 13:15 → 2026-12-02 13:15 …</td></tr>
+    <tr><td>按年（3 月 1 日）</td><td>次年 2026-03-01 13:15 → 2026-03-02 13:15 …</td></tr>
+  </tbody>
+</table>
+<ul>
+  <li><b>发布 ≠ 开始</b>：允许 08:00 发布、13:15 才开始；两者间隔固定，都等于提前量。</li>
+  <li><b>生成即固化</b>：执行的计划起止在生成那一刻写入，<b>之后改规则不回改历史</b>。</li>
+  <li><b>「下一次任务详情」</b>：按当前表单实时推算下一条的发布时间与计划起止，从右侧滑出只读面板（内容即基本信息配置的克隆，全部置灰）。未开重复发布、或未填计划起止时按钮置灰，hover 提示「开启重复发布、并填写计划开始/结束时间后可预览」。</li>
+</ul>
+
+<h5>4.7 全局规则 · 任务提醒</h5>
+<p class="devdoc-tip"><b>先定口径</b>：所有提醒都挂在<b>每一条执行</b>上，基准是该条执行自己的「计划开始 / 计划结束」，不是任务整体的起止；同一执行 × 同一提醒类型 × 同一提前量，<b>只发一次</b>。</p>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>取值 / 格式</th><th>取值逻辑</th></tr></thead>
+  <tbody>
+    <tr><td>自动推送提醒</td><td>开关</td><td>—</td><td>默认<b>开启</b></td><td><b>总开关</b>：关闭后「计划开始前 / 计划结束前 / 超期未处理」三类提醒<b>全部不发送</b>，已排队的提醒一并作废；重新开启只对之后到点的时机生效，<b>不补发</b>历史提醒</td></tr>
+    <tr><td>计划开始时间前</td><td>多选 + 自定义</td><td>开启提醒时 ≥ 1 项</td><td>不提醒 / 准时 / 提前 10 分钟 / 30 分钟 / 1 小时 / 2 小时 / 1 天 / 2 天 / 自定义（1–999 分钟·小时·天）</td><td>触发时刻＝<b>该执行的计划开始 − 提前量</b>；「准时」＝计划开始当刻。<b>多选时每个选项各发 1 次</b>（同时选「提前 1 天」和「提前 1 小时」→ 发 2 次）。「不提醒」与其它项互斥，选中后清空其它选择</td></tr>
+    <tr><td>计划结束时间前</td><td>多选 + 自定义</td><td>开启提醒时 ≥ 1 项</td><td>同上</td><td>触发时刻＝<b>该执行的计划结束 − 提前量</b>；其余规则同上</td></tr>
+    <tr><td>提醒人</td><td>组织架构多选</td><td>开启提醒时 ≥ 1 人</td><td>—</td><td>默认带入该任务的执行人，可改为其他人；只存 <code>person_id</code>；发送时跳过离职 / 停用人员并记日志</td></tr>
+  </tbody>
+</table>
+<p><b>发送规则（开发 / 测试对照）</b></p>
+<ul>
+  <li><b>扫描频率</b>：定时任务每 5 分钟扫描一次，取「触发时刻落在 (now, now+5min] 区间」的提醒发送；同一分钟内到点的多条合并处理。</li>
+  <li><b>触发时刻早于执行生成时间</b>：该条提醒<b>不发送</b>（例如配置「提前 2 天」，但执行只在 1 天前才生成，则此提前量对本条无效）。</li>
+  <li><b>错过窗口</b>：因服务停机等错过扫描 → 在基准时刻后 <b>60 分钟内补发 1 次</b>；超过 60 分钟直接丢弃，并记一条「提醒过期未发送」日志。</li>
+  <li><b>不发送的情形</b>：该执行已闭环（全员提交）、已撤回、已作废，或任务已终止。</li>
+  <li><b>幂等</b>：唯一键＝<code>执行编号 + 提醒类型(start/end) + 提前量秒数</code>；重复扫描或服务重启不会重复发送。</li>
+  <li><b>时间口径</b>：Asia/Shanghai，分钟级精度、不显示秒；跨天按自然时间计算（提前 1 天＝24 小时）。</li>
+  <li><b>渠道</b>：站内通知 + 待办角标（渠道由通知中心统一，本模块只负责「何时、发给谁」）。</li>
+</ul>
+
+<h5>4.8 全局规则 · 超期未处理提醒</h5>
+<p class="devdoc-tip"><b>什么叫「超期」</b>：某条执行已过自己的「计划结束时间」（<code>now ≥ plan_end</code>）且<b>没有全员提交（未闭环）</b>，这条执行即进入<b>超期</b>状态。<br>对个人而言：<b>我未提交</b> → 我的待办超期；<b>我已提交但提交时间晚于 plan_end</b> → 标记「超期完成」（仍算超期，永久保留标记）。</p>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>取值 / 格式</th><th>取值逻辑</th></tr></thead>
+  <tbody>
+    <tr><td>超期未处理</td><td>下拉单选 + 自定义</td><td>非必填（默认不提醒）</td><td>不提醒 / 每 10 分钟 / 每 30 分钟 / 每 1 小时 / 每 1 天 / 自定义（每 N 分钟·小时·天，1–999）</td><td>进入超期后按此间隔重复提醒。<b>第 1 次提醒时点＝plan_end + 间隔</b>（计划结束 17:00、选「每 30 分钟」→ 17:30 第 1 次、18:00 第 2 次）</td></tr>
+    <tr><td>重复次数</td><td>数字</td><td>非「不提醒」时必填</td><td>1–10，默认 2</td><td><b>总发送次数（含第 1 次）</b>；达到上限后不再发送，直到执行状态变化</td></tr>
+  </tbody>
+</table>
+<p><b>判定与停止</b></p>
+<ul>
+  <li><b>判定基准</b>：该条执行的 <code>plan_end</code>；<b>不使用任务整体的计划结束时间</b>，也不用「最后一个人提交的时间」反推。</li>
+  <li><b>进入超期的时刻</b>：<code>now ≥ plan_end</code> 且未闭环，精确到分钟。</li>
+  <li><b>停止条件（满足任一）</b>：执行闭环（全员提交）／执行被撤回／执行被作废／任务被终止／达到重复次数上限。</li>
+  <li><b>超期后仍可提交</b>：提交成功后该人的超期提醒立即停止；状态打「超期完成」标记且永久保留（绩效追溯）。</li>
+  <li><b>不计入超期</b>：已撤回、已作废的执行（同时从「应完成」与「超期」统计中剔除，日志保留）。</li>
+  <li><b>发送对象</b>：该执行<b>仍未提交的执行人</b> + 已配置的提醒人（去重，排除离职 / 停用）。</li>
+  <li><b>幂等</b>：唯一键＝<code>执行编号 + 超期提醒第 N 次</code>；重复扫描不重复发送。</li>
+</ul>
+<p class="devdoc-tip"><b>一条可复现的例子</b>：计划结束 2026-10-20 17:00，配置「每 30 分钟、重复 2 次」；执行到 17:00 仍有人未交 → 17:30 发第 1 次、18:00 发第 2 次后停止；若 17:45 全员交齐，则 18:00 那次不再发送。</p>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>标签切换</b>：基本信息与全局规则之间切换<b>不丢已填值</b>；不触发保存。</li>
+  <li><b>频率切换</b>：按天 / 周 / 月 / 年之间切换时，已选日期值保留在内存，切回原频率自动恢复；切到「按天」时日期控件隐藏但不清空。</li>
+  <li><b>按年多行</b>：「+ 添加一条」在末尾追加一行空规则（月份、日期均未选，参与校验）；每行右侧 ✕ 删除，<b>最后一行不可删</b>。</li>
+  <li><b>停止日期与永不截止</b>：勾选「永不截止」→ 日期输入禁用并清空展示；取消勾选 → 恢复输入，需重新选择。</li>
+  <li><b>未保存提示</b>：任何标签下改动后返回，都按「有未保存修改」处理。</li>
+  <li><b>预览</b>：「下一次任务详情」读取的是<b>当前表单值</b>（不是已保存值），因此改完立刻能看效果。</li>
+</ol>
+
+<h4>6. 边界与异常</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>按年无效日期</td><td>2/30、4/31、6/31 等自动跳过该月，不报错、不阻断保存</td></tr>
+    <tr><td>按年组合超限</td><td>行数 &gt; 10 或组合 &gt; 60 时，保存按钮置灰并提示「规则过于复杂，请精简」</td></tr>
+    <tr><td>停止日期早于首条</td><td>提示「停止日期不能早于计划开始时间」，聚焦该字段</td></tr>
+    <tr><td>计划结束 ≤ 开始</td><td>提示「计划结束时间必须晚于开始时间」</td></tr>
+    <tr><td>重复日期为空</td><td>开启重复发布但未选任何日期 → 「请至少选择 1 个重复日期」</td></tr>
+    <tr><td>提前量过大</td><td>发布时间早于当前时间时提示「发布时间早于当前时间」，仍允许保存（可能是有意补录），但发布时二次确认</td></tr>
+    <tr><td>画布为空 / 缺固定组件</td><td>固定组件不可删除，因此不会出现；若数据异常缺字段，保存时提示「模板结构不完整，请重新打开」</td></tr>
+    <tr><td>并发保存</td><td>以 version 做乐观锁，冲突返回 409 并提示「模板已被他人修改，请刷新后重试」</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-publish">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div><code>page-publish</code></div>
+  <div class="k">菜单路径</div><div>发布任务（左侧导航第二项）</div>
+  <div class="k">三个标签</div><div>发布任务 / 草稿任务 / 我发起的</div>
+  <div class="k">发布表单两标签</div><div>基本信息配置 / 全局规则配置</div>
+  <div class="k">数据来源</div><div>模板列表读 <code>tpl_list</code>（仅启用）；草稿与「我发起的」读 <code>task_list</code>，分别按 <code>status=draft</code> 与 <code>creator_id=当前人</code> 过滤</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>这是<b>发起侧</b>的唯一入口，承担三件事：选模板并发布新任务、继续编辑未发完的草稿、管理自己已发起的任务（编辑计划 / 暂停 / 终止 / 复制 / 查看执行明细）。</p>
+<p class="devdoc-tip"><b>维度边界</b>：本页全部是<b>任务级</b>——一行代表一个任务，不是一次执行。执行级的一切（谁做了、超没超期、撤回作废）都在「我的任务」与「任务总台账 → 执行明细」。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>页签栏</b>：发布任务 ｜ 草稿任务（角标＝草稿数）｜ 我发起的（角标＝任务数）。</li>
+  <li><b>标签1 · 发布任务</b>：可用模板列表，每行「发布」进入发布表单。</li>
+  <li><b>发布表单</b>：顶栏（返回 / 标题 / 保存草稿 · 发布任务）+ 两个标签（基本信息配置 / 全局规则配置）。</li>
+  <li><b>标签2 · 草稿任务</b>：草稿列表，操作为 编辑 / 发布 / 删除。</li>
+  <li><b>标签3 · 我发起的</b>：任务级列表，操作按状态给；「已发布次数」可点下钻。</li>
+  <li><b>执行明细弹窗</b>：点「已发布次数」打开，列见 4.6，支持撤回 / 作废 / 调整执行人。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用校验规则</b>：长度按字符计；文本提交前 <code>trim()</code>；时间统一 <code>YYYY-MM-DD HH:mm</code>；<b>低代码字段（任务名称、执行说明）的长度与字符校验由模板组件属性决定，页面只做空值拦截</b>；<b>执行人 / 参与人员用组织架构选择器，系统不设人数上限以外的字数规则</b>。</p>
+
+<h5>4.1 标签1 · 可用模板列表（5 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:76px;">列</th><th style="width:96px;">控件</th><th style="width:110px;">格式</th><th>取值与规则</th></tr></thead>
+  <tbody>
+    <tr><td>模板ID</td><td>文本·只读</td><td><code>TPL</code>+3 位</td><td>等宽字体；生成规则见「任务模板 · 4.2」</td></tr>
+    <tr><td>模板名称</td><td>文本·只读</td><td>≤ 50 字</td><td><b>单元格最多显示 20 个字符</b>，超出以「…」截断，hover 显示完整名称（口径同模板列表）</td></tr>
+    <tr><td>表单类型</td><td>标签·只读</td><td>三值枚举</td><td>普通业务表单 / 无 / BPM流程表单</td></tr>
+    <tr><td>创建人</td><td>文本·只读</td><td>姓名</td><td>只读展示姓名，<b>不区分在职 / 离职</b></td></tr>
+    <tr><td>操作</td><td>按钮</td><td>发布</td><td>点击进入发布表单，任务名称预填模板名、表单类型由模板带入且只读</td></tr>
+  </tbody>
+</table>
+<p><b>数据范围</b>：<b>只列启用中的模板</b>，停用模板不出现；空态「暂无可用模板，请先到任务模板中创建并启用」。</p>
+
+<h5>4.2 发布表单 · 基本信息配置</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>单行文本</td><td>是</td><td>由组件属性决定</td><td>默认＝模板名，可修改；空值提示「请填写任务名称」；长度 / 正则按模板该组件配置</td></tr>
+    <tr><td>发起人</td><td>文本·只读</td><td>—</td><td>—</td><td>＝当前登录人，<b>不可修改、不接受前端传值</b></td></tr>
+    <tr><td>参与人员</td><td>组织架构多选</td><td>否</td><td>≥ 0 人</td><td>可为空；不产生待办、不参与会签；<b>与执行人允许重复，不做重复校验</b></td></tr>
+    <tr><td>执行人</td><td>组织架构多选</td><td>是</td><td>≥ 1 人</td><td>带入模板默认值，可改；受模板「可选成员范围」限制；为空提示「请选择执行人」</td></tr>
+    <tr><td>执行任务@表单</td><td>下拉 / 只读</td><td>是</td><td>三值枚举</td><td>由模板带入；非「无」时须选具体表单；<b>任务发布后不可改</b>；无表单显示「无（普通任务）」</td></tr>
+    <tr><td>执行工种</td><td>文本 / 字典</td><td>否</td><td>≤ 20 字</td><td>带入模板值，可改；执行页只读展示</td></tr>
+    <tr><td>执行地点</td><td>文本</td><td>否</td><td>≤ 50 字</td><td>带入模板值，可改；执行页只读展示</td></tr>
+    <tr><td>计划开始时间</td><td>日期时间</td><td>是</td><td><code>YYYY-MM-DD HH:mm</code></td><td>须 ≥ 当前时间，否则「计划开始时间不能早于当前时间」；含义＝<b>第一条执行的开始</b></td></tr>
+    <tr><td>计划结束时间</td><td>日期时间</td><td>是</td><td><code>YYYY-MM-DD HH:mm</code></td><td>须 <b>严格大于</b>开始，否则「计划结束时间必须晚于开始时间」；差值＝每条执行时长</td></tr>
+    <tr><td>执行说明</td><td>多行文本</td><td>否</td><td>由组件属性决定</td><td>带入模板值；执行页「任务基本信息」中单独占一整行</td></tr>
+  </tbody>
+</table>
+
+<h5>4.3 发布表单 · 全局规则配置（覆盖模板）</h5>
+<p>字段与「任务模板编辑页 · 全局规则配置」<b>完全一致</b>：执行控制、重复发布（频率 / 重复日期 / 停止日期 / 发布时间 / 立即发布第一条）、任务提醒、超期未处理。此处只说明差异：</p>
+<table class="devdoc-table">
+  <thead><tr><th>项</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>进入时取值</td><td>带入模板已保存的默认值；模板未配置时用系统默认（重复发布会话关闭、自动提醒开启）</td></tr>
+    <tr><td>修改影响范围</td><td><b>只影响本次发布，不回写模板</b>；下次选同一模板仍是模板原值</td></tr>
+    <tr><td>「下一次任务详情」</td><td>读取<b>本页当前值</b>（不是模板值）；从右侧滑出只读面板，内容＝基本信息配置的克隆、全部置灰，支持横向滚动与打印</td></tr>
+    <tr><td>关闭「开启重复发布」</td><td>重复频率 / 重复日期 / 停止日期 / 发布时间<b>整块隐藏</b>；已填值保留在表单状态中，重新开启后原值恢复并重新显示；关闭时按单次任务处理（只生成 1 条执行）</td></tr>
+    <tr><td>切换标签</td><td>基本信息已填内容<b>不丢</b>；规则改动同样保留</td></tr>
+  </tbody>
+</table>
+
+<h5>4.4 标签2 · 草稿任务（7 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:76px;">列</th><th style="width:104px;">控件</th><th style="width:132px;">格式</th><th>取值与规则</th></tr></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>≤ 20 字符展示</td><td>草稿保存时的名称；超出按「8.1 文本截断」处理，hover 显示全名</td></tr>
+    <tr><td>类型</td><td>标签·只读</td><td>单次 / 周期</td><td>按「开启重复发布」判定：开启＝周期，关闭＝单次</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>见 8.1 人员规则</td><td>已选执行人；<b>1 人全名、2 人「A、B」、≥3 人「A、B 等 N 人」</b>；hover 显示全部；单行不换行</td></tr>
+    <tr><td>已发布次数</td><td>文本·只读</td><td><code>0 次</code></td><td><b>恒为 0 次、不可点</b>（草稿不生成执行）</td></tr>
+    <tr><td>状态</td><td>标签·只读</td><td>草稿</td><td>固定值，灰色标签</td></tr>
+    <tr><td>创建时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>草稿保存时间；列表按此列<b>倒序</b></td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>编辑 · 发布 · 删除</td><td>编辑＝回填发布表单（含全局规则）；发布＝走完整发布校验，成功后草稿转正式任务并<b>跳「我发起的」</b>；删除＝二次确认后物理删除，不可恢复</td></tr>
+  </tbody>
+</table>
+<p><b>查询</b>：关键字（任务名称）+ 类型。<b>排序</b>：固定按创建时间倒序，<b>不提供表头排序</b>。空态「暂无草稿，去发布任务时点『保存草稿』会出现在这里」。</p>
+
+<h5>4.5 标签3 · 我发起的（7 列，任务级）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:76px;">列</th><th style="width:104px;">控件</th><th style="width:132px;">格式</th><th>取值与规则</th></tr></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>≤ 20 字符展示</td><td>任务名；<b>无 ID 列</b>（前台不展示编号）；超出按 8.1 截断，hover 显示全名</td></tr>
+    <tr><td>类型</td><td>标签·只读</td><td>单次 / 周期</td><td>单次＝还剩 1 个未生成执行的周期任务，两者规则完全一致</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>见 8.1 人员规则</td><td>全部执行人；<b>1 人全名、2 人「A、B」、≥3 人「A、B 等 N 人」</b>；hover 显示全部；单行不换行</td></tr>
+    <tr><td>已发布次数</td><td><b>可点链接</b></td><td><code>N 次</code></td><td>该任务已生成的执行条数；点击打开<b>执行明细弹窗</b>（按发布时间倒序）；<b>0 次不可点</b>（置灰 + hover「尚未生成执行」）</td></tr>
+    <tr><td>状态</td><td>标签·只读</td><td>4 态</td><td>进行中 / 已完成 / 已暂停 / 已终止；<b>任务级不出现超期</b></td></tr>
+    <tr><td>创建时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>任务创建（首次发布）时间；列表按此列<b>倒序</b></td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>按状态给</td><td>见下方操作矩阵</td></tr>
+  </tbody>
+</table>
+<p><b>操作矩阵（只看状态）</b></p>
+<table class="devdoc-table">
+  <thead><tr><th>状态</th><th>操作</th><th>行为</th></tr></thead>
+  <tbody>
+    <tr><td>进行中</td><td>编辑计划 · 暂停 · 复制 · 终止</td><td>编辑＝进任务详情可编辑态；暂停＝即刻生效、可恢复；<b>复制＝照抄当前配置新建任务，原任务不受影响</b>；终止＝不可恢复，已生成执行照常走完</td></tr>
+    <tr><td>已暂停</td><td>编辑计划 · 恢复 · 复制 · 终止</td><td>恢复后从下一条按规则继续生成，<b>不补生成暂停期间的执行</b>；复制同上</td></tr>
+    <tr><td>已完成</td><td>查看 · 复制</td><td>查看＝任务详情只读；复制同上</td></tr>
+    <tr><td>已终止</td><td>查看 · 复制</td><td>同上</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>暂停 / 恢复 / 终止都要二次确认</b>：暂停＝「暂停后不再生成新的执行，已生成的照常进行，可随时恢复」；恢复＝「恢复后从下一条按规则继续生成，暂停期间的不会补生成」；终止＝「终止后不可恢复，已生成的执行照常走完」+ <b>必填终止原因（2–200 字）</b>，原因写入任务操作记录。三者口径与「任务总台账 · 4.5」完全一致，两处入口共用同一套实现。</p>
+<p class="devdoc-tip"><b>为什么复制对所有状态开放</b>：复制是「以现有配置新建一条任务」，与任务当前是否在跑无关——进行中的任务同样可能需要"再发一份一样的"（如临时加一个班组）。复制<b>不改变、不暂停、不影响原任务</b>；新任务从发布时刻起按自己的规则生成执行，名称默认加「（副本）」。</p>
+<p class="devdoc-tip"><b>为什么已生成过执行就不能改表单类型</b>：执行生成时锁定<b>表单快照</b>，同一任务下每次执行必须使用同一套字段结构。若允许中途改表单类型，会出现在同一任务里"前几次是老表单、后几次是新表单"，历史提交无法按同一结构展示、导出与统计。若真实诉求是"换张表重新发"，请用「复制」新建任务——历史任务保持原样。<b>其余字段（名称 / 执行人 / 参与人 / 计划起止 / 重复规则 / 提醒）仍可编辑</b>，且只影响之后生成的执行。</p>
+<p><b>查询</b>：关键字 + 类型 + 状态。<b>排序</b>：固定按创建时间倒序，<b>不提供表头排序</b>。</p>
+
+<h5>4.6 执行明细弹窗（点「已发布次数」打开）</h5>
+<p>标题「执行明细 · 任务名」；<b>不设副标题</b>（不显示总条数、不显示任务状态——任务状态在外层列表已展示，弹窗内重复无意义）。列表按发布时间倒序；超过 50 条时分页，20 条 / 页。</p>
+<table class="devdoc-table">
+  <thead><tr><th style="width:76px;">列</th><th style="width:104px;">控件</th><th style="width:150px;">格式</th><th>取值与规则</th></tr></thead>
+  <tbody>
+    <tr><td>发布时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>该条执行<b>被生成的绝对时刻</b>（＝计划开始 − 提前量）；<b>带年份、到分钟</b>；倒序排列（最新在上）</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>见 8.1 人员规则</td><td><b>不可点击</b>——本弹窗只做查看，不设下钻；要看某人提交了什么，走「详情 → 执行日志 → 提交详情」。<b>与「任务总台账 · 执行明细」不同</b>：那里点执行人是下钻到执行人列表，本弹窗不提供该交互</td></tr>
+    <tr><td>状态</td><td>标签</td><td>未执行 / 执行中 n/m / 已完成 / 已撤回 / 已作废</td><td>服务端按「已提交人数 / 执行人总数」计算；n/m 必须显示数字</td></tr>
+    <tr><td>超期</td><td>标签</td><td>超期 / 超期完成 / —</td><td>见 4.6.1；<b>已完成与执行中的执行同样可以标超期</b></td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>详情 · 撤回 / 作废 · 调整</td><td>见 4.6.2</td></tr>
+  </tbody>
+</table>
+
+<h5>4.6.1 超期判定（三种取值）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>取值</th><th>判定条件</th><th>展示</th></tr></thead>
+  <tbody>
+    <tr><td><b>超期</b></td><td>当前时间 &gt; 该执行<b>自己的计划结束</b>，且<b>未闭环</b>（仍有人未提交）</td><td>红色徽标「超期」</td></tr>
+    <tr><td><b>超期完成</b></td><td>该执行<b>已闭环</b>（n/n），但<b>最后一位提交时间 &gt; 计划结束</b></td><td>橙色标签「超期完成」（不用红色，避免与"还没做完"混淆）</td></tr>
+    <tr><td><b>—</b></td><td>已闭环且最后提交 ≤ 计划结束；或该执行已撤回 / 已作废</td><td>灰色 <code>—</code></td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>判定顺序</b>：先看是否撤回 / 作废（是 → <code>—</code>）；再看是否闭环（否 → 比当前时间；是 → 比最后提交时间）。<b>计划结束取该执行自己的 <code>plan_end</code></b>，不是任务整体结束时间。</p>
+
+<h5>4.6.2 操作规格（详情 / 撤回 / 作废 / 调整）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>操作</th><th>出现条件</th><th>点击后</th><th>校验与后置效果</th></tr></thead>
+  <tbody>
+    <tr><td>详情</td><td>始终出现</td><td>打开<b>执行详情弹窗</b>，见 4.6.3</td><td>只读，不发起写请求</td></tr>
+    <tr><td>撤回</td><td>状态＝未执行（0/n）</td><td>弹窗：标题「撤回本次执行」+ 说明「本次尚未有人执行，撤回后不再出现在执行人的待办中」+ <b>撤回原因（必填，2–200 字）</b>，提供 4 个快捷原因（内容有误 / 时间冲突 / 任务取消 / 重复发布）</td><td>原因为空不可提交；<b>不通知执行人</b>；确认后状态置「已撤回」，<b>从应完成与超期统计中剔除</b>（日志保留）；写执行日志「已撤回 · 原因」；<b>已超期也允许撤回</b>，弹窗额外提示「该执行已超期」</td></tr>
+    <tr><td>作废</td><td>状态＝执行中 n/m（0 &lt; n &lt; m）</td><td>弹窗：标题「作废本次执行」+ 说明「已有人提交，作废后本次执行失效并通知执行人」+ <b>作废原因（必填，2–200 字）</b></td><td>原因为空不可提交；<b>必须通知执行人</b>（站内通知，含原因）；状态置「已作废」，不计入统计；日志与已提交记录<b>保留</b></td></tr>
+    <tr><td>调整</td><td>仍存在未提交的执行人（n &lt; m），且未撤回 / 未作废</td><td>弹窗三个字段：<b>原执行人</b>（下拉，<b>只列未提交者</b>；仅 1 人未交时自动选中并锁定）、<b>调整给</b>（组织架构单选，排除现有执行人）、<b>调整原因</b>（选填，≤ 200 字）</td><td>「调整给」未选不可提交；<b>只改这一条执行</b>，不动任务规则、不影响其它执行；状态与进度不变；写日志「已调整执行人 · A → B」并<b>通知新旧执行人</b></td></tr>
+    <tr><td>—（无操作）</td><td>已完成（n＝m）、已撤回、已作废</td><td>操作列只保留「详情」（撤回 / 作废 / 调整全部不显示）</td><td>—</td></tr>
+  </tbody>
+</table>
+
+<h5>4.6.3 执行详情弹窗（点「详情」）</h5>
+<p>标题「执行详情 · 任务名」，自上而下三块：</p>
+<ol>
+  <li><b>头部胶囊</b>：完成进度 <code>n/m</code> + 超期徽标（超期 / 超期完成 / 未超期）+ 计划结束 <code>YYYY-MM-DD HH:mm</code>。</li>
+  <li><b>任务信息</b>（只读，8 项，与执行页一致）：发起人 / 参与人员 / 执行人 / 执行表单 / 任务起始时间 / 执行地点 / 执行工种 / 执行说明（跨整行）。<b>不含「所属任务」</b>——弹窗本身就是从某个任务下钻进来的，再列任务名属于重复信息；也<b>不显示发布时间</b>（列表已有该列）。</li>
+  <li><b>执行日志</b>：列＝执行人 ｜ 提交情况 ｜ 提交时间 ｜ 超期 ｜ <b>操作</b>；转办、撤回、作废等事件按时间插入同一张表。</li>
+</ol>
+<table class="devdoc-table">
+  <thead><tr><th>日志行的操作</th><th>出现条件</th><th>点击后</th></tr></thead>
+  <tbody>
+    <tr><td><b>提交详情</b></td><td>该行「提交情况＝已提交」</td><td>打开<b>该执行人的只读提交页</b>（复用执行页只读态）：顶部显示「姓名 · 提交时间」，下面按模板表单展示他填写的字段值 + 附件；<b>不可编辑、不可重新提交</b>；返回回到执行明细弹窗</td></tr>
+    <tr><td>—</td><td>未提交 / 转办 / 撤回 / 作废等事件行</td><td>无内容可看，显示灰色 <code>—</code></td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>三个"看某个人"的入口别混</b>：<br>· 执行明细弹窗 → 详情 → 执行日志 →「提交详情」＝看<b>这次执行里某个人</b>交了什么；<br>· 我的任务 →「查看」＝看<b>整条执行</b>的任务信息 + 执行日志；<br>· 任务总台账 → 执行明细 → 点执行人 ⇒ 只在该页提供，打开<b>执行人列表</b>再点「查看」。</p>
+
+<h4>5. 交互与联动</h4>
+<h5>5.1 发布前校验（顺序执行，命中即停并聚焦）</h5>
+<ol>
+  <li>任务名称非空 → 「请填写任务名称」</li>
+  <li>执行人 ≥ 1 → 「请选择执行人」</li>
+  <li>计划开始、结束均有值 → 「请填写计划开始 / 结束时间」</li>
+  <li>结束 &gt; 开始 → 「计划结束时间必须晚于开始时间」</li>
+  <li>开始 ≥ 当前时间 → 「计划开始时间不能早于当前时间」</li>
+  <li>开启重复发布时：重复日期 ≥ 1 项；停止日期 ≥ 首条日期，或已勾「永不截止」</li>
+  <li>按模板组件 schema 校验自定义字段（必填 / 长度 / 正则）</li>
+</ol>
+<h5>5.2 提交结果</h5>
+<table class="devdoc-table">
+  <thead><tr><th>动作</th><th>结果</th></tr></thead>
+  <tbody>
+    <tr><td>发布任务</td><td>创建任务（生成任务编号）→ 按「立即发布第一条」或发布时间生成首条执行 → 跳「我发起的」并高亮该行 → Toast「发布成功」</td></tr>
+    <tr><td>保存草稿</td><td>只存任务定义、<b>不生成执行</b>，状态＝草稿 → 跳「草稿任务」</td></tr>
+    <tr><td>失败</td><td>保留全部已填内容，Toast 提示原因，不清空、不跳转</td></tr>
+    <tr><td>重复提交</td><td>按幂等键去重，<b>同一次点击只创建一条任务</b>；重复请求返回同一 <code>task_id</code></td></tr>
+  </tbody>
+</table>
+<h5>5.3 联动手势</h5>
+<ol>
+  <li><b>标签切换</b>：发布任务 / 草稿任务 / 我发起的之间切换<b>不重置</b>已填的发布表单（未发布的表单内容保留在内存）。</li>
+  <li><b>发布完成</b>：表单清空、模板列表刷新（表单被消耗不影响模板本身）。</li>
+  <li><b>草稿发布</b>：成功后该草稿记录消失，成为正式任务出现在「我发起的」。</li>
+  <li><b>已发布次数</b>：0 次显示为纯文本；≥1 次显示为链接，hover 变主色并出现下划线。</li>
+</ol>
+
+<h4>6. 边界与异常</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>无可用模板</td><td>「发布任务」标签展示空态 + 跳转「去任务模板」按钮</td></tr>
+    <tr><td>模板在填写期间被停用</td><td>点发布时校验模板状态，返回「该模板已停用，请重新选择」，保留已填内容</td></tr>
+    <tr><td>表单模板被删除</td><td>提示「表单不可用，请联系管理员修复模板」，禁止发布</td></tr>
+    <tr><td>计划开始已过期</td><td>提示「计划开始时间不能早于当前时间」，聚焦该字段</td></tr>
+    <tr><td>重复日期为空</td><td>「请至少选择 1 个重复日期」</td></tr>
+    <tr><td>停止日期早于首条</td><td>「停止日期不能早于计划开始时间」</td></tr>
+    <tr><td>网络超时</td><td>提示「提交可能已成功，请到『我发起的』确认」，<b>不自动重试</b>，避免重复建任务</td></tr>
+    <tr><td>草稿被他人删除</td><td>编辑时提示「该草稿已不存在」，返回列表并刷新</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-mytask">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div><code>page-mytask</code></div>
+  <div class="k">菜单路径</div><div>我的任务（左侧导航第三项）</div>
+  <div class="k">四个标签</div><div>待我执行 / 已执行 / 已转发 / 我参与的</div>
+  <div class="k">数据来源</div><div><code>todo</code> 表（我的待办）与 <code>exec</code> 表（整条执行），均以当前登录人为过滤条件</div>
+  <div class="k">行粒度</div><div>前三个标签＝<b>我的待办</b>（一人一行）；「我参与的」＝<b>整条执行</b>（我不产生待办）</div>
+  <div class="k">默认标签</div><div>进入页面默认落在<b>待我执行</b>；从任务详情返回时回到来源标签，不重置</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>这是<b>执行侧</b>的唯一入口，只回答一个问题：<b>和我有关的事，现在到哪一步了</b>。因此本页只有执行级信息（发布时间、状态、超期、我的提交时间），<b>不出现任务级的暂停 / 终止 / 编辑计划</b>。</p>
+<p class="devdoc-tip"><b>互斥归属</b>：同一条执行对同一个人只出现在一个标签——我是执行人且未交 → 待我执行；已交 → 已执行；已转出 → 已转发；<b>仅是参与人</b> → 我参与的。这样不会被误认为数据重复。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>页签栏</b>：4 个标签，单层平铺；「待我执行」带待办数角标。</li>
+  <li><b>查询条</b>：按标签定制，条件与匹配规则见 <b>4.6</b>；含结果数与重置。</li>
+  <li><b>列表</b>：<b>四个标签各用各的表头</b>，列结构不共用，见 4.1 ~ 4.4。</li>
+  <li><b>查看入口分流</b>：<b>「已执行」</b>点「查看」→ <b>我的提交只读页</b>（与执行页同一版式，展示我填的值与附件）；<b>「已转发 / 我参与的」</b>点「查看」→ <b>任务详情整页</b>（任务基本信息 + 执行日志），见「任务详情」页文档。</li>
+  <li><b>转办弹窗</b>：「待我执行」点「转办」打开，见 4.5。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用校验规则</b>：时间统一 <code>YYYY-MM-DD HH:mm</code>（带年份、到分钟）；状态标签由服务端下发；超期只做展示，不参与前端计算；执行人等多值列按「通用规则 8.1」展示。</p>
+<table class="devdoc-table">
+  <thead><tr><th style="width:96px;">超期取值</th><th>判定</th><th>出现在</th></tr></thead>
+  <tbody>
+    <tr><td><b>超期</b></td><td>我未提交，且当前时间 &gt; 该执行计划结束</td><td>待我执行</td></tr>
+    <tr><td><b>超期完成</b></td><td>我已提交，但<b>我的提交时间 &gt; 计划结束</b></td><td>已执行（永久保留标记）</td></tr>
+    <tr><td><b>超期</b>（执行级）</td><td>整条执行过计划结束仍未闭环</td><td>我参与的</td></tr>
+    <tr><td><b>—</b></td><td>按期完成；或该执行已撤回 / 已作废</td><td>各标签</td></tr>
+  </tbody>
+</table>
+
+<h5>4.1 待我执行（6 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列</th><th style="width:110px;">控件</th><th style="width:126px;">格式</th><th>取值与规则</th></tr></thead></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>—</td><td>该次执行所属任务的名称；展示按通用规则 8.1（≤20 字符，超出「…」，hover 全称）</td></tr>
+    <tr><td>发布时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>该条执行的生成时刻；<b>用来区分同一任务的多次执行</b></td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>逗号分隔</td><td><b>显示全部执行人</b>（不刻意标出「我」），便于知道还有谁一起做</td></tr>
+    <tr><td>状态</td><td>标签</td><td>未执行 / 执行中 n/m</td><td>本标签内不会出现「已完成」（我一交就移出），也不会出现已撤回 / 已作废</td></tr>
+    <tr><td>超期</td><td>徽标</td><td>超期 / 超期完成 / —</td><td><b>人级口径</b>：我没提交且当前时间 &gt; 该执行计划结束</td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>执行 · 转办</td><td>执行＝进执行页；若「开始时间后才可执行」开启且未到开始时间，按钮置灰并提示；转办＝打开转办弹窗</td></tr>
+  </tbody>
+</table>
+<p><b>排序</b>：超期在前，其余按发布时间倒序。 <b>查询</b>：关键字 + 状态 + 是否超期。 <b>空态</b>：「当前没有待执行的任务」。</p>
+
+<h5>4.2 已执行（7 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列</th><th style="width:110px;">控件</th><th style="width:126px;">格式</th><th>取值与规则</th></tr></thead></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>—</td><td>同上</td></tr>
+    <tr><td>发布时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>同上</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>逗号分隔</td><td>全部执行人</td></tr>
+    <tr><td>状态</td><td>标签</td><td>已完成 / 执行中 n/m / 已作废 / 已撤回</td><td>我交了他没交 → 执行中 n/m；全员交齐 → 已完成；执行被作废 → 已作废</td></tr>
+    <tr><td>我的提交时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>我提交的凭证；<b>只显示我的，不显示他人的</b></td></tr>
+    <tr><td>超期</td><td>徽标</td><td>超期 / 超期完成 / —</td><td>按「<b>我的提交时间</b> &gt; 该执行计划结束」判定；超期完成后<b>永久保留</b>标记</td></tr>
+    <tr><td>操作</td><td>按钮</td><td>查看</td><td><b>进我的提交只读页</b>（与执行页同一版式）：标题「查看提交 · 任务名」+ 灰色「只读」标签，显示<b>我填写的表单字段值、执行说明、附件、提交时间</b>；上方任务基本信息照常展示；<b>不给撤回 / 作废按钮</b>，也不展示其他人的提交</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>已作废仍保留</b>：我确实做过这件事，记录不能凭空消失；仅状态显示「已作废」，仍可点「查看」看到我当时提交的内容。</p>
+<p><b>查询</b>：关键字 + 状态（已完成 / 已作废 / 已撤回）+ 是否超期。</p>
+
+<h5>4.3 已转发（5 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列</th><th style="width:110px;">控件</th><th style="width:126px;">格式</th><th>取值与规则</th></tr></thead></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>—</td><td>同上</td></tr>
+    <tr><td>发布时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>同上</td></tr>
+    <tr><td>转给</td><td>文本·只读</td><td>姓名</td><td>我转出的接收人；重名追加部门</td></tr>
+    <tr><td>转出时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>我确认转办的时间</td></tr>
+    <tr><td>操作</td><td>按钮</td><td>查看</td><td>进任务详情页（只读），日志里含「我转给谁」与接手人后续提交情况</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>本标签不显示状态与超期</b>：转出之后进度和超期归接手人；多级转办（A→B→C）时「算谁的时间」无法定义。这里只做<b>留痕</b>。执行被作废时本行保留，不消失。</p>
+<p><b>查询</b>：关键字 + 转给。</p>
+
+<h5>4.4 我参与的（6 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列</th><th style="width:110px;">控件</th><th style="width:126px;">格式</th><th>取值与规则</th></tr></thead></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>—</td><td>同上</td></tr>
+    <tr><td>发布时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>同上</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>逗号分隔</td><td>整条执行的全部执行人（<b>不含我</b>，我是参与人）</td></tr>
+    <tr><td>状态</td><td>标签</td><td>未执行 / 执行中 n/m / 已完成 / 已撤回 / 已作废</td><td>整条执行的状态</td></tr>
+    <tr><td>超期</td><td>徽标</td><td>超期 / 超期完成 / —</td><td><b>执行级口径</b>（不是针对我）：整条执行超过计划结束仍未闭环</td></tr>
+    <tr><td>操作</td><td>按钮</td><td>查看</td><td>进任务详情页（只读）；<b>不能执行、不能转办</b></td></tr>
+  </tbody>
+</table>
+<p><b>查询</b>：关键字 + 状态 + 是否超期。 <b>移除规则</b>：执行被撤回 / 作废后从本列表移除（我本无待办，留着只会干扰）。</p>
+
+<h5>4.5 转办弹窗</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>校验与取值</th></tr></thead>
+  <tbody>
+    <tr><td>转给</td><td>组织架构单选</td><td>是</td><td>1 人</td><td>排除自己；排除已在执行人名单中的人；仅在职；未选提示「请选择转交人」</td></tr>
+    <tr><td>转办原因</td><td>多行文本</td><td>否</td><td>≤ 200 字</td><td>选填；写入执行日志的「已转办」条目；<b>不填也允许提交</b></td></tr>
+  </tbody>
+</table>
+<p><b>前置条件</b>：仅当前待办未提交、且我是该待办执行人时可用。<b>确认后</b>：我的待办置为已转出、接收人生成新待办、本行移入「已转发」、写日志「已转办 · 我 → 接收人 · 原因」；<b>不可撤回</b>。</p>
+
+<h5>4.6 查询条件（每个标签一条独立查询条）</h5>
+<p>四个标签各一条查询条，<b>输入 / 选择即时生效</b>（不需要点「查询」按钮）、多条件之间为<b>「与」</b>；右侧实时显示「共 N 条」（筛选后的总条数）；末尾「重置」清空该标签全部条件并恢复全量。切换标签时<b>各自保留</b>自己的条件，互不影响；离开页面再回来重置为默认。</p>
+<table class="devdoc-table">
+  <thead><tr><th style="width:76px;">标签</th><th style="width:110px;">条件</th><th style="width:150px;">控件 / 默认值</th><th>匹配规则</th></tr></thead>
+  <tbody>
+    <tr><td>待我执行</td><td>关键字</td><td>输入框 / 空<br>占位「搜索任务名称」</td><td>对<b>任务名称</b>做包含匹配；<b>忽略大小写</b>；首尾空格去除、多个连续空格归一为一个；空串不过滤；不做拼音、不做分词、不匹配执行人等其他列</td></tr>
+    <tr><td>待我执行</td><td>状态</td><td>下拉 / 全部</td><td>全部 / 未执行 / 执行中 / 已完成。按状态文案的<b>前缀</b>匹配，「执行中 1/2」由「执行中」命中；「已完成」在本标签通常不出现（我提交后会移出），保留用于异常数据排查</td></tr>
+    <tr><td>待我执行</td><td>是否超期</td><td>下拉 / 全部</td><td>全部 / 仅超期 / 未超期。按行内<b>是否存在超期标记</b>判断，<b>不按文案匹配</b>（避免「超期完成」被误判为未超期）</td></tr>
+    <tr><td>已执行</td><td>关键字</td><td>输入框 / 空</td><td>同「待我执行」</td></tr>
+    <tr><td>已执行</td><td>状态</td><td>下拉 / 全部</td><td>全部 / 已完成 / 已作废 / 已撤回；<b>不含「执行中」</b>——我提交后本标签只会是这三种</td></tr>
+    <tr><td>已执行</td><td>是否超期</td><td>下拉 / 全部</td><td>同上；<b>「超期完成」算超期</b>（我曾晚交，记录要留痕）</td></tr>
+    <tr><td>已转发</td><td>关键字</td><td>输入框 / 空</td><td>同「待我执行」</td></tr>
+    <tr><td>已转发</td><td>转给</td><td>下拉 / 全部</td><td>全部 + <b>接收人姓名</b>（取自本租户在职人员）；按「转给」列<b>全等</b>匹配，不做包含（避免「李强」命中「李强生」）</td></tr>
+    <tr><td>我参与的</td><td>关键字 / 状态 / 是否超期</td><td>输入框 + 两个下拉</td><td>同「待我执行」，其中「是否超期」为<b>执行级</b>口径（整条执行是否超期），不是「我」是否超期——我不是执行人</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>排序</b>：按发布时间倒序（见「通用规则 8」），<b>不提供表头排序</b>。<br><b>筛选后为空</b>：「没有符合条件的结果」+「重置」；<b>刷新</b>：保留条件与当前标签。</p>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>提交后的行流动</b>：「待我执行」点执行并提交 → 该行<b>从本表移除</b>，按目标表结构重建一行插入「已执行」，并写入「我的提交时间」＝服务器当前时间；状态按会签进度重算。</li>
+  <li><b>转办后的行流动</b>：确认转办 → 从「待我执行」移除，按「已转发」结构插入一行（转给 / 转出时间）。</li>
+  <li><b>标签切换</b>：保留各自的查询条件（各标签独立），切换不重置。</li>
+  <li><b>默认落点</b>：进入页面 → 待我执行；从详情返回 → 回到来源标签。</li>
+  <li><b>角标</b>：待我执行角标＝我的未提交待办数，提交 / 转办后实时减 1。</li>
+  <li><b>状态颜色</b>：未执行灰、执行中橙、已完成绿、已作废 / 已撤回灰；超期徽标红色，紧跟状态之后。</li>
+</ol>
+
+<h4>6. 边界与异常</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>未到计划开始时间</td><td>「执行」按钮置灰，hover 提示「未到计划开始时间」；服务端同样拦截</td></tr>
+    <tr><td>执行被他人抢先闭环</td><td>点执行时返回 409，提示「该执行状态已变化」，刷新列表</td></tr>
+    <tr><td>转办目标刚被移除 / 离职</td><td>提交时校验，返回「该人员已不可选，请重新选择」</td></tr>
+    <tr><td>执行被撤回 / 作废</td><td>待我执行、我参与的 → 直接移除；已执行、已转发 → 保留并标「已作废」</td></tr>
+    <tr><td>超期仍未提交</td><td>标红 + 按提醒规则推送；不阻断提交</td></tr>
+    <tr><td>空态</td><td>各标签独立文案：「当前没有待执行的任务」「还没有已执行的任务」「还没有转出记录」「暂无参与的任务」</td></tr>
+    <tr><td>加载失败</td><td>保留查询条件与标签位置，展示重试按钮，不显示空态文案</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-exec">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div><code>page-exec</code></div>
+  <div class="k">入口</div><div>我的任务 →「待我执行」→「执行」；只读态另从任务详情 → 执行日志 →「查看提交」进入</div>
+  <div class="k">形态</div><div><b>整页</b>（非弹窗），顶栏固定、内容区滚动</div>
+  <div class="k">两种模式</div><div>编辑态（我执行）/ 只读态（查看某人提交）</div>
+  <div class="k">数据来源</div><div>执行快照 + 待办 + 模板组件 schema + 我的暂存内容</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>让执行人在<b>不离开上下文</b>的情况下看清「这是什么任务、要干什么」并完成填写。因此页面固定分两块：<b>上＝任务基本信息（只读）</b>，<b>下＝任务执行填写（可编辑）</b>，上下用独立卡片与标题明确分隔，避免误把只读信息当成要填的字段。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>顶栏</b>：返回 ｜ 标题「执行任务 · 任务名」 ｜ 右侧「暂存」「提交」（只读态两者都隐藏）。</li>
+  <li><b>状态条</b>：状态标签（未执行 / 执行中 n/m / 已完成）+ 超期 / 未超期徽标。</li>
+  <li><b>区块① 任务基本信息</b>：只读，8 项，见 4.1；标题左侧有主色竖条。</li>
+  <li><b>区块② 任务执行填写</b>：按表单类型渲染，见 4.2 / 4.3；只读态标题变为「提交内容」。</li>
+  <li><b>底部</b>：无独立页脚，操作集中在顶栏，避免长表单滚到底才能提交。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用校验规则</b>：文本提交前 <code>trim()</code>；必填为空时定位到该字段并提示「请填写{字段名}」；<b>字段的必填 / 长度 / 正则全部来自模板组件 schema</b>，页面不硬编码。</p>
+
+<h5>4.1 区块① 任务基本信息（只读，8 项）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>格式</th><th>取值与规则</th></tr></thead>
+  <tbody>
+    <tr><td>发起人</td><td>文本·只读</td><td>—</td><td>姓名</td><td>任务发起人；离职显示「姓名（已离职）」</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>—</td><td>逗号分隔</td><td><b>该条执行的全部执行人</b>（含已提交者），不是只有我</td></tr>
+    <tr><td>参与人员</td><td>文本·只读</td><td>—</td><td>逗号分隔</td><td>为空显示「—」</td></tr>
+    <tr><td>执行表单</td><td>文本·只读</td><td>—</td><td>表单名 / 无（普通任务）</td><td>无表单时显示「无（普通任务）」</td></tr>
+    <tr><td>执行工种</td><td>文本·只读</td><td>—</td><td>≤ 20 字</td><td>为空显示「—」</td></tr>
+    <tr><td>执行地点</td><td>文本·只读</td><td>—</td><td>≤ 50 字</td><td>为空显示「—」</td></tr>
+    <tr><td>计划时间</td><td>文本·只读</td><td>—</td><td><code>MM-DD HH:mm ~ HH:mm</code></td><td><b>该条执行自己的起止</b>（由首条递推得出），不是任务整体的计划起止</td></tr>
+    <tr><td>执行说明</td><td>文本·只读</td><td>—</td><td>—</td><td><b>单独占一整行</b>（跨列），长文本自动换行，不截断</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip">这 8 项由<b>同一个渲染函数</b>产出，执行页与任务详情页共用；改一处两处同时生效，不允许各写一套。</p>
+
+<h5>4.2 区块② 有表单（<code>form_id</code> 非空）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>校验与取值</th></tr></thead>
+  <tbody>
+    <tr><td>表单字段（动态）</td><td>按组件类型渲染</td><td>按组件属性</td><td>按组件属性</td><td>顺序＝模板画布顺序；<b>不可增删字段</b>；块头固定提示「表单由模板固定，不可增删字段」；前端先校验，服务端按同一 schema 再校验</td></tr>
+    <tr><td>现场附件</td><td>上传</td><td>否</td><td>≤ 9 个，单个 ≤ 20MB</td><td>jpg / jpeg / png / pdf / doc / docx / xls / xlsx；支持点击与拖拽；上传中显示进度、失败可单独重试；<b>只存文件 ID</b></td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip">原型中的「巡检区域 / 设备状态 / 安全隐患 / 处理措施 / 备注」为演示字段，开发按 <code>components</code> 渲染，<b>不要写死这几个字段</b>。</p>
+
+<h5>4.3 区块② 无表单（<code>form_id</code> 为空）</h5>
+<table class="devdoc-table devdoc-table--spec">
+  <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>校验与取值</th></tr></thead>
+  <tbody>
+    <tr><td>执行完成情况</td><td>多行文本</td><td>是</td><td>由控件配置决定</td><td>去空格后非空，否则「请填写执行完成情况」；页面只拦空值，长度由表单设计器决定</td></tr>
+    <tr><td>现场附件</td><td>上传</td><td>否</td><td>≤ 9 个，单个 ≤ 20MB</td><td>同上</td></tr>
+  </tbody>
+</table>
+<p>块头下方固定提示：<b>「本任务未绑定固定表单：只需填写执行完成情况，并可上传现场附件」</b>；<b>不再重复展示「执行说明」</b>（上面基本信息里已有）。</p>
+
+<h5>4.4 只读态（查看他人 / 查看我的提交）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>项</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>入口</td><td><b>三个入口，同一套版式</b>：①我的任务 · 已执行 → 「查看」＝<b>看我自己</b>提交的内容；②我的任务 · 已转发 / 我参与的 → 任务详情 → 执行日志 → 「提交详情」＝<b>看某个人</b>；③任务总台账 → 执行明细 → 执行人列表 → 「查看」＝<b>看某个人</b></td></tr>
+    <tr><td>标题</td><td>看他人：「查看提交 · 姓名 · 任务名」；看自己：「查看提交 · 任务名」。两种都带灰色「只读」标签</td></tr>
+    <tr><td>提交人一行</td><td>区块②顶部显示「提交人 · 提交于 YYYY-MM-DD HH:mm」；看自己时提交人显示为「我」</td></tr>
+    <tr><td>区块② 标题</td><td>改为「提交内容」</td></tr>
+    <tr><td>控件</td><td>全部 <code>disabled</code>，不发起写请求；上传区不可点</td></tr>
+    <tr><td>顶栏按钮</td><td>只有「返回」，<b>没有暂存 / 提交</b></td></tr>
+    <tr><td>未提交的人</td><td>基本信息照常展示；提交区显示「某某 尚未提交，本次没有可查看的提交内容」</td></tr>
+    <tr><td>返回落点</td><td>从任务详情进来 → 回该详情页；从执行人列表进来 → 回该列表并重新打开</td></tr>
+  </tbody>
+</table>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>暂存</b>：保存当前填写内容到草稿，Toast「已暂存」；再次进入<b>自动回填</b>；暂存<b>不改变待办状态</b>、不影响会签进度、不计入提交。</li>
+  <li><b>提交</b>：按 4.2 / 4.3 校验 → 通过后写提交时间（服务端当前时间）与提交人（服务端当前登录人）→ 该待办标记已提交 → 行移入「已执行」→ <b>静默返回列表，不弹提示</b>。</li>
+  <li><b>会签</b>：我提交后若仍有人未交，状态为「执行中 n/m」；全员提交后整条执行才「已完成」。</li>
+  <li><b>幂等</b>：同一 <code>todo_id</code> 重复提交只保留一条记录；已提交的人再次进入本页应为<b>只读态</b>，不允许二次编辑。</li>
+  <li><b>开始时间控制</b>：若任务开启「开始时间后才可执行」，未到计划开始就无法进入编辑态（列表按钮已置灰，直接访问 URL 也应拦截）。</li>
+  <li><b>返回</b>：未提交且有内容时二次确认「内容未提交，确定离开？」；已暂存则不提示。</li>
+</ol>
+
+<h4>6. 边界与异常</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>附件超过数量 / 体积</td><td>「最多上传 9 个附件」/「单个文件不能超过 20MB」，已成功的附件保留</td></tr>
+    <tr><td>附件上传失败</td><td>保留已填内容，单个文件可重试，不清空表单</td></tr>
+    <tr><td>提交超时</td><td>按「结果未知」处理，提示「提交可能已成功，请刷新后确认」，<b>不自动重试</b></td></tr>
+    <tr><td>提交时已被他人调整执行人</td><td>返回 409「你已不是该待办的执行人」，返回列表</td></tr>
+    <tr><td>执行已被撤回 / 作废</td><td>进入时提示「本次执行已失效」，只读展示并禁用提交</td></tr>
+    <tr><td>表单 schema 加载失败</td><td>基本信息照常展示，填写区提示「表单加载失败，请重试」，禁止提交</td></tr>
+    <tr><td>并发提交同一待办</td><td>服务端按 <code>todo_id</code> 幂等，后到请求返回首次结果，不产生两条记录</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-tdetail">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div><code>page-tdetail</code></div>
+  <div class="k">入口</div><div>我的任务 →「<b>已转发 / 我参与的</b>」→「查看」；<b>「已执行」的「查看」不进本页</b>，直接进「我的提交只读页」（执行页只读态）；任务总台账 →「查看计划」为另一套（可编辑任务定义），本页只读</div>
+  <div class="k">形态</div><div>整页只读，顶栏只有「返回」</div>
+  <div class="k">两块内容</div><div>① 任务基本信息（与执行页同一套渲染）② 执行日志</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>回答「<b>这一趟到底发生了什么</b>」：任务是什么、派给了谁、谁交了、谁没交、谁转给了谁、有没有被撤回或作废。<b>本页只读，不提供任何写操作</b>——要执行去执行页，要撤回作废去台账。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>顶栏</b>：返回 + 标题「查看任务 · 任务名」+ 灰色「只读」标签。</li>
+  <li><b>状态条</b>：状态标签 + 超期徽标。</li>
+  <li><b>区块① 任务基本信息</b>：8 项，字段与执行页<b>完全一致</b>（同一渲染函数）。</li>
+  <li><b>区块② 执行日志</b>：列表，列见 4.2；每行有「操作」按钮，按动作分流（见 4.3）。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<h5>4.1 区块① 任务基本信息</h5>
+<p>字段与取值规则见「执行任务 · 4.1」，本节不重复：发起人 / 执行人 / 参与人员 / 执行表单 / 执行工种 / 执行地点 / 计划时间 / 执行说明（跨整行）。<b>必须复用同一组件</b>，不允许本页另写一套字段与排版。</p>
+
+<h5>4.2 区块② 执行日志（5 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列</th><th style="width:110px;">控件</th><th style="width:126px;">格式</th><th>取值与规则</th></tr></thead></thead>
+  <tbody>
+    <tr><td>执行人 / 对象</td><td>文本·只读</td><td>姓名 / 「A → B」/ 系统</td><td>提交类事件显示姓名；转办显示「转出人 → 接收人」；系统事件显示「系统」</td></tr>
+    <tr><td>动作</td><td>标签</td><td>7 类枚举</td><td>已发布 / 已提交 / 未提交 / 已转办 / 已撤回 / 已作废 / 已调整执行人；颜色：发布灰、提交绿、未提交灰、转办蓝、撤回橙、作废红、调整紫</td></tr>
+    <tr><td>时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>动作发生时间；<b>未提交显示「—」</b></td></tr>
+    <tr><td>超期</td><td>徽标</td><td>超期 / 超期完成 / —</td><td><b>该人的待办</b>是否超期；已提交的看其提交时间是否晚于计划结束</td></tr>
+    <tr><td>操作</td><td>按钮</td><td>按动作分流</td><td>见 4.3；无内容可看时显示「—」</td></tr>
+  </tbody>
+</table>
+<p><b>排序规则</b>：<b>未提交的人置顶</b>（一进来先看还差谁），其余按时间倒序；同一时间按动作优先级 作废 &gt; 撤回 &gt; 调整 &gt; 转办 &gt; 提交 &gt; 发布。</p>
+<p><b>日志完整性</b>：日志是<b>任务级</b>的，按执行记录，不属于某个人。撤回、作废的记录<b>永久保留</b>，不因状态变化而删除，也不可编辑。</p>
+
+<h5>4.3 操作分流</h5>
+<table class="devdoc-table">
+  <thead><tr><th>动作</th><th>操作文案</th><th>点开后</th></tr></thead>
+  <tbody>
+    <tr><td>已提交</td><td>查看提交</td><td>进入<b>该执行人的只读提交页</b>（复用执行页只读态，版式一致），返回回本页</td></tr>
+    <tr><td>已转办</td><td>转办详情</td><td>弹窗：转出人 → 接收人、转办时间、<b>转办原因</b>（未填显示「—」）</td></tr>
+    <tr><td>已撤回 / 已作废</td><td>详情</td><td>弹窗：操作人、操作时间、原因（必填项，一定有值）</td></tr>
+    <tr><td>已调整执行人</td><td>详情</td><td>弹窗：原执行人 → 新执行人、调整时间、调整原因（选填）、操作人</td></tr>
+    <tr><td>未提交 / 已发布</td><td>—</td><td>无内容可看，操作列显示「—」</td></tr>
+  </tbody>
+</table>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>返回</b>：回到来源标签（已执行 / 已转发 / 我参与的），不重置标签位置与查询条件。</li>
+  <li><b>查看提交</b>：进入只读提交页后，返回回到<b>本详情页</b>（而非直接回列表），保留阅读上下文。</li>
+  <li><b>弹窗</b>：转办 / 撤回 / 作废 / 调整详情均为轻量弹窗，只读、无操作按钮，关闭即回本页。</li>
+  <li><b>无写操作</b>：本页不出现执行、转办、撤回、作废、调整中的任何按钮。</li>
+  <li><b>状态实时性</b>：打开时取最新数据；页面停留超过 60 秒后返回列表会重新拉取，避免看到过期状态。</li>
+</ol>
+
+<h4>6. 边界与异常</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>执行不存在 / 已删除</td><td>「该执行不存在或已被移除」，提供返回列表按钮</td></tr>
+    <tr><td>日志为空</td><td>至少有一条「已发布」；若数据异常为空，显示「暂无日志」</td></tr>
+    <tr><td>提交人已离职</td><td>执行日志里姓名后追加「（已离职）」，记录仍可查看</td></tr>
+    <tr><td>表单快照缺失</td><td>基本信息正常展示，提交详情提示「表单结构已失效，无法展示提交内容」</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+<div class="devdoc-src" id="devdoc-ledger">
+
+<h4>1. 页面信息</h4>
+<div class="devdoc-kv">
+  <div class="k">页面 ID</div><div><code>page-ledger</code></div>
+  <div class="k">菜单路径</div><div>任务总台账（左侧导航第四项，数据统计分组）</div>
+  <div class="k">两个标签</div><div><b>任务总览</b>（一行一个任务）/ <b>执行明细</b>（一行一次执行）</div>
+  <div class="k">数据来源</div><div><code>task_list</code> 全量 + <code>exec</code> 全量</div>
+  <div class="k">下钻路径</div><div>任务总览 →「已发布次数」→ 执行明细弹窗 → 点执行人 → 执行人列表 →「查看」→ 该人提交页</div>
+</div>
+
+<h4>2. 页面目标</h4>
+<p>给管理者看<b>全公司</b>的任务运行情况：任务总览回答「哪些任务还在跑、跑到什么状态」，执行明细回答「每一次到底谁做了、按时没有」。两处都要能直接纠错——<b>暂停 / 终止任务</b>、<b>撤回 / 作废执行</b>、<b>调整执行人</b>。</p>
+<p class="devdoc-tip"><b>命名口径</b>：界面上<b>不出现「实例」</b>二字，统一叫「执行」「本次执行」「执行明细」；「实例」只出现在开发文档与代码里。</p>
+
+<h4>3. 区块结构</h4>
+<ol>
+  <li><b>页签栏</b>：任务总览 ｜ 执行明细。</li>
+  <li><b>查询条</b>：每个标签一条独立查询条，切换标签时跟着切换（含结果数与重置），条件与匹配规则见 <b>4.6</b>。</li>
+  <li><b>标签1 · 任务总览</b>：7 列任务级列表，操作＝查看计划 / 暂停·恢复 / 终止；导出 Excel。</li>
+  <li><b>标签2 · 执行明细</b>：6 列执行级列表，操作＝详情 / 撤回·作废 / 调整；导出 Excel。</li>
+  <li><b>执行明细弹窗</b>：从「已发布次数」下钻，列同执行明细，只读范围限定为该任务。</li>
+  <li><b>执行人列表弹窗</b>：从「执行人」单元格下钻，每人一行。</li>
+</ol>
+
+<h4>4. 字段规格</h4>
+<p><b>通用校验规则</b>：时间统一 <code>YYYY-MM-DD HH:mm</code>；任务级状态只有 4 个、<b>不含超期</b>；执行级超期按该执行自己的计划结束判定，取值 <b>超期 / 超期完成 / —</b>（超期＝未闭环且已过期；超期完成＝已闭环但最后提交晚于计划结束）；执行人等多值列按「通用规则 8.1」展示。</p>
+
+<h5>4.1 标签1 · 任务总览（7 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列</th><th style="width:110px;">控件</th><th style="width:126px;">格式</th><th>取值与规则</th></tr></thead></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>—</td><td>点击不跳转（下钻统一走「已发布次数」）；超长省略 + hover</td></tr>
+    <tr><td>类型</td><td>标签·只读</td><td>单次 / 周期</td><td>按是否开启重复发布判定</td></tr>
+    <tr><td>发起人</td><td>文本·只读</td><td>姓名</td><td><b>本页特有列</b>——管理员需要知道是谁发起的；离职显示「（已离职）」</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>逗号分隔</td><td>任务的全部执行人</td></tr>
+    <tr><td>已发布次数</td><td><b>可点链接</b></td><td>N 次</td><td>该任务已生成的执行条数；点击打开执行明细弹窗；<b>0 次置灰不可点</b></td></tr>
+    <tr><td>状态</td><td>标签</td><td>进行中 / 已完成 / 已暂停 / 已终止</td><td><b>任务级不出现超期</b></td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>查看计划 · 暂停/恢复 · 终止</td><td>见 4.5；<b>管理员可对任何人发起的任务执行</b>，不受发起人限制</td></tr>
+  </tbody>
+</table>
+<p><b>查询</b>：关键字 + 类型 + 发起人 + 状态。 <b>排序</b>：创建时间倒序，20 条 / 页。 <b>导出</b>：文件名「任务总览_yyyymmdd_HHmm.xlsx」。</p>
+
+<h5>4.2 标签2 · 执行明细（6 列）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列</th><th style="width:110px;">控件</th><th style="width:126px;">格式</th><th>取值与规则</th></tr></thead></thead>
+  <tbody>
+    <tr><td>任务名称</td><td>文本·只读</td><td>—</td><td>该次执行所属任务的名称；展示按通用规则 8.1（≤20 字符，超出「…」，hover 全称）；<b>同一任务的多条执行名称相同，靠发布时间区分</b></td></tr>
+    <tr><td>发布时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td>该条执行的生成时刻，<b>默认倒序</b></td></tr>
+    <tr><td>执行人</td><td><b>可点文本</b></td><td>逗号分隔</td><td>点击任意位置打开<b>执行人列表</b>（不区分点的是哪个名字），见 4.4</td></tr>
+    <tr><td>状态</td><td>标签</td><td>5 态</td><td>未执行 / 执行中 n/m / 已完成 / 已撤回 / 已作废</td></tr>
+    <tr><td>超期</td><td>徽标</td><td>超期 / 超期完成 / —</td><td><b>执行级口径</b>：当前时间 &gt; 该执行计划结束且未闭环（等价于「最后提交的人超时了」）</td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>详情 · 撤回/作废 · 调整</td><td>见 4.5</td></tr>
+  </tbody>
+</table>
+<p><b>查询</b>：关键字 + 执行人 + 状态 + 是否超期。 <b>导出</b>：文件名「执行明细_yyyymmdd_HHmm.xlsx」。</p>
+
+<h5>4.3 执行明细弹窗（从「已发布次数」下钻）</h5>
+<table class="devdoc-table">
+  <thead><tr><th>项</th><th>规则</th></tr></thead>
+  <tbody>
+    <tr><td>标题</td><td>「执行明细 · 任务名」，副标题显示该任务共 N 次执行</td></tr>
+    <tr><td>列</td><td>与执行明细标签一致：发布时间 / 执行人 / 状态 / 超期 / 操作</td></tr>
+    <tr><td>范围</td><td>只含该任务的执行，按发布时间倒序，不分页（单任务执行数有限，超过 50 条时分页）</td></tr>
+    <tr><td>操作</td><td>详情 / 撤回 / 作废 / 调整，规则同 4.5；<b>操作后本弹窗与背后的任务总览「已发布次数」同步刷新</b></td></tr>
+    <tr><td>返回</td><td>关闭弹窗回到任务总览，不丢失查询条件</td></tr>
+  </tbody>
+</table>
+
+<h5>4.4 执行人列表弹窗（从「执行人」下钻）</h5>
+<table class="devdoc-table">
+  <thead><tr><th style="width:84px;">列 / 区</th><th style="width:110px;">控件</th><th style="width:120px;">格式</th><th>取值与规则</th></tr></thead>
+  <tbody>
+    <tr><td>标题</td><td>文本</td><td>执行人列表 · 任务名</td><td>副标题「本次执行共 N 位执行人 · 发布时间 … · 计划 …」</td></tr>
+    <tr><td>筛选</td><td>3 个下拉</td><td>执行人 / 提交情况 / 是否超期</td><td>即时过滤，不影响背后列表</td></tr>
+    <tr><td>执行人</td><td>文本·只读</td><td>姓名</td><td>重名追加部门</td></tr>
+    <tr><td>提交情况</td><td>标签</td><td>已提交 / 未提交</td><td>个人状态，不是整条执行状态</td></tr>
+    <tr><td>提交时间</td><td>文本·只读</td><td><code>YYYY-MM-DD HH:mm</code></td><td><b>该人自己</b>的提交时间；未提交显示「—」</td></tr>
+    <tr><td>超期</td><td>徽标</td><td>超期 / 超期完成 / —</td><td><b>针对该人</b>：未提交且已过期，或提交时间晚于计划结束</td></tr>
+    <tr><td>操作</td><td>按钮组</td><td>查看 / 调整</td><td>查看＝该人只读提交页（未提交也可点，展示基本信息 + 未提交提示）；调整＝仅对<b>未提交</b>的人显示</td></tr>
+  </tbody>
+</table>
+<p><b>返回</b>：从台账进来 → 关闭后回到执行明细并<b>重新打开该执行人列表</b>，不丢上下文。</p>
+
+<h5>4.5 操作出现条件与弹窗字段</h5>
+<table class="devdoc-table">
+  <thead><tr><th>操作</th><th>出现条件</th><th>弹窗字段与校验</th><th>后置效果</th></tr></thead>
+  <tbody>
+    <tr><td>查看计划</td><td>任务总览，始终可用</td><td>无弹窗，进任务详情只读页</td><td>—</td></tr>
+    <tr><td>暂停</td><td>任务状态＝进行中</td><td>二次确认「暂停后不再生成新的执行，已生成的照常进行，可随时恢复」</td><td>状态转已暂停；当天未到点的不再生成</td></tr>
+    <tr><td>恢复</td><td>任务状态＝已暂停</td><td>二次确认「恢复后从下一条按规则继续生成，暂停期间的不会补生成」</td><td>状态转进行中</td></tr>
+    <tr><td>终止</td><td>进行中 / 已暂停</td><td>二次确认 + 必填原因（2–200 字）「终止后不可恢复，已生成的执行照常走完」</td><td>状态转已终止；不再生成</td></tr>
+    <tr><td>详情（执行）</td><td>始终可用</td><td>无弹窗，进任务详情页</td><td>—</td></tr>
+    <tr><td>撤回</td><td>状态＝未执行（0/n）</td><td>必填原因（2–200 字），给 4 个常用原因快捷项；<b>不通知执行人</b>；已超期时额外提示「撤回后不计入应完成与超期统计，日志保留」</td><td>状态转已撤回；从统计剔除；写日志</td></tr>
+    <tr><td>作废</td><td>状态＝执行中 n/m</td><td>必填原因（2–200 字）；<b>通知执行人</b></td><td>状态转已作废；不计入统计；日志与已提交记录保留</td></tr>
+    <tr><td>调整执行人</td><td>仍存在未提交的执行人（n &lt; m）</td><td>原执行人（下拉，<b>只列未提交者</b>，仅 1 人未交时自动选中）→ 调整给（组织架构单选，排除现有执行人）→ 调整原因（选填 ≤ 200 字）</td><td>只改这一条执行、不动任务规则；状态不变；写日志「已调整执行人 · A → B」；<b>通知新旧执行人</b></td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>已撤回 / 已作废的执行只剩「详情」</b>；全员已提交（n＝m）后「调整」自动消失，已提交的人永远不出现在「原执行人」下拉里。</p>
+
+<h5>4.6 查询条件（每个标签一条独立查询条）</h5>
+<p>两个标签各一条查询条，<b>即时生效</b>、多条件<b>「与」</b>、右侧「共 N 条」、末尾「重置」；切换标签时查询条跟着切换，各自保留条件。</p>
+<table class="devdoc-table">
+  <thead><tr><th style="width:82px;">标签</th><th style="width:96px;">条件</th><th style="width:150px;">控件 / 默认值</th><th>匹配规则</th></tr></thead>
+  <tbody>
+    <tr><td>任务总览</td><td>关键字</td><td>输入框 / 空<br>占位「搜索任务名称」</td><td>对<b>任务名称</b>包含匹配，忽略大小写、去首尾空格；不匹配发起人、执行人</td></tr>
+    <tr><td>任务总览</td><td>类型</td><td>下拉 / 全部</td><td>全部 / 单次 / 周期；按「类型」列<b>全等</b>匹配</td></tr>
+    <tr><td>任务总览</td><td>发起人</td><td>下拉 / 全部</td><td>全部 + 人员姓名（本租户发过任务的人）；按「发起人」列<b>全等</b>匹配</td></tr>
+    <tr><td>任务总览</td><td>状态</td><td>下拉 / 全部</td><td>全部 / 进行中 / 已暂停 / 已完成 / 已终止；按「状态」列<b>全等</b>匹配（任务级 4 态，不含超期）</td></tr>
+    <tr><td>执行明细</td><td>关键字</td><td>输入框 / 空</td><td>同「任务总览」</td></tr>
+    <tr><td>执行明细</td><td>执行人</td><td>下拉 / 全部</td><td>全部 + 人员姓名；按「执行人」列做<b>包含</b>匹配——该列是「A、B」合并展示，必须能用单个姓名命中多人执行</td></tr>
+    <tr><td>执行明细</td><td>状态</td><td>下拉 / 全部</td><td>全部 / 未执行 / 执行中 / 已完成 / 已撤回 / 已作废；按状态文案前缀匹配</td></tr>
+    <tr><td>执行明细</td><td>是否超期</td><td>下拉 / 全部</td><td>全部 / 仅超期 / 未超期；按超期标记判断，「超期完成」算超期</td></tr>
+  </tbody>
+</table>
+<p class="devdoc-tip"><b>排序</b>：任务总览按创建时间倒序；执行明细按发布时间倒序（同任务内）；<b>不提供表头排序</b>。<br><b>导出</b>：按<b>当前筛选结果全量</b>导出（不分页），文件名带导出时的标签名，见「通用规则 8」。<br><b>筛选后为空</b>：「没有符合条件的结果」+「重置」。</p>
+
+<h4>5. 交互与联动</h4>
+<ol>
+  <li><b>标签切换</b>：只换数据与查询条，<b>保留各自查询条件</b>；切换后回到第 1 页。</li>
+  <li><b>下钻一致</b>：任务总览的「已发布次数」与执行明细的「执行人」是<b>唯一</b>两个可点下钻字段，其余列不做跳转，避免误点。</li>
+  <li><b>操作后刷新</b>：任何写操作成功后，刷新当前列表与相关计数（已发布次数、角标），<b>不整页重载</b>。</li>
+  <li><b>导出</b>：按当前标签与当前筛选条件导出全量，导出期间按钮 loading 并禁用。</li>
+  <li><b>管理员越权操作</b>：可对任何人发起的任务执行暂停 / 终止，可对任意执行撤回 / 作废 / 调整，<b>不受发起人限制</b>；但每次写操作都记审计日志。</li>
+</ol>
+
+<h4>6. 边界与异常</h4>
+<table class="devdoc-table">
+  <thead><tr><th>场景</th><th>处理</th></tr></thead>
+  <tbody>
+    <tr><td>任务 0 次执行</td><td>「已发布次数」显示「0 次」且置灰不可点，hover 提示「尚未生成执行」</td></tr>
+    <tr><td>执行已被他人操作</td><td>返回 409「状态已变化，请刷新后重试」，刷新该行</td></tr>
+    <tr><td>撤回时已有人提交</td><td>拒绝并提示「已有执行人提交，请改用作废」，按钮文案随状态刷新自动切换</td></tr>
+    <tr><td>执行人全部提交后点调整</td><td>按钮已消失；直接调接口返回 409「没有可调整的执行人」</td></tr>
+    <tr><td>筛选无结果</td><td>「没有符合条件的结果」+ 重置</td></tr>
+    <tr><td>导出超限</td><td>&gt; 5 万行提示「结果过多，请缩小范围后导出」，不生成文件</td></tr>
+  </tbody>
+</table>
+
+</div>
+
+</body>
+</html>
 `,Az=`<!DOCTYPE html>
 <html lang="zh-CN">
 <head>
@@ -12397,23 +15305,42 @@ navigateTo(
 <\/script>
 </body>
 </html>
-`,jz=[`人事管理`,`财务管理`,`安全管理`,`生产管理`,`设备管理`,`综合管理`],Mz=`./prototype-annotations.json`,Nz=`https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e`;function Pz(e){let t=Array.isArray(e)?e:e?.annotations;return Array.isArray(t)?t:[]}DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Fz=[{label:`工作台`,icon:yz},{label:`应用`,icon:rz},{label:`任务`,icon:Cz},{label:`流程`,icon:cz},{label:`动态`,icon:pz},{label:`预警`,icon:Sz},{label:`看板`,icon:ZR}],Iz=[{id:`home`,label:`首页`,icon:yz},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:pz},{id:`task`,label:`任务`,icon:Cz},{id:`flow`,label:`流程`,icon:cz},{id:`warning`,label:`预警`,icon:Sz},{id:`message`,label:`消息`,icon:mz},{id:`equipment`,label:`设备`,icon:vz},{id:`production`,label:`生产`,icon:xz},{id:`fire`,label:`消防`,icon:Tz},{id:`explosive`,label:`火工品`,icon:uz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:hz},{id:`people`,label:`人员`,icon:Ez},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:bz},{id:`idea`,label:`提示`,icon:dz},{id:`edit`,label:`编辑`,icon:lz},{id:`delete`,label:`删除`,icon:wz},{id:`arrow`,label:`前往`,icon:fz}];function Lz({name:e=`apps`,className:t,customIcons:n=[]}){let r=n.find(t=>t.id===e);return r?(0,Q.jsx)(`img`,{className:t,src:r.src,alt:``,"aria-hidden":`true`}):(0,Q.jsx)(Iz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var Rz=`./xiaodong/`,zz=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:mz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:Cz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:Sz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],Bz=[{name:`双重预防机制`,description:`风险与隐患`,icon:pz},{name:`安全管理`,description:`检查与整改`,icon:Sz},{name:`设备管理`,description:`点检与维修`,icon:vz},{name:`火工品管理`,description:`领用与追溯`,icon:uz},{name:`生产管理`,description:`计划与日报`,icon:xz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Tz},{name:`应急管理`,description:`预案与响应`,icon:dz}],Vz=[{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}],Hz=[`安全管理员`,`设备工程师`,`生产主管`],Uz=[{id:`workbench`,label:`工作台`,icon:yz,pinned:!0}],Wz=[{id:`msg-1`,source:`流程审批`,type:`审批提醒`,sender:`矿山应急照明设备采购申请`,time:`今天 10:12`,initiator:`王建国`,initiatedAt:`今天 09:12`,application:`机电管理`,processNumber:`202608310001`,title:`矿山应急照明设备采购申请`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`blue`},{id:`msg-2`,source:`流程超时`,type:`超时提醒`,sender:`南区 2# 采场动火作业申请`,time:`今天 09:38`,initiator:`张宇`,initiatedAt:`今天 08:46`,application:`安全管理`,processNumber:`202608310002`,title:`南区 2# 采场动火作业申请`,content:`当前审批节点已超时，请尽快处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`流程结束`,type:`结束提醒`,sender:`碎矿车间停机检修计划`,time:`昨天 16:45`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,application:`设备管理`,processNumber:`202608300003`,title:`碎矿车间停机检修计划`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:Sz,tone:`red`},{id:`msg-4`,source:`流程审批`,type:`审批提醒`,sender:`外协队入场资格审核`,time:`昨天 14:20`,initiator:`周敏`,initiatedAt:`昨天 10:20`,application:`双重预防机制`,processNumber:`202608300004`,title:`外协队入场资格审核`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-5`,source:`流程结束`,type:`结束提醒`,sender:`井下设备检修采购申请`,time:`7 月 28 日 09:16`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,application:`设备管理`,processNumber:`202608260006`,title:`井下设备检修采购申请`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!0,icon:hz,tone:`blue`}],Gz=`20260831`;function Kz(e=``){let t=String(e).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);if(t)return`${t[1]}${t[2].padStart(2,`0`)}${t[3].padStart(2,`0`)}`;let n=String(e).match(/(\d{1,2})\s*月\s*(\d{1,2})\s*日/);return n?`2026${n[1].padStart(2,`0`)}${n[2].padStart(2,`0`)}`:String(e).includes(`昨天`)?`20260830`:Gz}function qz(e){let t=String(e.id??``),n=Number(t.match(/(\d+)(?!.*\d)/)?.[1]),r=Number(e.sequence)||n%9999||1;return`${Kz(e.initiatedAt)}${String(r).padStart(4,`0`)}`}var Jz=[`待审批`,`审批中`,`已通过`,`已拒绝`,`已撤销`,`已驳回`],Yz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`审批中`,application:`设备管理`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`张宇`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`审批中`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,startedByMe:!0},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`流程已结束`,approver:`刘海`,status:`已通过`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`张宇`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0},{id:`flow-5`,name:`东区临时用电申请`,initiator:`陈伟`,initiatedAt:`昨天 11:16`,currentNode:`流程已结束`,approver:`张宇`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,handledByMe:!0,handledResult:`驳回`},{id:`flow-6`,name:`井下设备检修采购申请`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,currentNode:`流程已撤销`,approver:`张宇`,status:`已撤销`,application:`设备管理`,amount:`42,800 元`,department:`机电管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`,revokedBy:`刘海`,revokedAt:`2026-08-26 17:08:00`},{id:`flow-7`,name:`高处作业审批申请`,initiator:`孙宁`,initiatedAt:`8 月 25 日 09:34`,currentNode:`分管领导审批`,approver:`张宇`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`紧急`,handledByMe:!0,handledResult:`驳回`},{id:`flow-8`,name:`井下通风设施改造申请`,initiator:`李明`,initiatedAt:`8 月 27 日 14:18`,currentNode:`流程已结束`,approver:`陈伟`,status:`已通过`,application:`应急管理`,amount:`26,000 元`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,finalOperator:`陈伟`},{id:`flow-9`,name:`采场临时封闭申请`,initiator:`王强`,initiatedAt:`8 月 27 日 10:05`,currentNode:`流程已结束`,approver:`赵磊`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,ccToMe:!0,finalOperator:`赵磊`},{id:`flow-10`,name:`消防器材增补采购申请`,initiator:`周敏`,initiatedAt:`8 月 26 日 13:26`,currentNode:`流程已撤销`,approver:`孙宁`,status:`已撤销`,application:`消防管理`,amount:`18,600 元`,department:`综合管理部`,urgency:`常规`,ccToMe:!0,revokedBy:`周敏`,revokedAt:`2026-08-26 15:20:00`},{id:`flow-11`,name:`爆破作业人员调整申请`,initiator:`何勇`,initiatedAt:`8 月 25 日 16:50`,currentNode:`分管领导审批`,approver:`周杰伦`,status:`已驳回`,application:`火工品管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,ccToMe:!0,rejectedBy:`周杰伦`},{id:`flow-12`,name:`东翼通风系统整改申请`,initiator:`张宇`,initiatedAt:`2026-09-02 09:18:00`,currentNode:`已驳回至发起人`,approver:`周杰伦`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,startedByMe:!0,rejectedBy:`周杰伦`,rejectionOpinion:`请补充整改方案及现场照片后重新提交。`},{id:`flow-draft-1`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-28 10:36:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已完成离职原因与交接安排说明，待补充附件后提交。`,draft:!0},{id:`flow-draft-2`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-27 16:18:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已填写基本离职信息，待确认最后工作日期。`,draft:!0}],Xz=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`,children:[]},{id:`equipment`,name:`设备管理部`,children:[]},{id:`production`,name:`生产技术部`,children:[]}]}]}],Zz=[{id:`transfer-zhao`,name:`赵六`,account:`zhaoliu`,department:`安全管理部`,organizationId:`safety`},{id:`transfer-wang`,name:`王五`,account:`wangwu`,department:`生产技术部`,organizationId:`production`},{id:`transfer-li`,name:`李四`,account:`lisi`,department:`设备管理部`,organizationId:`equipment`}],Qz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:pz,tone:`green`},{name:`平巷凿岩作业隐患排查审批流程`,time:`昨天 16:40`,icon:nz,tone:`blue`},{name:`生产管理`,time:`7 月 25 日`,icon:xz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:pz,tone:`violet`}],$z=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:hz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:Cz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:vz}];function eB({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function tB({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Fz.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)(eB,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function nB({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o,onOpenSpecification:s}){let[c,l]=(0,Z.useState)(!1),u=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{if(!c)return;let e=e=>{u.current?.contains(e.target)||l(!1)},t=e=>{e.key===`Escape`&&l(!1)};return document.addEventListener(`pointerdown`,e),document.addEventListener(`keydown`,t),()=>{document.removeEventListener(`pointerdown`,e),document.removeEventListener(`keydown`,t)}},[c]),(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{type:`button`,className:`prototype-annotation-toggle`,onClick:s,children:[(0,Q.jsx)(lz,{}),(0,Q.jsx)(`span`,{children:`标注`})]}),(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsxs)(`div`,{className:`top-profile-control`,ref:u,children:[(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":c,onClick:()=>l(e=>!e),children:`张`}),c?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{l(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{l(!1),o()},children:`退出登录`})]}):null]})]})]})}function rB({visible:e,managing:t,pageId:n,pageLabel:r,annotations:i,onCloseManager:a,onAdd:o,onUpdate:s,onRemove:c,onReposition:l}){let[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(``),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(null),S=()=>{let e=document.querySelector(`.page-shell`),t=e?.getBoundingClientRect();return{left:t?.left??80,top:t?.top??0,width:Math.max(t?.width??window.innerWidth-80,1),height:Math.max(e?.scrollHeight??0,t?.height??window.innerHeight,1)}},[C,w]=(0,Z.useState)(()=>({left:80,top:0,width:Math.max(window.innerWidth-80,1),height:Math.max(window.innerHeight,1)})),T=(0,Z.useRef)(!1),E=i.filter(e=>e.pageId===n),D=E.find(e=>e.id===m),O=(e,t=0)=>{let n=Math.min(980,window.innerWidth-37),r=156+t*42,i=e.leftPercent!==null&&e.leftPercent!==void 0&&e.topPercent!==null&&e.topPercent!==void 0&&Number.isFinite(Number(e.leftPercent))&&Number.isFinite(Number(e.topPercent)),a=i&&e.positionSpace===`page`,o=i?Number(e.leftPercent)/100*window.innerWidth:e.left??n,s=i?Number(e.topPercent)/100*window.innerHeight:e.top??r;return{left:a?Number(e.leftPercent)/100*C.width:o-C.left,top:a?Number(e.topPercent)/100*C.height:s-C.top,hasRelativePosition:i,isPagePosition:a}},k=(e,t,n=C)=>({leftPercent:Number((e/n.width*100).toFixed(3)),topPercent:Number((t/n.height*100).toFixed(3)),positionSpace:`page`}),A=(e,t)=>{if(b?.id===e.id)return{left:`${b.left}px`,top:`${b.top}px`};let n=O(e,t);return{left:`${n.left}px`,top:`${n.top}px`}};(0,Z.useEffect)(()=>{let e=()=>w(S()),t=document.querySelector(`.page-shell`),n=typeof ResizeObserver>`u`?null:new ResizeObserver(e);return e(),t&&n?.observe(t),window.addEventListener(`resize`,e),window.visualViewport?.addEventListener(`resize`,e),()=>{n?.disconnect(),window.removeEventListener(`resize`,e),window.visualViewport?.removeEventListener(`resize`,e)}},[n]),(0,Z.useEffect)(()=>{E.forEach((e,t)=>{let{isPagePosition:n,left:r,top:i}=O(e,t);n||l(e.id,k(r,i))})},[i,n,C.width,C.height]),(0,Z.useEffect)(()=>{if(!b)return;let e=e=>{let t=S(),n=Math.min(Math.max(12,Math.round(e.clientX-t.left-b.offsetX)),t.width-37),r=Math.min(Math.max(64,Math.round(e.clientY-t.top-b.offsetY)),t.height-37);(Math.abs(n-b.startLeft)>3||Math.abs(r-b.startTop)>3)&&(T.current=!0),x(e=>e&&{...e,left:n,top:r})},t=()=>{l(b.id,k(b.left,b.top,S())),x(null)};return window.addEventListener(`mousemove`,e),window.addEventListener(`mouseup`,t,{once:!0}),()=>{window.removeEventListener(`mousemove`,e),window.removeEventListener(`mouseup`,t)}},[b,l]);let j=()=>{let e=u.trim();if(e){if(f){s(f,e),d(``),p(``);return}_(!0)}},M=()=>{d(``),p(``),y(``),_(!1)};return(0,Q.jsxs)(Q.Fragment,{children:[e?E.map((e,t)=>(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-tag`,style:A(e,t),"aria-label":`查看备注 ${t+1}`,onMouseDown:n=>{n.preventDefault();let{left:r,top:i}=O(e,t),a=S();T.current=!1,x({id:e.id,left:r,top:i,startLeft:r,startTop:i,offsetX:n.clientX-a.left-r,offsetY:n.clientY-a.top-i})},onClick:()=>{if(T.current){T.current=!1;return}h(e.id)},children:t+1},e.id)):null,e&&D?(0,Q.jsxs)(`section`,{className:`prototype-annotation-popover`,style:{left:`${Math.min(O(D).left+32,C.width-286)}px`,top:`${Math.min(O(D).top+30,C.height-160)}px`},"aria-label":`备注内容`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:`备注内容`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭备注内容`,onClick:()=>h(``),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:D.content})]}):null,g?(0,Q.jsx)(`div`,{className:`prototype-annotation-placement-layer`,onClick:e=>{let t=S(),i=Math.min(Math.max(12,Math.round(e.clientX-t.left)),t.width-37),a=Math.min(Math.max(64,Math.round(e.clientY-t.top)),t.height-37),s=k(i,a,t);v?l(v,s):o({pageId:n,pageLabel:r,content:u.trim(),...s}),M()},role:`presentation`,children:(0,Q.jsx)(`span`,{children:v?`请点击页面任意位置重新放置标签`:`请点击页面任意位置放置备注标签`})}):null,t?(0,Q.jsxs)(`aside`,{className:`prototype-annotation-panel`,"aria-label":`原型标注管理`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`原型标注管理`}),(0,Q.jsx)(`b`,{children:r})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭标注管理`,onClick:a,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-editor`,children:[(0,Q.jsx)(`p`,{className:`prototype-annotation-source-note`,children:`标注从部署文件读取；在线调整仅用于当前预览。`}),(0,Q.jsx)(`label`,{htmlFor:`prototype-annotation-content`,children:f?`编辑备注`:`新增备注`}),(0,Q.jsx)(`textarea`,{id:`prototype-annotation-content`,value:u,maxLength:240,placeholder:`例如：此处提交后需校验审批人是否存在，并记录操作日志。`,onChange:e=>d(e.target.value)}),(0,Q.jsxs)(`footer`,{children:[f||g?(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-cancel`,onClick:M,children:g?`取消放置`:`取消编辑`}):null,(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-save`,onClick:j,disabled:!u.trim(),children:f?`保存备注`:`点击页面放置标签`})]})]}),(0,Q.jsx)(`div`,{className:`prototype-annotation-list`,children:E.length?E.map((e,t)=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:String(t+1).padStart(2,`0`)}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-entry`,children:[(0,Q.jsx)(`p`,{children:e.content}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑备注`,onClick:()=>{d(e.content),p(e.id),_(!1)},children:`编辑`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`重新放置备注`,onClick:()=>{y(e.id),_(!0)},children:`重新放置`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除备注`,onClick:()=>{m===e.id&&h(``),c(e.id)},children:`删除`})]})]})]},e.id)):(0,Q.jsx)(`div`,{className:`prototype-annotation-empty`,children:`当前页面还没有备注，输入内容后即可在页面任意位置放置。`})})]}):null]})}function iB({total:e,page:t,pageSize:n,onPageChange:r,onPageSizeChange:i,className:a=``,itemLabel:o=`条`}){let s=Math.max(1,Math.ceil(e/n)),c=Math.min(t,s);return(0,Q.jsxs)(`footer`,{className:`system-pagination ${a}`.trim(),children:[(0,Q.jsxs)(`span`,{children:[`共 `,e,` `,o]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页${o}数`,value:n,onChange:e=>i(Number(e.target.value)),children:[(0,Q.jsxs)(`option`,{value:10,children:[`10 `,o]}),(0,Q.jsxs)(`option`,{value:20,children:[`20 `,o]}),(0,Q.jsxs)(`option`,{value:50,children:[`50 `,o]})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:c===1,onClick:()=>r(Math.max(1,c-1)),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[c,` / `,s]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:c===s,onClick:()=>r(Math.min(s,c+1)),children:`下一页`})]})}function aB({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r,onOpenProcess:i}){let[a,o]=(0,Z.useState)(`全部`),[s,c]=(0,Z.useState)(`全部`),[l,u]=(0,Z.useState)(`未读`),[d,f]=(0,Z.useState)(10),[p,m]=(0,Z.useState)(1),h=e=>e.source.startsWith(`流程`)?`流程`:e.source,g=e.filter(e=>(a===`全部`||h(e)===a)&&(a!==`流程`||s===`全部`||e.source===s)&&(l===`全部`||(l===`未读`?!e.read:e.read))),_=Math.max(1,Math.ceil(g.length/d)),v=Math.min(p,_),y=g.slice((v-1)*d,v*d),b=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,b,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:b===0,children:[(0,Q.jsx)(hz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:a,onChange:e=>{let t=e.target.value;o(t),c([`流程`,`全部`].includes(t)?`全部`:``),m(1)},children:[(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`动态`}),(0,Q.jsx)(`option`,{children:`全部`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsx)(`select`,{value:s,disabled:![`流程`,`全部`].includes(a),onChange:e=>{c(e.target.value),m(1)},children:a===`流程`?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`流程审批`}),(0,Q.jsx)(`option`,{children:`流程超时`}),(0,Q.jsx)(`option`,{children:`流程结束`}),(0,Q.jsx)(`option`,{children:`流程驳回`}),(0,Q.jsx)(`option`,{children:`流程抄送`})]}):a===`全部`?(0,Q.jsx)(`option`,{children:`全部`}):(0,Q.jsx)(`option`,{value:``,children:` `})})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:l,onChange:e=>{u(e.target.value),m(1)},children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:y.length?y.map(e=>{let{id:n,source:r,type:a,sender:o,time:s,initiator:c,initiatedAt:l,application:u,processNumber:d,read:f,icon:p,tone:m}=e;return(0,Q.jsxs)(`button`,{className:f?`message-row read`:`message-row`,onClick:()=>{t(n),i(a===`结束提醒`?`我发起的`:`待审批`,d)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${m}`,children:(0,Q.jsx)(p,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`time`,{children:s}),f?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsx)(`strong`,{children:(0,Q.jsx)(`em`,{children:r})}),(0,Q.jsxs)(`p`,{className:`message-process-origin`,children:[c,`于`,l,`通过`,u,`应用发起的流程编号为：`,d]})]}),(0,Q.jsx)(fz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(iB,{className:`message-pagination`,total:g.length,page:v,pageSize:d,onPageChange:m,onPageSizeChange:e=>{f(e),m(1)}})]})}function oB({process:e,onClose:t,onApprove:n,viewOnly:r=!1,canRevoke:i=!1,canResumeDraft:a=!1,hideFinalLog:o=!1,onResumeDraft:s,onResubmit:c}){let[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(!1),[h,g]=(0,Z.useState)(null),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(!1),[x,S]=(0,Z.useState)(!1),[C,w]=(0,Z.useState)([]),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(null),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)(`initiator`),[N,P]=(0,Z.useState)(!1),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(``),ne=()=>{u(!1),f(!1),m(!1),b(!1),S(!1),w([]),E(``),O(null),A(``),P(!1),F(!1),te(``),t()};if(!e)return null;let re=e.status===`已驳回`,ie=e.status===`已撤销`,ae=e.status===`已通过`,oe=e.status===`已拒绝`,se=e.resubmitted,L=D===`initiator`?{label:`发起人`,name:e.initiator}:{label:`上一节点`,name:e.previousApprover??`张七`},R=[{time:`2026-08-23 12:00:00`,title:`系统发起`,details:[`${e.initiator}发起了${e.name}`],action:`发起`,state:`done`},{time:`2026-08-23 12:00:00`,title:`主管领导审批`,details:[`李四已同意`,`审批意见：请按流程办理`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`分管领导审批`,details:[`王五已转办`,`转办原因：赵总定夺`,`流程到达时间：2026-08-23 12:00:00`],action:`转办`,state:`done`},{time:`2026-08-23 12:00:00`,title:`转办审批`,details:[`赵六已加签`,`流程到达时间：2026-08-23 12:00:00`],action:`加签`,state:`done`},{time:`2026-08-23 12:00:00`,title:`加签审批`,details:[`张七已同意`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`抄送`,details:[`系统已抄送`,`流程到达时间：2026-08-23 12:00:00`],action:`抄送`,state:`done`},{time:re||se||ae||oe?`2026-08-23 12:00:00`:ie?e.revokedAt??`2026-08-28 10:36:00`:`当前`,title:re||se||ae||oe?`分管领导审批`:ie?`撤销`:`结束`,details:re||se?[`${e.rejectedBy??`周杰伦`}已驳回`,`审批意见：${e.rejectionOpinion??`请核对清楚再提交`}`,`流程到达时间：2026-08-23 12:00:00`]:ae?[`${e.finalOperator??`张宇`}已同意`,`审批意见：同意办理`,`流程完成时间：2026-08-23 12:00:00`]:oe?[`${e.finalOperator??`张宇`}已拒绝`,`审批意见：${e.refusalOpinion||`未填写`}`,`流程完成时间：2026-08-23 12:00:00`]:ie?[`${e.revokedBy??`张宇`}已撤销该流程`]:[[`待审批`,`审批中`].includes(e.status)?`当前待 ${e.approver} 审批`:`流程已结束`],action:re||se?`驳回`:ae?`同意`:oe?`拒绝`:ie?`撤销`:void 0,state:se?`done`:`current`},...se?[{time:`2026-08-23 12:30:00`,title:`重新提交`,details:[`${e.initiator}已重新提交`],action:`重新提交`,state:`done`},{time:``,hideTime:!0,title:`分管领导审批`,details:[`周杰伦`,`流程到达时间：2026-08-23 12:30:00`],state:ie?`done`:`current`},...ie?[{time:e.revokedAt??`2026-08-28 10:36:00`,title:`撤销`,details:[`${e.revokedBy??`张宇`}已撤销该流程`],action:`撤销`,state:`current`}]:[]]:[],...e.actionLogs??[]],z=[[`所属部门`,e.department],[`发起人`,e.initiator],[`发起时间`,e.initiatedAt]],ce=e=>{if(e===`撤销`){P(!0);return}if(e===`转办`){f(!0);return}if(e===`加签`){w([]),E(``),b(!0);return}if(e===`退回`){A(``),O(j),M(e=>e===`initiator`?`previous`:`initiator`);return}if(e===`拒绝`){te(``),F(!0);return}n(`已${e}`)},B=o&&!re&&!ie&&!se&&!ae&&!oe&&!e.actionLogs?.length?R.slice(0,-1):R;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:ne,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:ne,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body${a?` draft-detail`:``}`,children:[(0,Q.jsxs)(`div`,{className:`process-approval-main`,children:[(0,Q.jsxs)(`section`,{className:`process-approval-form`,children:[(0,Q.jsx)(`h3`,{children:`申请单`}),(0,Q.jsx)(`div`,{className:`process-approval-fields`,children:z.map(([e,t])=>(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),t||`-`]},e))}),(0,Q.jsxs)(`label`,{className:`process-approval-description`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,readOnly:!0,defaultValue:`${e.name}相关事项，请按流程审核处理。`})]}),i&&!re&&!ie?(0,Q.jsx)(`div`,{className:`process-initiated-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`})}):null]}),re&&i?(0,Q.jsxs)(`div`,{className:`process-rejected-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>c?.(e),children:`重新提交`})]}):r?null:(0,Q.jsxs)(`section`,{className:`process-approval-opinion`,children:[(0,Q.jsx)(`h3`,{children:`审批意见`}),(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请输入审批意见`}),(0,Q.jsxs)(`div`,{className:`process-approval-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`转办`),children:`转办`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`加签`),children:`加签`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`退回`),children:`驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`拒绝`),children:`拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>ce(`同意`),children:`同意`})]})]})]}),a?null:(0,Q.jsxs)(`section`,{className:`process-approval-log`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`流程日志`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(!0),children:`流程图`})]}),(0,Q.jsx)(`ol`,{children:B.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`div`,{className:`process-log-entry-heading`,children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsxs)(`span`,{className:`process-log-entry-meta`,children:[e.hideTime?null:(0,Q.jsx)(`time`,{children:e.time}),e.action?(0,Q.jsx)(`span`,{className:`process-log-action`,children:e.action}):null]})]}),e.details.map(e=>(0,Q.jsx)(`p`,{children:e},e))]})]},e.title))})]})]})]})}),l?(0,Q.jsx)(`div`,{className:`process-flowchart-map-layer`,role:`presentation`,onMouseDown:()=>u(!1),children:(0,Q.jsxs)(`section`,{className:`process-flowchart-map-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-flowchart-map-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-flowchart-map-title`,children:`流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程图`,onClick:()=>u(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart-map`,"aria-label":`${e.name}流程图`,children:[(0,Q.jsx)(`i`,{className:`flowchart-map-link start-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-right`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link secondary-right`}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node start`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`b`,{children:e.name})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval active`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`设备主管审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy first-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval manager`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`总经理审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy second-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]})]})]})}):null,N?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>P(!1),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>P(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>P(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{P(!1),n(`已撤销`)},children:`确定撤销`})]})]})}):null,ee?(0,Q.jsx)(`div`,{className:`process-refuse-layer`,role:`presentation`,onMouseDown:()=>F(!1),children:(0,Q.jsxs)(`section`,{className:`process-refuse-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-refuse-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-refuse-title`,children:`确认拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭拒绝确认`,onClick:()=>F(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-refuse-body`,children:[(0,Q.jsxs)(`label`,{children:[`拒绝意见`,(0,Q.jsx)(`textarea`,{rows:`4`,value:I,onChange:e=>te(e.target.value),placeholder:`请输入拒绝意见`})]}),(0,Q.jsx)(`p`,{children:`拒绝后该流程终止，无法修改，确认要拒绝吗？`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>F(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已拒绝`,I.trim()),F(!1),te(``)},children:`确定拒绝`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>f(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),h&&(n(`已转办`,{target:h,reason:_}),f(!1),m(!1),v(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-transfer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-transfer-title`,children:`转办流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭转办弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 转办人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>m(!0),children:[h?`${h.name} · ${h.department}`:`请选择转办人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`转办原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:_,onChange:e=>v(e.target.value),placeholder:`请输入转办原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!h,children:`确认转办`})]})]})}):null,y?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>b(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),C.length&&(n(`已加签`,{targets:C,reason:T}),b(!1),S(!1),w([]),E(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-add-signer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-add-signer-title`,children:`加签流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭加签弹窗`,onClick:()=>b(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 加签人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>S(!0),children:[C.length?C.map(e=>e.name).join(`、`):`请选择加签人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`加签原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:T,onChange:e=>E(e.target.value),placeholder:`请输入加签原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>b(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!C.length,children:`确认加签`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>O(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-return-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-return-confirm-title`,children:`确认驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭驳回确认`,onClick:()=>O(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-return-body`,children:[(0,Q.jsxs)(`label`,{children:[`驳回意见`,(0,Q.jsx)(`textarea`,{rows:`3`,value:k,maxLength:200,placeholder:`请输入驳回意见（选填）`,onChange:e=>A(e.target.value)})]}),(0,Q.jsxs)(`p`,{children:[`驳回后，流程将退回至`,L.label,`，确认要驳回吗？`]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{O(null),A(``)},children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已驳回`,{target:L,reason:k.trim()}),O(null),A(``)},children:`确认驳回`})]})]})}):null,p?(0,Q.jsx)(HB,{organizations:Xz,users:Zz,selectedUser:h,onSelect:g,onClose:()=>m(!1),title:`选择转办人`,selectedLabel:`已选转办人`}):null,x?(0,Q.jsx)(UB,{organizations:Xz,users:Zz,selectedUsers:C,onSelect:w,onClose:()=>S(!1),title:`选择加签人`,selectedLabel:`已选加签人`}):null]})}function sB({onAction:e,initialFilter:t=`待审批`,initialProcessNumber:n=``,processRecords:r,setProcessRecords:i}){let[a,o]=(0,Z.useState)(null),[s,c]=(0,Z.useState)(null),[l,u]=(0,Z.useState)(t),[d,f]=(0,Z.useState)({number:n,title:``,application:``,type:``,status:``}),[p,m]=(0,Z.useState)(`全部`),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(null),[y,b]=(0,Z.useState)(null),[x,S]=(0,Z.useState)(`new`),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),j=(0,Z.useRef)(null),M=[{category:`人资管理`,application:`消防管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,application:`机电管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,application:`双重预防机制`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,application:`生产管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,application:`应急管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,application:`设备管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,application:`火工品管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,application:`安全管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,application:`双重预防机制`,tone:`red`,name:`材料采购流程`}],N={待审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`arrivalAt`,`status`]},已审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`completedAt`,`result`,`status`]},抄送我的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`sentAt`,`status`]},我发起的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiatedAt`,`currentNode`,`status`]},草稿箱:{filters:[`title`],columns:[`title`,`type`,`application`,`initiatedAt`,`status`]}},P={number:`流程编号`,title:`标题`,application:`所属应用`,type:`流程类型`,initiator:`发起人`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},ee=e=>l===`待审批`&&e===`title`?`流程名称`:l===`待审批`&&e===`status`?`当前状态`:l===`已审批`&&e===`title`?`流程名称`:l===`已审批`&&e===`completedAt`?`处理时间`:l===`已审批`&&e===`result`?`我的处理`:l===`已审批`&&e===`status`?`当前状态`:l===`抄送我的`&&e===`title`?`流程名称`:l===`抄送我的`&&e===`sentAt`?`抄送时间`:l===`抄送我的`&&e===`status`?`当前状态`:l===`我发起的`&&e===`title`?`流程名称`:l===`我发起的`&&e===`status`?`当前状态`:l===`草稿箱`&&e===`title`?`流程名称`:l===`草稿箱`&&e===`initiatedAt`?`保存时间`:l===`草稿箱`&&e===`status`?`状态`:P[e],F=N[l],I=[...new Set(r.map(e=>e.application??`综合管理`))],te=M.filter(e=>(p===`全部`||p===`最近使用`&&e.recent)&&(!h.trim()||e.name.includes(h.trim()))),ne=e=>({number:qz(e),title:e.name,application:e.application??`综合管理`,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?e.handledResult??`同意`:`-`,sentAt:e.initiatedAt,endedAt:[`审批中`,`已撤销`].includes(e.status)||e.draft?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),re=r.filter(e=>{let t=l===`待审批`&&[`待审批`,`审批中`].includes(e.status)&&e.approver===`张宇`||l===`已审批`&&e.handledByMe||l===`抄送我的`&&e.ccToMe||l===`我发起的`&&e.startedByMe||l===`草稿箱`&&e.draft,n=ne(e);return t&&(!d.number||n.number.includes(d.number))&&(!d.title||n.title.includes(d.title))&&(!d.application||n.application===d.application)&&(!d.type||n.type===d.type)&&(!d.status||n.status===d.status)}),ie=(t,n={})=>{let r=typeof n==`string`?{opinion:n}:n;t===`已撤销`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已撤销`,startedByMe:!0,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-08-28 10:36:00`}:e)),t===`已拒绝`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已拒绝`,handledByMe:!0,handledResult:`拒绝`,finalOperator:`张宇`,refusalOpinion:r.opinion??``,currentNode:`流程已结束`}:e)),t===`已转办`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`审批中`,approver:r.target?.name??e.approver,currentNode:`转办审批`,handledByMe:!0,handledResult:`转办`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:00:00`,title:`转办`,details:[`张宇已转办给${r.target?.name??`处理人`}`,`转办原因：${r.reason||`未填写`}`],action:`转办`,state:`done`}]}:e)),t===`已加签`&&i(e=>e.map(e=>e.id===a.id?{...e,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:02:00`,title:`加签`,details:[`张宇已加签给${r.targets?.map(e=>e.name).join(`、`)||`处理人`}`,`加签原因：${r.reason||`未填写`}`],action:`加签`,state:`done`}]}:e)),t===`已驳回`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已驳回`,currentNode:`已驳回至${r.target?.label??`上一节点`}`,handledByMe:!0,handledResult:`驳回`,rejectedBy:`张宇`,rejectionOpinion:r.reason||`未填写`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:05:00`,title:`驳回`,details:[`张宇已驳回至${r.target?.label??`上一节点`}`,`驳回原因：${r.reason||`未填写`}`],action:`驳回`,state:`current`}]}:e)),e(`${a.name}${t}`),o(null)},ae=()=>{s&&(i(e=>e.map(e=>e.id===s.id?{...e,status:`已撤销`,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-09-02 10:36:00`}:e)),e(`${s.name}已撤销`),c(null))},oe=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),u(`发起流程`),L(t,e)},se=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),L({...t,name:e.name},{...e,description:`请根据驳回意见核对并完善申请信息后重新提交。`},`resubmit`)},L=(e,t=null,n=`restore`)=>{v(e),b(t),S(t?n:`new`),w(null),O(!1),A(!1)},R=e=>{L(e)},z=()=>{v(null),b(null),A(!1)},ce=()=>{if(!_)return;let t=new FormData(j.current),n={id:y?.draft?y.id:`flow-draft-${Date.now()}`,name:_.name,initiator:`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,application:_.application,department:t.get(`department`)||`安全管理部`,description:t.get(`description`)||``,draft:!0,startedByMe:!0,sequence:y?.sequence??r.filter(e=>Kz(e.initiatedAt)===Gz).length+1};i(e=>y?.draft?e.map(e=>e.id===n.id?n:e):[n,...e]),b(n),e(`${_.name}已暂存到草稿箱`),z()};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsx)(`header`,{className:`task-list-header`,children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]})}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(N)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":l===e,className:l===e?`active`:``,onClick:()=>u(e),children:e},e))})}),l===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":p===e,className:p===e?`active`:``,onClick:()=>m(e),children:e},e))}),(0,Q.jsx)(`input`,{value:h,onChange:e=>g(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=te.filter(t=>t.category===e),n=M.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsxs)(`button`,{onClick:()=>R(e),children:[e.name,`（`,e.application,`）`]},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[F.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:d.number,onChange:e=>f(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,F.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程名称`}),(0,Q.jsx)(`input`,{value:d.title,onChange:e=>f(t=>({...t,title:e.target.value})),placeholder:`请输入流程名称`})]}):null,F.filters.includes(`application`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`所属应用`}),(0,Q.jsxs)(`select`,{value:d.application,onChange:e=>f(t=>({...t,application:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择所属应用`}),I.map(e=>(0,Q.jsx)(`option`,{children:e},e))]})]}):null,F.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:d.type,onChange:e=>f(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,F.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:d.status,onChange:e=>f(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>f({number:``,title:``,application:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(e=>(0,Q.jsx)(`span`,{children:ee(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),re.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(t=>{let n=ne(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>o(e),children:n},t):t===`status`||t===`result`?(0,Q.jsx)(`i`,{className:[`已驳回`,`已拒绝`].includes(n)?`rejected`:[`待审批`,`审批中`].includes(n)?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),l===`我发起的`?(0,Q.jsxs)(`span`,{className:`process-list-actions initiated-actions`,children:[(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:e.status===`已驳回`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>se(e),children:`重新提交`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:[`待审批`,`审批中`,`已驳回`].includes(e.status)?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action danger`,onClick:()=>c(e),children:`撤销`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),`查看`]})})]}):(0,Q.jsxs)(`span`,{className:`process-list-actions`,children:[l===`草稿箱`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>oe(e),children:`继续填报`}):null,(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),l===`待审批`?`审批`:`查看`]})]})]},e.id)),re.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(oB,{process:a,onClose:()=>o(null),onApprove:ie,viewOnly:l!==`待审批`,canRevoke:!1,canResumeDraft:l===`草稿箱`,hideFinalLog:[`已审批`,`我发起的`].includes(l),onResumeDraft:oe,onResubmit:se}),s?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>c(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-list-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-list-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>c(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:ae,children:`确定撤销`})]})]})}):null,C?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>w(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsx)(`h2`,{id:`draft-restore-title`,children:`发现同名流程草稿`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>w(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,C.drafts.length,` 条“`,C.template.name,`”草稿，请选择恢复继续填报，或重新发起新的流程。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:C.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>L(C.template),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=C.drafts.find(e=>e.id===T);L(C.template,e)},children:`恢复并继续填报`})]})]})}):null,_?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:z,role:`presentation`,children:(0,Q.jsxs)(`form`,{ref:j,className:`process-form-dialog${D?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),x===`resubmit`&&y?.id&&i(e=>e.map(e=>e.id===y.id?{...e,status:`审批中`,currentNode:`分管领导审批`,resubmitted:!0}:e)),e(`${x===`resubmit`?`已重新提交流程`:`已发起流程`}：${_.name}`),z()},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:y?x===`resubmit`?`重新提交`:`恢复草稿`:`发起流程`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>A(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>O(e=>!e),children:D?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:z,children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{name:`title`,defaultValue:_.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{name:`department`,defaultValue:y?.department??`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`5`,defaultValue:y?.description??``,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:y?x===`resubmit`?`请根据驳回意见核对信息后重新提交。`:`正在恢复 ${y.initiatedAt} 保存的草稿。`:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:z,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-draft-action`,onClick:ce,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:x===`resubmit`?`重新提交`:`发起流程`})]})]})]})}):null,_&&k?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>A(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>A(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function cB({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(fz,{})]})})}function lB({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),...Bz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(fz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(fz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(bz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function uB({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Qz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(fz,{})]},t))})]})}function dB({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(Bz.find(t=>t.name===e)??Bz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(gz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:Bz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(hz,{}):null]},n))}):null]})}var fB=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:pz,nested:!0},{label:`隐患排查治理`,icon:Sz,expanded:!0}],pB=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查审批流程`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],mB=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:Cz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`}],hB=[{title:`员工离职申请`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`平巷凿岩作业隐患排查审批流程`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`掘进工作面隐患整改审批流程`,detail:`隐患排查审批`,icon:nz,tone:`lime`,kind:`approval`}],gB=[{id:`inspection-001`,reporter:`张宇`,date:`2026-07-29`,shift:`早班`,location:`西翼 3# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`现场检查正常，无需整改。`,status:`已提交`,flowStatus:`审批中`},{id:`inspection-002`,reporter:`李明`,date:`2026-07-28`,shift:`中班`,location:`西翼 2# 平巷`,equipment:`正常`,environment:`发现问题`,protection:`正常`,description:`照明灯具亮度不足，已通知机电班处理。`,status:`已复核`,flowStatus:`已通过`}];function _B({onAction:e,onSwitchApplication:t,approvalDrafts:n,setApprovalDrafts:r,onSaveProcessDraft:i,onDeleteProcessDraft:a,initialFormTitle:o=mB[0].title,initialOpenForm:s=!1,initialFormSource:c=hB.some(e=>e.title===o)?`隐患排查审批流程`:`岗位隐患排查清单`}){let[l,u]=(0,Z.useState)(c),[d,f]=(0,Z.useState)(s),[p,m]=(0,Z.useState)(o),[h,g]=(0,Z.useState)(!1),[_,v]=(0,Z.useState)(`页面`),[y,b]=(0,Z.useState)(c),[x,S]=(0,Z.useState)(null),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),[j,M]=(0,Z.useState)(null),[N,P]=(0,Z.useState)(gB),[ee,F]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[I,te]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[ne,re]=(0,Z.useState)(1),[ie,ae]=(0,Z.useState)(10),oe=(0,Z.useRef)(null),se=(0,Z.useRef)(null),L=l,R=[...mB,...hB].find(e=>e.title===p)??mB[0],z=R.kind===`approval`,ce=n.filter(e=>e.kind===(z?`approval`:`inspection`)&&e.name===R.title),B=(e=mB[0],t=`岗位隐患排查清单`,n=null)=>{m(e.title),b(t),w(n),S(null),f(!0),g(!1),v(`页面`),A(!1),M(null)},le=(e=mB[0],t=`岗位隐患排查清单`)=>{let r=n.filter(t=>t.draft&&t.name===e.title&&t.kind===(e.kind===`approval`?`approval`:`inspection`));if(r.length){S({form:e,source:t,drafts:r}),E(r[0].id);return}B(e,t)},ue=()=>O(!0),de=()=>{O(!1),f(!1),g(!1),A(!1)},fe=t=>{t.preventDefault(),g(!0),A(!1),e(`${R.title}已提交${z?`，已进入审批流程`:``}`)},V=()=>{if(!z)return;let t=new FormData(se.current),n={id:C?.id?.startsWith(`approval-draft-`)?C.id:`approval-draft-${Date.now()}`,processDraftId:C?.processDraftId??`flow-draft-${Date.now()}`,kind:`approval`,name:R.title,initiator:t.get(`reporter`)||`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:t.get(`description`)||``,draft:!0};r(e=>C?.id?.startsWith(`approval-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),i({id:n.processDraftId,name:n.name,initiator:n.initiator,initiatedAt:n.initiatedAt,currentNode:n.currentNode,status:n.status,department:n.department,description:n.description,application:`双重预防机制`,draft:!0,startedByMe:!0}),A(!1),e(`${R.title}已暂存到草稿箱`)},H=()=>{let t=new FormData(se.current),n={id:C?.id?.startsWith(`inspection-draft-`)?C.id:`inspection-draft-${Date.now()}`,kind:`inspection`,name:R.title,reporter:t.get(`reporter`)||`张宇`,inspectionDate:t.get(`inspectionDate`)||`2026-09-02`,shift:t.get(`shift`)||`早班`,location:t.get(`location`)||``,equipment:t.get(`equipment`)||``,environment:t.get(`environment`)||``,protection:t.get(`protection`)||``,description:t.get(`description`)||``,initiatedAt:`2026-09-02 10:00:00`,status:`草稿`,draft:!0};r(e=>C?.id?.startsWith(`inspection-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),A(!1),e(`${R.title}已暂存到草稿箱`)},pe=e=>{if(e===`页面`&&_!==`页面`&&ce.length){S({form:R,source:y,drafts:ce}),E(ce[0].id);return}v(e)},me=e=>{if(e!==_){if(_===`页面`&&k){M({type:`tab`,tab:e});return}pe(e)}},he=e=>{if(d&&_===`页面`&&k){M({type:`page`,item:e});return}u(e),f(!1),g(!1)},ge=e=>{if(d&&_===`页面`&&k){M({type:`application`,application:e});return}t(e)},_e=()=>{let e=j;if(M(null),A(!1),e?.type===`tab`){pe(e.tab);return}e?.type===`page`&&(u(e.item),f(!1),g(!1)),e?.type===`application`&&t(e.application)},ve=N.filter(e=>(!I.reporter||e.reporter.includes(I.reporter))&&(!I.date||e.date===I.date)&&(!I.shift||e.shift===I.shift)&&(!z||!I.flowStatus||e.flowStatus===I.flowStatus)),ye=Math.max(1,Math.ceil(ve.length/ie)),U=Math.min(ne,ye),W=ve.slice((U-1)*ie,U*ie),G=(t=N)=>{let n=[[`填报人`,`检查日期`,`作业班次`,`作业地点`,`凿岩设备防护装置完好`,`作业面通风与照明符合要求`,`人员防护用品佩戴规范`,`隐患描述与整改建议`,`填报状态`],...t.map(e=>[e.reporter,e.date,e.shift,e.location,e.equipment,e.environment,e.protection,e.description,e.status])].map(e=>e.map(e=>`"${String(e).replaceAll(`"`,`""`)}"`).join(`,`)).join(`
+`,jz=[`人事管理`,`财务管理`,`安全管理`,`生产管理`,`设备管理`,`综合管理`],Mz=`./prototype-annotations.json`,Nz=`https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e`;function Pz(e){let t=Array.isArray(e)?e:e?.annotations;return Array.isArray(t)?t:[]}DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Fz=[{label:`工作台`,icon:yz},{label:`应用`,icon:rz},{label:`任务`,icon:Cz},{label:`流程`,icon:cz},{label:`动态`,icon:pz},{label:`预警`,icon:Sz},{label:`看板`,icon:ZR}],Iz=[{id:`home`,label:`首页`,icon:yz},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:pz},{id:`task`,label:`任务`,icon:Cz},{id:`flow`,label:`流程`,icon:cz},{id:`warning`,label:`预警`,icon:Sz},{id:`message`,label:`消息`,icon:mz},{id:`equipment`,label:`设备`,icon:vz},{id:`production`,label:`生产`,icon:xz},{id:`fire`,label:`消防`,icon:Tz},{id:`explosive`,label:`火工品`,icon:uz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:hz},{id:`people`,label:`人员`,icon:Ez},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:bz},{id:`idea`,label:`提示`,icon:dz},{id:`edit`,label:`编辑`,icon:lz},{id:`delete`,label:`删除`,icon:wz},{id:`arrow`,label:`前往`,icon:fz}];function Lz({name:e=`apps`,className:t,customIcons:n=[]}){let r=n.find(t=>t.id===e);return r?(0,Q.jsx)(`img`,{className:t,src:r.src,alt:``,"aria-hidden":`true`}):(0,Q.jsx)(Iz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var Rz=`./xiaodong/`,zz=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:mz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:Cz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:Sz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],Bz=[{name:`双重预防机制`,description:`风险与隐患`,icon:pz},{name:`安全管理`,description:`检查与整改`,icon:Sz},{name:`设备管理`,description:`点检与维修`,icon:vz},{name:`火工品管理`,description:`领用与追溯`,icon:uz},{name:`生产管理`,description:`计划与日报`,icon:xz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Tz},{name:`应急管理`,description:`预案与响应`,icon:dz}],Vz=[{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}],Hz=[`安全管理员`,`设备工程师`,`生产主管`],Uz=[{id:`workbench`,label:`工作台`,icon:yz,pinned:!0}],Wz=[{id:`msg-1`,source:`流程审批`,type:`审批提醒`,sender:`矿山应急照明设备采购申请`,time:`今天 10:12`,initiator:`王建国`,initiatedAt:`今天 09:12`,application:`机电管理`,processNumber:`202608310001`,title:`矿山应急照明设备采购申请`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`blue`},{id:`msg-2`,source:`流程超时`,type:`超时提醒`,sender:`南区 2# 采场动火作业申请`,time:`今天 09:38`,initiator:`张宇`,initiatedAt:`今天 08:46`,application:`安全管理`,processNumber:`202608310002`,title:`南区 2# 采场动火作业申请`,content:`当前审批节点已超时，请尽快处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`流程结束`,type:`结束提醒`,sender:`碎矿车间停机检修计划`,time:`昨天 16:45`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,application:`设备管理`,processNumber:`202608300003`,title:`碎矿车间停机检修计划`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:Sz,tone:`red`},{id:`msg-4`,source:`流程审批`,type:`审批提醒`,sender:`外协队入场资格审核`,time:`昨天 14:20`,initiator:`周敏`,initiatedAt:`昨天 10:20`,application:`双重预防机制`,processNumber:`202608300004`,title:`外协队入场资格审核`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-5`,source:`流程结束`,type:`结束提醒`,sender:`井下设备检修采购申请`,time:`7 月 28 日 09:16`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,application:`设备管理`,processNumber:`202608260006`,title:`井下设备检修采购申请`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!0,icon:hz,tone:`blue`}],Gz=`20260831`;function Kz(e=``){let t=String(e).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);if(t)return`${t[1]}${t[2].padStart(2,`0`)}${t[3].padStart(2,`0`)}`;let n=String(e).match(/(\d{1,2})\s*月\s*(\d{1,2})\s*日/);return n?`2026${n[1].padStart(2,`0`)}${n[2].padStart(2,`0`)}`:String(e).includes(`昨天`)?`20260830`:Gz}function qz(e){let t=String(e.id??``),n=Number(t.match(/(\d+)(?!.*\d)/)?.[1]),r=Number(e.sequence)||n%9999||1;return`${Kz(e.initiatedAt)}${String(r).padStart(4,`0`)}`}var Jz=[`待审批`,`审批中`,`已通过`,`已拒绝`,`已撤销`,`已驳回`],Yz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`审批中`,application:`设备管理`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`张宇`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`审批中`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,startedByMe:!0},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`流程已结束`,approver:`刘海`,status:`已通过`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`张宇`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0},{id:`flow-5`,name:`东区临时用电申请`,initiator:`陈伟`,initiatedAt:`昨天 11:16`,currentNode:`流程已结束`,approver:`张宇`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,handledByMe:!0,handledResult:`驳回`},{id:`flow-6`,name:`井下设备检修采购申请`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,currentNode:`流程已撤销`,approver:`张宇`,status:`已撤销`,application:`设备管理`,amount:`42,800 元`,department:`机电管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`,revokedBy:`刘海`,revokedAt:`2026-08-26 17:08:00`},{id:`flow-7`,name:`高处作业审批申请`,initiator:`孙宁`,initiatedAt:`8 月 25 日 09:34`,currentNode:`分管领导审批`,approver:`张宇`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`紧急`,handledByMe:!0,handledResult:`驳回`},{id:`flow-8`,name:`井下通风设施改造申请`,initiator:`李明`,initiatedAt:`8 月 27 日 14:18`,currentNode:`流程已结束`,approver:`陈伟`,status:`已通过`,application:`应急管理`,amount:`26,000 元`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,finalOperator:`陈伟`},{id:`flow-9`,name:`采场临时封闭申请`,initiator:`王强`,initiatedAt:`8 月 27 日 10:05`,currentNode:`流程已结束`,approver:`赵磊`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,ccToMe:!0,finalOperator:`赵磊`},{id:`flow-10`,name:`消防器材增补采购申请`,initiator:`周敏`,initiatedAt:`8 月 26 日 13:26`,currentNode:`流程已撤销`,approver:`孙宁`,status:`已撤销`,application:`消防管理`,amount:`18,600 元`,department:`综合管理部`,urgency:`常规`,ccToMe:!0,revokedBy:`周敏`,revokedAt:`2026-08-26 15:20:00`},{id:`flow-11`,name:`爆破作业人员调整申请`,initiator:`何勇`,initiatedAt:`8 月 25 日 16:50`,currentNode:`分管领导审批`,approver:`周杰伦`,status:`已驳回`,application:`火工品管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,ccToMe:!0,rejectedBy:`周杰伦`},{id:`flow-12`,name:`东翼通风系统整改申请`,initiator:`张宇`,initiatedAt:`2026-09-02 09:18:00`,currentNode:`已驳回至发起人`,approver:`周杰伦`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,startedByMe:!0,rejectedBy:`周杰伦`,rejectionOpinion:`请补充整改方案及现场照片后重新提交。`},{id:`flow-draft-1`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-28 10:36:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已完成离职原因与交接安排说明，待补充附件后提交。`,draft:!0},{id:`flow-draft-2`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-27 16:18:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已填写基本离职信息，待确认最后工作日期。`,draft:!0}],Xz=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`,children:[]},{id:`equipment`,name:`设备管理部`,children:[]},{id:`production`,name:`生产技术部`,children:[]}]}]}],Zz=[{id:`transfer-zhao`,name:`赵六`,account:`zhaoliu`,department:`安全管理部`,organizationId:`safety`},{id:`transfer-wang`,name:`王五`,account:`wangwu`,department:`生产技术部`,organizationId:`production`},{id:`transfer-li`,name:`李四`,account:`lisi`,department:`设备管理部`,organizationId:`equipment`}],Qz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:pz,tone:`green`},{name:`平巷凿岩作业隐患排查审批流程`,time:`昨天 16:40`,icon:nz,tone:`blue`},{name:`生产管理`,time:`7 月 25 日`,icon:xz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:pz,tone:`violet`}],$z=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:hz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:Cz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:vz}];function eB({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function tB({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Fz.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)(eB,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function nB({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o,onOpenSpecification:s}){let[c,l]=(0,Z.useState)(!1),u=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{if(!c)return;let e=e=>{u.current?.contains(e.target)||l(!1)},t=e=>{e.key===`Escape`&&l(!1)};return document.addEventListener(`pointerdown`,e),document.addEventListener(`keydown`,t),()=>{document.removeEventListener(`pointerdown`,e),document.removeEventListener(`keydown`,t)}},[c]),(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{type:`button`,className:`prototype-annotation-toggle`,onClick:s,children:[(0,Q.jsx)(lz,{}),(0,Q.jsx)(`span`,{children:`标注`})]}),(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsxs)(`div`,{className:`top-profile-control`,ref:u,children:[(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":c,onClick:()=>l(e=>!e),children:`张`}),c?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{l(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{l(!1),o()},children:`退出登录`})]}):null]})]})]})}function rB({visible:e,managing:t,pageId:n,pageLabel:r,annotations:i,onCloseManager:a,onAdd:o,onUpdate:s,onRemove:c,onReposition:l}){let[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(``),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(null),S=()=>{let e=document.querySelector(`.page-shell`),t=e?.getBoundingClientRect();return{left:t?.left??80,top:t?.top??0,width:Math.max(t?.width??window.innerWidth-80,1),height:Math.max(e?.scrollHeight??0,t?.height??window.innerHeight,1)}},[C,w]=(0,Z.useState)(()=>({left:80,top:0,width:Math.max(window.innerWidth-80,1),height:Math.max(window.innerHeight,1)})),T=(0,Z.useRef)(!1),E=i.filter(e=>e.pageId===n),D=E.find(e=>e.id===m),O=(e,t=0)=>{let n=Math.min(980,window.innerWidth-37),r=156+t*42,i=e.leftPercent!==null&&e.leftPercent!==void 0&&e.topPercent!==null&&e.topPercent!==void 0&&Number.isFinite(Number(e.leftPercent))&&Number.isFinite(Number(e.topPercent)),a=i&&e.positionSpace===`page`,o=i?Number(e.leftPercent)/100*window.innerWidth:e.left??n,s=i?Number(e.topPercent)/100*window.innerHeight:e.top??r;return{left:a?Number(e.leftPercent)/100*C.width:o-C.left,top:a?Number(e.topPercent)/100*C.height:s-C.top,hasRelativePosition:i,isPagePosition:a}},k=(e,t,n=C)=>({leftPercent:Number((e/n.width*100).toFixed(3)),topPercent:Number((t/n.height*100).toFixed(3)),positionSpace:`page`}),A=(e,t)=>{if(b?.id===e.id)return{left:`${b.left}px`,top:`${b.top}px`};let n=O(e,t);return{left:`${n.left}px`,top:`${n.top}px`}};(0,Z.useEffect)(()=>{let e=()=>w(S()),t=document.querySelector(`.page-shell`),n=typeof ResizeObserver>`u`?null:new ResizeObserver(e);return e(),t&&n?.observe(t),window.addEventListener(`resize`,e),window.visualViewport?.addEventListener(`resize`,e),()=>{n?.disconnect(),window.removeEventListener(`resize`,e),window.visualViewport?.removeEventListener(`resize`,e)}},[n]),(0,Z.useEffect)(()=>{E.forEach((e,t)=>{let{isPagePosition:n,left:r,top:i}=O(e,t);n||l(e.id,k(r,i))})},[i,n,C.width,C.height]),(0,Z.useEffect)(()=>{if(!b)return;let e=e=>{let t=S(),n=Math.min(Math.max(12,Math.round(e.clientX-t.left-b.offsetX)),t.width-37),r=Math.min(Math.max(64,Math.round(e.clientY-t.top-b.offsetY)),t.height-37);(Math.abs(n-b.startLeft)>3||Math.abs(r-b.startTop)>3)&&(T.current=!0),x(e=>e&&{...e,left:n,top:r})},t=()=>{l(b.id,k(b.left,b.top,S())),x(null)};return window.addEventListener(`mousemove`,e),window.addEventListener(`mouseup`,t,{once:!0}),()=>{window.removeEventListener(`mousemove`,e),window.removeEventListener(`mouseup`,t)}},[b,l]);let j=()=>{let e=u.trim();if(e){if(f){s(f,e),d(``),p(``);return}_(!0)}},M=()=>{d(``),p(``),y(``),_(!1)};return(0,Q.jsxs)(Q.Fragment,{children:[e?E.map((e,t)=>(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-tag`,style:A(e,t),"aria-label":`查看备注 ${t+1}`,onMouseDown:n=>{n.preventDefault();let{left:r,top:i}=O(e,t),a=S();T.current=!1,x({id:e.id,left:r,top:i,startLeft:r,startTop:i,offsetX:n.clientX-a.left-r,offsetY:n.clientY-a.top-i})},onClick:()=>{if(T.current){T.current=!1;return}h(e.id)},children:t+1},e.id)):null,e&&D?(0,Q.jsxs)(`section`,{className:`prototype-annotation-popover`,style:{left:`${Math.min(O(D).left+32,C.width-286)}px`,top:`${Math.min(O(D).top+30,C.height-160)}px`},"aria-label":`备注内容`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:`备注内容`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭备注内容`,onClick:()=>h(``),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:D.content})]}):null,g?(0,Q.jsx)(`div`,{className:`prototype-annotation-placement-layer`,onClick:e=>{let t=S(),i=Math.min(Math.max(12,Math.round(e.clientX-t.left)),t.width-37),a=Math.min(Math.max(64,Math.round(e.clientY-t.top)),t.height-37),s=k(i,a,t);v?l(v,s):o({pageId:n,pageLabel:r,content:u.trim(),...s}),M()},role:`presentation`,children:(0,Q.jsx)(`span`,{children:v?`请点击页面任意位置重新放置标签`:`请点击页面任意位置放置备注标签`})}):null,t?(0,Q.jsxs)(`aside`,{className:`prototype-annotation-panel`,"aria-label":`原型标注管理`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`原型标注管理`}),(0,Q.jsx)(`b`,{children:r})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭标注管理`,onClick:a,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-editor`,children:[(0,Q.jsx)(`p`,{className:`prototype-annotation-source-note`,children:`标注从部署文件读取；在线调整仅用于当前预览。`}),(0,Q.jsx)(`label`,{htmlFor:`prototype-annotation-content`,children:f?`编辑备注`:`新增备注`}),(0,Q.jsx)(`textarea`,{id:`prototype-annotation-content`,value:u,maxLength:240,placeholder:`例如：此处提交后需校验审批人是否存在，并记录操作日志。`,onChange:e=>d(e.target.value)}),(0,Q.jsxs)(`footer`,{children:[f||g?(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-cancel`,onClick:M,children:g?`取消放置`:`取消编辑`}):null,(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-save`,onClick:j,disabled:!u.trim(),children:f?`保存备注`:`点击页面放置标签`})]})]}),(0,Q.jsx)(`div`,{className:`prototype-annotation-list`,children:E.length?E.map((e,t)=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:String(t+1).padStart(2,`0`)}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-entry`,children:[(0,Q.jsx)(`p`,{children:e.content}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑备注`,onClick:()=>{d(e.content),p(e.id),_(!1)},children:`编辑`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`重新放置备注`,onClick:()=>{y(e.id),_(!0)},children:`重新放置`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除备注`,onClick:()=>{m===e.id&&h(``),c(e.id)},children:`删除`})]})]})]},e.id)):(0,Q.jsx)(`div`,{className:`prototype-annotation-empty`,children:`当前页面还没有备注，输入内容后即可在页面任意位置放置。`})})]}):null]})}function iB({total:e,page:t,pageSize:n,onPageChange:r,onPageSizeChange:i,className:a=``,itemLabel:o=`条`}){let s=Math.max(1,Math.ceil(e/n)),c=Math.min(t,s);return(0,Q.jsxs)(`footer`,{className:`system-pagination ${a}`.trim(),children:[(0,Q.jsxs)(`span`,{children:[`共 `,e,` `,o]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页${o}数`,value:n,onChange:e=>i(Number(e.target.value)),children:[(0,Q.jsxs)(`option`,{value:10,children:[`10 `,o]}),(0,Q.jsxs)(`option`,{value:20,children:[`20 `,o]}),(0,Q.jsxs)(`option`,{value:50,children:[`50 `,o]})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:c===1,onClick:()=>r(Math.max(1,c-1)),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[c,` / `,s]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:c===s,onClick:()=>r(Math.min(s,c+1)),children:`下一页`})]})}function aB({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r,onOpenProcess:i}){let[a,o]=(0,Z.useState)(`全部`),[s,c]=(0,Z.useState)(`全部`),[l,u]=(0,Z.useState)(`未读`),[d,f]=(0,Z.useState)(10),[p,m]=(0,Z.useState)(1),h=e=>e.source.startsWith(`流程`)?`流程`:e.source,g=e.filter(e=>(a===`全部`||h(e)===a)&&(a!==`流程`||s===`全部`||e.source===s)&&(l===`全部`||(l===`未读`?!e.read:e.read))),_=Math.max(1,Math.ceil(g.length/d)),v=Math.min(p,_),y=g.slice((v-1)*d,v*d),b=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,b,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:b===0,children:[(0,Q.jsx)(hz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:a,onChange:e=>{let t=e.target.value;o(t),c([`流程`,`全部`].includes(t)?`全部`:``),m(1)},children:[(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`动态`}),(0,Q.jsx)(`option`,{children:`全部`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsx)(`select`,{value:s,disabled:![`流程`,`全部`].includes(a),onChange:e=>{c(e.target.value),m(1)},children:a===`流程`?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`流程审批`}),(0,Q.jsx)(`option`,{children:`流程超时`}),(0,Q.jsx)(`option`,{children:`流程结束`}),(0,Q.jsx)(`option`,{children:`流程驳回`}),(0,Q.jsx)(`option`,{children:`流程抄送`})]}):a===`全部`?(0,Q.jsx)(`option`,{children:`全部`}):(0,Q.jsx)(`option`,{value:``,children:` `})})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:l,onChange:e=>{u(e.target.value),m(1)},children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:y.length?y.map(e=>{let{id:n,source:r,type:a,sender:o,time:s,initiator:c,initiatedAt:l,application:u,processNumber:d,read:f,icon:p,tone:m}=e;return(0,Q.jsxs)(`button`,{className:f?`message-row read`:`message-row`,onClick:()=>{t(n),i(a===`结束提醒`?`我发起的`:`待审批`,d)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${m}`,children:(0,Q.jsx)(p,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`time`,{children:s}),f?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsx)(`strong`,{children:(0,Q.jsx)(`em`,{children:r})}),(0,Q.jsxs)(`p`,{className:`message-process-origin`,children:[c,`于`,l,`通过`,u,`应用发起的流程编号为：`,d]})]}),(0,Q.jsx)(fz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(iB,{className:`message-pagination`,total:g.length,page:v,pageSize:d,onPageChange:m,onPageSizeChange:e=>{f(e),m(1)}})]})}function oB({process:e,onClose:t,onApprove:n,viewOnly:r=!1,canRevoke:i=!1,canResumeDraft:a=!1,hideFinalLog:o=!1,onResumeDraft:s,onResubmit:c}){let[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(!1),[h,g]=(0,Z.useState)(null),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(!1),[x,S]=(0,Z.useState)(!1),[C,w]=(0,Z.useState)([]),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(null),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)(`initiator`),[N,P]=(0,Z.useState)(!1),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(``),ne=()=>{u(!1),f(!1),m(!1),b(!1),S(!1),w([]),E(``),O(null),A(``),P(!1),F(!1),te(``),t()};if(!e)return null;let re=e.status===`已驳回`,ie=e.status===`已撤销`,ae=e.status===`已通过`,oe=e.status===`已拒绝`,se=e.resubmitted,L=D===`initiator`?{label:`发起人`,name:e.initiator}:{label:`上一节点`,name:e.previousApprover??`张七`},R=[{time:`2026-08-23 12:00:00`,title:`系统发起`,details:[`${e.initiator}发起了${e.name}`],action:`发起`,state:`done`},{time:`2026-08-23 12:00:00`,title:`主管领导审批`,details:[`李四已同意`,`审批意见：请按流程办理`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`分管领导审批`,details:[`王五已转办`,`转办原因：赵总定夺`,`流程到达时间：2026-08-23 12:00:00`],action:`转办`,state:`done`},{time:`2026-08-23 12:00:00`,title:`转办审批`,details:[`赵六已加签`,`流程到达时间：2026-08-23 12:00:00`],action:`加签`,state:`done`},{time:`2026-08-23 12:00:00`,title:`加签审批`,details:[`张七已同意`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`抄送`,details:[`系统已抄送`,`流程到达时间：2026-08-23 12:00:00`],action:`抄送`,state:`done`},{time:re||se||ae||oe?`2026-08-23 12:00:00`:ie?e.revokedAt??`2026-08-28 10:36:00`:`当前`,title:re||se||ae||oe?`分管领导审批`:ie?`撤销`:`结束`,details:re||se?[`${e.rejectedBy??`周杰伦`}已驳回`,`审批意见：${e.rejectionOpinion??`请核对清楚再提交`}`,`流程到达时间：2026-08-23 12:00:00`]:ae?[`${e.finalOperator??`张宇`}已同意`,`审批意见：同意办理`,`流程完成时间：2026-08-23 12:00:00`]:oe?[`${e.finalOperator??`张宇`}已拒绝`,`审批意见：${e.refusalOpinion||`未填写`}`,`流程完成时间：2026-08-23 12:00:00`]:ie?[`${e.revokedBy??`张宇`}已撤销该流程`]:[[`待审批`,`审批中`].includes(e.status)?`当前待 ${e.approver} 审批`:`流程已结束`],action:re||se?`驳回`:ae?`同意`:oe?`拒绝`:ie?`撤销`:void 0,state:se?`done`:`current`},...se?[{time:`2026-08-23 12:30:00`,title:`重新提交`,details:[`${e.initiator}已重新提交`],action:`重新提交`,state:`done`},{time:``,hideTime:!0,title:`分管领导审批`,details:[`周杰伦`,`流程到达时间：2026-08-23 12:30:00`],state:ie?`done`:`current`},...ie?[{time:e.revokedAt??`2026-08-28 10:36:00`,title:`撤销`,details:[`${e.revokedBy??`张宇`}已撤销该流程`],action:`撤销`,state:`current`}]:[]]:[],...e.actionLogs??[]],z=[[`所属部门`,e.department],[`发起人`,e.initiator],[`发起时间`,e.initiatedAt]],ce=e=>{if(e===`撤销`){P(!0);return}if(e===`转办`){f(!0);return}if(e===`加签`){w([]),E(``),b(!0);return}if(e===`退回`){A(``),O(j),M(e=>e===`initiator`?`previous`:`initiator`);return}if(e===`拒绝`){te(``),F(!0);return}n(`已${e}`)},B=o&&!re&&!ie&&!se&&!ae&&!oe&&!e.actionLogs?.length?R.slice(0,-1):R;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:ne,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:ne,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body${a?` draft-detail`:``}`,children:[(0,Q.jsxs)(`div`,{className:`process-approval-main`,children:[(0,Q.jsxs)(`section`,{className:`process-approval-form`,children:[(0,Q.jsx)(`h3`,{children:`申请单`}),(0,Q.jsx)(`div`,{className:`process-approval-fields`,children:z.map(([e,t])=>(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),t||`-`]},e))}),(0,Q.jsxs)(`label`,{className:`process-approval-description`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,readOnly:!0,defaultValue:`${e.name}相关事项，请按流程审核处理。`})]}),i&&!re&&!ie?(0,Q.jsx)(`div`,{className:`process-initiated-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`})}):null]}),re&&i?(0,Q.jsxs)(`div`,{className:`process-rejected-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>c?.(e),children:`重新提交`})]}):r?null:(0,Q.jsxs)(`section`,{className:`process-approval-opinion`,children:[(0,Q.jsx)(`h3`,{children:`审批意见`}),(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请输入审批意见`}),(0,Q.jsxs)(`div`,{className:`process-approval-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`转办`),children:`转办`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`加签`),children:`加签`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`退回`),children:`驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`拒绝`),children:`拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>ce(`同意`),children:`同意`})]})]})]}),a?null:(0,Q.jsxs)(`section`,{className:`process-approval-log`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`流程日志`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(!0),children:`流程图`})]}),(0,Q.jsx)(`ol`,{children:B.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`div`,{className:`process-log-entry-heading`,children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsxs)(`span`,{className:`process-log-entry-meta`,children:[e.hideTime?null:(0,Q.jsx)(`time`,{children:e.time}),e.action?(0,Q.jsx)(`span`,{className:`process-log-action`,children:e.action}):null]})]}),e.details.map(e=>(0,Q.jsx)(`p`,{children:e},e))]})]},e.title))})]})]})]})}),l?(0,Q.jsx)(`div`,{className:`process-flowchart-map-layer`,role:`presentation`,onMouseDown:()=>u(!1),children:(0,Q.jsxs)(`section`,{className:`process-flowchart-map-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-flowchart-map-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-flowchart-map-title`,children:`流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程图`,onClick:()=>u(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart-map`,"aria-label":`${e.name}流程图`,children:[(0,Q.jsx)(`i`,{className:`flowchart-map-link start-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-right`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link secondary-right`}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node start`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`b`,{children:e.name})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval active`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`设备主管审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy first-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval manager`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`总经理审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy second-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]})]})]})}):null,N?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>P(!1),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>P(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>P(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{P(!1),n(`已撤销`)},children:`确定撤销`})]})]})}):null,ee?(0,Q.jsx)(`div`,{className:`process-refuse-layer`,role:`presentation`,onMouseDown:()=>F(!1),children:(0,Q.jsxs)(`section`,{className:`process-refuse-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-refuse-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-refuse-title`,children:`确认拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭拒绝确认`,onClick:()=>F(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-refuse-body`,children:[(0,Q.jsxs)(`label`,{children:[`拒绝意见`,(0,Q.jsx)(`textarea`,{rows:`4`,value:I,onChange:e=>te(e.target.value),placeholder:`请输入拒绝意见`})]}),(0,Q.jsx)(`p`,{children:`拒绝后该流程终止，无法修改，确认要拒绝吗？`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>F(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已拒绝`,I.trim()),F(!1),te(``)},children:`确定拒绝`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>f(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),h&&(n(`已转办`,{target:h,reason:_}),f(!1),m(!1),v(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-transfer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-transfer-title`,children:`转办流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭转办弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 转办人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>m(!0),children:[h?`${h.name} · ${h.department}`:`请选择转办人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`转办原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:_,onChange:e=>v(e.target.value),placeholder:`请输入转办原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!h,children:`确认转办`})]})]})}):null,y?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>b(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),C.length&&(n(`已加签`,{targets:C,reason:T}),b(!1),S(!1),w([]),E(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-add-signer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-add-signer-title`,children:`加签流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭加签弹窗`,onClick:()=>b(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 加签人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>S(!0),children:[C.length?C.map(e=>e.name).join(`、`):`请选择加签人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`加签原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:T,onChange:e=>E(e.target.value),placeholder:`请输入加签原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>b(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!C.length,children:`确认加签`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>O(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-return-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-return-confirm-title`,children:`确认驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭驳回确认`,onClick:()=>O(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-return-body`,children:[(0,Q.jsxs)(`label`,{children:[`驳回意见`,(0,Q.jsx)(`textarea`,{rows:`3`,value:k,maxLength:200,placeholder:`请输入驳回意见（选填）`,onChange:e=>A(e.target.value)})]}),(0,Q.jsxs)(`p`,{children:[`驳回后，流程将退回至`,L.label,`，确认要驳回吗？`]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{O(null),A(``)},children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已驳回`,{target:L,reason:k.trim()}),O(null),A(``)},children:`确认驳回`})]})]})}):null,p?(0,Q.jsx)(UB,{organizations:Xz,users:Zz,selectedUser:h,onSelect:g,onClose:()=>m(!1),title:`选择转办人`,selectedLabel:`已选转办人`}):null,x?(0,Q.jsx)(WB,{organizations:Xz,users:Zz,selectedUsers:C,onSelect:w,onClose:()=>S(!1),title:`选择加签人`,selectedLabel:`已选加签人`}):null]})}function sB({onAction:e,initialFilter:t=`待审批`,initialProcessNumber:n=``,processRecords:r,setProcessRecords:i}){let[a,o]=(0,Z.useState)(null),[s,c]=(0,Z.useState)(null),[l,u]=(0,Z.useState)(t),[d,f]=(0,Z.useState)({number:n,title:``,application:``,type:``,status:``}),[p,m]=(0,Z.useState)(`全部`),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(null),[y,b]=(0,Z.useState)(null),[x,S]=(0,Z.useState)(`new`),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),j=(0,Z.useRef)(null),M=[{category:`人资管理`,application:`消防管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,application:`机电管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,application:`双重预防机制`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,application:`生产管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,application:`应急管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,application:`设备管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,application:`火工品管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,application:`安全管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,application:`双重预防机制`,tone:`red`,name:`材料采购流程`}],N={待审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`arrivalAt`,`status`]},已审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`completedAt`,`result`,`status`]},抄送我的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`sentAt`,`status`]},我发起的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiatedAt`,`currentNode`,`status`]},草稿箱:{filters:[`title`],columns:[`title`,`type`,`application`,`initiatedAt`,`status`]}},P={number:`流程编号`,title:`标题`,application:`所属应用`,type:`流程类型`,initiator:`发起人`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},ee=e=>l===`待审批`&&e===`title`?`流程名称`:l===`待审批`&&e===`status`?`当前状态`:l===`已审批`&&e===`title`?`流程名称`:l===`已审批`&&e===`completedAt`?`处理时间`:l===`已审批`&&e===`result`?`我的处理`:l===`已审批`&&e===`status`?`当前状态`:l===`抄送我的`&&e===`title`?`流程名称`:l===`抄送我的`&&e===`sentAt`?`抄送时间`:l===`抄送我的`&&e===`status`?`当前状态`:l===`我发起的`&&e===`title`?`流程名称`:l===`我发起的`&&e===`status`?`当前状态`:l===`草稿箱`&&e===`title`?`流程名称`:l===`草稿箱`&&e===`initiatedAt`?`保存时间`:l===`草稿箱`&&e===`status`?`状态`:P[e],F=N[l],I=[...new Set(r.map(e=>e.application??`综合管理`))],te=M.filter(e=>(p===`全部`||p===`最近使用`&&e.recent)&&(!h.trim()||e.name.includes(h.trim()))),ne=e=>({number:qz(e),title:e.name,application:e.application??`综合管理`,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?e.handledResult??`同意`:`-`,sentAt:e.initiatedAt,endedAt:[`审批中`,`已撤销`].includes(e.status)||e.draft?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),re=r.filter(e=>{let t=l===`待审批`&&[`待审批`,`审批中`].includes(e.status)&&e.approver===`张宇`||l===`已审批`&&e.handledByMe||l===`抄送我的`&&e.ccToMe||l===`我发起的`&&e.startedByMe||l===`草稿箱`&&e.draft,n=ne(e);return t&&(!d.number||n.number.includes(d.number))&&(!d.title||n.title.includes(d.title))&&(!d.application||n.application===d.application)&&(!d.type||n.type===d.type)&&(!d.status||n.status===d.status)}),ie=(t,n={})=>{let r=typeof n==`string`?{opinion:n}:n;t===`已撤销`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已撤销`,startedByMe:!0,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-08-28 10:36:00`}:e)),t===`已拒绝`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已拒绝`,handledByMe:!0,handledResult:`拒绝`,finalOperator:`张宇`,refusalOpinion:r.opinion??``,currentNode:`流程已结束`}:e)),t===`已转办`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`审批中`,approver:r.target?.name??e.approver,currentNode:`转办审批`,handledByMe:!0,handledResult:`转办`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:00:00`,title:`转办`,details:[`张宇已转办给${r.target?.name??`处理人`}`,`转办原因：${r.reason||`未填写`}`],action:`转办`,state:`done`}]}:e)),t===`已加签`&&i(e=>e.map(e=>e.id===a.id?{...e,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:02:00`,title:`加签`,details:[`张宇已加签给${r.targets?.map(e=>e.name).join(`、`)||`处理人`}`,`加签原因：${r.reason||`未填写`}`],action:`加签`,state:`done`}]}:e)),t===`已驳回`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已驳回`,currentNode:`已驳回至${r.target?.label??`上一节点`}`,handledByMe:!0,handledResult:`驳回`,rejectedBy:`张宇`,rejectionOpinion:r.reason||`未填写`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:05:00`,title:`驳回`,details:[`张宇已驳回至${r.target?.label??`上一节点`}`,`驳回原因：${r.reason||`未填写`}`],action:`驳回`,state:`current`}]}:e)),e(`${a.name}${t}`),o(null)},ae=()=>{s&&(i(e=>e.map(e=>e.id===s.id?{...e,status:`已撤销`,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-09-02 10:36:00`}:e)),e(`${s.name}已撤销`),c(null))},oe=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),u(`发起流程`),L(t,e)},se=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),L({...t,name:e.name},{...e,description:`请根据驳回意见核对并完善申请信息后重新提交。`},`resubmit`)},L=(e,t=null,n=`restore`)=>{v(e),b(t),S(t?n:`new`),w(null),O(!1),A(!1)},R=e=>{L(e)},z=()=>{v(null),b(null),A(!1)},ce=()=>{if(!_)return;let t=new FormData(j.current),n={id:y?.draft?y.id:`flow-draft-${Date.now()}`,name:_.name,initiator:`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,application:_.application,department:t.get(`department`)||`安全管理部`,description:t.get(`description`)||``,draft:!0,startedByMe:!0,sequence:y?.sequence??r.filter(e=>Kz(e.initiatedAt)===Gz).length+1};i(e=>y?.draft?e.map(e=>e.id===n.id?n:e):[n,...e]),b(n),e(`${_.name}已暂存到草稿箱`),z()};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsx)(`header`,{className:`task-list-header`,children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]})}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(N)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":l===e,className:l===e?`active`:``,onClick:()=>u(e),children:e},e))})}),l===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":p===e,className:p===e?`active`:``,onClick:()=>m(e),children:e},e))}),(0,Q.jsx)(`input`,{value:h,onChange:e=>g(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=te.filter(t=>t.category===e),n=M.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsxs)(`button`,{onClick:()=>R(e),children:[e.name,`（`,e.application,`）`]},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[F.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:d.number,onChange:e=>f(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,F.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程名称`}),(0,Q.jsx)(`input`,{value:d.title,onChange:e=>f(t=>({...t,title:e.target.value})),placeholder:`请输入流程名称`})]}):null,F.filters.includes(`application`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`所属应用`}),(0,Q.jsxs)(`select`,{value:d.application,onChange:e=>f(t=>({...t,application:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择所属应用`}),I.map(e=>(0,Q.jsx)(`option`,{children:e},e))]})]}):null,F.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:d.type,onChange:e=>f(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,F.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:d.status,onChange:e=>f(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>f({number:``,title:``,application:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(e=>(0,Q.jsx)(`span`,{children:ee(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),re.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(t=>{let n=ne(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>o(e),children:n},t):t===`status`||t===`result`?(0,Q.jsx)(`i`,{className:[`已驳回`,`已拒绝`].includes(n)?`rejected`:[`待审批`,`审批中`].includes(n)?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),l===`我发起的`?(0,Q.jsxs)(`span`,{className:`process-list-actions initiated-actions`,children:[(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:e.status===`已驳回`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>se(e),children:`重新提交`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:[`待审批`,`审批中`,`已驳回`].includes(e.status)?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action danger`,onClick:()=>c(e),children:`撤销`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),`查看`]})})]}):(0,Q.jsxs)(`span`,{className:`process-list-actions`,children:[l===`草稿箱`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>oe(e),children:`继续填报`}):null,(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),l===`待审批`?`审批`:`查看`]})]})]},e.id)),re.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(oB,{process:a,onClose:()=>o(null),onApprove:ie,viewOnly:l!==`待审批`,canRevoke:!1,canResumeDraft:l===`草稿箱`,hideFinalLog:[`已审批`,`我发起的`].includes(l),onResumeDraft:oe,onResubmit:se}),s?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>c(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-list-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-list-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>c(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:ae,children:`确定撤销`})]})]})}):null,C?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>w(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsx)(`h2`,{id:`draft-restore-title`,children:`发现同名流程草稿`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>w(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,C.drafts.length,` 条“`,C.template.name,`”草稿，请选择恢复继续填报，或重新发起新的流程。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:C.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>L(C.template),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=C.drafts.find(e=>e.id===T);L(C.template,e)},children:`恢复并继续填报`})]})]})}):null,_?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:z,role:`presentation`,children:(0,Q.jsxs)(`form`,{ref:j,className:`process-form-dialog${D?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),x===`resubmit`&&y?.id&&i(e=>e.map(e=>e.id===y.id?{...e,status:`审批中`,currentNode:`分管领导审批`,resubmitted:!0}:e)),e(`${x===`resubmit`?`已重新提交流程`:`已发起流程`}：${_.name}`),z()},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:y?x===`resubmit`?`重新提交`:`恢复草稿`:`发起流程`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>A(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>O(e=>!e),children:D?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:z,children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{name:`title`,defaultValue:_.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{name:`department`,defaultValue:y?.department??`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`5`,defaultValue:y?.description??``,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:y?x===`resubmit`?`请根据驳回意见核对信息后重新提交。`:`正在恢复 ${y.initiatedAt} 保存的草稿。`:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:z,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-draft-action`,onClick:ce,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:x===`resubmit`?`重新提交`:`发起流程`})]})]})]})}):null,_&&k?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>A(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>A(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function cB({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(fz,{})]})})}function lB({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),...Bz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(fz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(fz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(bz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function uB({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Qz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(fz,{})]},t))})]})}function dB({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(Bz.find(t=>t.name===e)??Bz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(gz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:Bz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(hz,{}):null]},n))}):null]})}var fB=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:pz,nested:!0},{label:`隐患排查治理`,icon:Sz,expanded:!0}],pB=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查审批流程`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],mB=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:Cz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`}],hB=[{title:`员工离职申请`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`平巷凿岩作业隐患排查审批流程`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`掘进工作面隐患整改审批流程`,detail:`隐患排查审批`,icon:nz,tone:`lime`,kind:`approval`}],gB=[{id:`inspection-001`,reporter:`张宇`,date:`2026-07-29`,shift:`早班`,location:`西翼 3# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`现场检查正常，无需整改。`,status:`已提交`,flowStatus:`审批中`},{id:`inspection-002`,reporter:`李明`,date:`2026-07-28`,shift:`中班`,location:`西翼 2# 平巷`,equipment:`正常`,environment:`发现问题`,protection:`正常`,description:`照明灯具亮度不足，已通知机电班处理。`,status:`已复核`,flowStatus:`已通过`}];function _B({onAction:e,onSwitchApplication:t,approvalDrafts:n,setApprovalDrafts:r,onSaveProcessDraft:i,onDeleteProcessDraft:a,initialFormTitle:o=mB[0].title,initialOpenForm:s=!1,initialFormSource:c=hB.some(e=>e.title===o)?`隐患排查审批流程`:`岗位隐患排查清单`}){let[l,u]=(0,Z.useState)(c),[d,f]=(0,Z.useState)(s),[p,m]=(0,Z.useState)(o),[h,g]=(0,Z.useState)(!1),[_,v]=(0,Z.useState)(`页面`),[y,b]=(0,Z.useState)(c),[x,S]=(0,Z.useState)(null),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),[j,M]=(0,Z.useState)(null),[N,P]=(0,Z.useState)(gB),[ee,F]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[I,te]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[ne,re]=(0,Z.useState)(1),[ie,ae]=(0,Z.useState)(10),oe=(0,Z.useRef)(null),se=(0,Z.useRef)(null),L=l,R=[...mB,...hB].find(e=>e.title===p)??mB[0],z=R.kind===`approval`,ce=n.filter(e=>e.kind===(z?`approval`:`inspection`)&&e.name===R.title),B=(e=mB[0],t=`岗位隐患排查清单`,n=null)=>{m(e.title),b(t),w(n),S(null),f(!0),g(!1),v(`页面`),A(!1),M(null)},le=(e=mB[0],t=`岗位隐患排查清单`)=>{let r=n.filter(t=>t.draft&&t.name===e.title&&t.kind===(e.kind===`approval`?`approval`:`inspection`));if(r.length){S({form:e,source:t,drafts:r}),E(r[0].id);return}B(e,t)},ue=()=>O(!0),de=()=>{O(!1),f(!1),g(!1),A(!1)},fe=t=>{t.preventDefault(),g(!0),A(!1),e(`${R.title}已提交${z?`，已进入审批流程`:``}`)},V=()=>{if(!z)return;let t=new FormData(se.current),n={id:C?.id?.startsWith(`approval-draft-`)?C.id:`approval-draft-${Date.now()}`,processDraftId:C?.processDraftId??`flow-draft-${Date.now()}`,kind:`approval`,name:R.title,initiator:t.get(`reporter`)||`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:t.get(`description`)||``,draft:!0};r(e=>C?.id?.startsWith(`approval-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),i({id:n.processDraftId,name:n.name,initiator:n.initiator,initiatedAt:n.initiatedAt,currentNode:n.currentNode,status:n.status,department:n.department,description:n.description,application:`双重预防机制`,draft:!0,startedByMe:!0}),A(!1),e(`${R.title}已暂存到草稿箱`)},H=()=>{let t=new FormData(se.current),n={id:C?.id?.startsWith(`inspection-draft-`)?C.id:`inspection-draft-${Date.now()}`,kind:`inspection`,name:R.title,reporter:t.get(`reporter`)||`张宇`,inspectionDate:t.get(`inspectionDate`)||`2026-09-02`,shift:t.get(`shift`)||`早班`,location:t.get(`location`)||``,equipment:t.get(`equipment`)||``,environment:t.get(`environment`)||``,protection:t.get(`protection`)||``,description:t.get(`description`)||``,initiatedAt:`2026-09-02 10:00:00`,status:`草稿`,draft:!0};r(e=>C?.id?.startsWith(`inspection-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),A(!1),e(`${R.title}已暂存到草稿箱`)},pe=e=>{if(e===`页面`&&_!==`页面`&&ce.length){S({form:R,source:y,drafts:ce}),E(ce[0].id);return}v(e)},me=e=>{if(e!==_){if(_===`页面`&&k){M({type:`tab`,tab:e});return}pe(e)}},he=e=>{if(d&&_===`页面`&&k){M({type:`page`,item:e});return}u(e),f(!1),g(!1)},ge=e=>{if(d&&_===`页面`&&k){M({type:`application`,application:e});return}t(e)},_e=()=>{let e=j;if(M(null),A(!1),e?.type===`tab`){pe(e.tab);return}e?.type===`page`&&(u(e.item),f(!1),g(!1)),e?.type===`application`&&t(e.application)},ve=N.filter(e=>(!I.reporter||e.reporter.includes(I.reporter))&&(!I.date||e.date===I.date)&&(!I.shift||e.shift===I.shift)&&(!z||!I.flowStatus||e.flowStatus===I.flowStatus)),ye=Math.max(1,Math.ceil(ve.length/ie)),U=Math.min(ne,ye),W=ve.slice((U-1)*ie,U*ie),G=(t=N)=>{let n=[[`填报人`,`检查日期`,`作业班次`,`作业地点`,`凿岩设备防护装置完好`,`作业面通风与照明符合要求`,`人员防护用品佩戴规范`,`隐患描述与整改建议`,`填报状态`],...t.map(e=>[e.reporter,e.date,e.shift,e.location,e.equipment,e.environment,e.protection,e.description,e.status])].map(e=>e.map(e=>`"${String(e).replaceAll(`"`,`""`)}"`).join(`,`)).join(`
 `),r=document.createElement(`a`);r.href=URL.createObjectURL(new Blob([`\ufeff${n}`],{type:`text/csv;charset=utf-8`})),r.download=`${R.title}-历史数据.csv`,r.click(),URL.revokeObjectURL(r.href),e(`历史填报数据已导出`)};return(0,Q.jsxs)(`section`,{className:`prevention-page`,"aria-labelledby":`prevention-page-title`,children:[(0,Q.jsxs)(`aside`,{className:`prevention-sidebar`,"aria-label":`双重预防机制功能导航`,children:[(0,Q.jsx)(dB,{currentName:`双重预防机制`,onSelect:ge}),(0,Q.jsx)(`nav`,{className:`prevention-nav`,children:fB.map(({label:t,icon:n,nested:r,expanded:i})=>(0,Q.jsxs)(`button`,{className:i?`prevention-nav-item expanded`:`prevention-nav-item`,onClick:()=>e(t),children:[(0,Q.jsx)(n,{}),(0,Q.jsx)(`span`,{children:t}),r?(0,Q.jsx)(_z,{}):i?(0,Q.jsx)(gz,{}):null]},t))}),(0,Q.jsx)(`div`,{className:`prevention-submenu`,children:pB.map(e=>(0,Q.jsxs)(`button`,{className:l===e?`selected`:``,onClick:()=>he(e),children:[(0,Q.jsx)(`span`,{children:e}),[`隐患排查任务发布`,`隐患排查工作表`,`隐患整改通知单`,`隐患汇报`].includes(e)?(0,Q.jsx)(_z,{}):null]},e))}),(0,Q.jsxs)(`nav`,{className:`prevention-nav prevention-nav-bottom`,children:[(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险告知卡`),children:[(0,Q.jsx)(QR,{}),(0,Q.jsx)(`span`,{children:`风险告知卡`}),(0,Q.jsx)(_z,{})]}),(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险四色图`),children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`风险四色图`}),(0,Q.jsx)(_z,{})]})]})]}),(0,Q.jsx)(`div`,{className:`prevention-content`,children:d?(0,Q.jsxs)(`section`,{className:`inspection-form-view`,"aria-labelledby":`inspection-form-title`,children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`span`,{children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>he(y),children:y}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:`在线填报`})]}),(0,Q.jsx)(`nav`,{className:`inspection-view-tabs`,"aria-label":`表单视图`,children:[`页面`,`数据`,`草稿箱`].map(e=>(0,Q.jsx)(`button`,{className:_===e?`active`:``,onClick:()=>me(e),children:e},e))}),_===`页面`?(0,Q.jsxs)(`form`,{ref:se,className:`inspection-form`,onChange:()=>A(!0),onSubmit:fe,children:[(0,Q.jsxs)(`header`,{className:`inspection-form-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`inspection-form-title`,children:R.title}),(0,Q.jsx)(`span`,{children:z?`请如实填写隐患情况，提交后将进入审批流程。`:`请如实填写现场检查情况，带 * 的项目为必填项。`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`form-back`,onClick:ue,children:`返回清单`})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`填报信息`}),(0,Q.jsxs)(`div`,{className:`form-fields`,children:[(0,Q.jsxs)(`label`,{children:[`填报人 *`,(0,Q.jsx)(`input`,{name:`reporter`,defaultValue:C?.reporter??`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`检查日期 *`,(0,Q.jsx)(`input`,{name:`inspectionDate`,type:`date`,defaultValue:C?.inspectionDate??`2026-07-29`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`作业班次 *`,(0,Q.jsxs)(`select`,{name:`shift`,defaultValue:C?.shift??`早班`,required:!0,children:[(0,Q.jsx)(`option`,{children:`早班`}),(0,Q.jsx)(`option`,{children:`中班`}),(0,Q.jsx)(`option`,{children:`夜班`})]})]}),(0,Q.jsxs)(`label`,{children:[`作业地点 *`,(0,Q.jsx)(`input`,{name:`location`,defaultValue:C?.location??``,placeholder:`例如：西翼 3# 平巷`,required:!0})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`现场检查`}),(0,Q.jsxs)(`div`,{className:`inspection-items`,children:[(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`凿岩设备防护装置完好`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`normal`,required:!0,defaultChecked:C?.equipment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`issue`,defaultChecked:C?.equipment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`作业面通风与照明符合要求`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`normal`,required:!0,defaultChecked:C?.environment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`issue`,defaultChecked:C?.environment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`人员防护用品佩戴规范`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`normal`,required:!0,defaultChecked:C?.protection===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`issue`,defaultChecked:C?.protection===`issue`}),` `,`发现问题`]})]})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`问题说明`}),(0,Q.jsxs)(`label`,{className:`wide-field`,children:[`隐患描述与整改建议`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`3`,defaultValue:C?.description??``,placeholder:`如发现隐患，请填写具体位置、问题描述及建议措施。`})]})]}),(0,Q.jsxs)(`footer`,{className:`form-actions`,children:[h?(0,Q.jsxs)(`span`,{className:`submit-status`,children:[(0,Q.jsx)(hz,{}),` `,z?`已提交，等待审批流程处理`:`已提交，等待负责人复核`]}):(0,Q.jsx)(`span`,{children:z?`填写完成后将提交至隐患排查审批流程。`:`填写完成后可直接提交至隐患排查记录。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`form-secondary`,onClick:ue,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`form-draft`,onClick:z?V:H,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`form-primary`,children:`提交`})]})]})]},C?.id??p):_===`数据`?(0,Q.jsxs)(`section`,{className:`inspection-data-view`,"aria-label":`${R.title}历史数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`历史填报数据`}),(0,Q.jsx)(`h2`,{children:R.title})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ve.length,` 条记录`]})]}),(0,Q.jsxs)(`form`,{className:`inspection-data-filter`,onSubmit:e=>{e.preventDefault(),te(ee),re(1)},children:[(0,Q.jsxs)(`label`,{children:[`填报人`,(0,Q.jsx)(`input`,{value:ee.reporter,maxLength:10,placeholder:`请输入填报人`,onChange:e=>F(t=>({...t,reporter:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`检查日期`,(0,Q.jsx)(`input`,{type:`date`,value:ee.date,onChange:e=>F(t=>({...t,date:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`作业班次`,(0,Q.jsxs)(`select`,{value:ee.shift,onChange:e=>F(t=>({...t,shift:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部班次`}),(0,Q.jsx)(`option`,{value:`早班`,children:`早班`}),(0,Q.jsx)(`option`,{value:`中班`,children:`中班`}),(0,Q.jsx)(`option`,{value:`夜班`,children:`夜班`})]})]}),z?(0,Q.jsxs)(`label`,{children:[`流程状态`,(0,Q.jsxs)(`select`,{value:ee.flowStatus,onChange:e=>F(t=>({...t,flowStatus:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),Jz.map(e=>(0,Q.jsx)(`option`,{value:e,children:e},e))]})]}):null,(0,Q.jsxs)(`div`,{className:`inspection-filter-actions`,children:[(0,Q.jsx)(`button`,{type:`submit`,className:`inspection-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{let e={reporter:``,date:``,shift:``,flowStatus:``};F(e),te(e),re(1)},children:`重置`})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-data-actions`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>oe.current?.click(),children:`导入`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>G(ve),children:`导出`})]}),(0,Q.jsx)(`input`,{ref:oe,className:`inspection-import-input`,type:`file`,accept:`.csv,.xlsx,.xls`,onChange:t=>{let n=t.target.files?.[0];if(!n)return;let r={id:`inspection-${Date.now()}`,reporter:`导入用户`,date:`2026-07-30`,shift:`早班`,location:`西翼 1# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`已从 ${n.name} 导入填报记录。`,status:`已导入`,flowStatus:`待审批`};P(e=>[r,...e]),t.target.value=``,e(`已导入 ${n.name}`)}})]}),(0,Q.jsx)(`div`,{className:`inspection-data-scroll`,children:(0,Q.jsxs)(`table`,{className:z?`inspection-approval-data-table`:``,children:[(0,Q.jsx)(`thead`,{children:(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`th`,{children:`发起人`}),(0,Q.jsx)(`th`,{children:`发起时间`}),(0,Q.jsx)(`th`,{children:`流程状态`})]}):null,(0,Q.jsx)(`th`,{children:`填报人`}),(0,Q.jsx)(`th`,{children:`检查日期`}),(0,Q.jsx)(`th`,{children:`作业班次`}),(0,Q.jsx)(`th`,{children:`作业地点`}),(0,Q.jsx)(`th`,{children:`凿岩设备防护装置完好`}),(0,Q.jsx)(`th`,{children:`作业面通风与照明符合要求`}),(0,Q.jsx)(`th`,{children:`人员防护用品佩戴规范`}),(0,Q.jsx)(`th`,{children:`隐患描述与整改建议`})]})}),(0,Q.jsx)(`tbody`,{children:W.length?W.map(e=>(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`td`,{children:e.initiator??e.reporter}),(0,Q.jsx)(`td`,{children:e.initiatedAt??`${e.date} 08:00`}),(0,Q.jsx)(`td`,{children:e.flowStatus??`待审批`})]}):null,(0,Q.jsx)(`td`,{children:e.reporter}),(0,Q.jsx)(`td`,{children:e.date}),(0,Q.jsx)(`td`,{children:e.shift}),(0,Q.jsx)(`td`,{children:e.location}),(0,Q.jsx)(`td`,{children:e.equipment}),(0,Q.jsx)(`td`,{children:e.environment}),(0,Q.jsx)(`td`,{children:e.protection}),(0,Q.jsx)(`td`,{className:`inspection-description-cell`,children:e.description})]},e.id)):(0,Q.jsx)(`tr`,{children:(0,Q.jsx)(`td`,{colSpan:z?11:8,className:`inspection-data-empty`,children:`暂无历史填报数据`})})})]})}),(0,Q.jsx)(iB,{className:`inspection-data-pagination`,total:ve.length,page:U,pageSize:ie,onPageChange:re,onPageSizeChange:e=>{ae(e),re(1)}})]}):(0,Q.jsxs)(`section`,{className:`inspection-draft-view`,"aria-label":`${R.title}草稿箱`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`暂存记录`}),(0,Q.jsx)(`h2`,{children:`草稿箱`})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ce.length,` 条草稿`]})]}),ce.length?(0,Q.jsx)(`div`,{className:`inspection-draft-list`,children:ce.map(t=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{className:`inspection-draft-title`,children:[(0,Q.jsx)(`b`,{children:t.name}),(0,Q.jsx)(`i`,{children:`草稿`})]}),(0,Q.jsxs)(`span`,{children:[`填报人：`,t.reporter||`张宇`]}),(0,Q.jsxs)(`time`,{children:[`保存时间：`,t.initiatedAt]})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>B(R,y,t),children:`继续填报`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>{r(e=>e.filter(e=>e.id!==t.id)),t.processDraftId&&a(t.processDraftId),C?.id===t.id&&w(null),e(`已删除草稿：${t.name}`)},children:`删除`})]})]},t.id))}):(0,Q.jsx)(`div`,{className:`inspection-draft-empty`,children:`暂无草稿，页面内暂存的填报数据会显示在这里。`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>u(`隐患排查治理`),children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:L})]}),(0,Q.jsx)(`div`,{className:`prevention-strip`}),[`岗位隐患排查清单`,`隐患排查审批流程`].includes(l)?(0,Q.jsxs)(`section`,{className:`prevention-list prevention-menu-catalog`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`全部`})}),(0,Q.jsx)(`div`,{className:`prevention-catalog-grid`,children:(l===`隐患排查审批流程`?hB:mB).map(e=>{let{title:t,icon:n,tone:r}=e;return(0,Q.jsxs)(`button`,{type:`button`,className:`prevention-catalog-card`,onClick:()=>le(e,l),children:[(0,Q.jsx)(`span`,{className:`prevention-form-icon ${r}`,children:(0,Q.jsx)(n,{})}),(0,Q.jsx)(`b`,{children:t})]},t)})})]}):(0,Q.jsxs)(`section`,{className:`prevention-list prevention-empty-content`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`功能页面`})}),(0,Q.jsx)(`p`,{children:`请从左侧菜单选择需要处理的业务。`})]})]})}),x?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>S(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`approval-draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsxs)(`h2`,{id:`approval-draft-restore-title`,children:[`发现同名`,x.form.kind===`approval`?`流程`:`表单`,`草稿`]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>S(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,x.drafts.length,` 条“`,x.form.title,`”草稿，请选择恢复继续填报，或重新发起新的`,x.form.kind===`approval`?`流程`:`表单`,`。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:x.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`approval-process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>B(x.form,x.source),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=x.drafts.find(e=>e.id===T);B(x.form,x.source,e)},children:`恢复并继续填报`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>O(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`cancel-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭取消确认`,onClick:()=>O(!1),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`取消填写`}),(0,Q.jsx)(`h2`,{id:`cancel-inspection-form-title`,children:`确认取消吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，取消后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>O(!1),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:de,children:`确认取消`})]})]})}):null,j?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>M(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`unsaved-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭未保存提醒`,onClick:()=>M(null),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`未保存内容`}),(0,Q.jsx)(`h2`,{id:`unsaved-inspection-form-title`,children:`确认切换吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，切换后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>M(null),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:_e,children:`确认切换`})]})]})}):null]})}function vB({app:e,onReturn:t,onAction:n,onSwitchApplication:r}){let i=e.icon,a=[`核对今日${e.name}记录`,`完成本周${e.description}复核`,`查看待处理异常提醒`];return(0,Q.jsxs)(`section`,{className:`mock-app-page`,"aria-labelledby":`mock-app-title`,children:[(0,Q.jsxs)(`aside`,{className:`mock-app-sidebar`,"aria-label":`${e.name}功能导航`,children:[(0,Q.jsx)(dB,{currentName:e.name,onSelect:r}),(0,Q.jsxs)(`nav`,{children:[(0,Q.jsxs)(`button`,{className:`mock-nav-item active`,children:[(0,Q.jsx)(yz,{}),`应用概览`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}待办`),children:[(0,Q.jsx)(Cz,{}),`待办处理`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}记录`),children:[(0,Q.jsx)(QR,{}),`业务记录`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}统计`),children:[(0,Q.jsx)(ZR,{}),`数据统计`]})]})]}),(0,Q.jsxs)(`div`,{className:`mock-app-content`,children:[(0,Q.jsxs)(`div`,{className:`mock-app-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`应用中心`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{children:e.name})]}),(0,Q.jsxs)(`header`,{className:`mock-app-header`,children:[(0,Q.jsx)(`span`,{className:`mock-app-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h1`,{id:`mock-app-title`,children:[e.name,`工作台`]}),(0,Q.jsx)(`p`,{children:`示例业务页面，数据仅用于界面演示。`})]}),(0,Q.jsxs)(`button`,{className:`mock-primary-action`,onClick:()=>n(`新建${e.name}记录`),children:[(0,Q.jsx)(az,{}),`新建记录`]})]}),(0,Q.jsxs)(`section`,{className:`mock-metrics`,"aria-label":`${e.name}概览`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`待处理`}),(0,Q.jsx)(`b`,{children:`6`}),(0,Q.jsx)(`small`,{children:`需你跟进`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`今日记录`}),(0,Q.jsx)(`b`,{children:`14`}),(0,Q.jsx)(`small`,{children:`已同步更新`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`异常提醒`}),(0,Q.jsx)(`b`,{children:`2`}),(0,Q.jsx)(`small`,{children:`等待复核`})]})]}),(0,Q.jsxs)(`section`,{className:`mock-work-list`,"aria-labelledby":`mock-work-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`mock-work-title`,children:`待处理事项`}),(0,Q.jsxs)(`button`,{onClick:()=>n(`${e.name}全部事项`),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),a.map((e,t)=>(0,Q.jsxs)(`button`,{onClick:()=>n(e),children:[(0,Q.jsx)(`span`,{className:`mock-row-icon tone-${t}`,children:(0,Q.jsx)(Cz,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsx)(`small`,{children:t===0?`今天需完成`:`已分配给你`})]}),(0,Q.jsx)(fz,{})]},e))]}),(0,Q.jsxs)(`button`,{className:`prevention-back`,onClick:t,children:[`返回工作台 `,(0,Q.jsx)(fz,{})]})]})]})}function yB({onOpen:e,onOpenAll:t}){return(0,Q.jsxs)(`section`,{className:`activity-feed`,"aria-labelledby":`activity-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`activity-title`,children:`动态`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:t,children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`feed-list`,children:$z.length?$z.map(({person:t,tone:n,avatar:r,headline:i,detail:a,time:o,icon:s})=>(0,Q.jsxs)(`button`,{className:`feed-item`,onClick:()=>e(i),children:[(0,Q.jsx)(`span`,{className:`feed-avatar ${n}`,children:r}),(0,Q.jsxs)(`span`,{className:`feed-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`strong`,{children:i})]}),(0,Q.jsx)(`p`,{children:a}),(0,Q.jsx)(`time`,{children:o})]}),(0,Q.jsx)(s,{className:`feed-icon`})]},i)):(0,Q.jsxs)(`div`,{className:`empty-feed`,children:[(0,Q.jsx)(iz,{}),(0,Q.jsx)(`p`,{children:`这一类动态已全部处理。`})]})})]})}function bB({onAction:e,onOpenTask:t,onOpenProcess:n,onOpenDynamics:r}){return(0,Q.jsxs)(`aside`,{className:`command-panel`,"aria-label":`快捷操作`,children:[(0,Q.jsx)(`p`,{children:`快捷入口`}),(0,Q.jsxs)(`button`,{className:`command-primary`,onClick:t,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(az,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起任务`}),(0,Q.jsx)(`small`,{children:`交办或跟进一项工作`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:n,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(cz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起流程`}),(0,Q.jsx)(`small`,{children:`提交一次审批或申请`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:r,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(mz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发动态`}),(0,Q.jsx)(`small`,{children:`发布一条安全工作动态`})]}),(0,Q.jsx)(fz,{})]})]})}function xB({title:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e===`发起任务`;return(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`action-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`dialog-close`,"aria-label":`关闭`,onClick:t,children:`×`}),n?(0,Q.jsxs)(`div`,{className:`dialog-success`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`h2`,{children:`已准备好继续`}),(0,Q.jsx)(`p`,{children:`这是工作台演示状态，实际接入后将在此进入对应业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`完成`})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`快速创建`}),(0,Q.jsx)(`h2`,{id:`action-dialog-title`,children:e}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:i?`填写最小必要信息，将工作直接交给相应负责人。`:`从授权模板中选择流程，减少重复填写。`}),(0,Q.jsxs)(`label`,{children:[i?`任务名称`:`流程模板`,(0,Q.jsx)(`input`,{autoFocus:!0,placeholder:i?`例如：完成现场安全检查`:`例如：选择设备检修申请`})]}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{className:`secondary-button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`primary-button`,onClick:()=>r(!0),children:`继续`})]})]})]})})}var SB=[{id:`safety`,name:`安全风险总览`,description:`风险等级、隐患整改与作业预警的综合视图`,metrics:[[`今日检查`,`28`,`较昨日 +4`],[`待整改隐患`,`16`,`4 项临近逾期`],[`高风险作业`,`3`,`均在监控中`],[`整改完成率`,`86%`,`本月累计`]],charts:[`risk`,`rectification`,`sources`,`trend`]},{id:`device`,name:`设备运行态势`,description:`关键设备运行状态、点检执行与故障分布`,metrics:[[`设备总数`,`248`,`当前在线 243`],[`待点检`,`12`,`今日需完成`],[`异常设备`,`5`,`等待处理`],[`设备完好率`,`97.8%`,`较上月 +0.6%`]],charts:[`device`,`trend`,`sources`,`risk`]},{id:`production`,name:`生产进度跟踪`,description:`产量计划、班组进度与生产指标完成情况`,metrics:[[`本月产量`,`12.6 万吨`,`计划完成 91%`],[`今日进尺`,`186 米`,`较计划 +12 米`],[`作业班组`,`8`,`全部已开工`],[`生产达成率`,`94%`,`较上周 +3%`]],charts:[`progress`,`trend`,`device`,`rectification`]},{id:`emergency`,name:`应急管理看板`,description:`应急物资、演练计划和预案执行情况`,metrics:[[`应急物资`,`356`,`库存充足`],[`本月演练`,`4`,`已完成 3 项`],[`应急预案`,`18`,`均为有效版本`],[`响应及时率`,`100%`,`本季度累计`]],charts:[`sources`,`progress`,`risk`,`trend`]}];function CB({type:e}){let t=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let n=t.current;if(!n)return;let r=oC(n),i={axisLine:{lineStyle:{color:`#dce4ec`}},axisLabel:{color:`#7b8998`,fontSize:10},splitLine:{lineStyle:{color:`#eef2f6`}}},a={risk:{title:{text:`风险等级分布`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},legend:{bottom:8,textStyle:{fontSize:10,color:`#7b8998`}},series:[{type:`pie`,radius:[`42%`,`66%`],center:[`50%`,`51%`],label:{show:!1},data:[{value:4,name:`重大`,itemStyle:{color:`#d95745`}},{value:12,name:`较大`,itemStyle:{color:`#e89b3e`}},{value:31,name:`一般`,itemStyle:{color:`#3c98d3`}},{value:47,name:`低风险`,itemStyle:{color:`#5bb287`}}]}]},rectification:{title:{text:`隐患整改闭环`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:16,top:49,bottom:26},xAxis:{type:`category`,data:[`一车间`,`二车间`,`南区`,`北区`,`选矿`],...i},yAxis:{type:`value`,...i},series:[{type:`bar`,barWidth:15,itemStyle:{color:`#1779ba`,borderRadius:[3,3,0,0]},data:[16,22,13,18,25]},{type:`bar`,barWidth:15,itemStyle:{color:`#a9d8c3`,borderRadius:[3,3,0,0]},data:[12,18,10,15,21]}]},sources:{title:{text:`问题来源占比`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},series:[{type:`pie`,radius:`62%`,center:[`50%`,`55%`],label:{formatter:`{b}
-{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function wB(){let[e,t]=(0,Z.useState)(`safety`),n=SB.find(t=>t.id===e)??SB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:SB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(_z,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(gz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(CB,{type:e})},`${n.id}-${e}`))})]})]})})}function TB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(`iframe`,{className:`embedded-dynamics-frame`,src:`${Rz}index.html`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function EB({view:e,title:t,className:n}){let r=JSON.stringify({view:e});return(0,Q.jsx)(`iframe`,{className:n,srcDoc:kz.replace(`</head>`,`<style>
-        /* Navigation and context are provided by the host system. */
-        .sidebar, .topbar, .logic { display: none !important; }
-        .app, .stage { height: 100dvh !important; }
-        .content { padding: 16px 20px 32px !important; }
-        html, body { background: #f5f7fa !important; }
-      </style></head>`).replace(`</body>`,`<script>
-        (function () {
-          var request = ${r};
-          var taskViews = ["view-template", "view-publish", "view-mytask", "view-ledger", "view-personnel"];
+{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function wB(){let[e,t]=(0,Z.useState)(`safety`),n=SB.find(t=>t.id===e)??SB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:SB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(_z,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(gz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(CB,{type:e})},`${n.id}-${e}`))})]})]})})}function TB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(`iframe`,{className:`embedded-dynamics-frame`,src:`${Rz}index.html`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function EB({view:e,title:t,className:n,subview:r,showDescription:i=!1}){let a=JSON.stringify({view:e,subview:r}),o=`
+    .sidebar, .topbar, .logic, .dev-doc-btn { display: none !important; }
+    .app, .stage { height: 100dvh !important; }
+    .content { padding: 16px 20px 32px !important; }
+    html, body { background: #f5f7fa !important; }
+    body.devdoc-open .app { padding-bottom: 0 !important; padding-right: ${i?`360px`:`0`} !important; }
+    #devDocDrawer {
+      display: ${i?`flex`:`none`} !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: auto !important;
+      width: 360px !important;
+      max-width: none !important;
+      height: 100dvh !important;
+      transform: none !important;
+      z-index: 20 !important;
+    }
+    #devDocDrawer .dev-doc-resizer, #devDocDrawer .dd-hint { display: none !important; }
+  `;return(0,Q.jsx)(`iframe`,{className:n,srcDoc:kz.replace(`</head>`,`<style>${o}</style></head>`).replace(`</body>`,`<script>
+        window.addEventListener("load", function () {
+          var request = ${a};
+          var taskViews = ["view-template", "view-publish", "view-mytask", "view-ledger"];
           if (taskViews.indexOf(request.view) !== -1 && typeof window.switchView === "function") {
             window.switchView(request.view);
           }
-        })();
-      <\/script></body>`),title:t},e)}function DB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`},{label:`人员明细`,view:`view-personnel`}],[n,r]=(0,Z.useState)(e),i=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsx)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label))}),(0,Q.jsx)(EB,{view:i.view,className:`embedded-tasks-frame`,title:i.label})]})}function OB({checked:e,onChange:t}){return(0,Q.jsxs)(`label`,{className:`settings-lowcode-description-switch`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:e,onChange:e=>t(e.target.checked)}),(0,Q.jsx)(`span`,{"aria-hidden":`true`}),`显示说明`]})}function kB({view:e,title:t,showDescription:n=!1}){let r=`<head><style>${`
+          if (request.subview === "lt-inst" && typeof window.ledgerTab === "function") {
+            window.ledgerTab("lt-inst");
+          }
+          if (${i} && typeof window.openDevDoc === "function") {
+            window.openDevDoc();
+          }
+        });
+      <\/script></body>`),title:t},`${e}-${r??`default`}-${i?`with-description`:`workspace-only`}`)}function DB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`}],[n,r]=(0,Z.useState)(e),[i,a]=(0,Z.useState)(!1),o=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:[t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-task-toolbar`,children:(0,Q.jsx)(OB,{checked:i,onChange:a})})]}),(0,Q.jsx)(EB,{view:o.view,subview:o.subview,className:`embedded-tasks-frame`,title:o.label,showDescription:i})]})}function OB({checked:e,onChange:t}){return(0,Q.jsxs)(`label`,{className:`settings-lowcode-description-switch`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:e,onChange:e=>t(e.target.checked)}),(0,Q.jsx)(`span`,{"aria-hidden":`true`}),`显示说明`]})}function kB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}任务页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(EB,{view:e,title:t,showDescription:r})})]})}function AB({view:e,title:t,showDescription:n=!1}){let r=`<head><style>${`
     .sidebar, .top-bar, .dev-doc-btn { display: none !important; }
     .main-container { width: 100%; }
     .content-area { top: 0; padding: 16px 20px 32px; }
@@ -12441,7 +15368,7 @@ navigateTo(
             window.renderDevDoc(hostWarningView);
           }
         });
-      <\/script></body>`),title:t},`${e}-${n?`with-description`:`workspace-only`}`)}function AB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}预警页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(kB,{view:e,title:t,showDescription:r})})]})}function jB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`}],[t,n]=(0,Z.useState)(`预警任务`),[r,i]=(0,Z.useState)(!1),a=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:[e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-warning-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})})]}),(0,Q.jsx)(kB,{view:a.view,title:a.label,showDescription:r})]})}function MB({module:e,view:t,showDescription:n=!1}){let r=new URLSearchParams({module:e,...t?{view:t}:{}}),i=JSON.stringify({module:e,view:t,dictionaries:{flowCategory:jz}}),a=`<head><style>${`
+      <\/script></body>`),title:t},`${e}-${n?`with-description`:`workspace-only`}`)}function jB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}预警页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(AB,{view:e,title:t,showDescription:r})})]})}function MB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`}],[t,n]=(0,Z.useState)(`预警任务`),[r,i]=(0,Z.useState)(!1),a=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:[e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-warning-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})})]}),(0,Q.jsx)(AB,{view:a.view,title:a.label,showDescription:r})]})}function NB({module:e,view:t,showDescription:n=!1}){let r=new URLSearchParams({module:e,...t?{view:t}:{}}),i=JSON.stringify({module:e,view:t,dictionaries:{flowCategory:jz}}),a=`<head><style>${`
     #topbar, #appMenu, #left-panel > aside:first-child, .sidebar { display: none !important; }
     #left-panel { width: ${n?`80%`:`100%`} !important; }
     #right-panel, #divider, #notes { display: ${n?`block`:`none`} !important; }
@@ -12452,6 +15379,6 @@ navigateTo(
             if (typeof window.switchModule === "function") window.switchModule(${JSON.stringify(e)});
           }, 80);
         });
-      <\/script>`),title:`低代码平台`},`${r.toString()}-${n?`with-description`:`workspace-only`}`)})}function NB({module:e,view:t,label:n}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page`,"aria-label":`${n}低代码页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(MB,{module:e,view:t,showDescription:r})]})}var PB=[{id:`task`,label:`待执行任务`,tone:`blue`,icon:Cz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`},{title:`核对井下作业人员定位数据`,source:`安全管理`,deadline:`7 月 31 日 10:00 前`,owner:`调度室`,note:`补充人员定位异常情况说明`,action:`执行任务`},{title:`更新选矿车间设备保养记录`,source:`设备管理`,deadline:`7 月 31 日 17:00 前`,owner:`刘海`,note:`同步本周关键设备保养信息`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`双重预防机制管理`,deadline:`2026-08-31 16:00:00`,owner:`王建国`,note:`流程到达时间：2026-08-31 09:12:00`,action:`去审批`,processNumber:`202608310001`},{title:`南区 2# 采场动火作业申请`,source:`生产管理`,deadline:`2026-08-31 15:00:00`,owner:`李明`,note:`流程到达时间：2026-08-31 08:46:00`,action:`去审批`,processNumber:`202608310002`},{title:`碎矿车间停机检修计划`,source:`设备管理`,deadline:`2026-09-01 09:00:00`,owner:`赵磊`,note:`流程到达时间：2026-08-30 15:28:00`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,tone:`red`,icon:Sz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`},{title:`井下局部通风机风量波动预警`,source:`通风监测`,deadline:`今天 18:00 前`,owner:`通风区`,note:`连续 15 分钟低于设定风量阈值`,action:`查看处置`},{title:`尾矿库在线监测数据中断`,source:`安全预警`,deadline:`明天 09:00 前`,owner:`环保部`,note:`请核实数据采集设备与通信链路`,action:`查看处置`}]}];function FB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let r=PB,i=PB.reduce((e,t)=>e+t.items.length,0),a=(r,i)=>{r.id===`task`?e():r.id===`approval`?t(`待审批`,i?.processNumber):n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:i}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:r.map(e=>{let t=e.icon,n=e.items.slice(0,5);return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.items.length,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(e),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{children:n.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row ${e.id===`approval`?`without-deadline`:``}`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),e.id===`approval`?null:(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>a(e,t),children:[t.action,(0,Q.jsx)(fz,{})]})]},t.title))})]},e.id)})})]})}var IB=[{label:`安全动态`,icon:pz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:Cz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:cz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:Sz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function LB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:LB(e.children,t,n)})}function RB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:RB(e.children,t,n)})}function zB(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:zB(e.children,t)}))}function BB(e){return e.flatMap(e=>[e,...BB(e.children)])}function VB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(VB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function HB({organizations:e,users:t,selectedUser:n,onSelect:r,onClose:i,title:a=`选择人员`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(s?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=l?t.filter(e=>e.organizationId===l):t,f=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(f,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`single-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`single-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(f,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[d.length,` 人`]})]}),d.length?d.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`single-person-picker`,checked:s?.id===e.id,onChange:()=>c(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsx)(`span`,{children:s?`1 人`:`0 人`})]}),s?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:s.name}),(0,Q.jsx)(`small`,{children:s.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(s),i()},children:`确认选择`})]})]})})}function UB({organizations:e,users:t,selectedUsers:n,onSelect:r,onClose:i,title:a=`分配用户`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n.map(e=>e.id)),[l,u]=(0,Z.useState)(n[0]?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=e=>e.organizationId??e.organization,f=l?t.filter(e=>d(e)===l):t,p=t.filter(e=>s.includes(e.id)),m=f.length>0&&f.every(e=>s.includes(e.id)),h=e=>c(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),g=()=>c(e=>[...new Set([...e,...f.map(e=>e.id)])]),_=()=>c(e=>e.filter(e=>!f.some(t=>t.id===e))),v=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(v,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`multi-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`multi-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(v,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:`人员`}),(0,Q.jsxs)(`span`,{children:[f.length,` 人`]})]}),f.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:g,disabled:m,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:_,disabled:!f.some(e=>s.includes(e.id)),children:`全不选`})]}):null]}),f.length?f.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s.includes(e.id),onChange:()=>h(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsxs)(`span`,{children:[p.length,` 人`]})]}),p.length?p.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>h(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(p),i()},children:`确认选择`})]})]})})}function WB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(`尚未建立组织架构，可手动新增根组织。`),h=e.length>0,g=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),_=()=>f(!0),v=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},y=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},b=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},x=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=g?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>RB(e,r.node.id,c)),m(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?LB(t,r.node.id,e):[...t,e]),m(`已新增组织：${n}`)}o(``),u(null),i(null)},S=e=>{t(t=>zB(t,e.id)),m(`已删除组织：${e.name}`)},C=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsx)(`div`,{className:`organization-toolbar`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})})}),(0,Q.jsxs)(`div`,{className:h?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:p})]}),h?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(VB,{nodes:e,onAddChild:y,onEdit:b,onDelete:S})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:v,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:x,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:C}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),g?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:_,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(HB,{organizations:e,users:n,selectedUser:l,onSelect:u,onClose:()=>f(!1),title:`选择负责人`,selectedLabel:`已选负责人`}):null]})}function GB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(GB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function KB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=KB(r.children,t,e);if(i)return i}return``}function qB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=e=>typeof e==`string`?e:e.value,c=e=>typeof e==`string`?e:e.label,l=t.filter(e=>n.includes(s(e))).map(c),u=e=>{let t=s(e);r(n.includes(t)?n.filter(e=>e!==t):[...n,t])};return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:l.length?l.join(`、`):`请选择${e}`}),(0,Q.jsx)(gz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>{let t=s(e);return(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(t),onChange:()=>u(e)}),(0,Q.jsx)(`span`,{children:c(e)})]},t)})}):null]})}function JB({organizations:e,setOrganizations:t,users:n,setUsers:r,roles:i}){let[a,o]=(0,Z.useState)(`users`),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(null),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(``),[x,S]=(0,Z.useState)(`abc123#`),[C,w]=(0,Z.useState)(``),[T,E]=(0,Z.useState)([]),[D,O]=(0,Z.useState)([]),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)({}),[N,P]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[ee,F]=(0,Z.useState)(``),I=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!ee)return;let e=window.setTimeout(()=>F(``),3e3);return()=>window.clearTimeout(e)},[ee]);let te=BB(e),ne=te.find(e=>e.id===s),re=n.filter(e=>(!s||e.organizationId===s)&&(!N.name||e.name.includes(N.name))&&(!N.account||e.account.includes(N.account))&&(!N.phone||e.phone.includes(N.phone))&&(!N.status||e.status===N.status)),ie=()=>{m(null),g(``),v(``),b(``),S(`abc123#`),w(s||te[0]?.id||``),E([]),O([]),M({}),A(``),u(`create`)},ae=e=>{m(e),g(e.name),v(e.account),b(e.phone===`未填写`?``:e.phone),S(e.password||`abc123#`),w(e.organizationId||te[0]?.id||``),E(e.positions||[]),O(e.roles||[]),M({}),A(``),u(`create`)},oe=e=>M(t=>t[e]?{...t,[e]:``}:t),se=t=>{t.preventDefault();let n=h.trim(),i=_.trim(),a={name:n?``:`请输入用户名称`,phone:!y||/^\d{11}$/.test(y)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:x.trim()?``:`请输入密码`,organization:C?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){M(a);return}let o=KB(e,C),s={name:n,account:i,phone:y||`未填写`,password:x,organizationId:C,department:o,positions:T,roles:D};r(e=>p?e.map(e=>e.id===p.id?{...e,...s}:e):[...e,{id:`user-${Date.now()}`,...s,status:`启用`}]),c(C),u(null),F(`${p?`已保存用户`:`已新增用户`}：${n}`)},L=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
+      <\/script>`),title:`低代码平台`},`${r.toString()}-${n?`with-description`:`workspace-only`}`)})}function PB({module:e,view:t,label:n}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page`,"aria-label":`${n}低代码页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(NB,{module:e,view:t,showDescription:r})]})}var FB=[{id:`task`,label:`待执行任务`,tone:`blue`,icon:Cz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`},{title:`核对井下作业人员定位数据`,source:`安全管理`,deadline:`7 月 31 日 10:00 前`,owner:`调度室`,note:`补充人员定位异常情况说明`,action:`执行任务`},{title:`更新选矿车间设备保养记录`,source:`设备管理`,deadline:`7 月 31 日 17:00 前`,owner:`刘海`,note:`同步本周关键设备保养信息`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`双重预防机制管理`,deadline:`2026-08-31 16:00:00`,owner:`王建国`,note:`流程到达时间：2026-08-31 09:12:00`,action:`去审批`,processNumber:`202608310001`},{title:`南区 2# 采场动火作业申请`,source:`生产管理`,deadline:`2026-08-31 15:00:00`,owner:`李明`,note:`流程到达时间：2026-08-31 08:46:00`,action:`去审批`,processNumber:`202608310002`},{title:`碎矿车间停机检修计划`,source:`设备管理`,deadline:`2026-09-01 09:00:00`,owner:`赵磊`,note:`流程到达时间：2026-08-30 15:28:00`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,tone:`red`,icon:Sz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`},{title:`井下局部通风机风量波动预警`,source:`通风监测`,deadline:`今天 18:00 前`,owner:`通风区`,note:`连续 15 分钟低于设定风量阈值`,action:`查看处置`},{title:`尾矿库在线监测数据中断`,source:`安全预警`,deadline:`明天 09:00 前`,owner:`环保部`,note:`请核实数据采集设备与通信链路`,action:`查看处置`}]}];function IB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let r=FB,i=FB.reduce((e,t)=>e+t.items.length,0),a=(r,i)=>{r.id===`task`?e():r.id===`approval`?t(`待审批`,i?.processNumber):n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:i}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:r.map(e=>{let t=e.icon,n=e.items.slice(0,5);return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.items.length,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(e),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{children:n.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row ${e.id===`approval`?`without-deadline`:``}`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),e.id===`approval`?null:(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>a(e,t),children:[t.action,(0,Q.jsx)(fz,{})]})]},t.title))})]},e.id)})})]})}var LB=[{label:`安全动态`,icon:pz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:Cz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:cz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:Sz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function RB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:RB(e.children,t,n)})}function zB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:zB(e.children,t,n)})}function BB(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:BB(e.children,t)}))}function VB(e){return e.flatMap(e=>[e,...VB(e.children)])}function HB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(HB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function UB({organizations:e,users:t,selectedUser:n,onSelect:r,onClose:i,title:a=`选择人员`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(s?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=l?t.filter(e=>e.organizationId===l):t,f=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(f,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`single-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`single-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(f,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[d.length,` 人`]})]}),d.length?d.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`single-person-picker`,checked:s?.id===e.id,onChange:()=>c(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsx)(`span`,{children:s?`1 人`:`0 人`})]}),s?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:s.name}),(0,Q.jsx)(`small`,{children:s.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(s),i()},children:`确认选择`})]})]})})}function WB({organizations:e,users:t,selectedUsers:n,onSelect:r,onClose:i,title:a=`分配用户`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n.map(e=>e.id)),[l,u]=(0,Z.useState)(n[0]?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=e=>e.organizationId??e.organization,f=l?t.filter(e=>d(e)===l):t,p=t.filter(e=>s.includes(e.id)),m=f.length>0&&f.every(e=>s.includes(e.id)),h=e=>c(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),g=()=>c(e=>[...new Set([...e,...f.map(e=>e.id)])]),_=()=>c(e=>e.filter(e=>!f.some(t=>t.id===e))),v=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(v,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`multi-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`multi-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(v,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:`人员`}),(0,Q.jsxs)(`span`,{children:[f.length,` 人`]})]}),f.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:g,disabled:m,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:_,disabled:!f.some(e=>s.includes(e.id)),children:`全不选`})]}):null]}),f.length?f.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s.includes(e.id),onChange:()=>h(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsxs)(`span`,{children:[p.length,` 人`]})]}),p.length?p.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>h(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(p),i()},children:`确认选择`})]})]})})}function GB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(`尚未建立组织架构，可手动新增根组织。`),h=e.length>0,g=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),_=()=>f(!0),v=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},y=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},b=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},x=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=g?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>zB(e,r.node.id,c)),m(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?RB(t,r.node.id,e):[...t,e]),m(`已新增组织：${n}`)}o(``),u(null),i(null)},S=e=>{t(t=>BB(t,e.id)),m(`已删除组织：${e.name}`)},C=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsx)(`div`,{className:`organization-toolbar`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})})}),(0,Q.jsxs)(`div`,{className:h?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:p})]}),h?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(HB,{nodes:e,onAddChild:y,onEdit:b,onDelete:S})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:v,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:x,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:C}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),g?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:_,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(UB,{organizations:e,users:n,selectedUser:l,onSelect:u,onClose:()=>f(!1),title:`选择负责人`,selectedLabel:`已选负责人`}):null]})}function KB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(KB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function qB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=qB(r.children,t,e);if(i)return i}return``}function JB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=e=>typeof e==`string`?e:e.value,c=e=>typeof e==`string`?e:e.label,l=t.filter(e=>n.includes(s(e))).map(c),u=e=>{let t=s(e);r(n.includes(t)?n.filter(e=>e!==t):[...n,t])};return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:l.length?l.join(`、`):`请选择${e}`}),(0,Q.jsx)(gz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>{let t=s(e);return(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(t),onChange:()=>u(e)}),(0,Q.jsx)(`span`,{children:c(e)})]},t)})}):null]})}function YB({organizations:e,setOrganizations:t,users:n,setUsers:r,roles:i}){let[a,o]=(0,Z.useState)(`users`),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(null),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(``),[x,S]=(0,Z.useState)(`abc123#`),[C,w]=(0,Z.useState)(``),[T,E]=(0,Z.useState)([]),[D,O]=(0,Z.useState)([]),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)({}),[N,P]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[ee,F]=(0,Z.useState)(``),I=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!ee)return;let e=window.setTimeout(()=>F(``),3e3);return()=>window.clearTimeout(e)},[ee]);let te=VB(e),ne=te.find(e=>e.id===s),re=n.filter(e=>(!s||e.organizationId===s)&&(!N.name||e.name.includes(N.name))&&(!N.account||e.account.includes(N.account))&&(!N.phone||e.phone.includes(N.phone))&&(!N.status||e.status===N.status)),ie=()=>{m(null),g(``),v(``),b(``),S(`abc123#`),w(s||te[0]?.id||``),E([]),O([]),M({}),A(``),u(`create`)},ae=e=>{m(e),g(e.name),v(e.account),b(e.phone===`未填写`?``:e.phone),S(e.password||`abc123#`),w(e.organizationId||te[0]?.id||``),E(e.positions||[]),O(e.roles||[]),M({}),A(``),u(`create`)},oe=e=>M(t=>t[e]?{...t,[e]:``}:t),se=t=>{t.preventDefault();let n=h.trim(),i=_.trim(),a={name:n?``:`请输入用户名称`,phone:!y||/^\d{11}$/.test(y)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:x.trim()?``:`请输入密码`,organization:C?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){M(a);return}let o=qB(e,C),s={name:n,account:i,phone:y||`未填写`,password:x,organizationId:C,department:o,positions:T,roles:D};r(e=>p?e.map(e=>e.id===p.id?{...e,...s}:e):[...e,{id:`user-${Date.now()}`,...s,status:`启用`}]),c(C),u(null),F(`${p?`已保存用户`:`已新增用户`}：${n}`)},L=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
 zhangyu,张宇,13800000000,安全管理部
-`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},R=t=>{let n=t.target.files?.[0];if(!n||!te.length)return;let i=s||te[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123#`,organizationId:i,department:KB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),F(`已导入 ${t.length} 位用户`)):F(`未识别到可导入的用户数据`),u(null)},a.readAsText(n,`utf-8`),t.target.value=``},z=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),ce=e=>{r(t=>t.filter(t=>t.id!==e)),F(`已删除用户`)},B=e=>f({type:`status`,user:e}),le=e=>{if(e.status===`启用`){F(`用户“${e.name}”处于启用状态，请先停用后再删除`);return}f({type:`delete`,user:e})},ue=e=>f({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`organization`,className:a===`organization`?`active`:``,onClick:()=>o(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`users`,className:a===`users`?`active`:``,onClick:()=>o(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),a===`organization`?(0,Q.jsx)(WB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[te.length,` 个组织`]})]}),e.length?(0,Q.jsx)(GB,{nodes:e,selectedId:s,onSelect:c}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:ne?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:N.name,onChange:e=>P(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:N.account,onChange:e=>P(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:N.phone,onChange:e=>P(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:N.status,onChange:e=>P(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>F(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>P({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsx)(`div`,{className:`user-directory-actions`,children:(0,Q.jsxs)(`button`,{className:`user-add`,onClick:ie,disabled:!te.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})}),te.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),re.length?re.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>B(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ae(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),l?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>u(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:l===`create`?(0,Q.jsxs)(`form`,{onSubmit:se,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:p?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||A(``)},children:[(0,Q.jsxs)(`label`,{className:j.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:h,maxLength:10,onChange:e=>{g(e.target.value),oe(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),j.name?(0,Q.jsx)(`em`,{children:j.name}):null]}),(0,Q.jsxs)(`label`,{className:j.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:y,maxLength:11,inputMode:`numeric`,onChange:e=>{b(e.target.value.replace(/\D/g,``).slice(0,11)),oe(`phone`)},placeholder:`例如：13800000000`}),j.phone?(0,Q.jsx)(`em`,{children:j.phone}):null]}),(0,Q.jsxs)(`label`,{className:j.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:_,onChange:e=>{v(e.target.value),oe(`account`)},placeholder:`例如：zhangyu`}),j.account?(0,Q.jsx)(`em`,{children:j.account}):null]}),(0,Q.jsxs)(`label`,{className:j.password?`field-error`:``,children:[`密码`,(0,Q.jsx)(`input`,{type:p?`password`:`text`,value:x,placeholder:p?`请输入密码`:void 0,onChange:e=>{S(e.target.value),oe(`password`)}}),j.password?(0,Q.jsx)(`em`,{children:j.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${j.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:C,onChange:e=>{w(e.target.value),oe(`organization`)},children:te.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:KB(e,t.id)},t.id))}),j.organization?(0,Q.jsx)(`em`,{children:j.organization}):null]}),(0,Q.jsx)(qB,{label:`岗位`,options:Hz,value:T,onChange:E,activeMenu:k,setActiveMenu:A}),(0,Q.jsx)(qB,{label:`角色`,options:i.map(e=>({value:e.name,label:e.status===`停用`?`${e.name}（已停用）`:e.name})),value:D,onChange:O,activeMenu:k,setActiveMenu:A})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:ne?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:I,type:`file`,accept:`.csv,text/csv`,onChange:R})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:L,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>u(null),children:`取消`})})]})})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:d.type===`cancel-create`?`确定取消${p?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:d.type===`delete`?`确定删除用户“${d.user.name}”吗？删除后无法恢复。`:d.type===`reset-password`?`确定将用户“${d.user.name}”的密码重置为默认密码 abc123# 吗？`:`确定${d.user.status===`启用`?`停用`:`启用`}用户“${d.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{d.type===`cancel-create`?(u(null),A(``)):d.type===`status`?(z(d.user.id),F(`已${d.user.status===`启用`?`停用`:`启用`}用户：${d.user.name}`)):d.type===`reset-password`?(r(e=>e.map(e=>e.id===d.user.id?{...e,password:`abc123#`}:e)),F(`已将 ${d.user.name} 的密码重置为 abc123#`)):ce(d.user.id),f(null)},children:`确定`})]})]})}):null,ee?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[ee,(0,Q.jsx)(`button`,{onClick:()=>F(``),children:`×`})]}):null]})}function YB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function XB({onAction:e,roles:t,setRoles:n}){let r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`,children:[{name:`法律法规`},{name:`制度文件`},{name:`隐患排查任务发布`},{name:`岗位隐患排查清单`,children:mB.map(e=>({name:e.title}))},{name:`隐患排查治理记录`},{name:`隐患排查审批流程`,children:hB.map(e=>({name:e.title}))},{name:`隐患排查工作表`},{name:`隐患整改通知单`},{name:`隐患整改台账`},{name:`隐患信息统计`},{name:`隐患汇报`}]},{name:`风险告知卡`},{name:`风险四色图`}]},{name:`安全管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`设备管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`火工品管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`生产管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`机电管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`消防管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`应急管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`,children:[{name:`我发起的`},{name:`已执行`},{name:`已转发`},{name:`我撤回的`},{name:`我参与的`}]},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`,children:[{name:`人资管理`,children:[{name:`员工离职申请`},{name:`职员晋升审批`},{name:`职员调岗审批`}]},{name:`基建管理`,children:[{name:`地表基建项目报建申请`},{name:`年度工程计划编制审批`},{name:`项目合同申报审批`}]},{name:`选矿管理`,children:[{name:`换矿申请`},{name:`选厂药剂领用申请`},{name:`材料采购流程`}]}]},{name:`待审批`},{name:`已审批`},{name:`抄送我的`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:SB.map(e=>({name:e.name}))},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务`},{name:`流程`},{name:`预警`},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`菜单管理`},{name:`字典管理`},{name:`企业设置`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={"设置中心/系统设置/角色权限":[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`]},o=new Set(mB.map(e=>`应用/双重预防机制/隐患排查治理/岗位隐患排查清单/${e.title}`)),s=new Set([...o,...hB.map(e=>`应用/双重预防机制/隐患排查治理/隐患排查审批流程/${e.title}`)]),c=e=>(a[e]??[]).map(t=>`button:${e}:${t}`),l=e=>o.has(e)?[`新增`,`导入`,`导出`].map(t=>`button:${e}:数据:${t}`):[],u=e=>s.has(e)?[`页面`,`数据`,...o.has(e)?[`草稿箱`]:[]]:[],d=e=>u(e).map(t=>`tab:${e}:${t}`),f=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:f(e.children,n)};let i=a[r]??[],o=u(r);return{id:`page:${r}`,name:e.name,type:`page`,children:i.length||o.length?[...i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`})),...o.map(e=>{let t=e===`数据`?l(r):[];return{id:`tab:${r}:${e}`,name:e,type:`tab`,children:t.length?t.map(e=>({id:e,name:e.split(`:`).at(-1),type:`button`})):void 0}})]:void 0}}),p=f(r),m=e=>e.children?.length?e.children.flatMap(m):[e.id],h=p.flatMap(m),g=()=>{let e=t=>t.flatMap(t=>t.children?.length?[t.id,...e(t.children)]:[]);return new Set(e(p))},_=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[v,y]=(0,Z.useState)(null),[b,x]=(0,Z.useState)(``),[S,C]=(0,Z.useState)(`启用`),[w,T]=(0,Z.useState)(new Set(h.slice(0,18))),[E,D]=(0,Z.useState)(`menu`),[O,k]=(0,Z.useState)(g),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(null),[P,ee]=(0,Z.useState)(_),[F,I]=(0,Z.useState)(null),[te,ne]=(0,Z.useState)(`group`),[re,ie]=(0,Z.useState)([`u-zhang`]),[ae,oe]=(0,Z.useState)({admin:[`u-zhang`],safety:[`u-zhao`],executor:[`u-li`],viewer:[]}),se=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],L=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],R=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],z=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],ce=()=>{x(``),C(`启用`),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`create`})},B=e=>{x(e.name),C(e.status),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`edit`,role:e})},le=t=>{t.preventDefault();let r=b.trim();r&&(v.mode===`edit`?n(e=>e.map(e=>e.id===v.role.id?{...e,name:r,status:S}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:S,createdAt:`2026-08-12 10:30`}]),y(null),e(v.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},ue=e=>T(t=>{let n=new Set(t),r=m(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),de=e=>k(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),fe=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=fe(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return w.has(`page:${r}`)||c(r).some(e=>w.has(e))||d(r).some(e=>w.has(e))||l(r).some(e=>w.has(e))?[e]:[]}),V=fe(r),H=i(V).length,pe=e=>ee(t=>({...t,...Object.fromEntries(i(V).map(t=>[t,e]))})),me=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:e.type===`tab`?`role-menu-tab`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:e.type===`tab`?`role-menu-tab-label`:``,children:[(0,Q.jsx)(YB,{node:e,selectedIds:w,getLeafIds:m,onToggle:ue}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${O.has(e.id)?`expanded`:``}`,"aria-label":`${O.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>de(e.id),children:(0,Q.jsx)(_z,{})}):null]}),e.children&&O.has(e.id)?(0,Q.jsx)(me,{nodes:e.children}):null]},`${e.id}-${t}`))}),he=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:te===e.id?`active`:``,onClick:()=>ne(e.id),children:e.name}),e.children?(0,Q.jsx)(he,{nodes:e.children}):null]},e.id))}),ge=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:ge(n.children??[],t)),null),_e=e=>e.children?.length?e.children.flatMap(_e):[e.id],ve=ge(se,te),ye=L.filter(e=>e.organization===te),U=ye.map(e=>e.id),W=U.some(e=>re.includes(e)),G=U.length>0&&U.every(e=>re.includes(e)),be=M?.dataPermissionOrganizationIds??[],xe=z.filter(e=>be.includes(e.organization)),K=L.filter(e=>re.includes(e.id)),Se=e=>ie(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),Ce=()=>ie(e=>[...new Set([...e,...U])]),we=()=>ie(e=>e.filter(e=>!U.includes(e))),Te=e=>{I(e),ne(`group`),ie(ae[e.id]??[])},Ee=e=>{let t=_e(e);N(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=z.filter(e=>i.includes(e.organization)).map(e=>e.id),o=z.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},De=e=>N(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Oe=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:_e(e).some(e=>be.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:_e(e).every(e=>be.includes(e)),ref:t=>{if(!t)return;let n=_e(e),r=n.filter(e=>be.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>Ee(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Oe,{nodes:e.children}):null]},e.id))}),q=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:O.has(r)?`expanded`:``,"aria-label":`${O.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>de(r),children:(0,Q.jsx)(_z,{})})]}),O.has(r)?(0,Q.jsx)(`ul`,{children:q(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:P[e.name]??`全部`,onChange:t=>ee(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`所在组织及下级`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)}),ke=()=>{let t=ae[A.id]??[];if(t.length){e(`角色“${A.name}”已分配 ${t.length} 位用户，无法删除`),j(null);return}n(e=>e.filter(e=>e.id!==A.id)),oe(e=>{let t={...e};return delete t[A.id],t}),e(`已删除角色：${A.name}`),j(null)},Ae=!!(A&&(ae[A.id]??[]).length),je=A?(ae[A.id]??[]).length:0;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:ce,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>B(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>j(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>Te(e),children:`分配用户`})]})]},e.id))]})]}),v?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>y(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:le,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:v.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>y(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:b,onChange:e=>x(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:S,onChange:e=>C(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`menu`,className:E===`menu`?`active`:``,onClick:()=>D(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`data`,className:E===`data`?`active`:``,onClick:()=>D(`data`),children:`数据权限`})]}),E===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单与页面选择可访问范围`})]}),(0,Q.jsx)(me,{nodes:p})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`所在组织及下级`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>pe(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>y(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,M?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>N(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>N(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:M.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Oe,{nodes:R})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!xe.length&&xe.every(e=>M.dataAuthorizedUserIds.includes(e.id)),onChange:()=>N(e=>{let t=xe.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:xe.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:M.dataAuthorizedUserIds.includes(e.id),onChange:()=>De(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[H,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>N(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${M.name}的数据权限`),N(null)},children:`保存权限`})]})]})}):null,F?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>I(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>I(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(he,{nodes:se})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:ve?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[ye.length,` 人`]})]}),ye.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:Ce,disabled:G,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:we,disabled:!W,children:`全不选`})]}):null]}),ye.length?ye.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:re.includes(e.id),onChange:()=>Se(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[K.length,` 人`]})]}),K.length?K.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>Se(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>I(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{oe(e=>({...e,[F.id]:re})),e(`已为${F.name}分配 ${K.length} 位用户`),I(null)},children:`确认分配`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:Ae?`无法删除`:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:Ae?`角色“${A.name}”下已分配 ${je} 位用户，无法删除。请先移除该角色下的用户后再试。`:`确定删除角色“${A.name}”吗？`})}),(0,Q.jsx)(`footer`,{children:Ae?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>j(null),children:`知道了`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:ke,children:`确认删除`})]})})]})}):null]})}function ZB({onAction:e,roles:t}){let[n,r]=(0,Z.useState)(!1),[i,a]=(0,Z.useState)(!1),[o,s]=(0,Z.useState)(!1),[c,l]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[u,d]=(0,Z.useState)({current:``,next:``,confirm:``}),[f,p]=(0,Z.useState)(``),m=[`安全管理员`,`数据查看员`].map(e=>t.find(t=>t.name===e)).filter(Boolean).map(e=>e.status===`停用`?`${e.name}（已停用）`:e.name).join(`、`),h=()=>{r(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:c.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>s(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>n?h():r(!0),children:n?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>a(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.name,onChange:e=>l(t=>({...t,name:e.target.value}))}):c.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.phone,onChange:e=>l(t=>({...t,phone:e.target.value}))}):c.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.email,onChange:e=>l(t=>({...t,email:e.target.value}))}):c.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:m||`安全管理员、数据查看员（已停用）`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),i?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>a(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!u.current||!u.next||!u.confirm){p(`请完整填写密码信息`);return}if(u.next!==u.confirm){p(`两次输入的新密码不一致`);return}if(u.current!==`123456`){p(`旧密码输入错误，请重新输入`);return}a(!1),d({current:``,next:``,confirm:``}),p(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>a(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.current,onChange:e=>d(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.next,onChange:e=>d(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.confirm,onChange:e=>d(t=>({...t,confirm:e.target.value}))})]}),f?(0,Q.jsx)(`p`,{className:`password-error`,children:f}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>a(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,o?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>s(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>s(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>s(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{s(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function QB({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,type:`系统字典`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,type:`业务字典`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-1-1`,parentId:`type-1`,code:`0101`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2-1`,parentId:`type-2`,code:`0201`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,type:`系统字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,type:`业务字典`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,type:`系统字典`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]},{id:`dict-6`,code:`FLOW_CATEGORY`,name:`流程分类`,type:`业务字典`,remark:`用于流程中心的流程归类。`,references:2,updater:`张宇`,updatedAt:`2026-08-24 10:30`,data:jz.map((e,t)=>({id:`flow-category-${t+1}`,code:String(t+1).padStart(2,`0`),name:e,updater:`张宇`,updatedAt:`2026-08-24 10:30`}))}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,type:`业务字典`,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),[y,b]=(0,Z.useState)(null),x=p.trim().toLowerCase(),S=s.filter(e=>e.name.toLowerCase().includes(x)),C=[...S.filter(e=>!e.parentId).flatMap(e=>[e,...y===e.id?S.filter(t=>t.parentId===e.id):[]])],w=Math.max(1,Math.ceil(C.length/_)),T=Math.min(h,w),E=C.slice((T-1)*_,T*_),D=(e=null)=>{o(e?{code:e.code,name:e.name,type:e.type??`业务字典`,remark:e.remark??``}:{code:``,name:``,type:`业务字典`,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),b(null),i({type:`editor`,dictionary:e})},O=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim(),c=a.type;if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,type:c,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,type:c,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,type:c,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},k=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},A=(e=null)=>{g(1),f(null),e&&b(e),c(t=>t.some(e=>e.isDraft)?t:[{id:`data-${Date.now()}`,code:``,name:``,parentId:e,updater:``,updatedAt:``,isDraft:!0},...t])},j=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},M=({id:t,code:n,name:r})=>{let i=n.trim(),a=r.trim();return i?a?s.some(e=>e.id!==t&&e.code.trim().toLocaleLowerCase()===i.toLocaleLowerCase())?(e(`数据编码“${i}”已存在，请修改后保存`),null):{code:i,name:a}:(e(`数据名称不能为空`),null):(e(`数据编码不能为空`),null)},N=e=>{let t=s.find(t=>t.id===e);if(!t)return!1;let n=M(t);return n?(c(t=>t.map(t=>t.id===e?{...t,...n,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t)),!0):!1},P=e=>{f({id:e.id,code:e.code,name:e.name})},ee=()=>{if(!d)return!1;let e=M(d);return e?(c(t=>t.map(t=>t.id===d.id?{...t,...e,updater:`张宇`,updatedAt:`刚刚`}:t)),f(null),!0):!1},F=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},I=e=>{let t=new Set(e);s.forEach(e=>{e.parentId&&t.has(e.parentId)&&t.add(e.id)}),c(e=>e.filter(e=>!t.has(e.id))),u(e=>e.filter(e=>!t.has(e))),f(e=>e&&t.has(e.id)?null:e),y&&t.has(y)&&b(null)},te=e=>s.find(t=>t.id===e)?.name||`-`;return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>D(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`类型`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.type??`业务字典`}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>D(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(wz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:k,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`类型`}),(0,Q.jsxs)(`select`,{value:a.type,disabled:!!r.dictionary,title:r.dictionary?`编辑字典时不能修改类型`:void 0,onChange:e=>o(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{children:`系统字典`}),(0,Q.jsx)(`option`,{children:`业务字典`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:A,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>I(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!C.filter(e=>!e.isDraft).length&&l.length===C.filter(e=>!e.isDraft).length,onChange:()=>{let e=C.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`上级数据`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),E.map(e=>{let t=d?.id===e.id,n=!e.parentId&&y===e.id;return(0,Q.jsxs)(Z.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``} ${e.parentId?`dictionary-data-row-child`:`dictionary-data-row-root`}`,onBlur:n=>{n.currentTarget.contains(n.relatedTarget)||(e.isDraft&&N(e.id),t&&ee())},children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>F(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?j(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?j(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{className:e.parentId?`dictionary-data-child-name`:``,children:e.name}),(0,Q.jsx)(`span`,{className:e.parentId?`dictionary-parent-data`:`dictionary-root-data`,children:e.parentId?te(e.parentId):`-`}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>N(e.id),children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>I([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:ee,children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[e.parentId?null:(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-toggle-child`,"aria-label":`${n?`收起`:`展开`}${e.name}的子级数据`,"aria-expanded":n,title:n?`收起子级`:`展开子级`,onClick:()=>b(t=>t===e.id?null:e.id),children:`子级`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>P(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>I([e.id]),children:(0,Q.jsx)(wz,{})})]})]},e.id),n?(0,Q.jsxs)(`div`,{className:`dictionary-child-add-row`,children:[(0,Q.jsx)(`span`,{className:`dictionary-child-add-label`,children:`子级数据`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>A(e.id),children:`新增子级`})]},`${e.id}-child-add`):null]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,S.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:T===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[T,` / `,w]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:T===w,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:r.dictionary.type===`系统字典`?`提示`:`确认删除`}),r.dictionary.type===`系统字典`?null:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:r.dictionary.type===`系统字典`?`系统字典“${r.dictionary.name}”不能删除，只能修改字典值。`:`确定删除字典“${r.dictionary.name}”吗？删除后无法恢复。`})}),(0,Q.jsx)(`footer`,{children:r.dictionary.type===`系统字典`?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>i(null),children:`关闭`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})})]})}):null]})}function $B({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),a=(0,Z.useRef)(null),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(!1),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(null),[v,y]=(0,Z.useState)(``),b=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){s(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){s(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),s(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},x=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},S=e=>{t(t=>({...t,systemIcon:e.id})),l(!1),n(`已选择系统图标：${e.label}`)},C=()=>{p(e=>(e&&(h(``),_(null),y(``)),!e))},w=e=>{let t=e.target.files?.[0];if(e.target.value=``,t){if(!t.type.startsWith(`image/`)){y(`请选择图片格式的图标文件`);return}if(t.size>512*1024){y(`图标文件不能超过 512KB`);return}_(t),y(``)}},T=()=>{if(!m.trim()){y(`请输入图标名称`);return}if(!g){y(`请选择图标文件`);return}let e=new FileReader;e.onload=()=>{let r={id:`custom-icon-${Date.now()}`,label:m.trim().slice(0,20),src:String(e.result)};t(e=>({...e,customSystemIcons:[...e.customSystemIcons??[],r]})),y(``),h(``),_(null),p(!1),n(`图标“${r.label}”已上传`)},e.readAsDataURL(g)},E=e=>{t(t=>({...t,customSystemIcons:e.src?(t.customSystemIcons??[]).filter(t=>t.id!==e.id):t.customSystemIcons??[],hiddenSystemIconIds:e.src?t.hiddenSystemIconIds??[]:[...new Set([...t.hiddenSystemIconIds??[],e.id])],systemIcon:t.systemIcon===e.id?`apps`:t.systemIcon})),d(null),n(`图标“${e.label}”已删除`)},D=[...Iz.filter(t=>!(e.hiddenSystemIconIds??[]).includes(t.id)),...e.customSystemIcons??[]];return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(Lz,{name:e.systemIcon,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>l(!0),children:`管理图标`})})]})]}),o?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:o}):null,c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>l(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`图标库`}),(0,Q.jsxs)(`div`,{className:`system-icon-picker-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:C,children:f?`取消上传`:`上传图标`}),(0,Q.jsx)(`span`,{children:`支持 PNG、JPG、WebP、SVG，最大 512KB`})]}),f?(0,Q.jsxs)(`div`,{className:`system-icon-upload-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{children:[`图标名称 `,(0,Q.jsx)(`i`,{children:`*`})]}),(0,Q.jsx)(`input`,{value:m,maxLength:20,placeholder:`请输入图标名称`,onChange:e=>{h(e.target.value),y(``)}})]}),(0,Q.jsxs)(`div`,{className:`system-icon-upload-file`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>a.current?.click(),children:`选择文件`}),(0,Q.jsx)(`span`,{children:g?.name??`未选择文件`}),(0,Q.jsx)(`button`,{type:`button`,onClick:T,children:`确认上传`})]}),v?(0,Q.jsx)(`p`,{role:`alert`,children:v}):null]}):null,(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:D.map(t=>(0,Q.jsxs)(`div`,{className:`system-icon-picker-item`,children:[(0,Q.jsxs)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>S(t),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:t.id,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`b`,{children:t.label})]}),(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-delete`,"aria-label":`删除${t.label}图标`,title:`删除图标`,onClick:()=>d(t),children:(0,Q.jsx)(wz,{})})]},t.id))}),(0,Q.jsx)(`input`,{ref:a,type:`file`,accept:`image/png,image/jpeg,image/webp,image/svg+xml`,onChange:w,hidden:!0})]})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-system-icon-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{id:`delete-system-icon-title`,children:`确认删除图标`})}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除图标“`,u.label,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>E(u),children:`确认删除`})]})]})}):null]})}function eV({onAction:e}){let t=[{id:`workbench`,name:`工作台`,type:`菜单`,icon:`home`,sort:1,path:`/workbench`,component:`WorkbenchPage`,perms:`workbench:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`applications`,name:`应用`,type:`目录`,icon:`apps`,sort:2,path:`/applications`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-dual-prevention`,name:`双重预防机制`,type:`目录`,icon:`shield`,sort:1,path:`dual-prevention`,component:``,perms:`application:dual-prevention:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-risk-control`,name:`风险分级管控`,type:`菜单`,icon:`shield`,sort:1,path:`risk-control`,component:`DualPreventionPage`,perms:`application:risk-control:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-list`,name:`岗位隐患排查清单`,type:`菜单`,icon:`document`,sort:2,path:`inspection-list`,component:`DualPreventionPage`,perms:`application:inspection-list:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-flow`,name:`隐患排查审批流程`,type:`菜单`,icon:`approval`,sort:3,path:`inspection-flow`,component:`DualPreventionPage`,perms:`application:inspection-flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`application-safety`,name:`安全管理`,type:`菜单`,icon:`shield`,sort:2,path:`safety`,component:`ApplicationPage`,perms:`application:safety:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-equipment`,name:`设备管理`,type:`菜单`,icon:`equipment`,sort:3,path:`equipment`,component:`ApplicationPage`,perms:`application:equipment:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-explosive`,name:`火工品管理`,type:`菜单`,icon:`explosive`,sort:4,path:`explosive`,component:`ApplicationPage`,perms:`application:explosive:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-production`,name:`生产管理`,type:`菜单`,icon:`production`,sort:5,path:`production`,component:`ApplicationPage`,perms:`application:production:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-electromechanical`,name:`机电管理`,type:`菜单`,icon:`equipment`,sort:6,path:`electromechanical`,component:`ApplicationPage`,perms:`application:electromechanical:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-fire`,name:`消防管理`,type:`菜单`,icon:`fire`,sort:7,path:`fire`,component:`ApplicationPage`,perms:`application:fire:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-emergency`,name:`应急管理`,type:`菜单`,icon:`warning`,sort:8,path:`emergency`,component:`ApplicationPage`,perms:`application:emergency:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`tasks`,name:`任务`,type:`目录`,icon:`task`,sort:3,path:`/tasks`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`processes`,name:`流程`,type:`目录`,icon:`flow`,sort:4,path:`/processes`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dynamics`,name:`动态`,type:`目录`,icon:`message`,sort:5,path:`/dynamics`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`warnings`,name:`预警`,type:`目录`,icon:`warning`,sort:6,path:`/warnings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dashboards`,name:`看板`,type:`目录`,icon:`dashboard`,sort:7,path:`/dashboards`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:SB.map((e,t)=>({id:`dashboard-${t+1}`,name:e.name,type:`菜单`,icon:`dashboard`,sort:t+1,path:`dashboard-${t+1}`,component:`DashboardPage`,perms:`dashboard:${t+1}:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}))},{id:`settings`,name:`设置中心`,type:`目录`,icon:`settings`,sort:8,path:`/settings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`settings-dynamics`,name:`安全动态`,type:`菜单`,icon:`message`,sort:1,path:`dynamics`,component:`DynamicsSettings`,perms:`settings:dynamics:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-worksheet`,name:`工作表`,type:`菜单`,icon:`document`,sort:2,path:`worksheet`,component:`EmbeddedLowCodePage`,perms:`settings:worksheet:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-task`,name:`任务`,type:`菜单`,icon:`task`,sort:3,path:`task`,component:`EmbeddedTaskFrame`,perms:`settings:task:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-flow`,name:`流程`,type:`菜单`,icon:`flow`,sort:4,path:`flow`,component:`EmbeddedLowCodePage`,perms:`settings:flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`system-settings`,name:`系统设置`,type:`目录`,icon:`settings`,sort:8,path:`system`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`organization-users`,name:`组织用户`,type:`菜单`,icon:`people`,sort:1,path:`organization-users`,component:`UserManagementCenter`,perms:`system:user:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`role-permission`,name:`角色权限`,type:`菜单`,icon:`approval`,sort:2,path:`role-permission`,component:`RbacPage`,perms:`system:role:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`menu-management`,name:`菜单管理`,type:`菜单`,icon:`sort`,sort:3,path:`menu-management`,component:`MenuManagementPage`,perms:`system:menu:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-31 09:00`,children:[]},{id:`dictionary`,name:`字典管理`,type:`菜单`,icon:`document`,sort:4,path:`dictionary`,component:`DictionaryManagement`,perms:`system:dictionary:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`enterprise`,name:`企业设置`,type:`菜单`,icon:`briefcase`,sort:5,path:`enterprise`,component:`EnterpriseSettings`,perms:`system:enterprise:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]}]}],n=(e=`settings`)=>({parentId:e,name:``,type:`菜单`,icon:`apps`,sort:1,path:``,component:``,perms:``,visible:`显示`,status:`启用`}),[r,i]=(0,Z.useState)(t),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(()=>new Set([`settings`,`system-settings`])),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(n()),[h,g]=(0,Z.useState)(``),_=(e,t=0,n=`0`)=>e.flatMap(e=>[{...e,depth:t,parentId:n},..._(e.children??[],t+1,e.id)]),v=_(r),y=e=>{if(e.id===`applications`)return!0;let t=e.parentId;for(;t!==`0`;){if(t===`applications`)return!0;t=v.find(e=>e.id===t)?.parentId??`0`}return!1},b=v.filter(e=>e.type!==`按钮`&&!y(e)),x=v.filter(e=>(!a||e.name.includes(a.trim()))&&(!s||e.status===s)?!0:v.some(t=>t.id!==e.id&&t.depth>e.depth&&t.parentId===e.id&&(!a||t.name.includes(a.trim()))&&(!s||t.status===s))),S=e=>{let t=e.parentId;for(;t!==`0`;){if(!l.has(t))return!1;t=v.find(e=>e.id===t)?.parentId??`0`}return!0},C=(e,t,n)=>e.map(e=>e.id===t?{...e,...n}:{...e,children:C(e.children??[],t,n)}),w=(e,t,n)=>t===`0`?[...e,n]:e.map(e=>e.id===t?{...e,children:[...e.children??[],n]}:{...e,children:w(e.children??[],t,n)}),T=(e,t)=>e.filter(e=>e.id!==t).map(e=>({...e,children:T(e.children??[],t)})),E=(e=`settings`)=>{let t=v.find(t=>t.id===e);m({...n(e),sort:(t?.children?.length??r.length)+1}),g(``),f({mode:`create`,parentId:e})},D=e=>{m({...e}),g(``),f({mode:`edit`,id:e.id})},O=t=>{t.preventDefault();let n=p.name.trim();if(!n){g(`请输入菜单名称`);return}let r={...p,name:n,sort:Number(p.sort)||1};d?.mode===`edit`?i(e=>C(e,d.id,r)):i(e=>w(e,r.parentId,{...r,id:`menu-${Date.now()}`,createdAt:`2026-08-31 10:00`,children:[]})),f(null),e(`${d?.mode===`edit`?`保存`:`新增`}菜单成功`)},k=t=>{let n=t.status===`启用`?`停用`:`启用`;i(e=>C(e,t.id,{status:n})),e(`${t.name}已${n}`)},A=()=>{i(e=>T(e,d.id)),f(null),e(`删除菜单成功`)},j=()=>u(new Set(v.filter(e=>e.children?.length).map(e=>e.id))),M=()=>u(new Set),N=(e,t)=>{m(n=>({...n,[e]:t})),g(``)};return(0,Q.jsxs)(`section`,{className:`menu-management`,"aria-labelledby":`menu-management-title`,children:[(0,Q.jsxs)(`header`,{className:`menu-management-toolbar`,children:[(0,Q.jsx)(`h1`,{id:`menu-management-title`,children:`菜单管理`}),(0,Q.jsxs)(`button`,{type:`button`,className:`menu-management-primary`,onClick:()=>E(`settings`),children:[(0,Q.jsx)(az,{}),`新增菜单`]})]}),(0,Q.jsxs)(`section`,{className:`menu-management-panel`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-filters`,children:[(0,Q.jsxs)(`label`,{children:[`菜单名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),maxLength:20,placeholder:`请输入菜单名称`})]}),(0,Q.jsxs)(`label`,{children:[`状态`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{value:``,children:`全部`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-reset`,onClick:()=>{o(``),c(``)},children:`重置`}),(0,Q.jsx)(`span`,{}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:j,children:`展开`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:M,children:`折叠`})]}),(0,Q.jsxs)(`div`,{className:`menu-management-table`,role:`table`,"aria-label":`菜单列表`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-table-head`,role:`row`,children:[(0,Q.jsx)(`span`,{children:`菜单名称`}),(0,Q.jsx)(`span`,{children:`图标`}),(0,Q.jsx)(`span`,{children:`排序`}),(0,Q.jsx)(`span`,{children:`权限标识`}),(0,Q.jsx)(`span`,{children:`组件路径`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),x.filter(S).map(e=>{let t=(e.children??[]).length>0,n=y(e);return(0,Q.jsxs)(`div`,{className:`menu-management-table-row`,role:`row`,children:[(0,Q.jsxs)(`div`,{className:`menu-tree-name`,style:{"--menu-depth":e.depth},children:[t?(0,Q.jsx)(`button`,{type:`button`,className:l.has(e.id)?`expanded`:``,onClick:()=>u(t=>{let n=new Set(t);return n.has(e.id)?n.delete(e.id):n.add(e.id),n}),children:(0,Q.jsx)(_z,{})}):(0,Q.jsx)(`i`,{}),(0,Q.jsx)(Lz,{name:e.icon}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`em`,{children:e.type})]}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:e.icon})}),(0,Q.jsx)(`span`,{children:e.sort}),(0,Q.jsx)(`code`,{children:e.perms||`-`}),(0,Q.jsx)(`code`,{children:e.component||`-`}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`i`,{className:e.status===`启用`?`menu-status enabled`:`menu-status`,children:e.status})}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsx)(`div`,{className:`menu-row-actions`,children:n?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>E(e.id),disabled:e.type===`按钮`,children:`新增`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>D(e),children:`修改`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>k(e),children:e.status===`启用`?`停用`:`启用`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,disabled:e.id===`settings`,onClick:()=>f({mode:`delete`,id:e.id,name:e.name}),children:`删除`})]})})]},e.id)})]})]}),d?.mode===`create`||d?.mode===`edit`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog menu-editor-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`menu-editor-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`menu-editor-title`,children:d.mode===`edit`?`修改菜单`:`新增菜单`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭菜单编辑弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body menu-editor-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`上级菜单`}),(0,Q.jsxs)(`select`,{value:p.parentId,onChange:e=>N(`parentId`,e.target.value),disabled:d.mode===`edit`,children:[d.mode===`edit`&&p.parentId===`0`?(0,Q.jsx)(`option`,{value:`0`,children:`主类目`}):null,b.filter(e=>e.id!==d.id).map(e=>(0,Q.jsxs)(`option`,{value:e.id,children:[`　`.repeat(e.depth),e.name]},e.id))]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单类型`}),(0,Q.jsxs)(`select`,{value:p.type,onChange:e=>N(`type`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`目录`}),(0,Q.jsx)(`option`,{children:`菜单`}),(0,Q.jsx)(`option`,{children:`按钮`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单名称`}),(0,Q.jsx)(`input`,{value:p.name,onChange:e=>N(`name`,e.target.value),maxLength:20,placeholder:`请输入菜单名称`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示排序`}),(0,Q.jsx)(`input`,{value:p.sort,onChange:e=>N(`sort`,e.target.value.replace(/\D/g,``).slice(0,4)),inputMode:`numeric`,maxLength:4,placeholder:`请输入排序号`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`路由地址`}),(0,Q.jsx)(`input`,{value:p.path,onChange:e=>N(`path`,e.target.value),maxLength:60,placeholder:`例如：system/menu`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`组件路径`}),(0,Q.jsx)(`input`,{value:p.component,onChange:e=>N(`component`,e.target.value),maxLength:60,placeholder:`例如：system/menu/index`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`权限标识`}),(0,Q.jsx)(`input`,{value:p.perms,onChange:e=>N(`perms`,e.target.value),maxLength:60,placeholder:`例如：system:menu:view`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单图标`}),(0,Q.jsx)(`select`,{value:p.icon,onChange:e=>N(`icon`,e.target.value),children:Iz.map(e=>(0,Q.jsx)(`option`,{value:e.id,children:e.label},e.id))})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示状态`}),(0,Q.jsxs)(`select`,{value:p.visible,onChange:e=>N(`visible`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`显示`}),(0,Q.jsx)(`option`,{children:`隐藏`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单状态`}),(0,Q.jsxs)(`select`,{value:p.status,onChange:e=>N(`status`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),h?(0,Q.jsx)(`p`,{className:`menu-editor-error`,children:h}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存`})]})]})}):null,d?.mode===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-menu-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-menu-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除菜单“`,d.name,`”吗？其下级菜单也将一并删除。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:A,children:`确认删除`})]})]})}):null]})}function tV({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r,roles:i,setRoles:a}){let[o,s]=(0,Z.useState)(t),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)([]),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),b=[{label:`工作表单`,module:`form`}],x=[{label:`流程中心`,module:`flow`}],S=b.find(e=>e.label===o);x.find(e=>e.label===o);let C=(o===`工作表`?{label:`工作表`,module:`form`}:o===`流程`?{label:`流程`,module:`flow`}:null)??(o===`应用中心`?{label:`应用中心`,module:`app`}:null),w=o===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===o),T=o===`预警`?{label:`预警`,view:`warning-rule`}:null,E=[`组织用户`,`角色权限`,`菜单管理`,`字典管理`,`企业设置`],D=IB.find(e=>e.label===o)??S??w??T??IB[0],O=D.icon??QR,k={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[o]??[],A=o===`组织用户`,j=o===`角色权限`,M=o===`菜单管理`,N=o===`安全动态`,P=o===`字典管理`,ee=o===`企业设置`,F=!!C;S?.module;let I=!!w,te=!!T,ne=E.includes(o),re=e=>{let t=e===`worksheet`?!f:e===`process`?!m:e===`task`?!g:!v;p(e===`worksheet`&&t),h(e===`process`&&t),_(e===`task`&&t),y(e===`system`&&t),t&&(e===`worksheet`&&s(`工作表单`),e===`process`&&s(`流程中心`),e===`task`&&s(`任务模版`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:IB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`,`预警`].includes(e)?(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ne?`active`:``}`,onClick:()=>re(`system`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:E.map(e=>(0,Q.jsx)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(_z,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!A&&!j&&!M&&!ee&&!N&&!P&&!F&&!I&&!te?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(O,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:D.title}),(0,Q.jsx)(`p`,{children:D.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${D.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,N?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(`iframe`,{src:`${Rz}index.html?view=feedno`,title:`动态圈管理`})}):ee?(0,Q.jsx)($B,{branding:n,onBrandingChange:r,onAction:e}):P?(0,Q.jsx)(QB,{onAction:e}):F?(0,Q.jsx)(NB,{module:C.module,view:C.view,label:C.label}):I?(0,Q.jsx)(`section`,{className:`settings-task-embed`,"aria-label":w.label,children:(0,Q.jsx)(EB,{view:w.view,title:w.label})}):te?(0,Q.jsx)(AB,{view:T.view,label:T.label,className:`settings-warning-embed`}):A?(0,Q.jsx)(JB,{organizations:c,setOrganizations:l,users:u,setUsers:d,roles:i}):j?(0,Q.jsx)(XB,{onAction:e,roles:i,setRoles:a}):M?(0,Q.jsx)(eV,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[D.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${D.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),k.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function nV({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(``),[p,m]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){f(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){f(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}f(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),f(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsxs)(`span`,{className:`login-password-field`,children:[(0,Q.jsx)(`input`,{type:l?`text`:`password`,value:a,onChange:e=>{o(e.target.value),f(``)},autoComplete:`current-password`,placeholder:`请输入密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`login-password-visibility`,"aria-label":l?`隐藏密码`:`显示密码`,title:l?`隐藏密码`:`显示密码`,onClick:()=>u(e=>!e),children:l?(0,Q.jsx)(sz,{}):(0,Q.jsx)(oz,{})})]})]}),d?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:d}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>m(!0),children:`忘记密码`})]}),p?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(fz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function rV(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function iV(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>Vz.map(e=>({...e}))),[i,a]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`,customSystemIcons:Array.isArray(e.customSystemIcons)?e.customSystemIcons.filter(e=>e&&typeof e.id==`string`&&typeof e.label==`string`&&typeof e.src==`string`):[],hiddenSystemIconIds:Array.isArray(e.hiddenSystemIconIds)?e.hiddenSystemIconIds.filter(e=>typeof e==`string`):[]}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`,customSystemIcons:[],hiddenSystemIconIds:[]}}}),[o,s]=(0,Z.useState)(`工作台`),[c,l]=(0,Z.useState)(`task`),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(``),m=(0,Z.useRef)(null),[h,g]=(0,Z.useState)(Uz),[_,v]=(0,Z.useState)(`workbench`),[y,b]=(0,Z.useState)(()=>Bz.map(e=>e.name)),[x,S]=(0,Z.useState)(`我的任务`),[C,w]=(0,Z.useState)(`待审批`),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(Yz),[k,A]=(0,Z.useState)([]),[j,M]=(0,Z.useState)(`动态`),[N,P]=(0,Z.useState)(mB[0].title),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(`安全动态`),[ne,re]=(0,Z.useState)(Wz),[ie,ae]=(0,Z.useState)(null),[oe,se]=(0,Z.useState)(!0),[L,R]=(0,Z.useState)([]);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(i))}catch{}},[i]),(0,Z.useEffect)(()=>{let e=!1;return fetch(Mz,{cache:`no-store`}).then(e=>{if(!e.ok)throw Error(`Unable to load prototype annotations`);return e.json()}).then(t=>{e||R(Pz(t))}).catch(()=>{e||R([])}),()=>{e=!0}},[]);let z=e=>{p(`已选择 ${e}`),window.clearTimeout(m.current),m.current=window.setTimeout(()=>p(``),3e3)},ce=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{v(e),s(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},B=e=>{let t=[...mB,...hB].find(t=>t.title===e);if(t){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{P(t.title),F(!0),g(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:pz}]),v(`双重预防机制`),s(`应用`)});return}let n=e===`应用中心`?`双重预防机制`:e,r=Bz.find(e=>e.name===n);if(!r){z(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{n===`双重预防机制`&&F(!1),g(e=>e.some(e=>e.id===n)?e:[...e,{id:n,label:n,icon:r.icon}]),v(n),s(`应用`)})},le=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:mz}]),v(`messages`),s(`工作台`)})},ue=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{ae(null),S(e),g(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:Cz}]),v(`tasks`),s(`任务`)})},de=(e=`待审批`,t=``)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),E(t),g(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:cz}]),v(`processes`),s(`流程`)})},fe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),v(`dashboard`),s(`看板`)})},V=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(e),g(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:pz}]),v(`safety-dynamics`),s(`动态`)})},H=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:Sz}]),v(`warnings`),s(`预警`)})},pe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:Cz}]),v(`todos`),s(`工作台`)})},me=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{te(e),g(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),v(`settings`),s(`设置`)})},he=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:Ez}]),v(`personal-center`),s(``)})},ge=e=>re(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),_e=()=>re(e=>e.map(e=>({...e,read:!0}))),ve=e=>{let t=h.findIndex(t=>t.id===e),n=h.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(g(n),_===e){let e=n[Math.max(0,t-1)]??Uz[0];v(e.id),s(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ye=Bz.find(e=>e.name===_);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(rV,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(tB,{active:o,brandLogo:i.logo,onOpenSettings:me,onChange:e=>{if(e===`工作台`){ce(`workbench`);return}if(e===`应用`){B(`应用中心`);return}if(e===`任务`){ue();return}if(e===`流程`){de();return}if(e===`动态`){V();return}if(e===`预警`){H();return}if(e===`看板`){fe();return}s(e),z(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(nB,{tabs:h,activeTab:_,onSelect:ce,onClose:ve,onOpenMessages:le,onOpenPersonal:he,onLogout:()=>t(!1),onOpenSpecification:()=>window.open(Nz,`_blank`,`noopener,noreferrer`)}),(0,Q.jsx)(`main`,{children:_===`messages`?(0,Q.jsx)(aB,{messages:ne,onMarkRead:ge,onMarkAllRead:_e,onReturn:()=>ce(`workbench`),onOpenProcess:de}):_===`todos`?(0,Q.jsx)(FB,{onOpenTasks:ue,onOpenProcesses:de,onOpenSafety:V}):_===`tasks`?(0,Q.jsx)(DB,{initialTab:x},x):_===`processes`?(0,Q.jsx)(sB,{initialFilter:C,initialProcessNumber:T,processRecords:D,setProcessRecords:O,onAction:z},`${C}-${T}`):_===`safety-dynamics`?(0,Q.jsx)(TB,{initialTab:j,onAction:z},j):_===`warnings`?(0,Q.jsx)(jB,{}):_===`dashboard`?(0,Q.jsx)(wB,{}):_===`settings`?(0,Q.jsx)(tV,{initialSelected:I,onAction:z,branding:i,onBrandingChange:a,roles:n,setRoles:r},I):_===`personal-center`?(0,Q.jsx)(ZB,{onAction:z,roles:n}):ye?.name===`双重预防机制`?(0,Q.jsx)(_B,{initialFormTitle:N,initialOpenForm:ee,approvalDrafts:k,setApprovalDrafts:A,onSaveProcessDraft:e=>O(t=>t.some(t=>t.id===e.id)?t.map(t=>t.id===e.id?e:t):[e,...t]),onDeleteProcessDraft:e=>O(t=>t.filter(t=>t.id!==e)),onAction:z,onSwitchApplication:B},`${N}-${ee?`form`:`catalog`}`):ye?(0,Q.jsx)(vB,{app:ye,onReturn:()=>ce(`workbench`),onAction:z,onSwitchApplication:B}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsxs)(`h1`,{children:[`智慧应急安全管理平台欢迎您，`,(0,Q.jsx)(`button`,{className:`workbench-user-link`,onClick:he,children:`张宇`})]})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:pe,children:[`待办总览 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:zz.map(e=>(0,Q.jsx)(cB,{item:e,active:c===e.id,onSelect:()=>l(e.id),onOpen:e=>{e===`message`&&le(),e===`task`&&ue(),e===`approval`&&de(),e===`warning`&&H()}},e.id))})]}),(0,Q.jsx)(uB,{onOpen:B}),(0,Q.jsx)(lB,{onOpen:B,favoriteApps:y,onCustomize:b})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(bB,{onAction:d,onOpenTask:()=>ue(`发布任务`),onOpenProcess:()=>de(`发起流程`),onOpenDynamics:()=>V(`发动态`)}),(0,Q.jsx)(yB,{onOpen:z,onOpenAll:V})]})]})]})}),(0,Q.jsx)(rB,{visible:oe,managing:!1,pageId:_,pageLabel:h.find(e=>e.id===_)?.label??`工作台`,annotations:L,onCloseManager:()=>{},onAdd:({pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a})=>{se(!0),R(o=>[...o,{id:`annotation-${Date.now()}`,pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a}])},onUpdate:(e,t)=>R(n=>n.map(n=>n.id===e?{...n,content:t}:n)),onRemove:e=>R(t=>t.filter(t=>t.id!==e)),onReposition:(e,t)=>{se(!0),R(n=>n.map(n=>n.id===e?{...n,...t}:n))}})]}),f?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":f,children:[(0,Q.jsx)(hz,{}),f]}):null,(0,Q.jsx)(xB,{title:u,onClose:()=>d(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(rV,{}),(0,Q.jsx)(nV,{branding:i,onLogin:()=>t(!0)})]})}(0,Dz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(iV,{}));
+`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},R=t=>{let n=t.target.files?.[0];if(!n||!te.length)return;let i=s||te[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123#`,organizationId:i,department:qB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),F(`已导入 ${t.length} 位用户`)):F(`未识别到可导入的用户数据`),u(null)},a.readAsText(n,`utf-8`),t.target.value=``},z=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),ce=e=>{r(t=>t.filter(t=>t.id!==e)),F(`已删除用户`)},B=e=>f({type:`status`,user:e}),le=e=>{if(e.status===`启用`){F(`用户“${e.name}”处于启用状态，请先停用后再删除`);return}f({type:`delete`,user:e})},ue=e=>f({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`organization`,className:a===`organization`?`active`:``,onClick:()=>o(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`users`,className:a===`users`?`active`:``,onClick:()=>o(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),a===`organization`?(0,Q.jsx)(GB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[te.length,` 个组织`]})]}),e.length?(0,Q.jsx)(KB,{nodes:e,selectedId:s,onSelect:c}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:ne?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:N.name,onChange:e=>P(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:N.account,onChange:e=>P(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:N.phone,onChange:e=>P(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:N.status,onChange:e=>P(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>F(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>P({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsx)(`div`,{className:`user-directory-actions`,children:(0,Q.jsxs)(`button`,{className:`user-add`,onClick:ie,disabled:!te.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})}),te.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),re.length?re.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>B(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ae(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),l?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>u(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:l===`create`?(0,Q.jsxs)(`form`,{onSubmit:se,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:p?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||A(``)},children:[(0,Q.jsxs)(`label`,{className:j.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:h,maxLength:10,onChange:e=>{g(e.target.value),oe(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),j.name?(0,Q.jsx)(`em`,{children:j.name}):null]}),(0,Q.jsxs)(`label`,{className:j.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:y,maxLength:11,inputMode:`numeric`,onChange:e=>{b(e.target.value.replace(/\D/g,``).slice(0,11)),oe(`phone`)},placeholder:`例如：13800000000`}),j.phone?(0,Q.jsx)(`em`,{children:j.phone}):null]}),(0,Q.jsxs)(`label`,{className:j.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:_,onChange:e=>{v(e.target.value),oe(`account`)},placeholder:`例如：zhangyu`}),j.account?(0,Q.jsx)(`em`,{children:j.account}):null]}),(0,Q.jsxs)(`label`,{className:j.password?`field-error`:``,children:[`密码`,(0,Q.jsx)(`input`,{type:p?`password`:`text`,value:x,placeholder:p?`请输入密码`:void 0,onChange:e=>{S(e.target.value),oe(`password`)}}),j.password?(0,Q.jsx)(`em`,{children:j.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${j.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:C,onChange:e=>{w(e.target.value),oe(`organization`)},children:te.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:qB(e,t.id)},t.id))}),j.organization?(0,Q.jsx)(`em`,{children:j.organization}):null]}),(0,Q.jsx)(JB,{label:`岗位`,options:Hz,value:T,onChange:E,activeMenu:k,setActiveMenu:A}),(0,Q.jsx)(JB,{label:`角色`,options:i.map(e=>({value:e.name,label:e.status===`停用`?`${e.name}（已停用）`:e.name})),value:D,onChange:O,activeMenu:k,setActiveMenu:A})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:ne?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:I,type:`file`,accept:`.csv,text/csv`,onChange:R})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:L,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>u(null),children:`取消`})})]})})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:d.type===`cancel-create`?`确定取消${p?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:d.type===`delete`?`确定删除用户“${d.user.name}”吗？删除后无法恢复。`:d.type===`reset-password`?`确定将用户“${d.user.name}”的密码重置为默认密码 abc123# 吗？`:`确定${d.user.status===`启用`?`停用`:`启用`}用户“${d.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{d.type===`cancel-create`?(u(null),A(``)):d.type===`status`?(z(d.user.id),F(`已${d.user.status===`启用`?`停用`:`启用`}用户：${d.user.name}`)):d.type===`reset-password`?(r(e=>e.map(e=>e.id===d.user.id?{...e,password:`abc123#`}:e)),F(`已将 ${d.user.name} 的密码重置为 abc123#`)):ce(d.user.id),f(null)},children:`确定`})]})]})}):null,ee?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[ee,(0,Q.jsx)(`button`,{onClick:()=>F(``),children:`×`})]}):null]})}function XB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function ZB({onAction:e,roles:t,setRoles:n}){let r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`,children:[{name:`法律法规`},{name:`制度文件`},{name:`隐患排查任务发布`},{name:`岗位隐患排查清单`,children:mB.map(e=>({name:e.title}))},{name:`隐患排查治理记录`},{name:`隐患排查审批流程`,children:hB.map(e=>({name:e.title}))},{name:`隐患排查工作表`},{name:`隐患整改通知单`},{name:`隐患整改台账`},{name:`隐患信息统计`},{name:`隐患汇报`}]},{name:`风险告知卡`},{name:`风险四色图`}]},{name:`安全管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`设备管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`火工品管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`生产管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`机电管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`消防管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`应急管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`,children:[{name:`我发起的`},{name:`已执行`},{name:`已转发`},{name:`我撤回的`},{name:`我参与的`}]},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`,children:[{name:`人资管理`,children:[{name:`员工离职申请`},{name:`职员晋升审批`},{name:`职员调岗审批`}]},{name:`基建管理`,children:[{name:`地表基建项目报建申请`},{name:`年度工程计划编制审批`},{name:`项目合同申报审批`}]},{name:`选矿管理`,children:[{name:`换矿申请`},{name:`选厂药剂领用申请`},{name:`材料采购流程`}]}]},{name:`待审批`},{name:`已审批`},{name:`抄送我的`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:SB.map(e=>({name:e.name}))},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务`},{name:`流程`},{name:`预警`},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`菜单管理`},{name:`字典管理`},{name:`企业设置`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={"设置中心/系统设置/角色权限":[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`]},o=new Set(mB.map(e=>`应用/双重预防机制/隐患排查治理/岗位隐患排查清单/${e.title}`)),s=new Set([...o,...hB.map(e=>`应用/双重预防机制/隐患排查治理/隐患排查审批流程/${e.title}`)]),c=e=>(a[e]??[]).map(t=>`button:${e}:${t}`),l=e=>o.has(e)?[`新增`,`导入`,`导出`].map(t=>`button:${e}:数据:${t}`):[],u=e=>s.has(e)?[`页面`,`数据`,...o.has(e)?[`草稿箱`]:[]]:[],d=e=>u(e).map(t=>`tab:${e}:${t}`),f=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:f(e.children,n)};let i=a[r]??[],o=u(r);return{id:`page:${r}`,name:e.name,type:`page`,children:i.length||o.length?[...i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`})),...o.map(e=>{let t=e===`数据`?l(r):[];return{id:`tab:${r}:${e}`,name:e,type:`tab`,children:t.length?t.map(e=>({id:e,name:e.split(`:`).at(-1),type:`button`})):void 0}})]:void 0}}),p=f(r),m=e=>e.children?.length?e.children.flatMap(m):[e.id],h=p.flatMap(m),g=()=>{let e=t=>t.flatMap(t=>t.children?.length?[t.id,...e(t.children)]:[]);return new Set(e(p))},_=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[v,y]=(0,Z.useState)(null),[b,x]=(0,Z.useState)(``),[S,C]=(0,Z.useState)(`启用`),[w,T]=(0,Z.useState)(new Set(h.slice(0,18))),[E,D]=(0,Z.useState)(`menu`),[O,k]=(0,Z.useState)(g),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(null),[P,ee]=(0,Z.useState)(_),[F,I]=(0,Z.useState)(null),[te,ne]=(0,Z.useState)(`group`),[re,ie]=(0,Z.useState)([`u-zhang`]),[ae,oe]=(0,Z.useState)({admin:[`u-zhang`],safety:[`u-zhao`],executor:[`u-li`],viewer:[]}),se=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],L=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],R=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],z=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],ce=()=>{x(``),C(`启用`),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`create`})},B=e=>{x(e.name),C(e.status),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`edit`,role:e})},le=t=>{t.preventDefault();let r=b.trim();r&&(v.mode===`edit`?n(e=>e.map(e=>e.id===v.role.id?{...e,name:r,status:S}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:S,createdAt:`2026-08-12 10:30`}]),y(null),e(v.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},ue=e=>T(t=>{let n=new Set(t),r=m(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),de=e=>k(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),fe=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=fe(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return w.has(`page:${r}`)||c(r).some(e=>w.has(e))||d(r).some(e=>w.has(e))||l(r).some(e=>w.has(e))?[e]:[]}),V=fe(r),H=i(V).length,pe=e=>ee(t=>({...t,...Object.fromEntries(i(V).map(t=>[t,e]))})),me=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:e.type===`tab`?`role-menu-tab`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:e.type===`tab`?`role-menu-tab-label`:``,children:[(0,Q.jsx)(XB,{node:e,selectedIds:w,getLeafIds:m,onToggle:ue}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${O.has(e.id)?`expanded`:``}`,"aria-label":`${O.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>de(e.id),children:(0,Q.jsx)(_z,{})}):null]}),e.children&&O.has(e.id)?(0,Q.jsx)(me,{nodes:e.children}):null]},`${e.id}-${t}`))}),he=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:te===e.id?`active`:``,onClick:()=>ne(e.id),children:e.name}),e.children?(0,Q.jsx)(he,{nodes:e.children}):null]},e.id))}),ge=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:ge(n.children??[],t)),null),_e=e=>e.children?.length?e.children.flatMap(_e):[e.id],ve=ge(se,te),ye=L.filter(e=>e.organization===te),U=ye.map(e=>e.id),W=U.some(e=>re.includes(e)),G=U.length>0&&U.every(e=>re.includes(e)),be=M?.dataPermissionOrganizationIds??[],xe=z.filter(e=>be.includes(e.organization)),K=L.filter(e=>re.includes(e.id)),Se=e=>ie(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),Ce=()=>ie(e=>[...new Set([...e,...U])]),we=()=>ie(e=>e.filter(e=>!U.includes(e))),Te=e=>{I(e),ne(`group`),ie(ae[e.id]??[])},Ee=e=>{let t=_e(e);N(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=z.filter(e=>i.includes(e.organization)).map(e=>e.id),o=z.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},De=e=>N(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Oe=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:_e(e).some(e=>be.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:_e(e).every(e=>be.includes(e)),ref:t=>{if(!t)return;let n=_e(e),r=n.filter(e=>be.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>Ee(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Oe,{nodes:e.children}):null]},e.id))}),q=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:O.has(r)?`expanded`:``,"aria-label":`${O.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>de(r),children:(0,Q.jsx)(_z,{})})]}),O.has(r)?(0,Q.jsx)(`ul`,{children:q(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:P[e.name]??`全部`,onChange:t=>ee(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`所在组织及下级`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)}),ke=()=>{let t=ae[A.id]??[];if(t.length){e(`角色“${A.name}”已分配 ${t.length} 位用户，无法删除`),j(null);return}n(e=>e.filter(e=>e.id!==A.id)),oe(e=>{let t={...e};return delete t[A.id],t}),e(`已删除角色：${A.name}`),j(null)},Ae=!!(A&&(ae[A.id]??[]).length),je=A?(ae[A.id]??[]).length:0;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:ce,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>B(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>j(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>Te(e),children:`分配用户`})]})]},e.id))]})]}),v?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>y(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:le,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:v.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>y(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:b,onChange:e=>x(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:S,onChange:e=>C(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`menu`,className:E===`menu`?`active`:``,onClick:()=>D(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`data`,className:E===`data`?`active`:``,onClick:()=>D(`data`),children:`数据权限`})]}),E===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单与页面选择可访问范围`})]}),(0,Q.jsx)(me,{nodes:p})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`所在组织及下级`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>pe(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>y(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,M?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>N(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>N(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:M.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Oe,{nodes:R})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!xe.length&&xe.every(e=>M.dataAuthorizedUserIds.includes(e.id)),onChange:()=>N(e=>{let t=xe.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:xe.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:M.dataAuthorizedUserIds.includes(e.id),onChange:()=>De(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[H,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>N(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${M.name}的数据权限`),N(null)},children:`保存权限`})]})]})}):null,F?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>I(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>I(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(he,{nodes:se})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:ve?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[ye.length,` 人`]})]}),ye.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:Ce,disabled:G,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:we,disabled:!W,children:`全不选`})]}):null]}),ye.length?ye.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:re.includes(e.id),onChange:()=>Se(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[K.length,` 人`]})]}),K.length?K.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>Se(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>I(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{oe(e=>({...e,[F.id]:re})),e(`已为${F.name}分配 ${K.length} 位用户`),I(null)},children:`确认分配`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:Ae?`无法删除`:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:Ae?`角色“${A.name}”下已分配 ${je} 位用户，无法删除。请先移除该角色下的用户后再试。`:`确定删除角色“${A.name}”吗？`})}),(0,Q.jsx)(`footer`,{children:Ae?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>j(null),children:`知道了`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:ke,children:`确认删除`})]})})]})}):null]})}function QB({onAction:e,roles:t}){let[n,r]=(0,Z.useState)(!1),[i,a]=(0,Z.useState)(!1),[o,s]=(0,Z.useState)(!1),[c,l]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[u,d]=(0,Z.useState)({current:``,next:``,confirm:``}),[f,p]=(0,Z.useState)(``),m=[`安全管理员`,`数据查看员`].map(e=>t.find(t=>t.name===e)).filter(Boolean).map(e=>e.status===`停用`?`${e.name}（已停用）`:e.name).join(`、`),h=()=>{r(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:c.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>s(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>n?h():r(!0),children:n?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>a(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.name,onChange:e=>l(t=>({...t,name:e.target.value}))}):c.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.phone,onChange:e=>l(t=>({...t,phone:e.target.value}))}):c.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.email,onChange:e=>l(t=>({...t,email:e.target.value}))}):c.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:m||`安全管理员、数据查看员（已停用）`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),i?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>a(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!u.current||!u.next||!u.confirm){p(`请完整填写密码信息`);return}if(u.next!==u.confirm){p(`两次输入的新密码不一致`);return}if(u.current!==`123456`){p(`旧密码输入错误，请重新输入`);return}a(!1),d({current:``,next:``,confirm:``}),p(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>a(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.current,onChange:e=>d(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.next,onChange:e=>d(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.confirm,onChange:e=>d(t=>({...t,confirm:e.target.value}))})]}),f?(0,Q.jsx)(`p`,{className:`password-error`,children:f}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>a(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,o?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>s(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>s(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>s(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{s(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function $B({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,type:`系统字典`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,type:`业务字典`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-1-1`,parentId:`type-1`,code:`0101`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2-1`,parentId:`type-2`,code:`0201`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,type:`系统字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,type:`业务字典`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,type:`系统字典`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]},{id:`dict-6`,code:`FLOW_CATEGORY`,name:`流程分类`,type:`业务字典`,remark:`用于流程中心的流程归类。`,references:2,updater:`张宇`,updatedAt:`2026-08-24 10:30`,data:jz.map((e,t)=>({id:`flow-category-${t+1}`,code:String(t+1).padStart(2,`0`),name:e,updater:`张宇`,updatedAt:`2026-08-24 10:30`}))}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,type:`业务字典`,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),[y,b]=(0,Z.useState)(null),x=p.trim().toLowerCase(),S=s.filter(e=>e.name.toLowerCase().includes(x)),C=[...S.filter(e=>!e.parentId).flatMap(e=>[e,...y===e.id?S.filter(t=>t.parentId===e.id):[]])],w=Math.max(1,Math.ceil(C.length/_)),T=Math.min(h,w),E=C.slice((T-1)*_,T*_),D=(e=null)=>{o(e?{code:e.code,name:e.name,type:e.type??`业务字典`,remark:e.remark??``}:{code:``,name:``,type:`业务字典`,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),b(null),i({type:`editor`,dictionary:e})},O=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim(),c=a.type;if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,type:c,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,type:c,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,type:c,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},k=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},A=(e=null)=>{g(1),f(null),e&&b(e),c(t=>t.some(e=>e.isDraft)?t:[{id:`data-${Date.now()}`,code:``,name:``,parentId:e,updater:``,updatedAt:``,isDraft:!0},...t])},j=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},M=({id:t,code:n,name:r})=>{let i=n.trim(),a=r.trim();return i?a?s.some(e=>e.id!==t&&e.code.trim().toLocaleLowerCase()===i.toLocaleLowerCase())?(e(`数据编码“${i}”已存在，请修改后保存`),null):{code:i,name:a}:(e(`数据名称不能为空`),null):(e(`数据编码不能为空`),null)},N=e=>{let t=s.find(t=>t.id===e);if(!t)return!1;let n=M(t);return n?(c(t=>t.map(t=>t.id===e?{...t,...n,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t)),!0):!1},P=e=>{f({id:e.id,code:e.code,name:e.name})},ee=()=>{if(!d)return!1;let e=M(d);return e?(c(t=>t.map(t=>t.id===d.id?{...t,...e,updater:`张宇`,updatedAt:`刚刚`}:t)),f(null),!0):!1},F=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},I=e=>{let t=new Set(e);s.forEach(e=>{e.parentId&&t.has(e.parentId)&&t.add(e.id)}),c(e=>e.filter(e=>!t.has(e.id))),u(e=>e.filter(e=>!t.has(e))),f(e=>e&&t.has(e.id)?null:e),y&&t.has(y)&&b(null)},te=e=>s.find(t=>t.id===e)?.name||`-`;return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>D(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`类型`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.type??`业务字典`}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>D(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(wz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:k,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`类型`}),(0,Q.jsxs)(`select`,{value:a.type,disabled:!!r.dictionary,title:r.dictionary?`编辑字典时不能修改类型`:void 0,onChange:e=>o(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{children:`系统字典`}),(0,Q.jsx)(`option`,{children:`业务字典`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:A,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>I(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!C.filter(e=>!e.isDraft).length&&l.length===C.filter(e=>!e.isDraft).length,onChange:()=>{let e=C.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`上级数据`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),E.map(e=>{let t=d?.id===e.id,n=!e.parentId&&y===e.id;return(0,Q.jsxs)(Z.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``} ${e.parentId?`dictionary-data-row-child`:`dictionary-data-row-root`}`,onBlur:n=>{n.currentTarget.contains(n.relatedTarget)||(e.isDraft&&N(e.id),t&&ee())},children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>F(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?j(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?j(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{className:e.parentId?`dictionary-data-child-name`:``,children:e.name}),(0,Q.jsx)(`span`,{className:e.parentId?`dictionary-parent-data`:`dictionary-root-data`,children:e.parentId?te(e.parentId):`-`}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>N(e.id),children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>I([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:ee,children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[e.parentId?null:(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-toggle-child`,"aria-label":`${n?`收起`:`展开`}${e.name}的子级数据`,"aria-expanded":n,title:n?`收起子级`:`展开子级`,onClick:()=>b(t=>t===e.id?null:e.id),children:`子级`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>P(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>I([e.id]),children:(0,Q.jsx)(wz,{})})]})]},e.id),n?(0,Q.jsxs)(`div`,{className:`dictionary-child-add-row`,children:[(0,Q.jsx)(`span`,{className:`dictionary-child-add-label`,children:`子级数据`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>A(e.id),children:`新增子级`})]},`${e.id}-child-add`):null]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,S.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:T===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[T,` / `,w]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:T===w,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:r.dictionary.type===`系统字典`?`提示`:`确认删除`}),r.dictionary.type===`系统字典`?null:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:r.dictionary.type===`系统字典`?`系统字典“${r.dictionary.name}”不能删除，只能修改字典值。`:`确定删除字典“${r.dictionary.name}”吗？删除后无法恢复。`})}),(0,Q.jsx)(`footer`,{children:r.dictionary.type===`系统字典`?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>i(null),children:`关闭`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})})]})}):null]})}function eV({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),a=(0,Z.useRef)(null),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(!1),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(null),[v,y]=(0,Z.useState)(``),b=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){s(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){s(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),s(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},x=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},S=e=>{t(t=>({...t,systemIcon:e.id})),l(!1),n(`已选择系统图标：${e.label}`)},C=()=>{p(e=>(e&&(h(``),_(null),y(``)),!e))},w=e=>{let t=e.target.files?.[0];if(e.target.value=``,t){if(!t.type.startsWith(`image/`)){y(`请选择图片格式的图标文件`);return}if(t.size>512*1024){y(`图标文件不能超过 512KB`);return}_(t),y(``)}},T=()=>{if(!m.trim()){y(`请输入图标名称`);return}if(!g){y(`请选择图标文件`);return}let e=new FileReader;e.onload=()=>{let r={id:`custom-icon-${Date.now()}`,label:m.trim().slice(0,20),src:String(e.result)};t(e=>({...e,customSystemIcons:[...e.customSystemIcons??[],r]})),y(``),h(``),_(null),p(!1),n(`图标“${r.label}”已上传`)},e.readAsDataURL(g)},E=e=>{t(t=>({...t,customSystemIcons:e.src?(t.customSystemIcons??[]).filter(t=>t.id!==e.id):t.customSystemIcons??[],hiddenSystemIconIds:e.src?t.hiddenSystemIconIds??[]:[...new Set([...t.hiddenSystemIconIds??[],e.id])],systemIcon:t.systemIcon===e.id?`apps`:t.systemIcon})),d(null),n(`图标“${e.label}”已删除`)},D=[...Iz.filter(t=>!(e.hiddenSystemIconIds??[]).includes(t.id)),...e.customSystemIcons??[]];return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(Lz,{name:e.systemIcon,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>l(!0),children:`管理图标`})})]})]}),o?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:o}):null,c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>l(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`图标库`}),(0,Q.jsxs)(`div`,{className:`system-icon-picker-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:C,children:f?`取消上传`:`上传图标`}),(0,Q.jsx)(`span`,{children:`支持 PNG、JPG、WebP、SVG，最大 512KB`})]}),f?(0,Q.jsxs)(`div`,{className:`system-icon-upload-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{children:[`图标名称 `,(0,Q.jsx)(`i`,{children:`*`})]}),(0,Q.jsx)(`input`,{value:m,maxLength:20,placeholder:`请输入图标名称`,onChange:e=>{h(e.target.value),y(``)}})]}),(0,Q.jsxs)(`div`,{className:`system-icon-upload-file`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>a.current?.click(),children:`选择文件`}),(0,Q.jsx)(`span`,{children:g?.name??`未选择文件`}),(0,Q.jsx)(`button`,{type:`button`,onClick:T,children:`确认上传`})]}),v?(0,Q.jsx)(`p`,{role:`alert`,children:v}):null]}):null,(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:D.map(t=>(0,Q.jsxs)(`div`,{className:`system-icon-picker-item`,children:[(0,Q.jsxs)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>S(t),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:t.id,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`b`,{children:t.label})]}),(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-delete`,"aria-label":`删除${t.label}图标`,title:`删除图标`,onClick:()=>d(t),children:(0,Q.jsx)(wz,{})})]},t.id))}),(0,Q.jsx)(`input`,{ref:a,type:`file`,accept:`image/png,image/jpeg,image/webp,image/svg+xml`,onChange:w,hidden:!0})]})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-system-icon-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{id:`delete-system-icon-title`,children:`确认删除图标`})}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除图标“`,u.label,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>E(u),children:`确认删除`})]})]})}):null]})}function tV({onAction:e}){let t=[{id:`workbench`,name:`工作台`,type:`菜单`,icon:`home`,sort:1,path:`/workbench`,component:`WorkbenchPage`,perms:`workbench:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`applications`,name:`应用`,type:`目录`,icon:`apps`,sort:2,path:`/applications`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-dual-prevention`,name:`双重预防机制`,type:`目录`,icon:`shield`,sort:1,path:`dual-prevention`,component:``,perms:`application:dual-prevention:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-risk-control`,name:`风险分级管控`,type:`菜单`,icon:`shield`,sort:1,path:`risk-control`,component:`DualPreventionPage`,perms:`application:risk-control:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-list`,name:`岗位隐患排查清单`,type:`菜单`,icon:`document`,sort:2,path:`inspection-list`,component:`DualPreventionPage`,perms:`application:inspection-list:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-flow`,name:`隐患排查审批流程`,type:`菜单`,icon:`approval`,sort:3,path:`inspection-flow`,component:`DualPreventionPage`,perms:`application:inspection-flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`application-safety`,name:`安全管理`,type:`菜单`,icon:`shield`,sort:2,path:`safety`,component:`ApplicationPage`,perms:`application:safety:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-equipment`,name:`设备管理`,type:`菜单`,icon:`equipment`,sort:3,path:`equipment`,component:`ApplicationPage`,perms:`application:equipment:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-explosive`,name:`火工品管理`,type:`菜单`,icon:`explosive`,sort:4,path:`explosive`,component:`ApplicationPage`,perms:`application:explosive:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-production`,name:`生产管理`,type:`菜单`,icon:`production`,sort:5,path:`production`,component:`ApplicationPage`,perms:`application:production:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-electromechanical`,name:`机电管理`,type:`菜单`,icon:`equipment`,sort:6,path:`electromechanical`,component:`ApplicationPage`,perms:`application:electromechanical:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-fire`,name:`消防管理`,type:`菜单`,icon:`fire`,sort:7,path:`fire`,component:`ApplicationPage`,perms:`application:fire:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-emergency`,name:`应急管理`,type:`菜单`,icon:`warning`,sort:8,path:`emergency`,component:`ApplicationPage`,perms:`application:emergency:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`tasks`,name:`任务`,type:`目录`,icon:`task`,sort:3,path:`/tasks`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`processes`,name:`流程`,type:`目录`,icon:`flow`,sort:4,path:`/processes`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dynamics`,name:`动态`,type:`目录`,icon:`message`,sort:5,path:`/dynamics`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`warnings`,name:`预警`,type:`目录`,icon:`warning`,sort:6,path:`/warnings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dashboards`,name:`看板`,type:`目录`,icon:`dashboard`,sort:7,path:`/dashboards`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:SB.map((e,t)=>({id:`dashboard-${t+1}`,name:e.name,type:`菜单`,icon:`dashboard`,sort:t+1,path:`dashboard-${t+1}`,component:`DashboardPage`,perms:`dashboard:${t+1}:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}))},{id:`settings`,name:`设置中心`,type:`目录`,icon:`settings`,sort:8,path:`/settings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`settings-dynamics`,name:`安全动态`,type:`菜单`,icon:`message`,sort:1,path:`dynamics`,component:`DynamicsSettings`,perms:`settings:dynamics:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-worksheet`,name:`工作表`,type:`菜单`,icon:`document`,sort:2,path:`worksheet`,component:`EmbeddedLowCodePage`,perms:`settings:worksheet:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-task`,name:`任务`,type:`菜单`,icon:`task`,sort:3,path:`task`,component:`EmbeddedTaskFrame`,perms:`settings:task:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-flow`,name:`流程`,type:`菜单`,icon:`flow`,sort:4,path:`flow`,component:`EmbeddedLowCodePage`,perms:`settings:flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`system-settings`,name:`系统设置`,type:`目录`,icon:`settings`,sort:8,path:`system`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`organization-users`,name:`组织用户`,type:`菜单`,icon:`people`,sort:1,path:`organization-users`,component:`UserManagementCenter`,perms:`system:user:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`role-permission`,name:`角色权限`,type:`菜单`,icon:`approval`,sort:2,path:`role-permission`,component:`RbacPage`,perms:`system:role:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`menu-management`,name:`菜单管理`,type:`菜单`,icon:`sort`,sort:3,path:`menu-management`,component:`MenuManagementPage`,perms:`system:menu:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-31 09:00`,children:[]},{id:`dictionary`,name:`字典管理`,type:`菜单`,icon:`document`,sort:4,path:`dictionary`,component:`DictionaryManagement`,perms:`system:dictionary:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`enterprise`,name:`企业设置`,type:`菜单`,icon:`briefcase`,sort:5,path:`enterprise`,component:`EnterpriseSettings`,perms:`system:enterprise:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]}]}],n=(e=`settings`)=>({parentId:e,name:``,type:`菜单`,icon:`apps`,sort:1,path:``,component:``,perms:``,visible:`显示`,status:`启用`}),[r,i]=(0,Z.useState)(t),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(()=>new Set([`settings`,`system-settings`])),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(n()),[h,g]=(0,Z.useState)(``),_=(e,t=0,n=`0`)=>e.flatMap(e=>[{...e,depth:t,parentId:n},..._(e.children??[],t+1,e.id)]),v=_(r),y=e=>{if(e.id===`applications`)return!0;let t=e.parentId;for(;t!==`0`;){if(t===`applications`)return!0;t=v.find(e=>e.id===t)?.parentId??`0`}return!1},b=v.filter(e=>e.type!==`按钮`&&!y(e)),x=v.filter(e=>(!a||e.name.includes(a.trim()))&&(!s||e.status===s)?!0:v.some(t=>t.id!==e.id&&t.depth>e.depth&&t.parentId===e.id&&(!a||t.name.includes(a.trim()))&&(!s||t.status===s))),S=e=>{let t=e.parentId;for(;t!==`0`;){if(!l.has(t))return!1;t=v.find(e=>e.id===t)?.parentId??`0`}return!0},C=(e,t,n)=>e.map(e=>e.id===t?{...e,...n}:{...e,children:C(e.children??[],t,n)}),w=(e,t,n)=>t===`0`?[...e,n]:e.map(e=>e.id===t?{...e,children:[...e.children??[],n]}:{...e,children:w(e.children??[],t,n)}),T=(e,t)=>e.filter(e=>e.id!==t).map(e=>({...e,children:T(e.children??[],t)})),E=(e=`settings`)=>{let t=v.find(t=>t.id===e);m({...n(e),sort:(t?.children?.length??r.length)+1}),g(``),f({mode:`create`,parentId:e})},D=e=>{m({...e}),g(``),f({mode:`edit`,id:e.id})},O=t=>{t.preventDefault();let n=p.name.trim();if(!n){g(`请输入菜单名称`);return}let r={...p,name:n,sort:Number(p.sort)||1};d?.mode===`edit`?i(e=>C(e,d.id,r)):i(e=>w(e,r.parentId,{...r,id:`menu-${Date.now()}`,createdAt:`2026-08-31 10:00`,children:[]})),f(null),e(`${d?.mode===`edit`?`保存`:`新增`}菜单成功`)},k=t=>{let n=t.status===`启用`?`停用`:`启用`;i(e=>C(e,t.id,{status:n})),e(`${t.name}已${n}`)},A=()=>{i(e=>T(e,d.id)),f(null),e(`删除菜单成功`)},j=()=>u(new Set(v.filter(e=>e.children?.length).map(e=>e.id))),M=()=>u(new Set),N=(e,t)=>{m(n=>({...n,[e]:t})),g(``)};return(0,Q.jsxs)(`section`,{className:`menu-management`,"aria-labelledby":`menu-management-title`,children:[(0,Q.jsxs)(`header`,{className:`menu-management-toolbar`,children:[(0,Q.jsx)(`h1`,{id:`menu-management-title`,children:`菜单管理`}),(0,Q.jsxs)(`button`,{type:`button`,className:`menu-management-primary`,onClick:()=>E(`settings`),children:[(0,Q.jsx)(az,{}),`新增菜单`]})]}),(0,Q.jsxs)(`section`,{className:`menu-management-panel`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-filters`,children:[(0,Q.jsxs)(`label`,{children:[`菜单名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),maxLength:20,placeholder:`请输入菜单名称`})]}),(0,Q.jsxs)(`label`,{children:[`状态`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{value:``,children:`全部`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-reset`,onClick:()=>{o(``),c(``)},children:`重置`}),(0,Q.jsx)(`span`,{}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:j,children:`展开`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:M,children:`折叠`})]}),(0,Q.jsxs)(`div`,{className:`menu-management-table`,role:`table`,"aria-label":`菜单列表`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-table-head`,role:`row`,children:[(0,Q.jsx)(`span`,{children:`菜单名称`}),(0,Q.jsx)(`span`,{children:`图标`}),(0,Q.jsx)(`span`,{children:`排序`}),(0,Q.jsx)(`span`,{children:`权限标识`}),(0,Q.jsx)(`span`,{children:`组件路径`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),x.filter(S).map(e=>{let t=(e.children??[]).length>0,n=y(e);return(0,Q.jsxs)(`div`,{className:`menu-management-table-row`,role:`row`,children:[(0,Q.jsxs)(`div`,{className:`menu-tree-name`,style:{"--menu-depth":e.depth},children:[t?(0,Q.jsx)(`button`,{type:`button`,className:l.has(e.id)?`expanded`:``,onClick:()=>u(t=>{let n=new Set(t);return n.has(e.id)?n.delete(e.id):n.add(e.id),n}),children:(0,Q.jsx)(_z,{})}):(0,Q.jsx)(`i`,{}),(0,Q.jsx)(Lz,{name:e.icon}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`em`,{children:e.type})]}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:e.icon})}),(0,Q.jsx)(`span`,{children:e.sort}),(0,Q.jsx)(`code`,{children:e.perms||`-`}),(0,Q.jsx)(`code`,{children:e.component||`-`}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`i`,{className:e.status===`启用`?`menu-status enabled`:`menu-status`,children:e.status})}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsx)(`div`,{className:`menu-row-actions`,children:n?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>E(e.id),disabled:e.type===`按钮`,children:`新增`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>D(e),children:`修改`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>k(e),children:e.status===`启用`?`停用`:`启用`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,disabled:e.id===`settings`,onClick:()=>f({mode:`delete`,id:e.id,name:e.name}),children:`删除`})]})})]},e.id)})]})]}),d?.mode===`create`||d?.mode===`edit`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog menu-editor-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`menu-editor-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`menu-editor-title`,children:d.mode===`edit`?`修改菜单`:`新增菜单`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭菜单编辑弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body menu-editor-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`上级菜单`}),(0,Q.jsxs)(`select`,{value:p.parentId,onChange:e=>N(`parentId`,e.target.value),disabled:d.mode===`edit`,children:[d.mode===`edit`&&p.parentId===`0`?(0,Q.jsx)(`option`,{value:`0`,children:`主类目`}):null,b.filter(e=>e.id!==d.id).map(e=>(0,Q.jsxs)(`option`,{value:e.id,children:[`　`.repeat(e.depth),e.name]},e.id))]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单类型`}),(0,Q.jsxs)(`select`,{value:p.type,onChange:e=>N(`type`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`目录`}),(0,Q.jsx)(`option`,{children:`菜单`}),(0,Q.jsx)(`option`,{children:`按钮`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单名称`}),(0,Q.jsx)(`input`,{value:p.name,onChange:e=>N(`name`,e.target.value),maxLength:20,placeholder:`请输入菜单名称`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示排序`}),(0,Q.jsx)(`input`,{value:p.sort,onChange:e=>N(`sort`,e.target.value.replace(/\D/g,``).slice(0,4)),inputMode:`numeric`,maxLength:4,placeholder:`请输入排序号`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`路由地址`}),(0,Q.jsx)(`input`,{value:p.path,onChange:e=>N(`path`,e.target.value),maxLength:60,placeholder:`例如：system/menu`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`组件路径`}),(0,Q.jsx)(`input`,{value:p.component,onChange:e=>N(`component`,e.target.value),maxLength:60,placeholder:`例如：system/menu/index`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`权限标识`}),(0,Q.jsx)(`input`,{value:p.perms,onChange:e=>N(`perms`,e.target.value),maxLength:60,placeholder:`例如：system:menu:view`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单图标`}),(0,Q.jsx)(`select`,{value:p.icon,onChange:e=>N(`icon`,e.target.value),children:Iz.map(e=>(0,Q.jsx)(`option`,{value:e.id,children:e.label},e.id))})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示状态`}),(0,Q.jsxs)(`select`,{value:p.visible,onChange:e=>N(`visible`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`显示`}),(0,Q.jsx)(`option`,{children:`隐藏`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单状态`}),(0,Q.jsxs)(`select`,{value:p.status,onChange:e=>N(`status`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),h?(0,Q.jsx)(`p`,{className:`menu-editor-error`,children:h}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存`})]})]})}):null,d?.mode===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-menu-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-menu-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除菜单“`,d.name,`”吗？其下级菜单也将一并删除。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:A,children:`确认删除`})]})]})}):null]})}function nV({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r,roles:i,setRoles:a}){let[o,s]=(0,Z.useState)(t),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)([]),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),b=[{label:`工作表单`,module:`form`}],x=[{label:`流程中心`,module:`flow`}],S=b.find(e=>e.label===o);x.find(e=>e.label===o);let C=(o===`工作表`?{label:`工作表`,module:`form`}:o===`流程`?{label:`流程`,module:`flow`}:null)??(o===`应用中心`?{label:`应用中心`,module:`app`}:null),w=o===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===o),T=o===`预警`?{label:`预警`,view:`warning-rule`}:null,E=[`组织用户`,`角色权限`,`菜单管理`,`字典管理`,`企业设置`],D=LB.find(e=>e.label===o)??S??w??T??LB[0],O=D.icon??QR,k={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[o]??[],A=o===`组织用户`,j=o===`角色权限`,M=o===`菜单管理`,N=o===`安全动态`,P=o===`字典管理`,ee=o===`企业设置`,F=!!C;S?.module;let I=!!w,te=!!T,ne=E.includes(o),re=e=>{let t=e===`worksheet`?!f:e===`process`?!m:e===`task`?!g:!v;p(e===`worksheet`&&t),h(e===`process`&&t),_(e===`task`&&t),y(e===`system`&&t),t&&(e===`worksheet`&&s(`工作表单`),e===`process`&&s(`流程中心`),e===`task`&&s(`任务模版`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:LB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`,`预警`].includes(e)?(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ne?`active`:``}`,onClick:()=>re(`system`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:E.map(e=>(0,Q.jsx)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(_z,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!A&&!j&&!M&&!ee&&!N&&!P&&!F&&!I&&!te?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(O,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:D.title}),(0,Q.jsx)(`p`,{children:D.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${D.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,N?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(`iframe`,{src:`${Rz}index.html?view=feedno`,title:`动态圈管理`})}):ee?(0,Q.jsx)(eV,{branding:n,onBrandingChange:r,onAction:e}):P?(0,Q.jsx)($B,{onAction:e}):F?(0,Q.jsx)(PB,{module:C.module,view:C.view,label:C.label}):I?(0,Q.jsx)(kB,{view:w.view,label:w.label,className:`settings-task-embed`}):te?(0,Q.jsx)(jB,{view:T.view,label:T.label,className:`settings-warning-embed`}):A?(0,Q.jsx)(YB,{organizations:c,setOrganizations:l,users:u,setUsers:d,roles:i}):j?(0,Q.jsx)(ZB,{onAction:e,roles:i,setRoles:a}):M?(0,Q.jsx)(tV,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[D.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${D.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),k.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function rV({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(``),[p,m]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){f(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){f(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}f(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),f(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsxs)(`span`,{className:`login-password-field`,children:[(0,Q.jsx)(`input`,{type:l?`text`:`password`,value:a,onChange:e=>{o(e.target.value),f(``)},autoComplete:`current-password`,placeholder:`请输入密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`login-password-visibility`,"aria-label":l?`隐藏密码`:`显示密码`,title:l?`隐藏密码`:`显示密码`,onClick:()=>u(e=>!e),children:l?(0,Q.jsx)(sz,{}):(0,Q.jsx)(oz,{})})]})]}),d?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:d}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>m(!0),children:`忘记密码`})]}),p?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(fz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function iV(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function aV(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>Vz.map(e=>({...e}))),[i,a]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`,customSystemIcons:Array.isArray(e.customSystemIcons)?e.customSystemIcons.filter(e=>e&&typeof e.id==`string`&&typeof e.label==`string`&&typeof e.src==`string`):[],hiddenSystemIconIds:Array.isArray(e.hiddenSystemIconIds)?e.hiddenSystemIconIds.filter(e=>typeof e==`string`):[]}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`,customSystemIcons:[],hiddenSystemIconIds:[]}}}),[o,s]=(0,Z.useState)(`工作台`),[c,l]=(0,Z.useState)(`task`),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(``),m=(0,Z.useRef)(null),[h,g]=(0,Z.useState)(Uz),[_,v]=(0,Z.useState)(`workbench`),[y,b]=(0,Z.useState)(()=>Bz.map(e=>e.name)),[x,S]=(0,Z.useState)(`我的任务`),[C,w]=(0,Z.useState)(`待审批`),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(Yz),[k,A]=(0,Z.useState)([]),[j,M]=(0,Z.useState)(`动态`),[N,P]=(0,Z.useState)(mB[0].title),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(`安全动态`),[ne,re]=(0,Z.useState)(Wz),[ie,ae]=(0,Z.useState)(null),[oe,se]=(0,Z.useState)(!0),[L,R]=(0,Z.useState)([]);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(i))}catch{}},[i]),(0,Z.useEffect)(()=>{let e=!1;return fetch(Mz,{cache:`no-store`}).then(e=>{if(!e.ok)throw Error(`Unable to load prototype annotations`);return e.json()}).then(t=>{e||R(Pz(t))}).catch(()=>{e||R([])}),()=>{e=!0}},[]);let z=e=>{p(`已选择 ${e}`),window.clearTimeout(m.current),m.current=window.setTimeout(()=>p(``),3e3)},ce=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{v(e),s(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},B=e=>{let t=[...mB,...hB].find(t=>t.title===e);if(t){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{P(t.title),F(!0),g(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:pz}]),v(`双重预防机制`),s(`应用`)});return}let n=e===`应用中心`?`双重预防机制`:e,r=Bz.find(e=>e.name===n);if(!r){z(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{n===`双重预防机制`&&F(!1),g(e=>e.some(e=>e.id===n)?e:[...e,{id:n,label:n,icon:r.icon}]),v(n),s(`应用`)})},le=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:mz}]),v(`messages`),s(`工作台`)})},ue=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{ae(null),S(e),g(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:Cz}]),v(`tasks`),s(`任务`)})},de=(e=`待审批`,t=``)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),E(t),g(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:cz}]),v(`processes`),s(`流程`)})},fe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),v(`dashboard`),s(`看板`)})},V=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(e),g(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:pz}]),v(`safety-dynamics`),s(`动态`)})},H=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:Sz}]),v(`warnings`),s(`预警`)})},pe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:Cz}]),v(`todos`),s(`工作台`)})},me=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{te(e),g(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),v(`settings`),s(`设置`)})},he=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:Ez}]),v(`personal-center`),s(``)})},ge=e=>re(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),_e=()=>re(e=>e.map(e=>({...e,read:!0}))),ve=e=>{let t=h.findIndex(t=>t.id===e),n=h.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(g(n),_===e){let e=n[Math.max(0,t-1)]??Uz[0];v(e.id),s(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ye=Bz.find(e=>e.name===_);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(iV,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(tB,{active:o,brandLogo:i.logo,onOpenSettings:me,onChange:e=>{if(e===`工作台`){ce(`workbench`);return}if(e===`应用`){B(`应用中心`);return}if(e===`任务`){ue();return}if(e===`流程`){de();return}if(e===`动态`){V();return}if(e===`预警`){H();return}if(e===`看板`){fe();return}s(e),z(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(nB,{tabs:h,activeTab:_,onSelect:ce,onClose:ve,onOpenMessages:le,onOpenPersonal:he,onLogout:()=>t(!1),onOpenSpecification:()=>window.open(Nz,`_blank`,`noopener,noreferrer`)}),(0,Q.jsx)(`main`,{children:_===`messages`?(0,Q.jsx)(aB,{messages:ne,onMarkRead:ge,onMarkAllRead:_e,onReturn:()=>ce(`workbench`),onOpenProcess:de}):_===`todos`?(0,Q.jsx)(IB,{onOpenTasks:ue,onOpenProcesses:de,onOpenSafety:V}):_===`tasks`?(0,Q.jsx)(DB,{initialTab:x},x):_===`processes`?(0,Q.jsx)(sB,{initialFilter:C,initialProcessNumber:T,processRecords:D,setProcessRecords:O,onAction:z},`${C}-${T}`):_===`safety-dynamics`?(0,Q.jsx)(TB,{initialTab:j,onAction:z},j):_===`warnings`?(0,Q.jsx)(MB,{}):_===`dashboard`?(0,Q.jsx)(wB,{}):_===`settings`?(0,Q.jsx)(nV,{initialSelected:I,onAction:z,branding:i,onBrandingChange:a,roles:n,setRoles:r},I):_===`personal-center`?(0,Q.jsx)(QB,{onAction:z,roles:n}):ye?.name===`双重预防机制`?(0,Q.jsx)(_B,{initialFormTitle:N,initialOpenForm:ee,approvalDrafts:k,setApprovalDrafts:A,onSaveProcessDraft:e=>O(t=>t.some(t=>t.id===e.id)?t.map(t=>t.id===e.id?e:t):[e,...t]),onDeleteProcessDraft:e=>O(t=>t.filter(t=>t.id!==e)),onAction:z,onSwitchApplication:B},`${N}-${ee?`form`:`catalog`}`):ye?(0,Q.jsx)(vB,{app:ye,onReturn:()=>ce(`workbench`),onAction:z,onSwitchApplication:B}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsxs)(`h1`,{children:[`智慧应急安全管理平台欢迎您，`,(0,Q.jsx)(`button`,{className:`workbench-user-link`,onClick:he,children:`张宇`})]})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:pe,children:[`待办总览 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:zz.map(e=>(0,Q.jsx)(cB,{item:e,active:c===e.id,onSelect:()=>l(e.id),onOpen:e=>{e===`message`&&le(),e===`task`&&ue(),e===`approval`&&de(),e===`warning`&&H()}},e.id))})]}),(0,Q.jsx)(uB,{onOpen:B}),(0,Q.jsx)(lB,{onOpen:B,favoriteApps:y,onCustomize:b})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(bB,{onAction:d,onOpenTask:()=>ue(`发布任务`),onOpenProcess:()=>de(`发起流程`),onOpenDynamics:()=>V(`发动态`)}),(0,Q.jsx)(yB,{onOpen:z,onOpenAll:V})]})]})]})}),(0,Q.jsx)(rB,{visible:oe,managing:!1,pageId:_,pageLabel:h.find(e=>e.id===_)?.label??`工作台`,annotations:L,onCloseManager:()=>{},onAdd:({pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a})=>{se(!0),R(o=>[...o,{id:`annotation-${Date.now()}`,pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a}])},onUpdate:(e,t)=>R(n=>n.map(n=>n.id===e?{...n,content:t}:n)),onRemove:e=>R(t=>t.filter(t=>t.id!==e)),onReposition:(e,t)=>{se(!0),R(n=>n.map(n=>n.id===e?{...n,...t}:n))}})]}),f?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":f,children:[(0,Q.jsx)(hz,{}),f]}):null,(0,Q.jsx)(xB,{title:u,onClose:()=>d(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(iV,{}),(0,Q.jsx)(rV,{branding:i,onLogin:()=>t(!0)})]})}(0,Dz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(aV,{}));

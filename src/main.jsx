@@ -5039,33 +5039,60 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
   );
 }
 
-function EmbeddedTaskFrame({ view, title, className }) {
-  const request = JSON.stringify({ view });
+function EmbeddedTaskFrame({
+  view,
+  title,
+  className,
+  subview,
+  showDescription = false,
+}) {
+  const request = JSON.stringify({ view, subview });
+  const descriptionWidth = 360;
+  const embeddedTaskStyles = `
+    .sidebar, .topbar, .logic, .dev-doc-btn { display: none !important; }
+    .app, .stage { height: 100dvh !important; }
+    .content { padding: 16px 20px 32px !important; }
+    html, body { background: #f5f7fa !important; }
+    body.devdoc-open .app { padding-bottom: 0 !important; padding-right: ${showDescription ? `${descriptionWidth}px` : "0"} !important; }
+    #devDocDrawer {
+      display: ${showDescription ? "flex" : "none"} !important;
+      top: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      left: auto !important;
+      width: ${descriptionWidth}px !important;
+      max-width: none !important;
+      height: 100dvh !important;
+      transform: none !important;
+      z-index: 20 !important;
+    }
+    #devDocDrawer .dev-doc-resizer, #devDocDrawer .dd-hint { display: none !important; }
+  `;
   const srcDoc = newTaskPrototypeHtml
     .replace(
       "</head>",
-      `<style>
-        /* Navigation and context are provided by the host system. */
-        .sidebar, .topbar, .logic { display: none !important; }
-        .app, .stage { height: 100dvh !important; }
-        .content { padding: 16px 20px 32px !important; }
-        html, body { background: #f5f7fa !important; }
-      </style></head>`,
+      `<style>${embeddedTaskStyles}</style></head>`,
     )
     .replace(
       "</body>",
       `<script>
-        (function () {
+        window.addEventListener("load", function () {
           var request = ${request};
-          var taskViews = ["view-template", "view-publish", "view-mytask", "view-ledger", "view-personnel"];
+          var taskViews = ["view-template", "view-publish", "view-mytask", "view-ledger"];
           if (taskViews.indexOf(request.view) !== -1 && typeof window.switchView === "function") {
             window.switchView(request.view);
           }
-        })();
+          if (request.subview === "lt-inst" && typeof window.ledgerTab === "function") {
+            window.ledgerTab("lt-inst");
+          }
+          if (${showDescription} && typeof window.openDevDoc === "function") {
+            window.openDevDoc();
+          }
+        });
       </script></body>`,
     );
 
-  return <iframe key={view} className={className} srcDoc={srcDoc} title={title} />;
+  return <iframe key={`${view}-${subview ?? "default"}-${showDescription ? "with-description" : "workspace-only"}`} className={className} srcDoc={srcDoc} title={title} />;
 }
 
 function EmbeddedTasksPage({ initialTab = "我的任务" }) {
@@ -5073,9 +5100,9 @@ function EmbeddedTasksPage({ initialTab = "我的任务" }) {
     { label: "发布任务", view: "view-publish" },
     { label: "我的任务", view: "view-mytask" },
     { label: "任务总台账", view: "view-ledger" },
-    { label: "人员明细", view: "view-personnel" },
   ];
   const [activeTaskTab, setActiveTaskTab] = useState(initialTab);
+  const [showDescription, setShowDescription] = useState(false);
   const activeTask = taskTabs.find((item) => item.label === activeTaskTab);
 
   return (
@@ -5090,11 +5117,19 @@ function EmbeddedTasksPage({ initialTab = "我的任务" }) {
             {tab.label}
           </button>
         ))}
+        <div className="embedded-task-toolbar">
+          <EmbeddedDescriptionSwitch
+            checked={showDescription}
+            onChange={setShowDescription}
+          />
+        </div>
       </nav>
       <EmbeddedTaskFrame
         view={activeTask.view}
+        subview={activeTask.subview}
         className="embedded-tasks-frame"
         title={activeTask.label}
+        showDescription={showDescription}
       />
     </section>
   );
@@ -5111,6 +5146,31 @@ function EmbeddedDescriptionSwitch({ checked, onChange }) {
       <span aria-hidden="true" />
       显示说明
     </label>
+  );
+}
+
+function TaskEmbeddedWorkspace({ view, label, className = "" }) {
+  const [showDescription, setShowDescription] = useState(false);
+
+  return (
+    <section
+      className={`settings-lowcode-page ${className}`.trim()}
+      aria-label={`${label}任务页面`}
+    >
+      <div className="settings-lowcode-toolbar">
+        <EmbeddedDescriptionSwitch
+          checked={showDescription}
+          onChange={setShowDescription}
+        />
+      </div>
+      <div className="settings-lowcode-embed">
+        <EmbeddedTaskFrame
+          view={view}
+          title={label}
+          showDescription={showDescription}
+        />
+      </div>
+    </section>
   );
 }
 
@@ -9910,12 +9970,11 @@ function SettingsPage({
               label={lowCodeMenu.label}
             />
           ) : isTaskPageSetting ? (
-            <section className="settings-task-embed" aria-label={taskPageMenu.label}>
-              <EmbeddedTaskFrame
-                view={taskPageMenu.view}
-                title={taskPageMenu.label}
-              />
-            </section>
+            <TaskEmbeddedWorkspace
+              view={taskPageMenu.view}
+              label={taskPageMenu.label}
+              className="settings-task-embed"
+            />
           ) : isWarningPageSetting ? (
             <WarningEmbeddedWorkspace
               view={warningPageMenu.view}
