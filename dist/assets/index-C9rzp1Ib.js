@@ -15305,9 +15305,3994 @@ navigateTo(
 <\/script>
 </body>
 </html>
-`,jz=[`人事管理`,`财务管理`,`安全管理`,`生产管理`,`设备管理`,`综合管理`],Mz=`./prototype-annotations.json`,Nz=`https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e`;function Pz(e){let t=Array.isArray(e)?e:e?.annotations;return Array.isArray(t)?t:[]}DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Fz=[{label:`工作台`,icon:yz},{label:`应用`,icon:rz},{label:`任务`,icon:Cz},{label:`流程`,icon:cz},{label:`动态`,icon:pz},{label:`预警`,icon:Sz},{label:`看板`,icon:ZR}],Iz=[{id:`home`,label:`首页`,icon:yz},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:pz},{id:`task`,label:`任务`,icon:Cz},{id:`flow`,label:`流程`,icon:cz},{id:`warning`,label:`预警`,icon:Sz},{id:`message`,label:`消息`,icon:mz},{id:`equipment`,label:`设备`,icon:vz},{id:`production`,label:`生产`,icon:xz},{id:`fire`,label:`消防`,icon:Tz},{id:`explosive`,label:`火工品`,icon:uz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:hz},{id:`people`,label:`人员`,icon:Ez},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:bz},{id:`idea`,label:`提示`,icon:dz},{id:`edit`,label:`编辑`,icon:lz},{id:`delete`,label:`删除`,icon:wz},{id:`arrow`,label:`前往`,icon:fz}];function Lz({name:e=`apps`,className:t,customIcons:n=[]}){let r=n.find(t=>t.id===e);return r?(0,Q.jsx)(`img`,{className:t,src:r.src,alt:``,"aria-hidden":`true`}):(0,Q.jsx)(Iz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var Rz=`./xiaodong/`,zz=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:mz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:Cz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:Sz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],Bz=[{name:`双重预防机制`,description:`风险与隐患`,icon:pz},{name:`安全管理`,description:`检查与整改`,icon:Sz},{name:`设备管理`,description:`点检与维修`,icon:vz},{name:`火工品管理`,description:`领用与追溯`,icon:uz},{name:`生产管理`,description:`计划与日报`,icon:xz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Tz},{name:`应急管理`,description:`预案与响应`,icon:dz}],Vz=[{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}],Hz=[`安全管理员`,`设备工程师`,`生产主管`],Uz=[{id:`workbench`,label:`工作台`,icon:yz,pinned:!0}],Wz=[{id:`msg-1`,source:`流程审批`,type:`审批提醒`,sender:`矿山应急照明设备采购申请`,time:`今天 10:12`,initiator:`王建国`,initiatedAt:`今天 09:12`,application:`机电管理`,processNumber:`202608310001`,title:`矿山应急照明设备采购申请`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`blue`},{id:`msg-2`,source:`流程超时`,type:`超时提醒`,sender:`南区 2# 采场动火作业申请`,time:`今天 09:38`,initiator:`张宇`,initiatedAt:`今天 08:46`,application:`安全管理`,processNumber:`202608310002`,title:`南区 2# 采场动火作业申请`,content:`当前审批节点已超时，请尽快处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`流程结束`,type:`结束提醒`,sender:`碎矿车间停机检修计划`,time:`昨天 16:45`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,application:`设备管理`,processNumber:`202608300003`,title:`碎矿车间停机检修计划`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:Sz,tone:`red`},{id:`msg-4`,source:`流程审批`,type:`审批提醒`,sender:`外协队入场资格审核`,time:`昨天 14:20`,initiator:`周敏`,initiatedAt:`昨天 10:20`,application:`双重预防机制`,processNumber:`202608300004`,title:`外协队入场资格审核`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-5`,source:`流程结束`,type:`结束提醒`,sender:`井下设备检修采购申请`,time:`7 月 28 日 09:16`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,application:`设备管理`,processNumber:`202608260006`,title:`井下设备检修采购申请`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!0,icon:hz,tone:`blue`}],Gz=`20260831`;function Kz(e=``){let t=String(e).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);if(t)return`${t[1]}${t[2].padStart(2,`0`)}${t[3].padStart(2,`0`)}`;let n=String(e).match(/(\d{1,2})\s*月\s*(\d{1,2})\s*日/);return n?`2026${n[1].padStart(2,`0`)}${n[2].padStart(2,`0`)}`:String(e).includes(`昨天`)?`20260830`:Gz}function qz(e){let t=String(e.id??``),n=Number(t.match(/(\d+)(?!.*\d)/)?.[1]),r=Number(e.sequence)||n%9999||1;return`${Kz(e.initiatedAt)}${String(r).padStart(4,`0`)}`}var Jz=[`待审批`,`审批中`,`已通过`,`已拒绝`,`已撤销`,`已驳回`],Yz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`审批中`,application:`设备管理`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`张宇`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`审批中`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,startedByMe:!0},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`流程已结束`,approver:`刘海`,status:`已通过`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`张宇`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0},{id:`flow-5`,name:`东区临时用电申请`,initiator:`陈伟`,initiatedAt:`昨天 11:16`,currentNode:`流程已结束`,approver:`张宇`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,handledByMe:!0,handledResult:`驳回`},{id:`flow-6`,name:`井下设备检修采购申请`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,currentNode:`流程已撤销`,approver:`张宇`,status:`已撤销`,application:`设备管理`,amount:`42,800 元`,department:`机电管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`,revokedBy:`刘海`,revokedAt:`2026-08-26 17:08:00`},{id:`flow-7`,name:`高处作业审批申请`,initiator:`孙宁`,initiatedAt:`8 月 25 日 09:34`,currentNode:`分管领导审批`,approver:`张宇`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`紧急`,handledByMe:!0,handledResult:`驳回`},{id:`flow-8`,name:`井下通风设施改造申请`,initiator:`李明`,initiatedAt:`8 月 27 日 14:18`,currentNode:`流程已结束`,approver:`陈伟`,status:`已通过`,application:`应急管理`,amount:`26,000 元`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,finalOperator:`陈伟`},{id:`flow-9`,name:`采场临时封闭申请`,initiator:`王强`,initiatedAt:`8 月 27 日 10:05`,currentNode:`流程已结束`,approver:`赵磊`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,ccToMe:!0,finalOperator:`赵磊`},{id:`flow-10`,name:`消防器材增补采购申请`,initiator:`周敏`,initiatedAt:`8 月 26 日 13:26`,currentNode:`流程已撤销`,approver:`孙宁`,status:`已撤销`,application:`消防管理`,amount:`18,600 元`,department:`综合管理部`,urgency:`常规`,ccToMe:!0,revokedBy:`周敏`,revokedAt:`2026-08-26 15:20:00`},{id:`flow-11`,name:`爆破作业人员调整申请`,initiator:`何勇`,initiatedAt:`8 月 25 日 16:50`,currentNode:`分管领导审批`,approver:`周杰伦`,status:`已驳回`,application:`火工品管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,ccToMe:!0,rejectedBy:`周杰伦`},{id:`flow-12`,name:`东翼通风系统整改申请`,initiator:`张宇`,initiatedAt:`2026-09-02 09:18:00`,currentNode:`已驳回至发起人`,approver:`周杰伦`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,startedByMe:!0,rejectedBy:`周杰伦`,rejectionOpinion:`请补充整改方案及现场照片后重新提交。`},{id:`flow-draft-1`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-28 10:36:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已完成离职原因与交接安排说明，待补充附件后提交。`,draft:!0},{id:`flow-draft-2`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-27 16:18:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已填写基本离职信息，待确认最后工作日期。`,draft:!0}],Xz=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`,children:[]},{id:`equipment`,name:`设备管理部`,children:[]},{id:`production`,name:`生产技术部`,children:[]}]}]}],Zz=[{id:`transfer-zhao`,name:`赵六`,account:`zhaoliu`,department:`安全管理部`,organizationId:`safety`},{id:`transfer-wang`,name:`王五`,account:`wangwu`,department:`生产技术部`,organizationId:`production`},{id:`transfer-li`,name:`李四`,account:`lisi`,department:`设备管理部`,organizationId:`equipment`}],Qz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:pz,tone:`green`},{name:`平巷凿岩作业隐患排查审批流程`,time:`昨天 16:40`,icon:nz,tone:`blue`},{name:`生产管理`,time:`7 月 25 日`,icon:xz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:pz,tone:`violet`}],$z=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:hz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:Cz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:vz}];function eB({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function tB({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Fz.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)(eB,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function nB({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o,onOpenSpecification:s}){let[c,l]=(0,Z.useState)(!1),u=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{if(!c)return;let e=e=>{u.current?.contains(e.target)||l(!1)},t=e=>{e.key===`Escape`&&l(!1)};return document.addEventListener(`pointerdown`,e),document.addEventListener(`keydown`,t),()=>{document.removeEventListener(`pointerdown`,e),document.removeEventListener(`keydown`,t)}},[c]),(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{type:`button`,className:`prototype-annotation-toggle`,onClick:s,children:[(0,Q.jsx)(lz,{}),(0,Q.jsx)(`span`,{children:`标注`})]}),(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsxs)(`div`,{className:`top-profile-control`,ref:u,children:[(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":c,onClick:()=>l(e=>!e),children:`张`}),c?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{l(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{l(!1),o()},children:`退出登录`})]}):null]})]})]})}function rB({visible:e,managing:t,pageId:n,pageLabel:r,annotations:i,onCloseManager:a,onAdd:o,onUpdate:s,onRemove:c,onReposition:l}){let[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(``),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(null),S=()=>{let e=document.querySelector(`.page-shell`),t=e?.getBoundingClientRect();return{left:t?.left??80,top:t?.top??0,width:Math.max(t?.width??window.innerWidth-80,1),height:Math.max(e?.scrollHeight??0,t?.height??window.innerHeight,1)}},[C,w]=(0,Z.useState)(()=>({left:80,top:0,width:Math.max(window.innerWidth-80,1),height:Math.max(window.innerHeight,1)})),T=(0,Z.useRef)(!1),E=i.filter(e=>e.pageId===n),D=E.find(e=>e.id===m),O=(e,t=0)=>{let n=Math.min(980,window.innerWidth-37),r=156+t*42,i=e.leftPercent!==null&&e.leftPercent!==void 0&&e.topPercent!==null&&e.topPercent!==void 0&&Number.isFinite(Number(e.leftPercent))&&Number.isFinite(Number(e.topPercent)),a=i&&e.positionSpace===`page`,o=i?Number(e.leftPercent)/100*window.innerWidth:e.left??n,s=i?Number(e.topPercent)/100*window.innerHeight:e.top??r;return{left:a?Number(e.leftPercent)/100*C.width:o-C.left,top:a?Number(e.topPercent)/100*C.height:s-C.top,hasRelativePosition:i,isPagePosition:a}},k=(e,t,n=C)=>({leftPercent:Number((e/n.width*100).toFixed(3)),topPercent:Number((t/n.height*100).toFixed(3)),positionSpace:`page`}),A=(e,t)=>{if(b?.id===e.id)return{left:`${b.left}px`,top:`${b.top}px`};let n=O(e,t);return{left:`${n.left}px`,top:`${n.top}px`}};(0,Z.useEffect)(()=>{let e=()=>w(S()),t=document.querySelector(`.page-shell`),n=typeof ResizeObserver>`u`?null:new ResizeObserver(e);return e(),t&&n?.observe(t),window.addEventListener(`resize`,e),window.visualViewport?.addEventListener(`resize`,e),()=>{n?.disconnect(),window.removeEventListener(`resize`,e),window.visualViewport?.removeEventListener(`resize`,e)}},[n]),(0,Z.useEffect)(()=>{E.forEach((e,t)=>{let{isPagePosition:n,left:r,top:i}=O(e,t);n||l(e.id,k(r,i))})},[i,n,C.width,C.height]),(0,Z.useEffect)(()=>{if(!b)return;let e=e=>{let t=S(),n=Math.min(Math.max(12,Math.round(e.clientX-t.left-b.offsetX)),t.width-37),r=Math.min(Math.max(64,Math.round(e.clientY-t.top-b.offsetY)),t.height-37);(Math.abs(n-b.startLeft)>3||Math.abs(r-b.startTop)>3)&&(T.current=!0),x(e=>e&&{...e,left:n,top:r})},t=()=>{l(b.id,k(b.left,b.top,S())),x(null)};return window.addEventListener(`mousemove`,e),window.addEventListener(`mouseup`,t,{once:!0}),()=>{window.removeEventListener(`mousemove`,e),window.removeEventListener(`mouseup`,t)}},[b,l]);let j=()=>{let e=u.trim();if(e){if(f){s(f,e),d(``),p(``);return}_(!0)}},M=()=>{d(``),p(``),y(``),_(!1)};return(0,Q.jsxs)(Q.Fragment,{children:[e?E.map((e,t)=>(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-tag`,style:A(e,t),"aria-label":`查看备注 ${t+1}`,onMouseDown:n=>{n.preventDefault();let{left:r,top:i}=O(e,t),a=S();T.current=!1,x({id:e.id,left:r,top:i,startLeft:r,startTop:i,offsetX:n.clientX-a.left-r,offsetY:n.clientY-a.top-i})},onClick:()=>{if(T.current){T.current=!1;return}h(e.id)},children:t+1},e.id)):null,e&&D?(0,Q.jsxs)(`section`,{className:`prototype-annotation-popover`,style:{left:`${Math.min(O(D).left+32,C.width-286)}px`,top:`${Math.min(O(D).top+30,C.height-160)}px`},"aria-label":`备注内容`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:`备注内容`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭备注内容`,onClick:()=>h(``),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:D.content})]}):null,g?(0,Q.jsx)(`div`,{className:`prototype-annotation-placement-layer`,onClick:e=>{let t=S(),i=Math.min(Math.max(12,Math.round(e.clientX-t.left)),t.width-37),a=Math.min(Math.max(64,Math.round(e.clientY-t.top)),t.height-37),s=k(i,a,t);v?l(v,s):o({pageId:n,pageLabel:r,content:u.trim(),...s}),M()},role:`presentation`,children:(0,Q.jsx)(`span`,{children:v?`请点击页面任意位置重新放置标签`:`请点击页面任意位置放置备注标签`})}):null,t?(0,Q.jsxs)(`aside`,{className:`prototype-annotation-panel`,"aria-label":`原型标注管理`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`原型标注管理`}),(0,Q.jsx)(`b`,{children:r})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭标注管理`,onClick:a,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-editor`,children:[(0,Q.jsx)(`p`,{className:`prototype-annotation-source-note`,children:`标注从部署文件读取；在线调整仅用于当前预览。`}),(0,Q.jsx)(`label`,{htmlFor:`prototype-annotation-content`,children:f?`编辑备注`:`新增备注`}),(0,Q.jsx)(`textarea`,{id:`prototype-annotation-content`,value:u,maxLength:240,placeholder:`例如：此处提交后需校验审批人是否存在，并记录操作日志。`,onChange:e=>d(e.target.value)}),(0,Q.jsxs)(`footer`,{children:[f||g?(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-cancel`,onClick:M,children:g?`取消放置`:`取消编辑`}):null,(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-save`,onClick:j,disabled:!u.trim(),children:f?`保存备注`:`点击页面放置标签`})]})]}),(0,Q.jsx)(`div`,{className:`prototype-annotation-list`,children:E.length?E.map((e,t)=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:String(t+1).padStart(2,`0`)}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-entry`,children:[(0,Q.jsx)(`p`,{children:e.content}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑备注`,onClick:()=>{d(e.content),p(e.id),_(!1)},children:`编辑`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`重新放置备注`,onClick:()=>{y(e.id),_(!0)},children:`重新放置`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除备注`,onClick:()=>{m===e.id&&h(``),c(e.id)},children:`删除`})]})]})]},e.id)):(0,Q.jsx)(`div`,{className:`prototype-annotation-empty`,children:`当前页面还没有备注，输入内容后即可在页面任意位置放置。`})})]}):null]})}function iB({total:e,page:t,pageSize:n,onPageChange:r,onPageSizeChange:i,className:a=``,itemLabel:o=`条`}){let s=Math.max(1,Math.ceil(e/n)),c=Math.min(t,s);return(0,Q.jsxs)(`footer`,{className:`system-pagination ${a}`.trim(),children:[(0,Q.jsxs)(`span`,{children:[`共 `,e,` `,o]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页${o}数`,value:n,onChange:e=>i(Number(e.target.value)),children:[(0,Q.jsxs)(`option`,{value:10,children:[`10 `,o]}),(0,Q.jsxs)(`option`,{value:20,children:[`20 `,o]}),(0,Q.jsxs)(`option`,{value:50,children:[`50 `,o]})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:c===1,onClick:()=>r(Math.max(1,c-1)),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[c,` / `,s]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:c===s,onClick:()=>r(Math.min(s,c+1)),children:`下一页`})]})}function aB({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r,onOpenProcess:i}){let[a,o]=(0,Z.useState)(`全部`),[s,c]=(0,Z.useState)(`全部`),[l,u]=(0,Z.useState)(`未读`),[d,f]=(0,Z.useState)(10),[p,m]=(0,Z.useState)(1),h=e=>e.source.startsWith(`流程`)?`流程`:e.source,g=e.filter(e=>(a===`全部`||h(e)===a)&&(a!==`流程`||s===`全部`||e.source===s)&&(l===`全部`||(l===`未读`?!e.read:e.read))),_=Math.max(1,Math.ceil(g.length/d)),v=Math.min(p,_),y=g.slice((v-1)*d,v*d),b=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,b,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:b===0,children:[(0,Q.jsx)(hz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:a,onChange:e=>{let t=e.target.value;o(t),c([`流程`,`全部`].includes(t)?`全部`:``),m(1)},children:[(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`动态`}),(0,Q.jsx)(`option`,{children:`全部`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsx)(`select`,{value:s,disabled:![`流程`,`全部`].includes(a),onChange:e=>{c(e.target.value),m(1)},children:a===`流程`?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`流程审批`}),(0,Q.jsx)(`option`,{children:`流程超时`}),(0,Q.jsx)(`option`,{children:`流程结束`}),(0,Q.jsx)(`option`,{children:`流程驳回`}),(0,Q.jsx)(`option`,{children:`流程抄送`})]}):a===`全部`?(0,Q.jsx)(`option`,{children:`全部`}):(0,Q.jsx)(`option`,{value:``,children:` `})})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:l,onChange:e=>{u(e.target.value),m(1)},children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:y.length?y.map(e=>{let{id:n,source:r,type:a,sender:o,time:s,initiator:c,initiatedAt:l,application:u,processNumber:d,read:f,icon:p,tone:m}=e;return(0,Q.jsxs)(`button`,{className:f?`message-row read`:`message-row`,onClick:()=>{t(n),i(a===`结束提醒`?`我发起的`:`待审批`,d)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${m}`,children:(0,Q.jsx)(p,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`time`,{children:s}),f?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsx)(`strong`,{children:(0,Q.jsx)(`em`,{children:r})}),(0,Q.jsxs)(`p`,{className:`message-process-origin`,children:[c,`于`,l,`通过`,u,`应用发起的流程编号为：`,d]})]}),(0,Q.jsx)(fz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(iB,{className:`message-pagination`,total:g.length,page:v,pageSize:d,onPageChange:m,onPageSizeChange:e=>{f(e),m(1)}})]})}function oB({process:e,onClose:t,onApprove:n,viewOnly:r=!1,canRevoke:i=!1,canResumeDraft:a=!1,hideFinalLog:o=!1,onResumeDraft:s,onResubmit:c}){let[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(!1),[h,g]=(0,Z.useState)(null),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(!1),[x,S]=(0,Z.useState)(!1),[C,w]=(0,Z.useState)([]),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(null),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)(`initiator`),[N,P]=(0,Z.useState)(!1),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(``),ne=()=>{u(!1),f(!1),m(!1),b(!1),S(!1),w([]),E(``),O(null),A(``),P(!1),F(!1),te(``),t()};if(!e)return null;let re=e.status===`已驳回`,ie=e.status===`已撤销`,ae=e.status===`已通过`,oe=e.status===`已拒绝`,se=e.resubmitted,L=D===`initiator`?{label:`发起人`,name:e.initiator}:{label:`上一节点`,name:e.previousApprover??`张七`},R=[{time:`2026-08-23 12:00:00`,title:`系统发起`,details:[`${e.initiator}发起了${e.name}`],action:`发起`,state:`done`},{time:`2026-08-23 12:00:00`,title:`主管领导审批`,details:[`李四已同意`,`审批意见：请按流程办理`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`分管领导审批`,details:[`王五已转办`,`转办原因：赵总定夺`,`流程到达时间：2026-08-23 12:00:00`],action:`转办`,state:`done`},{time:`2026-08-23 12:00:00`,title:`转办审批`,details:[`赵六已加签`,`流程到达时间：2026-08-23 12:00:00`],action:`加签`,state:`done`},{time:`2026-08-23 12:00:00`,title:`加签审批`,details:[`张七已同意`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`抄送`,details:[`系统已抄送`,`流程到达时间：2026-08-23 12:00:00`],action:`抄送`,state:`done`},{time:re||se||ae||oe?`2026-08-23 12:00:00`:ie?e.revokedAt??`2026-08-28 10:36:00`:`当前`,title:re||se||ae||oe?`分管领导审批`:ie?`撤销`:`结束`,details:re||se?[`${e.rejectedBy??`周杰伦`}已驳回`,`审批意见：${e.rejectionOpinion??`请核对清楚再提交`}`,`流程到达时间：2026-08-23 12:00:00`]:ae?[`${e.finalOperator??`张宇`}已同意`,`审批意见：同意办理`,`流程完成时间：2026-08-23 12:00:00`]:oe?[`${e.finalOperator??`张宇`}已拒绝`,`审批意见：${e.refusalOpinion||`未填写`}`,`流程完成时间：2026-08-23 12:00:00`]:ie?[`${e.revokedBy??`张宇`}已撤销该流程`]:[[`待审批`,`审批中`].includes(e.status)?`当前待 ${e.approver} 审批`:`流程已结束`],action:re||se?`驳回`:ae?`同意`:oe?`拒绝`:ie?`撤销`:void 0,state:se?`done`:`current`},...se?[{time:`2026-08-23 12:30:00`,title:`重新提交`,details:[`${e.initiator}已重新提交`],action:`重新提交`,state:`done`},{time:``,hideTime:!0,title:`分管领导审批`,details:[`周杰伦`,`流程到达时间：2026-08-23 12:30:00`],state:ie?`done`:`current`},...ie?[{time:e.revokedAt??`2026-08-28 10:36:00`,title:`撤销`,details:[`${e.revokedBy??`张宇`}已撤销该流程`],action:`撤销`,state:`current`}]:[]]:[],...e.actionLogs??[]],z=[[`所属部门`,e.department],[`发起人`,e.initiator],[`发起时间`,e.initiatedAt]],ce=e=>{if(e===`撤销`){P(!0);return}if(e===`转办`){f(!0);return}if(e===`加签`){w([]),E(``),b(!0);return}if(e===`退回`){A(``),O(j),M(e=>e===`initiator`?`previous`:`initiator`);return}if(e===`拒绝`){te(``),F(!0);return}n(`已${e}`)},B=o&&!re&&!ie&&!se&&!ae&&!oe&&!e.actionLogs?.length?R.slice(0,-1):R;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:ne,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:ne,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body${a?` draft-detail`:``}`,children:[(0,Q.jsxs)(`div`,{className:`process-approval-main`,children:[(0,Q.jsxs)(`section`,{className:`process-approval-form`,children:[(0,Q.jsx)(`h3`,{children:`申请单`}),(0,Q.jsx)(`div`,{className:`process-approval-fields`,children:z.map(([e,t])=>(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),t||`-`]},e))}),(0,Q.jsxs)(`label`,{className:`process-approval-description`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,readOnly:!0,defaultValue:`${e.name}相关事项，请按流程审核处理。`})]}),i&&!re&&!ie?(0,Q.jsx)(`div`,{className:`process-initiated-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`})}):null]}),re&&i?(0,Q.jsxs)(`div`,{className:`process-rejected-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>c?.(e),children:`重新提交`})]}):r?null:(0,Q.jsxs)(`section`,{className:`process-approval-opinion`,children:[(0,Q.jsx)(`h3`,{children:`审批意见`}),(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请输入审批意见`}),(0,Q.jsxs)(`div`,{className:`process-approval-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`转办`),children:`转办`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`加签`),children:`加签`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`退回`),children:`驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`拒绝`),children:`拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>ce(`同意`),children:`同意`})]})]})]}),a?null:(0,Q.jsxs)(`section`,{className:`process-approval-log`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`流程日志`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(!0),children:`流程图`})]}),(0,Q.jsx)(`ol`,{children:B.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`div`,{className:`process-log-entry-heading`,children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsxs)(`span`,{className:`process-log-entry-meta`,children:[e.hideTime?null:(0,Q.jsx)(`time`,{children:e.time}),e.action?(0,Q.jsx)(`span`,{className:`process-log-action`,children:e.action}):null]})]}),e.details.map(e=>(0,Q.jsx)(`p`,{children:e},e))]})]},e.title))})]})]})]})}),l?(0,Q.jsx)(`div`,{className:`process-flowchart-map-layer`,role:`presentation`,onMouseDown:()=>u(!1),children:(0,Q.jsxs)(`section`,{className:`process-flowchart-map-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-flowchart-map-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-flowchart-map-title`,children:`流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程图`,onClick:()=>u(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart-map`,"aria-label":`${e.name}流程图`,children:[(0,Q.jsx)(`i`,{className:`flowchart-map-link start-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-right`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link secondary-right`}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node start`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`b`,{children:e.name})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval active`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`设备主管审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy first-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval manager`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`总经理审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy second-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]})]})]})}):null,N?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>P(!1),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>P(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>P(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{P(!1),n(`已撤销`)},children:`确定撤销`})]})]})}):null,ee?(0,Q.jsx)(`div`,{className:`process-refuse-layer`,role:`presentation`,onMouseDown:()=>F(!1),children:(0,Q.jsxs)(`section`,{className:`process-refuse-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-refuse-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-refuse-title`,children:`确认拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭拒绝确认`,onClick:()=>F(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-refuse-body`,children:[(0,Q.jsxs)(`label`,{children:[`拒绝意见`,(0,Q.jsx)(`textarea`,{rows:`4`,value:I,onChange:e=>te(e.target.value),placeholder:`请输入拒绝意见`})]}),(0,Q.jsx)(`p`,{children:`拒绝后该流程终止，无法修改，确认要拒绝吗？`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>F(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已拒绝`,I.trim()),F(!1),te(``)},children:`确定拒绝`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>f(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),h&&(n(`已转办`,{target:h,reason:_}),f(!1),m(!1),v(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-transfer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-transfer-title`,children:`转办流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭转办弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 转办人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>m(!0),children:[h?`${h.name} · ${h.department}`:`请选择转办人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`转办原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:_,onChange:e=>v(e.target.value),placeholder:`请输入转办原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!h,children:`确认转办`})]})]})}):null,y?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>b(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),C.length&&(n(`已加签`,{targets:C,reason:T}),b(!1),S(!1),w([]),E(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-add-signer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-add-signer-title`,children:`加签流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭加签弹窗`,onClick:()=>b(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 加签人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>S(!0),children:[C.length?C.map(e=>e.name).join(`、`):`请选择加签人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`加签原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:T,onChange:e=>E(e.target.value),placeholder:`请输入加签原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>b(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!C.length,children:`确认加签`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>O(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-return-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-return-confirm-title`,children:`确认驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭驳回确认`,onClick:()=>O(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-return-body`,children:[(0,Q.jsxs)(`label`,{children:[`驳回意见`,(0,Q.jsx)(`textarea`,{rows:`3`,value:k,maxLength:200,placeholder:`请输入驳回意见（选填）`,onChange:e=>A(e.target.value)})]}),(0,Q.jsxs)(`p`,{children:[`驳回后，流程将退回至`,L.label,`，确认要驳回吗？`]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{O(null),A(``)},children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已驳回`,{target:L,reason:k.trim()}),O(null),A(``)},children:`确认驳回`})]})]})}):null,p?(0,Q.jsx)(UB,{organizations:Xz,users:Zz,selectedUser:h,onSelect:g,onClose:()=>m(!1),title:`选择转办人`,selectedLabel:`已选转办人`}):null,x?(0,Q.jsx)(WB,{organizations:Xz,users:Zz,selectedUsers:C,onSelect:w,onClose:()=>S(!1),title:`选择加签人`,selectedLabel:`已选加签人`}):null]})}function sB({onAction:e,initialFilter:t=`待审批`,initialProcessNumber:n=``,processRecords:r,setProcessRecords:i}){let[a,o]=(0,Z.useState)(null),[s,c]=(0,Z.useState)(null),[l,u]=(0,Z.useState)(t),[d,f]=(0,Z.useState)({number:n,title:``,application:``,type:``,status:``}),[p,m]=(0,Z.useState)(`全部`),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(null),[y,b]=(0,Z.useState)(null),[x,S]=(0,Z.useState)(`new`),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),j=(0,Z.useRef)(null),M=[{category:`人资管理`,application:`消防管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,application:`机电管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,application:`双重预防机制`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,application:`生产管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,application:`应急管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,application:`设备管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,application:`火工品管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,application:`安全管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,application:`双重预防机制`,tone:`red`,name:`材料采购流程`}],N={待审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`arrivalAt`,`status`]},已审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`completedAt`,`result`,`status`]},抄送我的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`sentAt`,`status`]},我发起的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiatedAt`,`currentNode`,`status`]},草稿箱:{filters:[`title`],columns:[`title`,`type`,`application`,`initiatedAt`,`status`]}},P={number:`流程编号`,title:`标题`,application:`所属应用`,type:`流程类型`,initiator:`发起人`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},ee=e=>l===`待审批`&&e===`title`?`流程名称`:l===`待审批`&&e===`status`?`当前状态`:l===`已审批`&&e===`title`?`流程名称`:l===`已审批`&&e===`completedAt`?`处理时间`:l===`已审批`&&e===`result`?`我的处理`:l===`已审批`&&e===`status`?`当前状态`:l===`抄送我的`&&e===`title`?`流程名称`:l===`抄送我的`&&e===`sentAt`?`抄送时间`:l===`抄送我的`&&e===`status`?`当前状态`:l===`我发起的`&&e===`title`?`流程名称`:l===`我发起的`&&e===`status`?`当前状态`:l===`草稿箱`&&e===`title`?`流程名称`:l===`草稿箱`&&e===`initiatedAt`?`保存时间`:l===`草稿箱`&&e===`status`?`状态`:P[e],F=N[l],I=[...new Set(r.map(e=>e.application??`综合管理`))],te=M.filter(e=>(p===`全部`||p===`最近使用`&&e.recent)&&(!h.trim()||e.name.includes(h.trim()))),ne=e=>({number:qz(e),title:e.name,application:e.application??`综合管理`,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?e.handledResult??`同意`:`-`,sentAt:e.initiatedAt,endedAt:[`审批中`,`已撤销`].includes(e.status)||e.draft?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),re=r.filter(e=>{let t=l===`待审批`&&[`待审批`,`审批中`].includes(e.status)&&e.approver===`张宇`||l===`已审批`&&e.handledByMe||l===`抄送我的`&&e.ccToMe||l===`我发起的`&&e.startedByMe||l===`草稿箱`&&e.draft,n=ne(e);return t&&(!d.number||n.number.includes(d.number))&&(!d.title||n.title.includes(d.title))&&(!d.application||n.application===d.application)&&(!d.type||n.type===d.type)&&(!d.status||n.status===d.status)}),ie=(t,n={})=>{let r=typeof n==`string`?{opinion:n}:n;t===`已撤销`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已撤销`,startedByMe:!0,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-08-28 10:36:00`}:e)),t===`已拒绝`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已拒绝`,handledByMe:!0,handledResult:`拒绝`,finalOperator:`张宇`,refusalOpinion:r.opinion??``,currentNode:`流程已结束`}:e)),t===`已转办`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`审批中`,approver:r.target?.name??e.approver,currentNode:`转办审批`,handledByMe:!0,handledResult:`转办`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:00:00`,title:`转办`,details:[`张宇已转办给${r.target?.name??`处理人`}`,`转办原因：${r.reason||`未填写`}`],action:`转办`,state:`done`}]}:e)),t===`已加签`&&i(e=>e.map(e=>e.id===a.id?{...e,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:02:00`,title:`加签`,details:[`张宇已加签给${r.targets?.map(e=>e.name).join(`、`)||`处理人`}`,`加签原因：${r.reason||`未填写`}`],action:`加签`,state:`done`}]}:e)),t===`已驳回`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已驳回`,currentNode:`已驳回至${r.target?.label??`上一节点`}`,handledByMe:!0,handledResult:`驳回`,rejectedBy:`张宇`,rejectionOpinion:r.reason||`未填写`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:05:00`,title:`驳回`,details:[`张宇已驳回至${r.target?.label??`上一节点`}`,`驳回原因：${r.reason||`未填写`}`],action:`驳回`,state:`current`}]}:e)),e(`${a.name}${t}`),o(null)},ae=()=>{s&&(i(e=>e.map(e=>e.id===s.id?{...e,status:`已撤销`,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-09-02 10:36:00`}:e)),e(`${s.name}已撤销`),c(null))},oe=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),u(`发起流程`),L(t,e)},se=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),L({...t,name:e.name},{...e,description:`请根据驳回意见核对并完善申请信息后重新提交。`},`resubmit`)},L=(e,t=null,n=`restore`)=>{v(e),b(t),S(t?n:`new`),w(null),O(!1),A(!1)},R=e=>{L(e)},z=()=>{v(null),b(null),A(!1)},ce=()=>{if(!_)return;let t=new FormData(j.current),n={id:y?.draft?y.id:`flow-draft-${Date.now()}`,name:_.name,initiator:`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,application:_.application,department:t.get(`department`)||`安全管理部`,description:t.get(`description`)||``,draft:!0,startedByMe:!0,sequence:y?.sequence??r.filter(e=>Kz(e.initiatedAt)===Gz).length+1};i(e=>y?.draft?e.map(e=>e.id===n.id?n:e):[n,...e]),b(n),e(`${_.name}已暂存到草稿箱`),z()};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsx)(`header`,{className:`task-list-header`,children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]})}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(N)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":l===e,className:l===e?`active`:``,onClick:()=>u(e),children:e},e))})}),l===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":p===e,className:p===e?`active`:``,onClick:()=>m(e),children:e},e))}),(0,Q.jsx)(`input`,{value:h,onChange:e=>g(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=te.filter(t=>t.category===e),n=M.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsxs)(`button`,{onClick:()=>R(e),children:[e.name,`（`,e.application,`）`]},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[F.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:d.number,onChange:e=>f(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,F.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程名称`}),(0,Q.jsx)(`input`,{value:d.title,onChange:e=>f(t=>({...t,title:e.target.value})),placeholder:`请输入流程名称`})]}):null,F.filters.includes(`application`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`所属应用`}),(0,Q.jsxs)(`select`,{value:d.application,onChange:e=>f(t=>({...t,application:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择所属应用`}),I.map(e=>(0,Q.jsx)(`option`,{children:e},e))]})]}):null,F.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:d.type,onChange:e=>f(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,F.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:d.status,onChange:e=>f(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>f({number:``,title:``,application:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(e=>(0,Q.jsx)(`span`,{children:ee(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),re.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(t=>{let n=ne(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>o(e),children:n},t):t===`status`||t===`result`?(0,Q.jsx)(`i`,{className:[`已驳回`,`已拒绝`].includes(n)?`rejected`:[`待审批`,`审批中`].includes(n)?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),l===`我发起的`?(0,Q.jsxs)(`span`,{className:`process-list-actions initiated-actions`,children:[(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:e.status===`已驳回`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>se(e),children:`重新提交`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:[`待审批`,`审批中`,`已驳回`].includes(e.status)?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action danger`,onClick:()=>c(e),children:`撤销`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),`查看`]})})]}):(0,Q.jsxs)(`span`,{className:`process-list-actions`,children:[l===`草稿箱`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>oe(e),children:`继续填报`}):null,(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),l===`待审批`?`审批`:`查看`]})]})]},e.id)),re.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(oB,{process:a,onClose:()=>o(null),onApprove:ie,viewOnly:l!==`待审批`,canRevoke:!1,canResumeDraft:l===`草稿箱`,hideFinalLog:[`已审批`,`我发起的`].includes(l),onResumeDraft:oe,onResubmit:se}),s?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>c(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-list-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-list-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>c(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:ae,children:`确定撤销`})]})]})}):null,C?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>w(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsx)(`h2`,{id:`draft-restore-title`,children:`发现同名流程草稿`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>w(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,C.drafts.length,` 条“`,C.template.name,`”草稿，请选择恢复继续填报，或重新发起新的流程。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:C.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>L(C.template),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=C.drafts.find(e=>e.id===T);L(C.template,e)},children:`恢复并继续填报`})]})]})}):null,_?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:z,role:`presentation`,children:(0,Q.jsxs)(`form`,{ref:j,className:`process-form-dialog${D?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),x===`resubmit`&&y?.id&&i(e=>e.map(e=>e.id===y.id?{...e,status:`审批中`,currentNode:`分管领导审批`,resubmitted:!0}:e)),e(`${x===`resubmit`?`已重新提交流程`:`已发起流程`}：${_.name}`),z()},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:y?x===`resubmit`?`重新提交`:`恢复草稿`:`发起流程`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>A(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>O(e=>!e),children:D?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:z,children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{name:`title`,defaultValue:_.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{name:`department`,defaultValue:y?.department??`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`5`,defaultValue:y?.description??``,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:y?x===`resubmit`?`请根据驳回意见核对信息后重新提交。`:`正在恢复 ${y.initiatedAt} 保存的草稿。`:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:z,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-draft-action`,onClick:ce,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:x===`resubmit`?`重新提交`:`发起流程`})]})]})]})}):null,_&&k?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>A(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>A(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function cB({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(fz,{})]})})}function lB({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),...Bz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(fz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(fz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(bz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function uB({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Qz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(fz,{})]},t))})]})}function dB({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(Bz.find(t=>t.name===e)??Bz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(gz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:Bz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(hz,{}):null]},n))}):null]})}var fB=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:pz,nested:!0},{label:`隐患排查治理`,icon:Sz,expanded:!0}],pB=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查审批流程`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],mB=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:Cz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`}],hB=[{title:`员工离职申请`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`平巷凿岩作业隐患排查审批流程`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`掘进工作面隐患整改审批流程`,detail:`隐患排查审批`,icon:nz,tone:`lime`,kind:`approval`}],gB=[{id:`inspection-001`,reporter:`张宇`,date:`2026-07-29`,shift:`早班`,location:`西翼 3# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`现场检查正常，无需整改。`,status:`已提交`,flowStatus:`审批中`},{id:`inspection-002`,reporter:`李明`,date:`2026-07-28`,shift:`中班`,location:`西翼 2# 平巷`,equipment:`正常`,environment:`发现问题`,protection:`正常`,description:`照明灯具亮度不足，已通知机电班处理。`,status:`已复核`,flowStatus:`已通过`}];function _B({onAction:e,onSwitchApplication:t,approvalDrafts:n,setApprovalDrafts:r,onSaveProcessDraft:i,onDeleteProcessDraft:a,initialFormTitle:o=mB[0].title,initialOpenForm:s=!1,initialFormSource:c=hB.some(e=>e.title===o)?`隐患排查审批流程`:`岗位隐患排查清单`}){let[l,u]=(0,Z.useState)(c),[d,f]=(0,Z.useState)(s),[p,m]=(0,Z.useState)(o),[h,g]=(0,Z.useState)(!1),[_,v]=(0,Z.useState)(`页面`),[y,b]=(0,Z.useState)(c),[x,S]=(0,Z.useState)(null),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),[j,M]=(0,Z.useState)(null),[N,P]=(0,Z.useState)(gB),[ee,F]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[I,te]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[ne,re]=(0,Z.useState)(1),[ie,ae]=(0,Z.useState)(10),oe=(0,Z.useRef)(null),se=(0,Z.useRef)(null),L=l,R=[...mB,...hB].find(e=>e.title===p)??mB[0],z=R.kind===`approval`,ce=n.filter(e=>e.kind===(z?`approval`:`inspection`)&&e.name===R.title),B=(e=mB[0],t=`岗位隐患排查清单`,n=null)=>{m(e.title),b(t),w(n),S(null),f(!0),g(!1),v(`页面`),A(!1),M(null)},le=(e=mB[0],t=`岗位隐患排查清单`)=>{let r=n.filter(t=>t.draft&&t.name===e.title&&t.kind===(e.kind===`approval`?`approval`:`inspection`));if(r.length){S({form:e,source:t,drafts:r}),E(r[0].id);return}B(e,t)},ue=()=>O(!0),de=()=>{O(!1),f(!1),g(!1),A(!1)},fe=t=>{t.preventDefault(),g(!0),A(!1),e(`${R.title}已提交${z?`，已进入审批流程`:``}`)},V=()=>{if(!z)return;let t=new FormData(se.current),n={id:C?.id?.startsWith(`approval-draft-`)?C.id:`approval-draft-${Date.now()}`,processDraftId:C?.processDraftId??`flow-draft-${Date.now()}`,kind:`approval`,name:R.title,initiator:t.get(`reporter`)||`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:t.get(`description`)||``,draft:!0};r(e=>C?.id?.startsWith(`approval-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),i({id:n.processDraftId,name:n.name,initiator:n.initiator,initiatedAt:n.initiatedAt,currentNode:n.currentNode,status:n.status,department:n.department,description:n.description,application:`双重预防机制`,draft:!0,startedByMe:!0}),A(!1),e(`${R.title}已暂存到草稿箱`)},H=()=>{let t=new FormData(se.current),n={id:C?.id?.startsWith(`inspection-draft-`)?C.id:`inspection-draft-${Date.now()}`,kind:`inspection`,name:R.title,reporter:t.get(`reporter`)||`张宇`,inspectionDate:t.get(`inspectionDate`)||`2026-09-02`,shift:t.get(`shift`)||`早班`,location:t.get(`location`)||``,equipment:t.get(`equipment`)||``,environment:t.get(`environment`)||``,protection:t.get(`protection`)||``,description:t.get(`description`)||``,initiatedAt:`2026-09-02 10:00:00`,status:`草稿`,draft:!0};r(e=>C?.id?.startsWith(`inspection-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),A(!1),e(`${R.title}已暂存到草稿箱`)},pe=e=>{if(e===`页面`&&_!==`页面`&&ce.length){S({form:R,source:y,drafts:ce}),E(ce[0].id);return}v(e)},me=e=>{if(e!==_){if(_===`页面`&&k){M({type:`tab`,tab:e});return}pe(e)}},he=e=>{if(d&&_===`页面`&&k){M({type:`page`,item:e});return}u(e),f(!1),g(!1)},ge=e=>{if(d&&_===`页面`&&k){M({type:`application`,application:e});return}t(e)},_e=()=>{let e=j;if(M(null),A(!1),e?.type===`tab`){pe(e.tab);return}e?.type===`page`&&(u(e.item),f(!1),g(!1)),e?.type===`application`&&t(e.application)},ve=N.filter(e=>(!I.reporter||e.reporter.includes(I.reporter))&&(!I.date||e.date===I.date)&&(!I.shift||e.shift===I.shift)&&(!z||!I.flowStatus||e.flowStatus===I.flowStatus)),ye=Math.max(1,Math.ceil(ve.length/ie)),U=Math.min(ne,ye),W=ve.slice((U-1)*ie,U*ie),G=(t=N)=>{let n=[[`填报人`,`检查日期`,`作业班次`,`作业地点`,`凿岩设备防护装置完好`,`作业面通风与照明符合要求`,`人员防护用品佩戴规范`,`隐患描述与整改建议`,`填报状态`],...t.map(e=>[e.reporter,e.date,e.shift,e.location,e.equipment,e.environment,e.protection,e.description,e.status])].map(e=>e.map(e=>`"${String(e).replaceAll(`"`,`""`)}"`).join(`,`)).join(`
-`),r=document.createElement(`a`);r.href=URL.createObjectURL(new Blob([`\ufeff${n}`],{type:`text/csv;charset=utf-8`})),r.download=`${R.title}-历史数据.csv`,r.click(),URL.revokeObjectURL(r.href),e(`历史填报数据已导出`)};return(0,Q.jsxs)(`section`,{className:`prevention-page`,"aria-labelledby":`prevention-page-title`,children:[(0,Q.jsxs)(`aside`,{className:`prevention-sidebar`,"aria-label":`双重预防机制功能导航`,children:[(0,Q.jsx)(dB,{currentName:`双重预防机制`,onSelect:ge}),(0,Q.jsx)(`nav`,{className:`prevention-nav`,children:fB.map(({label:t,icon:n,nested:r,expanded:i})=>(0,Q.jsxs)(`button`,{className:i?`prevention-nav-item expanded`:`prevention-nav-item`,onClick:()=>e(t),children:[(0,Q.jsx)(n,{}),(0,Q.jsx)(`span`,{children:t}),r?(0,Q.jsx)(_z,{}):i?(0,Q.jsx)(gz,{}):null]},t))}),(0,Q.jsx)(`div`,{className:`prevention-submenu`,children:pB.map(e=>(0,Q.jsxs)(`button`,{className:l===e?`selected`:``,onClick:()=>he(e),children:[(0,Q.jsx)(`span`,{children:e}),[`隐患排查任务发布`,`隐患排查工作表`,`隐患整改通知单`,`隐患汇报`].includes(e)?(0,Q.jsx)(_z,{}):null]},e))}),(0,Q.jsxs)(`nav`,{className:`prevention-nav prevention-nav-bottom`,children:[(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险告知卡`),children:[(0,Q.jsx)(QR,{}),(0,Q.jsx)(`span`,{children:`风险告知卡`}),(0,Q.jsx)(_z,{})]}),(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险四色图`),children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`风险四色图`}),(0,Q.jsx)(_z,{})]})]})]}),(0,Q.jsx)(`div`,{className:`prevention-content`,children:d?(0,Q.jsxs)(`section`,{className:`inspection-form-view`,"aria-labelledby":`inspection-form-title`,children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`span`,{children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>he(y),children:y}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:`在线填报`})]}),(0,Q.jsx)(`nav`,{className:`inspection-view-tabs`,"aria-label":`表单视图`,children:[`页面`,`数据`,`草稿箱`].map(e=>(0,Q.jsx)(`button`,{className:_===e?`active`:``,onClick:()=>me(e),children:e},e))}),_===`页面`?(0,Q.jsxs)(`form`,{ref:se,className:`inspection-form`,onChange:()=>A(!0),onSubmit:fe,children:[(0,Q.jsxs)(`header`,{className:`inspection-form-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`inspection-form-title`,children:R.title}),(0,Q.jsx)(`span`,{children:z?`请如实填写隐患情况，提交后将进入审批流程。`:`请如实填写现场检查情况，带 * 的项目为必填项。`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`form-back`,onClick:ue,children:`返回清单`})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`填报信息`}),(0,Q.jsxs)(`div`,{className:`form-fields`,children:[(0,Q.jsxs)(`label`,{children:[`填报人 *`,(0,Q.jsx)(`input`,{name:`reporter`,defaultValue:C?.reporter??`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`检查日期 *`,(0,Q.jsx)(`input`,{name:`inspectionDate`,type:`date`,defaultValue:C?.inspectionDate??`2026-07-29`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`作业班次 *`,(0,Q.jsxs)(`select`,{name:`shift`,defaultValue:C?.shift??`早班`,required:!0,children:[(0,Q.jsx)(`option`,{children:`早班`}),(0,Q.jsx)(`option`,{children:`中班`}),(0,Q.jsx)(`option`,{children:`夜班`})]})]}),(0,Q.jsxs)(`label`,{children:[`作业地点 *`,(0,Q.jsx)(`input`,{name:`location`,defaultValue:C?.location??``,placeholder:`例如：西翼 3# 平巷`,required:!0})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`现场检查`}),(0,Q.jsxs)(`div`,{className:`inspection-items`,children:[(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`凿岩设备防护装置完好`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`normal`,required:!0,defaultChecked:C?.equipment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`issue`,defaultChecked:C?.equipment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`作业面通风与照明符合要求`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`normal`,required:!0,defaultChecked:C?.environment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`issue`,defaultChecked:C?.environment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`人员防护用品佩戴规范`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`normal`,required:!0,defaultChecked:C?.protection===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`issue`,defaultChecked:C?.protection===`issue`}),` `,`发现问题`]})]})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`问题说明`}),(0,Q.jsxs)(`label`,{className:`wide-field`,children:[`隐患描述与整改建议`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`3`,defaultValue:C?.description??``,placeholder:`如发现隐患，请填写具体位置、问题描述及建议措施。`})]})]}),(0,Q.jsxs)(`footer`,{className:`form-actions`,children:[h?(0,Q.jsxs)(`span`,{className:`submit-status`,children:[(0,Q.jsx)(hz,{}),` `,z?`已提交，等待审批流程处理`:`已提交，等待负责人复核`]}):(0,Q.jsx)(`span`,{children:z?`填写完成后将提交至隐患排查审批流程。`:`填写完成后可直接提交至隐患排查记录。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`form-secondary`,onClick:ue,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`form-draft`,onClick:z?V:H,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`form-primary`,children:`提交`})]})]})]},C?.id??p):_===`数据`?(0,Q.jsxs)(`section`,{className:`inspection-data-view`,"aria-label":`${R.title}历史数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`历史填报数据`}),(0,Q.jsx)(`h2`,{children:R.title})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ve.length,` 条记录`]})]}),(0,Q.jsxs)(`form`,{className:`inspection-data-filter`,onSubmit:e=>{e.preventDefault(),te(ee),re(1)},children:[(0,Q.jsxs)(`label`,{children:[`填报人`,(0,Q.jsx)(`input`,{value:ee.reporter,maxLength:10,placeholder:`请输入填报人`,onChange:e=>F(t=>({...t,reporter:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`检查日期`,(0,Q.jsx)(`input`,{type:`date`,value:ee.date,onChange:e=>F(t=>({...t,date:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`作业班次`,(0,Q.jsxs)(`select`,{value:ee.shift,onChange:e=>F(t=>({...t,shift:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部班次`}),(0,Q.jsx)(`option`,{value:`早班`,children:`早班`}),(0,Q.jsx)(`option`,{value:`中班`,children:`中班`}),(0,Q.jsx)(`option`,{value:`夜班`,children:`夜班`})]})]}),z?(0,Q.jsxs)(`label`,{children:[`流程状态`,(0,Q.jsxs)(`select`,{value:ee.flowStatus,onChange:e=>F(t=>({...t,flowStatus:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),Jz.map(e=>(0,Q.jsx)(`option`,{value:e,children:e},e))]})]}):null,(0,Q.jsxs)(`div`,{className:`inspection-filter-actions`,children:[(0,Q.jsx)(`button`,{type:`submit`,className:`inspection-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{let e={reporter:``,date:``,shift:``,flowStatus:``};F(e),te(e),re(1)},children:`重置`})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-data-actions`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>oe.current?.click(),children:`导入`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>G(ve),children:`导出`})]}),(0,Q.jsx)(`input`,{ref:oe,className:`inspection-import-input`,type:`file`,accept:`.csv,.xlsx,.xls`,onChange:t=>{let n=t.target.files?.[0];if(!n)return;let r={id:`inspection-${Date.now()}`,reporter:`导入用户`,date:`2026-07-30`,shift:`早班`,location:`西翼 1# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`已从 ${n.name} 导入填报记录。`,status:`已导入`,flowStatus:`待审批`};P(e=>[r,...e]),t.target.value=``,e(`已导入 ${n.name}`)}})]}),(0,Q.jsx)(`div`,{className:`inspection-data-scroll`,children:(0,Q.jsxs)(`table`,{className:z?`inspection-approval-data-table`:``,children:[(0,Q.jsx)(`thead`,{children:(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`th`,{children:`发起人`}),(0,Q.jsx)(`th`,{children:`发起时间`}),(0,Q.jsx)(`th`,{children:`流程状态`})]}):null,(0,Q.jsx)(`th`,{children:`填报人`}),(0,Q.jsx)(`th`,{children:`检查日期`}),(0,Q.jsx)(`th`,{children:`作业班次`}),(0,Q.jsx)(`th`,{children:`作业地点`}),(0,Q.jsx)(`th`,{children:`凿岩设备防护装置完好`}),(0,Q.jsx)(`th`,{children:`作业面通风与照明符合要求`}),(0,Q.jsx)(`th`,{children:`人员防护用品佩戴规范`}),(0,Q.jsx)(`th`,{children:`隐患描述与整改建议`})]})}),(0,Q.jsx)(`tbody`,{children:W.length?W.map(e=>(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`td`,{children:e.initiator??e.reporter}),(0,Q.jsx)(`td`,{children:e.initiatedAt??`${e.date} 08:00`}),(0,Q.jsx)(`td`,{children:e.flowStatus??`待审批`})]}):null,(0,Q.jsx)(`td`,{children:e.reporter}),(0,Q.jsx)(`td`,{children:e.date}),(0,Q.jsx)(`td`,{children:e.shift}),(0,Q.jsx)(`td`,{children:e.location}),(0,Q.jsx)(`td`,{children:e.equipment}),(0,Q.jsx)(`td`,{children:e.environment}),(0,Q.jsx)(`td`,{children:e.protection}),(0,Q.jsx)(`td`,{className:`inspection-description-cell`,children:e.description})]},e.id)):(0,Q.jsx)(`tr`,{children:(0,Q.jsx)(`td`,{colSpan:z?11:8,className:`inspection-data-empty`,children:`暂无历史填报数据`})})})]})}),(0,Q.jsx)(iB,{className:`inspection-data-pagination`,total:ve.length,page:U,pageSize:ie,onPageChange:re,onPageSizeChange:e=>{ae(e),re(1)}})]}):(0,Q.jsxs)(`section`,{className:`inspection-draft-view`,"aria-label":`${R.title}草稿箱`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`暂存记录`}),(0,Q.jsx)(`h2`,{children:`草稿箱`})]}),(0,Q.jsxs)(`span`,{children:[`共 `,ce.length,` 条草稿`]})]}),ce.length?(0,Q.jsx)(`div`,{className:`inspection-draft-list`,children:ce.map(t=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{className:`inspection-draft-title`,children:[(0,Q.jsx)(`b`,{children:t.name}),(0,Q.jsx)(`i`,{children:`草稿`})]}),(0,Q.jsxs)(`span`,{children:[`填报人：`,t.reporter||`张宇`]}),(0,Q.jsxs)(`time`,{children:[`保存时间：`,t.initiatedAt]})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>B(R,y,t),children:`继续填报`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>{r(e=>e.filter(e=>e.id!==t.id)),t.processDraftId&&a(t.processDraftId),C?.id===t.id&&w(null),e(`已删除草稿：${t.name}`)},children:`删除`})]})]},t.id))}):(0,Q.jsx)(`div`,{className:`inspection-draft-empty`,children:`暂无草稿，页面内暂存的填报数据会显示在这里。`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>u(`隐患排查治理`),children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:L})]}),(0,Q.jsx)(`div`,{className:`prevention-strip`}),[`岗位隐患排查清单`,`隐患排查审批流程`].includes(l)?(0,Q.jsxs)(`section`,{className:`prevention-list prevention-menu-catalog`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`全部`})}),(0,Q.jsx)(`div`,{className:`prevention-catalog-grid`,children:(l===`隐患排查审批流程`?hB:mB).map(e=>{let{title:t,icon:n,tone:r}=e;return(0,Q.jsxs)(`button`,{type:`button`,className:`prevention-catalog-card`,onClick:()=>le(e,l),children:[(0,Q.jsx)(`span`,{className:`prevention-form-icon ${r}`,children:(0,Q.jsx)(n,{})}),(0,Q.jsx)(`b`,{children:t})]},t)})})]}):(0,Q.jsxs)(`section`,{className:`prevention-list prevention-empty-content`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`功能页面`})}),(0,Q.jsx)(`p`,{children:`请从左侧菜单选择需要处理的业务。`})]})]})}),x?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>S(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`approval-draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsxs)(`h2`,{id:`approval-draft-restore-title`,children:[`发现同名`,x.form.kind===`approval`?`流程`:`表单`,`草稿`]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>S(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,x.drafts.length,` 条“`,x.form.title,`”草稿，请选择恢复继续填报，或重新发起新的`,x.form.kind===`approval`?`流程`:`表单`,`。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:x.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`approval-process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>B(x.form,x.source),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=x.drafts.find(e=>e.id===T);B(x.form,x.source,e)},children:`恢复并继续填报`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>O(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`cancel-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭取消确认`,onClick:()=>O(!1),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`取消填写`}),(0,Q.jsx)(`h2`,{id:`cancel-inspection-form-title`,children:`确认取消吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，取消后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>O(!1),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:de,children:`确认取消`})]})]})}):null,j?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>M(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`unsaved-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭未保存提醒`,onClick:()=>M(null),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`未保存内容`}),(0,Q.jsx)(`h2`,{id:`unsaved-inspection-form-title`,children:`确认切换吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，切换后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>M(null),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:_e,children:`确认切换`})]})]})}):null]})}function vB({app:e,onReturn:t,onAction:n,onSwitchApplication:r}){let i=e.icon,a=[`核对今日${e.name}记录`,`完成本周${e.description}复核`,`查看待处理异常提醒`];return(0,Q.jsxs)(`section`,{className:`mock-app-page`,"aria-labelledby":`mock-app-title`,children:[(0,Q.jsxs)(`aside`,{className:`mock-app-sidebar`,"aria-label":`${e.name}功能导航`,children:[(0,Q.jsx)(dB,{currentName:e.name,onSelect:r}),(0,Q.jsxs)(`nav`,{children:[(0,Q.jsxs)(`button`,{className:`mock-nav-item active`,children:[(0,Q.jsx)(yz,{}),`应用概览`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}待办`),children:[(0,Q.jsx)(Cz,{}),`待办处理`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}记录`),children:[(0,Q.jsx)(QR,{}),`业务记录`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}统计`),children:[(0,Q.jsx)(ZR,{}),`数据统计`]})]})]}),(0,Q.jsxs)(`div`,{className:`mock-app-content`,children:[(0,Q.jsxs)(`div`,{className:`mock-app-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`应用中心`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{children:e.name})]}),(0,Q.jsxs)(`header`,{className:`mock-app-header`,children:[(0,Q.jsx)(`span`,{className:`mock-app-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h1`,{id:`mock-app-title`,children:[e.name,`工作台`]}),(0,Q.jsx)(`p`,{children:`示例业务页面，数据仅用于界面演示。`})]}),(0,Q.jsxs)(`button`,{className:`mock-primary-action`,onClick:()=>n(`新建${e.name}记录`),children:[(0,Q.jsx)(az,{}),`新建记录`]})]}),(0,Q.jsxs)(`section`,{className:`mock-metrics`,"aria-label":`${e.name}概览`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`待处理`}),(0,Q.jsx)(`b`,{children:`6`}),(0,Q.jsx)(`small`,{children:`需你跟进`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`今日记录`}),(0,Q.jsx)(`b`,{children:`14`}),(0,Q.jsx)(`small`,{children:`已同步更新`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`异常提醒`}),(0,Q.jsx)(`b`,{children:`2`}),(0,Q.jsx)(`small`,{children:`等待复核`})]})]}),(0,Q.jsxs)(`section`,{className:`mock-work-list`,"aria-labelledby":`mock-work-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`mock-work-title`,children:`待处理事项`}),(0,Q.jsxs)(`button`,{onClick:()=>n(`${e.name}全部事项`),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),a.map((e,t)=>(0,Q.jsxs)(`button`,{onClick:()=>n(e),children:[(0,Q.jsx)(`span`,{className:`mock-row-icon tone-${t}`,children:(0,Q.jsx)(Cz,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsx)(`small`,{children:t===0?`今天需完成`:`已分配给你`})]}),(0,Q.jsx)(fz,{})]},e))]}),(0,Q.jsxs)(`button`,{className:`prevention-back`,onClick:t,children:[`返回工作台 `,(0,Q.jsx)(fz,{})]})]})]})}function yB({onOpen:e,onOpenAll:t}){return(0,Q.jsxs)(`section`,{className:`activity-feed`,"aria-labelledby":`activity-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`activity-title`,children:`动态`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:t,children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`feed-list`,children:$z.length?$z.map(({person:t,tone:n,avatar:r,headline:i,detail:a,time:o,icon:s})=>(0,Q.jsxs)(`button`,{className:`feed-item`,onClick:()=>e(i),children:[(0,Q.jsx)(`span`,{className:`feed-avatar ${n}`,children:r}),(0,Q.jsxs)(`span`,{className:`feed-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`strong`,{children:i})]}),(0,Q.jsx)(`p`,{children:a}),(0,Q.jsx)(`time`,{children:o})]}),(0,Q.jsx)(s,{className:`feed-icon`})]},i)):(0,Q.jsxs)(`div`,{className:`empty-feed`,children:[(0,Q.jsx)(iz,{}),(0,Q.jsx)(`p`,{children:`这一类动态已全部处理。`})]})})]})}function bB({onAction:e,onOpenTask:t,onOpenProcess:n,onOpenDynamics:r}){return(0,Q.jsxs)(`aside`,{className:`command-panel`,"aria-label":`快捷操作`,children:[(0,Q.jsx)(`p`,{children:`快捷入口`}),(0,Q.jsxs)(`button`,{className:`command-primary`,onClick:t,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(az,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起任务`}),(0,Q.jsx)(`small`,{children:`交办或跟进一项工作`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:n,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(cz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起流程`}),(0,Q.jsx)(`small`,{children:`提交一次审批或申请`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:r,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(mz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发动态`}),(0,Q.jsx)(`small`,{children:`发布一条安全工作动态`})]}),(0,Q.jsx)(fz,{})]})]})}function xB({title:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e===`发起任务`;return(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`action-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`dialog-close`,"aria-label":`关闭`,onClick:t,children:`×`}),n?(0,Q.jsxs)(`div`,{className:`dialog-success`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`h2`,{children:`已准备好继续`}),(0,Q.jsx)(`p`,{children:`这是工作台演示状态，实际接入后将在此进入对应业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`完成`})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`快速创建`}),(0,Q.jsx)(`h2`,{id:`action-dialog-title`,children:e}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:i?`填写最小必要信息，将工作直接交给相应负责人。`:`从授权模板中选择流程，减少重复填写。`}),(0,Q.jsxs)(`label`,{children:[i?`任务名称`:`流程模板`,(0,Q.jsx)(`input`,{autoFocus:!0,placeholder:i?`例如：完成现场安全检查`:`例如：选择设备检修申请`})]}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{className:`secondary-button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`primary-button`,onClick:()=>r(!0),children:`继续`})]})]})]})})}var SB=[{id:`safety`,name:`安全风险总览`,description:`风险等级、隐患整改与作业预警的综合视图`,metrics:[[`今日检查`,`28`,`较昨日 +4`],[`待整改隐患`,`16`,`4 项临近逾期`],[`高风险作业`,`3`,`均在监控中`],[`整改完成率`,`86%`,`本月累计`]],charts:[`risk`,`rectification`,`sources`,`trend`]},{id:`device`,name:`设备运行态势`,description:`关键设备运行状态、点检执行与故障分布`,metrics:[[`设备总数`,`248`,`当前在线 243`],[`待点检`,`12`,`今日需完成`],[`异常设备`,`5`,`等待处理`],[`设备完好率`,`97.8%`,`较上月 +0.6%`]],charts:[`device`,`trend`,`sources`,`risk`]},{id:`production`,name:`生产进度跟踪`,description:`产量计划、班组进度与生产指标完成情况`,metrics:[[`本月产量`,`12.6 万吨`,`计划完成 91%`],[`今日进尺`,`186 米`,`较计划 +12 米`],[`作业班组`,`8`,`全部已开工`],[`生产达成率`,`94%`,`较上周 +3%`]],charts:[`progress`,`trend`,`device`,`rectification`]},{id:`emergency`,name:`应急管理看板`,description:`应急物资、演练计划和预案执行情况`,metrics:[[`应急物资`,`356`,`库存充足`],[`本月演练`,`4`,`已完成 3 项`],[`应急预案`,`18`,`均为有效版本`],[`响应及时率`,`100%`,`本季度累计`]],charts:[`sources`,`progress`,`risk`,`trend`]}];function CB({type:e}){let t=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let n=t.current;if(!n)return;let r=oC(n),i={axisLine:{lineStyle:{color:`#dce4ec`}},axisLabel:{color:`#7b8998`,fontSize:10},splitLine:{lineStyle:{color:`#eef2f6`}}},a={risk:{title:{text:`风险等级分布`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},legend:{bottom:8,textStyle:{fontSize:10,color:`#7b8998`}},series:[{type:`pie`,radius:[`42%`,`66%`],center:[`50%`,`51%`],label:{show:!1},data:[{value:4,name:`重大`,itemStyle:{color:`#d95745`}},{value:12,name:`较大`,itemStyle:{color:`#e89b3e`}},{value:31,name:`一般`,itemStyle:{color:`#3c98d3`}},{value:47,name:`低风险`,itemStyle:{color:`#5bb287`}}]}]},rectification:{title:{text:`隐患整改闭环`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:16,top:49,bottom:26},xAxis:{type:`category`,data:[`一车间`,`二车间`,`南区`,`北区`,`选矿`],...i},yAxis:{type:`value`,...i},series:[{type:`bar`,barWidth:15,itemStyle:{color:`#1779ba`,borderRadius:[3,3,0,0]},data:[16,22,13,18,25]},{type:`bar`,barWidth:15,itemStyle:{color:`#a9d8c3`,borderRadius:[3,3,0,0]},data:[12,18,10,15,21]}]},sources:{title:{text:`问题来源占比`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},series:[{type:`pie`,radius:`62%`,center:[`50%`,`55%`],label:{formatter:`{b}
-{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function wB(){let[e,t]=(0,Z.useState)(`safety`),n=SB.find(t=>t.id===e)??SB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:SB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(_z,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(gz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(CB,{type:e})},`${n.id}-${e}`))})]})]})})}function TB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(`iframe`,{className:`embedded-dynamics-frame`,src:`${Rz}index.html`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function EB({view:e,title:t,className:n,subview:r,showDescription:i=!1}){let a=JSON.stringify({view:e,subview:r}),o=`
+`,jz=`<!doctype html>
+<html lang="zh-CN">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<meta name="theme-color" content="#f4f7fa" />
+<title>动态 · 澄明工作台</title>
+<style>
+:root { font-family: "Segoe UI Variable Text", "Noto Sans SC", "Microsoft YaHei", sans-serif; color: #182334; background: #f5f7fa; font-synthesis: none; -webkit-font-smoothing: antialiased; }
+* { box-sizing: border-box; }
+body { margin: 0; min-width: 320px; }
+button, input, textarea { font: inherit; }
+button { cursor: pointer; }
+svg { display: block; }
+
+/* ===== Design tokens (from 澄明工作台 workbench-redesign) ===== */
+.workbench {
+  --canvas: #f5f7fa; --surface: #ffffff; --surface-soft: #f8fafc;
+  --text: #182334; --muted: #657386; --line: #e1e7ef;
+  --accent: #0f6cbd; --accent-soft: #e7f2fb;
+  --nav: #172437; --nav-hover: #223a56;
+  --shadow: 0 18px 45px rgba(35, 58, 88, .07);
+  --danger: #c73d32; --danger-soft: #fdeceb;
+  --ok: #287d69; --ok-soft: #e3f4ef;
+  --warn: #ad6037; --warn-soft: #fff0e8;
+  --violet: #7259a4; --violet-soft: #eeeafa;
+  min-height: 100dvh; background: var(--canvas); color: var(--text);
+  transition: background .25s ease, color .25s ease;
+}
+.theme-dark {
+  --canvas: #141c27; --surface: #1b2635; --surface-soft: #202d3e;
+  --text: #f0f5fb; --muted: #a8b6c8; --line: #334255;
+  --accent: #63b0f4; --accent-soft: #183a5a;
+  --nav: #101722; --nav-hover: #243a55;
+  --shadow: 0 18px 45px rgba(0, 0, 0, .18);
+  --danger: #e8857c; --danger-soft: #3a2320;
+  --ok: #5fb9a4; --ok-soft: #1f3a34;
+  --warn: #d99a6c; --warn-soft: #3a2c20;
+  --violet: #b6a3e0; --violet-soft: #2c2540;
+}
+
+/* ===== Nav rail ===== */
+.app-nav { width: 80px; min-height: 100dvh; position: fixed; inset: 0 auto 0 0; z-index: 3; background: var(--nav); color: #bdc9d7; display: flex; flex-direction: column; align-items: center; padding: 17px 0 14px; }
+.product-mark { width: 40px; height: 40px; display: grid; place-items: center; background: #dceeff; color: #0f6cbd; border-radius: 10px; font-family: Georgia, serif; font-weight: 700; font-size: 25px; margin-bottom: 24px; }
+.app-nav nav { width: 100%; display: grid; gap: 4px; }
+.nav-link { width: 100%; min-height: 61px; border: 0; background: transparent; color: inherit; display: grid; place-items: center; gap: 3px; font-size: 10px; position: relative; }
+.nav-link svg { width: 20px; }
+.nav-link:hover { background: var(--nav-hover); color: #fff; }
+.nav-link.active { color: #fff; background: #204260; }
+.nav-link.active::before { content: ''; position: absolute; left: 0; top: 11px; width: 3px; height: 39px; background: #82c4fa; }
+.nav-link.has-child { position: relative; }
+.nav-caret { position: absolute; right: 6px; top: 50%; width: 6px; height: 6px; border-right: 1.5px solid currentColor; border-bottom: 1.5px solid currentColor; transform: translateY(-50%) rotate(45deg); opacity: .65; }
+.nav-link:hover .nav-caret, .nav-link.active .nav-caret { opacity: .9; border-color: #fff; }
+
+/* 二级菜单：内嵌子面板（展开在图标栏右侧，内容区自动右移，不遮挡） */
+.nav-subpanel { position: fixed; left: 80px; top: 0; bottom: 0; width: 196px; background: var(--nav); border-right: 1px solid rgba(255,255,255,.07); padding: 16px 10px; z-index: 5; overflow-y: auto; }
+.nav-subpanel[hidden] { display: none; }
+.nsp-head { font-size: 11px; font-weight: 700; color: #7e8ca0; letter-spacing: .04em; padding: 2px 12px 10px; }
+.nsp-item { display: flex; align-items: center; gap: 11px; width: 100%; border: 0; background: transparent; color: #c7d2df; text-align: left; padding: 10px 12px; border-radius: 9px; font-size: 13.5px; font-weight: 600; cursor: pointer; }
+.nsp-item svg { width: 17px; color: #8a98a8; flex: 0 0 auto; }
+.nsp-item:hover { background: #204260; color: #fff; }
+.nsp-item:hover svg { color: #fff; }
+body.nav-shifted .page-shell { margin-left: 276px; }
+.nav-link.expanded { background: #204260; color: #fff; }
+.nav-link.expanded .nav-caret { transform: translateY(-50%) rotate(225deg); border-color: #fff; }
+
+/* 模块占位 / 空状态 */
+.module-placeholder { height: 100%; min-height: 60vh; display: grid; place-content: center; justify-items: center; gap: 6px; text-align: center; color: var(--muted); padding: 40px; }
+.module-placeholder .mp-icon { width: 64px; height: 64px; border-radius: 18px; display: grid; place-items: center; background: var(--accent-soft); color: var(--accent); margin-bottom: 6px; }
+.module-placeholder .mp-icon svg { width: 32px; }
+.module-placeholder h2 { margin: 0; font-size: 19px; color: var(--text); }
+.module-placeholder p { margin: 0; font-size: 13px; }
+.nav-bottom { margin-top: auto; display: grid; gap: 13px; justify-items: center; }
+.profile-mini { width: 31px; height: 31px; border-radius: 50%; display: grid; place-items: center; color: #fff; background: #4a78a8; font-size: 12px; font-weight: 700; }
+
+/* ===== Top tabs（可关闭标签页） ===== */
+.page-shell { margin-left: 80px; min-height: 100dvh; transition: margin-left .18s ease; }
+.app-topbar { height: 52px; display: flex; align-items: stretch; background: var(--surface); border-bottom: 1px solid var(--line); padding-right: 12px; }
+.ws-tabs { flex: 1; display: flex; align-items: stretch; gap: 2px; overflow-x: auto; padding: 0 6px; scrollbar-width: none; }
+.ws-tabs::-webkit-scrollbar { display: none; }
+.ws-tab { display: flex; align-items: center; gap: 8px; padding: 0 8px 0 14px; border: 0; background: transparent; color: var(--muted); font-size: 13px; font-weight: 600; border-bottom: 2px solid transparent; cursor: pointer; white-space: nowrap; }
+.ws-tab:hover { color: var(--text); background: var(--surface-soft); }
+.ws-tab.active { color: var(--accent); border-bottom-color: var(--accent); background: var(--accent-soft); }
+.ws-tab-close { width: 19px; height: 19px; border: 0; background: transparent; color: inherit; border-radius: 5px; display: grid; place-items: center; cursor: pointer; opacity: .5; }
+.ws-tab-close:hover { background: rgba(15,108,189,.16); opacity: 1; }
+.ws-tab-close svg { width: 12px; }
+.ws-empty { display: flex; align-items: center; padding: 0 16px; color: var(--muted); font-size: 12.5px; }
+.message-entry { height: 35px; margin: 0 0 0 6px; padding: 0 11px; display: inline-flex; align-items: center; gap: 5px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); font-size: 12px; font-weight: 600; white-space: nowrap; }
+.message-entry:hover { background: var(--surface-soft); color: var(--accent); }
+.message-entry > svg { width: 18px; }
+.message-entry b { min-width: 17px; height: 17px; padding: 0 4px; display: grid; place-items: center; border-radius: 10px; background: var(--danger); color: #fff; font-size: 10px; }
+.icon-button { width: 34px; height: 34px; border: 0; border-radius: 8px; display: grid; place-items: center; background: transparent; color: var(--muted); position: relative; }
+.icon-button:hover, .icon-button.active { background: var(--accent-soft); color: var(--accent); }
+.icon-button svg { width: 19px; }
+
+main { padding: 16px 28px 40px; }
+.section-title p, .kicker { margin: 0; color: #647da0; font-size: 11px; font-weight: 650; letter-spacing: .06em; }
+.section-title { display: flex; align-items: flex-end; justify-content: space-between; gap: 18px; }
+.section-title h2 { margin: 0; font-size: 20px; letter-spacing: -.03em; }
+.quiet-action { border: 0; color: var(--accent); background: transparent; display: flex; align-items: center; gap: 5px; white-space: nowrap; padding: 5px 0; font-size: 12px; font-weight: 600; }
+.quiet-action svg { width: 16px; }
+.quiet-action:hover { text-decoration: underline; }
+
+/* ===== Layout ===== */
+.feed-layout { display: grid; grid-template-columns: minmax(0, 1fr) 340px; gap: 28px; align-items: start; max-width: 1360px; }
+.feed-layout--single { grid-template-columns: 1fr; max-width: none; }
+.feed-layout--scoped { grid-template-columns: 208px minmax(0, 1fr); max-width: none; }
+.feed-scope { position: sticky; top: 76px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); padding: 8px; display: grid; gap: 2px; align-self: start; }
+.feed-scope-title { font-size: 11px; font-weight: 700; color: var(--muted); padding: 6px 10px 4px; letter-spacing: .04em; }
+.feed-scope-item { display: flex; align-items: center; justify-content: space-between; gap: 6px; padding: 8px 10px; border: 0; border-radius: 8px; background: transparent; color: var(--text); font-size: 12.5px; text-align: left; cursor: pointer; }
+.feed-scope-item svg { width: 13px; color: var(--muted); flex: 0 0 auto; }
+.feed-scope-item:hover { background: var(--surface-soft); }
+.feed-scope-item.sel { background: var(--accent-soft); color: var(--accent); font-weight: 600; }
+.feed-scope-item.sel svg { color: var(--accent); }
+.feed-scope-head { display: flex; align-items: center; justify-content: space-between; gap: 6px; }
+.feed-scope-toggle { width: 26px; height: 26px; flex: 0 0 auto; border: 0; border-radius: 7px; background: transparent; color: var(--muted); display: grid; place-items: center; cursor: pointer; }
+.feed-scope-toggle:hover { background: var(--surface-soft); color: var(--text); }
+.feed-scope-toggle svg { width: 16px; transform: rotate(180deg); transition: transform .2s; }
+.feed-layout--scoped.collapsed { grid-template-columns: 40px minmax(0, 1fr); }
+.feed-layout--scoped.collapsed .feed-scope-title { display: none; }
+.feed-layout--scoped.collapsed .feed-scope-item { display: none; }
+.feed-layout--scoped.collapsed .feed-scope-head { justify-content: center; padding: 2px 0; }
+.feed-layout--scoped.collapsed .feed-scope-toggle svg { transform: rotate(0deg); }
+.primary-column, .secondary-column { min-width: 0; }
+.secondary-column { display: grid; align-content: start; gap: 23px; }
+
+/* ===== Page head + search ===== */
+.feed-page-head { margin-bottom: 16px; }
+.feed-search { margin-top: 14px; display: flex; align-items: center; gap: 8px; height: 38px; padding: 0 12px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--muted); max-width: 560px; }
+.feed-search:focus-within { border-color: var(--accent); box-shadow: 0 0 0 2px color-mix(in srgb, var(--accent) 16%, transparent); }
+.feed-search svg { width: 17px; flex: 0 0 auto; }
+.feed-search input { border: 0; outline: none; background: transparent; color: var(--text); width: 100%; font-size: 13px; }
+.feed-search input::placeholder { color: var(--muted); }
+
+/* ===== Filter tabs (segmented) ===== */
+.feed-filter { display: flex; gap: 4px; margin: 16px 0 14px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; padding: 5px; overflow-x: auto; scrollbar-width: none; }
+.feed-filter button { border: 0; background: transparent; padding: 7px 13px; font-size: 12.5px; font-weight: 600; color: var(--muted); white-space: nowrap; border-radius: 7px; display: inline-flex; align-items: center; gap: 6px; }
+.feed-filter button .pill { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 9px; background: var(--surface-soft); color: var(--muted); }
+.feed-filter button.selected { color: var(--accent); background: var(--accent-soft); }
+.feed-filter button.selected .pill { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+.feed-adv { display: flex; align-items: center; gap: 12px; flex-wrap: wrap; margin: 0 0 16px; padding: 10px 12px; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; }
+.feed-adv-field { display: inline-flex; align-items: center; gap: 8px; }
+.feed-adv-label { font-size: 12.5px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.feed-select { appearance: none; -webkit-appearance: none; border: 1px solid var(--line); background: var(--surface-soft); color: var(--text); font-size: 12.5px; font-weight: 600; padding: 7px 28px 7px 11px; border-radius: 8px; cursor: pointer; background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 24 24' fill='none' stroke='%236b7a90' stroke-width='2'%3E%3Cpath d='M6 9l6 6 6-6'/%3E%3C/svg%3E"); background-repeat: no-repeat; background-position: right 9px center; }
+.feed-select:hover { border-color: var(--accent); }
+.feed-select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px var(--accent-soft); }
+.feed-adv-check { display: inline-flex; align-items: center; gap: 6px; font-size: 12.5px; font-weight: 600; color: var(--text); cursor: pointer; user-select: none; }
+.feed-adv-check input { width: 15px; height: 15px; accent-color: var(--accent); cursor: pointer; }
+.feed-adv-spacer { flex: 1 1 auto; }
+.feed-adv-count { font-size: 12px; color: var(--muted); white-space: nowrap; }
+
+/* ===== Feed card ===== */
+.feed-card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 16px 18px; margin-bottom: 14px; }
+.feed-card-head { display: grid; grid-template-columns: 38px minmax(0,1fr) auto; gap: 11px; align-items: start; }
+.feed-avatar { width: 38px; height: 38px; border-radius: 9px; display: grid; place-items: center; font-size: 13px; font-weight: 700; flex: 0 0 auto; }
+.feed-avatar.blue { background: var(--accent-soft); color: var(--accent); }
+.feed-avatar.green { background: var(--ok-soft); color: var(--ok); }
+.feed-avatar.orange { background: var(--warn-soft); color: var(--warn); }
+.feed-avatar.violet { background: var(--violet-soft); color: var(--violet); }
+.feed-avatar.red { background: var(--danger-soft); color: var(--danger); }
+.feed-card-head-meta { min-width: 0; }
+.feed-card-operator { font-size: 13px; display: flex; align-items: baseline; gap: 7px; flex-wrap: wrap; }
+.feed-card-operator b { font-weight: 650; }
+.feed-dept { font-size: 11px; color: var(--muted); }
+.feed-card-sub { display: flex; align-items: center; gap: 8px; margin-top: 3px; }
+.feed-type-tag { font-size: 10.5px; font-weight: 700; padding: 1.5px 7px; border-radius: 5px; }
+.feed-type-tag.form { color: var(--accent); background: var(--accent-soft); }
+.feed-type-tag.process { color: var(--violet); background: var(--violet-soft); }
+.feed-type-tag.task { color: var(--warn); background: var(--warn-soft); }
+.feed-type-tag.warning { color: var(--danger); background: var(--danger-soft); }
+.feed-type-tag.manual { color: var(--accent); background: var(--accent-soft); }
+.feed-type-tag.no { color: var(--accent); background: var(--accent-soft); }
+.feed-card-sub time { font-size: 11px; color: var(--muted); }
+.feed-card-head-actions { display: flex; align-items: center; gap: 2px; }
+.head-icon { width: 30px; height: 30px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); display: grid; place-items: center; }
+.head-icon:hover { background: var(--surface-soft); color: var(--text); }
+.head-icon svg { width: 17px; }
+.head-icon.star.on { color: #e0a106; }
+.head-icon.star.on svg { fill: #e0a106; }
+
+.feed-card-body { display: block; width: 100%; text-align: left; border: 0; background: transparent; color: inherit; padding: 12px 0 0; cursor: pointer; }
+.feed-card-title { margin: 0; font-size: 14.5px; font-weight: 650; letter-spacing: -.01em; }
+.feed-card-title:hover { color: var(--accent); }
+.feed-card-body:hover .feed-card-title { color: var(--accent); }
+
+.feed-attachments { display: flex; flex-wrap: wrap; gap: 7px; margin-top: 11px; }
+.feed-attachment { display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-soft); color: var(--text); font-size: 11.5px; max-width: 100%; }
+.feed-attachment svg { width: 14px; color: var(--accent); flex: 0 0 auto; }
+.feed-attachment small { color: var(--muted); }
+.feed-attachment:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.feed-attachment:hover small { color: var(--accent); }
+.feed-thumb { margin-top: 11px; width: 132px; height: 92px; border-radius: 9px; border: 1px solid var(--line); background: linear-gradient(135deg, #cfe3f5, #e9d9f3); display: grid; place-items: center; color: #5d7793; font-size: 11px; }
+
+.feed-card-footer { display: flex; align-items: center; gap: 4px; margin-top: 13px; padding-top: 11px; border-top: 1px solid var(--line); }
+.feed-action { border: 0; background: transparent; color: var(--muted); font-size: 12.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 6px; padding: 6px 10px; border-radius: 7px; }
+.feed-action svg { width: 16px; }
+.feed-action:hover { background: var(--surface-soft); color: var(--text); }
+.feed-action.like.on { color: var(--danger); }
+.feed-action.like.on svg { fill: var(--danger); }
+.feed-action.fav.on { color: var(--warn); }
+.feed-action.fav.on svg { fill: var(--warn); }
+.feed-action.relate { margin-left: auto; color: var(--accent); }
+.feed-action.relate svg { width: 15px; }
+.feed-action:disabled { opacity: .5; cursor: default; color: var(--muted); }
+.feed-action:disabled:hover { background: transparent; color: var(--muted); }
+.feed-action.del { color: var(--danger); }
+.feed-action.del:hover { background: var(--danger-soft); color: var(--danger); }
+.feed-action.del:disabled { color: var(--muted); background: transparent; }
+
+/* comments preview inside card */
+.feed-comments { margin-top: 12px; border-top: 1px dashed var(--line); padding-top: 11px; display: grid; gap: 9px; }
+.feed-comment { display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 8px; align-items: start; }
+.feed-comment > span { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-weight: 700; background: var(--accent-soft); color: var(--accent); }
+.feed-comment div { min-width: 0; font-size: 12px; line-height: 1.5; }
+.feed-comment b { font-weight: 650; margin-right: 5px; }
+.feed-comment time { color: var(--muted); font-size: 10.5px; margin-left: 6px; font-weight: 400; }
+.feed-comment .mention { color: var(--accent); font-weight: 600; }
+.feed-view-all { border: 0; background: transparent; color: var(--accent); font-size: 12px; font-weight: 600; padding: 4px 0; align-self: start; }
+.feed-view-all:hover { text-decoration: underline; }
+
+/* ===== Side cards ===== */
+.side-card { padding: 18px; border-radius: 12px; background: var(--surface); border: 1px solid var(--line); box-shadow: var(--shadow); }
+.side-kicker { margin: 0 0 13px; color: #647da0; font-size: 11px; font-weight: 650; letter-spacing: .06em; display: flex; align-items: center; justify-content: space-between; }
+.side-kicker .count { color: var(--accent); background: var(--accent-soft); font-size: 10px; padding: 1px 7px; border-radius: 9px; }
+.followed-item { display: grid; grid-template-columns: 28px minmax(0,1fr) auto; gap: 9px; align-items: center; width: 100%; border: 0; background: transparent; text-align: left; color: inherit; padding: 9px 0; border-top: 1px solid var(--line); }
+.followed-item:first-of-type { border-top: 0; }
+.followed-item:hover { background: var(--surface-soft); margin: 0 -9px; padding: 9px; border-radius: 8px; }
+.followed-item .feed-avatar { width: 28px; height: 28px; border-radius: 7px; font-size: 11px; }
+.followed-item b { font-size: 12px; font-weight: 600; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.followed-item small { font-size: 10.5px; color: var(--muted); }
+.followed-item .unfollow { border: 0; background: transparent; color: var(--muted); width: 26px; height: 26px; border-radius: 6px; display: grid; place-items: center; }
+.followed-item .unfollow:hover { color: var(--danger); background: var(--danger-soft); }
+.empty-side { padding: 18px 4px; text-align: center; color: var(--muted); font-size: 12px; }
+.empty-side svg { width: 30px; color: var(--accent); margin: 0 auto 8px; }
+
+.stat-row { display: grid; grid-template-columns: 54px minmax(0,1fr) 34px; gap: 10px; align-items: center; padding: 8px 0; }
+.stat-row + .stat-row { border-top: 1px solid var(--line); }
+.stat-tag { font-size: 10.5px; font-weight: 700; padding: 3px 0; border-radius: 5px; text-align: center; }
+.stat-bar { height: 7px; border-radius: 5px; background: var(--surface-soft); overflow: hidden; }
+.stat-bar i { display: block; height: 100%; border-radius: 5px; }
+.stat-num { font-size: 12px; font-weight: 700; text-align: right; color: var(--text); }
+
+.side-note { font-size: 11.5px; line-height: 1.65; color: var(--muted); }
+.side-note b { color: var(--text); }
+
+/* ===== View: followed / timeline ===== */
+.view-head { margin-bottom: 6px; }
+.tl-record { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 18px 20px; margin-bottom: 18px; display: grid; grid-template-columns: auto minmax(0,1fr) auto; gap: 13px; align-items: center; }
+.tl-record .rec-icon { width: 46px; height: 46px; border-radius: 11px; background: var(--warn-soft); color: var(--warn); display: grid; place-items: center; }
+.tl-record .rec-icon svg { width: 24px; }
+.tl-record h1 { margin: 0; font-size: 18px; letter-spacing: -.02em; }
+.tl-record p { margin: 4px 0 0; color: var(--muted); font-size: 11.5px; }
+.tl-record .rec-status { font-size: 11px; font-weight: 700; padding: 3px 10px; border-radius: 6px; background: var(--ok-soft); color: var(--ok); }
+
+.timeline { background: var(--surface); border: 1px solid var(--line); border-radius: 12px; box-shadow: var(--shadow); padding: 8px 22px; }
+.tl-node { position: relative; display: grid; grid-template-columns: 34px minmax(0,1fr); gap: 14px; padding: 16px 0; }
+.tl-node + .tl-node { border-top: 1px solid var(--line); }
+.tl-rail { position: relative; display: grid; place-items: start; justify-items: center; }
+.tl-dot { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; z-index: 1; color: #fff; }
+.tl-dot.blue { background: var(--accent); } .tl-dot.green { background: var(--ok); } .tl-dot.orange { background: var(--warn); } .tl-dot.violet { background: var(--violet); }
+.tl-dot svg { width: 16px; }
+.tl-line { position: absolute; top: 30px; bottom: -16px; width: 2px; background: var(--line); }
+.tl-node:last-child .tl-line { display: none; }
+.tl-body { min-width: 0; }
+.tl-body-head { display: flex; align-items: center; gap: 9px; }
+.tl-type { font-size: 10.5px; font-weight: 700; padding: 1.5px 7px; border-radius: 5px; }
+.tl-time { font-size: 11px; color: var(--muted); margin-left: auto; }
+.tl-body h3 { margin: 8px 0 0; font-size: 14px; font-weight: 650; }
+.tl-body p { margin: 5px 0 0; font-size: 12.5px; line-height: 1.55; color: #3a4757; }
+.theme-dark .tl-body p { color: #c4cfdc; }
+.tl-body .tl-link { display: inline-flex; align-items: center; gap: 5px; margin-top: 8px; border: 0; background: transparent; color: var(--accent); font-size: 12px; font-weight: 600; padding: 0; }
+.tl-body .tl-link svg { width: 14px; }
+
+/* ===== Detail modal ===== */
+.detail-layer { position: fixed; inset: 0; z-index: 30; display: grid; place-items: center; background: rgba(13, 24, 38, .56); padding: 24px; }
+.detail-dialog { width: min(720px, 100%); min-width: 0; max-height: calc(100vh - 48px); display: flex; flex-direction: column; overflow: hidden; border-radius: 14px; background: var(--surface); color: var(--text); box-shadow: 0 24px 68px rgba(0, 0, 0, .27); }
+.detail-head { padding: 18px 20px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 38px minmax(0,1fr) auto; gap: 11px; align-items: center; position: relative; }
+.detail-close { position: absolute; top: 13px; right: 14px; width: 30px; height: 30px; border: 0; background: transparent; color: var(--muted); border-radius: 7px; display: grid; place-items: center; }
+.detail-close:hover { background: var(--surface-soft); color: var(--text); }
+.detail-close svg { width: 18px; }
+.detail-body { overflow: auto; padding: 18px 20px; }
+.detail-title { margin: 14px 0 0; font-size: 18px; font-weight: 700; letter-spacing: -.02em; }
+.detail-meta { display: flex; flex-wrap: wrap; gap: 14px; margin-top: 12px; font-size: 11.5px; color: var(--muted); }
+.detail-meta b { color: var(--text); font-weight: 600; }
+.detail-relate { display: inline-flex; align-items: center; gap: 6px; margin-top: 13px; padding: 8px 12px; border: 1px solid var(--line); border-radius: 8px; background: var(--surface-soft); color: var(--accent); font-size: 12px; font-weight: 600; }
+.detail-relate svg { width: 15px; }
+.detail-section-h { margin: 20px 0 10px; font-size: 13px; font-weight: 700; display: flex; align-items: center; gap: 8px; }
+.detail-section-h .seg { color: var(--muted); font-weight: 500; font-size: 11.5px; }
+
+.comment-list { display: grid; gap: 12px; }
+.comment-item { display: grid; grid-template-columns: 30px minmax(0,1fr); gap: 10px; align-items: start; }
+.comment-item > span { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: var(--accent-soft); color: var(--accent); }
+.comment-main { min-width: 0; }
+.comment-head { display: flex; align-items: baseline; gap: 8px; }
+.comment-head b { font-size: 12.5px; font-weight: 650; }
+.comment-head time { font-size: 10.5px; color: var(--muted); }
+.comment-text { margin: 3px 0 0; font-size: 12.5px; line-height: 1.55; }
+.comment-text .mention { color: var(--accent); font-weight: 600; }
+.comment-reply { margin-top: 5px; border: 0; background: transparent; color: var(--muted); font-size: 11.5px; font-weight: 600; padding: 0; display: inline-flex; align-items: center; gap: 4px; }
+.comment-reply:hover { color: var(--accent); }
+.comment-reply svg { width: 13px; }
+.comment-del { margin-top: 5px; margin-left: 14px; border: 0; background: transparent; color: var(--danger); font-size: 11.5px; font-weight: 600; padding: 0; display: inline-flex; align-items: center; gap: 4px; }
+.comment-del:hover { text-decoration: underline; }
+.comment-del svg { width: 13px; }
+.comment-attachments { display: flex; flex-wrap: wrap; gap: 6px; margin-top: 7px; }
+.cmt-att { display: inline-flex; align-items: center; gap: 5px; padding: 5px 9px; border: 1px solid var(--line); border-radius: 7px; background: var(--surface-soft); color: var(--text); font-size: 11px; max-width: 100%; }
+.cmt-att svg { width: 13px; color: var(--accent); flex: 0 0 auto; }
+.cmt-att small { color: var(--muted); }
+.cmt-att:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.cmt-att:hover small { color: var(--accent); }
+
+.composer { margin-top: 16px; border: 1px solid var(--line); border-radius: 10px; padding: 10px 12px; background: var(--surface-soft); }
+.composer textarea { width: 100%; border: 0; background: transparent; color: var(--text); outline: none; resize: vertical; min-height: 40px; font-size: 13px; line-height: 1.5; }
+.composer textarea::placeholder { color: var(--muted); }
+.composer-bar { display: flex; align-items: center; gap: 4px; margin-top: 6px; }
+.composer-bar .spacer { margin-left: auto; }
+.composer-btn { width: 32px; height: 32px; border: 0; border-radius: 7px; background: transparent; color: var(--muted); display: grid; place-items: center; position: relative; }
+.composer-btn:hover { background: var(--accent-soft); color: var(--accent); }
+.composer-btn svg { width: 18px; }
+.send-btn { min-height: 32px; padding: 0 16px; border: 1px solid var(--accent); border-radius: 7px; background: var(--accent); color: #fff; font-size: 12.5px; font-weight: 650; }
+.send-btn:disabled { opacity: .5; cursor: default; }
+
+.popover { position: absolute; z-index: 40; background: var(--surface); border: 1px solid var(--line); border-radius: 10px; box-shadow: 0 14px 34px rgba(24, 51, 80, .17); padding: 6px; min-width: 180px; }
+.emoji-pop { display: grid; grid-template-columns: repeat(6, 1fr); gap: 2px; }
+.emoji-pop button { border: 0; background: transparent; font-size: 19px; height: 34px; border-radius: 7px; }
+.emoji-pop button:hover { background: var(--surface-soft); }
+.mention-pop { display: grid; }
+.mention-pop button { border: 0; background: transparent; text-align: left; display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 8px; align-items: center; padding: 7px 8px; border-radius: 7px; color: var(--text); font-size: 12.5px; }
+.mention-pop button:hover { background: var(--accent-soft); color: var(--accent); }
+.mention-pop span { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-weight: 700; background: var(--accent-soft); color: var(--accent); }
+
+.likers { display: grid; gap: 2px; }
+.likers button { border: 0; background: transparent; text-align: left; display: grid; grid-template-columns: 26px minmax(0,1fr); gap: 8px; align-items: center; padding: 6px 8px; border-radius: 7px; color: var(--text); font-size: 12.5px; }
+.likers button:hover { background: var(--surface-soft); }
+.likers span { width: 26px; height: 26px; border-radius: 50%; display: grid; place-items: center; font-size: 10px; font-weight: 700; background: var(--danger-soft); color: var(--danger); }
+
+/* share popover */
+.share-pop { min-width: 210px; }
+.share-pop .share-row { display: flex; align-items: center; gap: 8px; padding: 8px; border-radius: 7px; }
+.share-pop .share-row + .share-row { margin-top: 4px; }
+.share-pop .share-row code { font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.share-pop .share-row button { margin-left: auto; border: 0; background: var(--accent-soft); color: var(--accent); border-radius: 6px; font-size: 11px; font-weight: 600; padding: 5px 9px; }
+.share-pop .qr { width: 100%; height: 96px; border-radius: 8px; background: repeating-conic-gradient(#172437 0 25%, #fff 0 50%) 50% / 12px 12px; margin-top: 8px; border: 1px solid var(--line); }
+
+/* toast */
+.toast { position: fixed; z-index: 70; right: 28px; bottom: 28px; display: flex; align-items: center; gap: 8px; padding: 12px 15px; border-radius: 9px; color: var(--text); background: var(--surface); border: 1px solid var(--line); box-shadow: 0 14px 34px rgba(24, 51, 80, .17); font-size: 12.5px; font-weight: 600; }
+.toast svg { width: 17px; color: var(--ok); }
+
+/* ===== Sheet：二级页面（右侧抽屉 / 移动端底部页） ===== */
+.sheet-layer { position: fixed; inset: 0; z-index: 40; background: rgba(13, 24, 38, .5); display: flex; justify-content: flex-end; }
+.sheet-panel { width: min(452px, 100%); height: 100%; min-width: 0; display: flex; flex-direction: column; background: var(--surface); color: var(--text); box-shadow: -18px 0 52px rgba(0, 0, 0, .22); animation: sheetIn .2s ease; }
+@keyframes sheetIn { from { transform: translateX(26px); opacity: .3; } to { transform: none; opacity: 1; } }
+.sheet-head { flex: 0 0 auto; padding: 13px 14px; border-bottom: 1px solid var(--line); display: grid; grid-template-columns: 32px minmax(0, 1fr) 32px; gap: 8px; align-items: center; }
+.sheet-titles { min-width: 0; text-align: center; }
+.sheet-titles h3 { margin: 0; font-size: 14.5px; font-weight: 700; letter-spacing: -.01em; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sheet-titles p { margin: 2px 0 0; font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.sheet-icon { width: 32px; height: 32px; border: 0; background: transparent; color: var(--muted); border-radius: 8px; display: grid; place-items: center; }
+.sheet-icon:hover { background: var(--surface-soft); color: var(--text); }
+.sheet-icon svg { width: 18px; }
+.sheet-body { flex: 1 1 auto; overflow: auto; padding: 16px; }
+.sheet-foot { flex: 0 0 auto; padding: 12px 16px; border-top: 1px solid var(--line); display: flex; gap: 10px; align-items: center; background: var(--surface); }
+.sheet-layer.is-modal { justify-content: center; align-items: center; background: rgba(13, 24, 38, .55); }
+.sheet-layer.is-modal .sheet-panel { width: min(760px, 94vw); height: auto; max-height: 90vh; border-radius: 16px; box-shadow: 0 26px 80px rgba(0, 0, 0, .42); animation: modalIn .2s ease; }
+@keyframes modalIn { from { opacity: 0; transform: translateY(10px) scale(.98); } to { opacity: 1; transform: none; } }
+.sheet-section { margin-bottom: 18px; }
+.sheet-section:last-child { margin-bottom: 0; }
+.sheet-section > h4 { margin: 0 0 9px; font-size: 11px; letter-spacing: .06em; font-weight: 650; color: #647da0; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.sheet-section > h4 em { font-style: normal; color: var(--muted); font-weight: 500; letter-spacing: 0; }
+.sheet-tip { margin: 8px 0 0; font-size: 11.5px; line-height: 1.6; color: var(--muted); }
+
+.btn-primary { flex: 1; min-height: 40px; padding: 0 16px; border: 1px solid var(--accent); border-radius: 9px; background: var(--accent); color: #fff; font-size: 13px; font-weight: 650; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.btn-primary:disabled { opacity: .45; cursor: default; }
+.btn-primary svg { width: 17px; }
+.btn-ghost { min-height: 40px; padding: 0 16px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--text); font-size: 13px; font-weight: 600; }
+.btn-ghost:hover { border-color: var(--accent); color: var(--accent); }
+.btn-danger { flex: 1; min-height: 40px; padding: 0 16px; border: 1px solid var(--danger); border-radius: 9px; background: var(--danger); color: #fff; font-size: 13px; font-weight: 650; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.btn-danger:hover { opacity: .9; }
+.btn-danger svg { width: 17px; }
+.mini-btn { border: 0; background: var(--accent-soft); color: var(--accent); border-radius: 7px; font-size: 11.5px; font-weight: 650; padding: 6px 10px; flex: 0 0 auto; }
+.mini-btn:hover { background: color-mix(in srgb, var(--accent) 20%, transparent); }
+
+.row-link { width: 100%; display: grid; grid-template-columns: 18px minmax(0, 1fr) auto 15px; gap: 10px; align-items: center; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); color: var(--text); padding: 11px 12px; font-size: 13px; text-align: left; }
+.row-link + .row-link { margin-top: 8px; }
+.row-link:hover { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.row-link svg { width: 100%; }
+.row-link b { font-size: 11.5px; font-weight: 600; color: var(--muted); white-space: nowrap; }
+.row-link:hover b { color: var(--accent); }
+.sheet-textarea { width: 100%; min-height: 76px; resize: vertical; border: 1px solid var(--line); border-radius: 10px; background: var(--surface-soft); color: var(--text); padding: 10px 12px; font-size: 13px; line-height: 1.55; outline: none; }
+.sheet-textarea:focus { border-color: var(--accent); background: var(--surface); }
+.sheet-textarea::placeholder { color: var(--muted); }
+.pick-search { max-width: none; margin: 0 0 10px; }
+
+/* share */
+.share-card { border: 1px solid var(--line); border-radius: 11px; background: var(--surface-soft); padding: 12px 13px; }
+.share-card .sc-head { display: grid; grid-template-columns: 30px minmax(0, 1fr) auto; gap: 9px; align-items: center; }
+.share-card .sc-head .feed-avatar { width: 30px; height: 30px; border-radius: 8px; font-size: 11px; }
+.share-card .sc-who { font-size: 12px; font-weight: 650; }
+.share-card .sc-who small { display: block; font-size: 10.5px; font-weight: 400; color: var(--muted); }
+.share-card b { display: block; margin-top: 10px; font-size: 13px; font-weight: 650; }
+.share-card p { margin: 5px 0 0; font-size: 11.5px; line-height: 1.6; color: var(--muted); }
+.channel-grid { display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 8px; }
+.channel { border: 1px solid var(--line); border-radius: 11px; background: var(--surface); padding: 11px 3px; display: grid; justify-items: center; gap: 6px; font-size: 11px; color: var(--text); }
+.channel i { width: 34px; height: 34px; border-radius: 10px; display: grid; place-items: center; background: var(--surface-soft); color: var(--muted); }
+.channel svg { width: 18px; }
+.channel:hover { border-color: var(--accent); }
+.channel.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.channel.on i { background: var(--accent); color: #fff; }
+.link-row { display: flex; align-items: center; gap: 8px; border: 1px solid var(--line); border-radius: 9px; padding: 8px 10px; background: var(--surface-soft); }
+.link-row > svg { width: 16px; color: var(--accent); flex: 0 0 auto; }
+.link-row code { flex: 1; min-width: 0; font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.qr-box { width: 168px; height: 168px; margin: 0 auto; border: 1px solid var(--line); border-radius: 12px; background: repeating-conic-gradient(#172437 0 25%, #fff 0 50%) 50% / 14px 14px; }
+
+/* chips + picker */
+.chips { display: flex; flex-wrap: wrap; gap: 6px; }
+.chips:not(:empty) { margin-bottom: 10px; }
+.chip { display: inline-flex; align-items: center; gap: 5px; padding: 4px 6px 4px 9px; border-radius: 20px; background: var(--accent-soft); color: var(--accent); font-size: 11.5px; font-weight: 600; }
+.chip button { border: 0; background: transparent; color: inherit; display: grid; place-items: center; padding: 0; }
+.chip svg { width: 12px; }
+.pick-group { margin-bottom: 12px; }
+.pick-group > h5 { margin: 0 0 4px; padding: 0 8px; font-size: 11px; font-weight: 650; color: var(--muted); }
+.pick-list { display: grid; gap: 2px; }
+.pick-item { display: grid; grid-template-columns: 30px minmax(0, 1fr) 18px; gap: 10px; align-items: center; width: 100%; border: 0; background: transparent; color: inherit; text-align: left; padding: 8px; border-radius: 9px; }
+.pick-item:hover { background: var(--surface-soft); }
+.pick-item.on { background: var(--accent-soft); }
+.pick-item .av { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; font-size: 11px; font-weight: 700; background: var(--accent-soft); color: var(--accent); }
+.pick-item.on .av { background: var(--accent); color: #fff; }
+.pick-item .av.grp { border-radius: 9px; background: var(--violet-soft); color: var(--violet); }
+.pick-item .av.grp svg { width: 16px; }
+.pick-item b { font-size: 12.5px; font-weight: 600; display: block; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.pick-item small { font-size: 10.5px; color: var(--muted); }
+.pick-check { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; color: transparent; }
+.pick-item.on .pick-check { background: var(--accent); border-color: var(--accent); color: #fff; }
+.pick-check svg { width: 12px; }
+.pick-empty { padding: 26px 0; text-align: center; color: var(--muted); font-size: 12px; }
+
+/* 记录规则：按 工作表 / 流程 / 任务 / 预警 分组 */
+.rule-groups { display: grid; gap: 16px; }
+.rule-group { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
+.rule-grp-head { display: flex; align-items: center; gap: 9px; padding: 10px 14px; border-bottom: 1px solid var(--line); background: var(--surface-soft); }
+.rule-grp-head b { font-size: 13px; font-weight: 680; letter-spacing: -.01em; }
+.rule-grp-ico { width: 26px; height: 26px; border-radius: 8px; display: grid; place-items: center; flex: 0 0 auto; }
+.rule-grp-ico svg { width: 15px; }
+.rule-grp-ico.sheet { color: var(--accent); background: var(--accent-soft); }
+.rule-grp-ico.process { color: var(--violet); background: var(--violet-soft); }
+.rule-grp-ico.task { color: var(--warn); background: var(--warn-soft); }
+.rule-grp-ico.warning { color: var(--danger); background: var(--danger-soft); }
+.rule-grp-count { margin-left: auto; font-size: 11px; font-weight: 600; color: var(--muted); background: var(--surface); border: 1px solid var(--line); border-radius: 9px; padding: 1px 8px; }
+.rule-group .pick-list { padding: 6px; }
+
+/* 新建向导：关联业务 tab + 级联树 */
+.biz-tabs { display: flex; gap: 6px; margin-bottom: 12px; flex-wrap: wrap; }
+.biz-tab { display: inline-flex; align-items: center; gap: 7px; padding: 7px 13px; border-radius: 9px; border: 1px solid var(--line); background: var(--surface); color: var(--text); font-size: 12.5px; font-weight: 600; cursor: pointer; }
+.biz-tab small { font-size: 10.5px; color: var(--muted); font-weight: 600; background: var(--surface-soft); border-radius: 9px; padding: 1px 7px; margin-left: 2px; }
+.biz-tab:hover { background: var(--surface-soft); }
+.biz-tab.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.biz-tab.on small { background: #fff; color: var(--accent); }
+.biz-tab-ico { width: 18px; height: 18px; display: grid; place-items: center; border-radius: 6px; }
+.biz-tab-ico svg { width: 13px; }
+
+.wiz-rule-divider { display: flex; align-items: center; gap: 12px; margin: 20px 0 12px; }
+.wiz-rule-divider::before, .wiz-rule-divider::after { content: ""; height: 1px; background: var(--line); flex: 1; }
+.wiz-rule-divider span { font-size: 12px; font-weight: 700; color: var(--accent); letter-spacing: .02em; }
+
+/* ===== 关联业务数据选择弹窗（新建动态圈 · 第二步） ===== */
+.biz-pick-layer { position: fixed; inset: 0; z-index: 80; display: flex; flex-direction: column; justify-content: center; align-items: center; background: rgba(13, 24, 38, .55); padding: 18px; }
+.biz-pick-layer[hidden] { display: none; }
+.biz-pick-dialog { width: min(860px, 94vw); max-height: 88vh; display: flex; flex-direction: column; background: var(--surface); color: var(--text); border: 1px solid var(--line); border-radius: 16px; box-shadow: 0 26px 80px rgba(0, 0, 0, .42); overflow: hidden; animation: modalIn .2s ease; }
+.biz-pick-head { flex: 0 0 auto; display: flex; align-items: flex-start; justify-content: space-between; gap: 12px; padding: 14px 18px; border-bottom: 1px solid var(--line); }
+.biz-pick-head .kicker { margin: 0; font-size: 11px; letter-spacing: .06em; color: var(--muted); font-weight: 600; }
+.biz-pick-head h2 { margin: 2px 0 0; font-size: 16px; font-weight: 700; }
+.biz-pick-head .quiet-action { flex: 0 0 auto; border: 0; background: transparent; color: var(--muted); font-size: 13px; padding: 6px 8px; border-radius: 8px; cursor: pointer; }
+.biz-pick-head .quiet-action:hover { background: var(--surface-soft); color: var(--text); }
+.biz-pick-body { flex: 1 1 auto; min-height: 0; overflow: hidden; padding: 0; }
+.biz-pick-foot { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 12px; padding: 12px 18px; border-top: 1px solid var(--line); background: var(--surface-soft); }
+.biz-pick-count { font-size: 12.5px; color: var(--muted); }
+
+/* 弹窗三栏：左 类别树 / 中 待选择 / 右 已选择 */
+.bp-cols { display: grid; grid-template-columns: 168px minmax(0, 1fr) minmax(0, 1fr); height: 100%; min-height: 0; }
+.bp-col { display: flex; flex-direction: column; min-width: 0; min-height: 0; border-right: 1px solid var(--line); }
+.bp-col:last-child { border-right: 0; }
+.bp-col-h { flex: 0 0 auto; display: flex; align-items: center; justify-content: space-between; gap: 8px; padding: 10px 12px; font-size: 12px; font-weight: 700; color: var(--muted); border-bottom: 1px solid var(--line); background: var(--surface-soft); }
+.bp-col-h .bp-count { min-width: 18px; height: 18px; padding: 0 5px; border-radius: 9px; background: var(--accent); color: #fff; font-size: 11px; font-weight: 600; display: grid; place-items: center; }
+.bp-col-body { flex: 1 1 auto; min-height: 0; overflow-y: auto; padding: 6px; }
+.bp-cat { width: 100%; display: flex; align-items: center; gap: 7px; border: 0; background: transparent; text-align: left; padding: 8px 9px; border-radius: 8px; font-size: 12.5px; color: var(--text); cursor: pointer; }
+.bp-cat:hover { background: var(--surface-soft); }
+.bp-cat.on { background: var(--accent-soft); color: var(--accent); }
+.bp-cat b { flex: 1; min-width: 0; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bp-cat small { flex: 0 0 auto; font-size: 11px; color: var(--muted); }
+.bp-item { width: 100%; display: flex; align-items: center; gap: 9px; border: 0; background: transparent; text-align: left; padding: 9px; border-radius: 8px; color: var(--text); cursor: pointer; }
+.bp-item:hover { background: var(--surface-soft); }
+.bp-item-main { flex: 1; min-width: 0; }
+.bp-item-main b { display: block; font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bp-item-main small { display: block; font-size: 10.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bp-item-check { flex: 0 0 auto; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; color: transparent; }
+.bp-item.on .bp-item-check { background: var(--accent); border-color: var(--accent); color: #fff; }
+.bp-item-check svg { width: 12px; }
+.bp-sel-row { display: flex; align-items: center; gap: 8px; padding: 9px; border-radius: 8px; }
+.bp-sel-row:hover { background: var(--surface-soft); }
+.bp-sel-row b { flex: 1; min-width: 0; font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bp-sel-x { flex: 0 0 auto; width: 20px; height: 20px; border: 0; border-radius: 50%; background: transparent; color: var(--danger); display: grid; place-items: center; cursor: pointer; }
+.bp-sel-x:hover { background: var(--accent-soft); }
+.bp-sel-x svg { width: 12px; }
+.bp-empty { margin: 0; padding: 14px 10px; font-size: 12px; color: var(--muted); text-align: center; }
+.bp-av { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 9px; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.bp-av svg { width: 16px; }
+.bp-av-sm { width: 24px; height: 24px; border-radius: 7px; }
+.bp-av-sm svg { width: 13px; }
+.bp-sel-dep { flex: 0 0 auto; font-size: 10.5px; color: var(--muted); background: var(--surface-soft); border: 1px solid var(--line); border-radius: 6px; padding: 1px 6px; }
+
+/* 第二步：各 tab 下方已选数据列表 */
+.bp-picked-list { display: grid; gap: 6px; margin: 0 0 12px; }
+.bp-picked { display: flex; align-items: center; gap: 10px; padding: 8px 10px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
+.bp-picked-ico { flex: 0 0 auto; width: 30px; height: 30px; border-radius: 9px; display: grid; place-items: center; }
+.bp-picked-ico svg { width: 16px; }
+.bp-picked-main { flex: 1; min-width: 0; }
+.bp-picked-main b { display: block; font-size: 12.5px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bp-picked-main small { display: block; font-size: 10.5px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+
+/* 第三步：可见范围 - 指定部门及人员 汇总卡（点击弹出三栏选择） */
+.scope-sum { width: 100%; display: flex; align-items: center; gap: 11px; margin-top: 10px; padding: 11px 12px; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); text-align: left; cursor: pointer; }
+.scope-sum:hover { border-color: var(--accent); background: var(--accent-soft); }
+.scope-sum .bp-picked-main { flex: 1; min-width: 0; }
+.scope-sum .bp-picked-main b { display: block; font-size: 13px; font-weight: 600; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scope-sum .bp-picked-main small { display: block; font-size: 11px; color: var(--muted); overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scope-sum-go { flex: 0 0 auto; font-size: 12.5px; font-weight: 650; color: var(--accent); }
+
+/* photo picker */
+.photo-grid { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 8px; }
+.photo-cell { position: relative; aspect-ratio: 1 / 1; border-radius: 10px; border: 1px solid var(--line); padding: 0; overflow: hidden; background: linear-gradient(135deg, #cfe3f5, #e9d9f3); color: #41607f; font-size: 10px; display: grid; place-items: center; align-content: center; gap: 4px; }
+.photo-cell svg { width: 20px; }
+.photo-cell.on { border-color: var(--accent); box-shadow: inset 0 0 0 2px var(--accent); }
+.photo-cell .tick { position: absolute; right: 6px; top: 6px; width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid rgba(255, 255, 255, .9); background: rgba(23, 36, 55, .22); display: grid; place-items: center; color: transparent; }
+.photo-cell .tick svg { width: 11px; }
+.photo-cell.on .tick { background: var(--accent); border-color: var(--accent); color: #fff; }
+.photo-cell.add { background: var(--surface-soft); border-style: dashed; color: var(--muted); }
+.photo-thumbs { display: flex; flex-wrap: wrap; gap: 8px; }
+.photo-thumbs .pt { position: relative; width: 66px; height: 66px; border-radius: 9px; border: 1px solid var(--line); background: linear-gradient(135deg, #cfe3f5, #e9d9f3); display: grid; place-items: center; color: #41607f; }
+.photo-thumbs .pt svg { width: 18px; }
+.photo-thumbs .pt button { position: absolute; right: -5px; top: -5px; width: 19px; height: 19px; border-radius: 50%; border: 0; background: var(--nav); color: #fff; display: grid; place-items: center; }
+.photo-thumbs .pt button svg { width: 11px; }
+
+/* menu list */
+.menu-list { display: grid; gap: 2px; }
+.menu-item { display: grid; grid-template-columns: 32px minmax(0, 1fr) 15px; gap: 11px; align-items: center; width: 100%; border: 0; background: transparent; color: inherit; text-align: left; padding: 10px 8px; border-radius: 9px; font-size: 13px; }
+.menu-item:hover { background: var(--surface-soft); }
+.menu-item i { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; background: var(--surface-soft); color: var(--muted); }
+.menu-item i svg { width: 17px; }
+.menu-item b { font-weight: 600; display: block; }
+.menu-item small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.menu-item > svg { width: 15px; color: var(--muted); }
+.menu-item:hover i { background: var(--accent-soft); color: var(--accent); }
+.menu-item.danger i { background: var(--danger-soft); color: var(--danger); }
+.menu-item.danger b { color: var(--danger); }
+.menu-item.danger:hover i { background: var(--danger-soft); color: var(--danger); }
+
+/* radio list */
+.radio-list { display: grid; gap: 2px; }
+.radio-item { display: grid; grid-template-columns: minmax(0, 1fr) 18px; gap: 10px; align-items: center; width: 100%; border: 0; background: transparent; color: inherit; text-align: left; padding: 11px 8px; border-radius: 9px; font-size: 13px; }
+.radio-item:hover { background: var(--surface-soft); }
+.radio-item small { display: block; font-size: 11px; color: var(--muted); margin-top: 2px; }
+.radio-dot { width: 18px; height: 18px; border-radius: 50%; border: 1.5px solid var(--line); display: grid; place-items: center; }
+.radio-item.on .radio-dot { border-color: var(--accent); }
+.radio-item.on .radio-dot::after { content: ''; width: 9px; height: 9px; border-radius: 50%; background: var(--accent); }
+
+/* likers page */
+.liker-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 10px; align-items: center; padding: 10px 0; border-top: 1px solid var(--line); }
+.liker-row:first-child { border-top: 0; }
+.liker-row .av { width: 34px; height: 34px; border-radius: 50%; display: grid; place-items: center; font-size: 12px; font-weight: 700; background: var(--danger-soft); color: var(--danger); }
+.liker-row b { font-size: 12.5px; font-weight: 650; display: block; }
+.liker-row small { font-size: 10.5px; color: var(--muted); }
+
+/* done state */
+.sheet-done { display: grid; place-items: center; gap: 11px; padding: 46px 12px 20px; text-align: center; }
+.sheet-done .ok { width: 58px; height: 58px; border-radius: 50%; background: var(--ok-soft); color: var(--ok); display: grid; place-items: center; }
+.sheet-done .ok svg { width: 29px; }
+.sheet-done b { font-size: 15.5px; }
+.sheet-done p { margin: 0; font-size: 12px; color: var(--muted); line-height: 1.7; }
+
+/* ===== Lightbox（图片查看器） ===== */
+.lightbox { position: fixed; inset: 0; z-index: 60; background: rgba(8, 13, 20, .93); display: flex; flex-direction: column; }
+.lb-top { flex: 0 0 auto; height: 56px; display: flex; align-items: center; gap: 10px; padding: 0 14px; color: #e7eef7; font-size: 12.5px; }
+.lb-top .lb-title { min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; font-weight: 600; }
+.lb-top .lb-idx { color: #93a5ba; flex: 0 0 auto; }
+.lb-top .spacer { margin-left: auto; }
+.lb-btn { width: 34px; height: 34px; border: 0; border-radius: 9px; background: rgba(255, 255, 255, .09); color: #e7eef7; display: grid; place-items: center; flex: 0 0 auto; }
+.lb-btn:hover { background: rgba(255, 255, 255, .2); }
+.lb-btn:disabled { opacity: .3; cursor: default; }
+.lb-btn svg { width: 18px; }
+.lb-stage { flex: 1 1 auto; min-height: 0; display: grid; grid-template-columns: 44px minmax(0, 1fr) 44px; align-items: center; gap: 10px; padding: 6px 14px; }
+.lb-nav { display: grid; place-items: center; }
+.lb-photo { width: 100%; max-width: 760px; margin: 0 auto; aspect-ratio: 4 / 3; max-height: 100%; border-radius: 13px; background: linear-gradient(135deg, #cfe3f5, #e9d9f3); display: grid; place-items: center; align-content: center; gap: 8px; color: #3f5f7e; font-size: 13px; text-align: center; padding: 16px; }
+.lb-img { max-width: min(760px, 100%); max-height: 72vh; width: auto; height: auto; border-radius: 13px; object-fit: contain; box-shadow: 0 8px 30px rgba(13, 24, 38, .35); }
+.lb-photo svg { width: 42px; }
+.lb-photo small { color: #5d7793; font-size: 11.5px; }
+.lb-strip { flex: 0 0 auto; display: flex; gap: 8px; padding: 12px 16px 18px; overflow-x: auto; justify-content: center; scrollbar-width: none; }
+.lb-thumb { width: 66px; height: 54px; border-radius: 9px; border: 2px solid transparent; background: linear-gradient(135deg, #cfe3f5, #e9d9f3); flex: 0 0 auto; padding: 0; display: grid; place-items: center; color: #41607f; }
+.lb-thumb svg { width: 16px; }
+.lb-thumb.on { border-color: #63b0f4; }
+
+/* ===== Record page（关联单据详情 U-5） ===== */
+.rec-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 0 22px; }
+.rec-field { padding: 10px 0; border-bottom: 1px solid var(--line); }
+.rec-field span { display: block; font-size: 11px; color: var(--muted); }
+.rec-field b { display: block; margin-top: 4px; font-size: 13px; font-weight: 600; word-break: break-word; }
+.rec-field.wide { grid-column: 1 / -1; }
+.rec-field.warn b { color: var(--danger); }
+.rec-log { display: grid; grid-template-columns: 26px minmax(0, 1fr); gap: 10px; padding: 11px 0; border-top: 1px solid var(--line); }
+.rec-log:first-child { border-top: 0; }
+.rec-log i { width: 26px; height: 26px; border-radius: 50%; background: var(--accent-soft); color: var(--accent); display: grid; place-items: center; }
+.rec-log i svg { width: 14px; }
+.rec-log b { font-size: 12.5px; font-weight: 650; }
+.rec-log time { font-size: 10.5px; color: var(--muted); margin-left: 8px; font-weight: 400; }
+.rec-log p { margin: 4px 0 0; font-size: 12px; line-height: 1.55; color: var(--muted); }
+.rec-actions { display: grid; gap: 8px; }
+.rec-actions button { width: 100%; min-height: 38px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--text); font-size: 12.5px; font-weight: 600; display: inline-flex; align-items: center; justify-content: center; gap: 7px; }
+.rec-actions button:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.rec-actions button svg { width: 16px; }
+.rec-actions .primary { background: var(--accent); border-color: var(--accent); color: #fff; }
+.rec-actions .primary:hover { background: var(--accent); color: #fff; }
+.rec-feed-item { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 9px; width: 100%; border: 0; background: transparent; text-align: left; color: inherit; padding: 10px 0; border-top: 1px solid var(--line); }
+.rec-feed-item:first-child { border-top: 0; }
+.rec-feed-item:hover { background: var(--surface-soft); margin: 0 -9px; padding: 10px 9px; border-radius: 8px; }
+.rec-feed-item .feed-avatar { width: 28px; height: 28px; border-radius: 7px; font-size: 11px; }
+.rec-feed-item b { font-size: 12px; font-weight: 600; display: block; }
+.rec-feed-item small { font-size: 10.5px; color: var(--muted); }
+
+[hidden] { display: none !important; }
+
+@media (max-width: 1180px) {
+  .feed-layout { grid-template-columns: 1fr; }
+  .secondary-column { grid-template-columns: minmax(260px, .76fr) minmax(0, 1.24fr); }
+  .feed-card, .side-card, .timeline, .tl-record { min-height: 0; }
+}
+@media (max-width: 850px) {
+  .app-nav { width: 100%; height: 66px; min-height: 0; inset: auto 0 0 0; padding: 0 7px; flex-direction: row; justify-content: center; }
+  .product-mark, .nav-bottom { display: none; }
+  .app-nav nav { height: 100%; display: flex; justify-content: space-around; max-width: 560px; }
+  .nav-link { min-height: 66px; flex: 1; font-size: 9px; }
+  .nav-link.active::before { left: 14px; top: auto; bottom: 0; width: calc(100% - 28px); height: 3px; }
+  .page-shell { margin-left: 0; padding-bottom: 66px; }
+  body.nav-shifted .page-shell { margin-left: 0; }
+  .app-topbar { height: 50px; }
+  .nav-caret { display: none; }
+  .nav-subpanel { display: none !important; }
+  main { padding: 18px 18px 32px; }
+  .secondary-column { grid-template-columns: 1fr; }
+}
+@media (max-width: 640px) {
+  .detail-layer { padding: 0; align-items: end; background: rgba(13, 24, 38, .72); backdrop-filter: blur(2px); }
+  .detail-dialog { width: 100%; max-width: 100%; max-height: 94vh; height: auto; border-radius: 16px 16px 0 0; }
+  .detail-head { padding: 14px 16px; grid-template-columns: 36px minmax(0, 1fr) auto; gap: 10px; }
+  .detail-close { top: 10px; right: 10px; }
+  .detail-body { padding: 14px 16px; }
+  .detail-title { font-size: 16px; }
+  .detail-meta { gap: 8px; font-size: 11px; }
+  .composer { padding: 8px 10px; }
+  .composer-bar { flex-wrap: wrap; }
+
+  /* sheet 变底部页 */
+  .sheet-layer { align-items: flex-end; justify-content: stretch; background: rgba(13, 24, 38, .72); backdrop-filter: blur(2px); }
+  .sheet-panel { width: 100%; height: auto; max-height: 92vh; border-radius: 16px 16px 0 0; animation: sheetUp .22s ease; }
+  @keyframes sheetUp { from { transform: translateY(30px); opacity: .4; } to { transform: none; opacity: 1; } }
+  .sheet-body { padding: 14px; }
+  .sheet-foot { padding: 11px 14px calc(11px + env(safe-area-inset-bottom)); }
+
+  /* 卡片按钮换行，关联单据独占一行 */
+  .feed-card-footer { flex-wrap: wrap; gap: 2px; }
+  .feed-action { padding: 6px 8px; }
+  .feed-action .lbl { display: none; }
+  .feed-action.relate { margin-left: 0; width: 100%; justify-content: flex-start; margin-top: 4px; padding-top: 8px; border-top: 1px dashed var(--line); border-radius: 0; }
+  .feed-action.relate .lbl { display: inline; }
+
+  .rec-grid { grid-template-columns: 1fr; }
+  .lb-stage { grid-template-columns: 1fr; padding: 6px 12px; }
+  .lb-stage .lb-nav { display: none; }
+  .qr-box { width: 148px; height: 148px; }
+  .toast { right: 14px; left: 14px; bottom: 82px; justify-content: center; }
+}
+/* ===== 消息中心（独立列表页，区别于动态圈） ===== */
+.message-entry.on { background: var(--accent-soft); color: var(--accent); }
+
+/* 工具条：已读状态分段 + 批量操作 */
+.msg-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 14px; }
+.msg-seg { display: inline-flex; gap: 2px; padding: 3px; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); }
+.msg-seg button { border: 0; background: transparent; padding: 5px 13px; font-size: 12px; font-weight: 600; color: var(--muted); border-radius: 6px; white-space: nowrap; }
+.msg-seg button.on { background: var(--accent-soft); color: var(--accent); }
+.msg-tools { display: flex; gap: 16px; align-items: center; }
+.msg-tools .quiet-action { font-size: 11.5px; }
+
+/* 列表 */
+.msg-list { display: grid; gap: 10px; align-content: start; }
+.msg-row { position: relative; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; transition: box-shadow .15s ease, border-color .15s ease; }
+.msg-row::before { content: ''; position: absolute; left: 0; top: 0; bottom: 0; width: 3px; background: var(--muted); }
+.msg-row.system::before, .msg-row.mention::before { background: var(--accent); }
+.msg-row.task::before { background: var(--warn); }
+.msg-row.process::before { background: var(--violet); }
+.msg-row.warn::before { background: var(--danger); }
+.msg-row.read::before { opacity: .3; }
+.msg-row.unread { background: color-mix(in srgb, var(--accent) 3%, var(--surface)); }
+.msg-row:hover { border-color: color-mix(in srgb, var(--accent) 30%, var(--line)); box-shadow: 0 6px 18px rgba(24, 51, 80, .06); }
+.msg-row.open { border-color: color-mix(in srgb, var(--accent) 42%, var(--line)); }
+
+.msg-head-row { width: 100%; text-align: left; border: 0; background: transparent; display: grid; grid-template-columns: auto 1fr auto; gap: 12px; padding: 14px 16px 14px 19px; align-items: center; }
+.msg-ico { width: 32px; height: 32px; border-radius: 9px; display: grid; place-items: center; align-self: start; margin-top: 1px; }
+.msg-ico svg { width: 16px; }
+.msg-row.system .msg-ico, .msg-row.mention .msg-ico { color: var(--accent); background: var(--accent-soft); }
+.msg-row.task .msg-ico { color: var(--warn); background: var(--warn-soft); }
+.msg-row.process .msg-ico { color: var(--violet); background: var(--violet-soft); }
+.msg-row.warn .msg-ico { color: var(--danger); background: var(--danger-soft); }
+
+.msg-main { min-width: 0; display: grid; gap: 4px; }
+.msg-row1 { display: flex; align-items: center; gap: 6px; flex-wrap: wrap; }
+.msg-cat-chip { font-size: 10.5px; font-weight: 700; padding: 1.5px 7px; border-radius: 5px; }
+.msg-row.system .msg-cat-chip, .msg-row.mention .msg-cat-chip { color: var(--accent); background: var(--accent-soft); }
+.msg-row.task .msg-cat-chip { color: var(--warn); background: var(--warn-soft); }
+.msg-row.process .msg-cat-chip { color: var(--violet); background: var(--violet-soft); }
+.msg-row.warn .msg-cat-chip { color: var(--danger); background: var(--danger-soft); }
+.msg-prio { font-size: 10px; font-weight: 700; padding: 1px 6px; border-radius: 5px; }
+.msg-prio.imp { color: var(--warn); background: var(--warn-soft); }
+.msg-prio.urg { color: var(--danger); background: var(--danger-soft); }
+.msg-flag { font-size: 10px; font-weight: 700; color: var(--accent); display: inline-flex; align-items: center; gap: 4px; }
+.msg-flag i { width: 6px; height: 6px; border-radius: 50%; background: var(--accent); display: inline-block; }
+.msg-readtag { font-size: 10px; color: var(--muted); }
+.msg-title { font-size: 13.5px; font-weight: 650; line-height: 1.45; color: var(--text); }
+.msg-row.read .msg-title { font-weight: 550; color: var(--muted); }
+.msg-text { font-size: 12px; line-height: 1.6; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 1; -webkit-box-orient: vertical; overflow: hidden; }
+.msg-meta { font-size: 10.5px; color: var(--muted); display: flex; gap: 8px; flex-wrap: wrap; align-items: center; }
+.msg-meta .msg-source { font-weight: 600; color: var(--text); }
+.msg-meta .msg-relate { color: var(--accent); font-weight: 600; }
+.msg-right { display: flex; align-items: center; gap: 9px; align-self: center; }
+.msg-time { font-size: 11px; color: var(--muted); white-space: nowrap; }
+.msg-chev { width: 16px; color: var(--muted); transition: transform .18s ease; flex: none; }
+.msg-row.open .msg-chev { transform: rotate(90deg); color: var(--accent); }
+
+/* 行内展开详情（不使用抽屉） */
+.msg-expand { border-top: 1px dashed var(--line); background: var(--surface-soft); padding: 13px 16px 14px 19px; display: grid; gap: 12px; }
+.msg-body-text { font-size: 12.5px; line-height: 1.75; color: var(--text); }
+.msg-fields { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 9px 16px; }
+.msg-field { display: grid; gap: 2px; min-width: 0; }
+.msg-field span { font-size: 10.5px; color: var(--muted); }
+.msg-field b { font-size: 12px; font-weight: 600; word-break: break-all; }
+.msg-ops { display: flex; gap: 8px; flex-wrap: wrap; }
+
+/* 侧栏统计（已移除消息概览/需优先处理/消息与动态圈，相关样式一并清理） */
+
+@media (max-width: 850px) {
+  .msg-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+/* ===== 动态圈（创建 / 关联 / 全生命周期） ===== */
+.no-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 14px; }
+.no-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
+.no-card { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); padding: 0; display: flex; flex-direction: column; overflow: hidden; transition: box-shadow .15s ease, border-color .15s ease; }
+.no-card:hover { border-color: color-mix(in srgb, var(--accent) 34%, var(--line)); box-shadow: 0 10px 26px rgba(24, 51, 80, .09); }
+.no-card.off { opacity: .72; }
+.no-open { width: 100%; text-align: left; border: 0; background: transparent; color: inherit; padding: 16px 16px 12px; display: grid; gap: 10px; }
+.no-top { display: grid; grid-template-columns: auto minmax(0, 1fr) auto; gap: 11px; align-items: start; }
+.no-ico { width: 40px; height: 40px; border-radius: 11px; display: grid; place-items: center; }
+.no-ico svg { width: 20px; }
+.no-name { font-size: 14.5px; font-weight: 680; letter-spacing: -.01em; line-height: 1.35; }
+.no-code { font-size: 10.5px; color: var(--muted); margin-top: 3px; }
+.no-state { font-size: 10px; font-weight: 700; padding: 2px 8px; border-radius: 5px; background: var(--ok-soft); color: var(--ok); white-space: nowrap; }
+.no-state.off { background: var(--surface-soft); color: var(--muted); }
+.no-desc { font-size: 12px; line-height: 1.6; color: var(--muted); display: -webkit-box; -webkit-line-clamp: 2; -webkit-box-orient: vertical; overflow: hidden; }
+.no-binds { display: flex; gap: 5px; flex-wrap: wrap; }
+.bind-chip { font-size: 10.5px; font-weight: 650; padding: 2px 8px; border-radius: 5px; display: inline-flex; align-items: center; gap: 4px; }
+.bind-chip.form { color: var(--accent); background: var(--accent-soft); }
+.bind-chip.process { color: var(--violet); background: var(--violet-soft); }
+.bind-chip.task { color: var(--warn); background: var(--warn-soft); }
+.bind-chip.none { color: var(--muted); background: var(--surface-soft); }
+.no-meta { display: flex; align-items: center; gap: 5px; margin-top: 10px; padding-top: 10px; border-top: 1px dashed var(--line); font-size: 11px; color: var(--muted); }
+.no-meta .no-k { margin-left: 10px; }
+.no-meta svg { width: 13px; color: var(--accent); flex: 0 0 auto; }
+.no-meta b { font-weight: 600; color: var(--text); }
+.no-acts { display: flex; gap: 6px; justify-content: flex-end; flex-wrap: wrap; padding: 8px 12px; border-top: 1px solid var(--line); }
+.no-acts button { flex: 0 0 auto; min-height: 26px; padding: 0 11px; border-radius: 7px; font-size: 11px; font-weight: 560; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: inline-flex; align-items: center; gap: 4px; }
+.no-acts button svg { width: 13px; height: 13px; flex: 0 0 auto; }
+.no-acts button:hover { border-color: var(--accent); color: var(--accent); }
+/* 动态圈条件筛选 */
+.no-filters { display: flex; flex-wrap: wrap; gap: 16px 32px; margin: 16px 0 14px; }
+.no-seg { display: flex; align-items: center; gap: 9px; }
+.no-seg-label { font-size: 11px; font-weight: 680; color: var(--muted); letter-spacing: .04em; white-space: nowrap; }
+.seg { display: inline-flex; padding: 3px; gap: 2px; background: var(--surface); border: 1px solid var(--line); border-radius: 9px; }
+.seg button { border: 0; background: transparent; padding: 5px 11px; font-size: 12px; font-weight: 620; color: var(--muted); white-space: nowrap; border-radius: 6px; display: inline-flex; align-items: center; gap: 5px; }
+.seg button:hover { color: var(--text); }
+.seg button.sel { color: var(--accent); background: var(--accent-soft); }
+.seg button .pill { font-size: 10px; font-weight: 700; padding: 0 5px; border-radius: 8px; background: var(--surface-soft); color: var(--muted); }
+.seg button.sel .pill { background: color-mix(in srgb, var(--accent) 16%, transparent); color: var(--accent); }
+/* 卡片上的“我创建”标记 */
+.no-mine { font-size: 9.5px; font-weight: 700; padding: 2px 7px; border-radius: 5px; background: var(--accent-soft); color: var(--accent); white-space: nowrap; }
+.no-acts button:disabled { opacity: .5; cursor: default; border-color: var(--line); color: var(--muted); }
+.no-acts button.go:disabled { background: var(--surface-soft); color: var(--muted); border-color: var(--line); }
+.no-acts button:disabled:hover { border-color: var(--line); color: var(--muted); }
+.no-acts button.del { color: var(--danger); }
+.no-acts button.del:hover { background: var(--danger-soft); border-color: var(--danger); color: var(--danger); }
+.no-acts button.del:disabled { color: var(--muted); background: transparent; border-color: var(--line); }
+.no-del-box { display: grid; gap: 14px; padding: 2px; }
+.no-del-warn { display: flex; gap: 11px; align-items: flex-start; padding: 13px 15px; border: 1px solid var(--danger); background: var(--danger-soft); border-radius: 11px; }
+.no-del-warn svg { width: 22px; color: var(--danger); flex: 0 0 auto; margin-top: 1px; }
+.no-del-warn b { font-size: 14px; color: var(--danger); }
+.no-del-warn p { margin: 4px 0 0; font-size: 12.5px; color: var(--text); line-height: 1.55; }
+.no-del-name { margin: 0; font-size: 13.5px; color: var(--text); }
+.no-detail-filter { display: flex; flex-wrap: wrap; gap: 12px; align-items: center; margin: 4px 0 18px; }
+.nd-search { flex: 1 1 240px; margin: 0; }
+.nd-select { height: 36px; border: 1px solid var(--line); border-radius: 10px; padding: 0 10px; background: var(--surface); color: var(--text); font-size: 13px; min-width: 210px; }
+.nd-basic { margin-bottom: 14px; padding: 13px 16px; }
+.nd-basic-head { display: flex; align-items: center; gap: 12px; }
+.nd-basic-head .rec-icon { width: 36px; height: 36px; border-radius: 9px; display: grid; place-items: center; font-size: 17px; }
+.nd-basic-head .rec-icon svg { width: 19px; }
+.nd-basic-titles { min-width: 0; }
+.nd-basic-head h3 { margin: 0; font-size: 15px; line-height: 1.25; }
+.nd-basic-head p { margin: 2px 0 0; color: var(--muted); font-size: 12px; }
+.nd-basic-aside { margin-left: auto; display: flex; align-items: center; gap: 8px; }
+.nd-basic-head .rec-status { font-size: 11.5px; font-weight: 600; padding: 3px 10px; border-radius: 999px; white-space: nowrap; }
+.nd-basic-toggle { width: 26px; height: 26px; border-radius: 7px; border: 1px solid var(--line); background: var(--surface); color: var(--muted); display: grid; place-items: center; cursor: pointer; transition: transform .18s ease, color .15s, border-color .15s; }
+.nd-basic-toggle:hover { color: var(--accent); border-color: var(--accent); }
+.nd-basic-toggle svg { width: 16px; }
+.nd-basic--collapsed .nd-basic-toggle { transform: rotate(-90deg); }
+.nd-follow { padding: 5px 16px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
+.nd-follow:hover { filter: brightness(1.06); }
+.nd-follow.on { border-color: var(--line); background: var(--surface-soft); color: var(--muted); }
+.nd-basic--collapsed .nd-basic-body { display: none; }
+.nd-basic-meta { display: flex; flex-wrap: wrap; gap: 5px 18px; margin-top: 11px; }
+.nd-basic-meta span { display: inline-flex; align-items: baseline; gap: 5px; font-size: 12px; }
+.nd-basic-meta i { color: var(--muted); font-style: normal; }
+.nd-basic-meta b { font-size: 12.5px; font-weight: 600; }
+.nd-basic-binds { display: flex; align-items: center; gap: 8px; margin-top: 10px; flex-wrap: wrap; }
+.nd-basic-label { font-size: 12px; color: var(--muted); white-space: nowrap; }
+.nd-basic-biz { display: flex; gap: 6px; flex-wrap: wrap; }
+button.lnk { background: none; border: 1px solid var(--line); color: var(--text); border-radius: 8px; padding: 5px 11px; font-size: 12px; cursor: pointer; }
+button.lnk:hover { border-color: var(--accent); color: var(--accent); }
+.no-new { border: 1.5px dashed var(--line); border-radius: 12px; background: transparent; color: var(--muted); display: grid; place-items: center; gap: 7px; padding: 26px 16px; min-height: 190px; align-content: center; }
+.no-new:hover { border-color: var(--accent); color: var(--accent); background: var(--accent-soft); }
+.no-new svg { width: 26px; }
+.no-new b { font-size: 13.5px; font-weight: 650; }
+.no-new small { font-size: 11px; line-height: 1.6; text-align: center; max-width: 210px; }
+.no-toolbar-right { display: inline-flex; align-items: center; gap: 10px; flex: 0 0 auto; }
+.no-view-toggle { display: inline-flex; border: 1px solid var(--line); border-radius: 9px; overflow: hidden; }
+.no-view-toggle button { border: 0; background: var(--surface); color: var(--muted); padding: 7px 13px; cursor: pointer; font-size: 12.5px; font-weight: 600; display: inline-flex; align-items: center; gap: 5px; }
+.no-view-toggle button svg { width: 14px; height: 14px; }
+.no-view-toggle button.on { background: var(--accent); color: #fff; }
+.no-view-toggle button:not(.on):hover { color: var(--text); }
+.no-table { width: 100%; border-collapse: separate; border-spacing: 0; background: var(--surface); border: 1px solid var(--line); border-radius: 12px; overflow: hidden; font-size: 13px; }
+.no-table thead th { text-align: left; padding: 12px 14px; font-size: 12px; font-weight: 640; color: var(--muted); background: var(--surface-soft); border-bottom: 1px solid var(--line); white-space: nowrap; }
+.no-table tbody td { padding: 12px 14px; border-bottom: 1px solid var(--line); vertical-align: middle; }
+.no-table tbody tr:last-child td { border-bottom: 0; }
+.no-table tbody tr:hover { background: var(--surface-soft); }
+.no-table tbody tr.off { opacity: .82; }
+.no-td-name { display: flex; align-items: center; gap: 11px; cursor: pointer; }
+.no-td-name .no-ico { width: 38px; height: 38px; border-radius: 10px; display: grid; place-items: center; flex: 0 0 auto; }
+.no-td-name .no-ico svg { width: 19px; }
+.no-name-cell { display: flex; flex-direction: column; min-width: 0; }
+.no-name-cell b { font-size: 14px; font-weight: 660; }
+.no-name-cell small { font-size: 11px; color: var(--muted); margin-top: 2px; }
+.no-td-state, .no-td-owner, .no-td-subs { cursor: pointer; white-space: nowrap; }
+.no-td-owner b { font-size: 13px; font-weight: 620; }
+.no-td-owner small { font-size: 11px; color: var(--muted); margin-left: 6px; }
+.no-td-subs { color: var(--muted); font-size: 12px; }
+.no-th-act { text-align: right; }
+.no-td-update { white-space: nowrap; font-size: 12px; color: var(--text); }
+.no-td-update small { color: var(--muted); }
+.no-td-act { text-align: right; white-space: nowrap; }
+.no-td-act .feed-action { margin-left: 6px; }
+.no-td-act .feed-action:first-child { margin-left: 0; }
+.no-new.as-row { display: flex; align-items: center; justify-content: center; gap: 8px; min-height: 0; padding: 14px 16px; margin-top: 10px; }
+.no-new.as-row b { font-size: 13px; }
+.no-meta { font-size: 11px; color: var(--muted); white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+.no-td-creator, .no-td-created { white-space: nowrap; font-size: 12px; }
+.no-td-created { color: var(--muted); }
+
+/* 关联业务对象行 */
+.bind-row { display: grid; grid-template-columns: 34px minmax(0, 1fr) auto; gap: 11px; align-items: center; padding: 11px 0; border-top: 1px solid var(--line); }
+.bind-row:first-child { border-top: 0; }
+.bind-ico { width: 34px; height: 34px; border-radius: 9px; display: grid; place-items: center; }
+.bind-ico svg { width: 17px; }
+.bind-row b { font-size: 13px; font-weight: 620; display: block; }
+.bind-row small { font-size: 10.5px; color: var(--muted); }
+
+/* 业务实例行 */
+.ins-row { width: 100%; text-align: left; border: 1px solid var(--line); border-radius: 11px; background: var(--surface); padding: 13px 14px; display: grid; gap: 9px; margin-bottom: 10px; }
+.ins-row:hover { border-color: var(--accent); }
+.ins-row.running { border-left: 3px solid var(--accent); }
+.ins-row.done { border-left: 3px solid var(--ok); }
+.ins-row.aborted { border-left: 3px solid var(--muted); opacity: .8; }
+.ins-top { display: flex; align-items: center; gap: 7px; flex-wrap: wrap; }
+.ins-code { font-size: 10.5px; font-weight: 700; color: var(--muted); }
+.ins-state { font-size: 10px; font-weight: 700; padding: 1.5px 7px; border-radius: 5px; }
+.ins-state.running { background: var(--accent-soft); color: var(--accent); }
+.ins-state.done { background: var(--ok-soft); color: var(--ok); }
+.ins-state.aborted { background: var(--surface-soft); color: var(--muted); }
+.ins-title { font-size: 13.5px; font-weight: 650; line-height: 1.4; }
+.ins-bar { height: 5px; border-radius: 3px; background: var(--surface-soft); overflow: hidden; }
+.ins-bar i { display: block; height: 100%; border-radius: 3px; background: var(--accent); transition: width .3s ease; }
+.ins-row.done .ins-bar i { background: var(--ok); }
+.ins-row.aborted .ins-bar i { background: var(--muted); }
+.ins-meta { font-size: 10.5px; color: var(--muted); display: flex; gap: 9px; flex-wrap: wrap; align-items: center; }
+.ins-meta em { font-style: normal; font-weight: 650; color: var(--accent); }
+.ins-row.done .ins-meta em { color: var(--ok); }
+
+/* 生命周期轨迹 */
+.life { display: grid; }
+.life-step { display: grid; grid-template-columns: 30px minmax(0, 1fr); gap: 13px; position: relative; padding-bottom: 15px; }
+.life-step::before { content: ''; position: absolute; left: 14px; top: 32px; bottom: 0; width: 2px; background: var(--line); }
+.life-step:last-child { padding-bottom: 0; }
+.life-step:last-child::before { display: none; }
+.life-step.done::before { background: var(--ok); }
+.life-dot { width: 30px; height: 30px; border-radius: 50%; display: grid; place-items: center; background: var(--surface); color: var(--muted); border: 2px solid var(--line); font-size: 11px; font-weight: 700; z-index: 1; }
+.life-dot svg { width: 15px; }
+.life-step.done .life-dot { background: var(--ok); border-color: var(--ok); color: #fff; }
+.life-step.cur .life-dot { background: var(--accent); border-color: var(--accent); color: #fff; box-shadow: 0 0 0 4px color-mix(in srgb, var(--accent) 18%, transparent); }
+.life-step.abort .life-dot { background: var(--danger); border-color: var(--danger); color: #fff; }
+.life-card { border: 1px solid var(--line); border-radius: 10px; padding: 11px 13px; background: var(--surface); display: grid; gap: 5px; }
+.life-step.cur .life-card { border-color: var(--accent); background: var(--accent-soft); }
+.life-step.pending .life-card { background: var(--surface-soft); border-style: dashed; }
+.life-head { display: flex; align-items: center; gap: 8px; flex-wrap: wrap; }
+.life-head b { font-size: 13px; font-weight: 650; }
+.life-tag { font-size: 10px; font-weight: 700; padding: 1px 7px; border-radius: 5px; background: var(--surface-soft); color: var(--muted); }
+.life-step.done .life-tag { background: var(--ok-soft); color: var(--ok); }
+.life-step.cur .life-tag { background: var(--accent); color: #fff; }
+.life-step.abort .life-tag { background: var(--danger-soft); color: var(--danger); }
+.life-card time { font-size: 10.5px; color: var(--muted); }
+.life-card p { margin: 0; font-size: 12px; line-height: 1.6; color: var(--muted); }
+.life-feed { border: 0; background: transparent; color: var(--accent); font-size: 11.5px; font-weight: 620; padding: 0; display: inline-flex; align-items: center; gap: 4px; justify-self: start; }
+.life-feed:hover { text-decoration: underline; }
+.life-feed svg { width: 13px; }
+.life-ops { display: flex; gap: 8px; flex-wrap: wrap; margin-top: 14px; padding-top: 14px; border-top: 1px solid var(--line); }
+.life-ops .btn-primary { flex: 0 0 auto; }
+.life-summary { border: 1px solid var(--ok); background: var(--ok-soft); border-radius: 11px; padding: 13px 15px; display: grid; gap: 5px; margin-bottom: 16px; }
+.life-summary b { font-size: 13.5px; font-weight: 680; color: var(--ok); display: flex; align-items: center; gap: 7px; }
+.life-summary b svg { width: 17px; }
+.life-summary p { margin: 0; font-size: 12px; line-height: 1.65; color: var(--text); }
+
+/* 来源动态圈标识（信息流卡片） */
+.feed-source { border: 0; border-radius: 5px; background: var(--surface-soft); color: var(--muted); font-size: 10px; font-weight: 650; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px; }
+.feed-source svg { width: 11px; }
+.feed-source:hover { background: var(--accent-soft); color: var(--accent); }
+
+/* 表单控件（创建向导） */
+.fld { display: grid; gap: 5px; margin-bottom: 13px; }
+.fld > label { font-size: 11.5px; font-weight: 650; color: var(--muted); }
+.fld input, .fld textarea, .fld select { width: 100%; border: 1px solid var(--line); border-radius: 9px; background: var(--surface); color: var(--text); padding: 9px 11px; font-family: inherit; font-size: 13px; }
+.fld textarea { min-height: 66px; resize: vertical; line-height: 1.6; }
+.fld input:focus, .fld textarea:focus, .fld select:focus { outline: none; border-color: var(--accent); box-shadow: 0 0 0 3px color-mix(in srgb, var(--accent) 12%, transparent); }
+.fld input:disabled { background: var(--surface-soft); color: var(--muted); }
+.fld .hint { font-size: 10.5px; line-height: 1.55; color: var(--muted); }
+.fld-row { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; }
+.wz-steps { display: flex; gap: 5px; margin-bottom: 10px; }
+.wz-steps i { flex: 1; height: 3px; border-radius: 2px; background: var(--line); }
+.wz-steps i.on { background: var(--accent); }
+.wz-cap { margin: 0 0 14px; font-size: 11px; color: var(--muted); }
+.wz-cap b { color: var(--accent); }
+/* 联级选择：部门 → 人员 */
+.cascader { margin-top: 10px; display: grid; grid-template-columns: 200px 1fr 220px; gap: 14px; border: 1px solid var(--line); border-radius: 12px; padding: 14px; background: var(--surface); min-height: 320px; }
+.casc-col { display: grid; gap: 4px; align-content: start; }
+.casc-left { border-right: 1px solid var(--line); padding-right: 14px; }
+.casc-middle { border-right: 1px solid var(--line); padding-right: 14px; }
+.casc-h { font-size: 12px; color: var(--muted); margin: 0 0 6px; display: flex; align-items: center; justify-content: space-between; gap: 8px; }
+.casc-h b { color: var(--text); font-weight: 600; }
+.casc-item { display: flex; align-items: center; gap: 9px; width: 100%; text-align: left; border: 1px solid var(--line); background: var(--surface); border-radius: 9px; padding: 9px 10px; cursor: pointer; transition: .12s; }
+.casc-item:hover { border-color: var(--accent); }
+.casc-name { flex: 1; display: flex; flex-direction: column; min-width: 0; }
+.casc-name b { font-size: 12.5px; font-weight: 600; }
+.casc-name small { color: var(--muted); font-size: 10.5px; }
+.casc-item.on { border-color: var(--accent); background: var(--accent-soft); }
+.casc-item.on .casc-name b { color: var(--accent); }
+.casc-check { width: 17px; height: 17px; border-radius: 5px; border: 1.5px solid var(--line); display: grid; place-items: center; color: #fff; background: var(--surface); flex: 0 0 auto; transition: .12s; }
+.casc-check svg { width: 12px; opacity: 0; }
+.casc-item.on .casc-check { background: var(--accent); border-color: var(--accent); }
+.casc-item.on .casc-check svg { opacity: 1; }
+.casc-acts { display: flex; gap: 8px; }
+.casc-acts .mini-btn { border: 1px solid var(--line); background: var(--surface); color: var(--text); border-radius: 7px; font-size: 11.5px; padding: 4px 9px; cursor: pointer; }
+.casc-acts .mini-btn.on { background: var(--accent-soft); color: var(--accent); border-color: transparent; font-weight: 600; }
+.casc-members-list, .sel-list { display: grid; gap: 2px; align-content: start; }
+.mem-row { display: flex; align-items: center; gap: 10px; width: 100%; text-align: left; border: 1px solid transparent; background: transparent; border-radius: 8px; padding: 7px 6px; cursor: pointer; transition: .12s; }
+.mem-row:hover { background: var(--surface-soft); }
+.mem-row.on { background: var(--accent-soft); }
+.mem-avatar { width: 32px; height: 32px; border-radius: 50%; background: var(--surface-soft); color: var(--muted); display: grid; place-items: center; flex: 0 0 auto; border: 1px solid var(--line); }
+.mem-avatar svg { width: 18px; }
+.mem-info { flex: 1; min-width: 0; display: grid; gap: 1px; }
+.mem-info b { font-size: 13px; font-weight: 500; }
+.mem-info small { color: var(--muted); font-size: 11px; }
+.mem-check { width: 17px; height: 17px; border-radius: 4px; border: 1.5px solid var(--line); display: grid; place-items: center; color: #fff; background: var(--surface); flex: 0 0 auto; }
+.mem-row.on .mem-check { background: var(--accent); border-color: var(--accent); }
+.mem-check svg { width: 12px; opacity: 0; }
+.mem-row.on .mem-check svg { opacity: 1; }
+.sel-row { display: flex; align-items: center; gap: 10px; padding: 7px 6px; border-radius: 8px; background: var(--surface-soft); border: 1px solid transparent; }
+.sel-row .sel-x { width: 20px; height: 20px; border-radius: 50%; display: grid; place-items: center; color: var(--muted); cursor: pointer; margin-left: auto; }
+.sel-row .sel-x:hover { color: var(--danger); background: color-mix(in srgb, var(--danger) 14%, transparent); }
+.casc-empty, .sel-empty { color: var(--muted); font-size: 12px; padding: 10px 2px; }
+.casc-middle, .casc-right { max-height: 392px; overflow-y: auto; }
+.casc-dept-group { padding-bottom: 9px; margin-bottom: 9px; border-bottom: 1px solid var(--line); }
+.casc-dept-group:last-child { padding-bottom: 0; margin-bottom: 0; border-bottom: 0; }
+.casc-group-h { display: flex; align-items: center; justify-content: space-between; gap: 8px; margin: 2px 0 7px; }
+.casc-group-h b { font-size: 12.5px; font-weight: 640; }
+.sel-group-h { display: flex; align-items: center; gap: 8px; margin: 11px 0 5px; padding-top: 8px; border-top: 1px solid var(--line); font-size: 11px; color: var(--muted); }
+.sel-group-h:first-child { margin-top: 0; padding-top: 0; border-top: 0; }
+.sel-group-h b { color: var(--text); font-size: 11.5px; font-weight: 640; }
+/* 整页创建向导 */
+.create-wrap { max-width: none; }
+.create-pane { background: var(--surface); border: 1px solid var(--line); border-radius: 14px; padding: 22px; min-height: 320px; }
+.create-foot { display: flex; gap: 10px; justify-content: flex-end; padding: 16px 0 4px; }
+.create-foot .btn-ghost, .create-foot .btn-primary { min-width: 112px; justify-content: center; }
+.wiz-done { display: grid; place-items: center; gap: 12px; padding: 40px 12px 24px; text-align: center; }
+.wiz-done .ok { width: 58px; height: 58px; border-radius: 50%; background: var(--ok-soft); color: var(--ok); display: grid; place-items: center; }
+.wiz-done .ok svg { width: 29px; }
+.wiz-done b { font-size: 16px; }
+.wiz-done p { margin: 0; font-size: 12.5px; color: var(--muted); line-height: 1.8; max-width: 460px; }
+.icon-pick, .tone-pick { display: flex; gap: 8px; flex-wrap: wrap; }
+.icon-pick button { width: 40px; height: 40px; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); display: grid; place-items: center; color: var(--muted); }
+.icon-pick button svg { width: 19px; }
+.icon-pick button.on { border-color: var(--accent); background: var(--accent-soft); color: var(--accent); }
+.tone-pick button { width: 28px; height: 28px; border-radius: 50%; border: 2px solid transparent; box-shadow: inset 0 0 0 2px var(--surface); }
+.tone-pick button.on { border-color: var(--text); }
+.sw-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 12px; align-items: center; padding: 11px 0; border-top: 1px solid var(--line); }
+.sw-row b { font-size: 12.5px; font-weight: 620; display: block; }
+.sw-row small { font-size: 10.5px; line-height: 1.55; color: var(--muted); }
+.sw { width: 38px; height: 21px; border-radius: 11px; background: var(--line); position: relative; border: 0; flex: none; }
+.sw::after { content: ''; position: absolute; top: 2px; left: 2px; width: 17px; height: 17px; border-radius: 50%; background: #fff; transition: left .16s ease; box-shadow: 0 1px 3px rgba(0, 0, 0, .22); }
+.sw.on { background: var(--accent); }
+.sw.on::after { left: 19px; }
+.wz-preview { border: 1px solid var(--line); border-radius: 11px; background: var(--surface-soft); padding: 13px; display: grid; gap: 9px; }
+.wz-kv { display: grid; grid-template-columns: 76px minmax(0, 1fr); gap: 10px; font-size: 12px; }
+.wz-kv span { color: var(--muted); }
+.wz-kv b { font-weight: 620; word-break: break-word; }
+
+@media (max-width: 640px) {
+  .no-grid { grid-template-columns: 1fr; }
+  .fld-row { grid-template-columns: 1fr; }
+  .no-toolbar { flex-direction: column; align-items: stretch; }
+  .no-filters { flex-direction: column; align-items: stretch; gap: 11px; }
+  .no-seg { flex-direction: column; align-items: stretch; gap: 6px; }
+  .no-seg select { width: 100%; }
+  .seg { overflow-x: auto; scrollbar-width: none; }
+  #noGrid { overflow-x: auto; }
+  .no-table { min-width: 840px; }
+}
+@media (max-width: 640px) {
+  .msg-head-row { grid-template-columns: auto 1fr; gap: 10px; padding: 12px 13px 12px 16px; }
+  .msg-right { grid-column: 1 / -1; padding-left: 42px; justify-content: flex-start; }
+  .msg-fields { grid-template-columns: 1fr; }
+  .msg-toolbar { flex-direction: column; align-items: stretch; gap: 9px; }
+  .msg-seg { overflow-x: auto; scrollbar-width: none; }
+  .msg-tools { justify-content: space-between; }
+}
+
+
+</style>
+</head>
+<body>
+<div class="workbench theme-light" id="workbench">
+  <!-- ===== Nav rail ===== -->
+  <aside class="app-nav" aria-label="主导航">
+    <div class="product-mark" aria-label="澄明工作台">C</div>
+    <nav id="navLinks"></nav>
+    <div class="nav-bottom">
+      <button class="icon-button" id="themeToggle" title="切换主题" aria-label="切换主题">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 12.8A9 9 0 1 1 11.2 3a7 7 0 0 0 9.8 9.8Z" stroke-linejoin="round"/></svg>
+      </button>
+      <button class="icon-button" title="设置" aria-label="设置">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 15a3 3 0 1 0 0-6 3 3 0 0 0 0 6Z"/><path d="M19.4 13a1.7 1.7 0 0 0 .3 1.9l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-2.9 1.2V21a2 2 0 1 1-4 0v-.1a1.7 1.7 0 0 0-2.9-1.2l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1A1.7 1.7 0 0 0 4.6 13H4.5a2 2 0 1 1 0-4h.1a1.7 1.7 0 0 0 1.2-2.9l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.9.3H11a1.7 1.7 0 0 0 1-1.5V2a2 2 0 1 1 4 0v.1a1.7 1.7 0 0 0 2.9 1.2l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.9V11a1.7 1.7 0 0 0 1.5 1H22a2 2 0 1 1 0 4h-.1a1.7 1.7 0 0 0-1.5 1Z"/></svg>
+      </button>
+      <div class="profile-mini" aria-label="当前用户 张宇">张</div>
+    </div>
+  </aside>
+
+  <div class="page-shell">
+    <!-- ===== 可关闭标签页 ===== -->
+    <header class="app-topbar" aria-label="工作台标签栏">
+      <div class="ws-tabs" id="wsTabs" role="tablist"></div>
+      <button class="message-entry" id="msgEntry" aria-label="消息中心" title="打开消息中心列表页"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M21 11.5a8.5 8.5 0 0 1-12.2 7.6L3 21l1.9-5.8A8.5 8.5 0 1 1 21 11.5Z"/></svg><span>消息</span><b id="msgBadge">0</b></button>
+    </header>
+
+    <main>
+      <!-- ===== View: Feed home (U-1) ===== -->
+      <section id="view-feed">
+
+        <div class="feed-page-head">
+          <div class="section-title">
+            <div><p class="kicker">全系统业务动态</p><h2>动态</h2></div>
+          </div>
+          <label class="feed-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+            <input id="searchInput" type="text" placeholder="搜索动态、操作人、关联单据…" />
+          </label>
+        </div>
+
+        <div class="feed-filter" id="feedFilter" role="tablist"></div>
+
+        <div class="feed-adv" id="feedAdv">
+          <div class="feed-adv-field">
+            <span class="feed-adv-label">时间</span>
+            <select id="feedTime" class="feed-select">
+              <option value="all">全部时间</option>
+              <option value="today">今天</option>
+              <option value="7d">近 7 天</option>
+              <option value="30d">近 30 天</option>
+            </select>
+          </div>
+          <div class="feed-adv-field">
+            <span class="feed-adv-label">动态圈</span>
+            <select id="feedNo" class="feed-select"></select>
+          </div>
+          <span class="feed-adv-spacer"></span>
+          <span class="feed-adv-count" id="feedAdvCount"></span>
+        </div>
+
+        <div class="feed-layout feed-layout--scoped" id="feedScopeLayout">
+          <aside class="feed-scope" id="feedScopeTree" aria-label="动态筛选树">
+            <div class="feed-scope-head">
+              <span class="feed-scope-title">我的动态</span>
+              <button class="feed-scope-toggle" data-scope-toggle="1" title="收起筛选栏" aria-label="收起筛选栏"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button>
+            </div>
+            <button class="feed-scope-item sel" data-scope="all">全部动态</button>
+            <button class="feed-scope-item" data-scope="mine">我发过的动态</button>
+            <button class="feed-scope-item" data-scope="faved">我收藏的动态</button>
+            <button class="feed-scope-item" data-scope="commented">我评论的动态</button>
+            <button class="feed-scope-item" data-scope="liked">我点赞的动态</button>
+          </aside>
+          <div class="primary-column">
+            <div id="feedList"></div>
+            <div id="feedEmpty" class="empty-side" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
+              <p>没有符合条件的动态圈。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== View: Linked timeline (U-6) ===== -->
+      <section id="view-timeline" hidden>
+
+        <div class="feed-page-head">
+          <div class="section-title"><div><p class="kicker">单据详情页 · 关联动态</p><h2>关联动态时间线</h2></div>
+            <button class="quiet-action" id="backToFeedBtn">返回信息流 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+          </div>
+        </div>
+        <div class="tl-record">
+          <span class="rec-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg></span>
+          <div><h1>隐患整改单 #HT-2026-0384</h1><p>双重预防机制 · 隐患排查治理 · 当前负责人：王芳</p></div>
+          <span class="rec-status">整改中</span>
+        </div>
+        <div class="timeline" id="timeline"></div>
+      </section>
+
+      <!-- ===== View: Linked record detail (U-5 关联单据详情) ===== -->
+      <section id="view-record" hidden>
+
+        <div class="feed-page-head">
+          <div class="section-title">
+            <div><p class="kicker" id="recKicker">关联单据</p><h2 id="recTitle">—</h2></div>
+            <button class="quiet-action" id="backFromRecord">返回 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+          </div>
+        </div>
+        <div class="tl-record" id="recHead"></div>
+        <div class="feed-layout">
+          <div class="primary-column">
+            <div class="side-card" style="margin-bottom:18px">
+              <p class="side-kicker">基本信息</p>
+              <div class="rec-grid" id="recFields"></div>
+            </div>
+            <div class="side-card">
+              <p class="side-kicker">处理记录</p>
+              <div id="recFlow"></div>
+            </div>
+          </div>
+          <div class="secondary-column">
+            <aside class="side-card">
+              <p class="side-kicker">关联动态 <span class="count" id="recFeedCount">0</span></p>
+              <div id="recFeeds"></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== View: 动态圈列表（U-7） ===== -->
+      <section id="view-feedno" hidden>
+
+        <div class="feed-page-head">
+          <div class="section-title">
+            <div><p class="kicker">配置业务来源 · 自动记录全过程</p><h2>动态圈</h2></div>
+            <button class="quiet-action" id="noHelpBtn">什么是动态圈？ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button>
+          </div>
+          <label class="feed-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+            <input id="noSearchInput" type="text" placeholder="搜索动态圈名称、编号、负责人、关联的表单/流程/任务…" />
+          </label>
+        </div>
+
+        <div class="no-filters" id="noFilter"></div>
+
+        <div class="no-toolbar">
+          <p class="side-note" style="margin:0">创建动态圈并关联<b>表单 / 流程 / 任务</b>；一旦有人发起所关联的业务，该动态圈将自动记录业务从<b>发生到结束</b>的每一个节点。</p>
+          <div class="no-toolbar-right">
+            <div class="no-view-toggle">
+              <button data-no-viewmode="card" title="卡片展示"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> 卡片</button>
+              <button class="on" data-no-viewmode="list" title="列表展示"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg> 列表</button>
+            </div>
+            <button class="btn-primary" id="noCreateBtn" style="flex:0 0 auto">＋ 新建动态圈</button>
+          </div>
+        </div>
+
+        <div class="feed-layout feed-layout--single">
+          <div class="primary-column">
+            <div class="no-grid" id="noGrid"></div>
+            <div id="noEmpty" class="empty-side" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7.5 9.5h9M7.5 13h6"/></svg>
+              <p>没有符合条件的动态圈。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== View: 新建动态圈（整页 · 基础配置） ===== -->
+      <section id="view-create" hidden>
+
+        <div class="feed-page-head">
+          <div class="section-title">
+            <div><p class="kicker" id="createKicker">新建动态</p><h2 id="createTitle">基础配置</h2></div>
+            <button class="quiet-action" id="createBack" data-create-cancel>返回动态圈列表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+          </div>
+        </div>
+        <div class="create-wrap">
+          <div class="create-pane" id="createPane"></div>
+          <div class="create-foot" id="createFoot"></div>
+        </div>
+      </section>
+
+      <!-- ===== View: 动态圈详情（U-8） ===== -->
+      <section id="view-nodetail" hidden>
+
+        <div class="feed-page-head">
+          <div class="section-title">
+            <div><p class="kicker" id="ndKicker">动态圈</p><h2 id="ndTitle">—</h2></div>
+            <button class="quiet-action" id="backFromNd">返回动态圈列表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+          </div>
+        </div>
+        <div class="side-card nd-basic" id="ndBasic"></div>
+        <div class="no-detail-filter">
+          <label class="feed-search nd-search"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg><input id="ndSearch" type="text" placeholder="搜索动态标题、内容、成员…" /></label>
+          <div class="no-seg"><span class="no-seg-label">部门</span><select id="ndDeptSel" class="nd-select"></select></div>
+          <div class="no-seg"><span class="no-seg-label">时间</span><div class="seg" id="ndTimeSeg">
+            <button data-nd-time="all" class="sel">全部</button>
+            <button data-nd-time="today">今天</button>
+            <button data-nd-time="7d">近 7 天</button>
+            <button data-nd-time="30d">近 30 天</button>
+          </div></div>
+        </div>
+        <div class="side-card">
+          <p class="side-kicker">本动态圈产生的动态 <span class="count" id="ndFeedCount">0</span></p>
+          <div id="ndFeeds"></div>
+        </div>
+      </section>
+
+      <!-- ===== View: 业务全生命周期（发生 → 结束） ===== -->
+      <section id="view-life" hidden>
+
+        <div class="feed-page-head">
+          <div class="section-title">
+            <div><p class="kicker" id="lfKicker">业务全过程记录</p><h2 id="lfTitle">—</h2></div>
+            <button class="quiet-action" id="backFromLife">返回动态圈 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+          </div>
+        </div>
+        <div class="tl-record" id="lfHead"></div>
+        <div class="feed-layout">
+          <div class="primary-column">
+            <div id="lfSummary"></div>
+            <div class="side-card">
+              <p class="side-kicker">生命周期轨迹 <span class="count" id="lfStepCount">0</span></p>
+              <div class="life" id="lfSteps"></div>
+              <div class="life-ops" id="lfOps"></div>
+            </div>
+          </div>
+          <div class="secondary-column">
+            <aside class="side-card">
+              <p class="side-kicker">本业务产生的动态 <span class="count" id="lfFeedCount">0</span></p>
+              <div id="lfFeeds"></div>
+            </aside>
+            <aside class="side-card">
+              <p class="side-kicker">业务信息</p>
+              <div class="rec-grid" id="lfFields"></div>
+            </aside>
+          </div>
+        </div>
+      </section>
+
+      <!-- ===== View: 消息中心（列表页，区别于动态圈） ===== -->
+      <section id="view-message" hidden>
+
+        <div class="feed-page-head">
+          <div class="section-title">
+            <div><p class="kicker">仅发给我的 · 区别于动态圈</p><h2>消息中心</h2></div>
+            <button class="quiet-action" id="backFromMsg">返回动态圈 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+          </div>
+          <label class="feed-search">
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
+            <input id="msgSearchInput" type="text" placeholder="搜索消息标题、正文、来源、关联单据…" />
+          </label>
+        </div>
+
+        <div class="feed-filter" id="msgFilter" role="tablist"></div>
+
+        <div class="msg-toolbar">
+          <div class="msg-seg" id="msgReadSeg" role="tablist">
+            <button data-msg-read="all" class="on">全部</button>
+            <button data-msg-read="unread">未读</button>
+            <button data-msg-read="read">已读</button>
+          </div>
+          <div class="msg-tools">
+            <button class="quiet-action" data-msg-readall>全部标为已读</button>
+            <button class="quiet-action" data-msg-clear>清空已读</button>
+          </div>
+        </div>
+
+        <div class="feed-layout feed-layout--single">
+          <div class="primary-column">
+            <div class="msg-list" id="msgList"></div>
+            <div id="msgEmpty" class="empty-side" hidden>
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>
+              <p>没有符合条件的消息。</p>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      <section id="view-module" hidden>
+
+        <div class="module-placeholder">
+          <div class="mp-icon" id="modIcon"></div>
+          <h2 id="modTitle">模块</h2>
+          <p>该模块正在建设中，后续版本开放。</p>
+        </div>
+      </section>
+
+      <section id="view-empty" hidden>
+
+        <div class="module-placeholder">
+          <div class="mp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
+          <h2>开始使用动态圈</h2>
+          <p>从左侧菜单选择功能模块，将以可关闭的标签页形式在这里打开。</p>
+        </div>
+      </section>
+
+    </main>
+  </div>
+
+  <!-- ===== Detail modal (U-3) ===== -->
+  <div class="detail-layer" id="detailLayer" hidden>
+
+    <section class="detail-dialog" role="dialog" aria-modal="true" aria-labelledby="detailTitle">
+      <header class="detail-head" id="detailHead"></header>
+      <div class="detail-body" id="detailBody"></div>
+    </section>
+  </div>
+
+  <!-- ===== Sheet layer：所有二级页面 ===== -->
+  <div class="sheet-layer" id="sheetLayer" hidden>
+
+    <section class="sheet-panel" id="sheetPanel" role="dialog" aria-modal="true"></section>
+  </div>
+
+  <!-- ===== 关联业务数据选择弹窗（新建动态圈 · 第二步） ===== -->
+  <div class="biz-pick-layer" id="bizPickLayer" hidden>
+    <section class="biz-pick-dialog" role="dialog" aria-modal="true" aria-labelledby="bizPickTitle">
+      <header class="biz-pick-head">
+        <div><p class="kicker" id="bizPickKicker">关联业务</p><h2 id="bizPickTitle">表单</h2></div>
+        <button class="quiet-action" data-wz-bizpick-close>关闭</button>
+      </header>
+      <div class="biz-pick-body" id="bizPickBody"></div>
+      <footer class="biz-pick-foot">
+        <span class="biz-pick-count" id="bizPickCount"></span>
+        <button class="btn-primary" data-wz-bizpick-close>完成</button>
+      </footer>
+    </section>
+  </div>
+
+  <!-- ===== 选择人员弹窗（新建动态圈 · 第三步 指定部门及人员） ===== -->
+  <div class="biz-pick-layer" id="scopePickLayer" hidden>
+    <section class="biz-pick-dialog" role="dialog" aria-modal="true" aria-labelledby="scopePickTitle">
+      <header class="biz-pick-head">
+        <div><p class="kicker" id="scopePickKicker">可见范围</p><h2 id="scopePickTitle">选择人员</h2></div>
+        <button class="quiet-action" data-wz-scopepick-close>关闭</button>
+      </header>
+      <div class="biz-pick-body" id="scopePickBody"></div>
+      <footer class="biz-pick-foot">
+        <span class="biz-pick-count" id="scopePickCount"></span>
+        <button class="btn-primary" data-wz-scopepick-close>确定</button>
+      </footer>
+    </section>
+  </div>
+
+  <!-- ===== Lightbox：图片查看器 ===== -->
+  <div class="lightbox" id="lightbox" hidden>
+</div>
+
+  <!-- ===== Toast ===== -->
+  <div id="toast" class="toast" hidden>
+    <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>
+    <span id="toastText"></span>
+  </div>
+</div>
+
+<script>
+/* ============ Icons ============ */
+const I = {
+  home: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M3 11l9-8 9 8M5 10v10h14V10"/></svg>',
+  apps: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg>',
+  task: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1M9 11l2 2 4-4"/></svg>',
+  flow: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="7" height="6" rx="1.5"/><rect x="14" y="14" width="7" height="6" rx="1.5"/><path d="M6.5 10v4h11"/></svg>',
+  chart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 20V10M10 20V4M16 20v-7M22 20H2"/></svg>',
+  people: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="9" cy="8" r="3.2"/><path d="M3.5 20a5.5 5.5 0 0 1 11 0M16 5.2a3.2 3.2 0 0 1 0 6.1M17 14.5a5.5 5.5 0 0 1 3.5 5.5"/></svg>',
+  user: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="8" r="4"/><path d="M4 20a8 8 0 0 1 16 0"/></svg>',
+  star: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="m12 3 2.6 5.3 5.9.9-4.3 4.1 1 5.8L12 16.9 6.8 19.2l1-5.8L3.5 9.2l5.9-.9L12 3Z" stroke-linejoin="round"/></svg>',
+  more: '<svg viewBox="0 0 24 24" fill="currentColor"><circle cx="5" cy="12" r="1.8"/><circle cx="12" cy="12" r="1.8"/><circle cx="19" cy="12" r="1.8"/></svg>',
+  comment: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 11.5a8.5 8.5 0 0 1-12.2 7.6L3 21l1.9-5.8A8.5 8.5 0 1 1 21 11.5Z"/></svg>',
+  heart: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 20s-7-4.6-9.3-9A4.8 4.8 0 0 1 12 6a4.8 4.8 0 0 1 9.3 5C19 15.4 12 20 12 20Z" stroke-linejoin="round"/></svg>',
+  share: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="6" cy="12" r="2.4"/><circle cx="18" cy="6" r="2.4"/><circle cx="18" cy="18" r="2.4"/><path d="m8.1 10.9 7.8-3.8M8.1 13.1l7.8 3.8"/></svg>',
+  link: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M10 14a4 4 0 0 0 5.7 0l3-3a4 4 0 0 0-5.7-5.7L11 7"/><path d="M14 10a4 4 0 0 0-5.7 0l-3 3a4 4 0 0 0 5.7 5.7L13 17"/></svg>',
+  smile: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M8.5 14.5a4.5 4.5 0 0 0 7 0M9 9.5h.01M15 9.5h.01"/></svg>',
+  at: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="4"/><path d="M16 12v1.5a2.5 2.5 0 0 0 5 0V12a9 9 0 1 0-3.5 7.1"/></svg>',
+  send: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M21 3 10.5 13.5M21 3l-7 18-4-7-7-4 18-7Z" stroke-linejoin="round"/></svg>',
+  close: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M6 6l12 12M18 6 6 18"/></svg>',
+  reply: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M9 14 4 9l5-5M4 9h11a5 5 0 0 1 5 5v1"/></svg>',
+  doc: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M14 3H7a2 2 0 0 0-2 2v14a2 2 0 0 0 2 2h10a2 2 0 0 0 2-2V8l-5-5Z"/><path d="M14 3v5h5"/></svg>',
+  img: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2"/><circle cx="9" cy="10" r="1.8"/><path d="m4 19 5-5 4 4 3-3 4 4"/></svg>',
+  clip: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round"><path d="M21.44 11.05l-9.19 9.19a6 6 0 0 1-8.49-8.49l9.19-9.19a4 4 0 0 1 5.66 5.66l-9.2 9.19a2 2 0 0 1-2.83-2.83l8.49-8.48"/></svg>',
+  bell: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M18 8a6 6 0 1 0-12 0c0 7-3 9-3 9h18s-3-2-3-9M13.7 21a2 2 0 0 1-3.4 0"/></svg>',
+  alert: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 9v4m0 4h.01M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0Z"/></svg>',
+  check: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M20 6 9 17l-5-5"/></svg>',
+  back: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>',
+  chev: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg>',
+  copy: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="9" y="9" width="12" height="12" rx="2"/><path d="M5 15H4a1 1 0 0 1-1-1V4a1 1 0 0 1 1-1h10a1 1 0 0 1 1 1v1"/></svg>',
+  download: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M12 3v12m0 0 4-4m-4 4-4-4M4 19h16"/></svg>',
+  camera: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 8h3l1.6-2.4A1 1 0 0 1 9.4 5h5.2a1 1 0 0 1 .8.4L17 8h3a1 1 0 0 1 1 1v9a1 1 0 0 1-1 1H4a1 1 0 0 1-1-1V9a1 1 0 0 1 1-1Z"/><circle cx="12" cy="13" r="3.4"/></svg>',
+  folder: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 7a2 2 0 0 1 2-2h4l2 2.5h8a2 2 0 0 1 2 2V18a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/></svg>',
+  bookmark: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M6 4h12v17l-6-4.2L6 21Z" stroke-linejoin="round"/></svg>',
+  eyeoff: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M3 3l18 18M10.6 10.7a2 2 0 0 0 2.8 2.8M9.4 5.3A9.6 9.6 0 0 1 12 5c5 0 9 4.5 9 7a11 11 0 0 1-2.4 3.4M6.2 6.7A11.6 11.6 0 0 0 3 12c0 2.5 4 7 9 7a9.7 9.7 0 0 0 3.6-.7"/></svg>',
+  flag: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M5 21V4h10l-1.6 3.4L15 11H5"/></svg>',
+  qr: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><path d="M14 14h3v3h-3zM20 14v3M14 20h3M20 20h1"/></svg>',
+  mail: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3.5 6.5 8.5 6 8.5-6"/></svg>',
+  chat: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 5h16v11H9.5L4 20V5Z" stroke-linejoin="round"/></svg>',
+  group: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="8.4" cy="9" r="2.6"/><circle cx="16" cy="9.4" r="2.3"/><path d="M3 19a5.4 5.4 0 0 1 10.8 0M14.4 14.6A4.8 4.8 0 0 1 21 19"/></svg>',
+  trash: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 7h16M9 7V5a1 1 0 0 1 1-1h4a1 1 0 0 1 1 1v2M6 7l1 13a1 1 0 0 0 1 1h8a1 1 0 0 0 1-1l1-13M10 11v6M14 11v6"/></svg>',
+  plus: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M12 5v14M5 12h14"/></svg>',
+  search: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>',
+  clock: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><circle cx="12" cy="12" r="9"/><path d="M12 7v5.2l3.2 2"/></svg>',
+  edit: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 20h4L19.5 8.5a2.1 2.1 0 0 0-3-3L5 17v3Z" stroke-linejoin="round"/></svg>',
+  print: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M7 9V3h10v6M7 19H5a2 2 0 0 1-2-2v-4a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2v4a2 2 0 0 1-2 2h-2"/><rect x="7" y="15" width="10" height="6" rx="1"/></svg>',
+};
+
+/* ============ Type meta ============ */
+const TYPES = {
+  form:    { label: '表单动态', tone: 'blue',   color: 'var(--accent)', soft: 'var(--accent-soft)' },
+  process: { label: '流程动态', tone: 'violet', color: 'var(--violet)', soft: 'var(--violet-soft)' },
+  task:    { label: '任务动态', tone: 'orange', color: 'var(--warn)',   soft: 'var(--warn-soft)' },
+  warning: { label: '预警动态', tone: 'red',    color: 'var(--danger)',soft: 'var(--danger-soft)' },
+  manual:  { label: '动态发布', tone: 'blue',   color: 'var(--accent)', soft: 'var(--accent-soft)' },
+};
+
+/* ============ Data (动态圈 feed) ============ */
+let feeds = [
+  {
+    id: 'f1', type: 'form', operator: '张宇', dept: '安全管理部', avatar: '张', tone: 'blue',
+    title: '提交了《日常巡检表》', summary: '点位：3# 主扇风机房；检测值：温度 87℃、振动 2.1mm/s、电流 142A；结论：运行正常，无需处理。',
+    time: '12 分钟前', attachments: [{ name: '巡检记录表.xlsx', kind: 'doc' }, { name: '现场照片.jpg', kind: 'img' }],
+    related: { label: '《日常巡检表》记录', id: 'REC-2041' },
+    likes: ['王芳', '陈刚', '李明'], liked: false,
+    comments: [
+      { author: '王芳', tone: 'orange', time: '8 分钟前', content: '收到，数据已同步到设备管理台账。' },
+      { author: '张宇', tone: 'blue', time: '5 分钟前', content: '已收到，下周专项点检我来排期。' },
+      { author: '李明', tone: 'violet', time: '3 分钟前', content: '温度偏高，建议下周安排一次专项点检。' },
+    ], followed: false,
+  },
+  {
+    id: 'f2', type: 'warning', operator: '系统预警', dept: '安全管理部', avatar: '预', tone: 'red',
+    title: '《隐患整改单 #HT-2026-0384》已逾期', summary: '南区排水泵隐患整改期限已超 4 小时，当前状态：整改中；请负责人王芳尽快处理，避免触发升级预警。',
+    time: '35 分钟前', attachments: [],
+    related: { label: '《隐患整改单》', id: 'HT-2026-0384' },
+    likes: [], liked: false,
+    comments: [{ author: '王芳', tone: 'orange', time: '20 分钟前', content: '正在现场复查，预计今天内完成闭环。' }], followed: true, faved: true,
+  },
+  {
+    id: 'f3', type: 'task', operator: '王芳', dept: '设备管理部', avatar: '王', tone: 'orange',
+    title: '派发了《设备检修任务》', summary: '任务：2# 渣浆泵更换备件；执行人：张宇；计划完成：今天 17:30；优先级：高。',
+    time: '1 小时前', attachments: [{ name: '检修工单.pdf', kind: 'doc' }],
+    related: { label: '《设备检修任务》', id: 'TASK-7782' },
+    likes: ['张宇'], liked: false,
+    comments: [], followed: false,
+  },
+  {
+    id: 'f4', type: 'process', operator: '李明', dept: '安全管理部', avatar: '李', tone: 'violet',
+    title: '发起了《隐患整改流程》并通过部门负责人审批', summary: '流程：南区 2# 采场边坡隐患整改；当前节点：安全审核；审批人：张宇；状态：审批中。',
+    time: '2 小时前', attachments: [{ name: '整改方案.docx', kind: 'doc' }, { name: '现场图集.zip', kind: 'img' }],
+    related: { label: '《隐患整改流程》', id: 'FLOW-3091' },
+    likes: ['张伟', '赵磊'], liked: true, faved: true,
+    comments: [{ author: '张宇', tone: 'blue', time: '1 小时前', content: '@李明 方案已收，安全审核今天内完成。', mention: ['李明'] }], followed: false,
+  },
+  {
+    id: 'f5', type: 'form', operator: '陈刚', dept: '生产管理部', avatar: '陈', tone: 'green',
+    title: '修改了《安全检查记录》', summary: '新增 2 项问题：①皮带机防护栏缺失；②照明线路老化。已关联至隐患排查治理台账。',
+    time: '今天 09:16', attachments: [{ name: '检查记录表.xlsx', kind: 'doc' }],
+    related: { label: '《安全检查记录》', id: 'REC-2038' },
+    likes: [], liked: false,
+    comments: [], followed: false,
+  },
+  {
+    id: 'f6', type: 'process', operator: '赵磊', dept: '机电管理部', avatar: '赵', tone: 'violet',
+    title: '转交了《动火作业申请》至安全管理部', summary: '流程：南区 2# 采场动火作业申请；动作：转交；接收人：李明；紧急程度：紧急。',
+    time: '昨天 16:40', attachments: [],
+    related: { label: '《动火作业申请》', id: 'FLOW-3087' },
+    likes: ['王芳'], liked: false,
+    comments: [{ author: '李明', tone: 'violet', time: '昨天 17:02', content: '收到，明天上午现场核查后审批。' }], followed: false,
+  },
+];
+/* 为每条动态补充可排序的时间戳，用于详情页「按时间倒序」与「时间筛选」展示 */
+function tsFromLabel(label) {
+  if (!label) return null;
+  let m;
+  if (label === '刚刚') return Date.now();
+  if ((m = label.match(/^(\\d+)\\s*分钟前$/))) return Date.now() - parseInt(m[1], 10) * 60000;
+  if ((m = label.match(/^(\\d+)\\s*小时前$/))) return Date.now() - parseInt(m[1], 10) * 3600000;
+  const now = new Date();
+  if ((m = label.match(/^今天\\s*(\\d{1,2}):(\\d{2})$/))) { const d = new Date(now); d.setHours(+m[1], +m[2], 0, 0); return d.getTime(); }
+  if ((m = label.match(/^昨天\\s*(\\d{1,2}):(\\d{2})$/))) { const d = new Date(now); d.setDate(d.getDate() - 1); d.setHours(+m[1], +m[2], 0, 0); return d.getTime(); }
+  return null;
+}
+feeds.forEach(f => { if (f.ts == null) f.ts = tsFromLabel(f.time) ?? (Date.now() - 86400000); });
+
+/* ============================================================
+   动态圈：业务对象库 / 生命周期模板 / 记录规则 / 动态圈 / 业务实例
+   ============================================================ */
+const BIZKIND = {
+  form:    { label: '表单', icon: 'doc',  color: 'var(--accent)', soft: 'var(--accent-soft)' },
+  process: { label: '流程', icon: 'flow', color: 'var(--violet)', soft: 'var(--violet-soft)' },
+  task:    { label: '任务', icon: 'task', color: 'var(--warn)',   soft: 'var(--warn-soft)' },
+};
+
+/* 可被动态圈关联的业务对象 */
+const BIZLIB = {
+  form: [
+    { id: 'FM-01', name: '日常巡检表', ver: 'V2.3', dept: '机电管理部', desc: '设备日常巡检数据填报' },
+    { id: 'FM-02', name: '安全检查记录', ver: 'V1.8', dept: '安全管理部', desc: '班组安全检查问题登记' },
+    { id: 'FM-03', name: '隐患上报单', ver: 'V3.0', dept: '安全管理部', desc: '隐患发现、定级与上报' },
+    { id: 'FM-04', name: '交接班记录表', ver: 'V1.2', dept: '生产管理部', desc: '班组交接班信息记录' },
+  ],
+  process: [
+    { id: 'PR-01', name: '隐患整改流程', ver: '5 节点', dept: '安全管理部', desc: '隐患从受理、整改到验收闭环' },
+    { id: 'PR-02', name: '动火作业申请', ver: '5 节点', dept: '安全管理部', desc: '特种作业逐级审批' },
+    { id: 'PR-03', name: '设备停机检修审批', ver: '5 节点', dept: '机电管理部', desc: '停机计划申请与审批' },
+    { id: 'PR-04', name: '外来人员入厂申请', ver: '5 节点', dept: '综合管理部', desc: '访客与承包商入厂许可' },
+  ],
+  task: [
+    { id: 'TK-01', name: '设备检修任务', ver: '标准', dept: '设备管理部', desc: '检修工单派发、执行与验收' },
+    { id: 'TK-02', name: '隐患整改任务', ver: '标准', dept: '安全管理部', desc: '整改责任到人并跟踪时限' },
+    { id: 'TK-03', name: '安全培训任务', ver: '标准', dept: '安全管理部', desc: '培训计划下发与签到确认' },
+  ],
+};
+const bizOf = (kind, id) => (BIZLIB[kind] || []).find(b => b.id === id);
+
+/* 生命周期节点模板：业务「发生 → 结束」的完整链路 */
+const LIFECYCLE = {
+  form: [
+    { k: '发起填报', a: '提交表单', ev: 'start' },
+    { k: '数据校验', a: '系统校验通过', ev: 'flow' },
+    { k: '部门审核', a: '审核通过', ev: 'approve' },
+    { k: '归档结束', a: '表单归档、业务闭环', ev: 'done' },
+  ],
+  process: [
+    { k: '发起申请', a: '提交申请', ev: 'start' },
+    { k: '部门审批', a: '部门负责人审批通过', ev: 'approve' },
+    { k: '安全审核', a: '安全管理部审核通过', ev: 'approve' },
+    { k: '执行落实', a: '现场执行完成', ev: 'flow' },
+    { k: '归档结束', a: '流程归档、业务闭环', ev: 'done' },
+  ],
+  task: [
+    { k: '派发任务', a: '任务派发至执行人', ev: 'start' },
+    { k: '接受任务', a: '执行人接单', ev: 'flow' },
+    { k: '执行中', a: '提交阶段进展', ev: 'flow' },
+    { k: '提交验收', a: '提交验收申请', ev: 'flow' },
+    { k: '验收结束', a: '验收通过、业务闭环', ev: 'done' },
+  ],
+};
+const lifeOf = (kind) => LIFECYCLE[kind] || LIFECYCLE.form;
+
+/* 记录规则：动态圈在哪些节点事件上生成动态（按 工作表 / 流程 / 任务 / 预警 四大类区分） */
+const RULE_GROUPS = [
+  { cat: 'sheet', label: '工作表', icon: I.doc,
+    items: [
+      ['sheet_submit', '提交', '工作表被提交时生成一条动态'],
+    ] },
+  { cat: 'process', label: '流程', icon: I.flow,
+    items: [
+      ['proc_start',    '发起 / 创建', '流程被发起或创建时生成动态'],
+      ['proc_transfer', '转交',       '流程节点转交他人处理时生成动态'],
+      ['proc_approve',  '审批通过',   '各级审批、审核通过时生成动态'],
+      ['proc_reject',   '驳回 / 退回', '流程被驳回或退回时生成动态'],
+      ['proc_abort',    '终止',       '流程被中途终止、作废时生成动态'],
+      ['proc_overdue',  '超时预警',   '超过节点时限自动生成预警动态'],
+    ] },
+  { cat: 'task', label: '任务', icon: I.task,
+    items: [
+      ['task_start',    '发起',   '任务被派发、发起时生成动态'],
+      ['task_exec',     '执行',   '任务执行、提交进展时生成动态'],
+      ['task_forward',  '转发',   '任务被转发给他人时生成动态'],
+      ['task_withdraw', '撤回',   '任务被撤回时生成动态'],
+      ['task_overdue',  '超时预警', '超过任务时限自动生成预警动态'],
+      ['task_done',     '完成',   '任务完成时生成闭环动态'],
+    ] },
+  { cat: 'warning', label: '预警', icon: I.alert,
+    items: [
+      ['warn_trigger',  '触发',    '预警触发时生成动态'],
+      ['warn_exec',     '执行',    '预警处置执行时生成动态'],
+      ['warn_transfer', '转交',    '预警转交他人处置时生成动态'],
+      ['warn_overdue',  '超时预警', '预警超时未处置自动升级预警'],
+      ['warn_done',     '完成',    '预警处置完成时生成动态'],
+    ] },
+];
+/* 各业务 tab 对应的记录规则分类：预警规则在表单 / 流程 / 任务 三个 tab 下均出现 */
+const RULE_CATS = { form: ['sheet', 'warning'], process: ['process', 'warning'], task: ['task', 'warning'] };
+/* 每个动作对应的底层生命周期事件（引擎据此判断是否记录；null 表示仅作为通知规则，不进入业务生命周期链路） */
+const EV_OF = {
+  sheet_submit: 'start',
+  proc_start: 'start', proc_transfer: 'flow', proc_approve: 'approve', proc_reject: 'reject', proc_abort: 'abort', proc_overdue: 'overdue',
+  task_start: 'start', task_exec: 'flow', task_forward: 'flow', task_withdraw: null, task_overdue: 'overdue', task_done: 'done',
+  warn_trigger: 'start', warn_exec: 'flow', warn_transfer: 'flow', warn_overdue: 'overdue', warn_done: 'done',
+};
+const evOf = (k) => (k in EV_OF ? EV_OF[k] : null);
+const RULE_LABEL = {};
+RULE_GROUPS.forEach(g => g.items.forEach(([k, lbl]) => { RULE_LABEL[k] = lbl; }));
+/* 旧版事件键 → 新版动作键（编辑旧动态圈时迁移） */
+const OLD_EV_TO_NEW = {
+  start:   ['sheet_submit', 'proc_start', 'task_start', 'warn_trigger'],
+  flow:    ['proc_transfer', 'task_exec', 'task_forward', 'warn_exec', 'warn_transfer'],
+  approve: ['proc_approve'],
+  reject:  ['proc_reject'],
+  overdue: ['proc_overdue', 'task_overdue', 'warn_overdue'],
+  done:    ['task_done', 'warn_done'],
+  abort:   ['proc_abort', 'task_withdraw'],
+};
+const migrateEvents = (arr) => {
+  const out = [];
+  (arr || []).forEach(k => {
+    if (k in EV_OF) out.push(k);
+    else if (OLD_EV_TO_NEW[k]) OLD_EV_TO_NEW[k].forEach(nk => out.push(nk));
+  });
+  return [...new Set(out)];
+};
+
+/* 已创建的动态圈 */
+let FEEDNOS = [
+  {
+    id: 'DTH-1001', name: '安全生产动态圈', icon: 'alert', tone: 'red',
+    desc: '汇总隐患排查、动火作业、整改任务等安全类业务，从发起到闭环全过程留痕。',
+    owner: '李明', creator: '张宇', dept: '安全管理部', created: '2026-07-12', status: 'on', subs: 28,
+    binds: [{ kind: 'process', id: 'PR-01' }, { kind: 'process', id: 'PR-02' }, { kind: 'form', id: 'FM-03' }, { kind: 'task', id: 'TK-02' }],
+    rules: { events: ['start', 'flow', 'approve', 'reject', 'overdue', 'done', 'abort'], toEnd: true, autoFollow: true, archive: 'auto' },
+    scope: { type: 'dept', list: ['安全管理部', '机电管理部', '生产管理部'] },
+  },
+  {
+    id: 'DTH-1002', name: '设备运维动态圈', icon: 'task', tone: 'orange',
+    desc: '关联日常巡检、停机检修审批与检修任务，跟踪设备类业务的完整生命周期。',
+    owner: '张宇', creator: '张宇', dept: '维修班', created: '2026-07-20', status: 'on', subs: 16,
+    binds: [{ kind: 'form', id: 'FM-01' }, { kind: 'process', id: 'PR-03' }, { kind: 'task', id: 'TK-01' }],
+    rules: { events: ['start', 'flow', 'approve', 'overdue', 'done'], toEnd: true, autoFollow: false, archive: 'auto' },
+    scope: { type: 'dept', list: ['机电管理部', '设备管理部', '维修班'] },
+  },
+  {
+    id: 'DTH-1003', name: '生产交接动态圈', icon: 'doc', tone: 'blue',
+    desc: '记录班组交接班信息，暂未启用，启用后关联业务被发起时才会产生动态。',
+    owner: '陈刚', creator: '陈刚', dept: '生产管理部', created: '2026-08-01', status: 'off', subs: 5,
+    binds: [{ kind: 'form', id: 'FM-04' }],
+    rules: { events: ['start', 'done'], toEnd: true, autoFollow: false, archive: 'manual' },
+    scope: { type: 'all', list: [] },
+  },
+];
+const noOf = (id) => FEEDNOS.find(n => n.id === id);
+
+/* 业务实例：某个关联对象被发起后，动态圈记录的一次完整业务过程 */
+let INSTANCES = [
+  {
+    id: 'INS-8801', noId: 'DTH-1002', kind: 'form', bizId: 'FM-01', title: '3# 主扇风机房日常巡检',
+    starter: '张伟', dept: '机电管理部', startAt: '今天 09:05', endAt: '今天 09:22', state: 'done', cursor: 4,
+    logs: [
+      { who: '张伟', at: '今天 09:05', act: '提交表单', note: '采集温度 87℃、振动 2.1mm/s、电流 142A，上传附件 2 个。', feedId: 'f1' },
+      { who: '系统', at: '今天 09:06', act: '系统校验通过', note: '数值区间校验通过，无异常项。' },
+      { who: '王芳', at: '今天 09:15', act: '审核通过', note: '数据已同步至设备管理台账，纳入趋势分析。' },
+      { who: '系统', at: '今天 09:22', act: '表单归档、业务闭环', note: '本次巡检业务结束，全过程共 4 个节点、耗时 17 分钟。' },
+    ],
+  },
+  {
+    id: 'INS-8802', noId: 'DTH-1001', kind: 'process', bizId: 'PR-01', title: '南区 2# 采场边坡隐患整改',
+    starter: '李明', dept: '安全管理部', startAt: '今天 10:12', endAt: '', state: 'running', cursor: 2,
+    logs: [
+      { who: '李明', at: '今天 10:12', act: '提交申请', note: '边坡存在浮石掉落风险，申请立项整改，附整改方案。', feedId: 'f4' },
+      { who: '张宇', at: '今天 11:30', act: '部门负责人审批通过', note: '同意整改方案，转安全管理部审核。' },
+    ],
+  },
+  {
+    id: 'INS-8803', noId: 'DTH-1002', kind: 'task', bizId: 'TK-01', title: '2# 渣浆泵更换备件',
+    starter: '王芳', dept: '设备管理部', startAt: '今天 08:25', endAt: '', state: 'running', cursor: 3,
+    logs: [
+      { who: '王芳', at: '今天 08:25', act: '任务派发至执行人', note: '执行人张宇，计划今天 17:30 前完成。', feedId: 'f3' },
+      { who: '张宇', at: '今天 08:31', act: '执行人接单', note: '预计 11:00 前到达现场。' },
+      { who: '张宇', at: '今天 11:05', act: '提交阶段进展', note: '密封件已更换，试运行观察中，进度 60%。' },
+    ],
+  },
+  {
+    id: 'INS-8804', noId: 'DTH-1001', kind: 'process', bizId: 'PR-02', title: '南区 2# 采场动火作业申请',
+    starter: '赵磊', dept: '机电管理部', startAt: '昨天 16:40', endAt: '', state: 'running', cursor: 1,
+    logs: [
+      { who: '赵磊', at: '昨天 16:40', act: '提交申请', note: '紧急动火作业，已转交安全管理部李明审批。', feedId: 'f6' },
+    ],
+  },
+  {
+    id: 'INS-8805', noId: 'DTH-1001', kind: 'task', bizId: 'TK-02', title: '南区排水泵隐患整改（HT-2026-0384）',
+    starter: '王芳', dept: '安全管理部', startAt: '今天 08:25', endAt: '', state: 'running', cursor: 2,
+    logs: [
+      { who: '王芳', at: '今天 08:25', act: '任务派发至执行人', note: '来源隐患整改单 HT-2026-0384，责任人王芳。' },
+      { who: '系统', at: '今天 12:00', act: '触发超时预警', note: '整改期限已到、状态仍为整改中，生成预警动态。', feedId: 'f2' },
+    ],
+  },
+];
+const insOf = (id) => INSTANCES.find(i => i.id === id);
+const insOfNo = (noId) => INSTANCES.filter(i => i.noId === noId);
+/* 由实例日志反查 动态→动态圈 归属（种子动态未直接存 noId，靠此映射补上） */
+const feedNoOf = {};
+INSTANCES.forEach(i => (i.logs || []).forEach(l => { if (l.feedId) feedNoOf[l.feedId] = i.noId; }));
+
+/* 为现有动态补「来源动态圈 / 业务实例」标识 */
+[['f1', 'DTH-1002', 'INS-8801'], ['f2', 'DTH-1001', 'INS-8805'], ['f3', 'DTH-1002', 'INS-8803'],
+ ['f4', 'DTH-1001', 'INS-8802'], ['f6', 'DTH-1001', 'INS-8804']].forEach(([fid, noId, insId]) => {
+  const f = feeds.find(x => x.id === fid);
+  if (f) { f.noId = noId; f.insId = insId; }
+});
+
+/* ============ Timeline (U-6) ============ */
+const timeline = [
+  { type: 'form', tone: 'blue',   icon: 'doc',    tag: '上报动态', time: '今天 07:40', title: '张伟 上报隐患', text: '在《日常巡检表》中发现南区排水泵异响，填报隐患信息并上传现场照片，生成隐患整改单 #HT-2026-0384。', relate: '《隐患整改单》HT-2026-0384', relateId: 'HT-2026-0384' },
+  { type: 'task', tone: 'orange', icon: 'task',   tag: '派发任务动态', time: '今天 08:25', title: '王芳 派发整改任务', text: '将整改任务派发给维修班张宇，要求今天 17:30 前完成排水泵检修与更换密封件。', relate: '《设备检修任务》TASK-7782', relateId: 'TASK-7782' },
+  { type: 'form', tone: 'green',  icon: 'check',  tag: '整改完成动态', time: '今天 11:05', title: '张宇 提交整改完成', text: '已完成排水泵检修，更换密封件 1 套，试运行正常，上传维修前后对比照片。', relate: '《设备检修任务》TASK-7782', relateId: 'TASK-7782' },
+  { type: 'process', tone: 'violet', icon: 'flow', tag: '复查通过动态', time: '刚刚', title: '李明 复查通过', text: '安全管理部现场复查确认隐患已消除，流程归档，隐患整改单状态更新为「已闭环」。', relate: '《隐患整改流程》FLOW-3091', relateId: 'FLOW-3091' },
+];
+
+/* ============ 组织架构 / 群组 / 图库（二级页面用） ============ */
+const DEPTS = [
+  { name: '机电管理部', members: [{ n: '张伟', r: '巡检员' }, { n: '赵磊', r: '机电主管' }] },
+  { name: '安全管理部', members: [{ n: '李明', r: '安全工程师' }, { n: '孙倩', r: '安全员' }] },
+  { name: '设备管理部', members: [{ n: '王芳', r: '设备主管' }] },
+  { name: '生产管理部', members: [{ n: '陈刚', r: '班组长' }, { n: '周敏', r: '生产调度' }] },
+  { name: '维修班', members: [{ n: '张宇', r: '维修工程师' }] },
+];
+const GROUPS = [
+  { n: '安全生产群', d: '28 人 · 全员' },
+  { n: '机电值班群', d: '12 人 · 值班组' },
+  { n: '隐患整改专项组', d: '9 人 · 专项' },
+];
+const MEMBERS = DEPTS.flatMap(d => d.members.map(m => m.n));
+const MEMBER_DEPT = {};
+DEPTS.forEach(d => d.members.forEach(m => { MEMBER_DEPT[m.n] = d.name + ' · ' + m.r; }));
+MEMBER_DEPT['系统预警'] = '系统自动生成';
+const PHOTOS = [
+  { n: '现场照片-01.jpg', d: '今天 08:12 · 2.1MB' },
+  { n: '现场照片-02.jpg', d: '今天 08:13 · 1.8MB' },
+  { n: '设备铭牌.jpg', d: '今天 08:15 · 0.9MB' },
+  { n: '整改前.jpg', d: '昨天 16:20 · 2.4MB' },
+  { n: '整改后.jpg', d: '昨天 17:05 · 2.2MB' },
+  { n: '巡检路线图.png', d: '8月1日 · 0.6MB' },
+];
+const EMOJIS = ['👍','❤️','😊','🎉','👏','🔥','✅','🙏','💡','😅','🚀','⚠️'];
+
+/* ============ 关联单据（U-5） ============ */
+const RECORDS = {
+  'REC-2041': {
+    kicker: '表单记录 · 日常巡检', title: '《日常巡检表》REC-2041', icon: 'doc', tone: 'blue',
+    sub: '设备巡检 · 填报人：张伟 · 机电管理部', status: '已提交', statusTone: 'ok',
+    fields: [
+      ['单据编号', 'REC-2041'], ['表单模板', '日常巡检表 V2.3'], ['填报人', '张伟'], ['所属部门', '机电管理部'],
+      ['填报时间', '2026-08-04 09:05'], ['巡检点位', '3# 主扇风机房'],
+      ['温度', '87 ℃'], ['振动', '2.1 mm/s'], ['电流', '142 A'],
+      ['巡检结论', '运行正常，无需处理', 'wide'],
+    ],
+    flow: [
+      { t: '2026-08-04 09:05', w: '张伟', a: '创建并提交', note: '现场采集数据 3 项，上传附件 2 个。' },
+      { t: '2026-08-04 09:09', w: '王芳', a: '数据同步', note: '已同步至设备管理台账，纳入趋势分析。' },
+    ],
+    actions: [['查看原始表单', 'doc', true], ['导出 PDF', 'download'], ['打印', 'print']],
+  },
+  'HT-2026-0384': {
+    kicker: '隐患整改单 · 双重预防机制', title: '隐患整改单 #HT-2026-0384', icon: 'alert', tone: 'red',
+    sub: '隐患排查治理 · 当前负责人：王芳', status: '整改中 · 已逾期', statusTone: 'danger',
+    fields: [
+      ['单据编号', 'HT-2026-0384'], ['隐患等级', '一般隐患'], ['隐患部位', '南区排水泵'], ['发现人', '张伟'],
+      ['责任人', '王芳'], ['整改期限', '2026-08-04 12:00'],
+      ['逾期时长', '4 小时 12 分', 'warn'], ['当前状态', '整改中'],
+      ['隐患描述', '南区排水泵运行时存在异响，疑似轴承磨损，存在停机风险。', 'wide'],
+    ],
+    flow: [
+      { t: '2026-08-04 07:40', w: '张伟', a: '上报隐患', note: '巡检中发现异响，附现场照片 2 张。' },
+      { t: '2026-08-04 08:25', w: '王芳', a: '受理并派发任务', note: '派发《设备检修任务》TASK-7782 给张宇。' },
+      { t: '2026-08-04 12:00', w: '系统', a: '触发逾期预警', note: '整改期限已到，状态仍为整改中，生成预警动态。' },
+    ],
+    actions: [['提交整改结果', 'check', true], ['申请延期', 'clock'], ['查看整改流程', 'flow']],
+  },
+  'TASK-7782': {
+    kicker: '任务 · 设备检修', title: '《设备检修任务》TASK-7782', icon: 'task', tone: 'orange',
+    sub: '设备管理部派发 · 执行人：张宇', status: '执行中', statusTone: 'warn',
+    fields: [
+      ['任务编号', 'TASK-7782'], ['任务名称', '2# 渣浆泵更换备件'], ['派发人', '王芳'], ['执行人', '张宇'],
+      ['优先级', '高'], ['计划完成', '今天 17:30'],
+      ['来源单据', 'HT-2026-0384'], ['当前进度', '60%'],
+      ['任务说明', '更换密封件 1 套，检查轴承磨损情况，完成后上传维修前后对比照片。', 'wide'],
+    ],
+    flow: [
+      { t: '2026-08-04 08:25', w: '王芳', a: '派发任务', note: '关联隐患整改单 HT-2026-0384。' },
+      { t: '2026-08-04 08:31', w: '张宇', a: '接受任务', note: '预计 11:00 前到达现场。' },
+      { t: '2026-08-04 11:05', w: '张宇', a: '提交阶段进展', note: '密封件已更换，试运行观察中。' },
+    ],
+    actions: [['提交完成结果', 'check', true], ['转派他人', 'people'], ['催办', 'bell']],
+  },
+  'FLOW-3091': {
+    kicker: '流程 · 隐患整改审批', title: '《隐患整改流程》FLOW-3091', icon: 'flow', tone: 'violet',
+    sub: '发起人：李明 · 安全管理部', status: '审批中', statusTone: 'warn',
+    fields: [
+      ['流程编号', 'FLOW-3091'], ['流程名称', '南区 2# 采场边坡隐患整改'], ['发起人', '李明'], ['发起时间', '2026-08-04 07:12'],
+      ['当前节点', '安全审核'], ['当前审批人', '张宇'],
+      ['已耗时', '2 小时 05 分'], ['流程状态', '审批中'],
+      ['流程说明', '边坡出现局部裂缝，需按整改方案分三阶段处置，本次申请审批整改方案与预算。', 'wide'],
+    ],
+    flow: [
+      { t: '2026-08-04 07:12', w: '李明', a: '发起流程', note: '上传《整改方案.docx》《现场图集.zip》。' },
+      { t: '2026-08-04 07:48', w: '赵磊', a: '部门负责人审批通过', note: '同意方案，建议压缩工期。' },
+      { t: '2026-08-04 08:02', w: '张宇', a: '待安全审核', note: '安全管理部审核中，承诺今天内完成。' },
+    ],
+    actions: [['同意并流转', 'check', true], ['驳回', 'close'], ['加签 / 转办', 'people']],
+  },
+  'REC-2038': {
+    kicker: '表单记录 · 安全检查', title: '《安全检查记录》REC-2038', icon: 'doc', tone: 'blue',
+    sub: '生产管理部 · 填报人：陈刚', status: '已修改', statusTone: 'ok',
+    fields: [
+      ['单据编号', 'REC-2038'], ['表单模板', '安全检查记录 V1.8'], ['填报人', '陈刚'], ['所属部门', '生产管理部'],
+      ['检查时间', '2026-08-04 09:16'], ['检查区域', '选矿厂皮带走廊'],
+      ['问题数量', '2 项'], ['关联台账', '隐患排查治理台账'],
+      ['问题明细', '①皮带机防护栏缺失；②照明线路老化，需于本周内整改完成。', 'wide'],
+    ],
+    flow: [
+      { t: '2026-08-04 08:40', w: '陈刚', a: '创建记录', note: '初次填报 0 项问题。' },
+      { t: '2026-08-04 09:16', w: '陈刚', a: '修改记录', note: '补录 2 项问题并关联隐患台账。' },
+    ],
+    actions: [['查看原始表单', 'doc', true], ['生成隐患整改单', 'plus'], ['导出 PDF', 'download']],
+  },
+  'FLOW-3087': {
+    kicker: '流程 · 动火作业申请', title: '《动火作业申请》FLOW-3087', icon: 'flow', tone: 'violet',
+    sub: '机电管理部发起 · 已转交安全管理部', status: '待审批', statusTone: 'warn',
+    fields: [
+      ['流程编号', 'FLOW-3087'], ['作业地点', '南区 2# 采场'], ['发起人', '赵磊'], ['接收人', '李明'],
+      ['紧急程度', '紧急', 'warn'], ['申请作业时间', '2026-08-05 08:00 - 12:00'],
+      ['当前节点', '安全管理部审批'], ['流程状态', '待审批'],
+      ['作业说明', '溜井格筛焊补作业，需办理动火作业票并落实监护人与灭火器材。', 'wide'],
+    ],
+    flow: [
+      { t: '2026-08-03 15:50', w: '赵磊', a: '发起申请', note: '填写动火作业内容与安全措施。' },
+      { t: '2026-08-03 16:40', w: '赵磊', a: '转交', note: '转交至安全管理部李明审批。' },
+      { t: '2026-08-03 17:02', w: '李明', a: '已签收', note: '明天上午现场核查后审批。' },
+    ],
+    actions: [['审批通过', 'check', true], ['驳回', 'close'], ['查看安全措施', 'doc']],
+  },
+};
+
+/* ============ Render helpers ============ */
+const $ = (s, el = document) => el.querySelector(s);
+const $$ = (s, el = document) => [...el.querySelectorAll(s)];
+const esc = (s) => s.replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+function renderMentions(text) {
+  return esc(text).replace(/@([一-龥A-Za-z0-9]+)/g, '<span class="mention">@$1</span>');
+}
+
+let curView = 'feed';
+/* Nav rail */
+const ICON_FEED = '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>';
+const NAV = [
+  { label: '工作台', icon: I.home, module: 'workbench' },
+  { label: '动态', icon: I.apps, key: 'dyn', children: [
+      { label: '动态', icon: ICON_FEED, module: 'feed' },
+      { label: '动态圈管理', icon: I.folder, module: 'feedno' },
+  ]},
+  { label: '任务', icon: I.task, module: 'task' },
+  { label: '流程', icon: I.flow, module: 'flow' },
+  { label: '数据洞察', icon: I.chart, module: 'chart' },
+  { label: '通讯录', icon: I.people, module: 'people' },
+];
+const MODULES = {
+  workbench: { label: '工作台', view: 'workbench', icon: I.home },
+  feed:      { label: '动态', view: 'feed', icon: ICON_FEED },
+  feedno:    { label: '动态圈管理', view: 'feedno', icon: I.folder },
+  task:      { label: '任务', view: 'task', icon: I.task },
+  flow:      { label: '流程', view: 'flow', icon: I.flow },
+  chart:     { label: '数据洞察', view: 'chart', icon: I.chart },
+  people:    { label: '通讯录', view: 'people', icon: I.people },
+  message:   { label: '消息', view: 'message', icon: I.bell },
+};
+$('#navLinks').innerHTML = NAV.map((n, i) =>
+  \`<button class="nav-link \${n.children ? 'has-child' : ''} \${i === 1 ? 'active' : ''}" title="\${n.label}"\${n.key ? \` data-nav-parent="\${n.key}"\` : ''}\${n.module ? \` data-nav-module="\${n.module}"\` : ''}>\${n.icon}<span>\${n.label}</span>\${n.children ? '<i class="nav-caret"></i>' : ''}</button>\`
+).join('');
+
+/* 二级菜单：内嵌子面板（展开在图标栏右侧，内容区自动右移，不遮挡） */
+const navSubpanel = document.createElement('div');
+navSubpanel.className = 'nav-subpanel';
+navSubpanel.id = 'navSubpanel';
+navSubpanel.hidden = true;
+document.body.appendChild(navSubpanel);
+
+function toggleNavSub(parentBtn) {
+  const nav = NAV.find(n => n.key === parentBtn.dataset.navParent);
+  if (!nav || !nav.children) return;
+  if (window.innerWidth <= 850) { openModule(nav.children[0].module); return; }
+  const open = navSubpanel.classList.contains('open') && navSubpanel.dataset.for === nav.key;
+  $$('#navLinks .nav-link').forEach(b => b.classList.remove('expanded'));
+  if (open) {
+    navSubpanel.classList.remove('open'); navSubpanel.hidden = true;
+    document.body.classList.remove('nav-shifted');
+  } else {
+    navSubpanel.dataset.for = nav.key;
+    navSubpanel.innerHTML = \`<div class="nsp-head">\${esc(nav.label)}</div>\` + nav.children.map(c =>
+      \`<button class="nsp-item" data-nav-module="\${c.module}">\${c.icon}<span>\${esc(c.label)}</span></button>\`
+    ).join('');
+    navSubpanel.classList.add('open'); navSubpanel.hidden = false;
+    parentBtn.classList.add('expanded');
+    document.body.classList.add('nav-shifted');
+  }
+}
+navSubpanel.addEventListener('click', (e) => {
+  const it = e.target.closest('[data-nav-module]');
+  if (!it) return;
+  openModule(it.dataset.navModule);
+  navSubpanel.classList.remove('open'); navSubpanel.hidden = true;
+  document.body.classList.remove('nav-shifted');
+  $$('#navLinks .nav-link').forEach(b => b.classList.remove('expanded'));
+});
+document.addEventListener('click', (e) => {
+  if (navSubpanel.classList.contains('open') && !navSubpanel.contains(e.target) && !e.target.closest('[data-nav-parent]')) {
+    navSubpanel.classList.remove('open'); navSubpanel.hidden = true;
+    document.body.classList.remove('nav-shifted');
+    $$('#navLinks .nav-link').forEach(b => b.classList.remove('expanded'));
+  }
+});
+
+/* 左侧菜单点击 → 打开可关闭标签页 */
+$('#navLinks').addEventListener('click', (e) => {
+  const mod = e.target.closest('[data-nav-module]');
+  if (mod) { openModule(mod.dataset.navModule); return; }
+  const p = e.target.closest('[data-nav-parent]');
+  if (p) { e.stopPropagation(); toggleNavSub(p); }
+});
+
+/* 可关闭标签页（依据左侧菜单点击的功能模块生成） */
+let openTabs = [];
+let activeTab = null;
+function openModule(id) {
+  if (!MODULES[id]) return;
+  if (!openTabs.includes(id)) openTabs.push(id);
+  activeTab = id;
+  renderTabs();
+  activateView(id);
+}
+function closeTab(id) {
+  const i = openTabs.indexOf(id);
+  if (i < 0) return;
+  openTabs.splice(i, 1);
+  if (activeTab === id) activeTab = openTabs.length ? openTabs[Math.max(0, i - 1)] : null;
+  renderTabs();
+  if (activeTab) activateView(activeTab); else showEmptyWorkspace();
+}
+function renderTabs() {
+  $('#wsTabs').innerHTML = openTabs.length
+    ? openTabs.map(id => {
+        const m = MODULES[id];
+        return \`<div class="ws-tab \${id === activeTab ? 'active' : ''}" data-ws-tab="\${id}"><span>\${esc(m.label)}</span><button class="ws-tab-close" data-ws-close="\${id}" title="关闭">\${I.close}</button></div>\`;
+      }).join('')
+    : '<div class="ws-empty">从左侧菜单选择功能模块开始</div>';
+}
+function activateView(id) {
+  const m = MODULES[id];
+  ['view-feed', 'view-feedno', 'view-message', 'view-module', 'view-empty'].forEach(s => { const el = $('#' + s); if (el) el.hidden = true; });
+  if (m.view === 'feed' || m.view === 'feedno' || m.view === 'message') {
+    switchView(m.view);
+  } else {
+    $('#view-module').hidden = false;
+    $('#modTitle').textContent = m.label;
+    $('#modIcon').innerHTML = m.icon || I.apps;
+  }
+}
+function showEmptyWorkspace() {
+  ['view-feed', 'view-feedno', 'view-message', 'view-module'].forEach(s => { const el = $('#' + s); if (el) el.hidden = true; });
+  const e = $('#view-empty'); if (e) e.hidden = false;
+}
+$('#wsTabs').addEventListener('click', (e) => {
+  const close = e.target.closest('[data-ws-close]');
+  if (close) { closeTab(close.dataset.wsClose); return; }
+  const tab = e.target.closest('[data-ws-tab]');
+  if (tab) openModule(tab.dataset.wsTab);
+});
+
+
+/* 默认打开「动态圈」信息流 */
+openModule('feed');
+
+/* ============ Feed list ============ */
+const FILTERS = [['all', '全部'], ['form', '表单动态'], ['process', '流程动态'], ['task', '任务动态'], ['warning', '预警动态']];
+let curFilter = 'all';
+let curSearch = '';
+let curTime = 'all';    /* 时间筛选：all / today / 7d / 30d */
+let curNo = 'all';      /* 动态圈名称筛选：all 或 FEEDNOS.id */
+let feedScope = 'all';  /* 左侧筛选树：all / mine / faved / commented / liked */
+
+function filterFeeds(list) {
+  const now = Date.now();
+  const startToday = new Date(); startToday.setHours(0, 0, 0, 0);
+  return list.filter(f => {
+    if (curFilter !== 'all' && f.type !== curFilter) return false;
+    if (curNo !== 'all' && f.noId !== curNo) return false;
+    if (feedScope === 'mine' && f.operator !== ME) return false;
+    if (feedScope === 'faved' && !f.faved) return false;
+    if (feedScope === 'commented' && !f.comments.some(c => c.author === ME)) return false;
+    if (feedScope === 'liked' && !f.likes.includes(ME)) return false;
+    if (curTime !== 'all') {
+      const ts = f.ts || 0;
+      if (curTime === 'today' && ts < startToday.getTime()) return false;
+      if (curTime === '7d' && ts < now - 7 * 86400000) return false;
+      if (curTime === '30d' && ts < now - 30 * 86400000) return false;
+    }
+    if (curSearch) {
+      const q = curSearch.toLowerCase();
+      const hay = (f.title + f.summary + f.operator + (f.related ? f.related.label : '')).toLowerCase();
+      if (!hay.includes(q)) return false;
+    }
+    return true;
+  });
+}
+
+/* 附件：可点击 → 图片查看器 / 文件预览页 */
+function attachmentsHTML(f, style = '') {
+  if (!f.attachments.length) return '';
+  const items = f.attachments.map((a, i) =>
+    \`<button class="feed-attachment" data-att="\${f.id}:\${i}" title="\${a.kind === 'img' ? '查看图片' : '预览文件'}">\${a.kind === 'img' ? I.img : I.doc}\${esc(a.name)}<small>\${a.kind === 'img' ? '查看' : '预览'}</small></button>\`
+  ).join('');
+  return \`<div class="feed-attachments"\${style ? \` style="\${style}"\` : ''}>\${items}</div>\`;
+}
+
+/* 附件类型推断与图标 */
+const IMG_EXT = ['jpg', 'jpeg', 'png', 'gif', 'webp', 'bmp'];
+function attKind(name) {
+  const e = (String(name).split('.').pop() || '').toLowerCase();
+  return IMG_EXT.includes(e) ? 'img' : 'file';
+}
+function attIcon(name) { return attKind(name) === 'img' ? I.img : I.doc; }
+/* picker 项 / 数据项 → 统一附件对象 { name, kind, url } */
+function toAtt(p) { return { name: p.n || p.name, kind: p.kind || attKind(p.n || p.name), url: p.url || '' }; }
+
+/* 评论等局部附件渲染（可点击预览） */
+function miniAttachmentsHTML(list, cidx) {
+  if (!list || !list.length) return '';
+  return \`<div class="comment-attachments">\${list.map((a, i) =>
+    \`<button class="cmt-att" data-catt="\${cidx}:\${i}" title="\${a.kind === 'img' ? '查看图片' : '预览文件'}">\${attIcon(a.name)}\${esc(a.name)}<small>\${a.kind === 'img' ? '查看' : '预览'}</small></button>\`
+  ).join('')}</div>\`;
+}
+
+function feedCardHTML(f) {
+  const t = TYPES[f.type];
+  const likeCount = f.likes.length;
+  const commentCount = f.comments.length;
+  const atts = attachmentsHTML(f);
+  const preview = f.comments.slice(0, 2).map(c => \`
+    <div class="feed-comment"><span>\${esc(c.author.slice(0, 1))}</span><div><b>\${esc(c.author)}</b>\${renderMentions(c.content)}<time>\${esc(c.time)}</time></div></div>\`
+  ).join('');
+  const footComments = commentCount > 2
+    ? \`<button class="feed-view-all" data-detail="\${f.id}">查看全部 \${commentCount} 条评论</button>\` : '';
+  const srcNo = f.noId ? noOf(f.noId) : null;
+  const srcTag = srcNo
+    ? \`<button class="feed-source" data-feedno="\${srcNo.id}" title="来源动态圈：\${esc(srcNo.name)}">\${I.link}\${esc(srcNo.name)}</button>\`
+    : '';
+  return \`
+  <article class="feed-card" data-id="\${f.id}">
+    <div class="feed-card-head">
+      <span class="feed-avatar \${f.tone}">\${esc(f.avatar)}</span>
+      <div class="feed-card-head-meta">
+        <div class="feed-card-operator"><b>\${esc(f.operator)}</b><span class="feed-dept">\${esc(f.dept)}</span></div>
+        <div class="feed-card-sub"><span class="feed-type-tag \${f.type}">\${t.label}</span><time>\${esc(f.time)}</time>\${srcTag}</div>
+      </div>
+      <div class="feed-card-head-actions">
+        <button class="head-icon star \${f.faved ? 'on' : ''}" data-fav="\${f.id}" title="\${f.faved ? '取消收藏' : '收藏'}">\${I.star}</button>
+      </div>
+    </div>
+    <button class="feed-card-body" data-detail="\${f.id}">
+      <h3 class="feed-card-title">\${esc(f.title)}</h3>
+    </button>
+    \${atts}
+    <div class="feed-card-footer">
+      <button class="feed-action like \${f.liked ? 'on' : ''}" data-like="\${f.id}" title="点赞">\${I.heart}<span class="lc">\${likeCount}</span></button>
+      <button class="feed-action comment" data-detail="\${f.id}" title="评论">\${I.comment}<span>\${commentCount}</span></button>
+      <button class="feed-action at" data-at="\${f.id}" title="提及成员">\${I.at}<span class="lbl">@</span></button>
+      <button class="feed-action photo" data-photo="\${f.id}" title="上传附件">\${I.clip}<span class="lbl">附件</span></button>
+      \${f.related ? \`<button class="feed-action relate" data-relate="\${f.id}">\${I.link}<span class="lbl">\${esc(f.related.label)}</span></button>\` : ''}
+    </div>
+    \${commentCount ? \`<div class="feed-comments">\${preview}\${footComments}</div>\` : ''}
+  </article>\`;
+}
+
+function renderFeed() {
+  populateFeedNoOptions();
+  const list = filterFeeds(feeds);
+  $('#feedList').innerHTML = list.map(feedCardHTML).join('');
+  $('#feedEmpty').hidden = list.length > 0;
+  const cnt = $('#feedAdvCount'); if (cnt) cnt.textContent = '共 ' + list.length + ' 条';
+  renderTypeStats();
+}
+
+/* ============ Type stats ============ */
+function renderTypeStats() {
+  if (!$('#typeStats')) return;
+  const counts = { form: 0, process: 0, task: 0, warning: 0 };
+  feeds.forEach(f => counts[f.type]++);
+  const max = Math.max(1, ...Object.values(counts));
+  $('#typeStats').innerHTML = Object.entries(counts).map(([k, v]) => {
+    const t = TYPES[k];
+    return \`<div class="stat-row">
+      <span class="stat-tag" style="color:\${t.color};background:\${t.soft}">\${t.label}</span>
+      <span class="stat-bar"><i style="width:\${(v / max) * 100}%;background:\${t.color}"></i></span>
+      <span class="stat-num">\${v}</span>
+    </div>\`;
+  }).join('');
+}
+
+/* ============ Timeline ============ */
+function renderTimeline() {
+  $('#timeline').innerHTML = timeline.map(n => \`
+    <div class="tl-node">
+      <div class="tl-rail"><span class="tl-dot \${n.tone}">\${I[n.icon]}</span><span class="tl-line"></span></div>
+      <div class="tl-body">
+        <div class="tl-body-head"><span class="tl-type" style="color:\${TYPES[n.type].color};background:\${TYPES[n.type].soft}">\${n.tag}</span><span class="tl-time">\${esc(n.time)}</span></div>
+        <h3>\${esc(n.title)}</h3>
+        <p>\${esc(n.text)}</p>
+        <button class="tl-link" data-relate-tl="\${esc(n.relateId)}">\${I.link}\${esc(n.relate)}\${I.chev}</button>
+      </div>
+    </div>\`).join('');
+}
+
+/* ============ Filters ============ */
+function renderFilters() {
+  $('#feedFilter').innerHTML = FILTERS.map(([k, lbl]) => {
+    const n = k === 'all' ? feeds.length : feeds.filter(f => f.type === k).length;
+      return \`<button class="\${curFilter === k ? 'selected' : ''}" data-filter="\${k}">\${lbl}<span class="pill">\${n}</span></button>\`;
+  }).join('');
+}
+
+function populateFeedNoOptions() {
+  const sel = $('#feedNo'); if (!sel) return;
+  const cur = curNo;
+  sel.innerHTML = '<option value="all">全部动态</option>' + FEEDNOS.map(n => \`<option value="\${n.id}">\${esc(n.name)}</option>\`).join('');
+  if (FEEDNOS.some(n => n.id === cur)) sel.value = cur;
+  else { sel.value = 'all'; curNo = 'all'; }
+}
+
+/* ============ Detail modal ============ */
+let detailId = null;
+function openDetail(id) {
+  const f = feeds.find(x => x.id === id);
+  if (!f) return;
+  if (detailId !== id) composerPhotos = [];
+  detailId = id;
+  const t = TYPES[f.type];
+  $('#detailHead').innerHTML = \`
+    <span class="feed-avatar \${f.tone}">\${esc(f.avatar)}</span>
+    <div><div class="feed-card-operator" style="font-size:13px"><b>\${esc(f.operator)}</b><span class="feed-dept">\${esc(f.dept)}</span></div>
+      <div class="feed-card-sub"><span class="feed-type-tag \${f.type}">\${t.label}</span><time>\${esc(f.time)}</time></div></div>
+    <button class="detail-close" id="detailClose" title="关闭">\${I.close}</button>\`;
+  $('#detailBody').innerHTML = \`
+    <h2 class="detail-title" id="detailTitle">\${esc(f.title)}</h2>
+    <div class="detail-meta">
+      <span>操作人：<b>\${esc(f.operator)}</b></span>
+      <span>部门：<b>\${esc(f.dept)}</b></span>
+      <span>时间：<b>\${esc(f.time)}</b></span>
+    </div>
+    \${attachmentsHTML(f, 'margin-top:12px')}
+    \${f.related ? \`<button class="detail-relate" data-relate="\${f.id}">\${I.link}关联单据：\${esc(f.related.label)} · \${esc(f.related.id)}\${I.chev}</button>\` : ''}
+
+    <div class="detail-section-h">点赞 <span class="seg">\${f.likes.length} 人</span></div>
+    <div style="display:flex;align-items:center;gap:10px">
+      <button class="feed-action like \${f.liked ? 'on' : ''}" data-like="\${f.id}" style="border:1px solid var(--line);padding:8px 12px">\${I.heart}<span class="lc">\${f.likes.length}</span> \${f.liked ? '已赞' : '点赞'}</button>
+      <button class="quiet-action" data-likers="\${f.id}" \${f.likes.length ? '' : 'disabled'}>查看点赞人</button>
+    </div>
+
+    <div class="detail-section-h">评论 <span class="seg">\${f.comments.length} 条</span></div>
+    <div class="comment-list" id="detailComments">\${f.comments.map((c, i) => commentHTML(c, i, f.id)).join('')}</div>
+
+    <div class="composer">
+      <textarea id="composerInput" placeholder="发表评论，输入 @ 可提及成员…"></textarea>
+      <div id="composerPhotos"></div>
+      <div class="composer-bar">
+        <button class="composer-btn" id="emojiBtn" title="表情">\${I.smile}</button>
+        <button class="composer-btn" id="atBtn" title="提及成员">\${I.at}</button>
+        <button class="composer-btn" id="picBtn" title="上传附件">\${I.clip}</button>
+        <span class="spacer"></span>
+        <button class="send-btn" id="sendBtn" disabled>\${I.send} 发送</button>
+      </div>
+    </div>\`;
+  bindComposer(f);
+  renderComposerPhotos();
+  $('#detailClose').addEventListener('click', closeDetail);
+  $('#detailLayer').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+function canDeleteComment(f) {
+  if (!f) return false;
+  if (f.operator === ME) return true;
+  const noId = f.noId || feedNoOf[f.id];
+  const n = noId ? noOf(noId) : null;
+  return !!(n && n.owner === ME);
+}
+function commentHTML(c, idx, fid) {
+  const f = (typeof fid === 'string') ? feeds.find(x => x.id === fid) : null;
+  const canDel = canDeleteComment(f);
+  return \`<div class="comment-item" data-cidx="\${idx}">
+    <span>\${esc(c.author.slice(0, 1))}</span>
+    <div class="comment-main">
+      <div class="comment-head"><b>\${esc(c.author)}</b><time>\${esc(c.time)}</time></div>
+      <p class="comment-text">\${renderMentions(c.content)}</p>
+      \${miniAttachmentsHTML(c.attachments, (fid || detailId) + ':' + idx)}
+      <button class="comment-reply" data-reply="\${esc(c.author)}">\${I.reply}回复</button>
+      \${canDel ? \`<button class="comment-del" data-del-cmt="\${esc(fid)}:\${idx}" title="删除评论">\${I.trash}删除</button>\` : ''}
+    </div></div>\`;
+}
+function openDeleteComment(fid, ci) {
+  const f = feeds.find(x => x.id === fid); if (!f) return;
+  const c = f.comments[+ci]; if (!c) return;
+  pushSheet({
+    title: '删除评论', sub: '该操作不可恢复', modal: true,
+    body: () => \`<div class="no-del-box">
+        <div class="no-del-warn">\${I.alert}<div><b>确认删除这条评论？</b><p>删除后该评论将无法找回，仅动态圈负责人或动态发布者有权删除。</p></div></div>
+        <p class="no-del-name">评论人：<b>\${esc(c.author)}</b> · \${esc(c.time)}</p>
+      </div>\`,
+    foot: () => \`<button class="btn-ghost" data-sheet-close>取消</button><button class="btn-danger" id="delCmtConfirmBtn">\${I.trash}删除</button>\`,
+    mount() {
+      const btn = $('#delCmtConfirmBtn');
+      if (btn) btn.addEventListener('click', () => {
+        f.comments.splice(+ci, 1);
+        if (detailId === fid) $('#detailComments').innerHTML = f.comments.map((c2, i) => commentHTML(c2, i, fid)).join('');
+        closeSheet(); renderFeed(); toast('评论已删除');
+      });
+    }
+  });
+}
+function closeDetail() { $('#detailLayer').hidden = true; detailId = null; document.body.style.overflow = ''; }
+
+function bindComposer(f) {
+  const input = $('#composerInput');
+  const send = $('#sendBtn');
+  input.addEventListener('input', () => { send.disabled = !input.value.trim() && !composerPhotos.length; });
+  send.addEventListener('click', () => {
+    const text = input.value.trim();
+    if (!text && !composerPhotos.length) return;
+    f.comments.push({ author: '张宇', tone: 'blue', time: '刚刚', content: text, attachments: composerPhotos.map(toAtt) });
+    $('#detailComments').innerHTML = f.comments.map((c, i) => commentHTML(c, i, f.id)).join('');
+    input.value = ''; composerPhotos = []; renderComposerPhotos(); send.disabled = true;
+    toast('评论已发布');
+    renderFeed();
+  });
+  $('#emojiBtn').addEventListener('click', (e) => openEmoji(e.currentTarget, input));
+  /* @ → 二级页面「提及成员」，确认后回填评论框 */
+  $('#atBtn').addEventListener('click', () => openMemberPicker({
+    title: '提及成员', sub: '被提及的成员会收到提醒，不会生成新动态',
+    selected: [], confirmText: '插入到评论',
+    onConfirm(names) {
+      input.value = (input.value.trim() + ' ' + names.map(n => '@' + n).join(' ') + ' ').trimStart();
+      send.disabled = !input.value.trim();
+      closeSheet(); input.focus();
+      toast(\`已提及 \${names.length} 位成员\`);
+    },
+  }));
+  /* 上传附件 → 二级页面「上传附件」，确认后作为评论附件 */
+  $('#picBtn').addEventListener('click', () => openPhotoPicker({
+    confirmText: '添加到评论',
+    onConfirm(list) {
+      composerPhotos = list;
+      closeSheet();
+      renderComposerPhotos();
+      send.disabled = !input.value.trim() && !composerPhotos.length;
+      toast(\`已添加 \${list.length} 个附件\`);
+    },
+  }));
+  $$('#detailComments .comment-reply').forEach(b => b.addEventListener('click', () => {
+    input.value = \`@\${b.dataset.reply} \`; input.focus(); send.disabled = false;
+  }));
+}
+
+let composerPhotos = [];
+function renderComposerPhotos() {
+  const box = $('#composerPhotos');
+  if (!box) return;
+  box.innerHTML = composerPhotos.length
+    ? \`<div class="photo-thumbs" style="margin:8px 0 2px">\${composerPhotos.map((p, i) =>
+        \`<span class="pt" title="\${esc(p.n)}">\${attIcon(p.n)}<button data-rmphoto="\${i}" title="移除">\${I.close}</button></span>\`).join('')}</div>\`
+    : '';
+}
+
+/* Emoji + mention popovers */
+function popover(anchor, html, cls = '') {
+  closePopovers();
+  const p = document.createElement('div');
+  p.className = 'popover ' + cls;
+  p.innerHTML = html;
+  document.body.appendChild(p);
+  const r = anchor.getBoundingClientRect();
+  p.style.top = (window.scrollY + r.bottom + 6) + 'px';
+  p.style.left = Math.min(window.scrollX + r.left, window.scrollX + window.innerWidth - p.offsetWidth - 12) + 'px';
+  return p;
+}
+function closePopovers() { $$('.popover').forEach(p => p.remove()); }
+function openEmoji(anchor, input) {
+  const p = popover(anchor, \`<div class="emoji-pop">\${EMOJIS.map(e => \`<button>\${e}</button>\`).join('')}</div>\`);
+  p.querySelectorAll('button').forEach(b => b.addEventListener('click', () => {
+    input.value += b.textContent; input.focus();
+    $('#sendBtn').disabled = !input.value.trim();
+    closePopovers();
+  }));
+}
+/* ============================================================
+   二级页面（Sheet）框架：所有卡片按钮的「下一步页面」都走这里
+   ============================================================ */
+const SHEETS = [];
+function pushSheet(cfg) { SHEETS.push(cfg); renderSheet(); }
+function replaceSheet(cfg) { if (SHEETS.length) SHEETS[SHEETS.length - 1] = cfg; else SHEETS.push(cfg); renderSheet(); }
+function popSheet() { SHEETS.pop(); SHEETS.length ? renderSheet() : closeSheet(); }
+function closeSheet() {
+  SHEETS.length = 0;
+  $('#sheetLayer').hidden = true;
+  if ($('#detailLayer').hidden && $('#lightbox').hidden) document.body.style.overflow = '';
+}
+function renderSheet() {
+  const cfg = SHEETS[SHEETS.length - 1];
+  if (!cfg) return closeSheet();
+  $('#sheetLayer').hidden = false;
+  $('#sheetLayer').className = 'sheet-layer' + (cfg.modal ? ' is-modal' : '');
+  document.body.style.overflow = 'hidden';
+  $('#sheetPanel').innerHTML = \`
+    <div class="sheet-head">
+      \${SHEETS.length > 1 ? \`<button class="sheet-icon" data-sheet-back title="返回上一步">\${I.back}</button>\` : '<span></span>'}
+      <div class="sheet-titles"><h3>\${esc(cfg.title)}</h3>\${cfg.sub ? \`<p>\${esc(cfg.sub)}</p>\` : ''}</div>
+      <button class="sheet-icon" data-sheet-close title="关闭">\${I.close}</button>
+    </div>
+    <div class="sheet-body" id="sheetBody">\${cfg.body()}</div>
+    \${cfg.foot ? \`<div class="sheet-foot" id="sheetFoot">\${cfg.foot()}</div>\` : ''}\`;
+  if (cfg.mount) cfg.mount();
+  $('#sheetBody').scrollTop = 0;
+}
+/* 通用「操作成功」结果页 */
+function sheetDone({ title, html, primary, onPrimary, modal }) {
+  replaceSheet({
+    title, modal: !!modal,
+    body: () => \`<div class="sheet-done"><span class="ok">\${I.check}</span><b>\${esc(title)}</b><p>\${html}</p></div>\`,
+    foot: () => \`<button class="btn-primary" id="doneBtn">\${esc(primary || '完成')}</button>\`,
+    mount() { $('#doneBtn').addEventListener('click', () => (onPrimary ? onPrimary() : closeSheet())); },
+  });
+}
+function feedMiniHTML(f) {
+  const t = TYPES[f.type];
+  return \`<div class="share-card">
+    <div class="sc-head">
+      <span class="feed-avatar \${f.tone}">\${esc(f.avatar)}</span>
+      <span class="sc-who">\${esc(f.operator)}<small>\${esc(f.dept)} · \${esc(f.time)}</small></span>
+      <span class="feed-type-tag \${f.type}">\${t.label}</span>
+    </div>
+    <b>\${esc(f.title)}</b>
+    <p>\${esc(f.summary.length > 66 ? f.summary.slice(0, 66) + '…' : f.summary)}</p>
+  </div>\`;
+}
+
+/* ---------- 页面 A：选择成员 / 群组（@ 与 分享接收人共用） ---------- */
+let pickState = null;
+function openMemberPicker(opt) {
+  pickState = Object.assign({ q: '', groups: true, confirmText: '确定' }, opt, { sel: new Set(opt.selected || []) });
+  pushSheet({ title: opt.title || '选择成员', sub: opt.sub, body: pickBody, foot: pickFoot, mount: pickMount });
+}
+function pickChipsHTML() {
+  return [...pickState.sel].map(n => \`<span class="chip">\${esc(n)}<button data-unpick="\${esc(n)}" title="移除">\${I.close}</button></span>\`).join('');
+}
+function pickListHTML() {
+  const q = pickState.q.trim();
+  const hit = (s) => !q || String(s).includes(q);
+  let html = '';
+  if (pickState.groups) {
+    const gs = GROUPS.filter(g => hit(g.n));
+    if (gs.length) html += \`<div class="pick-group"><h5>群组</h5><div class="pick-list">\${gs.map(g =>
+      \`<button class="pick-item \${pickState.sel.has(g.n) ? 'on' : ''}" data-pick="\${esc(g.n)}">
+        <span class="av grp">\${I.group}</span><span><b>\${esc(g.n)}</b><small>\${esc(g.d)}</small></span>
+        <span class="pick-check">\${I.check}</span></button>\`).join('')}</div></div>\`;
+  }
+  DEPTS.forEach(d => {
+    const ms = d.members.filter(m => hit(m.n) || hit(d.name) || hit(m.r));
+    if (!ms.length) return;
+    html += \`<div class="pick-group"><h5>\${esc(d.name)}</h5><div class="pick-list">\${ms.map(m =>
+      \`<button class="pick-item \${pickState.sel.has(m.n) ? 'on' : ''}" data-pick="\${esc(m.n)}">
+        <span class="av">\${esc(m.n.slice(0, 1))}</span><span><b>\${esc(m.n)}</b><small>\${esc(d.name)} · \${esc(m.r)}</small></span>
+        <span class="pick-check">\${I.check}</span></button>\`).join('')}</div></div>\`;
+  });
+  return html || '<div class="pick-empty">没有匹配的成员或群组</div>';
+}
+function pickBody() {
+  return \`<label class="feed-search pick-search">\${I.search}<input id="pickSearch" type="text" placeholder="搜索姓名、部门或群组…" value="\${esc(pickState.q)}" /></label>
+    <div class="chips" id="pickChips">\${pickChipsHTML()}</div>
+    <div id="pickList">\${pickListHTML()}</div>\`;
+}
+function pickFoot() {
+  const n = pickState.sel.size;
+  return \`<span style="font-size:11.5px;color:var(--muted)">已选 <b style="color:var(--accent)">\${n}</b></span>
+    <button class="btn-primary" id="pickConfirm" \${n ? '' : 'disabled'}>\${esc(pickState.confirmText)}\${n ? '（' + n + '）' : ''}</button>\`;
+}
+function pickMount() {
+  $('#pickSearch').addEventListener('input', (e) => { pickState.q = e.target.value; $('#pickList').innerHTML = pickListHTML(); });
+  $('#pickConfirm').addEventListener('click', () => pickState.onConfirm([...pickState.sel]));
+}
+function pickRefresh() {
+  $('#pickChips').innerHTML = pickChipsHTML();
+  $('#pickList').innerHTML = pickListHTML();
+  $('#sheetFoot').innerHTML = pickFoot();
+  $('#pickConfirm').addEventListener('click', () => pickState.onConfirm([...pickState.sel]));
+}
+
+/* ---------- 页面 B：上传附件 ---------- */
+let photoState = null;
+const ATT_FILE_ACCEPT = 'image/*,.pdf,.doc,.docx,.xls,.xlsx,.ppt,.pptx,.zip,.txt,.rar';
+function openPhotoPicker(opt) {
+  photoState = Object.assign({ extra: [], confirmText: '下一步' }, opt, { sel: new Set() });
+  pushSheet({ title: opt.title || '上传附件', sub: opt.sub || '最多 9 个 · 支持图片与文件', body: photoBody, foot: photoFoot, mount: photoMount });
+}
+function photoAll() {
+  return photoState.extra.concat(PHOTOS).map(p => Object.assign({}, p, { kind: p.kind || attKind(p.n) }));
+}
+function photoBody() {
+  const all = photoAll();
+  return \`<div class="sheet-section"><h4>选择来源</h4>
+      <button class="row-link" data-photosrc="camera">\${I.camera}<span>拍照 / 现场取证</span><b>调用相机</b>\${I.chev}</button>
+      <button class="row-link" data-photosrc="album">\${I.folder}<span>从本地相册选择</span><b>jpg / png</b>\${I.chev}</button>
+      <button class="row-link" data-photosrc="files">\${I.doc}<span>从本地选择文件</span><b>图片 / 文档</b>\${I.chev}</button>
+      <button class="row-link" data-photosrc="record">\${I.doc}<span>从关联单据附件选择</span><b>已上传附件</b>\${I.chev}</button>
+    </div>
+    <div class="sheet-section"><h4>最近附件 <em id="photoCount">已选 \${photoState.sel.size} / 9</em></h4>
+      <div class="photo-grid" id="photoGrid">\${all.map((p, i) =>
+        \`<button class="photo-cell \${photoState.sel.has(i) ? 'on' : ''}" data-photocell="\${i}" title="\${esc(p.n)}">\${attIcon(p.n)}<span>\${esc(p.n)}</span><span class="tick">\${I.check}</span></button>\`).join('')}</div>
+      <p class="sheet-tip">原型演示：图片以占位图呈现；实际接入后展示真实缩略图，选中的附件会随动态 / 评论一并发布，并支持点击预览。</p>
+    </div>\`;
+}
+function photoFoot() {
+  const n = photoState.sel.size;
+  return \`<button class="btn-ghost" data-sheet-close>取消</button>
+    <button class="btn-primary" id="photoConfirm" \${n ? '' : 'disabled'}>\${esc(photoState.confirmText)}\${n ? '（' + n + '）' : ''}</button>\`;
+}
+function photoMount() {
+  if (!$('#attFileInput')) {
+    const inp = document.createElement('input');
+    inp.type = 'file'; inp.id = 'attFileInput'; inp.multiple = true; inp.accept = ATT_FILE_ACCEPT;
+    inp.style.position = 'fixed'; inp.style.left = '-9999px'; inp.style.top = '-9999px';
+    document.body.appendChild(inp);
+    inp.addEventListener('change', () => {
+      const files = Array.from(inp.files || []);
+      files.forEach(file => {
+        const kind = attKind(file.name);
+        const url = (kind === 'img' && window.URL && URL.createObjectURL) ? URL.createObjectURL(file) : '';
+        photoState.extra.unshift({ n: file.name, d: '已选择 · ' + (file.size >= 1048576 ? (file.size / 1048576).toFixed(1) + 'MB' : Math.max(1, Math.round(file.size / 1024)) + 'KB'), kind, url });
+      });
+      photoState.sel = new Set([...photoState.sel].map(i => i + files.length));
+      for (let k = 0; k < files.length; k++) photoState.sel.add(k);
+      inp.value = '';
+      photoRefresh();
+    });
+  }
+  $('#photoConfirm').addEventListener('click', () => photoState.onConfirm(photoAll().filter((_, i) => photoState.sel.has(i))));
+}
+function photoRefresh() { $('#sheetBody').innerHTML = photoBody(); $('#sheetFoot').innerHTML = photoFoot(); photoMount(); }
+
+
+/* ---------- 页面 D：发表评论（@ / 照片 的下一步） ---------- */
+let composeState = null;
+function openComposePage({ id, mentions = [], photos = [] }) {
+  composeState = { id, mentions: [...mentions], photos: [...photos], text: mentions.map(m => '@' + m).join(' ') + (mentions.length ? ' ' : '') };
+  pushSheet({ title: '发表评论', sub: '评论与 @ 提及仅在本条动态内互动', body: composeBody, foot: composeFoot, mount: composeMount });
+}
+function composeBody() {
+  const f = feeds.find(x => x.id === composeState.id);
+  return \`<div class="sheet-section"><h4>回复该动态</h4>\${feedMiniHTML(f)}</div>
+    <div class="sheet-section"><h4>提及成员 <em>\${composeState.mentions.length} 人</em></h4>
+      <div class="chips">\${composeState.mentions.map(m => \`<span class="chip">@\${esc(m)}<button data-unmention="\${esc(m)}" title="移除">\${I.close}</button></span>\`).join('')}</div>
+      <button class="row-link" data-compose-at>\${I.at}<span>添加提及成员</span><b>\${composeState.mentions.length ? composeState.mentions.length + ' 已选' : '去选择'}</b>\${I.chev}</button>
+    </div>
+    <div class="sheet-section"><h4>评论内容</h4>
+      <textarea class="sheet-textarea" id="composeText" placeholder="说点什么…">\${esc(composeState.text)}</textarea>
+    </div>
+    <div class="sheet-section"><h4>附件 <em>\${composeState.photos.length} 个</em></h4>
+      <div class="photo-thumbs">\${composeState.photos.map((p, i) => \`<span class="pt" title="\${esc(p.n)}">\${attIcon(p.n)}<button data-uncphoto="\${i}" title="移除">\${I.close}</button></span>\`).join('')}<button class="pt" data-compose-photo title="上传附件" style="border-style:dashed;color:var(--muted);background:var(--surface-soft)">\${I.plus}</button></div>
+    </div>\`;
+}
+function composeFoot() {
+  const ok = composeState.text.trim() || composeState.photos.length;
+  return \`<button class="btn-ghost" data-sheet-close>取消</button><button class="btn-primary" id="composeSend" \${ok ? '' : 'disabled'}>\${I.send} 发布评论</button>\`;
+}
+function composeMount() {
+  $('#composeText').addEventListener('input', (e) => {
+    composeState.text = e.target.value;
+    $('#composeSend').disabled = !(composeState.text.trim() || composeState.photos.length);
+  });
+  $('#composeSend').addEventListener('click', () => {
+    const f = feeds.find(x => x.id === composeState.id);
+    f.comments.push({ author: '张宇', tone: 'blue', time: '刚刚', content: composeState.text.trim(), attachments: composeState.photos.map(toAtt) });
+    renderFeed();
+    sheetDone({
+      title: '评论已发布',
+      html: composeState.mentions.length
+        ? \`已提及 <b>\${composeState.mentions.map(m => esc(m)).join('、')}</b>，系统将向其推送提醒（不生成新动态）。\`
+        : '评论已展示在该条动态下方。',
+      primary: '查看动态详情',
+      onPrimary: () => { const fid = composeState.id; closeSheet(); openDetail(fid); },
+    });
+  });
+}
+function composeRefresh() { $('#sheetBody').innerHTML = composeBody(); $('#sheetFoot').innerHTML = composeFoot(); composeMount(); }
+
+/* ---------- 发起动态：手动发布一条动态到动态圈 ---------- */
+let feedDraft = null;
+function openNewFeedPage(noId) {
+  const n = noOf(noId); if (!n) return;
+  feedDraft = { noId, title: '', text: '', mentions: [], photos: [] };
+  pushSheet({ title: '发起动态', sub: n.name, body: newFeedBody, foot: newFeedFoot, mount: newFeedMount, modal: true });
+}
+function newFeedBody() {
+  const d = feedDraft;
+  return \`<div class="sheet-section"><h4>动态标题 <em>选填</em></h4>
+      <input class="sheet-input" id="nfTitle" type="text" placeholder="一句话概括这条动态" value="\${esc(d.title)}" maxlength="40" /></div>
+    <div class="sheet-section"><h4>动态内容 <em>必填</em></h4>
+      <textarea class="sheet-textarea" id="nfText" placeholder="记录业务进展、风险提示或需要协同的事项…">\${esc(d.text)}</textarea></div>
+    <div class="sheet-section"><h4>提及成员 <em>\${d.mentions.length} 人</em></h4>
+      <div class="chips">\${d.mentions.map(m => \`<span class="chip">@\${esc(m)}<button data-nf-unmention="\${esc(m)}" title="移除">\${I.close}</button></span>\`).join('')}</div>
+      <button class="row-link" data-nf-at>\${I.at}<span>添加提及成员</span><b>\${d.mentions.length ? d.mentions.length + ' 已选' : '去选择'}</b>\${I.chev}</button>
+    </div>
+    <div class="sheet-section"><h4>附件 <em>\${d.photos.length} 个</em></h4>
+      <div class="photo-thumbs">\${d.photos.map((p, i) => \`<span class="pt" title="\${esc(p.n)}">\${attIcon(p.n)}<button data-nf-uncphoto="\${i}" title="移除">\${I.close}</button></span>\`).join('')}<button class="pt" data-nf-photo title="上传附件" style="border-style:dashed;color:var(--muted);background:var(--surface-soft)">\${I.plus}</button></div>
+    </div>\`;
+}
+function newFeedFoot() {
+  const ok = feedDraft.text.trim() || feedDraft.photos.length;
+  return \`<button class="btn-ghost" data-sheet-close>取消</button><button class="btn-primary" id="nfSend" \${ok ? '' : 'disabled'}>\${I.send} 发布动态</button>\`;
+}
+function newFeedMount() {
+  $('#nfTitle').addEventListener('input', (e) => { feedDraft.title = e.target.value; });
+  $('#nfText').addEventListener('input', (e) => {
+    feedDraft.text = e.target.value;
+    $('#nfSend').disabled = !(feedDraft.text.trim() || feedDraft.photos.length);
+  });
+  $('#nfSend').addEventListener('click', () => {
+    const n = noOf(feedDraft.noId); if (!n) return;
+    const seq = 'f' + (++feedSeq);
+    const raw = feedDraft.text.trim();
+    const title = feedDraft.title.trim() || (raw.length > 22 ? raw.slice(0, 22) + '…' : raw);
+    feeds.unshift({
+      id: seq, type: 'manual', operator: ME, dept: (MEMBER_DEPT[ME] || '').split(' · ')[0] || '安全管理部',
+      avatar: ME.slice(0, 1), tone: 'blue', ts: Date.now(),
+      title, summary: raw, time: '刚刚',
+      attachments: feedDraft.photos.map(p => ({ name: p.n, kind: p.kind || attKind(p.n), url: p.url || '' })),
+      related: null, /* 手动发布的动态未关联任何单据（所属动态圈由 noId 记录） */
+      likes: [], liked: false, faved: false, comments: [], noId: n.id,
+    });
+    renderFeed(); renderNoView();
+    sheetDone({
+      title: '动态已发布',
+      modal: true,
+      html: \`《<b>\${esc(n.name)}</b>》已新增一条动态，将出现在动态圈信息流中\${feedDraft.mentions.length ? '，并已提及 <b>' + esc(feedDraft.mentions.join('、')) + '</b>' : ''}。\`,
+      primary: '查看信息流',
+      onPrimary: () => { const fid = seq; closeSheet(); switchView('feed'); renderFeed(); openDetail(fid); },
+    });
+  });
+}
+function newFeedRefresh() { $('#sheetBody').innerHTML = newFeedBody(); $('#sheetFoot').innerHTML = newFeedFoot(); newFeedMount(); }
+
+/* ---------- 页面 E：点赞人列表 ---------- */
+function openLikersPage(id) {
+  const f = feeds.find(x => x.id === id); if (!f) return;
+  pushSheet({
+    title: '点赞人', sub: \`\${f.likes.length} 人赞过这条动态\`,
+    body: () => f.likes.length
+      ? f.likes.map(n => \`<div class="liker-row"><span class="av">\${esc(n.slice(0, 1))}</span><span><b>\${esc(n)}</b><small>\${esc(MEMBER_DEPT[n] || '—')}</small></span><button class="mini-btn" data-hi="\${esc(n)}">打招呼</button></div>\`).join('')
+      : '<div class="pick-empty">还没有人点赞</div>',
+    foot: () => '<button class="btn-primary" data-sheet-close>知道了</button>',
+  });
+}
+
+/* ---------- 页面 G：文件预览 ---------- */
+function openFilePreview(fid, idx) {
+  const f = feeds.find(x => x.id === fid); if (!f) return;
+  const a = f.attachments[idx]; if (!a) return;
+  pushSheet({
+    title: '文件预览', sub: a.name,
+    body: () => \`<div class="sheet-section">
+        <div class="lb-photo" style="aspect-ratio:4/3;background:var(--surface-soft);color:var(--muted);border:1px solid var(--line)">\${I.doc}<b style="font-size:13px;color:var(--text)">\${esc(a.name)}</b><small>原型演示：此处渲染文档在线预览</small></div>
+      </div>
+      <div class="sheet-section"><h4>文件信息</h4>
+        <div class="rec-grid">
+          <div class="rec-field"><span>文件名</span><b>\${esc(a.name)}</b></div>
+          <div class="rec-field"><span>上传人</span><b>\${esc(f.operator)}</b></div>
+          <div class="rec-field"><span>上传时间</span><b>\${esc(f.time)}</b></div>
+          <div class="rec-field"><span>所属单据</span><b>\${esc(f.related.id)}</b></div>
+        </div>
+      </div>\`,
+    foot: () => \`<button class="btn-ghost" id="fpOpen">新窗口打开</button><button class="btn-primary" id="fpDl">\${I.download} 下载文件</button>\`,
+    mount() {
+      $('#fpOpen').addEventListener('click', () => toast('已在新窗口打开预览'));
+      $('#fpDl').addEventListener('click', () => toast(\`正在下载 \${a.name}\`));
+    },
+  });
+}
+
+/* ---------- 统一附件预览（不依赖动态，可直接预览任意附件对象） ---------- */
+function openAttachmentPreview(att) {
+  if (!att) return;
+  if (att.kind === 'img') openImagePreview(att);
+  else openFilePreviewAtt(att);
+}
+/* 图片预览：复用 lightbox（支持真实 url 缩略图，fid 可缺省） */
+function openImagePreview(att) {
+  lbState = { fid: null, imgs: [{ name: att.name, url: att.url || '', i: 0 }], pos: 0 };
+  renderLightbox();
+}
+/* 文件预览：独立 sheet（与原 openFilePreview 视觉一致） */
+function openFilePreviewAtt(att) {
+  pushSheet({
+    title: '文件预览', sub: att.name,
+    body: () => \`<div class="sheet-section">
+        <div class="lb-photo" style="aspect-ratio:4/3;background:var(--surface-soft);color:var(--muted);border:1px solid var(--line)">\${attIcon(att.name)}<b style="font-size:13px;color:var(--text)">\${esc(att.name)}</b><small>原型演示：此处渲染文档在线预览</small></div>
+      </div>\`,
+    foot: () => \`<button class="btn-ghost" id="fpOpen">新窗口打开</button><button class="btn-primary" id="fpDl">\${I.download} 下载文件</button>\`,
+    mount() {
+      $('#fpOpen').addEventListener('click', () => toast('已在新窗口打开预览'));
+      $('#fpDl').addEventListener('click', () => toast(\`正在下载 \${att.name}\`));
+    },
+  });
+}
+
+/* ---------- 页面 H：图片查看器（Lightbox） ---------- */
+let lbState = null;
+function openLightbox(fid, idx) {
+  const f = feeds.find(x => x.id === fid); if (!f) return;
+  const imgs = f.attachments.map((a, i) => Object.assign({}, a, { i })).filter(a => a.kind === 'img');
+  if (!imgs.length) return openFilePreview(fid, idx);
+  const pos = Math.max(0, imgs.findIndex(a => a.i === Number(idx)));
+  lbState = { fid, imgs, pos };
+  renderLightbox();
+}
+function renderLightbox() {
+  if (!lbState) return;
+  const { imgs, pos, fid } = lbState;
+  const f = fid ? feeds.find(x => x.id === fid) : null;
+  const cur = imgs[pos];
+  const photo = cur.url
+    ? \`<img class="lb-img" src="\${esc(cur.url)}" alt="\${esc(cur.name)}" />\`
+    : \`<div class="lb-photo">\${I.img}<b>\${esc(cur.name)}</b><small>\${f ? esc(f.operator) + ' · ' + esc(f.time) + (f.related ? ' · 来自 ' + esc(f.related.id) : '') : '附件预览'}</small></div>\`;
+  $('#lightbox').innerHTML = \`
+    <div class="lb-top">
+      <button class="lb-btn" data-lb="close" title="关闭">\${I.close}</button>
+      <span class="lb-title">\${esc(cur.name)}</span>
+      <span class="lb-idx">\${pos + 1} / \${imgs.length}</span>
+      <span class="spacer"></span>
+      <button class="lb-btn" data-lb="download" title="下载原图">\${I.download}</button>
+      \${f && f.related ? \`<button class="lb-btn" data-lb="record" title="查看关联单据">\${I.link}</button>\` : ''}
+    </div>
+    <div class="lb-stage">
+      <span class="lb-nav"><button class="lb-btn" data-lb="prev" title="上一张" \${pos === 0 ? 'disabled' : ''}>\${I.back}</button></span>
+      \${photo}
+      <span class="lb-nav"><button class="lb-btn" data-lb="next" title="下一张" \${pos === imgs.length - 1 ? 'disabled' : ''}>\${I.chev}</button></span>
+    </div>
+    <div class="lb-strip">\${imgs.map((a, i) => \`<button class="lb-thumb \${i === pos ? 'on' : ''}" data-lbthumb="\${i}" title="\${esc(a.name)}">\${a.url ? \`<img src="\${esc(a.url)}" alt="">\` : I.img}</button>\`).join('')}</div>\`;
+  $('#lightbox').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  $('#lightbox').hidden = true; lbState = null;
+  if ($('#detailLayer').hidden && $('#sheetLayer').hidden) document.body.style.overflow = '';
+}
+
+/* ---------- 页面 I：关联单据详情（整页 U-5） ---------- */
+const TONE_MAP = { blue: ['var(--accent-soft)', 'var(--accent)'], violet: ['var(--violet-soft)', 'var(--violet)'], orange: ['var(--warn-soft)', 'var(--warn)'], red: ['var(--danger-soft)', 'var(--danger)'], green: ['var(--ok-soft)', 'var(--ok)'] };
+const STATUS_MAP = { ok: ['var(--ok-soft)', 'var(--ok)'], warn: ['var(--warn-soft)', 'var(--warn)'], danger: ['var(--danger-soft)', 'var(--danger)'] };
+let recordFrom = 'feed';
+let recordId = null;
+function openRecord(recId) {
+  const r = RECORDS[recId];
+  if (!r) { toast(\`未找到单据 \${recId}\`); return; }
+  if (curView !== 'record') recordFrom = curView;
+  recordId = recId;
+  closeSheet(); closeLightbox(); closeDetail();
+  const tone = TONE_MAP[r.tone] || TONE_MAP.blue;
+  const st = STATUS_MAP[r.statusTone] || STATUS_MAP.ok;
+  $('#recKicker').textContent = r.kicker;
+  $('#recTitle').textContent = r.title;
+  $('#recHead').innerHTML = \`
+    <span class="rec-icon" style="background:\${tone[0]};color:\${tone[1]}">\${I[r.icon] || I.doc}</span>
+    <div><h1>\${esc(r.title)}</h1><p>\${esc(r.sub)}</p></div>
+    <span class="rec-status" style="background:\${st[0]};color:\${st[1]}">\${esc(r.status)}</span>\`;
+  $('#recFields').innerHTML = r.fields.map(([k, v, cls]) =>
+    \`<div class="rec-field\${cls ? ' ' + cls : ''}"><span>\${esc(k)}</span><b>\${esc(v)}</b></div>\`).join('');
+  $('#recFlow').innerHTML = r.flow.map(s =>
+    \`<div class="rec-log"><i>\${I.check}</i><div><b>\${esc(s.w)} \${esc(s.a)}</b><time>\${esc(s.t)}</time><p>\${esc(s.note)}</p></div></div>\`).join('');
+  const rel = feeds.filter(f => f.related.id === recId);
+  $('#recFeedCount').textContent = rel.length;
+  $('#recFeeds').innerHTML = rel.length
+    ? rel.map(f => \`<button class="rec-feed-item" data-detail="\${f.id}"><span class="feed-avatar \${f.tone}">\${esc(f.avatar)}</span><span><b>\${esc(f.title)}</b><small>\${esc(f.operator)} · \${esc(f.time)}</small></span></button>\`).join('')
+    : \`<div class="empty-side">\${I.link}<p>暂无关联动态。</p></div>\`;
+  switchView('record');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+
+/* ============ Actions ============ */
+function toggleLike(id) {
+  const f = feeds.find(x => x.id === id); if (!f) return;
+  if (f.liked) { f.liked = false; f.likes = f.likes.filter(n => n !== '张宇'); }
+  else { f.liked = true; f.likes.push('张宇'); }
+  renderFeed();
+  if (detailId === id) openDetail(id);
+}
+
+/* 收藏：卡片/详情页星标切换，配合左侧筛选树「我收藏的动态」 */
+function toggleFav(id) {
+  const f = feeds.find(x => x.id === id); if (!f) return;
+  f.faved = !f.faved;
+  renderFeed();
+  if (detailId === id) openDetail(id);
+  toast(f.faved ? '已收藏该动态，可在左侧「我收藏的动态」查看' : '已取消收藏');
+}
+
+/* ============ Toast ============ */
+let toastTimer;
+function toast(msg) {
+  $('#toastText').textContent = msg;
+  $('#toast').hidden = false;
+  clearTimeout(toastTimer);
+  toastTimer = setTimeout(() => { $('#toast').hidden = true; }, 2200);
+}
+
+/* ============ View switching ============ */
+function switchView(v) {
+  curView = v;
+  $('#view-feed').hidden = v !== 'feed';
+  $('#view-timeline').hidden = v !== 'timeline';
+  $('#view-record').hidden = v !== 'record';
+  $('#view-message').hidden = v !== 'message';
+  $('#view-feedno').hidden = v !== 'feedno';
+  $('#view-nodetail').hidden = v !== 'nodetail';
+  $('#view-life').hidden = v !== 'life';
+  $('#view-create').hidden = v !== 'create';
+  const me = $('#msgEntry'); if (me) me.classList.toggle('on', v === 'message');
+  if (v === 'message') renderMsgView();
+  if (v === 'feedno') renderNoView();
+}
+
+
+/* ============ Event delegation：所有按钮 → 对应的下一步页面 ============ */
+const HOOKS = ['data-filter', 'data-detail', 'data-like',
+  'data-relate', 'data-likers', 'data-relate-tl', 'data-reply',
+  'data-at', 'data-photo', 'data-att', 'data-catt', 'data-sheet-back', 'data-sheet-close',
+  'data-fav', 'data-scope', 'data-scope-toggle', 'data-del-cmt',
+  'data-pick', 'data-unpick', 'data-photocell', 'data-photosrc',
+  'data-hi',
+  'data-compose-at', 'data-compose-photo', 'data-unmention', 'data-uncphoto', 'data-rmphoto',
+  'data-nf-at', 'data-nf-photo', 'data-nf-unmention', 'data-nf-uncphoto',
+  'data-lb', 'data-lbthumb', 'data-recact', 'data-open-tl', 'data-feedno', 'data-create-cancel'].map(a => '[' + a + ']').join(',');
+
+document.addEventListener('click', (e) => {
+  const t = e.target.closest(HOOKS);
+  if (!t) return;
+  const d = t.dataset;
+
+  /* ---- 列表 / 筛选 / 详情 ---- */
+  if (d.filter) { curFilter = d.filter; renderFilters(); renderFeed(); }
+  else if (d.detail) { openDetail(d.detail); }
+  else if (d.like) { toggleLike(d.like); }
+  else if (d.fav) { toggleFav(d.fav); }
+  else if (d.scope) { feedScope = d.scope; $$('#feedScopeTree .feed-scope-item').forEach(b => b.classList.toggle('sel', b.dataset.scope === feedScope)); renderFeed(); }
+  else if (d.scopeToggle) { const lay = $('#feedScopeLayout'); if (lay) lay.classList.toggle('collapsed'); }
+  else if (d.delCmt) { const p = d.delCmt.split(':'); openDeleteComment(p[0], p[1]); }
+  else if (t.hasAttribute('data-create-cancel')) { switchView('feedno'); }
+
+  /* ---- 卡片按钮 → 下一步页面 ---- */
+  else if (d.at) { openMemberPicker({ title: '提及成员', sub: '选择后进入评论编辑 · @ 不生成新动态', confirmText: '下一步', onConfirm: (names) => openComposePage({ id: d.at, mentions: names }) }); }
+  else if (d.photo) { openPhotoPicker({ confirmText: '下一步', onConfirm: (list) => openComposePage({ id: d.photo, photos: list }) }); }
+  else if (d.att) { const [fid, idx] = d.att.split(':'); const f = feeds.find(x => x.id === fid); (f && f.attachments[idx] && f.attachments[idx].kind === 'img') ? openLightbox(fid, Number(idx)) : openFilePreview(fid, Number(idx)); }
+  else if (d.catt) { const [fid, cidx, ai] = d.catt.split(':'); const f = feeds.find(x => x.id === fid); const c = f && f.comments[Number(cidx)]; const a = c && c.attachments && c.attachments[Number(ai)]; openAttachmentPreview(a); }
+  else if (d.relate) { const f = feeds.find(x => x.id === d.relate); if (f) openRecord(f.related.id); }
+  else if (d.relateTl) { openRecord(d.relateTl); }
+  else if (d.likers) { openLikersPage(d.likers); }
+
+  /* ---- Sheet 通用 ---- */
+  else if (t.hasAttribute('data-sheet-back')) { popSheet(); }
+  else if (t.hasAttribute('data-sheet-close')) { closeSheet(); }
+
+  /* ---- 成员选择页 ---- */
+  else if (d.pick) { pickState.sel.has(d.pick) ? pickState.sel.delete(d.pick) : pickState.sel.add(d.pick); pickRefresh(); }
+  else if (d.unpick) { pickState.sel.delete(d.unpick); pickRefresh(); }
+
+  /* ---- 照片选择页 ---- */
+  else if (d.photocell) {
+    const i = Number(d.photocell);
+    if (photoState.sel.has(i)) photoState.sel.delete(i);
+    else if (photoState.sel.size >= 9) toast('最多选择 9 个附件');
+    else photoState.sel.add(i);
+    photoRefresh();
+  }
+  else if (d.photosrc) {
+    if (d.photosrc === 'files') { const inp = document.getElementById('attFileInput'); if (inp) inp.click(); }
+    else if (d.photosrc === 'camera') { photoState.extra.unshift({ n: \`拍摄_\${String(Date.now()).slice(-4)}.jpg\`, d: '刚刚 · 拍照', kind: 'img' }); photoState.sel = new Set([...photoState.sel].map(i => i + 1)); photoState.sel.add(0); photoRefresh(); toast('已拍摄 1 张照片'); }
+    else if (d.photosrc === 'album') { toast('已打开本地相册选择器'); }
+    else { photoState.extra.unshift({ n: '单据附件_现场照片.jpg', d: '来自关联单据附件', kind: 'img' }); photoState.sel = new Set([...photoState.sel].map(i => i + 1)); photoState.sel.add(0); photoRefresh(); toast('已从单据附件添加 1 张'); }
+  }
+
+
+  /* ---- 评论编辑页 ---- */
+  else if (t.hasAttribute('data-compose-at')) {
+    const cid = composeState.id;
+    openMemberPicker({
+      title: '添加提及成员', selected: composeState.mentions, groups: false, confirmText: '确定',
+      onConfirm(list) {
+        const added = list.filter(n => !composeState.mentions.includes(n));
+        composeState.mentions = list;
+        composeState.text = (composeState.text.trim() + ' ' + added.map(n => '@' + n).join(' ') + ' ').trimStart();
+        popSheet(); composeRefresh(); if (cid) void cid;
+      },
+    });
+  }
+  else if (t.hasAttribute('data-compose-photo')) {
+    openPhotoPicker({
+      confirmText: '添加',
+      onConfirm(list) { composeState.photos = composeState.photos.concat(list); popSheet(); composeRefresh(); },
+    });
+  }
+  else if (d.unmention) { composeState.mentions = composeState.mentions.filter(m => m !== d.unmention); composeState.text = composeState.text.replace('@' + d.unmention, '').replace(/\\s+/g, ' ').trim(); composeRefresh(); }
+  else if (d.uncphoto) { composeState.photos.splice(Number(d.uncphoto), 1); composeRefresh(); }
+  else if (d.rmphoto) { composerPhotos.splice(Number(d.rmphoto), 1); renderComposerPhotos(); const s = $('#sendBtn'); if (s) s.disabled = !$('#composerInput').value.trim() && !composerPhotos.length; }
+
+  /* ---- 发起动态编辑页 ---- */
+  else if (t.hasAttribute('data-nf-at')) {
+    openMemberPicker({
+      title: '添加提及成员', selected: feedDraft.mentions, groups: false, confirmText: '确定',
+      onConfirm(list) { feedDraft.mentions = list; popSheet(); newFeedRefresh(); },
+    });
+  }
+  else if (t.hasAttribute('data-nf-photo')) {
+    openPhotoPicker({ confirmText: '添加', onConfirm(list) { feedDraft.photos = feedDraft.photos.concat(list); popSheet(); newFeedRefresh(); } });
+  }
+  else if (d.nfUnmention) { feedDraft.mentions = feedDraft.mentions.filter(m => m !== d.nfUnmention); newFeedRefresh(); }
+  else if (d.nfUncphoto) { feedDraft.photos.splice(Number(d.nfUncphoto), 1); newFeedRefresh(); }
+
+  else if (d.hi) { toast(\`已向 \${d.hi} 发送打招呼消息\`); }
+
+
+  /* ---- 图片查看器 ---- */
+  else if (d.lb) {
+    if (d.lb === 'close') closeLightbox();
+    else if (d.lb === 'prev') { lbState.pos = Math.max(0, lbState.pos - 1); renderLightbox(); }
+    else if (d.lb === 'next') { lbState.pos = Math.min(lbState.imgs.length - 1, lbState.pos + 1); renderLightbox(); }
+    else if (d.lb === 'download') { toast(\`正在下载 \${lbState.imgs[lbState.pos].name}\`); }
+    else if (d.lb === 'record') { const f = lbState.fid ? feeds.find(x => x.id === lbState.fid) : null; if (!f || !f.related) { toast('该附件无关联单据'); return; } openRecord(f.related.id); }
+  }
+  else if (d.lbthumb) { lbState.pos = Number(d.lbthumb); renderLightbox(); }
+
+  /* ---- 关联单据详情页 ---- */
+  else if (d.recact) { toast(\`已执行：\${d.recact}\`); }
+  else if (t.hasAttribute('data-open-tl')) { switchView('timeline'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+
+  /* ---- 动态卡片来源标签 → 打开动态圈 ---- */
+  else if (d.feedno) { openNoDetail(d.feedno); }
+});
+
+$('#detailLayer').addEventListener('click', (e) => { if (e.target === $('#detailLayer')) closeDetail(); });
+$('#bizPickLayer').addEventListener('click', wizClick);
+$('#bizPickLayer').addEventListener('click', (e) => { if (e.target === $('#bizPickLayer')) bizPickClose(); });
+$('#scopePickLayer').addEventListener('click', wizClick);
+$('#scopePickLayer').addEventListener('click', (e) => { if (e.target === $('#scopePickLayer')) scopePickClose(); });
+$('#backFromRecord').addEventListener('click', () => switchView(recordFrom === 'record' ? 'feed' : recordFrom));
+document.addEventListener('keydown', (e) => {
+  if (e.key !== 'Escape') return;
+  closePopovers();
+  if (!$('#lightbox').hidden) return closeLightbox();
+  if (!$('#sheetLayer').hidden) return popSheet();
+  closeDetail();
+});
+document.addEventListener('click', (e) => { if (!e.target.closest('.popover, .composer-btn')) closePopovers(); });
+
+/* Search */
+$('#searchInput').addEventListener('input', (e) => { curSearch = e.target.value.trim(); renderFeed(); });
+$('#feedTime').addEventListener('change', (e) => { curTime = e.target.value; renderFeed(); });
+$('#feedNo').addEventListener('change', (e) => { curNo = e.target.value; renderFeed(); });
+
+/* Timeline / back */
+const openTlBtn = document.getElementById('openTimelineBtn');
+if (openTlBtn) openTlBtn.addEventListener('click', () => switchView('timeline'));
+$('#backToFeedBtn').addEventListener('click', () => switchView('feed'));
+
+/* Theme toggle */
+$('#themeToggle').addEventListener('click', () => {
+  const wb = $('#workbench');
+  wb.classList.toggle('theme-dark'); wb.classList.toggle('theme-light');
+});
+
+/* ============================================================
+   动态圈：列表页 / 创建向导 / 详情页 / 业务全生命周期
+   ============================================================ */
+const ME = '张宇';           /* 当前登录用户（与右上角个人资料一致，创建向导默认负责人） */
+let noFilters = { owner: 'all', status: 'all', dept: 'all' };
+let noSearch = '';
+let ndId = null;             /* 当前查看的动态圈 */
+let ndTimeFilter = 'all';    /* 详情页时间筛选：all/today/7d/30d */
+let ndDeptFilter = 'all';    /* 详情页部门筛选：all 或 DEPTS.name */
+let ndSearch = '';           /* 详情页关键字搜索 */
+let ndBasicCollapsed = true;  /* 详情页「动态圈介绍」卡片是否折叠（默认收起） */
+let lifeInsId = null;        /* 当前查看的业务实例 */
+let lifeFrom = 'nodetail';
+let insSeq = 8805, feedSeq = 6, noSeq = 1003;
+
+function nowLabel() {
+  const d = new Date();
+  return \`今天 \${String(d.getHours()).padStart(2, '0')}:\${String(d.getMinutes()).padStart(2, '0')}\`;
+}
+const insTotalSteps = (ins) => lifeOf(ins.kind).length;
+const insPercent = (ins) => Math.round((ins.cursor / insTotalSteps(ins)) * 100);
+const insCurNode = (ins) => lifeOf(ins.kind)[ins.cursor] || null;
+function insStateText(ins) {
+  if (ins.state === 'done') return '已闭环';
+  if (ins.state === 'aborted') return '已终止';
+  const nd = insCurNode(ins);
+  return nd ? '进行中' : '进行中';
+}
+
+/* ---------- 列表页 ---------- */
+function noVisible() {
+  const kw = noSearch.toLowerCase();
+  const f = noFilters;
+  return FEEDNOS.filter(n => {
+    if (f.owner === 'me' && n.owner !== ME) return false;
+    if (f.status !== 'all' && n.status !== f.status) return false;
+    if (f.dept !== 'all' && n.dept !== f.dept) return false;
+    if (kw) {
+      const bindNames = n.binds.map(b => (bizOf(b.kind, b.id) || {}).name || '').join(' ');
+      const hay = [n.name, n.id, n.owner, n.dept, n.desc, bindNames].join(' ').toLowerCase();
+      if (!hay.includes(kw)) return false;
+    }
+    return true;
+  });
+}
+function renderNoFilter() {
+  const mineCount = FEEDNOS.filter(n => n.owner === ME).length;
+  const onCount = FEEDNOS.filter(n => n.status === 'on').length;
+  const offCount = FEEDNOS.filter(n => n.status === 'off').length;
+  const seg = (dim, attr, items) => \`<div class="seg">\${items.map(([k, lbl, n]) =>
+    \`<button data-\${attr}="\${k}" class="\${noFilters[dim] === k ? 'sel' : ''}">\${lbl}\${n != null ? \` <span class="pill">\${n}</span>\` : ''}</button>\`).join('')}</div>\`;
+  const depts = [...new Set(FEEDNOS.map(n => n.dept))];
+  const deptSel = \`<select id="noDept" class="feed-select">\`
+    + \`<option value="all">全部类别</option>\`
+    + depts.map(d => \`<option value="\${esc(d)}"\${noFilters.dept === d ? ' selected' : ''}>\${esc(d)}</option>\`).join('')
+    + \`</select>\`;
+  $('#noFilter').innerHTML = [
+    \`<div class="no-seg"><span class="no-seg-label">归属</span>\${seg('owner', 'no-owner', [['all', '全部', FEEDNOS.length], ['me', '我创建的', mineCount]])}</div>\`,
+    \`<div class="no-seg"><span class="no-seg-label">状态</span>\${seg('status', 'no-status', [['all', '全部', FEEDNOS.length], ['on', '已启用', onCount], ['off', '已停用', offCount]])}</div>\`,
+    \`<div class="no-seg"><span class="no-seg-label">类别</span>\${deptSel}</div>\`,
+  ].join('');
+  const ds = $('#noDept');
+  if (ds) ds.addEventListener('change', (e) => { noFilters.dept = e.target.value; renderNoView(); });
+}
+/* 当前登录用户能否管理（编辑 / 停用启用）该动态圈：创建者或负责人 */
+function canManage(n) { return (n.creator || n.owner) === ME; }
+/* 该动态圈产生的「最新一条动态」 */
+function latestFeedOf(n) {
+  const fl = feeds.filter(f => f.noId === n.id).sort((a, b) => (b.ts || 0) - (a.ts || 0));
+  return fl[0] || null;
+}
+/* 动态圈的最近一次更新时间：有动态取最新动态时间，否则取创建时间 */
+function latestUpdateOf(n) {
+  const f = latestFeedOf(n);
+  if (f) return { time: f.time, ts: f.ts || 0, has: true };
+  return { time: n.created ? '创建于 ' + n.created : '暂无更新', ts: 0, has: false };
+}
+/* 动态圈是否可删除
+ * 权限：仅创建者 / 负责人（canManage）
+ * 条件：未产生动态 或 已停用 → 可删；已产生动态 且 已启用 → 不可删 */
+function canDeleteNo(n) {
+  if (!canManage(n)) return { ok: false, reason: '仅创建者或负责人可删除' };
+  const hasFeed = !!latestFeedOf(n);
+  if (hasFeed && n.status === 'on') return { ok: false, reason: '已产生动态且已启用，无法删除' };
+  return { ok: true, reason: hasFeed ? '将一并清除其下动态' : '删除后不可恢复' };
+}
+function openDeleteNo(id) {
+  const n = noOf(id);
+  if (!n) return;
+  const chk = canDeleteNo(n);
+  if (!chk.ok) { toast(chk.reason); return; }
+  const feedCnt = feeds.filter(f => f.noId === id).length;
+  pushSheet({
+    title: '删除动态圈',
+    sub: n.name,
+    modal: true,
+    body: () => \`<div class="no-del-box">
+        <div class="no-del-warn">\${I.alert}<div><b>此操作不可恢复</b><p>\${feedCnt ? \`该动态圈下仍有 <b>\${feedCnt}</b> 条动态，删除后将一并清除。\` : '删除后该动态将无法找回。'}</p></div></div>
+        <p class="no-del-name">确认删除 <b>\${esc(n.name)}</b>（\${esc(n.id)}）吗？</p>
+      </div>\`,
+    foot: () => \`<button class="btn-ghost" data-sheet-close>取消</button><button class="btn-danger" id="delConfirmBtn">\${I.trash}删除</button>\`,
+    mount() {
+      const btn = $('#delConfirmBtn');
+      if (btn) btn.addEventListener('click', () => { deleteNo(id); closeSheet(); toast('动态圈已删除'); });
+    }
+  });
+}
+function deleteNo(id) {
+  const idx = FEEDNOS.findIndex(x => x.id === id);
+  if (idx >= 0) FEEDNOS.splice(idx, 1);
+  for (let i = feeds.length - 1; i >= 0; i--) if (feeds[i].noId === id) feeds.splice(i, 1);
+  renderNoView();
+}
+let noViewMode = 'list';
+function noCardHTML(n) {
+  const tone = TONE_MAP[n.tone] || TONE_MAP.blue;
+  const upd = latestUpdateOf(n);
+  const mine = n.creator === ME ? '我创建' : (n.owner === ME ? '我负责' : '');
+  const mng = canManage(n);
+  const del = canDeleteNo(n);
+  const off = n.status === 'off';
+  return \`<article class="no-card \${n.status === 'off' ? 'off' : ''}">
+    <button class="no-open" data-no-open="\${n.id}">
+      <span class="no-top">
+        <span class="no-ico" style="background:\${tone[0]};color:\${tone[1]}">\${I[n.icon] || I.doc}</span>
+        <span><span class="no-name">\${esc(n.name)}</span><span class="no-code">\${esc(n.id)} · \${esc(n.owner)} · \${esc(n.dept)}</span></span>
+        <span class="no-state \${n.status === 'off' ? 'off' : ''}">\${n.status === 'on' ? '已启用' : '已停用'}\${mine ? \` <span class="no-mine">\${mine}</span>\` : ''}</span>
+      </span>
+      <span class="no-desc">\${esc(n.desc)}</span>
+      <span class="no-meta">\${I.user}<span>创建人</span><b>\${esc(n.creator)}</b><span class="no-k">创建时间</span><b>\${esc(n.created)}</b></span>
+      <span class="no-meta">\${I.clock}<span>最新更新</span><b>\${esc(upd.time)}</b></span>
+    </button>
+    <div class="no-acts">
+      \${mng ? \`<button data-no-toggle="\${n.id}">\${n.status === 'on' ? '停用' : '启用'}</button>\` : ''}
+      \${mng ? \`<button data-no-edit="\${n.id}" \${off ? 'disabled' : ''} title="\${off ? '动态圈已停用，无法编辑' : ''}">编辑</button>\` : ''}
+      \${mng ? \`<button class="del" data-no-delete="\${n.id}" \${del.ok ? '' : 'disabled'} title="\${esc(del.reason)}">\${I.trash}删除</button>\` : ''}
+    </div>
+  </article>\`;
+}
+function renderNoGrid() {
+  const list = noVisible();
+  if (noViewMode === 'list') {
+    $('#noGrid').innerHTML = list.length
+      ? \`<table class="no-table"><thead><tr>
+           <th>动态圈</th><th>状态</th><th>负责人 / 类别</th><th>可见</th><th>创建人</th><th>创建时间</th><th>最新更新</th><th class="no-th-act">操作</th>
+         </tr></thead><tbody>\${list.map(noRowHTML).join('')}</tbody></table>\`
+      : '';
+  } else {
+    $('#noGrid').innerHTML = list.map(noCardHTML).join('');
+  }
+  $('#noEmpty').hidden = list.length > 0;
+}
+function noRowHTML(n) {
+  const tone = TONE_MAP[n.tone] || TONE_MAP.blue;
+  const upd = latestUpdateOf(n);
+  const mine = n.creator === ME ? '我创建' : (n.owner === ME ? '我负责' : '');
+  const mng = canManage(n);
+  const del = canDeleteNo(n);
+  const off = n.status === 'off';
+  return \`<tr class="no-tr \${off ? 'off' : ''}">
+    <td class="no-td-name" data-no-open="\${n.id}">
+      <span class="feed-avatar no-ico \${n.tone}" style="background:\${tone[0]};color:\${tone[1]}">\${I[n.icon] || I.doc}</span>
+      <span class="no-name-cell"><b>\${esc(n.name)}</b><small>\${esc(n.id)}</small></span>
+    </td>
+    <td class="no-td-state" data-no-open="\${n.id}">
+      <span class="no-state \${off ? 'off' : ''}">\${n.status === 'on' ? '已启用' : '已停用'}</span>\${mine ? \` <span class="no-mine">\${mine}</span>\` : ''}
+    </td>
+    <td class="no-td-owner" data-no-open="\${n.id}"><b>\${esc(n.owner)}</b><small>\${esc(n.dept)}</small></td>
+    <td class="no-td-subs" data-no-open="\${n.id}">\${n.subs} 人可见</td>
+    <td class="no-td-creator" data-no-open="\${n.id}">\${esc(n.creator)}</td>
+    <td class="no-td-created" data-no-open="\${n.id}">\${esc(n.created)}</td>
+    <td class="no-td-update">\${upd.has ? \`<b>\${esc(upd.time)}</b>\` : \`<small>\${esc(upd.time)}</small>\`}</td>
+    <td class="no-td-act">
+      \${mng ? \`<button class="feed-action" data-no-toggle="\${n.id}">\${n.status === 'on' ? '停用' : '启用'}</button>\` : ''}
+      \${mng ? \`<button class="feed-action" data-no-edit="\${n.id}" \${off ? 'disabled' : ''} title="\${off ? '动态圈已停用，无法编辑' : ''}">编辑</button>\` : ''}
+      \${mng ? \`<button class="feed-action del" data-no-delete="\${n.id}" \${del.ok ? '' : 'disabled'} title="\${esc(del.reason)}">\${I.trash}删除</button>\` : ''}
+    </td>
+  </tr>\`;
+}
+function renderNoView() { renderNoFilter(); renderNoGrid(); }
+
+/* ---------- 创建向导（4 步） ---------- */
+const NO_ICONS = ['doc', 'flow', 'task', 'alert', 'chart', 'people'];
+const NO_TONES = ['blue', 'violet', 'orange', 'red', 'green'];
+const ARCHIVES = [['auto', '自动归档', '业务结束后动态自动归档，保留可追溯记录'], ['manual', '手动归档', '业务结束后由负责人确认归档']];
+let noDraft = null;
+let createdNoId = null;
+
+function nextNoCode() { return 'DTH-' + (++noSeq); }
+function openCreateNo() {
+  noDraft = {
+    editId: null,
+    step: 1, name: '', code: nextNoCode(), icon: 'doc', tone: 'blue', desc: '',
+    owner: '张宇', dept: '安全管理部', binds: [],
+    bizTab: 'form',
+    events: ['sheet_submit', 'proc_start', 'proc_transfer', 'proc_approve', 'proc_reject', 'task_start', 'task_exec', 'task_done', 'warn_trigger', 'warn_exec', 'warn_done'], toEnd: true, autoFollow: true, archive: 'auto',
+    scopeType: 'dept', scopeList: ['安全管理部'], scopePeople: { '安全管理部': [] },
+  };
+  switchView('create');
+  renderCreateView();
+}
+function openEditNo(id) {
+  const n = noOf(id); if (!n) { toast('未找到该动态圈'); return; }
+  const scopeList = (n.scope && n.scope.list ? n.scope.list : []).slice();
+  const scopePeople = {};
+  scopeList.forEach(dep => { scopePeople[dep] = ((n.scope && n.scope.people && n.scope.people[dep]) || []).slice(); });
+  noDraft = {
+    editId: id,
+    step: 1, name: n.name, code: n.id, icon: n.icon, tone: n.tone, desc: n.desc,
+    owner: n.owner, dept: n.dept, binds: (n.binds || []).map(b => ({ kind: b.kind, id: b.id })),
+    bizTab: 'form',
+    events: migrateEvents(n.rules && n.rules.events ? n.rules.events : ['start', 'flow', 'approve', 'done']),
+    toEnd: n.rules ? n.rules.toEnd : true,
+    autoFollow: n.rules ? n.rules.autoFollow : true,
+    archive: n.rules ? n.rules.archive : 'auto',
+    scopeType: n.scope ? n.scope.type : 'dept', scopeList, scopePeople,
+    cascadeSel: scopeList[0] || DEPTS[0].name,
+  };
+  switchView('create');
+  renderCreateView();
+}
+const wizHasBind = (kind, id) => noDraft.binds.some(b => b.kind === kind && b.id === id);
+function wizPaneHTML() {
+  const d = noDraft;
+  const bar = \`<div class="wz-steps">\${[1, 2, 3].map(i => \`<i class="\${i <= d.step ? 'on' : ''}"></i>\`).join('')}</div>\`;
+  const caps = {
+    1: '第 1 / 3 步 · <b>基本信息</b>：给动态圈起名并指定负责人',
+    2: '第 2 / 3 步 · <b>关联业务与记录规则</b>：选择要跟踪的表单/流程/任务，并设定在哪些节点自动生成动态',
+    3: '第 3 / 3 步 · <b>可见范围与确认</b>：确定谁能看到并完成创建',
+  };
+  return bar + \`<p class="wz-cap">\${caps[d.step]}</p>\` + [wizStep1, wizStep2, wizStep3][d.step - 1]();
+}
+function wizStep1() {
+  const d = noDraft;
+  return \`
+    <div class="fld"><label>动态圈名称 <b style="color:var(--danger)">*</b></label>
+      <input id="wzName" type="text" value="\${esc(d.name)}" placeholder="例如：安全生产动态圈" maxlength="24" />
+      <span class="hint">建议以「业务领域 + 动态圈」命名，便于成员识别。</span></div>
+    <div class="fld-row">
+      <div class="fld"><label>动态圈编号</label><input type="text" value="\${esc(d.code)}" disabled /></div>
+      <div class="fld"><label>负责人</label><select id="wzOwner">\${MEMBERS.map(m => \`<option \${d.owner === m ? 'selected' : ''}>\${esc(m)}</option>\`).join('')}</select></div>
+    </div>
+    <div class="fld"><label>所属类别</label><select id="wzDept">\${DEPTS.map(x => \`<option \${d.dept === x.name ? 'selected' : ''}>\${esc(x.name)}</option>\`).join('')}</select></div>
+    <div class="fld"><label>简介</label>
+      <textarea id="wzDesc" placeholder="说明该动态圈跟踪哪些业务、面向哪些人">\${esc(d.desc)}</textarea></div>
+    <div class="fld"><label>标识图标</label>
+      <div class="icon-pick">\${NO_ICONS.map(k => \`<button data-wz-icon="\${k}" class="\${d.icon === k ? 'on' : ''}" title="\${k}">\${I[k]}</button>\`).join('')}</div></div>
+    <div class="fld"><label>主题色</label>
+      <div class="tone-pick">\${NO_TONES.map(k => \`<button data-wz-tone="\${k}" class="\${d.tone === k ? 'on' : ''}" style="background:\${TONE_MAP[k][1]}" title="\${k}"></button>\`).join('')}</div></div>\`;
+}
+let bizPickKind = null;
+let bizPickDept = 'all';
+function bizPickOpen(kind) {
+  bizPickKind = kind; bizPickDept = 'all';
+  $('#bizPickTitle').textContent = '选择' + BIZKIND[kind].label;
+  bizPickRenderBody();
+  $('#bizPickLayer').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+/* 三栏选择弹窗：左 类别树 / 中 待选择 / 右 已选择 */
+function bizPickHTML(kind) {
+  const all = BIZLIB[kind];
+  const byDept = {};
+  all.forEach(b => { (byDept[b.dept] = byDept[b.dept] || []).push(b); });
+  const depts = Object.keys(byDept);
+  const sel = noDraft.binds.filter(b => b.kind === kind);
+  /* 左：类别树（全部 + 各部门类别） */
+  const catBtn = (key, label, n) => \`<button class="bp-cat \${bizPickDept === key ? 'on' : ''}" data-wz-bizcat="\${esc(key)}">
+      <b>\${esc(label)}</b><small>\${n}</small></button>\`;
+  const cats = catBtn('all', '全部', all.length)
+    + depts.map(dep => catBtn(dep, dep, byDept[dep].length)).join('');
+  /* 中：待选择（按所选类别过滤） */
+  const pool = bizPickDept === 'all' ? all : (byDept[bizPickDept] || []);
+  const items = pool.map(b => {
+    const on = wizHasBind(kind, b.id);
+    return \`<button class="bp-item \${on ? 'on' : ''}" data-wz-bind="\${kind}:\${b.id}">
+      <span class="bp-item-main"><b>\${esc(b.name)}</b><small>\${esc(b.id)} · \${esc(b.ver)} · \${esc(b.desc)}</small></span>
+      <span class="bp-item-check">\${I.check}</span></button>\`;
+  }).join('');
+  /* 右：已选择（可移除） */
+  const picked = sel.length ? sel.map(b => {
+    const o = bizOf(kind, b.id) || {};
+    return \`<div class="bp-sel-row"><b>\${esc(o.name || b.id)}</b>
+      <button class="bp-sel-x" data-wz-unbind="\${kind}:\${b.id}" title="移除">\${I.close}</button></div>\`;
+  }).join('') : '<p class="bp-empty">尚未选择</p>';
+  return \`<div class="bp-cols">
+    <div class="bp-col"><div class="bp-col-h">类别</div><div class="bp-col-body">\${cats}</div></div>
+    <div class="bp-col"><div class="bp-col-h">待选择</div><div class="bp-col-body">\${items || '<p class="bp-empty">该类别暂无数据</p>'}</div></div>
+    <div class="bp-col"><div class="bp-col-h">已选择<span class="bp-count">\${sel.length}</span></div><div class="bp-col-body">\${picked}</div></div>
+  </div>\`;
+}
+function bizPickRenderBody() {
+  if (bizPickKind == null) return;
+  $('#bizPickBody').innerHTML = bizPickHTML(bizPickKind);
+  const cnt = noDraft.binds.filter(b => b.kind === bizPickKind).length;
+  $('#bizPickCount').textContent = cnt ? \`已选 \${cnt} 项\${BIZKIND[bizPickKind].label}\` : \`尚未选择\${BIZKIND[bizPickKind].label}\`;
+}
+function bizPickClose() {
+  $('#bizPickLayer').hidden = true;
+  document.body.style.overflow = '';
+  wizRepaint();
+}
+/* ===== 第三步「指定部门及人员」选择人员弹窗：左 组织树 / 中 待选择 / 右 已选择 ===== */
+let scopePickDept = null;
+function scopePickOpen() {
+  if (!scopePickDept || !DEPTS.some(x => x.name === scopePickDept)) scopePickDept = DEPTS[0].name;
+  scopePickRenderBody();
+  $('#scopePickLayer').hidden = false;
+  document.body.style.overflow = 'hidden';
+}
+function scopePickHTML() {
+  const D = noDraft;
+  /* 左：组织树（部门列表，带人数） */
+  const cats = DEPTS.map(x => \`<button class="bp-cat \${scopePickDept === x.name ? 'on' : ''}" data-wz-scopedep="\${esc(x.name)}">
+      <b>\${esc(x.name)}</b><small>\${x.members.length}</small></button>\`).join('');
+  /* 中：待选择（所选部门成员；全选写入该部门全部成员） */
+  const dx = DEPTS.find(x => x.name === scopePickDept);
+  const sel = D.scopePeople[scopePickDept] || [];
+  const items = dx.members.map(m => {
+    const on = sel.includes(m.n);
+    return \`<button class="bp-item \${on ? 'on' : ''}" data-wz-person="\${esc(dx.name)}::\${esc(m.n)}">
+      <span class="bp-av">\${I.user}</span>
+      <span class="bp-item-main"><b>\${esc(m.n)}</b><small>\${esc(m.r)}</small></span>
+      <span class="bp-item-check">\${I.check}</span></button>\`;
+  }).join('');
+  /* 右：已选择（跨部门汇总，可移除） */
+  const rows = DEPTS.filter(x => (D.scopePeople[x.name] || []).length).flatMap(x =>
+    (D.scopePeople[x.name] || []).map(n =>
+      \`<div class="bp-sel-row"><span class="bp-av bp-av-sm">\${I.user}</span><b>\${esc(n)}</b><small class="bp-sel-dep">\${esc(x.name)}</small>
+        <button class="bp-sel-x" data-wz-person-remove="\${esc(x.name)}::\${esc(n)}" title="移除">\${I.close}</button></div>\`));
+  const total = DEPTS.reduce((a, x) => a + (D.scopePeople[x.name] || []).length, 0);
+  return \`<div class="bp-cols">
+    <div class="bp-col"><div class="bp-col-h">组织</div><div class="bp-col-body">\${cats}</div></div>
+    <div class="bp-col"><div class="bp-col-h">待选择<button class="mini-btn" data-wz-dept-all="\${esc(dx.name)}">全选</button></div><div class="bp-col-body">\${items}</div></div>
+    <div class="bp-col"><div class="bp-col-h">已选择<span class="bp-count">\${total}</span></div><div class="bp-col-body">\${rows.length ? rows.join('') : '<p class="bp-empty">尚未选择</p>'}</div></div>
+  </div>\`;
+}
+function scopePickRenderBody() {
+  if (scopePickDept == null) return;
+  $('#scopePickBody').innerHTML = scopePickHTML();
+  const total = DEPTS.reduce((a, x) => a + (noDraft.scopePeople[x.name] || []).length, 0);
+  $('#scopePickCount').textContent = total ? \`已选 \${total} 人（\${DEPTS.filter(x => (noDraft.scopePeople[x.name] || []).length).length} 个部门）\` : '尚未选择人员';
+}
+function scopePickClose() {
+  $('#scopePickLayer').hidden = true;
+  document.body.style.overflow = '';
+  wizRepaint();
+}
+function wizStep2() {
+  const d = noDraft;
+  /* 已选数据按各自 tab 展示：当前 tab 下列出该 tab（表单/流程/任务）已选的业务对象 */
+  const tabBinds = d.binds.filter(b => b.kind === d.bizTab);
+  const picked = tabBinds.length
+    ? \`<div class="bp-picked-list">\${tabBinds.map(b => {
+      const o = bizOf(b.kind, b.id) || {};
+      return \`<div class="bp-picked">
+        <span class="bp-picked-ico" style="background:\${BIZKIND[b.kind].soft};color:\${BIZKIND[b.kind].color}">\${I[BIZKIND[b.kind].icon]}</span>
+        <span class="bp-picked-main"><b>\${esc(o.name || b.id)}</b><small>\${esc(b.id)}\${o.ver ? ' · ' + esc(o.ver) : ''}</small></span>
+        <button class="bp-sel-x" data-wz-unbind="\${b.kind}:\${b.id}" title="移除">\${I.close}</button></div>\`;
+    }).join('')}</div>\`
+    : '<p class="side-note" style="margin:0 0 10px">当前 tab 尚未选择数据（<b>关联对象非必填</b>，可直接进入下一步）；点击上方标签在弹窗中勾选。</p>';
+
+  /* 表单 / 流程 / 任务 分 tab 页；点击某 tab 弹出对应的数据选择弹窗 */
+  const tabs = Object.keys(BIZKIND).map(kind =>
+    \`<button class="biz-tab \${d.bizTab === kind ? 'on' : ''}" data-wz-biztab="\${kind}">
+       <span class="biz-tab-ico" style="background:\${BIZKIND[kind].soft};color:\${BIZKIND[kind].color}">\${I[BIZKIND[kind].icon]}</span>
+       \${BIZKIND[kind].label}<small>\${d.binds.filter(b => b.kind === kind).length}</small>
+     </button>\`).join('');
+
+  /* 当前 tab 对应的记录规则（同页下方展示；预警规则在三个 tab 下均出现） */
+  const ruleGroups = RULE_GROUPS.filter(g => RULE_CATS[d.bizTab].includes(g.cat));
+  const rules = \`
+    <div class="rule-groups">\${ruleGroups.map(g => \`
+      <div class="rule-group">
+        <div class="rule-grp-head"><span class="rule-grp-ico \${g.cat}">\${g.icon}</span><b>\${esc(g.label)}记录规则</b><span class="rule-grp-count">\${g.items.filter(([k]) => d.events.includes(k)).length}/\${g.items.length}</span></div>
+        <div class="pick-list">\${g.items.map(([k, lbl, desc]) =>
+          \`<button class="pick-item \${d.events.includes(k) ? 'on' : ''}" data-wz-ev="\${k}">
+            <span class="av grp">\${I.check}</span>
+            <span><b>\${esc(lbl)}</b><small>\${esc(desc)}</small></span>
+            <span class="pick-check">\${I.check}</span></button>\`).join('')}</div>
+      </div>\`).join('')}</div>\`;
+
+  return \`
+    <div class="biz-tabs">\${tabs}</div>
+    \${picked}
+    <p class="side-note" style="margin:0 0 10px">点击 <b>表单 / 流程 / 任务</b> 标签弹出数据选择弹窗（左类别 / 中待选 / 右已选），已选数据展示在各自 tab 下方；<b>关联对象非必填</b>，可跳过。</p>
+    <div class="wiz-rule-divider"><span>记录规则</span></div>
+    <p class="side-note" style="margin:0 0 14px">下方展示 <b>\${ruleGroups.map(g => g.label + '记录规则').join(' / ')}</b>（预警规则始终在列）；勾选的节点事件发生时，动态圈会自动生成一条动态并写入业务实例的生命周期轨迹（<code>genFeedForStep</code>）。</p>
+    \${rules}\`;
+}
+function wizStep3() {
+  const d = noDraft;
+  /* 可见范围二选一；「指定部门及人员」点击后弹出三栏选择人员弹窗 */
+  const scopes = [['all', '全员可见', '公司全体成员均可在动态圈中看到'], ['dept', '指定部门及人员', '仅所选部门中勾选的成员可见']];
+  const deptTotal = DEPTS.reduce((a, x) => a + (d.scopePeople[x.name] || []).length, 0);
+  const deptCnt = DEPTS.filter(x => (d.scopePeople[x.name] || []).length).length;
+  const deptPick = d.scopeType === 'dept'
+    ? \`<button class="scope-sum" data-wz-scope-pick title="点击选择部门及人员">
+        <span class="bp-picked-ico" style="background:var(--accent-soft);color:var(--accent)">\${I.user}</span>
+        <span class="bp-picked-main"><b>\${deptTotal ? \`\${deptCnt} 个部门 · \${deptTotal} 人\` : '尚未选择人员'}</b><small>点击打开选择弹窗（左组织 / 中待选 / 右已选）</small></span>
+        <span class="scope-sum-go">选择 ›</span>
+      </button>\` : '';
+  const bindList = d.binds.length ? d.binds.map(b => (bizOf(b.kind, b.id) || {}).name).join('、') : '未关联';
+  const evList = d.events.map(k => RULE_LABEL[k]).filter(Boolean).join('、') || '未选择';
+  return \`
+    <div class="fld"><label>可见范围</label>
+      <div class="radio-list">\${scopes.map(([k, lbl, desc]) =>
+        \`<button class="radio-item \${d.scopeType === k ? 'on' : ''}" data-wz-scope="\${k}"><span><b>\${esc(lbl)}</b><small>\${esc(desc)}</small></span><span class="radio-dot"></span></button>\`).join('')}</div>
+      \${deptPick}</div>
+    <p class="side-note" style="margin:16px 0 8px"><b>创建预览</b></p>
+    <div class="wz-preview">
+      <div class="wz-kv"><span>名称</span><b>\${esc(d.name || '（未填写）')}</b></div>
+      <div class="wz-kv"><span>编号</span><b>\${esc(d.code)}</b></div>
+      <div class="wz-kv"><span>负责人</span><b>\${esc(d.owner)} · \${esc(d.dept)}</b></div>
+      <div class="wz-kv"><span>关联业务</span><b>\${esc(bindList)}（\${d.binds.length} 项）</b></div>
+      <div class="wz-kv"><span>记录节点</span><b>\${esc(evList)}</b></div>
+      <div class="wz-kv"><span>记录范围</span><b>\${d.toEnd ? '从发起持续记录至业务结束闭环' : '仅记录发起节点'}</b></div>
+      <div class="wz-kv"><span>可见范围</span><b>\${d.scopeType === 'all' ? '全员可见' : d.scopeList.length ? d.scopeList.map(dep => {
+        const ms = DEPTS.find(x => x.name === dep).members;
+        const sel = d.scopePeople[dep] || [];
+        const cnt = sel.length;
+        const all = sel.length === ms.length;
+        return all ? \`\${esc(dep)}（全部 \${ms.length} 人）\` : \`\${esc(dep)}（\${cnt} 人）\`;
+      }).join('、') : '尚未选择人员'}</b></div>
+    </div>\`;
+}
+function wizFoot() {
+  const d = noDraft;
+  const canNext = d.step === 1 ? !!d.name.trim() : d.step === 2 ? (d.events.length > 0) : true;
+  const last = d.editId ? '保存修改' : '确认创建';
+  return \`\${d.step > 1 ? '<button class="btn-ghost" data-wz-prev>上一步</button>' : ''}
+    <button class="btn-primary" data-wz-next \${canNext ? '' : 'disabled'}>\${d.step === 3 ? last : '下一步'}</button>\`;
+}
+function wizRepaint() { $('#createTitle').textContent = ['基本信息', '关联业务与记录规则', '可见范围与确认'][noDraft.step - 1]; $('#createPane').innerHTML = wizPaneHTML(); $('#createFoot').innerHTML = wizFoot(); }
+function renderCreateView() {
+  $('#createKicker').textContent = noDraft.editId ? '编辑动态圈' : '新建动态圈';
+  $('#createTitle').textContent = ['基本信息', '关联业务与记录规则', '可见范围与确认'][noDraft.step - 1];
+  /* 重置容器节点，丢弃上一次进入时绑定的监听，避免重复触发 */
+  ['createPane', 'createFoot'].forEach((id) => {
+    const el = $('#' + id); const c = el.cloneNode(false); el.parentNode.replaceChild(c, el);
+  });
+  $('#createPane').innerHTML = wizPaneHTML();
+  $('#createFoot').innerHTML = wizFoot();
+  wizMount();
+}
+function wizClick(e) {
+  const t = e.target.closest('[data-wz-icon],[data-wz-tone],[data-wz-bind],[data-wz-unbind],[data-wz-ev],[data-wz-scope],[data-wz-dept-all],[data-wz-person],[data-wz-person-remove],[data-wz-biztab],[data-wz-bizcat],[data-wz-bizpick-close],[data-wz-scopedep],[data-wz-scope-pick],[data-wz-scopepick-close]');
+  if (!t) return;
+  const d = t.dataset, D = noDraft;
+  if (d.wzIcon) D.icon = d.wzIcon;
+  else if (d.wzTone) D.tone = d.wzTone;
+  else if (d.wzBind || d.wzUnbind) {
+    const kindId = (d.wzBind || d.wzUnbind).split(':');
+    const ki = D.binds.findIndex(b => b.kind === kindId[0] && b.id === kindId[1]);
+    if (ki > -1) D.binds.splice(ki, 1); else if (d.wzBind) D.binds.push({ kind: kindId[0], id: kindId[1] });
+  }
+  else if (d.wzEv) { const ei2 = D.events.indexOf(d.wzEv); ei2 > -1 ? D.events.splice(ei2, 1) : D.events.push(d.wzEv); }
+  else if (d.wzScope) { D.scopeType = d.wzScope; if (d.wzScope === 'dept') scopePickOpen(); }
+  else if (d.wzDeptAll) {
+    /* 弹窗「全选」：整部门成员写入，并确保部门在可见范围内 */
+    const xm = DEPTS.find(z => z.name === d.wzDeptAll);
+    D.scopePeople[d.wzDeptAll] = xm.members.map(m => m.n);
+    if (!D.scopeList.includes(d.wzDeptAll)) D.scopeList.push(d.wzDeptAll);
+  }
+  else if (d.wzPerson) {
+    const pn = d.wzPerson.split('::');
+    if (!D.scopePeople[pn[0]]) D.scopePeople[pn[0]] = [];
+    const arr = D.scopePeople[pn[0]];
+    const pi = arr.indexOf(pn[1]);
+    if (pi > -1) {
+      arr.splice(pi, 1);
+      /* 部门选空 → 自动移出可见范围 */
+      if (!arr.length) { delete D.scopePeople[pn[0]]; const di = D.scopeList.indexOf(pn[0]); if (di > -1) D.scopeList.splice(di, 1); }
+    } else {
+      arr.push(pn[1]);
+      if (!D.scopeList.includes(pn[0])) D.scopeList.push(pn[0]);
+    }
+  }
+  else if (d.wzPersonRemove) {
+    const pr = d.wzPersonRemove.split('::');
+    const ar2 = D.scopePeople[pr[0]];
+    if (ar2) { const pj = ar2.indexOf(pr[1]); if (pj > -1) ar2.splice(pj, 1); }
+    if (ar2 && !ar2.length) { delete D.scopePeople[pr[0]]; const dj = D.scopeList.indexOf(pr[0]); if (dj > -1) D.scopeList.splice(dj, 1); }
+  }
+  else if (d.wzBiztab) { D.bizTab = d.wzBiztab; bizPickOpen(d.wzBiztab); }
+  else if (d.wzBizcat) { bizPickDept = d.wzBizcat; }
+  else if (t.hasAttribute('data-wz-bizpick-close')) { bizPickClose(); }
+  else if (d.wzScopedep) { scopePickDept = d.wzScopedep; }
+  else if (t.hasAttribute('data-wz-scope-pick')) { scopePickOpen(); }
+  else if (t.hasAttribute('data-wz-scopepick-close')) { scopePickClose(); }
+  wizRepaint();
+  if (!$('#bizPickLayer').hidden) bizPickRenderBody();
+  if (!$('#scopePickLayer').hidden) scopePickRenderBody();
+}
+function wizMount() {
+  const body = $('#createPane'), foot = $('#createFoot');
+  body.addEventListener('input', (e) => {
+    const t = e.target;
+    if (t.id === 'wzName') { noDraft.name = t.value; $('#createFoot').innerHTML = wizFoot(); }
+    else if (t.id === 'wzDesc') noDraft.desc = t.value;
+  });
+  body.addEventListener('change', (e) => {
+    if (e.target.id === 'wzOwner') noDraft.owner = e.target.value;
+    else if (e.target.id === 'wzDept') noDraft.dept = e.target.value;
+  });
+  body.addEventListener('click', wizClick);
+  foot.addEventListener('click', (e) => {
+    if (e.target.closest('[data-wz-prev]')) { noDraft.step--; wizRepaint(); }
+    else if (e.target.closest('[data-wz-next]')) {
+      if (noDraft.step < 3) { noDraft.step++; wizRepaint(); }
+      else createFeedNo();
+    }
+    else if (e.target.closest('[data-create-back-list]')) { switchView('feedno'); }
+    else if (e.target.closest('[data-create-view-no]')) { if (createdNoId) openNoDetail(createdNoId); }
+  });
+}
+function createFeedNo() {
+  const d = noDraft;
+  const scope = (() => { const people = {}; d.scopeList.forEach(dep => { const x = DEPTS.find(z => z.name === dep); people[dep] = (d.scopePeople[dep] || x.members.map(m => m.n)).slice(); }); return { type: d.scopeType, list: d.scopeList.slice(), people }; })();
+  const subs = d.scopeType === 'dept' ? d.scopeList.reduce((a, dep) => { const x = DEPTS.find(z => z.name === dep); const sel = d.scopePeople[dep]; return a + (sel ? sel.length : x.members.length); }, 0) : d.scopeType === 'all' ? 62 : 0;
+  const updated = {
+    id: d.code, name: d.name.trim(), icon: d.icon, tone: d.tone,
+    desc: d.desc.trim() || '尚未填写简介。', owner: d.owner, dept: d.dept,
+    subs,
+    binds: d.binds.slice(),
+    rules: { events: d.events.slice(), toEnd: d.toEnd, autoFollow: d.autoFollow, archive: d.archive },
+    scope,
+  };
+  let saved;
+  if (d.editId) {
+    const i = FEEDNOS.findIndex(x => x.id === d.editId);
+    if (i > -1) { FEEDNOS[i] = Object.assign({}, FEEDNOS[i], updated); saved = FEEDNOS[i]; }
+    else { saved = Object.assign({ created: '今天', status: 'on', creator: ME }, updated); FEEDNOS.unshift(saved); }
+    createdNoId = d.editId;
+  } else {
+    saved = Object.assign({ created: '今天', status: 'on', creator: ME }, updated);
+    FEEDNOS.unshift(saved);
+    createdNoId = saved.id;
+  }
+  renderNoView();
+  const bindTxt = saved.binds.map(b => (bizOf(b.kind, b.id) || {}).name).join('、');
+  wizDoneSuccess(saved, bindTxt, !!d.editId);
+}
+function wizDoneSuccess(n, bindTxt, isEdit) {
+  $('#createKicker').textContent = isEdit ? '编辑完成' : '创建完成';
+  $('#createTitle').textContent = isEdit ? '动态圈修改成功' : '动态圈创建成功';
+  $('#createPane').innerHTML = \`<div class="wiz-done">
+    <span class="ok">\${I.check}</span>
+    <b>\${esc(n.name)}（\${esc(n.id)}）\${isEdit ? '已保存修改' : '已创建并启用'}</b>
+    <p>\${isEdit
+      ? '你对动态圈的配置已更新，列表与详情将同步反映最新设置。'
+      : \`已关联 <b>\${n.binds.length}</b> 项业务：\${esc(bindTxt)}。<br>一旦有人发起这些业务，动态圈将自动记录从发起到结束的完整过程。\`}</p>
+  </div>\`;
+  $('#createFoot').innerHTML = \`<button class="btn-ghost" data-create-back-list>返回动态圈列表</button><button class="btn-primary" data-create-view-no>查看动态圈</button>\`;
+}
+
+/* ---------- 动态圈详情页 ---------- */
+function openNoDetail(id) {
+  const n = noOf(id);
+  if (!n) { toast('未找到该动态圈'); return; }
+  ndId = id;
+  closeSheet(); closeLightbox(); closeDetail();
+  renderNoDetail();
+  switchView('nodetail');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function renderNoDetail() {
+  const n = noOf(ndId); if (!n) return;
+  ndBasicCollapsed = true; /* 每次打开详情默认收起介绍卡片 */
+  const tone = TONE_MAP[n.tone] || TONE_MAP.blue;
+  $('#ndKicker').textContent = \`动态圈 · \${n.id}\`;
+  $('#ndTitle').textContent = n.name;
+
+  /* 基本信息 */
+  $('#ndBasic').innerHTML = \`
+    <div class="nd-basic-head">
+      <span class="rec-icon" style="background:\${tone[0]};color:\${tone[1]}">\${I[n.icon] || I.doc}</span>
+      <div class="nd-basic-titles"><h3>\${esc(n.name)}</h3><p>\${esc(n.id)} · \${esc(n.dept)}</p></div>
+      <div class="nd-basic-aside">
+        <button class="nd-follow \${n.followed ? 'on' : ''}" data-nd-follow-btn type="button" title="\${n.followed ? '取消关注' : '关注该动态圈'}">\${n.followed ? '已关注' : '关注'}</button>
+        <span class="rec-status" style="background:\${n.status === 'on' ? 'var(--ok-soft)' : 'var(--surface-soft)'};color:\${n.status === 'on' ? 'var(--ok)' : 'var(--muted)'}">\${n.status === 'on' ? '已启用' : '已停用'}</span>
+        <button class="nd-basic-toggle" data-nd-collapse type="button" title="折叠/展开" aria-expanded="\${ndBasicCollapsed ? 'false' : 'true'}">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M6 9l6 6 6-6"/></svg>
+        </button>
+      </div>
+    </div>
+    <div class="nd-basic-body">
+      <div class="nd-basic-meta">
+        <span><i>负责人</i><b>\${esc(n.owner)}</b></span>
+        <span><i>创建于</i><b>\${esc(n.created)}</b></span>
+        <span><i>可见</i><b>\${n.subs} 人</b></span>
+        <span><i>状态</i><b>\${n.status === 'on' ? '已启用' : '已停用'}</b></span>
+      </div>
+      \${n.binds.length ? \`<div class="nd-basic-binds"><span class="nd-basic-label">关联业务</span><span class="nd-basic-biz">\${n.binds.map(b => { const o = bizOf(b.kind, b.id) || {}; const m = BIZKIND[b.kind]; return \`<span class="bind-chip \${b.kind}">\${I[m.icon]}\${esc(o.name || b.id)}</span>\`; }).join('')}</span></div>\` : ''}
+    </div>
+  \`;
+  $('#ndBasic').classList.toggle('nd-basic--collapsed', ndBasicCollapsed);
+
+  /* 部门筛选下拉（进入详情重置为全部部门） */
+  ndDeptFilter = 'all';
+  const dsel = $('#ndDeptSel');
+  if (dsel) dsel.innerHTML = \`<option value="all">全部部门</option>\` + DEPTS.map(x => \`<option value="\${esc(x.name)}">\${esc(x.name)}</option>\`).join('');
+  /* 时间筛选高亮 */
+  $$('#ndTimeSeg button').forEach(b => b.classList.toggle('sel', (b.dataset.ndTime || 'all') === ndTimeFilter));
+
+  renderNdFeeds();
+}
+/* 详情页：该动态圈产生的动态，按时间倒序，支持时间筛选 / 关键字搜索 */
+function renderNdFeeds() {
+  const n = noOf(ndId); if (!n) return;
+  let fl = feeds.filter(f => f.noId === n.id);
+  if (ndTimeFilter !== 'all') {
+    const now = Date.now();
+    const startToday = new Date(); startToday.setHours(0, 0, 0, 0);
+    const min = ndTimeFilter === 'today' ? startToday.getTime()
+      : ndTimeFilter === '7d' ? now - 7 * 86400000
+      : now - 30 * 86400000;
+    fl = fl.filter(f => (f.ts || 0) >= min);
+  }
+  const kw = (ndSearch || '').trim().toLowerCase();
+  if (kw) fl = fl.filter(f => (f.title + ' ' + f.summary + ' ' + f.operator).toLowerCase().includes(kw));
+  if (ndDeptFilter !== 'all') fl = fl.filter(f => (f.dept || '') === ndDeptFilter);
+  fl.sort((a, b) => (b.ts || 0) - (a.ts || 0));
+  $('#ndFeedCount').textContent = fl.length;
+  $('#ndFeeds').innerHTML = fl.length
+    ? fl.map(f => \`<button class="rec-feed-item" data-detail="\${f.id}"><span class="feed-avatar \${f.tone}">\${esc(f.avatar)}</span><span><b>\${esc(f.title)}</b><small>\${esc(f.operator)} · \${esc(f.dept)} · \${esc(f.time)}</small></span></button>\`).join('')
+    : \`<div class="empty-side">\${I.link}<p>没有符合条件的动态。</p></div>\`;
+}
+function insRowHTML(i) {
+  const nd = insCurNode(i); const m = BIZKIND[i.kind];
+  const biz = bizOf(i.kind, i.bizId) || {};
+  return \`<button class="ins-row \${i.state}" data-life="\${i.id}">
+    <span class="ins-top">
+      <span class="bind-chip \${i.kind}">\${I[m.icon]}\${m.label}</span>
+      <span class="ins-code">\${esc(i.id)}</span>
+      <span class="ins-state \${i.state}">\${insStateText(i)}</span>
+    </span>
+    <span class="ins-title">\${esc(i.title)}</span>
+    <span class="ins-bar"><i style="width:\${insPercent(i)}%"></i></span>
+    <span class="ins-meta">
+      <span>来源：\${esc(biz.name || i.bizId)}</span>
+      <span>发起人：\${esc(i.starter)}</span>
+      <span>\${esc(i.startAt)}\${i.endAt ? ' → ' + esc(i.endAt) : ''}</span>
+      <em>\${i.state === 'running' ? '当前节点：' + esc(nd ? nd.k : '—') : i.state === 'done' ? '全部 ' + insTotalSteps(i) + ' 个节点已完成' : '已中途终止'}（\${i.cursor}/\${insTotalSteps(i)}）</em>
+    </span>
+  </button>\`;
+}
+
+/* ---------- 生命周期推进：记录业务从发生到结束 ---------- */
+const ACTORS = ['王芳', '李明', '张宇', '赵磊', '陈刚'];
+function stepNote(ins, node, idx) {
+  const biz = (bizOf(ins.kind, ins.bizId) || {}).name || ins.bizId;
+  const map = {
+    start: \`\${ins.starter} 通过《\${biz}》发起「\${ins.title}」，动态圈开始记录本次业务全过程。\`,
+    flow: \`「\${ins.title}」流转至第 \${idx + 1} 个节点：\${node.k}，\${node.a}。\`,
+    approve: \`「\${ins.title}」在 \${node.k} 节点\${node.a}，业务继续向下流转。\`,
+    done: \`「\${ins.title}」全部节点已完成，\${node.a}，本次业务正式结束。\`,
+  };
+  return map[node.ev] || \`\${node.k}：\${node.a}。\`;
+}
+function genFeedForStep(ins, node, who, note, idx) {
+  const n = noOf(ins.noId);
+  const biz = (bizOf(ins.kind, ins.bizId) || {}).name || ins.bizId;
+  const toneByKind = { form: 'blue', process: 'violet', task: 'orange' };
+  const id = 'f' + (++feedSeq) + '_' + ins.id.slice(-4);
+  const isDone = node.ev === 'done';
+  feeds.unshift({
+    id, type: ins.kind, operator: who, dept: (MEMBER_DEPT[who] || '').split(' · ')[0] || ins.dept,
+    avatar: who.slice(0, 1), tone: isDone ? 'green' : (toneByKind[ins.kind] || 'blue'), ts: Date.now(),
+    title: idx === 0 ? \`发起了《\${biz}》：\${ins.title}\` : isDone ? \`《\${biz}》「\${ins.title}」已闭环\` : \`\${node.k}：\${ins.title}\`,
+    summary: note, time: idx === 0 ? '刚刚' : nowLabel(), attachments: [],
+    related: { label: \`《\${biz}》全过程\`, id: ins.id },
+    likes: [], liked: false, comments: [], followed: !!(n && n.rules.autoFollow && idx === 0),
+    noId: ins.noId, insId: ins.id,
+  });
+  return id;
+}
+function advanceInstance(insId, silent) {
+  const ins = insOf(insId);
+  if (!ins || ins.state !== 'running') return false;
+  const life = lifeOf(ins.kind), node = life[ins.cursor];
+  if (!node) return false;
+  const n = noOf(ins.noId);
+  const idx = ins.cursor;
+  const who = idx === 0 ? ins.starter : (node.ev === 'done' ? '系统' : ACTORS[idx % ACTORS.length]);
+  const at = idx === 0 ? ins.startAt : nowLabel();
+  const note = stepNote(ins, node, idx);
+  const log = { who, at, act: node.a, note };
+  /* 记录规则：仅在被勾选的事件上生成动态 */
+  if (n && n.rules.events.some(k => evOf(k) === node.ev) && (n.rules.toEnd || node.ev === 'start')) {
+    log.feedId = genFeedForStep(ins, node, who, note, idx);
+  }
+  ins.logs.push(log);
+  ins.cursor++;
+  if (ins.cursor >= life.length) { ins.state = 'done'; ins.endAt = at; }
+  if (!silent) { renderFeed(); renderNoView(); }
+  return true;
+}
+function abortInstance(insId) {
+  const ins = insOf(insId); if (!ins || ins.state !== 'running') return;
+  const n = noOf(ins.noId);
+  const at = nowLabel();
+  const note = \`「\${ins.title}」在 \${(insCurNode(ins) || {}).k || '当前节点'} 被终止，本次业务提前结束。\`;
+  const log = { who: '张宇', at, act: '终止业务', note, abort: true };
+  if (n && n.rules.events.some(k => evOf(k) === 'abort')) log.feedId = genFeedForStep(ins, { ev: 'abort', k: '业务终止', a: '终止业务' }, '张宇', note, ins.cursor);
+  ins.logs.push(log);
+  ins.state = 'aborted'; ins.endAt = at;
+  renderFeed(); renderNoView();
+}
+
+/* ---------- 业务全生命周期页 ---------- */
+function openLife(insId) {
+  const ins = insOf(insId);
+  if (!ins) { toast('未找到该业务记录'); return; }
+  lifeInsId = insId;
+  if (curView !== 'life') lifeFrom = curView;
+  closeSheet(); closeLightbox(); closeDetail();
+  renderLife();
+  switchView('life');
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+}
+function renderLife() {
+  const ins = insOf(lifeInsId); if (!ins) return;
+  const n = noOf(ins.noId) || {}; const m = BIZKIND[ins.kind];
+  const biz = bizOf(ins.kind, ins.bizId) || {};
+  const life = lifeOf(ins.kind);
+  const tone = TONE_MAP[m.label === '表单' ? 'blue' : m.label === '流程' ? 'violet' : 'orange'];
+  const stTone = ins.state === 'done' ? ['var(--ok-soft)', 'var(--ok)'] : ins.state === 'aborted' ? ['var(--surface-soft)', 'var(--muted)'] : ['var(--accent-soft)', 'var(--accent)'];
+
+  $('#lfKicker').textContent = \`\${n.name || '动态圈'} · \${ins.id}\`;
+  $('#lfTitle').textContent = ins.title;
+  $('#lfHead').innerHTML = \`
+    <span class="rec-icon" style="background:\${tone[0]};color:\${tone[1]}">\${I[m.icon]}</span>
+    <div><h1>\${esc(ins.title)}</h1><p>\${m.label}《\${esc(biz.name || ins.bizId)}》 · 发起人 \${esc(ins.starter)}（\${esc(ins.dept)}） · \${esc(ins.startAt)}\${ins.endAt ? ' → ' + esc(ins.endAt) : ''} · 进度 \${ins.cursor}/\${life.length}</p></div>
+    <span class="rec-status" style="background:\${stTone[0]};color:\${stTone[1]}">\${insStateText(ins)}</span>\`;
+
+  $('#lfSummary').innerHTML = ins.state === 'done'
+    ? \`<div class="life-summary"><b>\${I.check}业务已闭环，全过程记录完成</b>
+        <p>「\${esc(ins.title)}」由 <b>\${esc(ins.starter)}</b> 于 \${esc(ins.startAt)} 发起，历经 <b>\${life.length}</b> 个节点，于 \${esc(ins.endAt)} 结束。动态圈「\${esc(n.name || '')}」共记录 <b>\${ins.logs.filter(l => l.feedId).length}</b> 条动态，完整覆盖业务的发生、流转与结束。</p></div>\`
+    : ins.state === 'aborted'
+      ? \`<div class="life-summary" style="border-color:var(--muted);background:var(--surface-soft)"><b style="color:var(--muted)">\${I.close}业务已中途终止</b>
+        <p>「\${esc(ins.title)}」在第 \${ins.cursor} 个节点被终止，终止前的全部过程已完整留痕。</p></div>\`
+      : '';
+
+  $('#lfStepCount').textContent = \`\${ins.cursor}/\${life.length}\`;
+  const abortLog = ins.logs.find(l => l.abort);
+  $('#lfSteps').innerHTML = life.map((node, i) => {
+    const log = ins.logs[i];
+    const done = i < ins.cursor;
+    const cur = i === ins.cursor && ins.state === 'running';
+    const cls = done ? 'done' : cur ? 'cur' : 'pending';
+    const tag = done ? '已完成' : cur ? '进行中' : '待进行';
+    return \`<div class="life-step \${cls}">
+      <span class="life-dot">\${done ? I.check : i + 1}</span>
+      <div class="life-card">
+        <span class="life-head"><b>\${esc(node.k)}</b><span class="life-tag">\${tag}</span></span>
+        \${log ? \`<time>\${esc(log.who)} · \${esc(log.at)} · \${esc(log.act)}</time><p>\${esc(log.note)}</p>\` : \`<p>\${esc(node.a)}（尚未发生）</p>\`}
+        \${log && log.feedId ? \`<button class="life-feed" data-detail="\${log.feedId}">\${I.link}查看该节点生成的动态</button>\` : ''}
+      </div>
+    </div>\`;
+  }).join('') + (abortLog ? \`<div class="life-step abort">
+      <span class="life-dot">\${I.close}</span>
+      <div class="life-card"><span class="life-head"><b>业务终止</b><span class="life-tag">已终止</span></span>
+        <time>\${esc(abortLog.who)} · \${esc(abortLog.at)} · \${esc(abortLog.act)}</time><p>\${esc(abortLog.note)}</p>
+        \${abortLog.feedId ? \`<button class="life-feed" data-detail="\${abortLog.feedId}">\${I.link}查看该节点生成的动态</button>\` : ''}</div>
+    </div>\` : '');
+
+  $('#lfOps').innerHTML = ins.state === 'running'
+    ? \`<button class="btn-primary" data-life-next="\${ins.id}">\${I.check}推进到下一节点（\${esc((insCurNode(ins) || {}).k || '')}）</button>
+       <button class="btn-ghost" data-life-all="\${ins.id}">一键推进至业务结束</button>
+       <button class="btn-ghost" data-life-abort="\${ins.id}">终止业务</button>\`
+    : \`<button class="btn-ghost" data-no-open="\${ins.noId}">返回动态圈</button>
+       <button class="btn-ghost" data-life-feeds="\${ins.id}">在信息流中查看全部动态</button>\`;
+
+  const fl = feeds.filter(f => f.insId === ins.id);
+  $('#lfFeedCount').textContent = fl.length;
+  $('#lfFeeds').innerHTML = fl.length
+    ? fl.map(f => \`<button class="rec-feed-item" data-detail="\${f.id}"><span class="feed-avatar \${f.tone}">\${esc(f.avatar)}</span><span><b>\${esc(f.title)}</b><small>\${esc(f.operator)} · \${esc(f.time)}</small></span></button>\`).join('')
+    : \`<div class="empty-side">\${I.link}<p>暂无动态。</p></div>\`;
+
+  $('#lfFields').innerHTML = [
+    ['业务实例编号', ins.id], ['来源动态圈', n.name || '—'],
+    ['业务对象', \`\${m.label}《\${biz.name || ins.bizId}》\`], ['对象编号', ins.bizId],
+    ['发起人', \`\${ins.starter}（\${ins.dept}）\`], ['发起时间', ins.startAt],
+    ['当前状态', insStateText(ins)], ['结束时间', ins.endAt || '进行中'],
+    ['节点进度', \`\${ins.cursor} / \${life.length}\`], ['已生成动态', fl.length + ' 条'],
+  ].map(([k, v]) => \`<div class="rec-field"><span>\${esc(k)}</span><b>\${esc(v)}</b></div>\`).join('');
+}
+
+/* ---------- 事件绑定 ---------- */
+$('#noCreateBtn').addEventListener('click', openCreateNo);
+$('#backFromNd').addEventListener('click', () => switchView('feedno'));
+$('#ndTimeSeg').addEventListener('click', (e) => {
+  const b = e.target.closest('[data-nd-time]'); if (!b) return;
+  ndTimeFilter = b.dataset.ndTime;
+  $$('#ndTimeSeg button').forEach(x => x.classList.toggle('sel', x === b));
+  renderNdFeeds();
+});
+$('#ndDeptSel').addEventListener('change', (e) => { ndDeptFilter = e.target.value; renderNdFeeds(); });
+$('#ndSearch').addEventListener('input', (e) => { ndSearch = e.target.value; renderNdFeeds(); });
+$('#ndBasic').addEventListener('click', (e) => {
+  const btn = e.target.closest('[data-nd-collapse]');
+  if (btn) {
+    ndBasicCollapsed = !ndBasicCollapsed;
+    $('#ndBasic').classList.toggle('nd-basic--collapsed', ndBasicCollapsed);
+    btn.setAttribute('aria-expanded', ndBasicCollapsed ? 'false' : 'true');
+    return;
+  }
+  const fb = e.target.closest('[data-nd-follow-btn]');
+  if (fb) {
+    const n = noOf(ndId); if (!n) return;
+    n.followed = !n.followed;
+    fb.classList.toggle('on', n.followed);
+    fb.textContent = n.followed ? '已关注' : '关注';
+    fb.title = n.followed ? '取消关注' : '关注该动态圈';
+    toast(n.followed ? '已关注该动态圈，有新动态会提醒你' : '已取消关注');
+  }
+});
+$('#backFromLife').addEventListener('click', () => {
+  const ins = insOf(lifeInsId);
+  if (ins) openNoDetail(ins.noId); else switchView('feedno');
+});
+$('#noSearchInput').addEventListener('input', (e) => { noSearch = e.target.value.trim(); renderNoGrid(); });
+$('#noHelpBtn').addEventListener('click', () => {
+  pushSheet({
+    title: '什么是动态圈？', sub: '业务来源的配置单元',
+    body: () => \`
+      <p class="side-note" style="margin:0 0 12px"><b>动态圈</b>是「动态圈」的业务来源配置。它把散落的表单、流程、任务收敛到一个号下，并规定在哪些节点自动生成动态。</p>
+      <div class="wz-preview">
+        <div class="wz-kv"><span>① 创建</span><b>设定名称、负责人、图标与可见范围</b></div>
+        <div class="wz-kv"><span>② 关联</span><b>勾选要跟踪的表单 / 流程 / 任务</b></div>
+        <div class="wz-kv"><span>③ 发起</span><b>任意人发起所关联业务，自动创建业务实例</b></div>
+        <div class="wz-kv"><span>④ 记录</span><b>发起 → 流转 → 审批 → 完成/终止，逐节点生成动态</b></div>
+        <div class="wz-kv"><span>⑤ 结束</span><b>业务闭环后形成完整可追溯的全过程链路</b></div>
+      </div>
+      <p class="side-note" style="margin:12px 0 0">与「消息中心」的区别：消息中心只收发给你个人的系统消息、抄送与通知；动态圈面向<b>业务本身</b>，记录的是业务对象的客观过程。</p>\`,
+    foot: () => \`<button class="btn-primary" id="helpNew">去创建一个动态圈</button>\`,
+    mount() { $('#helpNew').addEventListener('click', () => { closeSheet(); openCreateNo(); }); },
+  });
+});
+
+/* 列表页 / 详情页 / 生命周期页 统一委托 */
+['#view-feedno', '#view-nodetail', '#view-life'].forEach(sel => {
+  $(sel).addEventListener('click', (e) => {
+    const t = e.target.closest('[data-no-owner],[data-no-status],[data-no-open],[data-no-viewmode],[data-no-create],[data-no-toggle],[data-no-edit],[data-no-delete],[data-life],[data-life-next],[data-life-all],[data-life-abort],[data-life-feeds]');
+    if (!t) return;
+    const d = t.dataset;
+    if (d.noOwner) { noFilters.owner = d.noOwner; renderNoView(); }
+    else if (d.noStatus) { noFilters.status = d.noStatus; renderNoView(); }
+    else if (d.noViewmode) {
+      noViewMode = d.noViewmode;
+      $$('#view-feedno .no-view-toggle button').forEach(b => b.classList.toggle('on', b.dataset.noViewmode === noViewMode));
+      renderNoGrid();
+    }
+    else if (t.hasAttribute('data-no-create')) openCreateNo();
+    else if (d.noOpen) openNoDetail(d.noOpen);
+    else if (d.noToggle) {
+      const n = noOf(d.noToggle); if (!n) return;
+      n.status = n.status === 'on' ? 'off' : 'on';
+      toast(n.status === 'on' ? '动态圈已启用，将开始记录关联业务' : '动态圈已停用，不再记录新业务');
+      renderNoDetail(); renderNoView();
+    }
+    else if (d.noEdit) { const n = noOf(d.noEdit); if (!n || n.status === 'off') { if (n) toast('动态圈已停用，无法编辑'); return; } openEditNo(d.noEdit); }
+    else if (d.noDelete) { openDeleteNo(d.noDelete); }
+    else if (d.life) openLife(d.life);
+    else if (d.lifeNext) { advanceInstance(d.lifeNext); renderLife(); toast('已推进到下一节点，并生成动态'); }
+    else if (d.lifeAll) {
+      let k = 0;
+      while (advanceInstance(d.lifeAll)) k++;
+      renderLife(); toast(\`已连续推进 \${k} 个节点，业务已闭环\`);
+    }
+    else if (d.lifeAbort) { abortInstance(d.lifeAbort); renderLife(); toast('业务已终止，终止前过程已完整留痕'); }
+    else if (d.lifeFeeds) { switchView('feed'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+  });
+});
+
+/* ============ 消息中心（独立列表页，区别于动态圈） ============ */
+const MSGCAT = {
+  mention: { label: '@我的', cls: 'mention', color: 'var(--accent)',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 3 3h1M8 8v5a3 3 0 0 1-3 3H4"/></svg>' },
+  system:  { label: '系统消息', cls: 'system', color: 'var(--accent)',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="3" y="4" width="18" height="7" rx="2"/><rect x="3" y="13" width="18" height="7" rx="2"/><path d="M7 7.5h.01M7 16.5h.01"/></svg>' },
+  task:    { label: '任务消息', cls: 'task', color: 'var(--warn)',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><rect x="4" y="4" width="16" height="16" rx="3"/><path d="m8 12 3 3 5-6"/></svg>' },
+  process: { label: '流程消息', cls: 'process', color: 'var(--violet)',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="6" cy="6" r="2.3"/><circle cx="18" cy="6" r="2.3"/><circle cx="12" cy="18" r="2.3"/><path d="M6 8.3v3.7a2 2 0 0 0 2 2h2.8M18 8.3v3.7a2 2 0 0 1-2 2h-2.8"/></svg>' },
+  warn:    { label: '预警消息', cls: 'warn', color: 'var(--danger)',
+    icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M12 3 2 20h20L12 3Z"/><path d="M12 9v5M12 17h.01"/></svg>' },
+};
+const MESSAGES = [
+  /* @我的 */
+  { id: 'm1', cat: 'mention', title: '王芳 在《设备检修任务》动态中 @ 提到了你', source: '王芳', time: '1 小时前',
+    text: '王芳 在《设备检修任务》动态中提及你：「执行人：张宇」，请关注任务进展。', read: false },
+  { id: 'm2', cat: 'mention', title: '李强 在《周安全例会纪要》中 @ 提到了你', source: '李强', time: '今天 09:12',
+    text: '李强 在纪要中 @ 你跟进「有限空间作业审批」事项，请于本周内反馈。', read: false },
+  /* 系统消息 */
+  { id: 's1', cat: 'system', title: '系统将于今晚 22:00 进行版本升级维护', source: '系统运维', time: '10 分钟前',
+    text: '澄明工作台 v2.8 升级，预计停机 30 分钟，期间「动态圈」与流程审批暂不可用，请提前保存工作。', read: false, prio: 'important' },
+  { id: 's2', cat: 'system', title: '《安全生产管理制度（2026版）》已发布', source: '安全管理部', time: '今天 08:30',
+    text: '新版制度已生效，请各部门组织宣贯学习，相关考核于下月启动。', read: false },
+  { id: 's3', cat: 'system', title: '月度经营数据报表已生成', source: '数据中心', time: '昨天 18:00',
+    text: '2026 年 7 月经营月报已生成，可在「数据洞察」查看与导出。', read: true },
+  /* 任务消息 */
+  { id: 't1', cat: 'task', title: '你被指派《消防器材月度点检》TASK-7788', source: '设备管理部', time: '40 分钟前',
+    text: '你被指派负责消防器材月度点检，计划今日 18:00 前完成，请按时提交。', read: false, prio: 'important',
+    relateKind: 'record', relateId: 'TASK-7788', relateLabel: '《消防器材月度点检》TASK-7788' },
+  { id: 't2', cat: 'task', title: '任务即将到期：《设备检修任务》TASK-7782', source: '设备管理部', time: '3 小时前',
+    text: '你负责的检修任务计划今天 17:30 完成，请合理安排时间。', read: true,
+    relateKind: 'record', relateId: 'TASK-7782', relateLabel: '《设备检修任务》TASK-7782' },
+  /* 流程消息 */
+  { id: 'p1', cat: 'process', title: '待你审批：《隐患整改流程》FLOW-3091', source: '安全管理部', time: '2 小时前',
+    text: '李明 发起隐患整改流程，当前待你（张宇）审批，请及时处理。', read: false, prio: 'urgent',
+    relateKind: 'record', relateId: 'FLOW-3091', relateLabel: '《隐患整改流程》FLOW-3091' },
+  { id: 'p2', cat: 'process', title: '《动火作业申请》FLOW-3087 已转交安全管理部（抄送你）', source: '赵磊', time: '昨天 16:40',
+    text: '赵磊 发起动火作业申请并抄送你知会，当前节点：安全管理部审批。', read: false, prio: 'important',
+    relateKind: 'record', relateId: 'FLOW-3087', relateLabel: '《动火作业申请》FLOW-3087' },
+  { id: 'p3', cat: 'process', title: '《隐患整改单 #HT-2026-0384》状态更新为「整改中」（抄送你）', source: '王芳', time: '35 分钟前',
+    text: '王芳 已接收该隐患整改单并抄送你跟进，请关注整改进度。', read: false,
+    relateKind: 'record', relateId: 'HT-2026-0384', relateLabel: '《隐患整改单》HT-2026-0384' },
+  { id: 'p4', cat: 'process', title: '《生产日报表》REC-2041 已审批通过（抄送知会）', source: '张伟', time: '12 分钟前',
+    text: '张伟 提交日常巡检表并经审批通过，抄送你知会。', read: true,
+    relateKind: 'record', relateId: 'REC-2041', relateLabel: '《日常巡检表》REC-2041' },
+  /* 预警消息 */
+  { id: 'w1', cat: 'warn', title: '预警：《液氨储罐区》温度超阈值', source: '监测预警', time: '5 分钟前',
+    text: '液氨储罐区实时温度 42℃，超过阈值 38℃，请立即核查冷却系统运行状态。', read: false, prio: 'urgent' },
+  { id: 'w2', cat: 'warn', title: '预警：《皮带输送机 B-12》振动异常', source: '设备健康监测', time: '28 分钟前',
+    text: '皮带输送机 B-12 振动值连续 10 分钟超过预警线，建议安排停机检查。', read: false, prio: 'important' },
+  { id: 'w3', cat: 'warn', title: '预警：《可燃气体探测器》电量低', source: '设备健康监测', time: '昨天 21:00',
+    text: '3 号车间可燃气体探测器电量低于 15%，请及时更换电池。', read: true },
+];
+let msgCat = 'all';          /* all | system | cc | notice */
+let msgReadFilter = 'all';   /* all | unread | read */
+let msgSearch = '';
+let msgExpandId = null;      /* 行内展开的消息 id（不使用抽屉） */
+let msgFrom = 'feed';        /* 进入消息页前的视图，用于返回 */
+
+const msgUnread = (arr) => arr.filter(m => !m.read).length;
+const msgOfCat = (c) => MESSAGES.filter(m => m.cat === c);
+
+function renderMsgBadge() {
+  const n = msgUnread(MESSAGES);
+  const b = $('#msgBadge');
+  b.textContent = n > 99 ? '99+' : n;
+  b.style.display = n ? 'grid' : 'none';
+}
+
+function msgVisible() {
+  const kw = msgSearch.toLowerCase();
+  return MESSAGES.filter(m => {
+    if (msgCat !== 'all' && m.cat !== msgCat) return false;
+    if (msgReadFilter === 'unread' && m.read) return false;
+    if (msgReadFilter === 'read' && !m.read) return false;
+    if (kw) {
+      const hay = [m.title, m.text, m.source, m.relateLabel || ''].join(' ').toLowerCase();
+      if (!hay.includes(kw)) return false;
+    }
+    return true;
+  });
+}
+
+function renderMsgFilter() {
+  const tabs = [
+    { k: 'all', label: '全部' },
+    { k: 'mention', label: '@我的' },
+    { k: 'system', label: '系统消息' },
+    { k: 'task', label: '任务消息' },
+    { k: 'process', label: '流程消息' },
+    { k: 'warn', label: '预警消息' },
+  ];
+  $('#msgFilter').innerHTML = tabs.map(t => {
+    const n = t.k === 'all' ? msgUnread(MESSAGES) : msgUnread(msgOfCat(t.k));
+    return \`<button data-msg-cat="\${t.k}" class="\${msgCat === t.k ? 'selected' : ''}">\${t.label} <span class="pill">\${n}</span></button>\`;
+  }).join('');
+  $$('#msgReadSeg button').forEach(b => b.classList.toggle('on', b.dataset.msgRead === msgReadFilter));
+}
+
+function msgRowHTML(m) {
+  const c = MSGCAT[m.cat];
+  const open = msgExpandId === m.id;
+  const prio = m.prio === 'urgent' ? '<span class="msg-prio urg">紧急</span>'
+    : m.prio === 'important' ? '<span class="msg-prio imp">重要</span>' : '';
+  const state = m.read ? '<span class="msg-readtag">已读</span>' : '<span class="msg-flag"><i></i>未读</span>';
+  const expand = open ? \`
+    <div class="msg-expand">
+      <p class="msg-body-text">\${esc(m.text)}</p>
+      <div class="msg-fields">
+        <div class="msg-field"><span>消息编号</span><b>MSG-\${esc(m.id.toUpperCase())}</b></div>
+        <div class="msg-field"><span>消息类型</span><b>\${c.label}</b></div>
+        <div class="msg-field"><span>发送方</span><b>\${esc(m.source)}</b></div>
+        <div class="msg-field"><span>接收时间</span><b>\${esc(m.time)}</b></div>
+        <div class="msg-field"><span>提醒方式</span><b>\${m.prio === 'urgent' ? '站内 + 企业微信' : '站内'}</b></div>
+        <div class="msg-field"><span>关联对象</span><b>\${m.relateLabel ? esc(m.relateLabel) : '无'}</b></div>
+      </div>
+      <div class="msg-ops">
+        <button class="btn-ghost" data-msg-toggleread="\${m.id}">\${m.read ? '标为未读' : '标为已读'}</button>
+        <button class="btn-ghost" data-msg-del="\${m.id}">删除消息</button>
+      </div>
+    </div>\` : '';
+  return \`<article class="msg-row \${c.cls} \${m.read ? 'read' : 'unread'}\${open ? ' open' : ''}">
+    <button class="msg-head-row" data-msg-row="\${m.id}" aria-expanded="\${open}">
+      <span class="msg-ico">\${c.icon}</span>
+      <span class="msg-main">
+        <span class="msg-row1"><span class="msg-cat-chip">\${c.label}</span>\${prio}\${state}</span>
+        <span class="msg-title">\${esc(m.title)}</span>
+        <span class="msg-text">\${esc(m.text)}</span>
+        <span class="msg-meta"><span class="msg-source">\${esc(m.source)}</span></span>
+      </span>
+      <span class="msg-right"><span class="msg-time">\${esc(m.time)}</span><svg class="msg-chev" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.9"><path d="M9 6l6 6-6 6"/></svg></span>
+    </button>
+    \${expand}
+  </article>\`;
+}
+
+function renderMsgList() {
+  const list = msgVisible();
+  $('#msgList').innerHTML = list.map(msgRowHTML).join('');
+  $('#msgEmpty').hidden = list.length > 0;
+}
+
+function renderMsgView() { renderMsgFilter(); renderMsgList(); renderMsgBadge(); }
+
+function msgToggleRow(id) {
+  const m = MESSAGES.find(x => x.id === id);
+  if (!m) return;
+  msgExpandId = (msgExpandId === id) ? null : id;
+  if (msgExpandId === id) m.read = true;   /* 展开即视为已读 */
+  renderMsgView();
+}
+
+/* 入口：右上角「消息」→ 以可关闭标签页形式打开 */
+$('#msgEntry').addEventListener('click', () => { openModule('message'); window.scrollTo({ top: 0, behavior: 'smooth' }); });
+$('#backFromMsg').addEventListener('click', () => openModule('feed'));
+$('#msgSearchInput').addEventListener('input', (e) => { msgSearch = e.target.value.trim(); renderMsgList(); });
+
+$('#view-message').addEventListener('click', (e) => {
+  const t = e.target.closest('[data-msg-cat],[data-msg-read],[data-msg-row],[data-msg-toggleread],[data-msg-del],[data-msg-readall],[data-msg-clear]');
+  if (!t) return;
+  const d = t.dataset;
+  if (d.msgCat) { msgCat = d.msgCat; renderMsgView(); }
+  else if (d.msgRead) { msgReadFilter = d.msgRead; renderMsgView(); }
+  else if (d.msgRow) { msgToggleRow(d.msgRow); }
+  else if (d.msgToggleread) {
+    const m = MESSAGES.find(x => x.id === d.msgToggleread);
+    if (m) { m.read = !m.read; renderMsgView(); toast(m.read ? '已标为已读' : '已标为未读'); }
+  }
+  else if (d.msgDel) {
+    const i = MESSAGES.findIndex(x => x.id === d.msgDel);
+    if (i > -1) { MESSAGES.splice(i, 1); if (msgExpandId === d.msgDel) msgExpandId = null; renderMsgView(); toast('消息已删除'); }
+  }
+  else if (t.hasAttribute('data-msg-readall')) { MESSAGES.forEach(m => m.read = true); renderMsgView(); toast('已将全部消息标为已读'); }
+  else if (t.hasAttribute('data-msg-clear')) {
+    const keep = MESSAGES.filter(m => !m.read);
+    MESSAGES.splice(0, MESSAGES.length, ...keep);
+    msgExpandId = null; renderMsgView(); toast('已清空已读消息');
+  }
+});
+renderMsgBadge();
+
+/* ============ Init ============ */
+renderFilters();
+renderFeed();
+renderTimeline();
+<\/script>
+
+</body>
+</html>
+`,Mz=[`人事管理`,`财务管理`,`安全管理`,`生产管理`,`设备管理`,`综合管理`],Nz=`./prototype-annotations.json`,Pz=`https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e`;function Fz(e){let t=Array.isArray(e)?e:e?.annotations;return Array.isArray(t)?t:[]}DE([wA,MO,qA,uM,aN,pP,aM,VN,RN,LP]);var Iz=[{label:`工作台`,icon:yz},{label:`应用`,icon:rz},{label:`任务`,icon:Cz},{label:`流程`,icon:cz},{label:`动态`,icon:pz},{label:`预警`,icon:Sz},{label:`看板`,icon:ZR}],Lz=[{id:`home`,label:`首页`,icon:yz},{id:`apps`,label:`应用`,icon:rz},{id:`shield`,label:`安全防护`,icon:pz},{id:`task`,label:`任务`,icon:Cz},{id:`flow`,label:`流程`,icon:cz},{id:`warning`,label:`预警`,icon:Sz},{id:`message`,label:`消息`,icon:mz},{id:`equipment`,label:`设备`,icon:vz},{id:`production`,label:`生产`,icon:xz},{id:`fire`,label:`消防`,icon:Tz},{id:`explosive`,label:`火工品`,icon:uz},{id:`document`,label:`表单`,icon:QR},{id:`dashboard`,label:`看板`,icon:ZR},{id:`approval`,label:`审批`,icon:nz},{id:`briefcase`,label:`工作`,icon:tz},{id:`calendar`,label:`日程`,icon:XR},{id:`check`,label:`完成`,icon:hz},{id:`people`,label:`人员`,icon:Ez},{id:`person-clock`,label:`值班`,icon:ez},{id:`settings`,label:`设置`,icon:$R},{id:`sort`,label:`排序`,icon:bz},{id:`idea`,label:`提示`,icon:dz},{id:`edit`,label:`编辑`,icon:lz},{id:`delete`,label:`删除`,icon:wz},{id:`arrow`,label:`前往`,icon:fz}];function Rz({name:e=`apps`,className:t,customIcons:n=[]}){let r=n.find(t=>t.id===e);return r?(0,Q.jsx)(`img`,{className:t,src:r.src,alt:``,"aria-hidden":`true`}):(0,Q.jsx)(Lz.find(t=>t.id===e)?.icon??rz,{className:t,"aria-hidden":`true`})}var zz=[{id:`message`,title:`未读消息`,count:12,note:`3 条需要你确认`,icon:mz,accent:`blue`,items:[`请确认 7 月安全例会纪要`,`在设备点检单中提及了你`,`新增一条隐患整改提醒`]},{id:`task`,title:`待办任务`,count:4,note:`2 项今天到期`,icon:Cz,accent:`orange`,items:[`完成 3 号球磨机点检复核`,`提交第二季度风险排查记录`,`补充 7 月生产日报说明`]},{id:`approval`,title:`待批流程`,count:3,note:`1 项等待超 24 小时`,icon:nz,accent:`teal`,items:[`矿山应急照明设备采购申请`,`南区 2# 采场动火作业申请`,`碎矿车间停机检修计划`]},{id:`warning`,title:`待处理预警`,count:5,note:`2 项高风险待处置`,icon:Sz,accent:`red`,items:[`南区排水泵房温度异常预警`,`3 号提升机运行参数超限`,`尾矿库在线监测数据待核查`]}],Bz=[{name:`双重预防机制`,description:`风险与隐患`,icon:pz},{name:`安全管理`,description:`检查与整改`,icon:Sz},{name:`设备管理`,description:`点检与维修`,icon:vz},{name:`火工品管理`,description:`领用与追溯`,icon:uz},{name:`生产管理`,description:`计划与日报`,icon:xz},{name:`机电管理`,description:`运行与保全`,icon:tz},{name:`消防管理`,description:`巡检与演练`,icon:Tz},{name:`应急管理`,description:`预案与响应`,icon:dz}],Vz=[{id:`admin`,name:`系统管理员`,creator:`系统管理员`,status:`启用`,createdAt:`2026-07-01 09:20`},{id:`safety`,name:`安全管理员`,creator:`张宇`,status:`启用`,createdAt:`2026-07-08 14:35`},{id:`executor`,name:`任务执行人`,creator:`李明`,status:`启用`,createdAt:`2026-07-12 10:16`},{id:`viewer`,name:`数据查看员`,creator:`王强`,status:`停用`,createdAt:`2026-07-15 16:42`}],Hz=[`安全管理员`,`设备工程师`,`生产主管`],Uz=[{id:`workbench`,label:`工作台`,icon:yz,pinned:!0}],Wz=[{id:`msg-1`,source:`流程审批`,type:`审批提醒`,sender:`矿山应急照明设备采购申请`,time:`今天 10:12`,initiator:`王建国`,initiatedAt:`今天 09:12`,application:`机电管理`,processNumber:`202608310001`,title:`矿山应急照明设备采购申请`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`blue`},{id:`msg-2`,source:`流程超时`,type:`超时提醒`,sender:`南区 2# 采场动火作业申请`,time:`今天 09:38`,initiator:`张宇`,initiatedAt:`今天 08:46`,application:`安全管理`,processNumber:`202608310002`,title:`南区 2# 采场动火作业申请`,content:`当前审批节点已超时，请尽快处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-3`,source:`流程结束`,type:`结束提醒`,sender:`碎矿车间停机检修计划`,time:`昨天 16:45`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,application:`设备管理`,processNumber:`202608300003`,title:`碎矿车间停机检修计划`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:Sz,tone:`red`},{id:`msg-4`,source:`流程审批`,type:`审批提醒`,sender:`外协队入场资格审核`,time:`昨天 14:20`,initiator:`周敏`,initiatedAt:`昨天 10:20`,application:`双重预防机制`,processNumber:`202608300004`,title:`外协队入场资格审核`,content:`流程已流转至当前审批节点，请及时处理。`,attachment:`审批流表单`,formKind:`approval`,read:!1,icon:nz,tone:`orange`},{id:`msg-5`,source:`流程结束`,type:`结束提醒`,sender:`井下设备检修采购申请`,time:`7 月 28 日 09:16`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,application:`设备管理`,processNumber:`202608260006`,title:`井下设备检修采购申请`,content:`流程已处理结束，相关结果已归档。`,attachment:`审批流表单`,formKind:`approval`,read:!0,icon:hz,tone:`blue`}],Gz=`20260831`;function Kz(e=``){let t=String(e).match(/(\d{4})-(\d{1,2})-(\d{1,2})/);if(t)return`${t[1]}${t[2].padStart(2,`0`)}${t[3].padStart(2,`0`)}`;let n=String(e).match(/(\d{1,2})\s*月\s*(\d{1,2})\s*日/);return n?`2026${n[1].padStart(2,`0`)}${n[2].padStart(2,`0`)}`:String(e).includes(`昨天`)?`20260830`:Gz}function qz(e){let t=String(e.id??``),n=Number(t.match(/(\d+)(?!.*\d)/)?.[1]),r=Number(e.sequence)||n%9999||1;return`${Kz(e.initiatedAt)}${String(r).padStart(4,`0`)}`}var Jz=[`待审批`,`审批中`,`已通过`,`已拒绝`,`已撤销`,`已驳回`],Yz=[{id:`flow-1`,name:`矿山应急照明设备采购申请`,initiator:`王建国`,initiatedAt:`今天 09:12`,currentNode:`部门负责人审批`,approver:`张宇`,status:`审批中`,application:`设备管理`,amount:`86,500 元`,department:`机电管理部`,urgency:`常规`},{id:`flow-2`,name:`南区 2# 采场动火作业申请`,initiator:`张宇`,initiatedAt:`今天 08:46`,currentNode:`安全管理部审批`,approver:`张宇`,status:`审批中`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,startedByMe:!0},{id:`flow-3`,name:`碎矿车间停机检修计划`,initiator:`赵磊`,initiatedAt:`昨天 15:28`,currentNode:`流程已结束`,approver:`刘海`,status:`已通过`,amount:`128,000 元`,department:`设备管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`},{id:`flow-4`,name:`外协队入场资格审核`,initiator:`周敏`,initiatedAt:`昨天 10:20`,currentNode:`安环部备案`,approver:`张宇`,status:`审批中`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,startedByMe:!0},{id:`flow-5`,name:`东区临时用电申请`,initiator:`陈伟`,initiatedAt:`昨天 11:16`,currentNode:`流程已结束`,approver:`张宇`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,handledByMe:!0,handledResult:`驳回`},{id:`flow-6`,name:`井下设备检修采购申请`,initiator:`刘海`,initiatedAt:`8 月 26 日 16:42`,currentNode:`流程已撤销`,approver:`张宇`,status:`已撤销`,application:`设备管理`,amount:`42,800 元`,department:`机电管理部`,urgency:`常规`,handledByMe:!0,startedByMe:!0,handledResult:`同意`,revokedBy:`刘海`,revokedAt:`2026-08-26 17:08:00`},{id:`flow-7`,name:`高处作业审批申请`,initiator:`孙宁`,initiatedAt:`8 月 25 日 09:34`,currentNode:`分管领导审批`,approver:`张宇`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`紧急`,handledByMe:!0,handledResult:`驳回`},{id:`flow-8`,name:`井下通风设施改造申请`,initiator:`李明`,initiatedAt:`8 月 27 日 14:18`,currentNode:`流程已结束`,approver:`陈伟`,status:`已通过`,application:`应急管理`,amount:`26,000 元`,department:`安全管理部`,urgency:`常规`,ccToMe:!0,finalOperator:`陈伟`},{id:`flow-9`,name:`采场临时封闭申请`,initiator:`王强`,initiatedAt:`8 月 27 日 10:05`,currentNode:`流程已结束`,approver:`赵磊`,status:`已拒绝`,application:`安全管理`,amount:`不涉及`,department:`生产管理部`,urgency:`紧急`,ccToMe:!0,finalOperator:`赵磊`},{id:`flow-10`,name:`消防器材增补采购申请`,initiator:`周敏`,initiatedAt:`8 月 26 日 13:26`,currentNode:`流程已撤销`,approver:`孙宁`,status:`已撤销`,application:`消防管理`,amount:`18,600 元`,department:`综合管理部`,urgency:`常规`,ccToMe:!0,revokedBy:`周敏`,revokedAt:`2026-08-26 15:20:00`},{id:`flow-11`,name:`爆破作业人员调整申请`,initiator:`何勇`,initiatedAt:`8 月 25 日 16:50`,currentNode:`分管领导审批`,approver:`周杰伦`,status:`已驳回`,application:`火工品管理`,amount:`不涉及`,department:`生产管理部`,urgency:`常规`,ccToMe:!0,rejectedBy:`周杰伦`},{id:`flow-12`,name:`东翼通风系统整改申请`,initiator:`张宇`,initiatedAt:`2026-09-02 09:18:00`,currentNode:`已驳回至发起人`,approver:`周杰伦`,status:`已驳回`,application:`双重预防机制`,amount:`不涉及`,department:`安全管理部`,urgency:`常规`,startedByMe:!0,rejectedBy:`周杰伦`,rejectionOpinion:`请补充整改方案及现场照片后重新提交。`},{id:`flow-draft-1`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-28 10:36:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已完成离职原因与交接安排说明，待补充附件后提交。`,draft:!0},{id:`flow-draft-2`,name:`员工离职申请`,initiator:`张宇`,initiatedAt:`2026-08-27 16:18:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:`已填写基本离职信息，待确认最后工作日期。`,draft:!0}],Xz=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`,children:[]},{id:`equipment`,name:`设备管理部`,children:[]},{id:`production`,name:`生产技术部`,children:[]}]}]}],Zz=[{id:`transfer-zhao`,name:`赵六`,account:`zhaoliu`,department:`安全管理部`,organizationId:`safety`},{id:`transfer-wang`,name:`王五`,account:`wangwu`,department:`生产技术部`,organizationId:`production`},{id:`transfer-li`,name:`李四`,account:`lisi`,department:`设备管理部`,organizationId:`equipment`}],Qz=[{name:`平巷凿岩作业岗位隐患排查表`,time:`今天 10:26`,icon:pz,tone:`green`},{name:`平巷凿岩作业隐患排查审批流程`,time:`昨天 16:40`,icon:nz,tone:`blue`},{name:`生产管理`,time:`7 月 25 日`,icon:xz,tone:`blue`},{name:`双重预防机制`,time:`7 月 24 日`,icon:pz,tone:`violet`}],$z=[{tab:`待我处理`,person:`陈伟`,tone:`blue`,avatar:`陈`,headline:`在设备保养计划中提及了你`,detail:`请协助确认 2# 渣浆泵更换备件的到货日期。`,time:`12 分钟前`,icon:ez},{tab:`流程提醒`,person:`系统通知`,tone:`green`,avatar:`系`,headline:`外协队入场审批已通过`,detail:`流程已归档，可查看审批意见与附件。`,time:`45 分钟前`,icon:hz},{tab:`待我处理`,person:`安环部`,tone:`orange`,avatar:`安`,headline:`向你分派了隐患整改复查`,detail:`整改期限为 7 月 30 日，请及时跟进。`,time:`今天 09:16`,icon:Cz},{tab:`业务动态`,person:`李明`,tone:`violet`,avatar:`李`,headline:`更新了南区排水泵巡检记录`,detail:`本次数据已同步到设备管理台账。`,time:`昨天 16:50`,icon:vz}];function eB({label:e,children:t,active:n,onClick:r,badge:i}){return(0,Q.jsxs)(`button`,{className:`icon-button ${n?`active`:``}`,"aria-label":e,title:e,onClick:r,children:[t,i?(0,Q.jsx)(`span`,{className:`semantic-badge`}):null]})}function tB({active:e,onChange:t,onOpenSettings:n,brandLogo:r}){return(0,Q.jsxs)(`aside`,{className:`app-nav`,"aria-label":`主导航`,children:[(0,Q.jsx)(`div`,{className:`product-mark`,"aria-label":`澄明工作台`,children:r?(0,Q.jsx)(`img`,{src:r,alt:`企业 Logo`}):`C`}),(0,Q.jsx)(`nav`,{children:Iz.map(({label:n,icon:r})=>(0,Q.jsxs)(`button`,{onClick:()=>t(n),className:e===n?`nav-link active`:`nav-link`,children:[(0,Q.jsx)(`span`,{className:`nav-icon`,children:(0,Q.jsx)(r,{})}),(0,Q.jsx)(`span`,{children:n})]},n))}),(0,Q.jsx)(`div`,{className:`nav-bottom`,children:(0,Q.jsx)(eB,{label:`设置`,active:e===`设置`,onClick:()=>n(),children:(0,Q.jsx)($R,{})})})]})}function nB({tabs:e,activeTab:t,onSelect:n,onClose:r,onOpenMessages:i,onOpenPersonal:a,onLogout:o,onOpenSpecification:s}){let[c,l]=(0,Z.useState)(!1),u=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{if(!c)return;let e=e=>{u.current?.contains(e.target)||l(!1)},t=e=>{e.key===`Escape`&&l(!1)};return document.addEventListener(`pointerdown`,e),document.addEventListener(`keydown`,t),()=>{document.removeEventListener(`pointerdown`,e),document.removeEventListener(`keydown`,t)}},[c]),(0,Q.jsxs)(`header`,{className:`application-tabs`,"aria-label":`应用页签`,children:[(0,Q.jsx)(`div`,{className:`tabs-scroll`,role:`tablist`,"aria-label":`已打开应用`,children:e.map(({id:e,label:i,icon:a,pinned:o})=>(0,Q.jsxs)(`div`,{className:t===e?`application-tab active`:`application-tab`,children:[(0,Q.jsxs)(`button`,{role:`tab`,"aria-selected":t===e,onClick:()=>n(e),children:[(0,Q.jsx)(a,{}),(0,Q.jsx)(`span`,{children:i})]}),o?null:(0,Q.jsx)(`button`,{className:`close-tab`,"aria-label":`关闭 ${i}`,onClick:()=>r(e),children:(0,Q.jsx)(YR,{})})]},e))}),(0,Q.jsxs)(`div`,{className:`topbar-actions`,children:[(0,Q.jsxs)(`button`,{type:`button`,className:`prototype-annotation-toggle`,onClick:s,children:[(0,Q.jsx)(lz,{}),(0,Q.jsx)(`span`,{children:`标注`})]}),(0,Q.jsxs)(`button`,{className:`message-entry`,"aria-label":`消息中心，有 4 条未读消息`,onClick:i,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`span`,{children:`消息`}),(0,Q.jsx)(`i`,{className:`message-dot`,"aria-hidden":`true`})]}),(0,Q.jsxs)(`div`,{className:`top-profile-control`,ref:u,children:[(0,Q.jsx)(`button`,{className:`top-profile-avatar`,"aria-label":`用户菜单`,"aria-expanded":c,onClick:()=>l(e=>!e),children:`张`}),c?(0,Q.jsxs)(`div`,{className:`top-profile-menu`,role:`menu`,"aria-label":`用户菜单`,children:[(0,Q.jsx)(`button`,{role:`menuitem`,onClick:()=>{l(!1),a()},children:`个人中心`}),(0,Q.jsx)(`button`,{className:`top-profile-logout`,role:`menuitem`,onClick:()=>{l(!1),o()},children:`退出登录`})]}):null]})]})]})}function rB({visible:e,managing:t,pageId:n,pageLabel:r,annotations:i,onCloseManager:a,onAdd:o,onUpdate:s,onRemove:c,onReposition:l}){let[u,d]=(0,Z.useState)(``),[f,p]=(0,Z.useState)(``),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(``),[b,x]=(0,Z.useState)(null),S=()=>{let e=document.querySelector(`.page-shell`),t=e?.getBoundingClientRect();return{left:t?.left??80,top:t?.top??0,width:Math.max(t?.width??window.innerWidth-80,1),height:Math.max(e?.scrollHeight??0,t?.height??window.innerHeight,1)}},[C,w]=(0,Z.useState)(()=>({left:80,top:0,width:Math.max(window.innerWidth-80,1),height:Math.max(window.innerHeight,1)})),T=(0,Z.useRef)(!1),E=i.filter(e=>e.pageId===n),D=E.find(e=>e.id===m),O=(e,t=0)=>{let n=Math.min(980,window.innerWidth-37),r=156+t*42,i=e.leftPercent!==null&&e.leftPercent!==void 0&&e.topPercent!==null&&e.topPercent!==void 0&&Number.isFinite(Number(e.leftPercent))&&Number.isFinite(Number(e.topPercent)),a=i&&e.positionSpace===`page`,o=i?Number(e.leftPercent)/100*window.innerWidth:e.left??n,s=i?Number(e.topPercent)/100*window.innerHeight:e.top??r;return{left:a?Number(e.leftPercent)/100*C.width:o-C.left,top:a?Number(e.topPercent)/100*C.height:s-C.top,hasRelativePosition:i,isPagePosition:a}},k=(e,t,n=C)=>({leftPercent:Number((e/n.width*100).toFixed(3)),topPercent:Number((t/n.height*100).toFixed(3)),positionSpace:`page`}),A=(e,t)=>{if(b?.id===e.id)return{left:`${b.left}px`,top:`${b.top}px`};let n=O(e,t);return{left:`${n.left}px`,top:`${n.top}px`}};(0,Z.useEffect)(()=>{let e=()=>w(S()),t=document.querySelector(`.page-shell`),n=typeof ResizeObserver>`u`?null:new ResizeObserver(e);return e(),t&&n?.observe(t),window.addEventListener(`resize`,e),window.visualViewport?.addEventListener(`resize`,e),()=>{n?.disconnect(),window.removeEventListener(`resize`,e),window.visualViewport?.removeEventListener(`resize`,e)}},[n]),(0,Z.useEffect)(()=>{E.forEach((e,t)=>{let{isPagePosition:n,left:r,top:i}=O(e,t);n||l(e.id,k(r,i))})},[i,n,C.width,C.height]),(0,Z.useEffect)(()=>{if(!b)return;let e=e=>{let t=S(),n=Math.min(Math.max(12,Math.round(e.clientX-t.left-b.offsetX)),t.width-37),r=Math.min(Math.max(64,Math.round(e.clientY-t.top-b.offsetY)),t.height-37);(Math.abs(n-b.startLeft)>3||Math.abs(r-b.startTop)>3)&&(T.current=!0),x(e=>e&&{...e,left:n,top:r})},t=()=>{l(b.id,k(b.left,b.top,S())),x(null)};return window.addEventListener(`mousemove`,e),window.addEventListener(`mouseup`,t,{once:!0}),()=>{window.removeEventListener(`mousemove`,e),window.removeEventListener(`mouseup`,t)}},[b,l]);let j=()=>{let e=u.trim();if(e){if(f){s(f,e),d(``),p(``);return}_(!0)}},M=()=>{d(``),p(``),y(``),_(!1)};return(0,Q.jsxs)(Q.Fragment,{children:[e?E.map((e,t)=>(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-tag`,style:A(e,t),"aria-label":`查看备注 ${t+1}`,onMouseDown:n=>{n.preventDefault();let{left:r,top:i}=O(e,t),a=S();T.current=!1,x({id:e.id,left:r,top:i,startLeft:r,startTop:i,offsetX:n.clientX-a.left-r,offsetY:n.clientY-a.top-i})},onClick:()=>{if(T.current){T.current=!1;return}h(e.id)},children:t+1},e.id)):null,e&&D?(0,Q.jsxs)(`section`,{className:`prototype-annotation-popover`,style:{left:`${Math.min(O(D).left+32,C.width-286)}px`,top:`${Math.min(O(D).top+30,C.height-160)}px`},"aria-label":`备注内容`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:`备注内容`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭备注内容`,onClick:()=>h(``),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:D.content})]}):null,g?(0,Q.jsx)(`div`,{className:`prototype-annotation-placement-layer`,onClick:e=>{let t=S(),i=Math.min(Math.max(12,Math.round(e.clientX-t.left)),t.width-37),a=Math.min(Math.max(64,Math.round(e.clientY-t.top)),t.height-37),s=k(i,a,t);v?l(v,s):o({pageId:n,pageLabel:r,content:u.trim(),...s}),M()},role:`presentation`,children:(0,Q.jsx)(`span`,{children:v?`请点击页面任意位置重新放置标签`:`请点击页面任意位置放置备注标签`})}):null,t?(0,Q.jsxs)(`aside`,{className:`prototype-annotation-panel`,"aria-label":`原型标注管理`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`原型标注管理`}),(0,Q.jsx)(`b`,{children:r})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`关闭标注管理`,onClick:a,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-editor`,children:[(0,Q.jsx)(`p`,{className:`prototype-annotation-source-note`,children:`标注从部署文件读取；在线调整仅用于当前预览。`}),(0,Q.jsx)(`label`,{htmlFor:`prototype-annotation-content`,children:f?`编辑备注`:`新增备注`}),(0,Q.jsx)(`textarea`,{id:`prototype-annotation-content`,value:u,maxLength:240,placeholder:`例如：此处提交后需校验审批人是否存在，并记录操作日志。`,onChange:e=>d(e.target.value)}),(0,Q.jsxs)(`footer`,{children:[f||g?(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-cancel`,onClick:M,children:g?`取消放置`:`取消编辑`}):null,(0,Q.jsx)(`button`,{type:`button`,className:`prototype-annotation-save`,onClick:j,disabled:!u.trim(),children:f?`保存备注`:`点击页面放置标签`})]})]}),(0,Q.jsx)(`div`,{className:`prototype-annotation-list`,children:E.length?E.map((e,t)=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:String(t+1).padStart(2,`0`)}),(0,Q.jsxs)(`div`,{className:`prototype-annotation-entry`,children:[(0,Q.jsx)(`p`,{children:e.content}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑备注`,onClick:()=>{d(e.content),p(e.id),_(!1)},children:`编辑`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`重新放置备注`,onClick:()=>{y(e.id),_(!0)},children:`重新放置`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除备注`,onClick:()=>{m===e.id&&h(``),c(e.id)},children:`删除`})]})]})]},e.id)):(0,Q.jsx)(`div`,{className:`prototype-annotation-empty`,children:`当前页面还没有备注，输入内容后即可在页面任意位置放置。`})})]}):null]})}function iB({total:e,page:t,pageSize:n,onPageChange:r,onPageSizeChange:i,className:a=``,itemLabel:o=`条`}){let s=Math.max(1,Math.ceil(e/n)),c=Math.min(t,s);return(0,Q.jsxs)(`footer`,{className:`system-pagination ${a}`.trim(),children:[(0,Q.jsxs)(`span`,{children:[`共 `,e,` `,o]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页${o}数`,value:n,onChange:e=>i(Number(e.target.value)),children:[(0,Q.jsxs)(`option`,{value:10,children:[`10 `,o]}),(0,Q.jsxs)(`option`,{value:20,children:[`20 `,o]}),(0,Q.jsxs)(`option`,{value:50,children:[`50 `,o]})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:c===1,onClick:()=>r(Math.max(1,c-1)),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[c,` / `,s]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:c===s,onClick:()=>r(Math.min(s,c+1)),children:`下一页`})]})}function aB({messages:e,onMarkRead:t,onMarkAllRead:n,onReturn:r,onOpenProcess:i}){let[a,o]=(0,Z.useState)(`全部`),[s,c]=(0,Z.useState)(`全部`),[l,u]=(0,Z.useState)(`未读`),[d,f]=(0,Z.useState)(10),[p,m]=(0,Z.useState)(1),h=e=>e.source.startsWith(`流程`)?`流程`:e.source,g=e.filter(e=>(a===`全部`||h(e)===a)&&(a!==`流程`||s===`全部`||e.source===s)&&(l===`全部`||(l===`未读`?!e.read:e.read))),_=Math.max(1,Math.ceil(g.length/d)),v=Math.min(p,_),y=g.slice((v-1)*d,v*d),b=e.filter(e=>!e.read).length;return(0,Q.jsxs)(`section`,{className:`message-center`,"aria-labelledby":`message-center-title`,children:[(0,Q.jsxs)(`div`,{className:`message-path`,children:[(0,Q.jsx)(`button`,{onClick:r,children:`工作台`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`message-center-title`,children:`互动消息`})]}),(0,Q.jsxs)(`header`,{className:`message-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`消息中心`}),(0,Q.jsxs)(`h1`,{children:[`互动消息列表 `,(0,Q.jsxs)(`span`,{children:[`(`,b,` 条未读)`]})]})]}),(0,Q.jsxs)(`button`,{className:`mark-all-read`,onClick:n,disabled:b===0,children:[(0,Q.jsx)(hz,{}),`全部标为已读`]})]}),(0,Q.jsxs)(`div`,{className:`message-filters`,"aria-label":`消息筛选`,children:[(0,Q.jsxs)(`label`,{children:[`消息来源`,(0,Q.jsxs)(`select`,{value:a,onChange:e=>{let t=e.target.value;o(t),c([`流程`,`全部`].includes(t)?`全部`:``),m(1)},children:[(0,Q.jsx)(`option`,{children:`流程`}),(0,Q.jsx)(`option`,{children:`任务`}),(0,Q.jsx)(`option`,{children:`预警`}),(0,Q.jsx)(`option`,{children:`动态`}),(0,Q.jsx)(`option`,{children:`全部`})]})]}),(0,Q.jsxs)(`label`,{children:[`消息类型`,(0,Q.jsx)(`select`,{value:s,disabled:![`流程`,`全部`].includes(a),onChange:e=>{c(e.target.value),m(1)},children:a===`流程`?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`流程审批`}),(0,Q.jsx)(`option`,{children:`流程超时`}),(0,Q.jsx)(`option`,{children:`流程结束`}),(0,Q.jsx)(`option`,{children:`流程驳回`}),(0,Q.jsx)(`option`,{children:`流程抄送`})]}):a===`全部`?(0,Q.jsx)(`option`,{children:`全部`}):(0,Q.jsx)(`option`,{value:``,children:` `})})]}),(0,Q.jsxs)(`label`,{children:[`消息状态`,(0,Q.jsxs)(`select`,{value:l,onChange:e=>{u(e.target.value),m(1)},children:[(0,Q.jsx)(`option`,{children:`未读`}),(0,Q.jsx)(`option`,{children:`已读`}),(0,Q.jsx)(`option`,{children:`全部`})]})]})]}),(0,Q.jsx)(`div`,{className:`message-list`,children:y.length?y.map(e=>{let{id:n,source:r,type:a,sender:o,time:s,initiator:c,initiatedAt:l,application:u,processNumber:d,read:f,icon:p,tone:m}=e;return(0,Q.jsxs)(`button`,{className:f?`message-row read`:`message-row`,onClick:()=>{t(n),i(a===`结束提醒`?`我发起的`:`待审批`,d)},children:[(0,Q.jsx)(`span`,{className:`message-row-icon ${m}`,children:(0,Q.jsx)(p,{})}),(0,Q.jsxs)(`span`,{className:`message-row-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:o}),(0,Q.jsx)(`time`,{children:s}),f?null:(0,Q.jsx)(`i`,{children:`未读`})]}),(0,Q.jsx)(`strong`,{children:(0,Q.jsx)(`em`,{children:r})}),(0,Q.jsxs)(`p`,{className:`message-process-origin`,children:[c,`于`,l,`通过`,u,`应用发起的流程编号为：`,d]})]}),(0,Q.jsx)(fz,{})]},n)}):(0,Q.jsxs)(`div`,{className:`message-empty`,children:[(0,Q.jsx)(mz,{}),(0,Q.jsx)(`p`,{children:`没有符合条件的消息。`})]})}),(0,Q.jsx)(iB,{className:`message-pagination`,total:g.length,page:v,pageSize:d,onPageChange:m,onPageSizeChange:e=>{f(e),m(1)}})]})}function oB({process:e,onClose:t,onApprove:n,viewOnly:r=!1,canRevoke:i=!1,canResumeDraft:a=!1,hideFinalLog:o=!1,onResumeDraft:s,onResubmit:c}){let[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(!1),[h,g]=(0,Z.useState)(null),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(!1),[x,S]=(0,Z.useState)(!1),[C,w]=(0,Z.useState)([]),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(null),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)(`initiator`),[N,P]=(0,Z.useState)(!1),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(``),ne=()=>{u(!1),f(!1),m(!1),b(!1),S(!1),w([]),E(``),O(null),A(``),P(!1),F(!1),te(``),t()};if(!e)return null;let re=e.status===`已驳回`,ie=e.status===`已撤销`,ae=e.status===`已通过`,oe=e.status===`已拒绝`,se=e.resubmitted,L=D===`initiator`?{label:`发起人`,name:e.initiator}:{label:`上一节点`,name:e.previousApprover??`张七`},R=[{time:`2026-08-23 12:00:00`,title:`系统发起`,details:[`${e.initiator}发起了${e.name}`],action:`发起`,state:`done`},{time:`2026-08-23 12:00:00`,title:`主管领导审批`,details:[`李四已同意`,`审批意见：请按流程办理`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`分管领导审批`,details:[`王五已转办`,`转办原因：赵总定夺`,`流程到达时间：2026-08-23 12:00:00`],action:`转办`,state:`done`},{time:`2026-08-23 12:00:00`,title:`转办审批`,details:[`赵六已加签`,`流程到达时间：2026-08-23 12:00:00`],action:`加签`,state:`done`},{time:`2026-08-23 12:00:00`,title:`加签审批`,details:[`张七已同意`,`流程到达时间：2026-08-23 12:00:00`],action:`同意`,state:`done`},{time:`2026-08-23 12:00:00`,title:`抄送`,details:[`系统已抄送`,`流程到达时间：2026-08-23 12:00:00`],action:`抄送`,state:`done`},{time:re||se||ae||oe?`2026-08-23 12:00:00`:ie?e.revokedAt??`2026-08-28 10:36:00`:`当前`,title:re||se||ae||oe?`分管领导审批`:ie?`撤销`:`结束`,details:re||se?[`${e.rejectedBy??`周杰伦`}已驳回`,`审批意见：${e.rejectionOpinion??`请核对清楚再提交`}`,`流程到达时间：2026-08-23 12:00:00`]:ae?[`${e.finalOperator??`张宇`}已同意`,`审批意见：同意办理`,`流程完成时间：2026-08-23 12:00:00`]:oe?[`${e.finalOperator??`张宇`}已拒绝`,`审批意见：${e.refusalOpinion||`未填写`}`,`流程完成时间：2026-08-23 12:00:00`]:ie?[`${e.revokedBy??`张宇`}已撤销该流程`]:[[`待审批`,`审批中`].includes(e.status)?`当前待 ${e.approver} 审批`:`流程已结束`],action:re||se?`驳回`:ae?`同意`:oe?`拒绝`:ie?`撤销`:void 0,state:se?`done`:`current`},...se?[{time:`2026-08-23 12:30:00`,title:`重新提交`,details:[`${e.initiator}已重新提交`],action:`重新提交`,state:`done`},{time:``,hideTime:!0,title:`分管领导审批`,details:[`周杰伦`,`流程到达时间：2026-08-23 12:30:00`],state:ie?`done`:`current`},...ie?[{time:e.revokedAt??`2026-08-28 10:36:00`,title:`撤销`,details:[`${e.revokedBy??`张宇`}已撤销该流程`],action:`撤销`,state:`current`}]:[]]:[],...e.actionLogs??[]],z=[[`所属部门`,e.department],[`发起人`,e.initiator],[`发起时间`,e.initiatedAt]],ce=e=>{if(e===`撤销`){P(!0);return}if(e===`转办`){f(!0);return}if(e===`加签`){w([]),E(``),b(!0);return}if(e===`退回`){A(``),O(j),M(e=>e===`initiator`?`previous`:`initiator`);return}if(e===`拒绝`){te(``),F(!0);return}n(`已${e}`)},B=o&&!re&&!ie&&!se&&!ae&&!oe&&!e.actionLogs?.length?R.slice(0,-1):R;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`div`,{className:`process-dialog-layer`,onMouseDown:ne,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-dialog-title`,children:e.name}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭流程审批`,onClick:ne,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-dialog-body${a?` draft-detail`:``}`,children:[(0,Q.jsxs)(`div`,{className:`process-approval-main`,children:[(0,Q.jsxs)(`section`,{className:`process-approval-form`,children:[(0,Q.jsx)(`h3`,{children:`申请单`}),(0,Q.jsx)(`div`,{className:`process-approval-fields`,children:z.map(([e,t])=>(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),t||`-`]},e))}),(0,Q.jsxs)(`label`,{className:`process-approval-description`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{rows:`5`,readOnly:!0,defaultValue:`${e.name}相关事项，请按流程审核处理。`})]}),i&&!re&&!ie?(0,Q.jsx)(`div`,{className:`process-initiated-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`})}):null]}),re&&i?(0,Q.jsxs)(`div`,{className:`process-rejected-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`撤销`),children:`撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>c?.(e),children:`重新提交`})]}):r?null:(0,Q.jsxs)(`section`,{className:`process-approval-opinion`,children:[(0,Q.jsx)(`h3`,{children:`审批意见`}),(0,Q.jsx)(`textarea`,{rows:`5`,placeholder:`请输入审批意见`}),(0,Q.jsxs)(`div`,{className:`process-approval-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`转办`),children:`转办`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ce(`加签`),children:`加签`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`退回`),children:`驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>ce(`拒绝`),children:`拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary`,onClick:()=>ce(`同意`),children:`同意`})]})]})]}),a?null:(0,Q.jsxs)(`section`,{className:`process-approval-log`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`流程日志`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>u(!0),children:`流程图`})]}),(0,Q.jsx)(`ol`,{children:B.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`span`,{className:e.state}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`div`,{className:`process-log-entry-heading`,children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsxs)(`span`,{className:`process-log-entry-meta`,children:[e.hideTime?null:(0,Q.jsx)(`time`,{children:e.time}),e.action?(0,Q.jsx)(`span`,{className:`process-log-action`,children:e.action}):null]})]}),e.details.map(e=>(0,Q.jsx)(`p`,{children:e},e))]})]},e.title))})]})]})]})}),l?(0,Q.jsx)(`div`,{className:`process-flowchart-map-layer`,role:`presentation`,onMouseDown:()=>u(!1),children:(0,Q.jsxs)(`section`,{className:`process-flowchart-map-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-flowchart-map-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-flowchart-map-title`,children:`流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程图`,onClick:()=>u(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart-map`,"aria-label":`${e.name}流程图`,children:[(0,Q.jsx)(`i`,{className:`flowchart-map-link start-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-down`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link main-right`}),(0,Q.jsx)(`i`,{className:`flowchart-map-link secondary-right`}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node start`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`b`,{children:e.name})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval active`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`设备主管审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy first-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node approval manager`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:`总经理审批`})]}),(0,Q.jsxs)(`div`,{className:`flowchart-map-node copy second-copy`,children:[(0,Q.jsx)(fz,{}),(0,Q.jsx)(`b`,{children:`抄送节点`})]})]})]})}):null,N?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>P(!1),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>P(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>P(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{P(!1),n(`已撤销`)},children:`确定撤销`})]})]})}):null,ee?(0,Q.jsx)(`div`,{className:`process-refuse-layer`,role:`presentation`,onMouseDown:()=>F(!1),children:(0,Q.jsxs)(`section`,{className:`process-refuse-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-refuse-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-refuse-title`,children:`确认拒绝`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭拒绝确认`,onClick:()=>F(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-refuse-body`,children:[(0,Q.jsxs)(`label`,{children:[`拒绝意见`,(0,Q.jsx)(`textarea`,{rows:`4`,value:I,onChange:e=>te(e.target.value),placeholder:`请输入拒绝意见`})]}),(0,Q.jsx)(`p`,{children:`拒绝后该流程终止，无法修改，确认要拒绝吗？`})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>F(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已拒绝`,I.trim()),F(!1),te(``)},children:`确定拒绝`})]})]})}):null,d?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>f(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),h&&(n(`已转办`,{target:h,reason:_}),f(!1),m(!1),v(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-transfer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-transfer-title`,children:`转办流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭转办弹窗`,onClick:()=>f(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 转办人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>m(!0),children:[h?`${h.name} · ${h.department}`:`请选择转办人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`转办原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:_,onChange:e=>v(e.target.value),placeholder:`请输入转办原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>f(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!h,children:`确认转办`})]})]})}):null,y?(0,Q.jsx)(`div`,{className:`process-transfer-layer`,role:`presentation`,onMouseDown:()=>b(!1),children:(0,Q.jsxs)(`form`,{className:`process-transfer-dialog`,onSubmit:e=>{e.preventDefault(),C.length&&(n(`已加签`,{targets:C,reason:T}),b(!1),S(!1),w([]),E(``))},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-add-signer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-add-signer-title`,children:`加签流程`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭加签弹窗`,onClick:()=>b(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-transfer-body`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{className:`process-transfer-label`,children:[(0,Q.jsx)(`em`,{children:`*`}),` 加签人`]}),(0,Q.jsxs)(`button`,{type:`button`,className:`process-transfer-person`,onClick:()=>S(!0),children:[C.length?C.map(e=>e.name).join(`、`):`请选择加签人`,(0,Q.jsx)(_z,{})]})]}),(0,Q.jsxs)(`label`,{children:[`加签原因`,(0,Q.jsx)(`textarea`,{rows:`4`,value:T,onChange:e=>E(e.target.value),placeholder:`请输入加签原因`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>b(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,disabled:!C.length,children:`确认加签`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>O(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-return-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-return-confirm-title`,children:`确认驳回`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭驳回确认`,onClick:()=>O(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-return-body`,children:[(0,Q.jsxs)(`label`,{children:[`驳回意见`,(0,Q.jsx)(`textarea`,{rows:`3`,value:k,maxLength:200,placeholder:`请输入驳回意见（选填）`,onChange:e=>A(e.target.value)})]}),(0,Q.jsxs)(`p`,{children:[`驳回后，流程将退回至`,L.label,`，确认要驳回吗？`]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{O(null),A(``)},children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{n(`已驳回`,{target:L,reason:k.trim()}),O(null),A(``)},children:`确认驳回`})]})]})}):null,p?(0,Q.jsx)(GB,{organizations:Xz,users:Zz,selectedUser:h,onSelect:g,onClose:()=>m(!1),title:`选择转办人`,selectedLabel:`已选转办人`}):null,x?(0,Q.jsx)(KB,{organizations:Xz,users:Zz,selectedUsers:C,onSelect:w,onClose:()=>S(!1),title:`选择加签人`,selectedLabel:`已选加签人`}):null]})}function sB({onAction:e,initialFilter:t=`待审批`,initialProcessNumber:n=``,processRecords:r,setProcessRecords:i}){let[a,o]=(0,Z.useState)(null),[s,c]=(0,Z.useState)(null),[l,u]=(0,Z.useState)(t),[d,f]=(0,Z.useState)({number:n,title:``,application:``,type:``,status:``}),[p,m]=(0,Z.useState)(`全部`),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(null),[y,b]=(0,Z.useState)(null),[x,S]=(0,Z.useState)(`new`),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),j=(0,Z.useRef)(null),M=[{category:`人资管理`,application:`消防管理`,tone:`blue`,name:`员工离职申请`,favorite:!0},{category:`人资管理`,application:`机电管理`,tone:`blue`,name:`职员晋升审批`},{category:`人资管理`,application:`双重预防机制`,tone:`blue`,name:`职员调岗审批`,recent:!0},{category:`基建管理`,application:`生产管理`,tone:`gold`,name:`地表基建项目报建申请`,favorite:!0},{category:`基建管理`,application:`应急管理`,tone:`gold`,name:`年度工程计划编制审批`},{category:`基建管理`,application:`设备管理`,tone:`gold`,name:`项目合同申报审批`,recent:!0},{category:`选矿管理`,application:`火工品管理`,tone:`red`,name:`换矿申请`},{category:`选矿管理`,application:`安全管理`,tone:`red`,name:`选厂药剂领用申请`,recent:!0},{category:`选矿管理`,application:`双重预防机制`,tone:`red`,name:`材料采购流程`}],N={待审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`arrivalAt`,`status`]},已审批:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`completedAt`,`result`,`status`]},抄送我的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiator`,`initiatedAt`,`sentAt`,`status`]},我发起的:{filters:[`number`,`title`,`application`],columns:[`number`,`title`,`type`,`application`,`initiatedAt`,`currentNode`,`status`]},草稿箱:{filters:[`title`],columns:[`title`,`type`,`application`,`initiatedAt`,`status`]}},P={number:`流程编号`,title:`标题`,application:`所属应用`,type:`流程类型`,initiator:`发起人`,arrivalAt:`流程到达时间`,completedAt:`处理完成时间`,duration:`处理耗时`,result:`处理结果`,sentAt:`发送时间`,endedAt:`流程结束时间`,status:`流程状态`,currentNode:`当前节点`,initiatedAt:`发起时间`},ee=e=>l===`待审批`&&e===`title`?`流程名称`:l===`待审批`&&e===`status`?`当前状态`:l===`已审批`&&e===`title`?`流程名称`:l===`已审批`&&e===`completedAt`?`处理时间`:l===`已审批`&&e===`result`?`我的处理`:l===`已审批`&&e===`status`?`当前状态`:l===`抄送我的`&&e===`title`?`流程名称`:l===`抄送我的`&&e===`sentAt`?`抄送时间`:l===`抄送我的`&&e===`status`?`当前状态`:l===`我发起的`&&e===`title`?`流程名称`:l===`我发起的`&&e===`status`?`当前状态`:l===`草稿箱`&&e===`title`?`流程名称`:l===`草稿箱`&&e===`initiatedAt`?`保存时间`:l===`草稿箱`&&e===`status`?`状态`:P[e],F=N[l],I=[...new Set(r.map(e=>e.application??`综合管理`))],te=M.filter(e=>(p===`全部`||p===`最近使用`&&e.recent)&&(!h.trim()||e.name.includes(h.trim()))),ne=e=>({number:qz(e),title:e.name,application:e.application??`综合管理`,type:e.name.includes(`动火`)?`作业审批`:e.name.includes(`采购`)?`采购申请`:`业务审批`,initiator:e.initiator,arrivalAt:e.initiatedAt,completedAt:e.handledByMe?`今天 10:18`:`-`,duration:e.handledByMe?`42 分钟`:`进行中`,result:e.handledByMe?e.handledResult??`同意`:`-`,sentAt:e.initiatedAt,endedAt:[`审批中`,`已撤销`].includes(e.status)||e.draft?`-`:`进行中`,status:e.status,currentNode:e.currentNode,initiatedAt:e.initiatedAt}),re=r.filter(e=>{let t=l===`待审批`&&[`待审批`,`审批中`].includes(e.status)&&e.approver===`张宇`||l===`已审批`&&e.handledByMe||l===`抄送我的`&&e.ccToMe||l===`我发起的`&&e.startedByMe||l===`草稿箱`&&e.draft,n=ne(e);return t&&(!d.number||n.number.includes(d.number))&&(!d.title||n.title.includes(d.title))&&(!d.application||n.application===d.application)&&(!d.type||n.type===d.type)&&(!d.status||n.status===d.status)}),ie=(t,n={})=>{let r=typeof n==`string`?{opinion:n}:n;t===`已撤销`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已撤销`,startedByMe:!0,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-08-28 10:36:00`}:e)),t===`已拒绝`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已拒绝`,handledByMe:!0,handledResult:`拒绝`,finalOperator:`张宇`,refusalOpinion:r.opinion??``,currentNode:`流程已结束`}:e)),t===`已转办`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`审批中`,approver:r.target?.name??e.approver,currentNode:`转办审批`,handledByMe:!0,handledResult:`转办`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:00:00`,title:`转办`,details:[`张宇已转办给${r.target?.name??`处理人`}`,`转办原因：${r.reason||`未填写`}`],action:`转办`,state:`done`}]}:e)),t===`已加签`&&i(e=>e.map(e=>e.id===a.id?{...e,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:02:00`,title:`加签`,details:[`张宇已加签给${r.targets?.map(e=>e.name).join(`、`)||`处理人`}`,`加签原因：${r.reason||`未填写`}`],action:`加签`,state:`done`}]}:e)),t===`已驳回`&&i(e=>e.map(e=>e.id===a.id?{...e,status:`已驳回`,currentNode:`已驳回至${r.target?.label??`上一节点`}`,handledByMe:!0,handledResult:`驳回`,rejectedBy:`张宇`,rejectionOpinion:r.reason||`未填写`,actionLogs:[...e.actionLogs??[],{time:`2026-08-28 11:05:00`,title:`驳回`,details:[`张宇已驳回至${r.target?.label??`上一节点`}`,`驳回原因：${r.reason||`未填写`}`],action:`驳回`,state:`current`}]}:e)),e(`${a.name}${t}`),o(null)},ae=()=>{s&&(i(e=>e.map(e=>e.id===s.id?{...e,status:`已撤销`,currentNode:`流程已撤销`,revokedBy:`张宇`,revokedAt:`2026-09-02 10:36:00`}:e)),e(`${s.name}已撤销`),c(null))},oe=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),u(`发起流程`),L(t,e)},se=e=>{let t=M.find(t=>t.name===e.name)??{category:`其他流程`,tone:`blue`,name:e.name};o(null),L({...t,name:e.name},{...e,description:`请根据驳回意见核对并完善申请信息后重新提交。`},`resubmit`)},L=(e,t=null,n=`restore`)=>{v(e),b(t),S(t?n:`new`),w(null),O(!1),A(!1)},R=e=>{L(e)},z=()=>{v(null),b(null),A(!1)},ce=()=>{if(!_)return;let t=new FormData(j.current),n={id:y?.draft?y.id:`flow-draft-${Date.now()}`,name:_.name,initiator:`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,application:_.application,department:t.get(`department`)||`安全管理部`,description:t.get(`description`)||``,draft:!0,startedByMe:!0,sequence:y?.sequence??r.filter(e=>Kz(e.initiatedAt)===Gz).length+1};i(e=>y?.draft?e.map(e=>e.id===n.id?n:e):[n,...e]),b(n),e(`${_.name}已暂存到草稿箱`),z()};return(0,Q.jsxs)(`section`,{className:`process-list-page`,"aria-labelledby":`process-list-title`,children:[(0,Q.jsx)(`header`,{className:`task-list-header`,children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`流程中心`}),(0,Q.jsx)(`h1`,{id:`process-list-title`,children:`流程列表`})]})}),(0,Q.jsx)(`div`,{className:`process-toolbar`,children:(0,Q.jsx)(`div`,{className:`process-filter-tabs`,role:`tablist`,"aria-label":`流程状态`,children:[`发起流程`,...Object.keys(N)].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":l===e,className:l===e?`active`:``,onClick:()=>u(e),children:e},e))})}),l===`发起流程`?(0,Q.jsxs)(`section`,{className:`process-library`,"aria-label":`流程库`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`process-library-tabs`,role:`tablist`,"aria-label":`流程库分类`,children:[`全部`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":p===e,className:p===e?`active`:``,onClick:()=>m(e),children:e},e))}),(0,Q.jsx)(`input`,{value:h,onChange:e=>g(e.target.value),placeholder:`请输入流程任务名称关键字`,"aria-label":`搜索流程模板`})]}),(0,Q.jsx)(`div`,{className:`process-library-groups`,children:[`人资管理`,`基建管理`,`选矿管理`].map(e=>{let t=te.filter(t=>t.category===e),n=M.find(t=>t.category===e)?.tone;return(0,Q.jsxs)(`section`,{className:`process-library-group ${n}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),e,(0,Q.jsxs)(`small`,{children:[`（`,t.length,`）`]})]}),t.length?t.map(e=>(0,Q.jsxs)(`button`,{onClick:()=>R(e),children:[e.name,`（`,e.application,`）`]},e.name)):(0,Q.jsx)(`p`,{children:`暂无流程`})]},e)})})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`process-query`,"aria-label":`流程筛选`,children:[F.filters.includes(`number`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程编号`}),(0,Q.jsx)(`input`,{value:d.number,onChange:e=>f(t=>({...t,number:e.target.value})),placeholder:`请输入流程编号`})]}):null,F.filters.includes(`title`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程名称`}),(0,Q.jsx)(`input`,{value:d.title,onChange:e=>f(t=>({...t,title:e.target.value})),placeholder:`请输入流程名称`})]}):null,F.filters.includes(`application`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`所属应用`}),(0,Q.jsxs)(`select`,{value:d.application,onChange:e=>f(t=>({...t,application:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择所属应用`}),I.map(e=>(0,Q.jsx)(`option`,{children:e},e))]})]}):null,F.filters.includes(`type`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`流程类型`}),(0,Q.jsxs)(`select`,{value:d.type,onChange:e=>f(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择流程类型`}),(0,Q.jsx)(`option`,{children:`作业审批`}),(0,Q.jsx)(`option`,{children:`采购申请`}),(0,Q.jsx)(`option`,{children:`业务审批`})]})]}):null,F.filters.includes(`status`)?(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsxs)(`select`,{value:d.status,onChange:e=>f(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`请选择状态`}),(0,Q.jsx)(`option`,{children:`待审批`}),(0,Q.jsx)(`option`,{children:`审批中`})]})]}):null,(0,Q.jsx)(`button`,{type:`button`,className:`process-query-submit`,onClick:()=>e(`已按当前条件筛选流程`),children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-query-reset`,onClick:()=>f({number:``,title:``,application:``,type:``,status:``}),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`process-list-table`,role:`table`,"aria-label":`流程列表`,children:[(0,Q.jsxs)(`div`,{className:`process-table-head`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(e=>(0,Q.jsx)(`span`,{children:ee(e)},e)),(0,Q.jsx)(`span`,{children:`操作`})]}),re.map(e=>(0,Q.jsxs)(`div`,{className:`process-table-row`,role:`row`,style:{gridTemplateColumns:`repeat(${F.columns.length+1}, minmax(105px, 1fr))`},children:[F.columns.map(t=>{let n=ne(e)[t];return t===`title`?(0,Q.jsx)(`button`,{className:`process-name-link`,onClick:()=>o(e),children:n},t):t===`status`||t===`result`?(0,Q.jsx)(`i`,{className:[`已驳回`,`已拒绝`].includes(n)?`rejected`:[`待审批`,`审批中`].includes(n)?`pending`:``,children:n},t):(0,Q.jsx)(`span`,{children:n},t)}),l===`我发起的`?(0,Q.jsxs)(`span`,{className:`process-list-actions initiated-actions`,children:[(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:e.status===`已驳回`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>se(e),children:`重新提交`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:[`待审批`,`审批中`,`已驳回`].includes(e.status)?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action danger`,onClick:()=>c(e),children:`撤销`}):null}),(0,Q.jsx)(`span`,{className:`process-list-action-slot`,children:(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),`查看`]})})]}):(0,Q.jsxs)(`span`,{className:`process-list-actions`,children:[l===`草稿箱`?(0,Q.jsx)(`button`,{type:`button`,className:`process-list-inline-action`,onClick:()=>oe(e),children:`继续填报`}):null,(0,Q.jsxs)(`button`,{className:`process-approval-action`,onClick:()=>o(e),children:[(0,Q.jsx)(nz,{}),l===`待审批`?`审批`:`查看`]})]})]},e.id)),re.length?null:(0,Q.jsx)(`div`,{className:`process-empty`,children:`暂无符合条件的流程`})]})]}),(0,Q.jsx)(oB,{process:a,onClose:()=>o(null),onApprove:ie,viewOnly:l!==`待审批`,canRevoke:!1,canResumeDraft:l===`草稿箱`,hideFinalLog:[`已审批`,`我发起的`].includes(l),onResumeDraft:oe,onResubmit:se}),s?(0,Q.jsx)(`div`,{className:`process-revoke-layer`,role:`presentation`,onMouseDown:()=>c(null),children:(0,Q.jsxs)(`section`,{className:`process-revoke-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`process-list-revoke-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`process-list-revoke-title`,children:`确认撤销`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭撤销确认`,onClick:()=>c(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`p`,{children:`撤销后，流程将终止，无法再次发起，确定要撤销吗？`}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,onClick:ae,children:`确定撤销`})]})]})}):null,C?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>w(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsx)(`h2`,{id:`draft-restore-title`,children:`发现同名流程草稿`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>w(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,C.drafts.length,` 条“`,C.template.name,`”草稿，请选择恢复继续填报，或重新发起新的流程。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:C.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>L(C.template),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=C.drafts.find(e=>e.id===T);L(C.template,e)},children:`恢复并继续填报`})]})]})}):null,_?(0,Q.jsx)(`div`,{className:`process-form-layer`,onMouseDown:z,role:`presentation`,children:(0,Q.jsxs)(`form`,{ref:j,className:`process-form-dialog${D?` fullscreen`:``}`,onMouseDown:e=>e.stopPropagation(),onSubmit:t=>{t.preventDefault(),x===`resubmit`&&y?.id&&i(e=>e.map(e=>e.id===y.id?{...e,status:`审批中`,currentNode:`分管领导审批`,resubmitted:!0}:e)),e(`${x===`resubmit`?`已重新提交流程`:`已发起流程`}：${_.name}`),z()},children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:y?x===`resubmit`?`重新提交`:`恢复草稿`:`发起流程`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>A(!0),children:`查看流程图`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-form-text-action`,onClick:()=>O(e=>!e),children:D?`退出全屏`:`全屏`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭流程表单`,onClick:z,children:(0,Q.jsx)(YR,{})})]})]}),(0,Q.jsx)(`div`,{className:`process-form-body`,children:(0,Q.jsxs)(`section`,{children:[(0,Q.jsx)(`h3`,{children:`申请信息`}),(0,Q.jsxs)(`div`,{className:`process-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`申请标题`,(0,Q.jsx)(`input`,{name:`title`,defaultValue:_.name})]}),(0,Q.jsxs)(`label`,{children:[`申请部门`,(0,Q.jsxs)(`select`,{name:`department`,defaultValue:y?.department??`安全管理部`,children:[(0,Q.jsx)(`option`,{children:`安全管理部`}),(0,Q.jsx)(`option`,{children:`生产管理部`}),(0,Q.jsx)(`option`,{children:`设备管理部`})]})]}),(0,Q.jsxs)(`label`,{children:[`申请人`,(0,Q.jsx)(`input`,{defaultValue:`张宇`,disabled:!0})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`申请说明`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`5`,defaultValue:y?.description??``,placeholder:`请填写申请事由、工作安排及需要说明的事项`})]}),(0,Q.jsxs)(`label`,{className:`wide`,children:[`相关附件`,(0,Q.jsx)(`input`,{type:`file`})]})]})]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`span`,{children:y?x===`resubmit`?`请根据驳回意见核对信息后重新提交。`:`正在恢复 ${y.initiatedAt} 保存的草稿。`:`请确认信息无误后再发起流程。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:z,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-draft-action`,onClick:ce,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`process-approve`,children:x===`resubmit`?`重新提交`:`发起流程`})]})]})]})}):null,_&&k?(0,Q.jsx)(`div`,{className:`process-flowchart-layer`,onMouseDown:()=>A(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`process-flowchart-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-label":`审批流程图`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`审批流程图`}),(0,Q.jsx)(`h2`,{children:_.name})]}),(0,Q.jsx)(`button`,{className:`process-dialog-close`,"aria-label":`关闭审批流程图`,onClick:()=>A(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-flowchart`,children:[(0,Q.jsxs)(`div`,{className:`flow-node done`,children:[(0,Q.jsx)(`span`,{children:`1`}),(0,Q.jsx)(`b`,{children:`发起申请`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node active`,children:[(0,Q.jsx)(`span`,{children:`2`}),(0,Q.jsx)(`b`,{children:`部门负责人`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`3`}),(0,Q.jsx)(`b`,{children:`安全审核`}),(0,Q.jsx)(`i`,{})]}),(0,Q.jsxs)(`div`,{className:`flow-node`,children:[(0,Q.jsx)(`span`,{children:`4`}),(0,Q.jsx)(`b`,{children:`归档完成`})]})]})]})}):null]})}function cB({item:e,active:t,onSelect:n,onOpen:r}){let i=e.icon;return(0,Q.jsx)(`section`,{className:`work-queue ${e.accent} ${t?`active`:``}`,children:(0,Q.jsxs)(`button`,{className:`queue-title`,onClick:()=>{n(),r(e.id)},children:[(0,Q.jsx)(`span`,{className:`queue-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.title}),(0,Q.jsx)(`small`,{children:e.note})]}),(0,Q.jsx)(`strong`,{children:e.count}),(0,Q.jsx)(fz,{})]})})}function lB({onOpen:e,favoriteApps:t,onCustomize:n}){let[r,i]=(0,Z.useState)(!1),[a,o]=(0,Z.useState)(t),[s,c]=(0,Z.useState)(null),l=t.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),u=[...a.map(e=>Bz.find(t=>t.name===e)).filter(Boolean),...Bz.filter(e=>!a.includes(e.name))],d=()=>{o(t),c(null),i(!0)},f=e=>o(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),p=(e,t)=>o(n=>{let r=n.indexOf(e),i=n.indexOf(t);if(r<0||i<0||r===i)return n;let a=[...n];return a.splice(r,1),a.splice(i,0,e),a});return(0,Q.jsx)(Q.Fragment,{children:(0,Q.jsxs)(`section`,{className:`application-rail`,"aria-labelledby":`applications-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`applications-title`,children:`常用应用`})}),(0,Q.jsxs)(`div`,{className:`application-rail-actions`,children:[(0,Q.jsx)(`button`,{className:`quiet-action application-customize`,onClick:d,children:`自定义`}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:()=>e(`应用中心`),children:[`浏览全部 `,(0,Q.jsx)(fz,{})]})]})]}),(0,Q.jsx)(`div`,{className:`application-grid`,children:l.map(({name:t,description:n,icon:r},i)=>(0,Q.jsxs)(`button`,{className:`application`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`application-icon icon-${i%4}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]}),(0,Q.jsx)(fz,{})]},t))}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer application-customizer-layer`,onMouseDown:()=>i(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog application-customizer`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`application-customizer-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`application-customizer-title`,children:`自定义常用应用`}),(0,Q.jsx)(`span`,{children:`勾选应用，拖动已添加的应用可调整展示顺序`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭自定义应用`,onClick:()=>i(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`application-customizer-body`,children:u.map(e=>{let t=a.includes(e.name),n=e.icon;return(0,Q.jsxs)(`div`,{className:`${t?`application-customizer-row selected`:`application-customizer-row`} ${s===e.name?`dragging`:``}`,draggable:t,onDragStart:t=>{c(e.name),t.dataTransfer.effectAllowed=`move`,t.dataTransfer.setData(`text/plain`,e.name)},onDragEnd:()=>c(null),onDragOver:n=>{t&&s&&s!==e.name&&n.preventDefault()},onDrop:n=>{n.preventDefault();let r=n.dataTransfer.getData(`text/plain`)||s;t&&r&&p(r,e.name),c(null)},children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:t,onChange:()=>f(e.name)}),(0,Q.jsx)(`span`,{className:`application-customizer-icon`,children:(0,Q.jsx)(n,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.description})]})]}),t?(0,Q.jsx)(`span`,{className:`application-drag-handle`,"aria-label":`拖拽排序`,children:(0,Q.jsx)(bz,{})}):null]},e.name)})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsxs)(`span`,{children:[`已选择 `,a.length,` 个应用`]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(a),i(!1)},children:`保存设置`})]})]})]})}):null]})})}function uB({onOpen:e}){return(0,Q.jsxs)(`section`,{className:`recent-section`,"aria-labelledby":`recent-apps-title`,children:[(0,Q.jsx)(`div`,{className:`section-title recent-title`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`recent-apps-title`,children:`最近使用`})})}),(0,Q.jsx)(`div`,{className:`recent-list`,children:Qz.map(({name:t,time:n,icon:r,tone:i})=>(0,Q.jsxs)(`button`,{className:`recent-app`,onClick:()=>e(t),children:[(0,Q.jsx)(`span`,{className:`recent-icon ${i}`,children:(0,Q.jsx)(r,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsxs)(`small`,{children:[n,` 使用`]})]}),(0,Q.jsx)(fz,{})]},t))})]})}function dB({currentName:e,onSelect:t}){let[n,r]=(0,Z.useState)(!1),i=(Bz.find(t=>t.name===e)??Bz[0]).icon;return(0,Q.jsxs)(`div`,{className:`app-switcher-wrap`,children:[(0,Q.jsxs)(`button`,{className:`prevention-switcher`,"aria-expanded":n,"aria-haspopup":`menu`,onClick:()=>r(e=>!e),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(i,{})}),(0,Q.jsx)(`b`,{children:e.replace(`机制`,`管理`)}),(0,Q.jsx)(gz,{})]}),n?(0,Q.jsx)(`div`,{className:`app-switcher-menu`,role:`menu`,"aria-label":`切换应用`,children:Bz.map(({name:n,description:i,icon:a})=>(0,Q.jsxs)(`button`,{role:`menuitem`,className:n===e?`selected`:``,onClick:()=>{r(!1),t(n)},children:[(0,Q.jsx)(a,{}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n}),(0,Q.jsx)(`small`,{children:i})]}),n===e?(0,Q.jsx)(hz,{}):null]},n))}):null]})}var fB=[{label:`法律法规`,icon:QR},{label:`制度文件`,icon:QR,nested:!0},{label:`风险分级管控`,icon:pz,nested:!0},{label:`隐患排查治理`,icon:Sz,expanded:!0}],pB=[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查审批流程`,`隐患排查治理记录`,`隐患排查工作表`,`隐患整改通知单`,`隐患整改台账`,`隐患信息统计`,`隐患汇报`],mB=[{title:`平巷凿岩作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`},{title:`掘进凿岩工隐患排查清单`,detail:`岗位隐患排查`,icon:Cz,tone:`blue`},{title:`撬毛作业岗位隐患排查表`,detail:`岗位隐患排查`,icon:pz,tone:`lime`}],hB=[{title:`员工离职申请`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`平巷凿岩作业隐患排查审批流程`,detail:`隐患排查审批`,icon:nz,tone:`blue`,kind:`approval`},{title:`掘进工作面隐患整改审批流程`,detail:`隐患排查审批`,icon:nz,tone:`lime`,kind:`approval`}],gB=[{title:`平巷凿岩作业隐患排查任务`,detail:`隐患排查任务发布`,icon:Cz,tone:`blue`,kind:`task`},{title:`掘进工作面隐患排查任务`,detail:`隐患排查任务发布`,icon:Cz,tone:`lime`,kind:`task`},{title:`撬毛作业岗位隐患排查任务`,detail:`隐患排查任务发布`,icon:Cz,tone:`blue`,kind:`task`}],_B=[{id:`inspection-001`,reporter:`张宇`,date:`2026-07-29`,shift:`早班`,location:`西翼 3# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`现场检查正常，无需整改。`,status:`已提交`,flowStatus:`审批中`},{id:`inspection-002`,reporter:`李明`,date:`2026-07-28`,shift:`中班`,location:`西翼 2# 平巷`,equipment:`正常`,environment:`发现问题`,protection:`正常`,description:`照明灯具亮度不足，已通知机电班处理。`,status:`已复核`,flowStatus:`已通过`}];function vB({onAction:e,onSwitchApplication:t,approvalDrafts:n,setApprovalDrafts:r,onSaveProcessDraft:i,onDeleteProcessDraft:a,initialFormTitle:o=mB[0].title,initialOpenForm:s=!1,initialFormSource:c=hB.some(e=>e.title===o)?`隐患排查审批流程`:gB.some(e=>e.title===o)?`隐患排查任务发布`:`岗位隐患排查清单`}){let[l,u]=(0,Z.useState)(c),[d,f]=(0,Z.useState)(s),[p,m]=(0,Z.useState)(o),[h,g]=(0,Z.useState)(!1),[_,v]=(0,Z.useState)(`页面`),[y,b]=(0,Z.useState)(c),[x,S]=(0,Z.useState)(null),[C,w]=(0,Z.useState)(null),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(!1),[k,A]=(0,Z.useState)(!1),[j,M]=(0,Z.useState)(null),[N,P]=(0,Z.useState)(_B),[ee,F]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[I,te]=(0,Z.useState)({reporter:``,date:``,shift:``,flowStatus:``}),[ne,re]=(0,Z.useState)(1),[ie,ae]=(0,Z.useState)(10),oe=(0,Z.useRef)(null),se=(0,Z.useRef)(null),L=l,R=[...mB,...hB,...gB].find(e=>e.title===p)??mB[0],z=R.kind===`approval`,ce=R.kind===`task`,B=e=>e?.kind===`approval`?`approval`:e?.kind===`task`?`task`:`inspection`,le=n.filter(e=>e.kind===B(R)&&e.name===R.title),ue=(e=mB[0],t=`岗位隐患排查清单`,n=null)=>{m(e.title),b(t),w(n),S(null),f(!0),g(!1),v(`页面`),A(!1),M(null)},de=(e=mB[0],t=`岗位隐患排查清单`)=>{let r=n.filter(t=>t.draft&&t.name===e.title&&t.kind===B(e));if(r.length){S({form:e,source:t,drafts:r}),E(r[0].id);return}ue(e,t)},fe=()=>O(!0),V=()=>{O(!1),f(!1),g(!1),A(!1)},H=t=>{t.preventDefault(),g(!0),A(!1),e(ce?`${R.title}已发布，已生成待执行任务`:`${R.title}已提交${z?`，已进入审批流程`:``}`)},pe=()=>{if(!z)return;let t=new FormData(se.current),n={id:C?.id?.startsWith(`approval-draft-`)?C.id:`approval-draft-${Date.now()}`,processDraftId:C?.processDraftId??`flow-draft-${Date.now()}`,kind:`approval`,name:R.title,initiator:t.get(`reporter`)||`张宇`,initiatedAt:`2026-08-31 10:00:00`,currentNode:`待提交`,status:`草稿`,department:`安全管理部`,description:t.get(`description`)||``,draft:!0};r(e=>C?.id?.startsWith(`approval-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),i({id:n.processDraftId,name:n.name,initiator:n.initiator,initiatedAt:n.initiatedAt,currentNode:n.currentNode,status:n.status,department:n.department,description:n.description,application:`双重预防机制`,draft:!0,startedByMe:!0}),A(!1),e(`${R.title}已暂存到草稿箱`)},me=()=>{let t=new FormData(se.current),n={id:C?.id?.startsWith(`inspection-draft-`)?C.id:`inspection-draft-${Date.now()}`,kind:ce?`task`:`inspection`,name:R.title,reporter:t.get(`reporter`)||`张宇`,inspectionDate:t.get(`inspectionDate`)||`2026-09-02`,shift:t.get(`shift`)||`早班`,location:t.get(`location`)||``,equipment:t.get(`equipment`)||``,environment:t.get(`environment`)||``,protection:t.get(`protection`)||``,description:t.get(`description`)||``,initiatedAt:`2026-09-02 10:00:00`,status:`草稿`,draft:!0};r(e=>C?.id?.startsWith(`inspection-draft-`)?e.map(e=>e.id===n.id?n:e):[n,...e]),w(n),A(!1),e(`${R.title}已暂存到草稿箱`)},he=e=>{if(e===`页面`&&_!==`页面`&&le.length){S({form:R,source:y,drafts:le}),E(le[0].id);return}v(e)},ge=e=>{if(e!==_){if(_===`页面`&&k){M({type:`tab`,tab:e});return}he(e)}},_e=e=>{if(d&&_===`页面`&&k){M({type:`page`,item:e});return}u(e),f(!1),g(!1)},ve=e=>{if(d&&_===`页面`&&k){M({type:`application`,application:e});return}t(e)},ye=()=>{let e=j;if(M(null),A(!1),e?.type===`tab`){he(e.tab);return}e?.type===`page`&&(u(e.item),f(!1),g(!1)),e?.type===`application`&&t(e.application)},U=N.filter(e=>(!I.reporter||e.reporter.includes(I.reporter))&&(!I.date||e.date===I.date)&&(!I.shift||e.shift===I.shift)&&(!z||!I.flowStatus||e.flowStatus===I.flowStatus)),W=Math.max(1,Math.ceil(U.length/ie)),G=Math.min(ne,W),be=U.slice((G-1)*ie,G*ie),xe=(t=N)=>{let n=[[`填报人`,`检查日期`,`作业班次`,`作业地点`,`凿岩设备防护装置完好`,`作业面通风与照明符合要求`,`人员防护用品佩戴规范`,`隐患描述与整改建议`,`填报状态`],...t.map(e=>[e.reporter,e.date,e.shift,e.location,e.equipment,e.environment,e.protection,e.description,e.status])].map(e=>e.map(e=>`"${String(e).replaceAll(`"`,`""`)}"`).join(`,`)).join(`
+`),r=document.createElement(`a`);r.href=URL.createObjectURL(new Blob([`\ufeff${n}`],{type:`text/csv;charset=utf-8`})),r.download=`${R.title}-历史数据.csv`,r.click(),URL.revokeObjectURL(r.href),e(`历史填报数据已导出`)};return(0,Q.jsxs)(`section`,{className:`prevention-page`,"aria-labelledby":`prevention-page-title`,children:[(0,Q.jsxs)(`aside`,{className:`prevention-sidebar`,"aria-label":`双重预防机制功能导航`,children:[(0,Q.jsx)(dB,{currentName:`双重预防机制`,onSelect:ve}),(0,Q.jsx)(`nav`,{className:`prevention-nav`,children:fB.map(({label:t,icon:n,nested:r,expanded:i})=>(0,Q.jsxs)(`button`,{className:i?`prevention-nav-item expanded`:`prevention-nav-item`,onClick:()=>e(t),children:[(0,Q.jsx)(n,{}),(0,Q.jsx)(`span`,{children:t}),r?(0,Q.jsx)(_z,{}):i?(0,Q.jsx)(gz,{}):null]},t))}),(0,Q.jsx)(`div`,{className:`prevention-submenu`,children:pB.map(e=>(0,Q.jsxs)(`button`,{className:l===e?`selected`:``,onClick:()=>_e(e),children:[(0,Q.jsx)(`span`,{children:e}),[`隐患排查任务发布`,`隐患排查工作表`,`隐患整改通知单`,`隐患汇报`].includes(e)?(0,Q.jsx)(_z,{}):null]},e))}),(0,Q.jsxs)(`nav`,{className:`prevention-nav prevention-nav-bottom`,children:[(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险告知卡`),children:[(0,Q.jsx)(QR,{}),(0,Q.jsx)(`span`,{children:`风险告知卡`}),(0,Q.jsx)(_z,{})]}),(0,Q.jsxs)(`button`,{className:`prevention-nav-item`,onClick:()=>e(`风险四色图`),children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`风险四色图`}),(0,Q.jsx)(_z,{})]})]})]}),(0,Q.jsx)(`div`,{className:`prevention-content`,children:d?(0,Q.jsxs)(`section`,{className:`inspection-form-view`,"aria-labelledby":`inspection-form-title`,children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`span`,{children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>_e(y),children:y}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:`在线填报`})]}),(0,Q.jsx)(`nav`,{className:`inspection-view-tabs`,"aria-label":`表单视图`,children:[`页面`,`数据`,`草稿箱`].map(e=>(0,Q.jsx)(`button`,{className:_===e?`active`:``,onClick:()=>ge(e),children:e},e))}),_===`页面`?(0,Q.jsxs)(`form`,{ref:se,className:`inspection-form`,onChange:()=>A(!0),onSubmit:H,children:[(0,Q.jsxs)(`header`,{className:`inspection-form-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`inspection-form-title`,children:R.title}),(0,Q.jsx)(`span`,{children:z?`请如实填写隐患情况，提交后将进入审批流程。`:ce?`请配置本次隐患排查任务，带 * 的项目为必填项。`:`请如实填写现场检查情况，带 * 的项目为必填项。`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`form-back`,onClick:fe,children:`返回清单`})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`填报信息`}),(0,Q.jsxs)(`div`,{className:`form-fields`,children:[(0,Q.jsxs)(`label`,{children:[`填报人 *`,(0,Q.jsx)(`input`,{name:`reporter`,defaultValue:C?.reporter??`张宇`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`检查日期 *`,(0,Q.jsx)(`input`,{name:`inspectionDate`,type:`date`,defaultValue:C?.inspectionDate??`2026-07-29`,required:!0})]}),(0,Q.jsxs)(`label`,{children:[`作业班次 *`,(0,Q.jsxs)(`select`,{name:`shift`,defaultValue:C?.shift??`早班`,required:!0,children:[(0,Q.jsx)(`option`,{children:`早班`}),(0,Q.jsx)(`option`,{children:`中班`}),(0,Q.jsx)(`option`,{children:`夜班`})]})]}),(0,Q.jsxs)(`label`,{children:[`作业地点 *`,(0,Q.jsx)(`input`,{name:`location`,defaultValue:C?.location??``,placeholder:`例如：西翼 3# 平巷`,required:!0})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`现场检查`}),(0,Q.jsxs)(`div`,{className:`inspection-items`,children:[(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`凿岩设备防护装置完好`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`normal`,required:!0,defaultChecked:C?.equipment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`equipment`,value:`issue`,defaultChecked:C?.equipment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`作业面通风与照明符合要求`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`normal`,required:!0,defaultChecked:C?.environment===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`environment`,value:`issue`,defaultChecked:C?.environment===`issue`}),` `,`发现问题`]})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-item`,children:[(0,Q.jsx)(`b`,{children:`人员防护用品佩戴规范`}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`normal`,required:!0,defaultChecked:C?.protection===`normal`}),` `,`正常`]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`protection`,value:`issue`,defaultChecked:C?.protection===`issue`}),` `,`发现问题`]})]})]})]})]}),(0,Q.jsxs)(`section`,{className:`form-section`,children:[(0,Q.jsx)(`h2`,{children:`问题说明`}),(0,Q.jsxs)(`label`,{className:`wide-field`,children:[`隐患描述与整改建议`,(0,Q.jsx)(`textarea`,{name:`description`,rows:`3`,defaultValue:C?.description??``,placeholder:`如发现隐患，请填写具体位置、问题描述及建议措施。`})]})]}),(0,Q.jsxs)(`footer`,{className:`form-actions`,children:[h?(0,Q.jsxs)(`span`,{className:`submit-status`,children:[(0,Q.jsx)(hz,{}),` `,z?`已提交，等待审批流程处理`:ce?`已发布，待执行人处理`:`已提交，等待负责人复核`]}):(0,Q.jsx)(`span`,{children:z?`填写完成后将提交至隐患排查审批流程。`:ce?`填写完成后将发布为待执行的隐患排查任务。`:`填写完成后可直接提交至隐患排查记录。`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`form-secondary`,onClick:fe,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`form-draft`,onClick:z?pe:me,children:`存草稿`}),(0,Q.jsx)(`button`,{type:`submit`,className:`form-primary`,children:`提交`})]})]})]},C?.id??p):_===`数据`?(0,Q.jsxs)(`section`,{className:`inspection-data-view`,"aria-label":`${R.title}历史数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`历史填报数据`}),(0,Q.jsx)(`h2`,{children:R.title})]}),(0,Q.jsxs)(`span`,{children:[`共 `,U.length,` 条记录`]})]}),(0,Q.jsxs)(`form`,{className:`inspection-data-filter`,onSubmit:e=>{e.preventDefault(),te(ee),re(1)},children:[(0,Q.jsxs)(`label`,{children:[`填报人`,(0,Q.jsx)(`input`,{value:ee.reporter,maxLength:10,placeholder:`请输入填报人`,onChange:e=>F(t=>({...t,reporter:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`检查日期`,(0,Q.jsx)(`input`,{type:`date`,value:ee.date,onChange:e=>F(t=>({...t,date:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`作业班次`,(0,Q.jsxs)(`select`,{value:ee.shift,onChange:e=>F(t=>({...t,shift:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部班次`}),(0,Q.jsx)(`option`,{value:`早班`,children:`早班`}),(0,Q.jsx)(`option`,{value:`中班`,children:`中班`}),(0,Q.jsx)(`option`,{value:`夜班`,children:`夜班`})]})]}),z?(0,Q.jsxs)(`label`,{children:[`流程状态`,(0,Q.jsxs)(`select`,{value:ee.flowStatus,onChange:e=>F(t=>({...t,flowStatus:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),Jz.map(e=>(0,Q.jsx)(`option`,{value:e,children:e},e))]})]}):null,(0,Q.jsxs)(`div`,{className:`inspection-filter-actions`,children:[(0,Q.jsx)(`button`,{type:`submit`,className:`inspection-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>{let e={reporter:``,date:``,shift:``,flowStatus:``};F(e),te(e),re(1)},children:`重置`})]})]}),(0,Q.jsxs)(`div`,{className:`inspection-data-actions`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>oe.current?.click(),children:`导入`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>xe(U),children:`导出`})]}),(0,Q.jsx)(`input`,{ref:oe,className:`inspection-import-input`,type:`file`,accept:`.csv,.xlsx,.xls`,onChange:t=>{let n=t.target.files?.[0];if(!n)return;let r={id:`inspection-${Date.now()}`,reporter:`导入用户`,date:`2026-07-30`,shift:`早班`,location:`西翼 1# 平巷`,equipment:`正常`,environment:`正常`,protection:`正常`,description:`已从 ${n.name} 导入填报记录。`,status:`已导入`,flowStatus:`待审批`};P(e=>[r,...e]),t.target.value=``,e(`已导入 ${n.name}`)}})]}),(0,Q.jsx)(`div`,{className:`inspection-data-scroll`,children:(0,Q.jsxs)(`table`,{className:z?`inspection-approval-data-table`:``,children:[(0,Q.jsx)(`thead`,{children:(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`th`,{children:`发起人`}),(0,Q.jsx)(`th`,{children:`发起时间`}),(0,Q.jsx)(`th`,{children:`流程状态`})]}):null,(0,Q.jsx)(`th`,{children:`填报人`}),(0,Q.jsx)(`th`,{children:`检查日期`}),(0,Q.jsx)(`th`,{children:`作业班次`}),(0,Q.jsx)(`th`,{children:`作业地点`}),(0,Q.jsx)(`th`,{children:`凿岩设备防护装置完好`}),(0,Q.jsx)(`th`,{children:`作业面通风与照明符合要求`}),(0,Q.jsx)(`th`,{children:`人员防护用品佩戴规范`}),(0,Q.jsx)(`th`,{children:`隐患描述与整改建议`})]})}),(0,Q.jsx)(`tbody`,{children:be.length?be.map(e=>(0,Q.jsxs)(`tr`,{children:[z?(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`td`,{children:e.initiator??e.reporter}),(0,Q.jsx)(`td`,{children:e.initiatedAt??`${e.date} 08:00`}),(0,Q.jsx)(`td`,{children:e.flowStatus??`待审批`})]}):null,(0,Q.jsx)(`td`,{children:e.reporter}),(0,Q.jsx)(`td`,{children:e.date}),(0,Q.jsx)(`td`,{children:e.shift}),(0,Q.jsx)(`td`,{children:e.location}),(0,Q.jsx)(`td`,{children:e.equipment}),(0,Q.jsx)(`td`,{children:e.environment}),(0,Q.jsx)(`td`,{children:e.protection}),(0,Q.jsx)(`td`,{className:`inspection-description-cell`,children:e.description})]},e.id)):(0,Q.jsx)(`tr`,{children:(0,Q.jsx)(`td`,{colSpan:z?11:8,className:`inspection-data-empty`,children:`暂无历史填报数据`})})})]})}),(0,Q.jsx)(iB,{className:`inspection-data-pagination`,total:U.length,page:G,pageSize:ie,onPageChange:re,onPageSizeChange:e=>{ae(e),re(1)}})]}):(0,Q.jsxs)(`section`,{className:`inspection-draft-view`,"aria-label":`${R.title}草稿箱`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`暂存记录`}),(0,Q.jsx)(`h2`,{children:`草稿箱`})]}),(0,Q.jsxs)(`span`,{children:[`共 `,le.length,` 条草稿`]})]}),le.length?(0,Q.jsx)(`div`,{className:`inspection-draft-list`,children:le.map(t=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{className:`inspection-draft-title`,children:[(0,Q.jsx)(`b`,{children:t.name}),(0,Q.jsx)(`i`,{children:`草稿`})]}),(0,Q.jsxs)(`span`,{children:[`填报人：`,t.reporter||`张宇`]}),(0,Q.jsxs)(`time`,{children:[`保存时间：`,t.initiatedAt]})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>ue(R,y,t),children:`继续填报`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,onClick:()=>{r(e=>e.filter(e=>e.id!==t.id)),t.processDraftId&&a(t.processDraftId),C?.id===t.id&&w(null),e(`已删除草稿：${t.name}`)},children:`删除`})]})]},t.id))}):(0,Q.jsx)(`div`,{className:`inspection-draft-empty`,children:`暂无草稿，页面内暂存的填报数据会显示在这里。`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`prevention-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`双重预防管理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`button`,{onClick:()=>u(`隐患排查治理`),children:`隐患排查治理`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{id:`prevention-page-title`,children:L})]}),(0,Q.jsx)(`div`,{className:`prevention-strip`}),[`隐患排查任务发布`,`岗位隐患排查清单`,`隐患排查审批流程`].includes(l)?(0,Q.jsxs)(`section`,{className:`prevention-list prevention-menu-catalog`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`全部`})}),(0,Q.jsx)(`div`,{className:`prevention-catalog-grid`,children:(l===`隐患排查任务发布`?gB:l===`隐患排查审批流程`?hB:mB).map(e=>{let{title:t,icon:n,tone:r}=e;return(0,Q.jsxs)(`button`,{type:`button`,className:`prevention-catalog-card`,onClick:()=>de(e,l),children:[(0,Q.jsx)(`span`,{className:`prevention-form-icon ${r}`,children:(0,Q.jsx)(n,{})}),(0,Q.jsx)(`b`,{children:t})]},t)})})]}):(0,Q.jsxs)(`section`,{className:`prevention-list prevention-empty-content`,children:[(0,Q.jsx)(`div`,{className:`prevention-list-heading`,children:(0,Q.jsx)(`h2`,{children:`功能页面`})}),(0,Q.jsx)(`p`,{children:`请从左侧菜单选择需要处理的业务。`})]})]})}),x?(0,Q.jsx)(`div`,{className:`process-draft-restore-layer`,role:`presentation`,onMouseDown:()=>S(null),children:(0,Q.jsxs)(`section`,{className:`process-draft-restore-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`approval-draft-restore-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`草稿箱提醒`}),(0,Q.jsxs)(`h2`,{id:`approval-draft-restore-title`,children:[`发现同名`,x.form.kind===`approval`?`流程`:`表单`,`草稿`]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`process-dialog-close`,"aria-label":`关闭草稿提醒`,onClick:()=>S(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`process-draft-restore-body`,children:[(0,Q.jsxs)(`p`,{children:[`当前草稿箱内有 `,x.drafts.length,` 条“`,x.form.title,`”草稿，请选择恢复继续填报，或重新发起新的`,x.form.kind===`approval`?`流程`:`表单`,`。`]}),(0,Q.jsx)(`div`,{className:`process-draft-options`,role:`radiogroup`,"aria-label":`选择要恢复的流程草稿`,children:x.drafts.map(e=>(0,Q.jsxs)(`label`,{className:T===e.id?`selected`:``,children:[(0,Q.jsx)(`input`,{type:`radio`,name:`approval-process-draft`,value:e.id,checked:T===e.id,onChange:()=>E(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[`最后保存：`,e.initiatedAt]})]})]},e.id))})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`process-reject`,onClick:()=>ue(x.form,x.source),children:`重新发起`}),(0,Q.jsx)(`button`,{type:`button`,className:`process-approve`,onClick:()=>{let e=x.drafts.find(e=>e.id===T);ue(x.form,x.source,e)},children:`恢复并继续填报`})]})]})}):null,D?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>O(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`cancel-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭取消确认`,onClick:()=>O(!1),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`取消填写`}),(0,Q.jsx)(`h2`,{id:`cancel-inspection-form-title`,children:`确认取消吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，取消后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>O(!1),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:V,children:`确认取消`})]})]})}):null,j?(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:()=>M(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`unsaved-inspection-form-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`dialog-close`,"aria-label":`关闭未保存提醒`,onClick:()=>M(null),children:`×`}),(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`未保存内容`}),(0,Q.jsx)(`h2`,{id:`unsaved-inspection-form-title`,children:`确认切换吗？`}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:`当前内容没有保存，切换后填写内容将无法恢复。`}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary-button`,onClick:()=>M(null),children:`继续填写`}),(0,Q.jsx)(`button`,{type:`button`,className:`primary-button`,onClick:ye,children:`确认切换`})]})]})}):null]})}function yB({app:e,onReturn:t,onAction:n,onSwitchApplication:r}){let i=e.icon,a=[`核对今日${e.name}记录`,`完成本周${e.description}复核`,`查看待处理异常提醒`];return(0,Q.jsxs)(`section`,{className:`mock-app-page`,"aria-labelledby":`mock-app-title`,children:[(0,Q.jsxs)(`aside`,{className:`mock-app-sidebar`,"aria-label":`${e.name}功能导航`,children:[(0,Q.jsx)(dB,{currentName:e.name,onSelect:r}),(0,Q.jsxs)(`nav`,{children:[(0,Q.jsxs)(`button`,{className:`mock-nav-item active`,children:[(0,Q.jsx)(yz,{}),`应用概览`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}待办`),children:[(0,Q.jsx)(Cz,{}),`待办处理`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}记录`),children:[(0,Q.jsx)(QR,{}),`业务记录`]}),(0,Q.jsxs)(`button`,{className:`mock-nav-item`,onClick:()=>n(`${e.name}统计`),children:[(0,Q.jsx)(ZR,{}),`数据统计`]})]})]}),(0,Q.jsxs)(`div`,{className:`mock-app-content`,children:[(0,Q.jsxs)(`div`,{className:`mock-app-breadcrumb`,children:[(0,Q.jsx)(`span`,{children:`应用中心`}),(0,Q.jsx)(_z,{}),(0,Q.jsx)(`strong`,{children:e.name})]}),(0,Q.jsxs)(`header`,{className:`mock-app-header`,children:[(0,Q.jsx)(`span`,{className:`mock-app-icon`,children:(0,Q.jsx)(i,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h1`,{id:`mock-app-title`,children:[e.name,`工作台`]}),(0,Q.jsx)(`p`,{children:`示例业务页面，数据仅用于界面演示。`})]}),(0,Q.jsxs)(`button`,{className:`mock-primary-action`,onClick:()=>n(`新建${e.name}记录`),children:[(0,Q.jsx)(az,{}),`新建记录`]})]}),(0,Q.jsxs)(`section`,{className:`mock-metrics`,"aria-label":`${e.name}概览`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`待处理`}),(0,Q.jsx)(`b`,{children:`6`}),(0,Q.jsx)(`small`,{children:`需你跟进`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`今日记录`}),(0,Q.jsx)(`b`,{children:`14`}),(0,Q.jsx)(`small`,{children:`已同步更新`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`span`,{children:`异常提醒`}),(0,Q.jsx)(`b`,{children:`2`}),(0,Q.jsx)(`small`,{children:`等待复核`})]})]}),(0,Q.jsxs)(`section`,{className:`mock-work-list`,"aria-labelledby":`mock-work-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{id:`mock-work-title`,children:`待处理事项`}),(0,Q.jsxs)(`button`,{onClick:()=>n(`${e.name}全部事项`),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),a.map((e,t)=>(0,Q.jsxs)(`button`,{onClick:()=>n(e),children:[(0,Q.jsx)(`span`,{className:`mock-row-icon tone-${t}`,children:(0,Q.jsx)(Cz,{})}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e}),(0,Q.jsx)(`small`,{children:t===0?`今天需完成`:`已分配给你`})]}),(0,Q.jsx)(fz,{})]},e))]}),(0,Q.jsxs)(`button`,{className:`prevention-back`,onClick:t,children:[`返回工作台 `,(0,Q.jsx)(fz,{})]})]})]})}function bB({onOpen:e,onOpenAll:t}){return(0,Q.jsxs)(`section`,{className:`activity-feed`,"aria-labelledby":`activity-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`activity-title`,children:`动态`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:t,children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`feed-list`,children:$z.length?$z.map(({person:t,tone:n,avatar:r,headline:i,detail:a,time:o,icon:s})=>(0,Q.jsxs)(`button`,{className:`feed-item`,onClick:()=>e(i),children:[(0,Q.jsx)(`span`,{className:`feed-avatar ${n}`,children:r}),(0,Q.jsxs)(`span`,{className:`feed-content`,children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`strong`,{children:i})]}),(0,Q.jsx)(`p`,{children:a}),(0,Q.jsx)(`time`,{children:o})]}),(0,Q.jsx)(s,{className:`feed-icon`})]},i)):(0,Q.jsxs)(`div`,{className:`empty-feed`,children:[(0,Q.jsx)(iz,{}),(0,Q.jsx)(`p`,{children:`这一类动态已全部处理。`})]})})]})}function xB({onAction:e,onOpenTask:t,onOpenProcess:n,onOpenDynamics:r}){return(0,Q.jsxs)(`aside`,{className:`command-panel`,"aria-label":`快捷操作`,children:[(0,Q.jsx)(`p`,{children:`快捷入口`}),(0,Q.jsxs)(`button`,{className:`command-primary`,onClick:t,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(az,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起任务`}),(0,Q.jsx)(`small`,{children:`交办或跟进一项工作`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:n,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(cz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发起流程`}),(0,Q.jsx)(`small`,{children:`提交一次审批或申请`})]}),(0,Q.jsx)(fz,{})]}),(0,Q.jsxs)(`button`,{className:`command-secondary`,onClick:r,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(mz,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`发动态`}),(0,Q.jsx)(`small`,{children:`发布一条安全工作动态`})]}),(0,Q.jsx)(fz,{})]})]})}function SB({title:e,onClose:t}){let[n,r]=(0,Z.useState)(!1);if(!e)return null;let i=e===`发起任务`;return(0,Q.jsx)(`div`,{className:`dialog-layer`,onMouseDown:t,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`action-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`action-dialog-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{className:`dialog-close`,"aria-label":`关闭`,onClick:t,children:`×`}),n?(0,Q.jsxs)(`div`,{className:`dialog-success`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`h2`,{children:`已准备好继续`}),(0,Q.jsx)(`p`,{children:`这是工作台演示状态，实际接入后将在此进入对应业务表单。`}),(0,Q.jsx)(`button`,{onClick:t,children:`完成`})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`p`,{className:`dialog-kicker`,children:`快速创建`}),(0,Q.jsx)(`h2`,{id:`action-dialog-title`,children:e}),(0,Q.jsx)(`p`,{className:`dialog-description`,children:i?`填写最小必要信息，将工作直接交给相应负责人。`:`从授权模板中选择流程，减少重复填写。`}),(0,Q.jsxs)(`label`,{children:[i?`任务名称`:`流程模板`,(0,Q.jsx)(`input`,{autoFocus:!0,placeholder:i?`例如：完成现场安全检查`:`例如：选择设备检修申请`})]}),(0,Q.jsxs)(`div`,{className:`dialog-actions`,children:[(0,Q.jsx)(`button`,{className:`secondary-button`,onClick:t,children:`取消`}),(0,Q.jsx)(`button`,{className:`primary-button`,onClick:()=>r(!0),children:`继续`})]})]})]})})}var CB=[{id:`safety`,name:`安全风险总览`,description:`风险等级、隐患整改与作业预警的综合视图`,metrics:[[`今日检查`,`28`,`较昨日 +4`],[`待整改隐患`,`16`,`4 项临近逾期`],[`高风险作业`,`3`,`均在监控中`],[`整改完成率`,`86%`,`本月累计`]],charts:[`risk`,`rectification`,`sources`,`trend`]},{id:`device`,name:`设备运行态势`,description:`关键设备运行状态、点检执行与故障分布`,metrics:[[`设备总数`,`248`,`当前在线 243`],[`待点检`,`12`,`今日需完成`],[`异常设备`,`5`,`等待处理`],[`设备完好率`,`97.8%`,`较上月 +0.6%`]],charts:[`device`,`trend`,`sources`,`risk`]},{id:`production`,name:`生产进度跟踪`,description:`产量计划、班组进度与生产指标完成情况`,metrics:[[`本月产量`,`12.6 万吨`,`计划完成 91%`],[`今日进尺`,`186 米`,`较计划 +12 米`],[`作业班组`,`8`,`全部已开工`],[`生产达成率`,`94%`,`较上周 +3%`]],charts:[`progress`,`trend`,`device`,`rectification`]},{id:`emergency`,name:`应急管理看板`,description:`应急物资、演练计划和预案执行情况`,metrics:[[`应急物资`,`356`,`库存充足`],[`本月演练`,`4`,`已完成 3 项`],[`应急预案`,`18`,`均为有效版本`],[`响应及时率`,`100%`,`本季度累计`]],charts:[`sources`,`progress`,`risk`,`trend`]}];function wB({type:e}){let t=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let n=t.current;if(!n)return;let r=oC(n),i={axisLine:{lineStyle:{color:`#dce4ec`}},axisLabel:{color:`#7b8998`,fontSize:10},splitLine:{lineStyle:{color:`#eef2f6`}}},a={risk:{title:{text:`风险等级分布`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},legend:{bottom:8,textStyle:{fontSize:10,color:`#7b8998`}},series:[{type:`pie`,radius:[`42%`,`66%`],center:[`50%`,`51%`],label:{show:!1},data:[{value:4,name:`重大`,itemStyle:{color:`#d95745`}},{value:12,name:`较大`,itemStyle:{color:`#e89b3e`}},{value:31,name:`一般`,itemStyle:{color:`#3c98d3`}},{value:47,name:`低风险`,itemStyle:{color:`#5bb287`}}]}]},rectification:{title:{text:`隐患整改闭环`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:16,top:49,bottom:26},xAxis:{type:`category`,data:[`一车间`,`二车间`,`南区`,`北区`,`选矿`],...i},yAxis:{type:`value`,...i},series:[{type:`bar`,barWidth:15,itemStyle:{color:`#1779ba`,borderRadius:[3,3,0,0]},data:[16,22,13,18,25]},{type:`bar`,barWidth:15,itemStyle:{color:`#a9d8c3`,borderRadius:[3,3,0,0]},data:[12,18,10,15,21]}]},sources:{title:{text:`问题来源占比`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`item`},series:[{type:`pie`,radius:`62%`,center:[`50%`,`55%`],label:{formatter:`{b}
+{d}%`,fontSize:10,color:`#637386`},data:[{value:38,name:`日常检查`,itemStyle:{color:`#438fc1`}},{value:26,name:`专项排查`,itemStyle:{color:`#78b996`}},{value:21,name:`巡检上报`,itemStyle:{color:`#e3a056`}},{value:15,name:`其他`,itemStyle:{color:`#a8b5c3`}}]}]},trend:{title:{text:`近 7 日趋势`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:35,right:17,top:48,bottom:26},xAxis:{type:`category`,boundaryGap:!1,data:[`周一`,`周二`,`周三`,`周四`,`周五`,`周六`,`今日`],...i},yAxis:{type:`value`,...i},series:[{type:`line`,smooth:!0,symbol:`circle`,symbolSize:5,lineStyle:{width:2,color:`#1779ba`},itemStyle:{color:`#1779ba`},areaStyle:{color:`rgba(23,121,186,.12)`},data:[12,18,15,24,21,27,28]}]},device:{title:{text:`设备状态监测`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},radar:{center:[`50%`,`57%`],radius:`59%`,indicator:[{name:`运行`,max:100},{name:`点检`,max:100},{name:`保养`,max:100},{name:`检修`,max:100},{name:`备件`,max:100}],axisName:{color:`#718093`,fontSize:10},splitArea:{areaStyle:{color:[`#fbfcfd`,`#f4f7f9`]}}},series:[{type:`radar`,data:[{value:[92,84,78,88,72],areaStyle:{color:`rgba(41,137,190,.23)`},lineStyle:{color:`#2684bf`},itemStyle:{color:`#2684bf`}}]}]},progress:{title:{text:`本月计划完成情况`,left:14,top:11,textStyle:{fontSize:13,fontWeight:700,color:`#1f2d3d`}},tooltip:{trigger:`axis`},grid:{left:36,right:17,top:48,bottom:26},xAxis:{type:`category`,data:[`采矿`,`掘进`,`选矿`,`运输`,`充填`],...i},yAxis:{type:`value`,max:120,...i},series:[{type:`bar`,barWidth:15,data:[96,91,103,88,94],itemStyle:{color:`#5bb287`,borderRadius:[3,3,0,0]}},{type:`line`,symbol:`none`,lineStyle:{color:`#de8c36`,type:`dashed`},data:[100,100,100,100,100]}]}};r.setOption(a[e]);let o=new ResizeObserver(()=>r.resize());return o.observe(n),()=>{o.disconnect(),r.dispose()}},[e]),(0,Q.jsx)(`div`,{className:`dashboard-chart`,ref:t,"aria-label":`数据图表`})}function TB(){let[e,t]=(0,Z.useState)(`safety`),n=CB.find(t=>t.id===e)??CB[0];return(0,Q.jsx)(`section`,{className:`dashboard-page`,"aria-labelledby":`dashboard-title`,children:(0,Q.jsxs)(`div`,{className:`dashboard-layout`,children:[(0,Q.jsxs)(`aside`,{className:`dashboard-sidebar`,"aria-label":`看板列表`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(ZR,{}),(0,Q.jsx)(`span`,{children:`数据看板`})]}),(0,Q.jsx)(`nav`,{children:CB.map(n=>(0,Q.jsxs)(`button`,{className:n.id===e?`active`:``,onClick:()=>t(n.id),children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:n.name}),(0,Q.jsx)(`small`,{children:n.description})]}),(0,Q.jsx)(_z,{})]},n.id))})]}),(0,Q.jsxs)(`div`,{className:`dashboard-content`,children:[(0,Q.jsxs)(`header`,{className:`dashboard-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`p`,{children:`看板中心`}),(0,Q.jsx)(`h1`,{id:`dashboard-title`,children:n.name}),(0,Q.jsx)(`span`,{children:n.description})]}),(0,Q.jsxs)(`button`,{children:[(0,Q.jsx)(XR,{}),`近 30 天`,(0,Q.jsx)(gz,{})]})]}),(0,Q.jsx)(`div`,{className:`dashboard-metrics`,children:n.metrics.map(([e,t,n])=>(0,Q.jsxs)(`article`,{children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(`b`,{children:t}),(0,Q.jsx)(`small`,{children:n})]},e))}),(0,Q.jsx)(`div`,{className:`dashboard-charts`,children:n.charts.map(e=>(0,Q.jsx)(`section`,{children:(0,Q.jsx)(wB,{type:e})},`${n.id}-${e}`))})]})]})})}function EB({view:e,title:t,className:n}){return(0,Q.jsx)(`iframe`,{className:n,srcDoc:jz.replace(`</head>`,`<style>
+    .app-nav, .app-topbar, .nav-subpanel { display: none !important; }
+    .page-shell, body.nav-shifted .page-shell { margin-left: 0 !important; }
+    .workbench { min-height: 100dvh !important; }
+    main { padding: 18px 22px 36px !important; }
+    html, body { background: #f5f7fa !important; }
+  </style></head>`).replace(`</body>`,`<script>
+        window.addEventListener("load", function () {
+          if (typeof window.switchView === "function") {
+            window.switchView(${JSON.stringify(e)});
+          }
+        });
+      <\/script></body>`),title:t})}function DB({onAction:e,initialTab:t=`动态`}){let[n,r]=(0,Z.useState)(t),[i,a]=(0,Z.useState)(`全部`),[o,s]=(0,Z.useState)(``),c=[{category:`安全管理`,tone:`blue`,name:`安全检查动态号`,favorite:!0},{category:`安全管理`,tone:`blue`,name:`隐患整改动态号`,recent:!0},{category:`安全管理`,tone:`blue`,name:`班前会动态号`},{category:`生产管理`,tone:`gold`,name:`生产日报动态号`,favorite:!0},{category:`生产管理`,tone:`gold`,name:`现场交接动态号`,recent:!0},{category:`生产管理`,tone:`gold`,name:`产量异常动态号`},{category:`设备管理`,tone:`red`,name:`设备点检动态号`},{category:`设备管理`,tone:`red`,name:`设备保养动态号`,recent:!0},{category:`设备管理`,tone:`red`,name:`故障处置动态号`}],l=c.filter(e=>(i===`全部`||i===`我的收藏`&&e.favorite||i===`最近使用`&&e.recent)&&(!o.trim()||e.name.includes(o.trim())));return(0,Q.jsxs)(`section`,{className:`embedded-dynamics-page`,"aria-label":`动态`,children:[(0,Q.jsx)(`nav`,{className:`embedded-dynamic-tabs`,"aria-label":`动态页面`,children:[`动态`,`发动态`].map(e=>(0,Q.jsx)(`button`,{className:n===e?`active`:``,onClick:()=>r(e),children:e},e))}),n===`动态`?(0,Q.jsx)(EB,{className:`embedded-dynamics-frame`,view:`feed`,title:`动态`}):(0,Q.jsxs)(`section`,{className:`dynamic-publish-library`,"aria-label":`发动态`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`div`,{className:`dynamic-publish-tabs`,role:`tablist`,"aria-label":`动态号筛选`,children:[`全部`,`我的收藏`,`最近使用`].map(e=>(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":i===e,className:i===e?`active`:``,onClick:()=>a(e),children:e},e))}),(0,Q.jsx)(`input`,{value:o,onChange:e=>s(e.target.value),placeholder:`请输入动态号名称关键字`,"aria-label":`搜索动态号`})]}),(0,Q.jsx)(`div`,{className:`dynamic-publish-groups`,children:[`安全管理`,`生产管理`,`设备管理`].map(t=>{let n=l.filter(e=>e.category===t),r=c.find(e=>e.category===t)?.tone;return(0,Q.jsxs)(`section`,{className:`dynamic-publish-group ${r}`,children:[(0,Q.jsxs)(`h2`,{children:[(0,Q.jsx)(`i`,{}),t,(0,Q.jsxs)(`small`,{children:[`（`,n.length,`）`]})]}),n.length?n.map(t=>(0,Q.jsx)(`button`,{onClick:()=>e?.(`已选择${t.name}`),children:t.name},t.name)):(0,Q.jsx)(`p`,{children:`暂无动态号`})]},t)})})]})]})}function OB({view:e,title:t,className:n,subview:r,showDescription:i=!1}){let a=JSON.stringify({view:e,subview:r}),o=`
     .sidebar, .topbar, .logic, .dev-doc-btn { display: none !important; }
     .app, .stage { height: 100dvh !important; }
     .content { padding: 16px 20px 32px !important; }
@@ -15340,7 +19325,7 @@ navigateTo(
             window.openDevDoc();
           }
         });
-      <\/script></body>`),title:t},`${e}-${r??`default`}-${i?`with-description`:`workspace-only`}`)}function DB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`}],[n,r]=(0,Z.useState)(e),[i,a]=(0,Z.useState)(!1),o=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:[t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-task-toolbar`,children:(0,Q.jsx)(OB,{checked:i,onChange:a})})]}),(0,Q.jsx)(EB,{view:o.view,subview:o.subview,className:`embedded-tasks-frame`,title:o.label,showDescription:i})]})}function OB({checked:e,onChange:t}){return(0,Q.jsxs)(`label`,{className:`settings-lowcode-description-switch`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:e,onChange:e=>t(e.target.checked)}),(0,Q.jsx)(`span`,{"aria-hidden":`true`}),`显示说明`]})}function kB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}任务页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(EB,{view:e,title:t,showDescription:r})})]})}function AB({view:e,title:t,showDescription:n=!1}){let r=`<head><style>${`
+      <\/script></body>`),title:t},`${e}-${r??`default`}-${i?`with-description`:`workspace-only`}`)}function kB({initialTab:e=`我的任务`}){let t=[{label:`发布任务`,view:`view-publish`},{label:`我的任务`,view:`view-mytask`},{label:`任务总台账`,view:`view-ledger`}],[n,r]=(0,Z.useState)(e),[i,a]=(0,Z.useState)(!1),o=t.find(e=>e.label===n);return(0,Q.jsxs)(`section`,{className:`embedded-tasks-page`,"aria-label":`任务`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-task-tabs`,"aria-label":`任务页面`,children:[t.map(e=>(0,Q.jsx)(`button`,{className:n===e.label?`active`:``,onClick:()=>r(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-task-toolbar`,children:(0,Q.jsx)(AB,{checked:i,onChange:a})})]}),(0,Q.jsx)(OB,{view:o.view,subview:o.subview,className:`embedded-tasks-frame`,title:o.label,showDescription:i})]})}function AB({checked:e,onChange:t}){return(0,Q.jsxs)(`label`,{className:`settings-lowcode-description-switch`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:e,onChange:e=>t(e.target.checked)}),(0,Q.jsx)(`span`,{"aria-hidden":`true`}),`显示说明`]})}function jB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}任务页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(AB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(OB,{view:e,title:t,showDescription:r})})]})}function MB({view:e,title:t,showDescription:n=!1}){let r=`<head><style>${`
     .sidebar, .top-bar, .dev-doc-btn { display: none !important; }
     .main-container { width: 100%; }
     .content-area { top: 0; padding: 16px 20px 32px; }
@@ -15368,7 +19353,7 @@ navigateTo(
             window.renderDevDoc(hostWarningView);
           }
         });
-      <\/script></body>`),title:t},`${e}-${n?`with-description`:`workspace-only`}`)}function jB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}预警页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(AB,{view:e,title:t,showDescription:r})})]})}function MB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`}],[t,n]=(0,Z.useState)(`预警任务`),[r,i]=(0,Z.useState)(!1),a=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:[e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-warning-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})})]}),(0,Q.jsx)(AB,{view:a.view,title:a.label,showDescription:r})]})}function NB({module:e,view:t,showDescription:n=!1}){let r=new URLSearchParams({module:e,...t?{view:t}:{}}),i=JSON.stringify({module:e,view:t,dictionaries:{flowCategory:jz}}),a=`<head><style>${`
+      <\/script></body>`),title:t},`${e}-${n?`with-description`:`workspace-only`}`)}function NB({view:e,label:t,className:n=``}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page ${n}`.trim(),"aria-label":`${t}预警页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(AB,{checked:r,onChange:i})}),(0,Q.jsx)(`div`,{className:`settings-lowcode-embed`,children:(0,Q.jsx)(MB,{view:e,title:t,showDescription:r})})]})}function PB(){let e=[{label:`预警分级看板`,view:`warning-dashboard`},{label:`预警任务`,view:`warning-task`},{label:`预警信息表统计`,view:`warning-stats`}],[t,n]=(0,Z.useState)(`预警任务`),[r,i]=(0,Z.useState)(!1),a=e.find(e=>e.label===t);return(0,Q.jsxs)(`section`,{className:`embedded-warnings-page`,"aria-label":`预警`,children:[(0,Q.jsxs)(`nav`,{className:`embedded-warning-tabs`,"aria-label":`预警页面`,children:[e.map(e=>(0,Q.jsx)(`button`,{className:t===e.label?`active`:``,onClick:()=>n(e.label),children:e.label},e.label)),(0,Q.jsx)(`div`,{className:`embedded-warning-toolbar`,children:(0,Q.jsx)(AB,{checked:r,onChange:i})})]}),(0,Q.jsx)(MB,{view:a.view,title:a.label,showDescription:r})]})}function FB({module:e,view:t,showDescription:n=!1}){let r=new URLSearchParams({module:e,...t?{view:t}:{}}),i=JSON.stringify({module:e,view:t,dictionaries:{flowCategory:Mz}}),a=`<head><style>${`
     #topbar, #appMenu, #left-panel > aside:first-child, .sidebar { display: none !important; }
     #left-panel { width: ${n?`80%`:`100%`} !important; }
     #right-panel, #divider, #notes { display: ${n?`block`:`none`} !important; }
@@ -15379,6 +19364,6 @@ navigateTo(
             if (typeof window.switchModule === "function") window.switchModule(${JSON.stringify(e)});
           }, 80);
         });
-      <\/script>`),title:`低代码平台`},`${r.toString()}-${n?`with-description`:`workspace-only`}`)})}function PB({module:e,view:t,label:n}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page`,"aria-label":`${n}低代码页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(OB,{checked:r,onChange:i})}),(0,Q.jsx)(NB,{module:e,view:t,showDescription:r})]})}var FB=[{id:`task`,label:`待执行任务`,tone:`blue`,icon:Cz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`},{title:`核对井下作业人员定位数据`,source:`安全管理`,deadline:`7 月 31 日 10:00 前`,owner:`调度室`,note:`补充人员定位异常情况说明`,action:`执行任务`},{title:`更新选矿车间设备保养记录`,source:`设备管理`,deadline:`7 月 31 日 17:00 前`,owner:`刘海`,note:`同步本周关键设备保养信息`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`双重预防机制管理`,deadline:`2026-08-31 16:00:00`,owner:`王建国`,note:`流程到达时间：2026-08-31 09:12:00`,action:`去审批`,processNumber:`202608310001`},{title:`南区 2# 采场动火作业申请`,source:`生产管理`,deadline:`2026-08-31 15:00:00`,owner:`李明`,note:`流程到达时间：2026-08-31 08:46:00`,action:`去审批`,processNumber:`202608310002`},{title:`碎矿车间停机检修计划`,source:`设备管理`,deadline:`2026-09-01 09:00:00`,owner:`赵磊`,note:`流程到达时间：2026-08-30 15:28:00`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,tone:`red`,icon:Sz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`},{title:`井下局部通风机风量波动预警`,source:`通风监测`,deadline:`今天 18:00 前`,owner:`通风区`,note:`连续 15 分钟低于设定风量阈值`,action:`查看处置`},{title:`尾矿库在线监测数据中断`,source:`安全预警`,deadline:`明天 09:00 前`,owner:`环保部`,note:`请核实数据采集设备与通信链路`,action:`查看处置`}]}];function IB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let r=FB,i=FB.reduce((e,t)=>e+t.items.length,0),a=(r,i)=>{r.id===`task`?e():r.id===`approval`?t(`待审批`,i?.processNumber):n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:i}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:r.map(e=>{let t=e.icon,n=e.items.slice(0,5);return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.items.length,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(e),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{children:n.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row ${e.id===`approval`?`without-deadline`:``}`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),e.id===`approval`?null:(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>a(e,t),children:[t.action,(0,Q.jsx)(fz,{})]})]},t.title))})]},e.id)})})]})}var LB=[{label:`安全动态`,icon:pz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:Cz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:cz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:Sz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function RB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:RB(e.children,t,n)})}function zB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:zB(e.children,t,n)})}function BB(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:BB(e.children,t)}))}function VB(e){return e.flatMap(e=>[e,...VB(e.children)])}function HB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(HB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function UB({organizations:e,users:t,selectedUser:n,onSelect:r,onClose:i,title:a=`选择人员`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(s?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=l?t.filter(e=>e.organizationId===l):t,f=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(f,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`single-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`single-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(f,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[d.length,` 人`]})]}),d.length?d.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`single-person-picker`,checked:s?.id===e.id,onChange:()=>c(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsx)(`span`,{children:s?`1 人`:`0 人`})]}),s?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:s.name}),(0,Q.jsx)(`small`,{children:s.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(s),i()},children:`确认选择`})]})]})})}function WB({organizations:e,users:t,selectedUsers:n,onSelect:r,onClose:i,title:a=`分配用户`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n.map(e=>e.id)),[l,u]=(0,Z.useState)(n[0]?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=e=>e.organizationId??e.organization,f=l?t.filter(e=>d(e)===l):t,p=t.filter(e=>s.includes(e.id)),m=f.length>0&&f.every(e=>s.includes(e.id)),h=e=>c(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),g=()=>c(e=>[...new Set([...e,...f.map(e=>e.id)])]),_=()=>c(e=>e.filter(e=>!f.some(t=>t.id===e))),v=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(v,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`multi-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`multi-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(v,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:`人员`}),(0,Q.jsxs)(`span`,{children:[f.length,` 人`]})]}),f.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:g,disabled:m,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:_,disabled:!f.some(e=>s.includes(e.id)),children:`全不选`})]}):null]}),f.length?f.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s.includes(e.id),onChange:()=>h(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsxs)(`span`,{children:[p.length,` 人`]})]}),p.length?p.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>h(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(p),i()},children:`确认选择`})]})]})})}function GB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(`尚未建立组织架构，可手动新增根组织。`),h=e.length>0,g=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),_=()=>f(!0),v=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},y=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},b=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},x=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=g?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>zB(e,r.node.id,c)),m(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?RB(t,r.node.id,e):[...t,e]),m(`已新增组织：${n}`)}o(``),u(null),i(null)},S=e=>{t(t=>BB(t,e.id)),m(`已删除组织：${e.name}`)},C=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsx)(`div`,{className:`organization-toolbar`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})})}),(0,Q.jsxs)(`div`,{className:h?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:p})]}),h?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(HB,{nodes:e,onAddChild:y,onEdit:b,onDelete:S})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:v,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:x,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:C}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),g?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:_,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(UB,{organizations:e,users:n,selectedUser:l,onSelect:u,onClose:()=>f(!1),title:`选择负责人`,selectedLabel:`已选负责人`}):null]})}function KB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(KB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function qB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=qB(r.children,t,e);if(i)return i}return``}function JB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=e=>typeof e==`string`?e:e.value,c=e=>typeof e==`string`?e:e.label,l=t.filter(e=>n.includes(s(e))).map(c),u=e=>{let t=s(e);r(n.includes(t)?n.filter(e=>e!==t):[...n,t])};return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:l.length?l.join(`、`):`请选择${e}`}),(0,Q.jsx)(gz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>{let t=s(e);return(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(t),onChange:()=>u(e)}),(0,Q.jsx)(`span`,{children:c(e)})]},t)})}):null]})}function YB({organizations:e,setOrganizations:t,users:n,setUsers:r,roles:i}){let[a,o]=(0,Z.useState)(`users`),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(null),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(``),[x,S]=(0,Z.useState)(`abc123#`),[C,w]=(0,Z.useState)(``),[T,E]=(0,Z.useState)([]),[D,O]=(0,Z.useState)([]),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)({}),[N,P]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[ee,F]=(0,Z.useState)(``),I=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!ee)return;let e=window.setTimeout(()=>F(``),3e3);return()=>window.clearTimeout(e)},[ee]);let te=VB(e),ne=te.find(e=>e.id===s),re=n.filter(e=>(!s||e.organizationId===s)&&(!N.name||e.name.includes(N.name))&&(!N.account||e.account.includes(N.account))&&(!N.phone||e.phone.includes(N.phone))&&(!N.status||e.status===N.status)),ie=()=>{m(null),g(``),v(``),b(``),S(`abc123#`),w(s||te[0]?.id||``),E([]),O([]),M({}),A(``),u(`create`)},ae=e=>{m(e),g(e.name),v(e.account),b(e.phone===`未填写`?``:e.phone),S(e.password||`abc123#`),w(e.organizationId||te[0]?.id||``),E(e.positions||[]),O(e.roles||[]),M({}),A(``),u(`create`)},oe=e=>M(t=>t[e]?{...t,[e]:``}:t),se=t=>{t.preventDefault();let n=h.trim(),i=_.trim(),a={name:n?``:`请输入用户名称`,phone:!y||/^\d{11}$/.test(y)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:x.trim()?``:`请输入密码`,organization:C?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){M(a);return}let o=qB(e,C),s={name:n,account:i,phone:y||`未填写`,password:x,organizationId:C,department:o,positions:T,roles:D};r(e=>p?e.map(e=>e.id===p.id?{...e,...s}:e):[...e,{id:`user-${Date.now()}`,...s,status:`启用`}]),c(C),u(null),F(`${p?`已保存用户`:`已新增用户`}：${n}`)},L=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
+      <\/script>`),title:`低代码平台`},`${r.toString()}-${n?`with-description`:`workspace-only`}`)})}function IB({module:e,view:t,label:n}){let[r,i]=(0,Z.useState)(!1);return(0,Q.jsxs)(`section`,{className:`settings-lowcode-page`,"aria-label":`${n}低代码页面`,children:[(0,Q.jsx)(`div`,{className:`settings-lowcode-toolbar`,children:(0,Q.jsx)(AB,{checked:r,onChange:i})}),(0,Q.jsx)(FB,{module:e,view:t,showDescription:r})]})}var LB=[{id:`task`,label:`待执行任务`,tone:`blue`,icon:Cz,items:[{title:`完成设备点检复核`,source:`设备管理`,deadline:`今天 17:30 前`,owner:`陈伟`,note:`3 号球磨机点检结果待复核`,action:`执行任务`},{title:`平巷凿岩作业隐患排查`,source:`双重预防机制`,deadline:`今天 16:00 前`,owner:`李明`,note:`按岗位隐患排查表完成现场检查`,action:`执行任务`},{title:`南区排水泵巡检`,source:`设备管理`,deadline:`明天 10:00 前`,owner:`设备管理部`,note:`完成设备运行参数记录`,action:`执行任务`},{title:`提交第二季度风险排查记录`,source:`安全管理`,deadline:`7 月 30 日 18:00 前`,owner:`安环部`,note:`补充风险分级管控记录`,action:`执行任务`},{title:`核对井下作业人员定位数据`,source:`安全管理`,deadline:`7 月 31 日 10:00 前`,owner:`调度室`,note:`补充人员定位异常情况说明`,action:`执行任务`},{title:`更新选矿车间设备保养记录`,source:`设备管理`,deadline:`7 月 31 日 17:00 前`,owner:`刘海`,note:`同步本周关键设备保养信息`,action:`执行任务`}]},{id:`approval`,label:`待审批流程`,tone:`orange`,icon:nz,items:[{title:`矿山应急照明设备采购申请`,source:`双重预防机制管理`,deadline:`2026-08-31 16:00:00`,owner:`王建国`,note:`流程到达时间：2026-08-31 09:12:00`,action:`去审批`,processNumber:`202608310001`},{title:`南区 2# 采场动火作业申请`,source:`生产管理`,deadline:`2026-08-31 15:00:00`,owner:`李明`,note:`流程到达时间：2026-08-31 08:46:00`,action:`去审批`,processNumber:`202608310002`},{title:`碎矿车间停机检修计划`,source:`设备管理`,deadline:`2026-09-01 09:00:00`,owner:`赵磊`,note:`流程到达时间：2026-08-30 15:28:00`,action:`去审批`}]},{id:`warning`,label:`待处理预警`,tone:`red`,icon:Sz,items:[{title:`南区排水泵房液位接近预警阈值`,source:`安全预警`,deadline:`立即处理`,owner:`系统监测`,note:`液位持续上升，请安排现场复核`,action:`查看处置`},{title:`动火作业许可将在 2 小时后到期`,source:`作业许可`,deadline:`今天 14:30 前`,owner:`系统监测`,note:`作业区域：南区 2# 采场`,action:`查看处置`},{title:`高风险作业视频监控离线`,source:`安全预警`,deadline:`今天内处理`,owner:`安环部`,note:`北区提升机房摄像头离线 18 分钟`,action:`查看处置`},{title:`井下局部通风机风量波动预警`,source:`通风监测`,deadline:`今天 18:00 前`,owner:`通风区`,note:`连续 15 分钟低于设定风量阈值`,action:`查看处置`},{title:`尾矿库在线监测数据中断`,source:`安全预警`,deadline:`明天 09:00 前`,owner:`环保部`,note:`请核实数据采集设备与通信链路`,action:`查看处置`}]}];function RB({onOpenTasks:e,onOpenProcesses:t,onOpenSafety:n}){let r=LB,i=LB.reduce((e,t)=>e+t.items.length,0),a=(r,i)=>{r.id===`task`?e():r.id===`approval`?t(`待审批`,i?.processNumber):n()};return(0,Q.jsxs)(`section`,{className:`todo-overview-page`,"aria-labelledby":`todo-overview-title`,children:[(0,Q.jsxs)(`header`,{className:`todo-overview-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`todo-overview-title`,children:`待办总览`}),(0,Q.jsx)(`span`,{children:`集中处理分派给你的任务、流程和安全预警。`})]}),(0,Q.jsxs)(`div`,{className:`todo-overview-total`,children:[(0,Q.jsx)(`b`,{children:i}),(0,Q.jsx)(`span`,{children:`项待办需要处理`})]})]}),(0,Q.jsx)(`div`,{className:`todo-groups`,children:r.map(e=>{let t=e.icon,n=e.items.slice(0,5);return(0,Q.jsxs)(`section`,{className:`todo-group ${e.tone}`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(t,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:e.label}),(0,Q.jsxs)(`p`,{children:[e.items.length,` 项待你处理`]})]}),(0,Q.jsxs)(`button`,{onClick:()=>a(e),children:[`查看全部 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{children:n.map(t=>(0,Q.jsxs)(`article`,{className:`todo-row ${e.id===`approval`?`without-deadline`:``}`,children:[(0,Q.jsx)(`span`,{className:`todo-row-dot`}),(0,Q.jsxs)(`div`,{className:`todo-row-main`,children:[(0,Q.jsx)(`h3`,{children:t.title}),(0,Q.jsxs)(`p`,{children:[(0,Q.jsx)(`b`,{children:t.source}),(0,Q.jsxs)(`i`,{children:[`发起人：`,t.owner]}),t.note]})]}),e.id===`approval`?null:(0,Q.jsx)(`time`,{children:t.deadline}),(0,Q.jsxs)(`button`,{onClick:()=>a(e,t),children:[t.action,(0,Q.jsx)(fz,{})]})]},t.title))})]},e.id)})})]})}var zB=[{label:`安全动态`,icon:pz,title:`安全动态`,description:`设置与你相关的安全提醒、预警升级和动态订阅。`},{label:`工作表`,icon:QR,title:`工作表`,description:`管理常用工作表模板、字段与填报规则。`},{label:`任务`,icon:Cz,title:`任务`,description:`配置任务提醒、默认执行人和逾期处理规则。`},{label:`流程`,icon:cz,title:`流程`,description:`维护审批模板、节点时限与流转通知。`},{label:`预警`,icon:Sz,title:`预警`,description:`维护预警规则、分级管控与处置统计。`},{label:`数据台`,icon:ZR,title:`数据台`,description:`管理业务数据接入、字段口径和同步状态。`},{label:`数据看板`,icon:ZR,title:`数据看板`,description:`设置个人看板的指标、排序和共享范围。`},{label:`应用中心`,icon:rz,title:`应用中心`,description:`管理应用、工作表与流程中心的配置入口。`},{label:`系统设置`,icon:$R,title:`系统设置`,description:`管理系统角色、用户和个人账号信息。`}];function BB(e,t,n){return e.map(e=>e.id===t?{...e,children:[...e.children,n]}:{...e,children:BB(e.children,t,n)})}function VB(e,t,n){return e.map(e=>e.id===t?{...e,...n}:{...e,children:VB(e.children,t,n)})}function HB(e,t){return e.filter(e=>e.id!==t).map(e=>({...e,children:HB(e.children,t)}))}function UB(e){return e.flatMap(e=>[e,...UB(e.children)])}function WB({nodes:e,onAddChild:t,onEdit:n,onDelete:r}){return(0,Q.jsx)(`ul`,{className:`organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`span`,{className:`organization-node`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.children.length?`${e.children.length} 个下级组织`:`末级组织`}),(0,Q.jsxs)(`span`,{className:`organization-node-actions`,children:[(0,Q.jsx)(`button`,{"aria-label":`新增 ${e.name} 的下级组织`,onClick:()=>t(e),children:`新增`}),(0,Q.jsx)(`button`,{"aria-label":`编辑 ${e.name}`,onClick:()=>n(e),children:`编辑`}),(0,Q.jsx)(`button`,{"aria-label":`删除 ${e.name}`,className:`danger`,onClick:()=>r(e),children:`删除`})]})]}),e.children.length?(0,Q.jsx)(WB,{nodes:e.children,onAddChild:t,onEdit:n,onDelete:r}):null]},e.id))})}function GB({organizations:e,users:t,selectedUser:n,onSelect:r,onClose:i,title:a=`选择人员`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n),[l,u]=(0,Z.useState)(s?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=l?t.filter(e=>e.organizationId===l):t,f=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(f,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog organization-leader-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`single-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`single-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(f,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`人员 `,(0,Q.jsxs)(`span`,{children:[d.length,` 人`]})]}),d.length?d.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`radio`,name:`single-person-picker`,checked:s?.id===e.id,onChange:()=>c(e)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsx)(`span`,{children:s?`1 人`:`0 人`})]}),s?(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:s.name}),(0,Q.jsx)(`small`,{children:s.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>c(null),children:`移除`})]}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(s),i()},children:`确认选择`})]})]})})}function KB({organizations:e,users:t,selectedUsers:n,onSelect:r,onClose:i,title:a=`分配用户`,selectedLabel:o=`已选人员`}){let[s,c]=(0,Z.useState)(n.map(e=>e.id)),[l,u]=(0,Z.useState)(n[0]?.organizationId??t[0]?.organizationId??e[0]?.id??``),d=e=>e.organizationId??e.organization,f=l?t.filter(e=>d(e)===l):t,p=t.filter(e=>s.includes(e.id)),m=f.length>0&&f.every(e=>s.includes(e.id)),h=e=>c(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),g=()=>c(e=>[...new Set([...e,...f.map(e=>e.id)])]),_=()=>c(e=>e.filter(e=>!f.some(t=>t.id===e))),v=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:l===e.id?`active`:``,onClick:()=>u(e.id),children:e.name}),e.children?.length?(0,Q.jsx)(v,{nodes:e.children}):null]},e.id))});return(0,Q.jsx)(`div`,{className:`single-person-picker-layer`,onMouseDown:i,role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`multi-person-picker-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`multi-person-picker-title`,children:a}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭${a}弹窗`,onClick:i,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),e.length?(0,Q.jsx)(v,{nodes:e}):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂无可选组织`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:`人员`}),(0,Q.jsxs)(`span`,{children:[f.length,` 人`]})]}),f.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:g,disabled:m,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:_,disabled:!f.some(e=>s.includes(e.id)),children:`全不选`})]}):null]}),f.length?f.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s.includes(e.id),onChange:()=>h(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[o,` `,(0,Q.jsxs)(`span`,{children:[p.length,` 人`]})]}),p.length?p.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department||`未设置部门`})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>h(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:i,children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{r(p),i()},children:`确认选择`})]})]})})}function qB({organizations:e,setOrganizations:t,users:n}){let[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(`公司`),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(!1),[p,m]=(0,Z.useState)(`尚未建立组织架构，可手动新增根组织。`),h=e.length>0,g=r?.mode===`root`||r?.mode===`edit`&&e.some(e=>e.id===r.node.id),_=()=>f(!0),v=()=>{o(``),c(`公司`),u(null),i({mode:`root`})},y=e=>{o(``),c(`部门`),u(null),i({mode:`child`,node:e})},b=e=>{o(e.name),c(e.type??`部门`),u(n.find(t=>t.id===e.leaderId)??(e.leaderName?{id:e.leaderId??``,name:e.leaderName,department:``}:null)),i({mode:`edit`,node:e})},x=e=>{e.preventDefault();let n=a.trim();if(!n)return;let c=g?{name:n}:{name:n,type:s,leaderId:l?.id??``,leaderName:l?.name??``};if(r.mode===`edit`)t(e=>VB(e,r.node.id,c)),m(`已更新组织：${n}`);else{let e={id:`org-${Date.now()}`,...c,children:[]};t(t=>r.mode===`child`?BB(t,r.node.id,e):[...t,e]),m(`已新增组织：${n}`)}o(``),u(null),i(null)},S=e=>{t(t=>HB(t,e.id)),m(`已删除组织：${e.name}`)},C=r?.mode===`edit`?`编辑组织：${r.node.name}`:r?.mode===`child`?`新增 ${r.node.name} 的下级组织`:`新增根组织`;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`organization-center`,"aria-labelledby":`organization-title`,children:[(0,Q.jsx)(`div`,{className:`organization-toolbar`,children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`organization-title`,children:`组织架构`})})}),(0,Q.jsxs)(`div`,{className:h?`organization-tip locked`:`organization-tip`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsx)(`span`,{children:p})]}),h?(0,Q.jsxs)(`div`,{className:`organization-tree-panel`,children:[(0,Q.jsx)(`div`,{className:`organization-tree-heading`,children:(0,Q.jsx)(`b`,{children:`组织树`})}),(0,Q.jsx)(WB,{nodes:e,onAddChild:y,onEdit:b,onDelete:S})]}):(0,Q.jsxs)(`div`,{className:`organization-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`还没有组织架构`}),(0,Q.jsx)(`p`,{children:`请先新增组织架构根组织`}),(0,Q.jsxs)(`button`,{onClick:v,children:[(0,Q.jsx)(az,{}),`新增根组织`]})]})]}),r?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog`,onSubmit:x,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`organization-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`organization-dialog-title`,children:C}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增组织弹窗`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[r.mode===`child`?(0,Q.jsxs)(`label`,{children:[`上级组织`,(0,Q.jsx)(`input`,{value:r.node.name,disabled:!0})]}):null,(0,Q.jsxs)(`label`,{children:[`组织名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),placeholder:`例如：安全管理部`,autoFocus:!0})]}),g?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`label`,{children:[`组织类型`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{children:`公司`}),(0,Q.jsx)(`option`,{children:`部门`})]})]}),(0,Q.jsxs)(`label`,{className:`organization-leader-field`,children:[`负责人`,(0,Q.jsx)(`button`,{type:`button`,onClick:_,children:l?`${l.name}${l.department?` · ${l.department}`:``}`:`选择负责人`})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存组织`})]})]})}):null,d?(0,Q.jsx)(GB,{organizations:e,users:n,selectedUser:l,onSelect:u,onClose:()=>f(!1),title:`选择负责人`,selectedLabel:`已选负责人`}):null]})}function JB({nodes:e,selectedId:t,onSelect:n}){return(0,Q.jsx)(`ul`,{className:`user-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{className:t===e.id?`active`:``,onClick:()=>n(e.id),children:(0,Q.jsx)(`span`,{children:e.name})}),e.children.length?(0,Q.jsx)(JB,{nodes:e.children,selectedId:t,onSelect:n}):null]},e.id))})}function YB(e,t,n=[]){for(let r of e){let e=[...n,r.name];if(r.id===t)return e.slice(-3).join(` / `);let i=YB(r.children,t,e);if(i)return i}return``}function XB({label:e,options:t,value:n,onChange:r,activeMenu:i,setActiveMenu:a}){let o=i===e,s=e=>typeof e==`string`?e:e.value,c=e=>typeof e==`string`?e:e.label,l=t.filter(e=>n.includes(s(e))).map(c),u=e=>{let t=s(e);r(n.includes(t)?n.filter(e=>e!==t):[...n,t])};return(0,Q.jsxs)(`div`,{className:`user-multi-select`,children:[(0,Q.jsx)(`span`,{children:e}),(0,Q.jsxs)(`button`,{type:`button`,className:o?`open`:``,"aria-expanded":o,onClick:()=>a(o?``:e),children:[(0,Q.jsx)(`b`,{children:l.length?l.join(`、`):`请选择${e}`}),(0,Q.jsx)(gz,{})]}),o?(0,Q.jsx)(`div`,{className:`user-multi-options`,role:`listbox`,"aria-label":e,children:t.map(e=>{let t=s(e);return(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:n.includes(t),onChange:()=>u(e)}),(0,Q.jsx)(`span`,{children:c(e)})]},t)})}):null]})}function ZB({organizations:e,setOrganizations:t,users:n,setUsers:r,roles:i}){let[a,o]=(0,Z.useState)(`users`),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(null),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(null),[h,g]=(0,Z.useState)(``),[_,v]=(0,Z.useState)(``),[y,b]=(0,Z.useState)(``),[x,S]=(0,Z.useState)(`abc123#`),[C,w]=(0,Z.useState)(``),[T,E]=(0,Z.useState)([]),[D,O]=(0,Z.useState)([]),[k,A]=(0,Z.useState)(``),[j,M]=(0,Z.useState)({}),[N,P]=(0,Z.useState)({name:``,account:``,phone:``,status:``}),[ee,F]=(0,Z.useState)(``),I=(0,Z.useRef)(null);(0,Z.useEffect)(()=>{if(!ee)return;let e=window.setTimeout(()=>F(``),3e3);return()=>window.clearTimeout(e)},[ee]);let te=UB(e),ne=te.find(e=>e.id===s),re=n.filter(e=>(!s||e.organizationId===s)&&(!N.name||e.name.includes(N.name))&&(!N.account||e.account.includes(N.account))&&(!N.phone||e.phone.includes(N.phone))&&(!N.status||e.status===N.status)),ie=()=>{m(null),g(``),v(``),b(``),S(`abc123#`),w(s||te[0]?.id||``),E([]),O([]),M({}),A(``),u(`create`)},ae=e=>{m(e),g(e.name),v(e.account),b(e.phone===`未填写`?``:e.phone),S(e.password||`abc123#`),w(e.organizationId||te[0]?.id||``),E(e.positions||[]),O(e.roles||[]),M({}),A(``),u(`create`)},oe=e=>M(t=>t[e]?{...t,[e]:``}:t),se=t=>{t.preventDefault();let n=h.trim(),i=_.trim(),a={name:n?``:`请输入用户名称`,phone:!y||/^\d{11}$/.test(y)?``:`请输入 11 位数字手机号`,account:i?``:`请输入账号`,password:x.trim()?``:`请输入密码`,organization:C?``:`请选择所属组织`};if(Object.values(a).some(Boolean)){M(a);return}let o=YB(e,C),s={name:n,account:i,phone:y||`未填写`,password:x,organizationId:C,department:o,positions:T,roles:D};r(e=>p?e.map(e=>e.id===p.id?{...e,...s}:e):[...e,{id:`user-${Date.now()}`,...s,status:`启用`}]),c(C),u(null),F(`${p?`已保存用户`:`已新增用户`}：${n}`)},L=()=>{let e=URL.createObjectURL(new Blob([`﻿账号,用户名称,手机号,所属组织
 zhangyu,张宇,13800000000,安全管理部
-`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},R=t=>{let n=t.target.files?.[0];if(!n||!te.length)return;let i=s||te[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123#`,organizationId:i,department:qB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),F(`已导入 ${t.length} 位用户`)):F(`未识别到可导入的用户数据`),u(null)},a.readAsText(n,`utf-8`),t.target.value=``},z=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),ce=e=>{r(t=>t.filter(t=>t.id!==e)),F(`已删除用户`)},B=e=>f({type:`status`,user:e}),le=e=>{if(e.status===`启用`){F(`用户“${e.name}”处于启用状态，请先停用后再删除`);return}f({type:`delete`,user:e})},ue=e=>f({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`organization`,className:a===`organization`?`active`:``,onClick:()=>o(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`users`,className:a===`users`?`active`:``,onClick:()=>o(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),a===`organization`?(0,Q.jsx)(GB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[te.length,` 个组织`]})]}),e.length?(0,Q.jsx)(KB,{nodes:e,selectedId:s,onSelect:c}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:ne?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:N.name,onChange:e=>P(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:N.account,onChange:e=>P(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:N.phone,onChange:e=>P(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:N.status,onChange:e=>P(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>F(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>P({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsx)(`div`,{className:`user-directory-actions`,children:(0,Q.jsxs)(`button`,{className:`user-add`,onClick:ie,disabled:!te.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})}),te.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),re.length?re.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>B(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ae(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),l?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>u(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:l===`create`?(0,Q.jsxs)(`form`,{onSubmit:se,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:p?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||A(``)},children:[(0,Q.jsxs)(`label`,{className:j.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:h,maxLength:10,onChange:e=>{g(e.target.value),oe(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),j.name?(0,Q.jsx)(`em`,{children:j.name}):null]}),(0,Q.jsxs)(`label`,{className:j.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:y,maxLength:11,inputMode:`numeric`,onChange:e=>{b(e.target.value.replace(/\D/g,``).slice(0,11)),oe(`phone`)},placeholder:`例如：13800000000`}),j.phone?(0,Q.jsx)(`em`,{children:j.phone}):null]}),(0,Q.jsxs)(`label`,{className:j.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:_,onChange:e=>{v(e.target.value),oe(`account`)},placeholder:`例如：zhangyu`}),j.account?(0,Q.jsx)(`em`,{children:j.account}):null]}),(0,Q.jsxs)(`label`,{className:j.password?`field-error`:``,children:[`密码`,(0,Q.jsx)(`input`,{type:p?`password`:`text`,value:x,placeholder:p?`请输入密码`:void 0,onChange:e=>{S(e.target.value),oe(`password`)}}),j.password?(0,Q.jsx)(`em`,{children:j.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${j.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:C,onChange:e=>{w(e.target.value),oe(`organization`)},children:te.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:qB(e,t.id)},t.id))}),j.organization?(0,Q.jsx)(`em`,{children:j.organization}):null]}),(0,Q.jsx)(JB,{label:`岗位`,options:Hz,value:T,onChange:E,activeMenu:k,setActiveMenu:A}),(0,Q.jsx)(JB,{label:`角色`,options:i.map(e=>({value:e.name,label:e.status===`停用`?`${e.name}（已停用）`:e.name})),value:D,onChange:O,activeMenu:k,setActiveMenu:A})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:ne?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:I,type:`file`,accept:`.csv,text/csv`,onChange:R})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:L,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>u(null),children:`取消`})})]})})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:d.type===`cancel-create`?`确定取消${p?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:d.type===`delete`?`确定删除用户“${d.user.name}”吗？删除后无法恢复。`:d.type===`reset-password`?`确定将用户“${d.user.name}”的密码重置为默认密码 abc123# 吗？`:`确定${d.user.status===`启用`?`停用`:`启用`}用户“${d.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{d.type===`cancel-create`?(u(null),A(``)):d.type===`status`?(z(d.user.id),F(`已${d.user.status===`启用`?`停用`:`启用`}用户：${d.user.name}`)):d.type===`reset-password`?(r(e=>e.map(e=>e.id===d.user.id?{...e,password:`abc123#`}:e)),F(`已将 ${d.user.name} 的密码重置为 abc123#`)):ce(d.user.id),f(null)},children:`确定`})]})]})}):null,ee?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[ee,(0,Q.jsx)(`button`,{onClick:()=>F(``),children:`×`})]}):null]})}function XB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function ZB({onAction:e,roles:t,setRoles:n}){let r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`,children:[{name:`法律法规`},{name:`制度文件`},{name:`隐患排查任务发布`},{name:`岗位隐患排查清单`,children:mB.map(e=>({name:e.title}))},{name:`隐患排查治理记录`},{name:`隐患排查审批流程`,children:hB.map(e=>({name:e.title}))},{name:`隐患排查工作表`},{name:`隐患整改通知单`},{name:`隐患整改台账`},{name:`隐患信息统计`},{name:`隐患汇报`}]},{name:`风险告知卡`},{name:`风险四色图`}]},{name:`安全管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`设备管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`火工品管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`生产管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`机电管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`消防管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`应急管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`,children:[{name:`我发起的`},{name:`已执行`},{name:`已转发`},{name:`我撤回的`},{name:`我参与的`}]},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`,children:[{name:`人资管理`,children:[{name:`员工离职申请`},{name:`职员晋升审批`},{name:`职员调岗审批`}]},{name:`基建管理`,children:[{name:`地表基建项目报建申请`},{name:`年度工程计划编制审批`},{name:`项目合同申报审批`}]},{name:`选矿管理`,children:[{name:`换矿申请`},{name:`选厂药剂领用申请`},{name:`材料采购流程`}]}]},{name:`待审批`},{name:`已审批`},{name:`抄送我的`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:SB.map(e=>({name:e.name}))},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务`},{name:`流程`},{name:`预警`},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`菜单管理`},{name:`字典管理`},{name:`企业设置`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={"设置中心/系统设置/角色权限":[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`]},o=new Set(mB.map(e=>`应用/双重预防机制/隐患排查治理/岗位隐患排查清单/${e.title}`)),s=new Set([...o,...hB.map(e=>`应用/双重预防机制/隐患排查治理/隐患排查审批流程/${e.title}`)]),c=e=>(a[e]??[]).map(t=>`button:${e}:${t}`),l=e=>o.has(e)?[`新增`,`导入`,`导出`].map(t=>`button:${e}:数据:${t}`):[],u=e=>s.has(e)?[`页面`,`数据`,...o.has(e)?[`草稿箱`]:[]]:[],d=e=>u(e).map(t=>`tab:${e}:${t}`),f=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:f(e.children,n)};let i=a[r]??[],o=u(r);return{id:`page:${r}`,name:e.name,type:`page`,children:i.length||o.length?[...i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`})),...o.map(e=>{let t=e===`数据`?l(r):[];return{id:`tab:${r}:${e}`,name:e,type:`tab`,children:t.length?t.map(e=>({id:e,name:e.split(`:`).at(-1),type:`button`})):void 0}})]:void 0}}),p=f(r),m=e=>e.children?.length?e.children.flatMap(m):[e.id],h=p.flatMap(m),g=()=>{let e=t=>t.flatMap(t=>t.children?.length?[t.id,...e(t.children)]:[]);return new Set(e(p))},_=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[v,y]=(0,Z.useState)(null),[b,x]=(0,Z.useState)(``),[S,C]=(0,Z.useState)(`启用`),[w,T]=(0,Z.useState)(new Set(h.slice(0,18))),[E,D]=(0,Z.useState)(`menu`),[O,k]=(0,Z.useState)(g),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(null),[P,ee]=(0,Z.useState)(_),[F,I]=(0,Z.useState)(null),[te,ne]=(0,Z.useState)(`group`),[re,ie]=(0,Z.useState)([`u-zhang`]),[ae,oe]=(0,Z.useState)({admin:[`u-zhang`],safety:[`u-zhao`],executor:[`u-li`],viewer:[]}),se=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],L=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],R=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],z=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],ce=()=>{x(``),C(`启用`),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`create`})},B=e=>{x(e.name),C(e.status),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`edit`,role:e})},le=t=>{t.preventDefault();let r=b.trim();r&&(v.mode===`edit`?n(e=>e.map(e=>e.id===v.role.id?{...e,name:r,status:S}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:S,createdAt:`2026-08-12 10:30`}]),y(null),e(v.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},ue=e=>T(t=>{let n=new Set(t),r=m(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),de=e=>k(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),fe=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=fe(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return w.has(`page:${r}`)||c(r).some(e=>w.has(e))||d(r).some(e=>w.has(e))||l(r).some(e=>w.has(e))?[e]:[]}),V=fe(r),H=i(V).length,pe=e=>ee(t=>({...t,...Object.fromEntries(i(V).map(t=>[t,e]))})),me=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:e.type===`tab`?`role-menu-tab`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:e.type===`tab`?`role-menu-tab-label`:``,children:[(0,Q.jsx)(XB,{node:e,selectedIds:w,getLeafIds:m,onToggle:ue}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${O.has(e.id)?`expanded`:``}`,"aria-label":`${O.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>de(e.id),children:(0,Q.jsx)(_z,{})}):null]}),e.children&&O.has(e.id)?(0,Q.jsx)(me,{nodes:e.children}):null]},`${e.id}-${t}`))}),he=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:te===e.id?`active`:``,onClick:()=>ne(e.id),children:e.name}),e.children?(0,Q.jsx)(he,{nodes:e.children}):null]},e.id))}),ge=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:ge(n.children??[],t)),null),_e=e=>e.children?.length?e.children.flatMap(_e):[e.id],ve=ge(se,te),ye=L.filter(e=>e.organization===te),U=ye.map(e=>e.id),W=U.some(e=>re.includes(e)),G=U.length>0&&U.every(e=>re.includes(e)),be=M?.dataPermissionOrganizationIds??[],xe=z.filter(e=>be.includes(e.organization)),K=L.filter(e=>re.includes(e.id)),Se=e=>ie(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),Ce=()=>ie(e=>[...new Set([...e,...U])]),we=()=>ie(e=>e.filter(e=>!U.includes(e))),Te=e=>{I(e),ne(`group`),ie(ae[e.id]??[])},Ee=e=>{let t=_e(e);N(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=z.filter(e=>i.includes(e.organization)).map(e=>e.id),o=z.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},De=e=>N(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Oe=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:_e(e).some(e=>be.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:_e(e).every(e=>be.includes(e)),ref:t=>{if(!t)return;let n=_e(e),r=n.filter(e=>be.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>Ee(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Oe,{nodes:e.children}):null]},e.id))}),q=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:O.has(r)?`expanded`:``,"aria-label":`${O.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>de(r),children:(0,Q.jsx)(_z,{})})]}),O.has(r)?(0,Q.jsx)(`ul`,{children:q(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:P[e.name]??`全部`,onChange:t=>ee(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`所在组织及下级`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)}),ke=()=>{let t=ae[A.id]??[];if(t.length){e(`角色“${A.name}”已分配 ${t.length} 位用户，无法删除`),j(null);return}n(e=>e.filter(e=>e.id!==A.id)),oe(e=>{let t={...e};return delete t[A.id],t}),e(`已删除角色：${A.name}`),j(null)},Ae=!!(A&&(ae[A.id]??[]).length),je=A?(ae[A.id]??[]).length:0;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:ce,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>B(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>j(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>Te(e),children:`分配用户`})]})]},e.id))]})]}),v?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>y(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:le,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:v.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>y(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:b,onChange:e=>x(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:S,onChange:e=>C(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`menu`,className:E===`menu`?`active`:``,onClick:()=>D(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`data`,className:E===`data`?`active`:``,onClick:()=>D(`data`),children:`数据权限`})]}),E===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单与页面选择可访问范围`})]}),(0,Q.jsx)(me,{nodes:p})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`所在组织及下级`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>pe(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>y(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,M?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>N(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>N(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:M.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Oe,{nodes:R})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!xe.length&&xe.every(e=>M.dataAuthorizedUserIds.includes(e.id)),onChange:()=>N(e=>{let t=xe.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:xe.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:M.dataAuthorizedUserIds.includes(e.id),onChange:()=>De(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[H,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>N(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${M.name}的数据权限`),N(null)},children:`保存权限`})]})]})}):null,F?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>I(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>I(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(he,{nodes:se})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:ve?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[ye.length,` 人`]})]}),ye.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:Ce,disabled:G,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:we,disabled:!W,children:`全不选`})]}):null]}),ye.length?ye.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:re.includes(e.id),onChange:()=>Se(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[K.length,` 人`]})]}),K.length?K.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>Se(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>I(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{oe(e=>({...e,[F.id]:re})),e(`已为${F.name}分配 ${K.length} 位用户`),I(null)},children:`确认分配`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:Ae?`无法删除`:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:Ae?`角色“${A.name}”下已分配 ${je} 位用户，无法删除。请先移除该角色下的用户后再试。`:`确定删除角色“${A.name}”吗？`})}),(0,Q.jsx)(`footer`,{children:Ae?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>j(null),children:`知道了`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:ke,children:`确认删除`})]})})]})}):null]})}function QB({onAction:e,roles:t}){let[n,r]=(0,Z.useState)(!1),[i,a]=(0,Z.useState)(!1),[o,s]=(0,Z.useState)(!1),[c,l]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[u,d]=(0,Z.useState)({current:``,next:``,confirm:``}),[f,p]=(0,Z.useState)(``),m=[`安全管理员`,`数据查看员`].map(e=>t.find(t=>t.name===e)).filter(Boolean).map(e=>e.status===`停用`?`${e.name}（已停用）`:e.name).join(`、`),h=()=>{r(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:c.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>s(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>n?h():r(!0),children:n?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>a(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.name,onChange:e=>l(t=>({...t,name:e.target.value}))}):c.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.phone,onChange:e=>l(t=>({...t,phone:e.target.value}))}):c.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.email,onChange:e=>l(t=>({...t,email:e.target.value}))}):c.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:m||`安全管理员、数据查看员（已停用）`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),i?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>a(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!u.current||!u.next||!u.confirm){p(`请完整填写密码信息`);return}if(u.next!==u.confirm){p(`两次输入的新密码不一致`);return}if(u.current!==`123456`){p(`旧密码输入错误，请重新输入`);return}a(!1),d({current:``,next:``,confirm:``}),p(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>a(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.current,onChange:e=>d(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.next,onChange:e=>d(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.confirm,onChange:e=>d(t=>({...t,confirm:e.target.value}))})]}),f?(0,Q.jsx)(`p`,{className:`password-error`,children:f}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>a(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,o?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>s(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>s(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>s(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{s(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function $B({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,type:`系统字典`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,type:`业务字典`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-1-1`,parentId:`type-1`,code:`0101`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2-1`,parentId:`type-2`,code:`0201`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,type:`系统字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,type:`业务字典`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,type:`系统字典`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]},{id:`dict-6`,code:`FLOW_CATEGORY`,name:`流程分类`,type:`业务字典`,remark:`用于流程中心的流程归类。`,references:2,updater:`张宇`,updatedAt:`2026-08-24 10:30`,data:jz.map((e,t)=>({id:`flow-category-${t+1}`,code:String(t+1).padStart(2,`0`),name:e,updater:`张宇`,updatedAt:`2026-08-24 10:30`}))}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,type:`业务字典`,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),[y,b]=(0,Z.useState)(null),x=p.trim().toLowerCase(),S=s.filter(e=>e.name.toLowerCase().includes(x)),C=[...S.filter(e=>!e.parentId).flatMap(e=>[e,...y===e.id?S.filter(t=>t.parentId===e.id):[]])],w=Math.max(1,Math.ceil(C.length/_)),T=Math.min(h,w),E=C.slice((T-1)*_,T*_),D=(e=null)=>{o(e?{code:e.code,name:e.name,type:e.type??`业务字典`,remark:e.remark??``}:{code:``,name:``,type:`业务字典`,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),b(null),i({type:`editor`,dictionary:e})},O=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim(),c=a.type;if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,type:c,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,type:c,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,type:c,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},k=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},A=(e=null)=>{g(1),f(null),e&&b(e),c(t=>t.some(e=>e.isDraft)?t:[{id:`data-${Date.now()}`,code:``,name:``,parentId:e,updater:``,updatedAt:``,isDraft:!0},...t])},j=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},M=({id:t,code:n,name:r})=>{let i=n.trim(),a=r.trim();return i?a?s.some(e=>e.id!==t&&e.code.trim().toLocaleLowerCase()===i.toLocaleLowerCase())?(e(`数据编码“${i}”已存在，请修改后保存`),null):{code:i,name:a}:(e(`数据名称不能为空`),null):(e(`数据编码不能为空`),null)},N=e=>{let t=s.find(t=>t.id===e);if(!t)return!1;let n=M(t);return n?(c(t=>t.map(t=>t.id===e?{...t,...n,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t)),!0):!1},P=e=>{f({id:e.id,code:e.code,name:e.name})},ee=()=>{if(!d)return!1;let e=M(d);return e?(c(t=>t.map(t=>t.id===d.id?{...t,...e,updater:`张宇`,updatedAt:`刚刚`}:t)),f(null),!0):!1},F=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},I=e=>{let t=new Set(e);s.forEach(e=>{e.parentId&&t.has(e.parentId)&&t.add(e.id)}),c(e=>e.filter(e=>!t.has(e.id))),u(e=>e.filter(e=>!t.has(e))),f(e=>e&&t.has(e.id)?null:e),y&&t.has(y)&&b(null)},te=e=>s.find(t=>t.id===e)?.name||`-`;return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>D(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`类型`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.type??`业务字典`}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>D(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(wz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:k,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`类型`}),(0,Q.jsxs)(`select`,{value:a.type,disabled:!!r.dictionary,title:r.dictionary?`编辑字典时不能修改类型`:void 0,onChange:e=>o(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{children:`系统字典`}),(0,Q.jsx)(`option`,{children:`业务字典`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:A,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>I(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!C.filter(e=>!e.isDraft).length&&l.length===C.filter(e=>!e.isDraft).length,onChange:()=>{let e=C.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`上级数据`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),E.map(e=>{let t=d?.id===e.id,n=!e.parentId&&y===e.id;return(0,Q.jsxs)(Z.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``} ${e.parentId?`dictionary-data-row-child`:`dictionary-data-row-root`}`,onBlur:n=>{n.currentTarget.contains(n.relatedTarget)||(e.isDraft&&N(e.id),t&&ee())},children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>F(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?j(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?j(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{className:e.parentId?`dictionary-data-child-name`:``,children:e.name}),(0,Q.jsx)(`span`,{className:e.parentId?`dictionary-parent-data`:`dictionary-root-data`,children:e.parentId?te(e.parentId):`-`}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>N(e.id),children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>I([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:ee,children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[e.parentId?null:(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-toggle-child`,"aria-label":`${n?`收起`:`展开`}${e.name}的子级数据`,"aria-expanded":n,title:n?`收起子级`:`展开子级`,onClick:()=>b(t=>t===e.id?null:e.id),children:`子级`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>P(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>I([e.id]),children:(0,Q.jsx)(wz,{})})]})]},e.id),n?(0,Q.jsxs)(`div`,{className:`dictionary-child-add-row`,children:[(0,Q.jsx)(`span`,{className:`dictionary-child-add-label`,children:`子级数据`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>A(e.id),children:`新增子级`})]},`${e.id}-child-add`):null]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,S.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:T===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[T,` / `,w]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:T===w,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:r.dictionary.type===`系统字典`?`提示`:`确认删除`}),r.dictionary.type===`系统字典`?null:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:r.dictionary.type===`系统字典`?`系统字典“${r.dictionary.name}”不能删除，只能修改字典值。`:`确定删除字典“${r.dictionary.name}”吗？删除后无法恢复。`})}),(0,Q.jsx)(`footer`,{children:r.dictionary.type===`系统字典`?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>i(null),children:`关闭`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})})]})}):null]})}function eV({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),a=(0,Z.useRef)(null),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(!1),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(null),[v,y]=(0,Z.useState)(``),b=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){s(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){s(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),s(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},x=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},S=e=>{t(t=>({...t,systemIcon:e.id})),l(!1),n(`已选择系统图标：${e.label}`)},C=()=>{p(e=>(e&&(h(``),_(null),y(``)),!e))},w=e=>{let t=e.target.files?.[0];if(e.target.value=``,t){if(!t.type.startsWith(`image/`)){y(`请选择图片格式的图标文件`);return}if(t.size>512*1024){y(`图标文件不能超过 512KB`);return}_(t),y(``)}},T=()=>{if(!m.trim()){y(`请输入图标名称`);return}if(!g){y(`请选择图标文件`);return}let e=new FileReader;e.onload=()=>{let r={id:`custom-icon-${Date.now()}`,label:m.trim().slice(0,20),src:String(e.result)};t(e=>({...e,customSystemIcons:[...e.customSystemIcons??[],r]})),y(``),h(``),_(null),p(!1),n(`图标“${r.label}”已上传`)},e.readAsDataURL(g)},E=e=>{t(t=>({...t,customSystemIcons:e.src?(t.customSystemIcons??[]).filter(t=>t.id!==e.id):t.customSystemIcons??[],hiddenSystemIconIds:e.src?t.hiddenSystemIconIds??[]:[...new Set([...t.hiddenSystemIconIds??[],e.id])],systemIcon:t.systemIcon===e.id?`apps`:t.systemIcon})),d(null),n(`图标“${e.label}”已删除`)},D=[...Iz.filter(t=>!(e.hiddenSystemIconIds??[]).includes(t.id)),...e.customSystemIcons??[]];return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(Lz,{name:e.systemIcon,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>l(!0),children:`管理图标`})})]})]}),o?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:o}):null,c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>l(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`图标库`}),(0,Q.jsxs)(`div`,{className:`system-icon-picker-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:C,children:f?`取消上传`:`上传图标`}),(0,Q.jsx)(`span`,{children:`支持 PNG、JPG、WebP、SVG，最大 512KB`})]}),f?(0,Q.jsxs)(`div`,{className:`system-icon-upload-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{children:[`图标名称 `,(0,Q.jsx)(`i`,{children:`*`})]}),(0,Q.jsx)(`input`,{value:m,maxLength:20,placeholder:`请输入图标名称`,onChange:e=>{h(e.target.value),y(``)}})]}),(0,Q.jsxs)(`div`,{className:`system-icon-upload-file`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>a.current?.click(),children:`选择文件`}),(0,Q.jsx)(`span`,{children:g?.name??`未选择文件`}),(0,Q.jsx)(`button`,{type:`button`,onClick:T,children:`确认上传`})]}),v?(0,Q.jsx)(`p`,{role:`alert`,children:v}):null]}):null,(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:D.map(t=>(0,Q.jsxs)(`div`,{className:`system-icon-picker-item`,children:[(0,Q.jsxs)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>S(t),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:t.id,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`b`,{children:t.label})]}),(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-delete`,"aria-label":`删除${t.label}图标`,title:`删除图标`,onClick:()=>d(t),children:(0,Q.jsx)(wz,{})})]},t.id))}),(0,Q.jsx)(`input`,{ref:a,type:`file`,accept:`image/png,image/jpeg,image/webp,image/svg+xml`,onChange:w,hidden:!0})]})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-system-icon-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{id:`delete-system-icon-title`,children:`确认删除图标`})}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除图标“`,u.label,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>E(u),children:`确认删除`})]})]})}):null]})}function tV({onAction:e}){let t=[{id:`workbench`,name:`工作台`,type:`菜单`,icon:`home`,sort:1,path:`/workbench`,component:`WorkbenchPage`,perms:`workbench:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`applications`,name:`应用`,type:`目录`,icon:`apps`,sort:2,path:`/applications`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-dual-prevention`,name:`双重预防机制`,type:`目录`,icon:`shield`,sort:1,path:`dual-prevention`,component:``,perms:`application:dual-prevention:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-risk-control`,name:`风险分级管控`,type:`菜单`,icon:`shield`,sort:1,path:`risk-control`,component:`DualPreventionPage`,perms:`application:risk-control:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-list`,name:`岗位隐患排查清单`,type:`菜单`,icon:`document`,sort:2,path:`inspection-list`,component:`DualPreventionPage`,perms:`application:inspection-list:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-flow`,name:`隐患排查审批流程`,type:`菜单`,icon:`approval`,sort:3,path:`inspection-flow`,component:`DualPreventionPage`,perms:`application:inspection-flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`application-safety`,name:`安全管理`,type:`菜单`,icon:`shield`,sort:2,path:`safety`,component:`ApplicationPage`,perms:`application:safety:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-equipment`,name:`设备管理`,type:`菜单`,icon:`equipment`,sort:3,path:`equipment`,component:`ApplicationPage`,perms:`application:equipment:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-explosive`,name:`火工品管理`,type:`菜单`,icon:`explosive`,sort:4,path:`explosive`,component:`ApplicationPage`,perms:`application:explosive:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-production`,name:`生产管理`,type:`菜单`,icon:`production`,sort:5,path:`production`,component:`ApplicationPage`,perms:`application:production:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-electromechanical`,name:`机电管理`,type:`菜单`,icon:`equipment`,sort:6,path:`electromechanical`,component:`ApplicationPage`,perms:`application:electromechanical:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-fire`,name:`消防管理`,type:`菜单`,icon:`fire`,sort:7,path:`fire`,component:`ApplicationPage`,perms:`application:fire:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-emergency`,name:`应急管理`,type:`菜单`,icon:`warning`,sort:8,path:`emergency`,component:`ApplicationPage`,perms:`application:emergency:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`tasks`,name:`任务`,type:`目录`,icon:`task`,sort:3,path:`/tasks`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`processes`,name:`流程`,type:`目录`,icon:`flow`,sort:4,path:`/processes`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dynamics`,name:`动态`,type:`目录`,icon:`message`,sort:5,path:`/dynamics`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`warnings`,name:`预警`,type:`目录`,icon:`warning`,sort:6,path:`/warnings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dashboards`,name:`看板`,type:`目录`,icon:`dashboard`,sort:7,path:`/dashboards`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:SB.map((e,t)=>({id:`dashboard-${t+1}`,name:e.name,type:`菜单`,icon:`dashboard`,sort:t+1,path:`dashboard-${t+1}`,component:`DashboardPage`,perms:`dashboard:${t+1}:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}))},{id:`settings`,name:`设置中心`,type:`目录`,icon:`settings`,sort:8,path:`/settings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`settings-dynamics`,name:`安全动态`,type:`菜单`,icon:`message`,sort:1,path:`dynamics`,component:`DynamicsSettings`,perms:`settings:dynamics:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-worksheet`,name:`工作表`,type:`菜单`,icon:`document`,sort:2,path:`worksheet`,component:`EmbeddedLowCodePage`,perms:`settings:worksheet:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-task`,name:`任务`,type:`菜单`,icon:`task`,sort:3,path:`task`,component:`EmbeddedTaskFrame`,perms:`settings:task:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-flow`,name:`流程`,type:`菜单`,icon:`flow`,sort:4,path:`flow`,component:`EmbeddedLowCodePage`,perms:`settings:flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`system-settings`,name:`系统设置`,type:`目录`,icon:`settings`,sort:8,path:`system`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`organization-users`,name:`组织用户`,type:`菜单`,icon:`people`,sort:1,path:`organization-users`,component:`UserManagementCenter`,perms:`system:user:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`role-permission`,name:`角色权限`,type:`菜单`,icon:`approval`,sort:2,path:`role-permission`,component:`RbacPage`,perms:`system:role:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`menu-management`,name:`菜单管理`,type:`菜单`,icon:`sort`,sort:3,path:`menu-management`,component:`MenuManagementPage`,perms:`system:menu:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-31 09:00`,children:[]},{id:`dictionary`,name:`字典管理`,type:`菜单`,icon:`document`,sort:4,path:`dictionary`,component:`DictionaryManagement`,perms:`system:dictionary:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`enterprise`,name:`企业设置`,type:`菜单`,icon:`briefcase`,sort:5,path:`enterprise`,component:`EnterpriseSettings`,perms:`system:enterprise:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]}]}],n=(e=`settings`)=>({parentId:e,name:``,type:`菜单`,icon:`apps`,sort:1,path:``,component:``,perms:``,visible:`显示`,status:`启用`}),[r,i]=(0,Z.useState)(t),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(()=>new Set([`settings`,`system-settings`])),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(n()),[h,g]=(0,Z.useState)(``),_=(e,t=0,n=`0`)=>e.flatMap(e=>[{...e,depth:t,parentId:n},..._(e.children??[],t+1,e.id)]),v=_(r),y=e=>{if(e.id===`applications`)return!0;let t=e.parentId;for(;t!==`0`;){if(t===`applications`)return!0;t=v.find(e=>e.id===t)?.parentId??`0`}return!1},b=v.filter(e=>e.type!==`按钮`&&!y(e)),x=v.filter(e=>(!a||e.name.includes(a.trim()))&&(!s||e.status===s)?!0:v.some(t=>t.id!==e.id&&t.depth>e.depth&&t.parentId===e.id&&(!a||t.name.includes(a.trim()))&&(!s||t.status===s))),S=e=>{let t=e.parentId;for(;t!==`0`;){if(!l.has(t))return!1;t=v.find(e=>e.id===t)?.parentId??`0`}return!0},C=(e,t,n)=>e.map(e=>e.id===t?{...e,...n}:{...e,children:C(e.children??[],t,n)}),w=(e,t,n)=>t===`0`?[...e,n]:e.map(e=>e.id===t?{...e,children:[...e.children??[],n]}:{...e,children:w(e.children??[],t,n)}),T=(e,t)=>e.filter(e=>e.id!==t).map(e=>({...e,children:T(e.children??[],t)})),E=(e=`settings`)=>{let t=v.find(t=>t.id===e);m({...n(e),sort:(t?.children?.length??r.length)+1}),g(``),f({mode:`create`,parentId:e})},D=e=>{m({...e}),g(``),f({mode:`edit`,id:e.id})},O=t=>{t.preventDefault();let n=p.name.trim();if(!n){g(`请输入菜单名称`);return}let r={...p,name:n,sort:Number(p.sort)||1};d?.mode===`edit`?i(e=>C(e,d.id,r)):i(e=>w(e,r.parentId,{...r,id:`menu-${Date.now()}`,createdAt:`2026-08-31 10:00`,children:[]})),f(null),e(`${d?.mode===`edit`?`保存`:`新增`}菜单成功`)},k=t=>{let n=t.status===`启用`?`停用`:`启用`;i(e=>C(e,t.id,{status:n})),e(`${t.name}已${n}`)},A=()=>{i(e=>T(e,d.id)),f(null),e(`删除菜单成功`)},j=()=>u(new Set(v.filter(e=>e.children?.length).map(e=>e.id))),M=()=>u(new Set),N=(e,t)=>{m(n=>({...n,[e]:t})),g(``)};return(0,Q.jsxs)(`section`,{className:`menu-management`,"aria-labelledby":`menu-management-title`,children:[(0,Q.jsxs)(`header`,{className:`menu-management-toolbar`,children:[(0,Q.jsx)(`h1`,{id:`menu-management-title`,children:`菜单管理`}),(0,Q.jsxs)(`button`,{type:`button`,className:`menu-management-primary`,onClick:()=>E(`settings`),children:[(0,Q.jsx)(az,{}),`新增菜单`]})]}),(0,Q.jsxs)(`section`,{className:`menu-management-panel`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-filters`,children:[(0,Q.jsxs)(`label`,{children:[`菜单名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),maxLength:20,placeholder:`请输入菜单名称`})]}),(0,Q.jsxs)(`label`,{children:[`状态`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{value:``,children:`全部`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-reset`,onClick:()=>{o(``),c(``)},children:`重置`}),(0,Q.jsx)(`span`,{}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:j,children:`展开`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:M,children:`折叠`})]}),(0,Q.jsxs)(`div`,{className:`menu-management-table`,role:`table`,"aria-label":`菜单列表`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-table-head`,role:`row`,children:[(0,Q.jsx)(`span`,{children:`菜单名称`}),(0,Q.jsx)(`span`,{children:`图标`}),(0,Q.jsx)(`span`,{children:`排序`}),(0,Q.jsx)(`span`,{children:`权限标识`}),(0,Q.jsx)(`span`,{children:`组件路径`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),x.filter(S).map(e=>{let t=(e.children??[]).length>0,n=y(e);return(0,Q.jsxs)(`div`,{className:`menu-management-table-row`,role:`row`,children:[(0,Q.jsxs)(`div`,{className:`menu-tree-name`,style:{"--menu-depth":e.depth},children:[t?(0,Q.jsx)(`button`,{type:`button`,className:l.has(e.id)?`expanded`:``,onClick:()=>u(t=>{let n=new Set(t);return n.has(e.id)?n.delete(e.id):n.add(e.id),n}),children:(0,Q.jsx)(_z,{})}):(0,Q.jsx)(`i`,{}),(0,Q.jsx)(Lz,{name:e.icon}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`em`,{children:e.type})]}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Lz,{name:e.icon})}),(0,Q.jsx)(`span`,{children:e.sort}),(0,Q.jsx)(`code`,{children:e.perms||`-`}),(0,Q.jsx)(`code`,{children:e.component||`-`}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`i`,{className:e.status===`启用`?`menu-status enabled`:`menu-status`,children:e.status})}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsx)(`div`,{className:`menu-row-actions`,children:n?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>E(e.id),disabled:e.type===`按钮`,children:`新增`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>D(e),children:`修改`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>k(e),children:e.status===`启用`?`停用`:`启用`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,disabled:e.id===`settings`,onClick:()=>f({mode:`delete`,id:e.id,name:e.name}),children:`删除`})]})})]},e.id)})]})]}),d?.mode===`create`||d?.mode===`edit`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog menu-editor-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`menu-editor-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`menu-editor-title`,children:d.mode===`edit`?`修改菜单`:`新增菜单`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭菜单编辑弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body menu-editor-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`上级菜单`}),(0,Q.jsxs)(`select`,{value:p.parentId,onChange:e=>N(`parentId`,e.target.value),disabled:d.mode===`edit`,children:[d.mode===`edit`&&p.parentId===`0`?(0,Q.jsx)(`option`,{value:`0`,children:`主类目`}):null,b.filter(e=>e.id!==d.id).map(e=>(0,Q.jsxs)(`option`,{value:e.id,children:[`　`.repeat(e.depth),e.name]},e.id))]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单类型`}),(0,Q.jsxs)(`select`,{value:p.type,onChange:e=>N(`type`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`目录`}),(0,Q.jsx)(`option`,{children:`菜单`}),(0,Q.jsx)(`option`,{children:`按钮`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单名称`}),(0,Q.jsx)(`input`,{value:p.name,onChange:e=>N(`name`,e.target.value),maxLength:20,placeholder:`请输入菜单名称`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示排序`}),(0,Q.jsx)(`input`,{value:p.sort,onChange:e=>N(`sort`,e.target.value.replace(/\D/g,``).slice(0,4)),inputMode:`numeric`,maxLength:4,placeholder:`请输入排序号`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`路由地址`}),(0,Q.jsx)(`input`,{value:p.path,onChange:e=>N(`path`,e.target.value),maxLength:60,placeholder:`例如：system/menu`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`组件路径`}),(0,Q.jsx)(`input`,{value:p.component,onChange:e=>N(`component`,e.target.value),maxLength:60,placeholder:`例如：system/menu/index`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`权限标识`}),(0,Q.jsx)(`input`,{value:p.perms,onChange:e=>N(`perms`,e.target.value),maxLength:60,placeholder:`例如：system:menu:view`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单图标`}),(0,Q.jsx)(`select`,{value:p.icon,onChange:e=>N(`icon`,e.target.value),children:Iz.map(e=>(0,Q.jsx)(`option`,{value:e.id,children:e.label},e.id))})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示状态`}),(0,Q.jsxs)(`select`,{value:p.visible,onChange:e=>N(`visible`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`显示`}),(0,Q.jsx)(`option`,{children:`隐藏`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单状态`}),(0,Q.jsxs)(`select`,{value:p.status,onChange:e=>N(`status`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),h?(0,Q.jsx)(`p`,{className:`menu-editor-error`,children:h}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存`})]})]})}):null,d?.mode===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-menu-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-menu-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除菜单“`,d.name,`”吗？其下级菜单也将一并删除。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:A,children:`确认删除`})]})]})}):null]})}function nV({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r,roles:i,setRoles:a}){let[o,s]=(0,Z.useState)(t),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)([]),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),b=[{label:`工作表单`,module:`form`}],x=[{label:`流程中心`,module:`flow`}],S=b.find(e=>e.label===o);x.find(e=>e.label===o);let C=(o===`工作表`?{label:`工作表`,module:`form`}:o===`流程`?{label:`流程`,module:`flow`}:null)??(o===`应用中心`?{label:`应用中心`,module:`app`}:null),w=o===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===o),T=o===`预警`?{label:`预警`,view:`warning-rule`}:null,E=[`组织用户`,`角色权限`,`菜单管理`,`字典管理`,`企业设置`],D=LB.find(e=>e.label===o)??S??w??T??LB[0],O=D.icon??QR,k={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[o]??[],A=o===`组织用户`,j=o===`角色权限`,M=o===`菜单管理`,N=o===`安全动态`,P=o===`字典管理`,ee=o===`企业设置`,F=!!C;S?.module;let I=!!w,te=!!T,ne=E.includes(o),re=e=>{let t=e===`worksheet`?!f:e===`process`?!m:e===`task`?!g:!v;p(e===`worksheet`&&t),h(e===`process`&&t),_(e===`task`&&t),y(e===`system`&&t),t&&(e===`worksheet`&&s(`工作表单`),e===`process`&&s(`流程中心`),e===`task`&&s(`任务模版`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:LB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`,`预警`].includes(e)?(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ne?`active`:``}`,onClick:()=>re(`system`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:E.map(e=>(0,Q.jsx)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(_z,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!A&&!j&&!M&&!ee&&!N&&!P&&!F&&!I&&!te?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(O,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:D.title}),(0,Q.jsx)(`p`,{children:D.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${D.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,N?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(`iframe`,{src:`${Rz}index.html?view=feedno`,title:`动态圈管理`})}):ee?(0,Q.jsx)(eV,{branding:n,onBrandingChange:r,onAction:e}):P?(0,Q.jsx)($B,{onAction:e}):F?(0,Q.jsx)(PB,{module:C.module,view:C.view,label:C.label}):I?(0,Q.jsx)(kB,{view:w.view,label:w.label,className:`settings-task-embed`}):te?(0,Q.jsx)(jB,{view:T.view,label:T.label,className:`settings-warning-embed`}):A?(0,Q.jsx)(YB,{organizations:c,setOrganizations:l,users:u,setUsers:d,roles:i}):j?(0,Q.jsx)(ZB,{onAction:e,roles:i,setRoles:a}):M?(0,Q.jsx)(tV,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[D.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${D.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),k.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function rV({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(``),[p,m]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){f(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){f(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}f(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),f(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsxs)(`span`,{className:`login-password-field`,children:[(0,Q.jsx)(`input`,{type:l?`text`:`password`,value:a,onChange:e=>{o(e.target.value),f(``)},autoComplete:`current-password`,placeholder:`请输入密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`login-password-visibility`,"aria-label":l?`隐藏密码`:`显示密码`,title:l?`隐藏密码`:`显示密码`,onClick:()=>u(e=>!e),children:l?(0,Q.jsx)(sz,{}):(0,Q.jsx)(oz,{})})]})]}),d?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:d}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>m(!0),children:`忘记密码`})]}),p?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(fz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function iV(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function aV(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>Vz.map(e=>({...e}))),[i,a]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`,customSystemIcons:Array.isArray(e.customSystemIcons)?e.customSystemIcons.filter(e=>e&&typeof e.id==`string`&&typeof e.label==`string`&&typeof e.src==`string`):[],hiddenSystemIconIds:Array.isArray(e.hiddenSystemIconIds)?e.hiddenSystemIconIds.filter(e=>typeof e==`string`):[]}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`,customSystemIcons:[],hiddenSystemIconIds:[]}}}),[o,s]=(0,Z.useState)(`工作台`),[c,l]=(0,Z.useState)(`task`),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(``),m=(0,Z.useRef)(null),[h,g]=(0,Z.useState)(Uz),[_,v]=(0,Z.useState)(`workbench`),[y,b]=(0,Z.useState)(()=>Bz.map(e=>e.name)),[x,S]=(0,Z.useState)(`我的任务`),[C,w]=(0,Z.useState)(`待审批`),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(Yz),[k,A]=(0,Z.useState)([]),[j,M]=(0,Z.useState)(`动态`),[N,P]=(0,Z.useState)(mB[0].title),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(`安全动态`),[ne,re]=(0,Z.useState)(Wz),[ie,ae]=(0,Z.useState)(null),[oe,se]=(0,Z.useState)(!0),[L,R]=(0,Z.useState)([]);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(i))}catch{}},[i]),(0,Z.useEffect)(()=>{let e=!1;return fetch(Mz,{cache:`no-store`}).then(e=>{if(!e.ok)throw Error(`Unable to load prototype annotations`);return e.json()}).then(t=>{e||R(Pz(t))}).catch(()=>{e||R([])}),()=>{e=!0}},[]);let z=e=>{p(`已选择 ${e}`),window.clearTimeout(m.current),m.current=window.setTimeout(()=>p(``),3e3)},ce=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{v(e),s(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},B=e=>{let t=[...mB,...hB].find(t=>t.title===e);if(t){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{P(t.title),F(!0),g(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:pz}]),v(`双重预防机制`),s(`应用`)});return}let n=e===`应用中心`?`双重预防机制`:e,r=Bz.find(e=>e.name===n);if(!r){z(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{n===`双重预防机制`&&F(!1),g(e=>e.some(e=>e.id===n)?e:[...e,{id:n,label:n,icon:r.icon}]),v(n),s(`应用`)})},le=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:mz}]),v(`messages`),s(`工作台`)})},ue=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{ae(null),S(e),g(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:Cz}]),v(`tasks`),s(`任务`)})},de=(e=`待审批`,t=``)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),E(t),g(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:cz}]),v(`processes`),s(`流程`)})},fe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),v(`dashboard`),s(`看板`)})},V=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(e),g(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:pz}]),v(`safety-dynamics`),s(`动态`)})},H=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:Sz}]),v(`warnings`),s(`预警`)})},pe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:Cz}]),v(`todos`),s(`工作台`)})},me=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{te(e),g(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),v(`settings`),s(`设置`)})},he=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:Ez}]),v(`personal-center`),s(``)})},ge=e=>re(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),_e=()=>re(e=>e.map(e=>({...e,read:!0}))),ve=e=>{let t=h.findIndex(t=>t.id===e),n=h.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(g(n),_===e){let e=n[Math.max(0,t-1)]??Uz[0];v(e.id),s(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ye=Bz.find(e=>e.name===_);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(iV,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(tB,{active:o,brandLogo:i.logo,onOpenSettings:me,onChange:e=>{if(e===`工作台`){ce(`workbench`);return}if(e===`应用`){B(`应用中心`);return}if(e===`任务`){ue();return}if(e===`流程`){de();return}if(e===`动态`){V();return}if(e===`预警`){H();return}if(e===`看板`){fe();return}s(e),z(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(nB,{tabs:h,activeTab:_,onSelect:ce,onClose:ve,onOpenMessages:le,onOpenPersonal:he,onLogout:()=>t(!1),onOpenSpecification:()=>window.open(Nz,`_blank`,`noopener,noreferrer`)}),(0,Q.jsx)(`main`,{children:_===`messages`?(0,Q.jsx)(aB,{messages:ne,onMarkRead:ge,onMarkAllRead:_e,onReturn:()=>ce(`workbench`),onOpenProcess:de}):_===`todos`?(0,Q.jsx)(IB,{onOpenTasks:ue,onOpenProcesses:de,onOpenSafety:V}):_===`tasks`?(0,Q.jsx)(DB,{initialTab:x},x):_===`processes`?(0,Q.jsx)(sB,{initialFilter:C,initialProcessNumber:T,processRecords:D,setProcessRecords:O,onAction:z},`${C}-${T}`):_===`safety-dynamics`?(0,Q.jsx)(TB,{initialTab:j,onAction:z},j):_===`warnings`?(0,Q.jsx)(MB,{}):_===`dashboard`?(0,Q.jsx)(wB,{}):_===`settings`?(0,Q.jsx)(nV,{initialSelected:I,onAction:z,branding:i,onBrandingChange:a,roles:n,setRoles:r},I):_===`personal-center`?(0,Q.jsx)(QB,{onAction:z,roles:n}):ye?.name===`双重预防机制`?(0,Q.jsx)(_B,{initialFormTitle:N,initialOpenForm:ee,approvalDrafts:k,setApprovalDrafts:A,onSaveProcessDraft:e=>O(t=>t.some(t=>t.id===e.id)?t.map(t=>t.id===e.id?e:t):[e,...t]),onDeleteProcessDraft:e=>O(t=>t.filter(t=>t.id!==e)),onAction:z,onSwitchApplication:B},`${N}-${ee?`form`:`catalog`}`):ye?(0,Q.jsx)(vB,{app:ye,onReturn:()=>ce(`workbench`),onAction:z,onSwitchApplication:B}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsxs)(`h1`,{children:[`智慧应急安全管理平台欢迎您，`,(0,Q.jsx)(`button`,{className:`workbench-user-link`,onClick:he,children:`张宇`})]})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:pe,children:[`待办总览 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:zz.map(e=>(0,Q.jsx)(cB,{item:e,active:c===e.id,onSelect:()=>l(e.id),onOpen:e=>{e===`message`&&le(),e===`task`&&ue(),e===`approval`&&de(),e===`warning`&&H()}},e.id))})]}),(0,Q.jsx)(uB,{onOpen:B}),(0,Q.jsx)(lB,{onOpen:B,favoriteApps:y,onCustomize:b})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(bB,{onAction:d,onOpenTask:()=>ue(`发布任务`),onOpenProcess:()=>de(`发起流程`),onOpenDynamics:()=>V(`发动态`)}),(0,Q.jsx)(yB,{onOpen:z,onOpenAll:V})]})]})]})}),(0,Q.jsx)(rB,{visible:oe,managing:!1,pageId:_,pageLabel:h.find(e=>e.id===_)?.label??`工作台`,annotations:L,onCloseManager:()=>{},onAdd:({pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a})=>{se(!0),R(o=>[...o,{id:`annotation-${Date.now()}`,pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a}])},onUpdate:(e,t)=>R(n=>n.map(n=>n.id===e?{...n,content:t}:n)),onRemove:e=>R(t=>t.filter(t=>t.id!==e)),onReposition:(e,t)=>{se(!0),R(n=>n.map(n=>n.id===e?{...n,...t}:n))}})]}),f?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":f,children:[(0,Q.jsx)(hz,{}),f]}):null,(0,Q.jsx)(xB,{title:u,onClose:()=>d(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(iV,{}),(0,Q.jsx)(rV,{branding:i,onLogin:()=>t(!0)})]})}(0,Dz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(aV,{}));
+`],{type:`text/csv;charset=utf-8;`})),t=document.createElement(`a`);t.href=e,t.download=`用户导入模板.csv`,t.click(),URL.revokeObjectURL(e)},R=t=>{let n=t.target.files?.[0];if(!n||!te.length)return;let i=s||te[0].id,a=new FileReader;a.onload=()=>{let t=String(a.result).replace(/^\ufeff/,``).split(/\r?\n/).slice(1).filter(Boolean).map((t,n)=>{let[r,a,o]=t.split(`,`).map(e=>e.trim());return r&&a?{id:`import-${Date.now()}-${n}`,account:r,name:a,phone:o||`未填写`,password:`abc123#`,organizationId:i,department:YB(e,i),status:`启用`}:null}).filter(Boolean);t.length?(r(e=>[...e,...t]),F(`已导入 ${t.length} 位用户`)):F(`未识别到可导入的用户数据`),u(null)},a.readAsText(n,`utf-8`),t.target.value=``},z=e=>r(t=>t.map(t=>t.id===e?{...t,status:t.status===`启用`?`停用`:`启用`}:t)),ce=e=>{r(t=>t.filter(t=>t.id!==e)),F(`已删除用户`)},B=e=>f({type:`status`,user:e}),le=e=>{if(e.status===`启用`){F(`用户“${e.name}”处于启用状态，请先停用后再删除`);return}f({type:`delete`,user:e})},ue=e=>f({type:`reset-password`,user:e});return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`user-management`,"aria-label":`用户中心管理`,children:[(0,Q.jsxs)(`nav`,{className:`user-management-tabs`,role:`tablist`,children:[(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`organization`,className:a===`organization`?`active`:``,onClick:()=>o(`organization`),children:(0,Q.jsx)(`b`,{children:`组织架构`})}),(0,Q.jsx)(`button`,{role:`tab`,"aria-selected":a===`users`,className:a===`users`?`active`:``,onClick:()=>o(`users`),children:(0,Q.jsx)(`b`,{children:`用户中心`})})]}),a===`organization`?(0,Q.jsx)(qB,{organizations:e,setOrganizations:t,users:n}):(0,Q.jsxs)(`section`,{className:`user-center-layout`,children:[(0,Q.jsxs)(`aside`,{className:`user-center-organization`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`组织架构`}),(0,Q.jsxs)(`span`,{children:[te.length,` 个组织`]})]}),e.length?(0,Q.jsx)(JB,{nodes:e,selectedId:s,onSelect:c}):(0,Q.jsx)(`div`,{className:`user-center-org-empty`,children:`请先在组织架构中建立组织`})]}),(0,Q.jsxs)(`section`,{className:`user-directory`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{children:ne?.name||`全部用户`})})}),(0,Q.jsxs)(`div`,{className:`user-filter`,children:[(0,Q.jsx)(`input`,{placeholder:`用户名称`,value:N.name,onChange:e=>P(t=>({...t,name:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`账号`,value:N.account,onChange:e=>P(t=>({...t,account:e.target.value}))}),(0,Q.jsx)(`input`,{placeholder:`手机号`,value:N.phone,onChange:e=>P(t=>({...t,phone:e.target.value}))}),(0,Q.jsxs)(`select`,{value:N.status,onChange:e=>P(t=>({...t,status:e.target.value})),children:[(0,Q.jsx)(`option`,{value:``,children:`全部状态`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]}),(0,Q.jsx)(`button`,{onClick:()=>F(`已按当前条件筛选用户`),children:`确定`}),(0,Q.jsx)(`button`,{onClick:()=>P({name:``,account:``,phone:``,status:``}),children:`重置`})]}),(0,Q.jsx)(`div`,{className:`user-directory-actions`,children:(0,Q.jsxs)(`button`,{className:`user-add`,onClick:ie,disabled:!te.length,children:[(0,Q.jsx)(az,{}),`新增用户`]})}),te.length?(0,Q.jsxs)(`div`,{className:`user-directory-list`,children:[(0,Q.jsxs)(`div`,{className:`user-directory-head`,children:[(0,Q.jsx)(`span`,{children:`账号`}),(0,Q.jsx)(`span`,{children:`用户名称`}),(0,Q.jsx)(`span`,{children:`部门`}),(0,Q.jsx)(`span`,{children:`手机号`}),(0,Q.jsx)(`span`,{children:`用户状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),re.length?re.map(e=>(0,Q.jsxs)(`div`,{className:`user-directory-row`,children:[(0,Q.jsx)(`span`,{children:e.account}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.department}),(0,Q.jsx)(`span`,{children:e.phone}),(0,Q.jsxs)(`button`,{className:e.status===`启用`?`user-status enabled`:`user-status`,onClick:()=>B(e),"aria-label":`切换 ${e.name} 状态`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`b`,{children:e.status})]}),(0,Q.jsxs)(`span`,{className:`user-row-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>ae(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>le(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>ue(e),children:`重置密码`})]})]},e.id)):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`暂无符合条件的用户`})]})]}):(0,Q.jsxs)(`div`,{className:`user-directory-empty`,children:[(0,Q.jsx)(Ez,{}),(0,Q.jsx)(`h3`,{children:`请先建立组织架构`})]})]})]})]}),l?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>u(null),role:`presentation`,children:(0,Q.jsx)(`div`,{className:`management-dialog user-management-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-dialog-title`,children:l===`create`?(0,Q.jsxs)(`form`,{onSubmit:se,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:p?`编辑用户`:`新增用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭新增用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body user-create-form`,onMouseDown:e=>{e.target.closest(`.user-multi-select`)||A(``)},children:[(0,Q.jsxs)(`label`,{className:j.name?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`用户名称`]}),(0,Q.jsx)(`input`,{value:h,maxLength:10,onChange:e=>{g(e.target.value),oe(`name`)},placeholder:`例如：张宇`,autoFocus:!0}),j.name?(0,Q.jsx)(`em`,{children:j.name}):null]}),(0,Q.jsxs)(`label`,{className:j.phone?`field-error`:``,children:[`手机号`,(0,Q.jsx)(`input`,{type:`tel`,value:y,maxLength:11,inputMode:`numeric`,onChange:e=>{b(e.target.value.replace(/\D/g,``).slice(0,11)),oe(`phone`)},placeholder:`例如：13800000000`}),j.phone?(0,Q.jsx)(`em`,{children:j.phone}):null]}),(0,Q.jsxs)(`label`,{className:j.account?`field-error`:``,children:[(0,Q.jsxs)(`span`,{className:`user-field-label`,children:[(0,Q.jsx)(`i`,{"aria-hidden":`true`,children:`*`}),`账号`]}),(0,Q.jsx)(`input`,{value:_,onChange:e=>{v(e.target.value),oe(`account`)},placeholder:`例如：zhangyu`}),j.account?(0,Q.jsx)(`em`,{children:j.account}):null]}),(0,Q.jsxs)(`label`,{className:j.password?`field-error`:``,children:[`密码`,(0,Q.jsx)(`input`,{type:p?`password`:`text`,value:x,placeholder:p?`请输入密码`:void 0,onChange:e=>{S(e.target.value),oe(`password`)}}),j.password?(0,Q.jsx)(`em`,{children:j.password}):null]}),(0,Q.jsxs)(`label`,{className:`user-organization-field${j.organization?` field-error`:``}`,children:[`所属组织`,(0,Q.jsx)(`select`,{value:C,onChange:e=>{w(e.target.value),oe(`organization`)},children:te.map(t=>(0,Q.jsx)(`option`,{value:t.id,children:YB(e,t.id)},t.id))}),j.organization?(0,Q.jsx)(`em`,{children:j.organization}):null]}),(0,Q.jsx)(XB,{label:`岗位`,options:Hz,value:T,onChange:E,activeMenu:k,setActiveMenu:A}),(0,Q.jsx)(XB,{label:`角色`,options:i.map(e=>({value:e.name,label:e.status===`停用`?`${e.name}（已停用）`:e.name})),value:D,onChange:O,activeMenu:k,setActiveMenu:A})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f({type:`cancel-create`}),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存用户`})]})]}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-dialog-title`,children:`导入用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭导入用户弹窗`,onClick:()=>u(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`导入到组织`,(0,Q.jsx)(`input`,{value:ne?.name||`默认组织`,disabled:!0})]}),(0,Q.jsxs)(`label`,{children:[`选择文件`,(0,Q.jsx)(`input`,{ref:I,type:`file`,accept:`.csv,text/csv`,onChange:R})]}),(0,Q.jsxs)(`button`,{type:`button`,className:`user-template`,onClick:L,children:[(0,Q.jsx)(QR,{}),`下载导入模板`]})]}),(0,Q.jsx)(`footer`,{children:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>u(null),children:`取消`})})]})})}):null,d?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`user-confirm-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`user-confirm-title`,children:`确认操作`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭确认弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:d.type===`cancel-create`?`确定取消${p?`编辑`:`新增`}用户吗？已填写的信息将不会保存。`:d.type===`delete`?`确定删除用户“${d.user.name}”吗？删除后无法恢复。`:d.type===`reset-password`?`确定将用户“${d.user.name}”的密码重置为默认密码 abc123# 吗？`:`确定${d.user.status===`启用`?`停用`:`启用`}用户“${d.user.name}”吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{d.type===`cancel-create`?(u(null),A(``)):d.type===`status`?(z(d.user.id),F(`已${d.user.status===`启用`?`停用`:`启用`}用户：${d.user.name}`)):d.type===`reset-password`?(r(e=>e.map(e=>e.id===d.user.id?{...e,password:`abc123#`}:e)),F(`已将 ${d.user.name} 的密码重置为 abc123#`)):ce(d.user.id),f(null)},children:`确定`})]})]})}):null,ee?(0,Q.jsxs)(`div`,{className:`user-management-notice`,role:`status`,children:[ee,(0,Q.jsx)(`button`,{onClick:()=>F(``),children:`×`})]}):null]})}function QB({node:e,selectedIds:t,getLeafIds:n,onToggle:r}){let i=(0,Z.useRef)(null),a=n(e),o=a.filter(e=>t.has(e)).length,s=o===a.length,c=o>0&&o<a.length;return(0,Z.useEffect)(()=>{i.current&&(i.current.indeterminate=c)},[c]),(0,Q.jsx)(`input`,{ref:i,type:`checkbox`,checked:s,"aria-checked":c?`mixed`:s,"data-indeterminate":c?`true`:void 0,onChange:()=>r(e)})}function $B({onAction:e,roles:t,setRoles:n}){let r=[{name:`工作台`},{name:`应用`,children:[{name:`双重预防机制`,children:[{name:`风险分级管控`},{name:`隐患排查治理`,children:[{name:`法律法规`},{name:`制度文件`},{name:`隐患排查任务发布`},{name:`岗位隐患排查清单`,children:mB.map(e=>({name:e.title}))},{name:`隐患排查治理记录`},{name:`隐患排查审批流程`,children:hB.map(e=>({name:e.title}))},{name:`隐患排查工作表`},{name:`隐患整改通知单`},{name:`隐患整改台账`},{name:`隐患信息统计`},{name:`隐患汇报`}]},{name:`风险告知卡`},{name:`风险四色图`}]},{name:`安全管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`设备管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`火工品管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`生产管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`机电管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`消防管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]},{name:`应急管理`,children:[{name:`应用概览`},{name:`待办处理`},{name:`业务记录`},{name:`数据统计`}]}]},{name:`任务`,children:[{name:`发布任务`},{name:`我的任务`,children:[{name:`我发起的`},{name:`已执行`},{name:`已转发`},{name:`我撤回的`},{name:`我参与的`}]},{name:`任务总台账`},{name:`人员明细`}]},{name:`流程`,children:[{name:`发起流程`,children:[{name:`人资管理`,children:[{name:`员工离职申请`},{name:`职员晋升审批`},{name:`职员调岗审批`}]},{name:`基建管理`,children:[{name:`地表基建项目报建申请`},{name:`年度工程计划编制审批`},{name:`项目合同申报审批`}]},{name:`选矿管理`,children:[{name:`换矿申请`},{name:`选厂药剂领用申请`},{name:`材料采购流程`}]}]},{name:`待审批`},{name:`已审批`},{name:`抄送我的`},{name:`我发起的`}]},{name:`动态`,children:[{name:`动态列表`},{name:`发动态`}]},{name:`预警`,children:[{name:`预警分级看板`},{name:`预警任务`},{name:`预警信息表统计`},{name:`预警统计`}]},{name:`看板`,children:CB.map(e=>({name:e.name}))},{name:`设置中心`,children:[{name:`安全动态`},{name:`工作表`},{name:`任务`},{name:`流程`},{name:`预警`},{name:`数据台`},{name:`数据看板`},{name:`应用中心`},{name:`系统设置`,children:[{name:`角色权限`},{name:`组织用户`},{name:`菜单管理`},{name:`字典管理`},{name:`企业设置`}]}]}],i=e=>e.flatMap(e=>e.children?.length?i(e.children):[e.name]),a={"设置中心/系统设置/角色权限":[`查看`,`新增`,`编辑`,`删除`,`分配用户`,`数据权限`]},o=new Set(mB.map(e=>`应用/双重预防机制/隐患排查治理/岗位隐患排查清单/${e.title}`)),s=new Set([...o,...hB.map(e=>`应用/双重预防机制/隐患排查治理/隐患排查审批流程/${e.title}`)]),c=e=>(a[e]??[]).map(t=>`button:${e}:${t}`),l=e=>o.has(e)?[`新增`,`导入`,`导出`].map(t=>`button:${e}:数据:${t}`):[],u=e=>s.has(e)?[`页面`,`数据`,...o.has(e)?[`草稿箱`]:[]]:[],d=e=>u(e).map(t=>`tab:${e}:${t}`),f=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=n.join(`/`);if(e.children?.length)return{id:`menu:${r}`,name:e.name,type:`menu`,children:f(e.children,n)};let i=a[r]??[],o=u(r);return{id:`page:${r}`,name:e.name,type:`page`,children:i.length||o.length?[...i.map(e=>({id:`button:${r}:${e}`,name:e,type:`button`})),...o.map(e=>{let t=e===`数据`?l(r):[];return{id:`tab:${r}:${e}`,name:e,type:`tab`,children:t.length?t.map(e=>({id:e,name:e.split(`:`).at(-1),type:`button`})):void 0}})]:void 0}}),p=f(r),m=e=>e.children?.length?e.children.flatMap(m):[e.id],h=p.flatMap(m),g=()=>{let e=t=>t.flatMap(t=>t.children?.length?[t.id,...e(t.children)]:[]);return new Set(e(p))},_=()=>Object.fromEntries(i(r).map(e=>[e,`仅自己`])),[v,y]=(0,Z.useState)(null),[b,x]=(0,Z.useState)(``),[S,C]=(0,Z.useState)(`启用`),[w,T]=(0,Z.useState)(new Set(h.slice(0,18))),[E,D]=(0,Z.useState)(`menu`),[O,k]=(0,Z.useState)(g),[A,j]=(0,Z.useState)(null),[M,N]=(0,Z.useState)(null),[P,ee]=(0,Z.useState)(_),[F,I]=(0,Z.useState)(null),[te,ne]=(0,Z.useState)(`group`),[re,ie]=(0,Z.useState)([`u-zhang`]),[ae,oe]=(0,Z.useState)({admin:[`u-zhang`],safety:[`u-zhao`],executor:[`u-li`],viewer:[]}),se=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]}]}],L=[{id:`u-zhang`,name:`张宇`,account:`zhangyu`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,account:`liming`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,account:`wangqiang`,department:`生产技术部`,organization:`production`},{id:`u-zhao`,name:`赵敏`,account:`zhaomin`,department:`安全管理部`,organization:`safety`},{id:`u-chen`,name:`陈磊`,account:`chenlei`,department:`设备管理部`,organization:`equipment`}],R=[{id:`group`,name:`华北矿业集团`,children:[{id:`mine`,name:`矿山事业部`,children:[{id:`safety`,name:`安全管理部`},{id:`equipment`,name:`设备管理部`},{id:`production`,name:`生产技术部`}]},{id:`service`,name:`综合服务中心`,children:[{id:`human`,name:`人力资源部`},{id:`finance`,name:`财务部`}]}]}],z=[{id:`u-zhang`,name:`张宇`,department:`安全管理部`,organization:`safety`},{id:`u-zhao`,name:`赵敏`,department:`安全管理部`,organization:`safety`},{id:`u-li`,name:`李明`,department:`设备管理部`,organization:`equipment`},{id:`u-chen`,name:`陈磊`,department:`设备管理部`,organization:`equipment`},{id:`u-wang`,name:`王强`,department:`生产技术部`,organization:`production`},{id:`u-zhou`,name:`周杰`,department:`人力资源部`,organization:`human`},{id:`u-sun`,name:`孙丽`,department:`财务部`,organization:`finance`}],ce=()=>{x(``),C(`启用`),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`create`})},B=e=>{x(e.name),C(e.status),T(new Set(h.slice(0,40))),ee(_()),D(`menu`),k(g()),y({mode:`edit`,role:e})},le=t=>{t.preventDefault();let r=b.trim();r&&(v.mode===`edit`?n(e=>e.map(e=>e.id===v.role.id?{...e,name:r,status:S}:e)):n(e=>[...e,{id:`role-${Date.now()}`,name:r,creator:`张宇`,status:S,createdAt:`2026-08-12 10:30`}]),y(null),e(v.mode===`edit`?`已保存角色：${r}`:`已新增角色：${r}`))},ue=e=>T(t=>{let n=new Set(t),r=m(e),i=r.every(e=>n.has(e));return r.forEach(e=>{i?n.delete(e):n.add(e)}),n}),de=e=>k(t=>{let n=new Set(t);return n.has(e)?n.delete(e):n.add(e),n}),fe=(e,t=[])=>e.flatMap(e=>{let n=[...t,e.name];if(e.children?.length){let t=fe(e.children,n);return t.length?[{...e,children:t}]:[]}let r=n.join(`/`);return w.has(`page:${r}`)||c(r).some(e=>w.has(e))||d(r).some(e=>w.has(e))||l(r).some(e=>w.has(e))?[e]:[]}),V=fe(r),H=i(V).length,pe=e=>ee(t=>({...t,...Object.fromEntries(i(V).map(t=>[t,e]))})),me=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`role-menu-tree`,children:e.map((e,t)=>(0,Q.jsxs)(`li`,{className:e.type===`button`?`role-menu-action`:e.type===`tab`?`role-menu-tab`:``,children:[(0,Q.jsxs)(`div`,{className:`role-menu-node`,children:[(0,Q.jsxs)(`label`,{className:e.type===`button`?`role-menu-button`:e.type===`tab`?`role-menu-tab-label`:``,children:[(0,Q.jsx)(QB,{node:e,selectedIds:w,getLeafIds:m,onToggle:ue}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(`button`,{type:`button`,className:`role-menu-expand ${O.has(e.id)?`expanded`:``}`,"aria-label":`${O.has(e.id)?`收起`:`展开`}${e.name}`,onClick:()=>de(e.id),children:(0,Q.jsx)(_z,{})}):null]}),e.children&&O.has(e.id)?(0,Q.jsx)(me,{nodes:e.children}):null]},`${e.id}-${t}`))}),he=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`assignment-org-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:te===e.id?`active`:``,onClick:()=>ne(e.id),children:e.name}),e.children?(0,Q.jsx)(he,{nodes:e.children}):null]},e.id))}),ge=(e,t)=>e.reduce((e,n)=>e??(n.id===t?n:ge(n.children??[],t)),null),_e=e=>e.children?.length?e.children.flatMap(_e):[e.id],ve=ge(se,te),ye=L.filter(e=>e.organization===te),U=ye.map(e=>e.id),W=U.some(e=>re.includes(e)),G=U.length>0&&U.every(e=>re.includes(e)),be=M?.dataPermissionOrganizationIds??[],xe=z.filter(e=>be.includes(e.organization)),K=L.filter(e=>re.includes(e.id)),Se=e=>ie(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e]),Ce=()=>ie(e=>[...new Set([...e,...U])]),we=()=>ie(e=>e.filter(e=>!U.includes(e))),Te=e=>{I(e),ne(`group`),ie(ae[e.id]??[])},Ee=e=>{let t=_e(e);N(e=>({...e,dataPermissionOrganizationIds:(()=>{let n=e.dataPermissionOrganizationIds;return t.every(e=>n.includes(e))?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])]})(),dataAuthorizedUserIds:(()=>{let n=e.dataPermissionOrganizationIds,r=t.every(e=>n.includes(e)),i=r?n.filter(e=>!t.includes(e)):[...new Set([...n,...t])],a=z.filter(e=>i.includes(e.organization)).map(e=>e.id),o=z.filter(e=>t.includes(e.organization)).map(e=>e.id);return r?e.dataAuthorizedUserIds.filter(e=>a.includes(e)):[...new Set([...e.dataAuthorizedUserIds.filter(e=>a.includes(e)),...o])]})()}))},De=e=>N(t=>({...t,dataAuthorizedUserIds:t.dataAuthorizedUserIds.includes(e)?t.dataAuthorizedUserIds.filter(t=>t!==e):[...t.dataAuthorizedUserIds,e]})),Oe=({nodes:e})=>(0,Q.jsx)(`ul`,{className:`data-permission-organization-tree`,children:e.map(e=>(0,Q.jsxs)(`li`,{children:[(0,Q.jsxs)(`label`,{className:_e(e).some(e=>be.includes(e))?`active`:``,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:_e(e).every(e=>be.includes(e)),ref:t=>{if(!t)return;let n=_e(e),r=n.filter(e=>be.includes(e)).length;t.indeterminate=r>0&&r<n.length},onChange:()=>Ee(e)}),(0,Q.jsx)(`span`,{children:e.name})]}),e.children?(0,Q.jsx)(Oe,{nodes:e.children}):null]},e.id))}),q=(e,t=[])=>e.map(e=>{let n=[...t,e.name],r=`${e.children?.length?`menu`:`page`}:${n.join(`/`)}`;return e.children?.length?(0,Q.jsxs)(`li`,{className:`data-permission-menu-group`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-menu-group-title`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`button`,{type:`button`,className:O.has(r)?`expanded`:``,"aria-label":`${O.has(r)?`收起`:`展开`}${e.name}`,onClick:()=>de(r),children:(0,Q.jsx)(_z,{})})]}),O.has(r)?(0,Q.jsx)(`ul`,{children:q(e.children,n)}):null]},r):(0,Q.jsxs)(`li`,{className:`data-permission-menu-leaf`,children:[(0,Q.jsx)(`span`,{children:e.name}),(0,Q.jsxs)(`select`,{"aria-label":`${e.name}数据权限范围`,value:P[e.name]??`全部`,onChange:t=>ee(n=>({...n,[e.name]:t.target.value})),children:[(0,Q.jsx)(`option`,{children:`全部`}),(0,Q.jsx)(`option`,{children:`所在组织及下级`}),(0,Q.jsx)(`option`,{children:`仅自己`})]})]},r)}),ke=()=>{let t=ae[A.id]??[];if(t.length){e(`角色“${A.name}”已分配 ${t.length} 位用户，无法删除`),j(null);return}n(e=>e.filter(e=>e.id!==A.id)),oe(e=>{let t={...e};return delete t[A.id],t}),e(`已删除角色：${A.name}`),j(null)},Ae=!!(A&&(ae[A.id]??[]).length),je=A?(ae[A.id]??[]).length:0;return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`role-list-page`,"aria-label":`角色权限管理`,children:[(0,Q.jsxs)(`header`,{className:`role-list-header`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:`角色权限`}),(0,Q.jsx)(`span`,{children:`通过角色统一管理系统访问与操作权限。`})]}),(0,Q.jsxs)(`button`,{onClick:ce,children:[(0,Q.jsx)(az,{}),`新增角色`]})]}),(0,Q.jsxs)(`div`,{className:`role-list-toolbar`,children:[(0,Q.jsx)(`input`,{placeholder:`请输入角色名称`}),(0,Q.jsx)(`button`,{onClick:()=>e(`已按角色名称筛选`),children:`查询`}),(0,Q.jsx)(`button`,{onClick:()=>e(`角色筛选已重置`),children:`重置`})]}),(0,Q.jsxs)(`div`,{className:`role-list-table`,children:[(0,Q.jsxs)(`div`,{className:`role-list-head`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`span`,{children:`创建人`}),(0,Q.jsx)(`span`,{children:`角色状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`role-list-row`,children:[(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.creator}),(0,Q.jsx)(`i`,{className:e.status===`启用`?`enabled`:``,children:e.status}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsxs)(`span`,{className:`role-list-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>B(e),children:`编辑`}),(0,Q.jsx)(`button`,{onClick:()=>j(e),children:`删除`}),(0,Q.jsx)(`button`,{onClick:()=>Te(e),children:`分配用户`})]})]},e.id))]})]}),v?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>y(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog role-dialog`,onSubmit:le,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`role-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`role-dialog-title`,children:v.mode===`edit`?`编辑角色`:`新增角色`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭角色弹窗`,onClick:()=>y(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`role-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[`角色名称`,(0,Q.jsx)(`input`,{value:b,onChange:e=>x(e.target.value),placeholder:`例如：车间安全员`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`角色状态`,(0,Q.jsxs)(`select`,{value:S,onChange:e=>C(e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]})]}),(0,Q.jsxs)(`nav`,{className:`role-permission-tabs`,role:`tablist`,"aria-label":`角色权限类型`,children:[(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`menu`,className:E===`menu`?`active`:``,onClick:()=>D(`menu`),children:`菜单权限`}),(0,Q.jsx)(`button`,{type:`button`,role:`tab`,"aria-selected":E===`data`,className:E===`data`?`active`:``,onClick:()=>D(`data`),children:`数据权限`})]}),E===`menu`?(0,Q.jsxs)(`section`,{className:`role-menu-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`菜单权限`}),(0,Q.jsx)(`span`,{children:`按菜单与页面选择可访问范围`})]}),(0,Q.jsx)(me,{nodes:p})]}):(0,Q.jsxs)(`section`,{className:`role-data-selector`,role:`tabpanel`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`b`,{children:`授权项`}),(0,Q.jsxs)(`div`,{className:`role-data-permission-header-actions`,children:[(0,Q.jsx)(`span`,{children:`全部设置为：`}),[`全部`,`所在组织及下级`,`仅自己`].map(e=>(0,Q.jsx)(`button`,{type:`button`,onClick:()=>pe(e),children:e},e))]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>y(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存角色`})]})]})}):null,M?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>N(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog data-permission-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`data-permission-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`data-permission-title`,children:`数据权限`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭数据权限弹窗`,onClick:()=>N(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`data-permission-body`,children:[(0,Q.jsxs)(`div`,{className:`data-permission-role`,children:[(0,Q.jsx)(`span`,{children:`角色名称`}),(0,Q.jsx)(`strong`,{children:M.name})]}),(0,Q.jsxs)(`div`,{className:`data-permission-workspace`,children:[(0,Q.jsxs)(`section`,{className:`data-permission-subjects`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`被授权对象`}),(0,Q.jsx)(`p`,{children:`选择组织后，对应人员将默认勾选`})]})}),(0,Q.jsxs)(`div`,{className:`data-permission-subject-columns`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`h4`,{children:`组织架构`}),(0,Q.jsx)(Oe,{nodes:R})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h4`,{children:`人员`}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:!!xe.length&&xe.every(e=>M.dataAuthorizedUserIds.includes(e.id)),onChange:()=>N(e=>{let t=xe.map(e=>e.id),n=t.every(t=>e.dataAuthorizedUserIds.includes(t));return{...e,dataAuthorizedUserIds:n?e.dataAuthorizedUserIds.filter(e=>!t.includes(e)):[...new Set([...e.dataAuthorizedUserIds,...t])]}})}),`全选`]})]}),(0,Q.jsx)(`div`,{className:`data-authorized-user-list`,children:xe.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:M.dataAuthorizedUserIds.includes(e.id),onChange:()=>De(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]})]},e.id))})]})]})]}),(0,Q.jsxs)(`section`,{className:`data-permission-items`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`授权项`}),(0,Q.jsx)(`p`,{children:`仅对没有下级菜单的功能配置数据权限`})]}),(0,Q.jsxs)(`span`,{children:[H,` 项`]})]}),(0,Q.jsx)(`div`,{className:`data-permission-menu-panel`,children:(0,Q.jsx)(`ul`,{children:q(V)})})]})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>N(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{e(`已保存${M.name}的数据权限`),N(null)},children:`保存权限`})]})]})}):null,F?(0,Q.jsx)(`div`,{className:`management-dialog-layer assign-user-dialog-layer`,onMouseDown:()=>I(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog assign-user-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`assign-user-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`assign-user-title`,children:`分配用户`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭分配用户弹窗`,onClick:()=>I(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`assign-user-body`,children:[(0,Q.jsxs)(`aside`,{children:[(0,Q.jsx)(`header`,{children:`组织架构`}),(0,Q.jsx)(he,{nodes:se})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{className:`assign-user-list-heading`,children:[(0,Q.jsx)(`b`,{children:ve?.name||`人员`}),(0,Q.jsxs)(`span`,{children:[ye.length,` 人`]})]}),ye.length?(0,Q.jsxs)(`div`,{className:`assign-user-bulk-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:Ce,disabled:G,children:`全选`}),(0,Q.jsx)(`button`,{type:`button`,onClick:we,disabled:!W,children:`全不选`})]}):null]}),ye.length?ye.map(e=>(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:re.includes(e.id),onChange:()=>Se(e.id)}),(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsxs)(`small`,{children:[e.account,` · `,e.department]})]})]},e.id)):(0,Q.jsx)(`p`,{className:`assign-user-empty`,children:`该组织暂无人员`})]}),(0,Q.jsxs)(`section`,{children:[(0,Q.jsxs)(`header`,{children:[`已选人员 `,(0,Q.jsxs)(`span`,{children:[K.length,` 人`]})]}),K.length?K.map(e=>(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`span`,{children:[(0,Q.jsx)(`b`,{children:e.name}),(0,Q.jsx)(`small`,{children:e.department})]}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>Se(e.id),children:`移除`})]},e.id)):(0,Q.jsx)(`p`,{children:`暂未选择人员`})]})]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>I(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{oe(e=>({...e,[F.id]:re})),e(`已为${F.name}分配 ${K.length} 位用户`),I(null)},children:`确认分配`})]})]})}):null,A?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>j(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-role-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-role-title`,children:Ae?`无法删除`:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>j(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:Ae?`角色“${A.name}”下已分配 ${je} 位用户，无法删除。请先移除该角色下的用户后再试。`:`确定删除角色“${A.name}”吗？`})}),(0,Q.jsx)(`footer`,{children:Ae?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>j(null),children:`知道了`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>j(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:ke,children:`确认删除`})]})})]})}):null]})}function eV({onAction:e,roles:t}){let[n,r]=(0,Z.useState)(!1),[i,a]=(0,Z.useState)(!1),[o,s]=(0,Z.useState)(!1),[c,l]=(0,Z.useState)({name:`张宇`,phone:`138 0000 0000`,email:`zhangyu@huabei-mining.com`}),[u,d]=(0,Z.useState)({current:``,next:``,confirm:``}),[f,p]=(0,Z.useState)(``),m=[`安全管理员`,`数据查看员`].map(e=>t.find(t=>t.name===e)).filter(Boolean).map(e=>e.status===`停用`?`${e.name}（已停用）`:e.name).join(`、`),h=()=>{r(!1),e(`个人资料已保存`)};return(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`personal-center`,"aria-label":`个人中心`,children:[(0,Q.jsxs)(`header`,{className:`personal-profile-hero`,children:[(0,Q.jsx)(`span`,{className:`personal-center-avatar`,children:`张`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h2`,{children:c.name}),(0,Q.jsx)(`span`,{children:`矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`button`,{className:`personal-profile-logout`,onClick:()=>s(!0),children:[(0,Q.jsx)(YR,{}),`退出登录`]})]}),(0,Q.jsxs)(`section`,{className:`personal-information`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h3`,{children:`个人信息`}),(0,Q.jsx)(`span`,{children:`账号资料与岗位身份`})]}),(0,Q.jsxs)(`div`,{className:`personal-information-actions`,children:[(0,Q.jsx)(`button`,{onClick:()=>n?h():r(!0),children:n?`保存资料`:`编辑资料`}),(0,Q.jsx)(`button`,{onClick:()=>a(!0),children:`修改密码`})]})]}),(0,Q.jsxs)(`dl`,{children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`用户名称`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.name,onChange:e=>l(t=>({...t,name:e.target.value}))}):c.name})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`手机号`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.phone,onChange:e=>l(t=>({...t,phone:e.target.value}))}):c.phone})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`邮箱`}),(0,Q.jsx)(`dd`,{children:n?(0,Q.jsx)(`input`,{value:c.email,onChange:e=>l(t=>({...t,email:e.target.value}))}):c.email})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`所属部门`}),(0,Q.jsx)(`dd`,{children:`华北矿业集团 / 矿山事业部 / 安全管理部`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`角色`}),(0,Q.jsx)(`dd`,{children:m||`安全管理员、数据查看员（已停用）`})]}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`dt`,{children:`账号状态`}),(0,Q.jsx)(`dd`,{children:(0,Q.jsx)(`i`,{children:`已启用`})})]})]})]})]}),i?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>a(!1),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog password-dialog`,onSubmit:t=>{if(t.preventDefault(),!u.current||!u.next||!u.confirm){p(`请完整填写密码信息`);return}if(u.next!==u.confirm){p(`两次输入的新密码不一致`);return}if(u.current!==`123456`){p(`旧密码输入错误，请重新输入`);return}a(!1),d({current:``,next:``,confirm:``}),p(``),e(`密码已修改`)},onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`password-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`password-dialog-title`,children:`修改密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭修改密码弹窗`,onClick:()=>a(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body`,children:[(0,Q.jsxs)(`label`,{children:[`旧密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.current,onChange:e=>d(t=>({...t,current:e.target.value})),autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.next,onChange:e=>d(t=>({...t,next:e.target.value}))})]}),(0,Q.jsxs)(`label`,{children:[`确认新密码`,(0,Q.jsx)(`input`,{type:`password`,value:u.confirm,onChange:e=>d(t=>({...t,confirm:e.target.value}))})]}),f?(0,Q.jsx)(`p`,{className:`password-error`,children:f}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>a(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确认修改`})]})]})}):null,o?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>s(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog logout-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`logout-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`logout-dialog-title`,children:`确认退出登录`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭退出登录确认`,onClick:()=>s(!1),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:`确定要退出登录吗？`})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>s(!1),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`logout-confirm-button`,onClick:()=>{s(!1),e(`已退出登录`)},children:`确认退出`})]})]})}):null]})}function tV({onAction:e}){let[t,n]=(0,Z.useState)([{id:`dict-1`,code:`SAFETY_LEVEL`,name:`安全风险等级`,type:`系统字典`,remark:`用于风险辨识与预警分级。`,references:28,updater:`张宇`,updatedAt:`2026-08-14 10:24`,data:[{id:`level-1`,code:`01`,name:`重大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`},{id:`level-2`,code:`02`,name:`较大风险`,updater:`张宇`,updatedAt:`2026-08-14 10:24`}]},{id:`dict-2`,code:`EQUIPMENT_TYPE`,name:`设备类型`,type:`业务字典`,remark:`用于设备台账和巡检记录。`,references:16,updater:`李明`,updatedAt:`2026-08-13 16:40`,data:[{id:`type-1`,code:`01`,name:`采矿设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-1-1`,parentId:`type-1`,code:`0101`,name:`采矿车`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2`,code:`02`,name:`掘进设备`,updater:`李明`,updatedAt:`2026-08-13 16:40`},{id:`type-2-1`,parentId:`type-2`,code:`0201`,name:`掘进机`,updater:`李明`,updatedAt:`2026-08-13 16:40`}]},{id:`dict-3`,code:`POSITION`,name:`岗位字典`,type:`系统字典`,remark:`用于用户岗位配置与任务分派。`,references:12,updater:`张宇`,updatedAt:`2026-08-19 09:30`,data:[{id:`position-1`,code:`SAFETY_ADMIN`,name:`安全管理员`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-2`,code:`EQUIPMENT_ENGINEER`,name:`设备工程师`,updater:`张宇`,updatedAt:`2026-08-19 09:30`},{id:`position-3`,code:`PRODUCTION_SUPERVISOR`,name:`生产主管`,updater:`张宇`,updatedAt:`2026-08-19 09:30`}]},{id:`dict-4`,code:`HAZARD_CATEGORY`,name:`隐患类别`,type:`业务字典`,remark:``,references:21,updater:`陈伟`,updatedAt:`2026-08-13 14:18`,data:[]},{id:`dict-5`,code:`WORK_STATUS`,name:`作业状态`,type:`系统字典`,remark:``,references:9,updater:`张宇`,updatedAt:`2026-08-12 09:36`,data:[]},{id:`dict-6`,code:`FLOW_CATEGORY`,name:`流程分类`,type:`业务字典`,remark:`用于流程中心的流程归类。`,references:2,updater:`张宇`,updatedAt:`2026-08-24 10:30`,data:Mz.map((e,t)=>({id:`flow-category-${t+1}`,code:String(t+1).padStart(2,`0`),name:e,updater:`张宇`,updatedAt:`2026-08-24 10:30`}))}]),[r,i]=(0,Z.useState)(null),[a,o]=(0,Z.useState)({code:``,name:``,type:`业务字典`,remark:``}),[s,c]=(0,Z.useState)([]),[l,u]=(0,Z.useState)([]),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(``),[h,g]=(0,Z.useState)(1),[_,v]=(0,Z.useState)(10),[y,b]=(0,Z.useState)(null),x=p.trim().toLowerCase(),S=s.filter(e=>e.name.toLowerCase().includes(x)),C=[...S.filter(e=>!e.parentId).flatMap(e=>[e,...y===e.id?S.filter(t=>t.parentId===e.id):[]])],w=Math.max(1,Math.ceil(C.length/_)),T=Math.min(h,w),E=C.slice((T-1)*_,T*_),D=(e=null)=>{o(e?{code:e.code,name:e.name,type:e.type??`业务字典`,remark:e.remark??``}:{code:``,name:``,type:`业务字典`,remark:``}),c(e?.data??[]),u([]),f(null),m(``),g(1),b(null),i({type:`editor`,dictionary:e})},O=t=>{t.preventDefault();let o=a.code.trim(),s=a.name.trim(),c=a.type;if(!(!o||!s))if(r.dictionary)n(e=>e.map(e=>e.id===r.dictionary.id?{...e,code:o,name:s,type:c,remark:a.remark.trim(),updater:`张宇`,updatedAt:`刚刚`}:e)),i(e=>({...e,dictionary:{...e.dictionary,code:o,name:s,type:c,remark:a.remark.trim()}})),e(`已保存字典信息：${s}`);else{let t={id:`dict-${Date.now()}`,code:o,name:s,type:c,remark:a.remark.trim(),data:[],references:0,updater:`张宇`,updatedAt:`刚刚`};n(e=>[t,...e]),i(e=>({...e,dictionary:t})),e(`已新增字典：${s}`)}},k=()=>{if(!r?.dictionary){i(null);return}let t=s.filter(e=>!e.isDraft).map(({isDraft:e,...t})=>t);n(e=>e.map(e=>e.id===r.dictionary.id?{...e,data:t,references:t.length,updater:`张宇`,updatedAt:`刚刚`}:e)),e(`已保存字典数据：${r.dictionary.name}`),i(null)},A=(e=null)=>{g(1),f(null),e&&b(e),c(t=>t.some(e=>e.isDraft)?t:[{id:`data-${Date.now()}`,code:``,name:``,parentId:e,updater:``,updatedAt:``,isDraft:!0},...t])},j=(e,t,n)=>{c(r=>r.map(r=>r.id===e?{...r,[t]:n}:r))},M=({id:t,code:n,name:r})=>{let i=n.trim(),a=r.trim();return i?a?s.some(e=>e.id!==t&&e.code.trim().toLocaleLowerCase()===i.toLocaleLowerCase())?(e(`数据编码“${i}”已存在，请修改后保存`),null):{code:i,name:a}:(e(`数据名称不能为空`),null):(e(`数据编码不能为空`),null)},N=e=>{let t=s.find(t=>t.id===e);if(!t)return!1;let n=M(t);return n?(c(t=>t.map(t=>t.id===e?{...t,...n,isDraft:!1,updater:`张宇`,updatedAt:`刚刚`}:t)),!0):!1},P=e=>{f({id:e.id,code:e.code,name:e.name})},ee=()=>{if(!d)return!1;let e=M(d);return e?(c(t=>t.map(t=>t.id===d.id?{...t,...e,updater:`张宇`,updatedAt:`刚刚`}:t)),f(null),!0):!1},F=e=>{u(t=>t.includes(e)?t.filter(t=>t!==e):[...t,e])},I=e=>{let t=new Set(e);s.forEach(e=>{e.parentId&&t.has(e.parentId)&&t.add(e.id)}),c(e=>e.filter(e=>!t.has(e.id))),u(e=>e.filter(e=>!t.has(e))),f(e=>e&&t.has(e.id)?null:e),y&&t.has(y)&&b(null)},te=e=>s.find(t=>t.id===e)?.name||`-`;return(0,Q.jsxs)(`section`,{className:`dictionary-management`,"aria-labelledby":`dictionary-title`,children:[(0,Q.jsxs)(`header`,{className:`dictionary-toolbar`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h1`,{id:`dictionary-title`,children:`字典管理`})}),(0,Q.jsxs)(`button`,{type:`button`,onClick:()=>D(),children:[(0,Q.jsx)(az,{}),`新增字典`]})]}),(0,Q.jsxs)(`section`,{className:`dictionary-panel`,"aria-label":`字典列表`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-table-head`,children:[(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`字典名称`}),(0,Q.jsx)(`span`,{children:`类型`}),(0,Q.jsx)(`span`,{children:`被引用次数`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),t.map(e=>(0,Q.jsxs)(`div`,{className:`dictionary-table-row`,children:[(0,Q.jsx)(`code`,{children:e.code}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`span`,{children:e.type??`业务字典`}),(0,Q.jsx)(`span`,{children:e.references}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>D(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>i({type:`delete`,dictionary:e}),children:(0,Q.jsx)(wz,{})})]})]},e.id))]}),r?.type===`editor`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog dictionary-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`dictionary-dialog-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`dictionary-dialog-title`,children:r.dictionary?`编辑字典`:`新增字典`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`保存字典数据并关闭`,onClick:k,children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`dictionary-dialog-body`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-form-grid`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典编码`}),(0,Q.jsx)(`input`,{value:a.code,onChange:e=>o(t=>({...t,code:e.target.value})),placeholder:`请输入字典编码`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典名称`}),(0,Q.jsx)(`input`,{value:a.name,onChange:e=>o(t=>({...t,name:e.target.value})),placeholder:`请输入字典名称`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`类型`}),(0,Q.jsxs)(`select`,{value:a.type,disabled:!!r.dictionary,title:r.dictionary?`编辑字典时不能修改类型`:void 0,onChange:e=>o(t=>({...t,type:e.target.value})),children:[(0,Q.jsx)(`option`,{children:`系统字典`}),(0,Q.jsx)(`option`,{children:`业务字典`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`字典备注`}),(0,Q.jsx)(`textarea`,{value:a.remark,onChange:e=>o(t=>({...t,remark:e.target.value})),placeholder:`请输入字典备注`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-confirm-bar`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`确定`})]}),(0,Q.jsxs)(`section`,{className:`dictionary-data-section`,"aria-label":`字典数据`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h3`,{children:`字典数据`}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`input`,{"aria-label":`搜索字典数据`,placeholder:`请输入数据名称`,value:p,onChange:e=>{m(e.target.value),g(1)}}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-add-data`,onClick:A,children:`添加数据`}),(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-batch-delete`,disabled:!l.length,onClick:()=>I(l),children:`批量删除`})]})]}),(0,Q.jsxs)(`div`,{className:`dictionary-data-scroll`,children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-head`,children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`全选字典数据`,type:`checkbox`,checked:!!C.filter(e=>!e.isDraft).length&&l.length===C.filter(e=>!e.isDraft).length,onChange:()=>{let e=C.filter(e=>!e.isDraft).map(e=>e.id);u(t=>t.length===e.length?[]:e)}})}),(0,Q.jsx)(`span`,{children:`编码`}),(0,Q.jsx)(`span`,{children:`数据名称`}),(0,Q.jsx)(`span`,{children:`上级数据`}),(0,Q.jsx)(`span`,{children:`更新人`}),(0,Q.jsx)(`span`,{children:`更新时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),E.map(e=>{let t=d?.id===e.id,n=!e.parentId&&y===e.id;return(0,Q.jsxs)(Z.Fragment,{children:[(0,Q.jsxs)(`div`,{className:`dictionary-data-row ${e.isDraft||t?`draft`:``} ${e.parentId?`dictionary-data-row-child`:`dictionary-data-row-root`}`,onBlur:n=>{n.currentTarget.contains(n.relatedTarget)||(e.isDraft&&N(e.id),t&&ee())},children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`input`,{"aria-label":`选择${e.name||`新增数据`}`,type:`checkbox`,disabled:e.isDraft,checked:l.includes(e.id),onChange:()=>F(e.id)})}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据编码`:`编辑${e.name}的编码`,value:e.isDraft?e.code:d.code,onChange:t=>e.isDraft?j(e.id,`code`,t.target.value):f(e=>({...e,code:t.target.value}))}):(0,Q.jsx)(`code`,{children:e.code}),e.isDraft||t?(0,Q.jsx)(`input`,{"aria-label":e.isDraft?`新增数据名称`:`编辑${e.name}的数据名称`,value:e.isDraft?e.name:d.name,onChange:t=>e.isDraft?j(e.id,`name`,t.target.value):f(e=>({...e,name:t.target.value}))}):(0,Q.jsx)(`strong`,{className:e.parentId?`dictionary-data-child-name`:``,children:e.name}),(0,Q.jsx)(`span`,{className:e.parentId?`dictionary-parent-data`:`dictionary-root-data`,children:e.parentId?te(e.parentId):`-`}),(0,Q.jsx)(`span`,{children:e.updater}),(0,Q.jsx)(`time`,{children:e.updatedAt}),e.isDraft?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认新增数据`,onClick:()=>N(e.id),children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消新增数据`,onClick:()=>I([e.id]),children:(0,Q.jsx)(YR,{})})]}):t?(0,Q.jsxs)(`span`,{className:`dictionary-draft-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,"aria-label":`确认编辑数据`,onClick:ee,children:(0,Q.jsx)(hz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`取消编辑数据`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}):(0,Q.jsxs)(`span`,{className:`dictionary-actions`,children:[e.parentId?null:(0,Q.jsx)(`button`,{type:`button`,className:`dictionary-toggle-child`,"aria-label":`${n?`收起`:`展开`}${e.name}的子级数据`,"aria-expanded":n,title:n?`收起子级`:`展开子级`,onClick:()=>b(t=>t===e.id?null:e.id),children:`子级`}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`编辑${e.name}`,title:`编辑`,onClick:()=>P(e),children:(0,Q.jsx)(lz,{})}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`删除${e.name}`,title:`删除`,onClick:()=>I([e.id]),children:(0,Q.jsx)(wz,{})})]})]},e.id),n?(0,Q.jsxs)(`div`,{className:`dictionary-child-add-row`,children:[(0,Q.jsx)(`span`,{className:`dictionary-child-add-label`,children:`子级数据`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>A(e.id),children:`新增子级`})]},`${e.id}-child-add`):null]},e.id)})]}),(0,Q.jsxs)(`footer`,{className:`dictionary-pagination`,children:[(0,Q.jsxs)(`span`,{children:[`共 `,S.length,` 条`]}),(0,Q.jsxs)(`label`,{children:[`每页`,(0,Q.jsxs)(`select`,{"aria-label":`每页数据条数`,value:_,onChange:e=>{v(Number(e.target.value)),g(1)},children:[(0,Q.jsx)(`option`,{value:10,children:`10 条`}),(0,Q.jsx)(`option`,{value:20,children:`20 条`}),(0,Q.jsx)(`option`,{value:50,children:`50 条`})]})]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`上一页`,disabled:T===1,onClick:()=>g(e=>e-1),children:`上一页`}),(0,Q.jsxs)(`b`,{children:[T,` / `,w]}),(0,Q.jsx)(`button`,{type:`button`,"aria-label":`下一页`,disabled:T===w,onClick:()=>g(e=>e+1),children:`下一页`})]})]})]})]})}):null,r?.type===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>i(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-dictionary-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-dictionary-title`,children:r.dictionary.type===`系统字典`?`提示`:`确认删除`}),r.dictionary.type===`系统字典`?null:(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>i(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsx)(`p`,{children:r.dictionary.type===`系统字典`?`系统字典“${r.dictionary.name}”不能删除，只能修改字典值。`:`确定删除字典“${r.dictionary.name}”吗？删除后无法恢复。`})}),(0,Q.jsx)(`footer`,{children:r.dictionary.type===`系统字典`?(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>i(null),children:`关闭`}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>i(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>{n(e=>e.filter(e=>e.id!==r.dictionary.id)),e(`已删除字典：${r.dictionary.name}`),i(null)},children:`确认删除`})]})})]})}):null]})}function nV({branding:e,onBrandingChange:t,onAction:n}){let r=(0,Z.useRef)(null),i=(0,Z.useRef)(null),a=(0,Z.useRef)(null),[o,s]=(0,Z.useState)(``),[c,l]=(0,Z.useState)(!1),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(``),[g,_]=(0,Z.useState)(null),[v,y]=(0,Z.useState)(``),b=(e,r)=>{let i=r.target.files?.[0];if(r.target.value=``,!i)return;if(!i.type.startsWith(`image/`)){s(`请选择 PNG、JPG 或 WebP 格式的图片`);return}if(i.size>1.5*1024*1024){s(`图片大小不能超过 1.5MB`);return}let a=new FileReader;a.onload=()=>{t(t=>({...t,[e]:String(a.result)})),s(``),n(e===`logo`?`企业 Logo 已更新`:`登录页背景图已更新`)},a.readAsDataURL(i)},x=e=>{t(t=>({...t,[e]:``})),n(e===`logo`?`已恢复默认 Logo`:`已恢复默认登录背景`)},S=e=>{t(t=>({...t,systemIcon:e.id})),l(!1),n(`已选择系统图标：${e.label}`)},C=()=>{p(e=>(e&&(h(``),_(null),y(``)),!e))},w=e=>{let t=e.target.files?.[0];if(e.target.value=``,t){if(!t.type.startsWith(`image/`)){y(`请选择图片格式的图标文件`);return}if(t.size>512*1024){y(`图标文件不能超过 512KB`);return}_(t),y(``)}},T=()=>{if(!m.trim()){y(`请输入图标名称`);return}if(!g){y(`请选择图标文件`);return}let e=new FileReader;e.onload=()=>{let r={id:`custom-icon-${Date.now()}`,label:m.trim().slice(0,20),src:String(e.result)};t(e=>({...e,customSystemIcons:[...e.customSystemIcons??[],r]})),y(``),h(``),_(null),p(!1),n(`图标“${r.label}”已上传`)},e.readAsDataURL(g)},E=e=>{t(t=>({...t,customSystemIcons:e.src?(t.customSystemIcons??[]).filter(t=>t.id!==e.id):t.customSystemIcons??[],hiddenSystemIconIds:e.src?t.hiddenSystemIconIds??[]:[...new Set([...t.hiddenSystemIconIds??[],e.id])],systemIcon:t.systemIcon===e.id?`apps`:t.systemIcon})),d(null),n(`图标“${e.label}”已删除`)},D=[...Lz.filter(t=>!(e.hiddenSystemIconIds??[]).includes(t.id)),...e.customSystemIcons??[]];return(0,Q.jsxs)(`section`,{className:`enterprise-settings`,"aria-labelledby":`enterprise-settings-title`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h1`,{id:`enterprise-settings-title`,children:`企业设置`})}),(0,Q.jsxs)(`div`,{className:`enterprise-settings-grid`,children:[(0,Q.jsxs)(`section`,{className:`enterprise-setting-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`企业 Logo`})}),(0,Q.jsx)(`div`,{className:`enterprise-logo-preview`,children:e.logo?(0,Q.jsx)(`img`,{src:e.logo,alt:`企业 Logo 预览`}):(0,Q.jsx)(`span`,{children:`C`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>r.current?.click(),children:`上传 Logo`}),e.logo?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`logo`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:r,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`logo`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-background-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`登录页背景图`})}),(0,Q.jsx)(`div`,{className:`enterprise-background-preview${e.loginBackground?` custom`:``}`,style:e.loginBackground?{backgroundImage:`url(${e.loginBackground})`}:void 0,children:(0,Q.jsx)(`span`,{children:`登录页背景预览`})}),(0,Q.jsxs)(`div`,{className:`enterprise-setting-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>i.current?.click(),children:`上传背景图`}),e.loginBackground?(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>x(`loginBackground`),children:`恢复默认`}):null]}),(0,Q.jsx)(`input`,{ref:i,type:`file`,accept:`image/png,image/jpeg,image/webp`,onChange:e=>b(`loginBackground`,e),hidden:!0})]}),(0,Q.jsxs)(`section`,{className:`enterprise-setting-card enterprise-icon-card`,children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{children:`系统图标管理`})}),(0,Q.jsx)(`div`,{className:`enterprise-system-icon-preview`,"aria-label":`当前系统图标预览`,children:(0,Q.jsx)(Rz,{name:e.systemIcon,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`p`,{children:`统一维护系统内可复用的功能图标。`}),(0,Q.jsx)(`div`,{className:`enterprise-setting-actions`,children:(0,Q.jsx)(`button`,{type:`button`,onClick:()=>l(!0),children:`管理图标`})})]})]}),o?(0,Q.jsx)(`p`,{className:`enterprise-upload-error`,role:`alert`,children:o}):null,c?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>l(!1),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog icon-picker-dialog`,role:`dialog`,"aria-modal":`true`,"aria-label":`选择系统图标`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-picker-close`,"aria-label":`关闭图标选择弹窗`,onClick:()=>l(!1),children:(0,Q.jsx)(YR,{})}),(0,Q.jsx)(`h2`,{className:`system-icon-picker-title`,children:`图标库`}),(0,Q.jsxs)(`div`,{className:`system-icon-picker-actions`,children:[(0,Q.jsx)(`button`,{type:`button`,onClick:C,children:f?`取消上传`:`上传图标`}),(0,Q.jsx)(`span`,{children:`支持 PNG、JPG、WebP、SVG，最大 512KB`})]}),f?(0,Q.jsxs)(`div`,{className:`system-icon-upload-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsxs)(`span`,{children:[`图标名称 `,(0,Q.jsx)(`i`,{children:`*`})]}),(0,Q.jsx)(`input`,{value:m,maxLength:20,placeholder:`请输入图标名称`,onChange:e=>{h(e.target.value),y(``)}})]}),(0,Q.jsxs)(`div`,{className:`system-icon-upload-file`,children:[(0,Q.jsx)(`button`,{type:`button`,className:`secondary`,onClick:()=>a.current?.click(),children:`选择文件`}),(0,Q.jsx)(`span`,{children:g?.name??`未选择文件`}),(0,Q.jsx)(`button`,{type:`button`,onClick:T,children:`确认上传`})]}),v?(0,Q.jsx)(`p`,{role:`alert`,children:v}):null]}):null,(0,Q.jsx)(`div`,{className:`system-icon-picker-grid`,children:D.map(t=>(0,Q.jsxs)(`div`,{className:`system-icon-picker-item`,children:[(0,Q.jsxs)(`button`,{type:`button`,"aria-label":`选择${t.label}图标`,title:t.label,className:e.systemIcon===t.id?`selected`:``,onClick:()=>S(t),children:[(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Rz,{name:t.id,customIcons:e.customSystemIcons})}),(0,Q.jsx)(`b`,{children:t.label})]}),(0,Q.jsx)(`button`,{type:`button`,className:`system-icon-delete`,"aria-label":`删除${t.label}图标`,title:`删除图标`,onClick:()=>d(t),children:(0,Q.jsx)(wz,{})})]},t.id))}),(0,Q.jsx)(`input`,{ref:a,type:`file`,accept:`image/png,image/jpeg,image/webp,image/svg+xml`,onChange:w,hidden:!0})]})}):null,u?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>d(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-system-icon-title`,onMouseDown:e=>e.stopPropagation(),children:[(0,Q.jsx)(`header`,{children:(0,Q.jsx)(`h2`,{id:`delete-system-icon-title`,children:`确认删除图标`})}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除图标“`,u.label,`”吗？删除后无法恢复。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>d(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:()=>E(u),children:`确认删除`})]})]})}):null]})}function rV({onAction:e}){let t=[{id:`workbench`,name:`工作台`,type:`菜单`,icon:`home`,sort:1,path:`/workbench`,component:`WorkbenchPage`,perms:`workbench:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`applications`,name:`应用`,type:`目录`,icon:`apps`,sort:2,path:`/applications`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-dual-prevention`,name:`双重预防机制`,type:`目录`,icon:`shield`,sort:1,path:`dual-prevention`,component:``,perms:`application:dual-prevention:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`application-risk-control`,name:`风险分级管控`,type:`菜单`,icon:`shield`,sort:1,path:`risk-control`,component:`DualPreventionPage`,perms:`application:risk-control:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-list`,name:`岗位隐患排查清单`,type:`菜单`,icon:`document`,sort:2,path:`inspection-list`,component:`DualPreventionPage`,perms:`application:inspection-list:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-inspection-flow`,name:`隐患排查审批流程`,type:`菜单`,icon:`approval`,sort:3,path:`inspection-flow`,component:`DualPreventionPage`,perms:`application:inspection-flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`application-safety`,name:`安全管理`,type:`菜单`,icon:`shield`,sort:2,path:`safety`,component:`ApplicationPage`,perms:`application:safety:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-equipment`,name:`设备管理`,type:`菜单`,icon:`equipment`,sort:3,path:`equipment`,component:`ApplicationPage`,perms:`application:equipment:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-explosive`,name:`火工品管理`,type:`菜单`,icon:`explosive`,sort:4,path:`explosive`,component:`ApplicationPage`,perms:`application:explosive:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-production`,name:`生产管理`,type:`菜单`,icon:`production`,sort:5,path:`production`,component:`ApplicationPage`,perms:`application:production:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-electromechanical`,name:`机电管理`,type:`菜单`,icon:`equipment`,sort:6,path:`electromechanical`,component:`ApplicationPage`,perms:`application:electromechanical:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-fire`,name:`消防管理`,type:`菜单`,icon:`fire`,sort:7,path:`fire`,component:`ApplicationPage`,perms:`application:fire:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`application-emergency`,name:`应急管理`,type:`菜单`,icon:`warning`,sort:8,path:`emergency`,component:`ApplicationPage`,perms:`application:emergency:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]},{id:`tasks`,name:`任务`,type:`目录`,icon:`task`,sort:3,path:`/tasks`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`processes`,name:`流程`,type:`目录`,icon:`flow`,sort:4,path:`/processes`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dynamics`,name:`动态`,type:`目录`,icon:`message`,sort:5,path:`/dynamics`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`warnings`,name:`预警`,type:`目录`,icon:`warning`,sort:6,path:`/warnings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`dashboards`,name:`看板`,type:`目录`,icon:`dashboard`,sort:7,path:`/dashboards`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:CB.map((e,t)=>({id:`dashboard-${t+1}`,name:e.name,type:`菜单`,icon:`dashboard`,sort:t+1,path:`dashboard-${t+1}`,component:`DashboardPage`,perms:`dashboard:${t+1}:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}))},{id:`settings`,name:`设置中心`,type:`目录`,icon:`settings`,sort:8,path:`/settings`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`settings-dynamics`,name:`安全动态`,type:`菜单`,icon:`message`,sort:1,path:`dynamics`,component:`DynamicsSettings`,perms:`settings:dynamics:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-worksheet`,name:`工作表`,type:`菜单`,icon:`document`,sort:2,path:`worksheet`,component:`EmbeddedLowCodePage`,perms:`settings:worksheet:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-task`,name:`任务`,type:`菜单`,icon:`task`,sort:3,path:`task`,component:`EmbeddedTaskFrame`,perms:`settings:task:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`settings-flow`,name:`流程`,type:`菜单`,icon:`flow`,sort:4,path:`flow`,component:`EmbeddedLowCodePage`,perms:`settings:flow:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`system-settings`,name:`系统设置`,type:`目录`,icon:`settings`,sort:8,path:`system`,component:``,perms:``,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[{id:`organization-users`,name:`组织用户`,type:`菜单`,icon:`people`,sort:1,path:`organization-users`,component:`UserManagementCenter`,perms:`system:user:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`role-permission`,name:`角色权限`,type:`菜单`,icon:`approval`,sort:2,path:`role-permission`,component:`RbacPage`,perms:`system:role:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`menu-management`,name:`菜单管理`,type:`菜单`,icon:`sort`,sort:3,path:`menu-management`,component:`MenuManagementPage`,perms:`system:menu:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-31 09:00`,children:[]},{id:`dictionary`,name:`字典管理`,type:`菜单`,icon:`document`,sort:4,path:`dictionary`,component:`DictionaryManagement`,perms:`system:dictionary:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]},{id:`enterprise`,name:`企业设置`,type:`菜单`,icon:`briefcase`,sort:5,path:`enterprise`,component:`EnterpriseSettings`,perms:`system:enterprise:view`,visible:`显示`,status:`启用`,createdAt:`2026-08-20 09:00`,children:[]}]}]}],n=(e=`settings`)=>({parentId:e,name:``,type:`菜单`,icon:`apps`,sort:1,path:``,component:``,perms:``,visible:`显示`,status:`启用`}),[r,i]=(0,Z.useState)(t),[a,o]=(0,Z.useState)(``),[s,c]=(0,Z.useState)(``),[l,u]=(0,Z.useState)(()=>new Set([`settings`,`system-settings`])),[d,f]=(0,Z.useState)(null),[p,m]=(0,Z.useState)(n()),[h,g]=(0,Z.useState)(``),_=(e,t=0,n=`0`)=>e.flatMap(e=>[{...e,depth:t,parentId:n},..._(e.children??[],t+1,e.id)]),v=_(r),y=e=>{if(e.id===`applications`)return!0;let t=e.parentId;for(;t!==`0`;){if(t===`applications`)return!0;t=v.find(e=>e.id===t)?.parentId??`0`}return!1},b=v.filter(e=>e.type!==`按钮`&&!y(e)),x=v.filter(e=>(!a||e.name.includes(a.trim()))&&(!s||e.status===s)?!0:v.some(t=>t.id!==e.id&&t.depth>e.depth&&t.parentId===e.id&&(!a||t.name.includes(a.trim()))&&(!s||t.status===s))),S=e=>{let t=e.parentId;for(;t!==`0`;){if(!l.has(t))return!1;t=v.find(e=>e.id===t)?.parentId??`0`}return!0},C=(e,t,n)=>e.map(e=>e.id===t?{...e,...n}:{...e,children:C(e.children??[],t,n)}),w=(e,t,n)=>t===`0`?[...e,n]:e.map(e=>e.id===t?{...e,children:[...e.children??[],n]}:{...e,children:w(e.children??[],t,n)}),T=(e,t)=>e.filter(e=>e.id!==t).map(e=>({...e,children:T(e.children??[],t)})),E=(e=`settings`)=>{let t=v.find(t=>t.id===e);m({...n(e),sort:(t?.children?.length??r.length)+1}),g(``),f({mode:`create`,parentId:e})},D=e=>{m({...e}),g(``),f({mode:`edit`,id:e.id})},O=t=>{t.preventDefault();let n=p.name.trim();if(!n){g(`请输入菜单名称`);return}let r={...p,name:n,sort:Number(p.sort)||1};d?.mode===`edit`?i(e=>C(e,d.id,r)):i(e=>w(e,r.parentId,{...r,id:`menu-${Date.now()}`,createdAt:`2026-08-31 10:00`,children:[]})),f(null),e(`${d?.mode===`edit`?`保存`:`新增`}菜单成功`)},k=t=>{let n=t.status===`启用`?`停用`:`启用`;i(e=>C(e,t.id,{status:n})),e(`${t.name}已${n}`)},A=()=>{i(e=>T(e,d.id)),f(null),e(`删除菜单成功`)},j=()=>u(new Set(v.filter(e=>e.children?.length).map(e=>e.id))),M=()=>u(new Set),N=(e,t)=>{m(n=>({...n,[e]:t})),g(``)};return(0,Q.jsxs)(`section`,{className:`menu-management`,"aria-labelledby":`menu-management-title`,children:[(0,Q.jsxs)(`header`,{className:`menu-management-toolbar`,children:[(0,Q.jsx)(`h1`,{id:`menu-management-title`,children:`菜单管理`}),(0,Q.jsxs)(`button`,{type:`button`,className:`menu-management-primary`,onClick:()=>E(`settings`),children:[(0,Q.jsx)(az,{}),`新增菜单`]})]}),(0,Q.jsxs)(`section`,{className:`menu-management-panel`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-filters`,children:[(0,Q.jsxs)(`label`,{children:[`菜单名称`,(0,Q.jsx)(`input`,{value:a,onChange:e=>o(e.target.value),maxLength:20,placeholder:`请输入菜单名称`})]}),(0,Q.jsxs)(`label`,{children:[`状态`,(0,Q.jsxs)(`select`,{value:s,onChange:e=>c(e.target.value),children:[(0,Q.jsx)(`option`,{value:``,children:`全部`}),(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-search`,children:`搜索`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-filter-reset`,onClick:()=>{o(``),c(``)},children:`重置`}),(0,Q.jsx)(`span`,{}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:j,children:`展开`}),(0,Q.jsx)(`button`,{type:`button`,className:`menu-tree-tool`,onClick:M,children:`折叠`})]}),(0,Q.jsxs)(`div`,{className:`menu-management-table`,role:`table`,"aria-label":`菜单列表`,children:[(0,Q.jsxs)(`div`,{className:`menu-management-table-head`,role:`row`,children:[(0,Q.jsx)(`span`,{children:`菜单名称`}),(0,Q.jsx)(`span`,{children:`图标`}),(0,Q.jsx)(`span`,{children:`排序`}),(0,Q.jsx)(`span`,{children:`权限标识`}),(0,Q.jsx)(`span`,{children:`组件路径`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`创建时间`}),(0,Q.jsx)(`span`,{children:`操作`})]}),x.filter(S).map(e=>{let t=(e.children??[]).length>0,n=y(e);return(0,Q.jsxs)(`div`,{className:`menu-management-table-row`,role:`row`,children:[(0,Q.jsxs)(`div`,{className:`menu-tree-name`,style:{"--menu-depth":e.depth},children:[t?(0,Q.jsx)(`button`,{type:`button`,className:l.has(e.id)?`expanded`:``,onClick:()=>u(t=>{let n=new Set(t);return n.has(e.id)?n.delete(e.id):n.add(e.id),n}),children:(0,Q.jsx)(_z,{})}):(0,Q.jsx)(`i`,{}),(0,Q.jsx)(Rz,{name:e.icon}),(0,Q.jsx)(`strong`,{children:e.name}),(0,Q.jsx)(`em`,{children:e.type})]}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(Rz,{name:e.icon})}),(0,Q.jsx)(`span`,{children:e.sort}),(0,Q.jsx)(`code`,{children:e.perms||`-`}),(0,Q.jsx)(`code`,{children:e.component||`-`}),(0,Q.jsx)(`span`,{children:(0,Q.jsx)(`i`,{className:e.status===`启用`?`menu-status enabled`:`menu-status`,children:e.status})}),(0,Q.jsx)(`time`,{children:e.createdAt}),(0,Q.jsx)(`div`,{className:`menu-row-actions`,children:n?null:(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsx)(`button`,{type:`button`,onClick:()=>E(e.id),disabled:e.type===`按钮`,children:`新增`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>D(e),children:`修改`}),(0,Q.jsx)(`button`,{type:`button`,onClick:()=>k(e),children:e.status===`启用`?`停用`:`启用`}),(0,Q.jsx)(`button`,{type:`button`,className:`danger`,disabled:e.id===`settings`,onClick:()=>f({mode:`delete`,id:e.id,name:e.name}),children:`删除`})]})})]},e.id)})]})]}),d?.mode===`create`||d?.mode===`edit`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`form`,{className:`management-dialog menu-editor-dialog`,onSubmit:O,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`menu-editor-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`menu-editor-title`,children:d.mode===`edit`?`修改菜单`:`新增菜单`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭菜单编辑弹窗`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsxs)(`div`,{className:`management-dialog-body menu-editor-form`,children:[(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`上级菜单`}),(0,Q.jsxs)(`select`,{value:p.parentId,onChange:e=>N(`parentId`,e.target.value),disabled:d.mode===`edit`,children:[d.mode===`edit`&&p.parentId===`0`?(0,Q.jsx)(`option`,{value:`0`,children:`主类目`}):null,b.filter(e=>e.id!==d.id).map(e=>(0,Q.jsxs)(`option`,{value:e.id,children:[`　`.repeat(e.depth),e.name]},e.id))]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单类型`}),(0,Q.jsxs)(`select`,{value:p.type,onChange:e=>N(`type`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`目录`}),(0,Q.jsx)(`option`,{children:`菜单`}),(0,Q.jsx)(`option`,{children:`按钮`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单名称`}),(0,Q.jsx)(`input`,{value:p.name,onChange:e=>N(`name`,e.target.value),maxLength:20,placeholder:`请输入菜单名称`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示排序`}),(0,Q.jsx)(`input`,{value:p.sort,onChange:e=>N(`sort`,e.target.value.replace(/\D/g,``).slice(0,4)),inputMode:`numeric`,maxLength:4,placeholder:`请输入排序号`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`路由地址`}),(0,Q.jsx)(`input`,{value:p.path,onChange:e=>N(`path`,e.target.value),maxLength:60,placeholder:`例如：system/menu`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`组件路径`}),(0,Q.jsx)(`input`,{value:p.component,onChange:e=>N(`component`,e.target.value),maxLength:60,placeholder:`例如：system/menu/index`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`权限标识`}),(0,Q.jsx)(`input`,{value:p.perms,onChange:e=>N(`perms`,e.target.value),maxLength:60,placeholder:`例如：system:menu:view`})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单图标`}),(0,Q.jsx)(`select`,{value:p.icon,onChange:e=>N(`icon`,e.target.value),children:Lz.map(e=>(0,Q.jsx)(`option`,{value:e.id,children:e.label},e.id))})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`显示状态`}),(0,Q.jsxs)(`select`,{value:p.visible,onChange:e=>N(`visible`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`显示`}),(0,Q.jsx)(`option`,{children:`隐藏`})]})]}),(0,Q.jsxs)(`label`,{children:[(0,Q.jsx)(`b`,{children:`菜单状态`}),(0,Q.jsxs)(`select`,{value:p.status,onChange:e=>N(`status`,e.target.value),children:[(0,Q.jsx)(`option`,{children:`启用`}),(0,Q.jsx)(`option`,{children:`停用`})]})]}),h?(0,Q.jsx)(`p`,{className:`menu-editor-error`,children:h}):null]}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`submit`,className:`management-dialog-primary`,children:`保存`})]})]})}):null,d?.mode===`delete`?(0,Q.jsx)(`div`,{className:`management-dialog-layer`,onMouseDown:()=>f(null),role:`presentation`,children:(0,Q.jsxs)(`section`,{className:`management-dialog management-confirm-dialog`,onMouseDown:e=>e.stopPropagation(),role:`dialog`,"aria-modal":`true`,"aria-labelledby":`delete-menu-title`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)(`h2`,{id:`delete-menu-title`,children:`确认删除`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-close`,"aria-label":`关闭删除确认`,onClick:()=>f(null),children:(0,Q.jsx)(YR,{})})]}),(0,Q.jsx)(`div`,{className:`management-dialog-body`,children:(0,Q.jsxs)(`p`,{children:[`确定删除菜单“`,d.name,`”吗？其下级菜单也将一并删除。`]})}),(0,Q.jsxs)(`footer`,{children:[(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-cancel`,onClick:()=>f(null),children:`取消`}),(0,Q.jsx)(`button`,{type:`button`,className:`management-dialog-primary`,onClick:A,children:`确认删除`})]})]})}):null]})}function iV({onAction:e,initialSelected:t=`安全动态`,branding:n,onBrandingChange:r,roles:i,setRoles:a}){let[o,s]=(0,Z.useState)(t),[c,l]=(0,Z.useState)([]),[u,d]=(0,Z.useState)([]),[f,p]=(0,Z.useState)(!1),[m,h]=(0,Z.useState)(!1),[g,_]=(0,Z.useState)(!1),[v,y]=(0,Z.useState)(!1),b=[{label:`工作表单`,module:`form`}],x=[{label:`流程中心`,module:`flow`}],S=b.find(e=>e.label===o);x.find(e=>e.label===o);let C=(o===`工作表`?{label:`工作表`,module:`form`}:o===`流程`?{label:`流程`,module:`flow`}:null)??(o===`应用中心`?{label:`应用中心`,module:`app`}:null),w=o===`任务`?{label:`任务`,view:`view-template`}:[{label:`任务模版`,view:`view-template`}].find(e=>e.label===o),T=o===`预警`?{label:`预警`,view:`warning-rule`}:null,E=[`组织用户`,`角色权限`,`菜单管理`,`字典管理`,`企业设置`],D=zB.find(e=>e.label===o)??S??w??T??zB[0],O=D.icon??QR,k={安全动态:[[`隐患整改逾期提醒`,`整改期限前 24 小时通知`,`已启用`],[`高风险作业预警`,`出现预警时即时通知`,`已启用`],[`安全检查动态`,`每日汇总推送`,`已启用`]],工作表:[[`岗位隐患排查表`,`双重预防机制`,`使用中`],[`设备点检记录表`,`设备管理`,`使用中`],[`动火作业申请表`,`安全管理`,`使用中`]],任务:[[`任务到期提醒`,`截止前 2 小时`,`已启用`],[`任务指派通知`,`站内消息 + 待办`,`已启用`],[`逾期升级规则`,`超期 24 小时通知负责人`,`已启用`]],流程:[[`动火作业申请`,`安全管理部审批`,`已发布`],[`设备采购申请`,`部门负责人审批`,`已发布`],[`外协队入场审核`,`安环部备案`,`已发布`]],数据台:[[`设备运行台账`,`每 30 分钟同步`,`正常`],[`隐患整改台账`,`实时同步`,`正常`],[`生产日报数据`,`每日 18:00 汇总`,`正常`]],数据看板:[[`安全风险总览`,`个人可见`,`已添加`],[`设备健康度`,`管理层共享`,`已添加`],[`生产进度跟踪`,`个人可见`,`已添加`]],角色权限:[[`安全管理员`,`隐患、检查、预警管理`,`当前角色`],[`任务执行人`,`任务处理与反馈`,`当前角色`],[`流程审批人`,`审批与意见填写`,`当前角色`]],组织用户:[[`姓名`,`张宇`,`已认证`],[`所属部门`,`安全管理部`,`已同步`],[`通知方式`,`站内消息、短信提醒`,`已启用`]]}[o]??[],A=o===`组织用户`,j=o===`角色权限`,M=o===`菜单管理`,N=o===`安全动态`,P=o===`字典管理`,ee=o===`企业设置`,F=!!C;S?.module;let I=!!w,te=!!T,ne=E.includes(o),re=e=>{let t=e===`worksheet`?!f:e===`process`?!m:e===`task`?!g:!v;p(e===`worksheet`&&t),h(e===`process`&&t),_(e===`task`&&t),y(e===`system`&&t),t&&(e===`worksheet`&&s(`工作表单`),e===`process`&&s(`流程中心`),e===`task`&&s(`任务模版`))};return(0,Q.jsx)(`section`,{className:`settings-page`,"aria-labelledby":`settings-title`,children:(0,Q.jsxs)(`div`,{className:`settings-layout`,children:[(0,Q.jsxs)(`aside`,{className:`settings-sidebar`,"aria-label":`设置菜单`,children:[(0,Q.jsxs)(`header`,{children:[(0,Q.jsx)($R,{}),(0,Q.jsx)(`span`,{children:`设置中心`})]}),(0,Q.jsx)(`nav`,{children:zB.map(({label:e,icon:t})=>[`工作表`,`任务`,`流程`,`预警`].includes(e)?(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e})]},e):e===`系统设置`?(0,Q.jsxs)(`div`,{className:`settings-menu-group`,children:[(0,Q.jsxs)(`button`,{className:`settings-parent-menu ${ne?`active`:``}`,onClick:()=>re(`system`),"aria-expanded":v,children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),(0,Q.jsx)(_z,{className:v?`expanded`:``})]}),v?(0,Q.jsx)(`div`,{className:`settings-submenu-list`,children:E.map(e=>(0,Q.jsx)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:e},e))}):null]},e):(0,Q.jsxs)(`button`,{className:o===e?`active`:``,onClick:()=>s(e),children:[(0,Q.jsx)(t,{}),(0,Q.jsx)(`span`,{children:e}),e===`安全动态`?null:(0,Q.jsx)(_z,{})]},e))})]}),(0,Q.jsxs)(`div`,{className:`settings-content`,children:[!A&&!j&&!M&&!ee&&!N&&!P&&!F&&!I&&!te?(0,Q.jsxs)(`header`,{className:`settings-header`,children:[(0,Q.jsx)(`span`,{className:`settings-header-icon`,children:(0,Q.jsx)(O,{})}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`h1`,{id:`settings-title`,children:D.title}),(0,Q.jsx)(`p`,{children:D.description})]}),(0,Q.jsxs)(`button`,{onClick:()=>e(`新增${D.title}配置`),children:[(0,Q.jsx)(az,{}),`新增配置`]})]}):null,N?(0,Q.jsx)(`section`,{className:`settings-dynamics-embed`,"aria-label":`动态圈管理`,children:(0,Q.jsx)(EB,{className:`settings-dynamics-frame`,view:`feedno`,title:`动态圈管理`})}):ee?(0,Q.jsx)(nV,{branding:n,onBrandingChange:r,onAction:e}):P?(0,Q.jsx)(tV,{onAction:e}):F?(0,Q.jsx)(IB,{module:C.module,view:C.view,label:C.label}):I?(0,Q.jsx)(jB,{view:w.view,label:w.label,className:`settings-task-embed`}):te?(0,Q.jsx)(NB,{view:T.view,label:T.label,className:`settings-warning-embed`}):A?(0,Q.jsx)(ZB,{organizations:c,setOrganizations:l,users:u,setUsers:d,roles:i}):j?(0,Q.jsx)($B,{onAction:e,roles:i,setRoles:a}):M?(0,Q.jsx)(rV,{onAction:e}):(0,Q.jsxs)(Q.Fragment,{children:[(0,Q.jsxs)(`section`,{className:`settings-panel`,"aria-labelledby":`settings-list-title`,children:[(0,Q.jsxs)(`div`,{className:`settings-panel-title`,children:[(0,Q.jsxs)(`div`,{children:[(0,Q.jsxs)(`h2`,{id:`settings-list-title`,children:[D.title,`配置`]}),(0,Q.jsx)(`p`,{children:`以下内容为当前生效的配置项。`})]}),(0,Q.jsx)(`button`,{onClick:()=>e(`保存${D.title}设置`),children:`保存设置`})]}),(0,Q.jsxs)(`div`,{className:`settings-table`,children:[(0,Q.jsxs)(`div`,{className:`settings-table-head`,children:[(0,Q.jsx)(`span`,{children:`配置名称`}),(0,Q.jsx)(`span`,{children:`规则 / 说明`}),(0,Q.jsx)(`span`,{children:`状态`}),(0,Q.jsx)(`span`,{children:`操作`})]}),k.map(([t,n,r])=>(0,Q.jsxs)(`div`,{className:`settings-table-row`,children:[(0,Q.jsx)(`strong`,{children:t}),(0,Q.jsx)(`span`,{children:n}),(0,Q.jsx)(`i`,{children:r}),(0,Q.jsx)(`button`,{onClick:()=>e(`编辑${t}`),children:`编辑`})]},t))]})]}),(0,Q.jsxs)(`section`,{className:`settings-note`,children:[(0,Q.jsx)(hz,{}),(0,Q.jsxs)(`div`,{children:[(0,Q.jsx)(`b`,{children:`设置即时生效`}),(0,Q.jsx)(`span`,{children:`保存后将应用到当前账号及相应的业务模块。`})]})]})]})]})]})})}function aV({onLogin:e,branding:t}){let[n]=(0,Z.useState)(()=>{try{return JSON.parse(window.localStorage.getItem(`ething-login`)||`null`)}catch{return null}}),[r,i]=(0,Z.useState)(n?.account??``),[a,o]=(0,Z.useState)(n?.password??``),[s,c]=(0,Z.useState)(!!n),[l,u]=(0,Z.useState)(!1),[d,f]=(0,Z.useState)(``),[p,m]=(0,Z.useState)(!1);return(0,Q.jsxs)(`main`,{className:`login-page`,children:[(0,Q.jsxs)(`section`,{className:`login-brand-panel${t.loginBackground?` has-custom-background`:``}`,style:t.loginBackground?{"--login-background-image":`url(${t.loginBackground})`}:void 0,"aria-labelledby":`login-brand-title`,children:[(0,Q.jsx)(`div`,{className:`login-brand-mark`,children:t.logo?(0,Q.jsx)(`img`,{src:t.logo,alt:`企业 Logo`}):`C`}),(0,Q.jsxs)(`div`,{className:`login-brand-content`,children:[(0,Q.jsx)(`p`,{children:`智慧应急安全管理平台`}),(0,Q.jsx)(`h1`,{id:`login-brand-title`,children:`把安全工作放在一处，清晰推进。`}),(0,Q.jsx)(`span`,{children:`面向矿山现场的任务、流程、预警和业务应用协同入口。`}),(0,Q.jsxs)(`ul`,{children:[(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 待办、流程与预警集中处理`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 业务应用与表单快速进入`]}),(0,Q.jsxs)(`li`,{children:[(0,Q.jsx)(hz,{}),` 动态信息及时同步到人`]})]})]}),(0,Q.jsxs)(`div`,{className:`login-brand-grid`,"aria-hidden":`true`,children:[(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{}),(0,Q.jsx)(`i`,{})]})]}),(0,Q.jsx)(`section`,{className:`login-form-panel`,"aria-labelledby":`login-title`,children:(0,Q.jsxs)(`form`,{className:`login-form`,onSubmit:t=>{if(t.preventDefault(),!r.trim()||!a){f(`请输入账号和密码`);return}if(r.trim()!==`zhangyu`||a!==`123456`){f(`账号或密码不正确，请重新输入`);return}try{s?window.localStorage.setItem(`ething-login`,JSON.stringify({account:r.trim(),password:a})):window.localStorage.removeItem(`ething-login`)}catch{}f(``),e()},noValidate:!0,children:[(0,Q.jsxs)(`div`,{className:`login-form-heading`,children:[(0,Q.jsx)(`span`,{children:`账号登录`}),(0,Q.jsx)(`h2`,{id:`login-title`,children:`欢迎登录`}),(0,Q.jsx)(`p`,{children:`请输入账号和密码进入系统。`})]}),(0,Q.jsxs)(`label`,{children:[`账号`,(0,Q.jsx)(`input`,{value:r,onChange:e=>{i(e.target.value),f(``)},autoComplete:`username`,placeholder:`请输入账号`,autoFocus:!0})]}),(0,Q.jsxs)(`label`,{children:[`密码`,(0,Q.jsxs)(`span`,{className:`login-password-field`,children:[(0,Q.jsx)(`input`,{type:l?`text`:`password`,value:a,onChange:e=>{o(e.target.value),f(``)},autoComplete:`current-password`,placeholder:`请输入密码`}),(0,Q.jsx)(`button`,{type:`button`,className:`login-password-visibility`,"aria-label":l?`隐藏密码`:`显示密码`,title:l?`隐藏密码`:`显示密码`,onClick:()=>u(e=>!e),children:l?(0,Q.jsx)(sz,{}):(0,Q.jsx)(oz,{})})]})]}),d?(0,Q.jsx)(`p`,{className:`login-error`,role:`alert`,children:d}):null,(0,Q.jsxs)(`div`,{className:`login-options`,children:[(0,Q.jsxs)(`label`,{className:`login-remember`,children:[(0,Q.jsx)(`input`,{type:`checkbox`,checked:s,onChange:e=>c(e.target.checked)}),(0,Q.jsx)(`span`,{children:`记住密码`})]}),(0,Q.jsx)(`button`,{type:`button`,className:`login-forgot-password`,onClick:()=>m(!0),children:`忘记密码`})]}),p?(0,Q.jsx)(`p`,{className:`login-forgot-note`,role:`status`,children:`请联系管理员重置密码。`}):null,(0,Q.jsxs)(`button`,{type:`submit`,className:`login-submit`,children:[`登录系统`,(0,Q.jsx)(fz,{})]}),(0,Q.jsx)(`p`,{className:`login-demo-account`,children:`演示账号：zhangyu　密码：123456`})]})})]})}function oV(){let[e,t]=(0,Z.useState)(``),n=(0,Z.useRef)(null);return(0,Z.useEffect)(()=>{let e=new Set([`button`,`checkbox`,`color`,`date`,`datetime-local`,`file`,`hidden`,`image`,`month`,`radio`,`range`,`reset`,`submit`,`time`,`week`]),r=t=>(t instanceof HTMLInputElement||t instanceof HTMLTextAreaElement)&&!t.disabled&&!t.readOnly&&!(t instanceof HTMLInputElement&&e.has(t.type)),i=e=>e instanceof HTMLTextAreaElement?500:e.type===`password`?64:e.type===`email`?100:e.type===`tel`?20:e.type===`number`?12:e.type===`url`?200:100,a=e=>{let t=e.getAttribute(`maxlength`);if(t!==null){let e=Number(t);if(Number.isFinite(e)&&e>=0)return e}return i(e)},o=e=>{if(!r(e))return null;let t=a(e);return e.hasAttribute(`maxlength`)||e.setAttribute(`maxlength`,String(t)),t},s=e=>{t(`输入内容最多 ${e} 个字符，超出部分未保存`),window.clearTimeout(n.current),n.current=window.setTimeout(()=>t(``),3e3)},c=e=>{let t=e.target,n=o(t);n!==null&&(t.value.length<=n||(t.value=t.value.slice(0,n),s(n)))},l=e=>{let t=e.target,n=o(t);if(n===null||!e.data)return;let r=(t.selectionEnd??t.value.length)-(t.selectionStart??t.value.length);t.value.length-r+e.data.length>n&&s(n)},u=e=>{e instanceof HTMLElement&&(e.matches(`input, textarea`)&&o(e),e.querySelectorAll(`input, textarea`).forEach(o))};document.querySelectorAll(`input, textarea`).forEach(o);let d=new MutationObserver(e=>{e.forEach(e=>e.addedNodes.forEach(u))});return d.observe(document.body,{childList:!0,subtree:!0}),document.addEventListener(`input`,c,!0),document.addEventListener(`beforeinput`,l,!0),document.addEventListener(`focusin`,c,!0),()=>{document.removeEventListener(`input`,c,!0),document.removeEventListener(`beforeinput`,l,!0),document.removeEventListener(`focusin`,c,!0),d.disconnect(),window.clearTimeout(n.current)}},[]),e?(0,Q.jsx)(`div`,{className:`input-length-toast`,role:`status`,"aria-live":`polite`,children:e}):null}function sV(){let[e,t]=(0,Z.useState)(!1),[n,r]=(0,Z.useState)(()=>Vz.map(e=>({...e}))),[i,a]=(0,Z.useState)(()=>{try{let e=JSON.parse(localStorage.getItem(`enterprise-branding`)??`{}`);return{logo:typeof e.logo==`string`?e.logo:``,loginBackground:typeof e.loginBackground==`string`?e.loginBackground:``,systemIcon:typeof e.systemIcon==`string`?e.systemIcon:`apps`,customSystemIcons:Array.isArray(e.customSystemIcons)?e.customSystemIcons.filter(e=>e&&typeof e.id==`string`&&typeof e.label==`string`&&typeof e.src==`string`):[],hiddenSystemIconIds:Array.isArray(e.hiddenSystemIconIds)?e.hiddenSystemIconIds.filter(e=>typeof e==`string`):[]}}catch{return{logo:``,loginBackground:``,systemIcon:`apps`,customSystemIcons:[],hiddenSystemIconIds:[]}}}),[o,s]=(0,Z.useState)(`工作台`),[c,l]=(0,Z.useState)(`task`),[u,d]=(0,Z.useState)(null),[f,p]=(0,Z.useState)(``),m=(0,Z.useRef)(null),[h,g]=(0,Z.useState)(Uz),[_,v]=(0,Z.useState)(`workbench`),[y,b]=(0,Z.useState)(()=>Bz.map(e=>e.name)),[x,S]=(0,Z.useState)(`我的任务`),[C,w]=(0,Z.useState)(`待审批`),[T,E]=(0,Z.useState)(``),[D,O]=(0,Z.useState)(Yz),[k,A]=(0,Z.useState)([]),[j,M]=(0,Z.useState)(`动态`),[N,P]=(0,Z.useState)(mB[0].title),[ee,F]=(0,Z.useState)(!1),[I,te]=(0,Z.useState)(`安全动态`),[ne,re]=(0,Z.useState)(Wz),[ie,ae]=(0,Z.useState)(null),[oe,se]=(0,Z.useState)(!0),[L,R]=(0,Z.useState)([]);(0,Z.useEffect)(()=>{try{localStorage.setItem(`enterprise-branding`,JSON.stringify(i))}catch{}},[i]),(0,Z.useEffect)(()=>{let e=!1;return fetch(Nz,{cache:`no-store`}).then(e=>{if(!e.ok)throw Error(`Unable to load prototype annotations`);return e.json()}).then(t=>{e||R(Fz(t))}).catch(()=>{e||R([])}),()=>{e=!0}},[]);let z=e=>{p(`已选择 ${e}`),window.clearTimeout(m.current),m.current=window.setTimeout(()=>p(``),3e3)},ce=e=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{v(e),s(e===`workbench`||e===`messages`||e===`todos`?`工作台`:e===`tasks`?`任务`:e===`processes`?`流程`:e===`settings`?`设置`:e===`personal-center`?``:e===`dashboard`?`看板`:e===`safety-dynamics`?`动态`:e===`warnings`?`预警`:`应用`)})},B=e=>{let t=[...mB,...hB].find(t=>t.title===e);if(t){window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{P(t.title),F(!0),g(e=>e.some(e=>e.id===`双重预防机制`)?e:[...e,{id:`双重预防机制`,label:`双重预防机制`,icon:pz}]),v(`双重预防机制`),s(`应用`)});return}let n=e===`应用中心`?`双重预防机制`:e,r=Bz.find(e=>e.name===n);if(!r){z(e);return}window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{n===`双重预防机制`&&F(!1),g(e=>e.some(e=>e.id===n)?e:[...e,{id:n,label:n,icon:r.icon}]),v(n),s(`应用`)})},le=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`messages`)?e:[...e,{id:`messages`,label:`消息`,icon:mz}]),v(`messages`),s(`工作台`)})},ue=(e=`我的任务`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{ae(null),S(e),g(e=>e.some(e=>e.id===`tasks`)?e:[...e,{id:`tasks`,label:`任务`,icon:Cz}]),v(`tasks`),s(`任务`)})},de=(e=`待审批`,t=``)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{w(e),E(t),g(e=>e.some(e=>e.id===`processes`)?e:[...e,{id:`processes`,label:`流程`,icon:cz}]),v(`processes`),s(`流程`)})},fe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`dashboard`)?e:[...e,{id:`dashboard`,label:`看板`,icon:ZR}]),v(`dashboard`),s(`看板`)})},V=(e=`动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{M(e),g(e=>e.some(e=>e.id===`safety-dynamics`)?e:[...e,{id:`safety-dynamics`,label:`安全动态`,icon:pz}]),v(`safety-dynamics`),s(`动态`)})},H=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`warnings`)?e:[...e,{id:`warnings`,label:`预警`,icon:Sz}]),v(`warnings`),s(`预警`)})},pe=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`todos`)?e:[...e,{id:`todos`,label:`待办总览`,icon:Cz}]),v(`todos`),s(`工作台`)})},me=(e=`安全动态`)=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{te(e),g(e=>e.some(e=>e.id===`settings`)?e:[...e,{id:`settings`,label:`设置`,icon:$R}]),v(`settings`),s(`设置`)})},he=()=>{window.scrollTo({top:0,behavior:`smooth`}),(0,Z.startTransition)(()=>{g(e=>e.some(e=>e.id===`personal-center`)?e:[...e,{id:`personal-center`,label:`个人中心`,icon:Ez}]),v(`personal-center`),s(``)})},ge=e=>re(t=>t.map(t=>t.id===e?{...t,read:!0}:t)),_e=()=>re(e=>e.map(e=>({...e,read:!0}))),ve=e=>{let t=h.findIndex(t=>t.id===e),n=h.filter(t=>t.id!==e);(0,Z.startTransition)(()=>{if(g(n),_===e){let e=n[Math.max(0,t-1)]??Uz[0];v(e.id),s(e.id===`workbench`?`工作台`:e.id===`settings`?`设置`:e.id===`personal-center`?``:`应用中心`)}})},ye=Bz.find(e=>e.name===_);return e?(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(oV,{}),(0,Q.jsxs)(`div`,{className:`workbench theme-light`,children:[(0,Q.jsx)(tB,{active:o,brandLogo:i.logo,onOpenSettings:me,onChange:e=>{if(e===`工作台`){ce(`workbench`);return}if(e===`应用`){B(`应用中心`);return}if(e===`任务`){ue();return}if(e===`流程`){de();return}if(e===`动态`){V();return}if(e===`预警`){H();return}if(e===`看板`){fe();return}s(e),z(e)}}),(0,Q.jsxs)(`div`,{className:`page-shell`,children:[(0,Q.jsx)(nB,{tabs:h,activeTab:_,onSelect:ce,onClose:ve,onOpenMessages:le,onOpenPersonal:he,onLogout:()=>t(!1),onOpenSpecification:()=>window.open(Pz,`_blank`,`noopener,noreferrer`)}),(0,Q.jsx)(`main`,{children:_===`messages`?(0,Q.jsx)(aB,{messages:ne,onMarkRead:ge,onMarkAllRead:_e,onReturn:()=>ce(`workbench`),onOpenProcess:de}):_===`todos`?(0,Q.jsx)(RB,{onOpenTasks:ue,onOpenProcesses:de,onOpenSafety:V}):_===`tasks`?(0,Q.jsx)(kB,{initialTab:x},x):_===`processes`?(0,Q.jsx)(sB,{initialFilter:C,initialProcessNumber:T,processRecords:D,setProcessRecords:O,onAction:z},`${C}-${T}`):_===`safety-dynamics`?(0,Q.jsx)(DB,{initialTab:j,onAction:z},j):_===`warnings`?(0,Q.jsx)(PB,{}):_===`dashboard`?(0,Q.jsx)(TB,{}):_===`settings`?(0,Q.jsx)(iV,{initialSelected:I,onAction:z,branding:i,onBrandingChange:a,roles:n,setRoles:r},I):_===`personal-center`?(0,Q.jsx)(eV,{onAction:z,roles:n}):ye?.name===`双重预防机制`?(0,Q.jsx)(vB,{initialFormTitle:N,initialOpenForm:ee,approvalDrafts:k,setApprovalDrafts:A,onSaveProcessDraft:e=>O(t=>t.some(t=>t.id===e.id)?t.map(t=>t.id===e.id?e:t):[e,...t]),onDeleteProcessDraft:e=>O(t=>t.filter(t=>t.id!==e)),onAction:z,onSwitchApplication:B},`${N}-${ee?`form`:`catalog`}`):ye?(0,Q.jsx)(yB,{app:ye,onReturn:()=>ce(`workbench`),onAction:z,onSwitchApplication:B}):(0,Q.jsxs)(`div`,{className:`workbench-home`,children:[(0,Q.jsxs)(`header`,{className:`workbench-welcome`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsxs)(`h1`,{children:[`智慧应急安全管理平台欢迎您，`,(0,Q.jsx)(`button`,{className:`workbench-user-link`,onClick:he,children:`张宇`})]})}),(0,Q.jsx)(`span`,{children:`今日工作已更新`})]}),(0,Q.jsxs)(`div`,{className:`main-layout`,children:[(0,Q.jsxs)(`div`,{className:`primary-column`,children:[(0,Q.jsxs)(`section`,{className:`priority-zone`,"aria-labelledby":`priority-title`,children:[(0,Q.jsxs)(`div`,{className:`section-title priority-title`,children:[(0,Q.jsx)(`div`,{children:(0,Q.jsx)(`h2`,{id:`priority-title`,children:`待办事项`})}),(0,Q.jsxs)(`button`,{className:`quiet-action`,onClick:pe,children:[`待办总览 `,(0,Q.jsx)(fz,{})]})]}),(0,Q.jsx)(`div`,{className:`queue-grid`,children:zz.map(e=>(0,Q.jsx)(cB,{item:e,active:c===e.id,onSelect:()=>l(e.id),onOpen:e=>{e===`message`&&le(),e===`task`&&ue(),e===`approval`&&de(),e===`warning`&&H()}},e.id))})]}),(0,Q.jsx)(uB,{onOpen:B}),(0,Q.jsx)(lB,{onOpen:B,favoriteApps:y,onCustomize:b})]}),(0,Q.jsxs)(`div`,{className:`secondary-column`,children:[(0,Q.jsx)(xB,{onAction:d,onOpenTask:()=>ue(`发布任务`),onOpenProcess:()=>de(`发起流程`),onOpenDynamics:()=>V(`发动态`)}),(0,Q.jsx)(bB,{onOpen:z,onOpenAll:V})]})]})]})}),(0,Q.jsx)(rB,{visible:oe,managing:!1,pageId:_,pageLabel:h.find(e=>e.id===_)?.label??`工作台`,annotations:L,onCloseManager:()=>{},onAdd:({pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a})=>{se(!0),R(o=>[...o,{id:`annotation-${Date.now()}`,pageId:e,pageLabel:t,content:n,leftPercent:r,topPercent:i,positionSpace:a}])},onUpdate:(e,t)=>R(n=>n.map(n=>n.id===e?{...n,content:t}:n)),onRemove:e=>R(t=>t.filter(t=>t.id!==e)),onReposition:(e,t)=>{se(!0),R(n=>n.map(n=>n.id===e?{...n,...t}:n))}})]}),f?(0,Q.jsxs)(`div`,{className:`toast`,role:`status`,"aria-label":f,children:[(0,Q.jsx)(hz,{}),f]}):null,(0,Q.jsx)(SB,{title:u,onClose:()=>d(null)})]})]}):(0,Q.jsxs)(PR,{theme:yR,children:[(0,Q.jsx)(oV,{}),(0,Q.jsx)(aV,{branding:i,onLogin:()=>t(!0)})]})}(0,Dz.createRoot)(document.getElementById(`root`)).render((0,Q.jsx)(sV,{}));

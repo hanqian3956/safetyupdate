@@ -59,6 +59,7 @@ import "./enterprise-settings.css";
 import lowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
 import newTaskPrototypeHtml from "../xiaodong/新任务.html?raw";
 import warningPrototypeHtml from "../xiaodong/预警.html?raw";
+import dynamicsPrototypeHtml from "../xiaodong/动态.html?raw";
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "人事管理",
@@ -137,8 +138,6 @@ function SystemIcon({ name = "apps", className, customIcons = [] }) {
   const Icon = systemIconLibrary.find((item) => item.id === name)?.icon ?? Apps24Regular;
   return <Icon className={className} aria-hidden="true" />;
 }
-
-const prototypeBase = `${import.meta.env.BASE_URL}xiaodong/`;
 
 const workQueues = [
   {
@@ -3474,6 +3473,30 @@ const preventionApprovalFlows = [
   },
 ];
 
+const preventionInspectionTasks = [
+  {
+    title: "平巷凿岩作业隐患排查任务",
+    detail: "隐患排查任务发布",
+    icon: ClipboardTask24Regular,
+    tone: "blue",
+    kind: "task",
+  },
+  {
+    title: "掘进工作面隐患排查任务",
+    detail: "隐患排查任务发布",
+    icon: ClipboardTask24Regular,
+    tone: "lime",
+    kind: "task",
+  },
+  {
+    title: "撬毛作业岗位隐患排查任务",
+    detail: "隐患排查任务发布",
+    icon: ClipboardTask24Regular,
+    tone: "blue",
+    kind: "task",
+  },
+];
+
 const initialInspectionRecords = [
   {
     id: "inspection-001",
@@ -3516,6 +3539,8 @@ function DualPreventionPage({
     (form) => form.title === initialFormTitle,
   )
     ? "隐患排查审批流程"
+    : preventionInspectionTasks.some((form) => form.title === initialFormTitle)
+      ? "隐患排查任务发布"
     : "岗位隐患排查清单",
 }) {
   const [selectedItem, setSelectedItem] = useState(initialFormSource);
@@ -3538,13 +3563,26 @@ function DualPreventionPage({
   const importInputRef = useRef(null);
   const approvalFormRef = useRef(null);
   const selectedLabel = selectedItem;
-  const allPreventionForms = [...preventionForms, ...preventionApprovalFlows];
+  const allPreventionForms = [
+    ...preventionForms,
+    ...preventionApprovalFlows,
+    ...preventionInspectionTasks,
+  ];
   const activeFormRecord =
     allPreventionForms.find((form) => form.title === selectedForm) ??
     preventionForms[0];
   const isApprovalFlow = activeFormRecord.kind === "approval";
+  const isInspectionTask = activeFormRecord.kind === "task";
+  const getDraftKind = (form) =>
+    form?.kind === "approval"
+      ? "approval"
+      : form?.kind === "task"
+        ? "task"
+        : "inspection";
   const inspectionDrafts = approvalDrafts.filter(
-    (draft) => draft.kind === (isApprovalFlow ? "approval" : "inspection") && draft.name === activeFormRecord.title,
+    (draft) =>
+      draft.kind === getDraftKind(activeFormRecord) &&
+      draft.name === activeFormRecord.title,
   );
   const openFormDirect = (
     form = preventionForms[0],
@@ -3566,7 +3604,10 @@ function DualPreventionPage({
     source = "岗位隐患排查清单",
   ) => {
     const matchingDrafts = approvalDrafts.filter(
-      (draft) => draft.draft && draft.name === form.title && draft.kind === (form.kind === "approval" ? "approval" : "inspection"),
+      (draft) =>
+        draft.draft &&
+        draft.name === form.title &&
+        draft.kind === getDraftKind(form),
     );
     if (matchingDrafts.length) {
       setApprovalDraftRestore({ form, source, drafts: matchingDrafts });
@@ -3587,9 +3628,11 @@ function DualPreventionPage({
     setSubmitted(true);
     setHasUnsavedFormChanges(false);
     onAction(
-      `${activeFormRecord.title}已提交${
-        isApprovalFlow ? "，已进入审批流程" : ""
-      }`,
+      isInspectionTask
+        ? `${activeFormRecord.title}已发布，已生成待执行任务`
+        : `${activeFormRecord.title}已提交${
+            isApprovalFlow ? "，已进入审批流程" : ""
+          }`,
     );
   };
   const saveApprovalDraft = () => {
@@ -3638,7 +3681,7 @@ function DualPreventionPage({
       id: selectedApprovalDraft?.id?.startsWith("inspection-draft-")
         ? selectedApprovalDraft.id
         : `inspection-draft-${Date.now()}`,
-      kind: "inspection",
+      kind: isInspectionTask ? "task" : "inspection",
       name: activeFormRecord.title,
       reporter: values.get("reporter") || "张宇",
       inspectionDate: values.get("inspectionDate") || "2026-09-02",
@@ -3874,6 +3917,8 @@ function DualPreventionPage({
                   <span>
                     {isApprovalFlow
                       ? "请如实填写隐患情况，提交后将进入审批流程。"
+                      : isInspectionTask
+                        ? "请配置本次隐患排查任务，带 * 的项目为必填项。"
                       : "请如实填写现场检查情况，带 * 的项目为必填项。"}
                   </span>
                 </div>
@@ -3999,12 +4044,16 @@ function DualPreventionPage({
                   <span className="submit-status">
                     <CheckmarkCircle24Regular /> {isApprovalFlow
                       ? "已提交，等待审批流程处理"
+                      : isInspectionTask
+                        ? "已发布，待执行人处理"
                       : "已提交，等待负责人复核"}
                   </span>
                 ) : (
                   <span>
                     {isApprovalFlow
                       ? "填写完成后将提交至隐患排查审批流程。"
+                      : isInspectionTask
+                        ? "填写完成后将发布为待执行的隐患排查任务。"
                       : "填写完成后可直接提交至隐患排查记录。"}
                   </span>
                 )}
@@ -4201,7 +4250,7 @@ function DualPreventionPage({
               <strong id="prevention-page-title">{selectedLabel}</strong>
             </div>
             <div className="prevention-strip" />
-            {["岗位隐患排查清单", "隐患排查审批流程"].includes(
+            {["隐患排查任务发布", "岗位隐患排查清单", "隐患排查审批流程"].includes(
               selectedItem,
             ) ? (
               <section className="prevention-list prevention-menu-catalog">
@@ -4209,9 +4258,11 @@ function DualPreventionPage({
                   <h2>全部</h2>
                 </div>
                 <div className="prevention-catalog-grid">
-                  {(selectedItem === "隐患排查审批流程"
-                    ? preventionApprovalFlows
-                    : preventionForms
+                  {(selectedItem === "隐患排查任务发布"
+                    ? preventionInspectionTasks
+                    : selectedItem === "隐患排查审批流程"
+                      ? preventionApprovalFlows
+                      : preventionForms
                   ).map((form) => {
                     const { title, icon: Icon, tone } = form;
                     return (
@@ -4954,6 +5005,30 @@ function DashboardPage() {
   );
 }
 
+function EmbeddedDynamicsFrame({ view, title, className }) {
+  const embeddedDynamicsStyles = `
+    .app-nav, .app-topbar, .nav-subpanel { display: none !important; }
+    .page-shell, body.nav-shifted .page-shell { margin-left: 0 !important; }
+    .workbench { min-height: 100dvh !important; }
+    main { padding: 18px 22px 36px !important; }
+    html, body { background: #f5f7fa !important; }
+  `;
+  const srcDoc = dynamicsPrototypeHtml
+    .replace("</head>", `<style>${embeddedDynamicsStyles}</style></head>`)
+    .replace(
+      "</body>",
+      `<script>
+        window.addEventListener("load", function () {
+          if (typeof window.switchView === "function") {
+            window.switchView(${JSON.stringify(view)});
+          }
+        });
+      </script></body>`,
+    );
+
+  return <iframe className={className} srcDoc={srcDoc} title={title} />;
+}
+
 function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [libraryTab, setLibraryTab] = useState("全部");
@@ -4991,9 +5066,9 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
         ))}
       </nav>
       {activeTab === "动态" ? (
-        <iframe
+        <EmbeddedDynamicsFrame
           className="embedded-dynamics-frame"
-          src={`${prototypeBase}index.html`}
+          view="feed"
           title="动态"
         />
       ) : (
@@ -9950,8 +10025,9 @@ function SettingsPage({
               className="settings-dynamics-embed"
               aria-label="动态圈管理"
             >
-              <iframe
-                src={`${prototypeBase}index.html?view=feedno`}
+              <EmbeddedDynamicsFrame
+                className="settings-dynamics-frame"
+                view="feedno"
                 title="动态圈管理"
               />
             </section>
