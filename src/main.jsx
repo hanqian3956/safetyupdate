@@ -336,6 +336,51 @@ const messageEntries = [
     icon: CheckmarkCircle24Regular,
     tone: "blue",
   },
+  {
+    id: "msg-6",
+    source: "动态",
+    type: "@我",
+    sender: "矿山安全交流圈",
+    time: "今天 10:26",
+    initiator: "李强",
+    initiatedAt: "今天 10:25",
+    title: "矿山安全交流圈",
+    content: "李强于今天 10:25@了我",
+    dynamicFeedId: "f3",
+    read: false,
+    icon: Chat24Regular,
+    tone: "blue",
+  },
+  {
+    id: "msg-7",
+    source: "动态",
+    type: "@我",
+    sender: "双重预防机制动态号",
+    time: "今天 09:48",
+    initiator: "王建国",
+    initiatedAt: "今天 09:47",
+    title: "双重预防机制动态号",
+    content: "王建国于今天 09:47@了我",
+    dynamicFeedId: "f4",
+    read: false,
+    icon: Chat24Regular,
+    tone: "blue",
+  },
+  {
+    id: "msg-8",
+    source: "动态",
+    type: "@我",
+    sender: "应急管理动态号",
+    time: "昨天 17:16",
+    initiator: "赵磊",
+    initiatedAt: "昨天 17:15",
+    title: "应急管理动态号",
+    content: "赵磊于昨天 17:15@了我",
+    dynamicFeedId: "f1",
+    read: true,
+    icon: Chat24Regular,
+    tone: "blue",
+  },
 ];
 
 const taskEntries = [
@@ -1389,7 +1434,7 @@ function SystemPagination({
   );
 }
 
-function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenProcess }) {
+function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenProcess, onOpenDynamics }) {
   const [messageSource, setMessageSource] = useState("全部");
   const [messageType, setMessageType] = useState("全部");
   const [status, setStatus] = useState("未读");
@@ -1403,6 +1448,7 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
       (messageSource !== "流程" ||
         messageType === "全部" ||
         message.source === messageType) &&
+      (messageSource !== "动态" || message.type === messageType) &&
       (status === "全部" || (status === "未读" ? !message.read : message.read)),
   );
   const pageCount = Math.max(1, Math.ceil(filteredMessages.length / pageSize));
@@ -1444,7 +1490,7 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
               const nextSource = event.target.value;
               setMessageSource(nextSource);
               setMessageType(
-                ["流程", "全部"].includes(nextSource) ? "全部" : "",
+                nextSource === "动态" ? "@我" : ["流程", "全部"].includes(nextSource) ? "全部" : "",
               );
               setPage(1);
             }}
@@ -1460,7 +1506,7 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
           消息类型
           <select
             value={messageType}
-            disabled={!['流程', '全部'].includes(messageSource)}
+            disabled={!['流程', '动态', '全部'].includes(messageSource)}
             onChange={(event) => {
               setMessageType(event.target.value);
               setPage(1);
@@ -1477,6 +1523,8 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
               </>
             ) : messageSource === "全部" ? (
               <option>全部</option>
+            ) : messageSource === "动态" ? (
+              <option>@我</option>
             ) : (
               <option value=""> </option>
             )}
@@ -1510,17 +1558,23 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
               initiatedAt,
               application,
               processNumber,
+              dynamicFeedId,
               read,
               icon: Icon,
               tone,
             } = message;
+            const isDynamicMessage = messageSource === "动态";
             return (
               <button
                 className={read ? "message-row read" : "message-row"}
                 key={id}
                 onClick={() => {
                   onMarkRead(id);
-                  onOpenProcess(messageType === "结束提醒" ? "我发起的" : "待审批", processNumber);
+                  if (!isDynamicMessage) {
+                    onOpenProcess(messageType === "结束提醒" ? "我发起的" : "待审批", processNumber);
+                  } else {
+                    onOpenDynamics(dynamicFeedId);
+                  }
                 }}
               >
                 <span className={`message-row-icon ${tone}`}>
@@ -1533,10 +1587,12 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
                     {!read ? <i>未读</i> : null}
                   </span>
                   <strong>
-                    <em>{messageSource}</em>
+                    <em>{isDynamicMessage ? "@我的" : messageSource}</em>
                   </strong>
                   <p className="message-process-origin">
-                    {initiator}于{initiatedAt}通过{application}应用发起的流程编号为：{processNumber}
+                    {isDynamicMessage
+                      ? `${initiator}于${initiatedAt}@了我`
+                      : `${initiator}于${initiatedAt}通过${application}应用发起的流程编号为：${processNumber}`}
                   </p>
                 </span>
                 <ArrowRight24Regular />
@@ -3560,8 +3616,21 @@ function DualPreventionPage({
   const [inspectionFilters, setInspectionFilters] = useState({ reporter: "", date: "", shift: "", flowStatus: "" });
   const [inspectionDataPage, setInspectionDataPage] = useState(1);
   const [inspectionDataPageSize, setInspectionDataPageSize] = useState(10);
+  const [taskDraftFilters, setTaskDraftFilters] = useState({ keyword: "", type: "" });
   const importInputRef = useRef(null);
   const approvalFormRef = useRef(null);
+  useEffect(() => {
+    const handleTaskPublishBack = (event) => {
+      if (event.data?.type === "prevention-task-publish-back") {
+        setActiveForm(false);
+        setSubmitted(false);
+        setInspectionTab("页面");
+        setHasUnsavedFormChanges(false);
+      }
+    };
+    window.addEventListener("message", handleTaskPublishBack);
+    return () => window.removeEventListener("message", handleTaskPublishBack);
+  }, []);
   const selectedLabel = selectedItem;
   const allPreventionForms = [
     ...preventionForms,
@@ -3582,8 +3651,47 @@ function DualPreventionPage({
   const inspectionDrafts = approvalDrafts.filter(
     (draft) =>
       draft.kind === getDraftKind(activeFormRecord) &&
-      draft.name === activeFormRecord.title,
+      (draft.kind === "task"
+        ? draft.templateName === activeFormRecord.title || draft.name === activeFormRecord.title
+        : draft.name === activeFormRecord.title),
   );
+  const visibleTaskDrafts = inspectionDrafts.filter((draft) =>
+    (!taskDraftFilters.keyword || draft.name.includes(taskDraftFilters.keyword.trim())) &&
+    (!taskDraftFilters.type || draft.taskType === taskDraftFilters.type),
+  );
+  useEffect(() => {
+    const handleTaskDraftSave = (event) => {
+      if (event.data?.type !== "prevention-task-draft-save") return;
+      const payload = event.data.draft ?? {};
+      if (payload.templateName !== activeFormRecord.title) return;
+      const now = new Date();
+      const savedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
+      const draft = {
+        id: payload.draftId ?? `task-draft-${Date.now()}`,
+        kind: "task",
+        templateName: activeFormRecord.title,
+        name: payload.name || activeFormRecord.title,
+        taskType: payload.isRepeated ? "周期" : "单次",
+        executor: payload.executor || "未指定",
+        formType: payload.formType || "普通业务表单",
+        publishedCount: 0,
+        initiatedAt: savedAt,
+        status: "草稿",
+        draft: true,
+      };
+      setApprovalDrafts((current) =>
+        current.some((item) => item.id === draft.id)
+          ? current.map((item) => (item.id === draft.id ? { ...item, ...draft } : item))
+          : [draft, ...current],
+      );
+      setSelectedApprovalDraft(draft);
+      setHasUnsavedFormChanges(false);
+      setInspectionTab("草稿箱");
+      onAction(`${draft.name}已存入草稿任务`);
+    };
+    window.addEventListener("message", handleTaskDraftSave);
+    return () => window.removeEventListener("message", handleTaskDraftSave);
+  }, [activeFormRecord.title, onAction, setApprovalDrafts]);
   const openFormDirect = (
     form = preventionForms[0],
     source = "岗位隐患排查清单",
@@ -3904,6 +4012,17 @@ function DualPreventionPage({
               ))}
             </nav>
             {inspectionTab === "页面" ? (
+            isInspectionTask ? (
+              <EmbeddedTaskFrame
+                view="view-publish"
+                publishTemplate={activeFormRecord.title}
+                draftTask={selectedApprovalDraft?.kind === "task" ? selectedApprovalDraft : null}
+                interceptDraftSave
+                className="prevention-task-publish-frame"
+                title={`${activeFormRecord.title}任务发布`}
+                hidePublishHeading
+              />
+            ) : (
             <form
               key={selectedApprovalDraft?.id ?? selectedForm}
               ref={approvalFormRef}
@@ -4078,7 +4197,19 @@ function DualPreventionPage({
                 </div>
               </footer>
             </form>
+            )
             ) : inspectionTab === "数据" ? (
+              isInspectionTask ? (
+                <EmbeddedTaskFrame
+                  view="view-publish"
+                  publishTab="pt-launch"
+                  firstPublishedTaskOnly
+                  hidePublishHeading
+                  hidePublishTabs
+                  className="prevention-task-publish-frame"
+                  title={`${activeFormRecord.title}任务数据`}
+                />
+              ) : (
               <section className="inspection-data-view" aria-label={`${activeFormRecord.title}历史数据`}>
                 <header>
                   <div>
@@ -4198,16 +4329,83 @@ function DualPreventionPage({
                   }}
                 />
               </section>
+              )
             ) : (
-              <section className="inspection-draft-view" aria-label={`${activeFormRecord.title}草稿箱`}>
+              <section className={`inspection-draft-view${isInspectionTask ? " inspection-task-draft-view" : ""}`} aria-label={`${activeFormRecord.title}草稿箱`}>
                 <header>
                   <div>
-                    <p>暂存记录</p>
-                    <h2>草稿箱</h2>
+                    <p>{isInspectionTask ? "任务级草稿" : "暂存记录"}</p>
+                    <h2>{isInspectionTask ? "草稿任务" : "草稿箱"}</h2>
                   </div>
                   <span>共 {inspectionDrafts.length} 条草稿</span>
                 </header>
-                {inspectionDrafts.length ? (
+                {isInspectionTask ? (
+                  <>
+                    <div className="inspection-task-draft-filter">
+                      <input
+                        value={taskDraftFilters.keyword}
+                        maxLength={50}
+                        placeholder="搜索任务名称"
+                        onChange={(event) => setTaskDraftFilters((current) => ({ ...current, keyword: event.target.value }))}
+                      />
+                      <select
+                        value={taskDraftFilters.type}
+                        onChange={(event) => setTaskDraftFilters((current) => ({ ...current, type: event.target.value }))}
+                      >
+                        <option value="">类型</option>
+                        <option value="单次">单次</option>
+                        <option value="周期">周期</option>
+                      </select>
+                      <span>共 {visibleTaskDrafts.length} 条</span>
+                      <button type="button" onClick={() => setTaskDraftFilters({ keyword: "", type: "" })}>重置</button>
+                    </div>
+                    <div className="inspection-task-draft-table-wrap">
+                      <table className="inspection-task-draft-table">
+                        <thead>
+                          <tr><th>任务名称</th><th>类型</th><th>执行人</th><th>已发布次数</th><th>状态</th><th>创建时间</th><th>操作</th></tr>
+                        </thead>
+                        <tbody>
+                          {visibleTaskDrafts.length ? visibleTaskDrafts.map((draft) => (
+                            <tr key={draft.id}>
+                              <td title={draft.name}>{draft.name}</td>
+                              <td>{draft.taskType || "单次"}</td>
+                              <td title={draft.executor}>{draft.executor || "未指定"}</td>
+                              <td>{draft.publishedCount ?? 0} 次</td>
+                              <td><span className="inspection-task-draft-status">草稿</span></td>
+                              <td>{draft.initiatedAt}</td>
+                              <td className="inspection-task-draft-actions">
+                                <button type="button" onClick={() => { setSelectedApprovalDraft(draft); setInspectionTab("页面"); }}>编辑</button>
+                                <button
+                                  type="button"
+                                  className="publish"
+                                  onClick={() => {
+                                    setApprovalDrafts((current) => current.filter((item) => item.id !== draft.id));
+                                    if (selectedApprovalDraft?.id === draft.id) setSelectedApprovalDraft(null);
+                                    setInspectionTab("数据");
+                                    onAction(`${draft.name}已发布，已进入数据列表`);
+                                  }}
+                                >
+                                  发布
+                                </button>
+                                <button
+                                  type="button"
+                                  className="danger"
+                                  onClick={() => {
+                                    setApprovalDrafts((current) => current.filter((item) => item.id !== draft.id));
+                                    if (selectedApprovalDraft?.id === draft.id) setSelectedApprovalDraft(null);
+                                    onAction(`已删除草稿：${draft.name}`);
+                                  }}
+                                >
+                                  删除
+                                </button>
+                              </td>
+                            </tr>
+                          )) : <tr><td colSpan="7" className="inspection-task-draft-empty">暂无草稿，页面内保存的任务会显示在这里。</td></tr>}
+                        </tbody>
+                      </table>
+                    </div>
+                  </>
+                ) : inspectionDrafts.length ? (
                   <div className="inspection-draft-list">
                     {inspectionDrafts.map((draft) => (
                       <article key={draft.id}>
@@ -5005,13 +5203,15 @@ function DashboardPage() {
   );
 }
 
-function EmbeddedDynamicsFrame({ view, title, className }) {
+function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "" }) {
   const embeddedDynamicsStyles = `
     .app-nav, .app-topbar, .nav-subpanel { display: none !important; }
     .page-shell, body.nav-shifted .page-shell { margin-left: 0 !important; }
     .workbench { min-height: 100dvh !important; }
     main { padding: 18px 22px 36px !important; }
     html, body { background: #f5f7fa !important; }
+    .feed-card.message-focus-target { border-color: #5ba6dc !important; box-shadow: 0 0 0 3px rgb(15 108 189 / 12%), 0 12px 28px rgb(15 108 189 / 12%) !important; }
+    .message-focus-mention { margin-left: 4px; padding: 2px 7px; display: inline-flex; align-items: center; border-radius: 5px; color: #0f6cbd; background: #e7f2fb; font-size: 10px; font-weight: 700; }
   `;
   const srcDoc = dynamicsPrototypeHtml
     .replace("</head>", `<style>${embeddedDynamicsStyles}</style></head>`)
@@ -5022,14 +5222,45 @@ function EmbeddedDynamicsFrame({ view, title, className }) {
           if (typeof window.switchView === "function") {
             window.switchView(${JSON.stringify(view)});
           }
+          var focusFeedId = ${JSON.stringify(focusFeedId)};
+          if (focusFeedId) {
+            try {
+              curFilter = "all";
+              curSearch = "";
+              curTime = "all";
+              curNo = "all";
+              feedScope = "all";
+              var searchInput = document.getElementById("searchInput");
+              if (searchInput) searchInput.value = "";
+              if (typeof renderFilters === "function") renderFilters();
+              if (typeof renderFeed === "function") renderFeed();
+              window.setTimeout(function () {
+                var target = document.querySelector('.feed-card[data-id="' + focusFeedId + '"]');
+                if (!target) return;
+                var feedList = document.getElementById("feedList");
+                if (feedList) feedList.prepend(target);
+                target.classList.add("message-focus-target");
+                var meta = target.querySelector(".feed-card-sub");
+                if (meta && !meta.querySelector(".message-focus-mention")) {
+                  var mention = document.createElement("span");
+                  mention.className = "message-focus-mention";
+                  mention.textContent = "@我的";
+                  meta.appendChild(mention);
+                }
+                target.scrollIntoView({ behavior: "smooth", block: "start" });
+              }, 60);
+            } catch (error) {
+              // The original information stream remains available if its local state cannot be reset.
+            }
+          }
         });
       </script></body>`,
     );
 
-  return <iframe className={className} srcDoc={srcDoc} title={title} />;
+  return <iframe key={`${view}-${focusFeedId || "all"}`} className={className} srcDoc={srcDoc} title={title} />;
 }
 
-function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
+function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "" }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [libraryTab, setLibraryTab] = useState("全部");
   const [keyword, setKeyword] = useState("");
@@ -5047,7 +5278,7 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
   const visibleDynamicNumbers = dynamicNumbers.filter(
     (item) =>
       (libraryTab === "全部" ||
-        (libraryTab === "我的收藏" && item.favorite) ||
+        (libraryTab === "我的关注" && item.favorite) ||
         (libraryTab === "最近使用" && item.recent)) &&
       (!keyword.trim() || item.name.includes(keyword.trim())),
   );
@@ -5069,13 +5300,14 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态" }) {
         <EmbeddedDynamicsFrame
           className="embedded-dynamics-frame"
           view="feed"
+          focusFeedId={focusFeedId}
           title="动态"
         />
       ) : (
         <section className="dynamic-publish-library" aria-label="发动态">
           <header>
             <div className="dynamic-publish-tabs" role="tablist" aria-label="动态号筛选">
-              {["全部", "我的收藏", "最近使用"].map((tab) => (
+              {["全部", "我的关注", "最近使用"].map((tab) => (
                 <button
                   key={tab}
                   role="tab"
@@ -5119,15 +5351,32 @@ function EmbeddedTaskFrame({
   title,
   className,
   subview,
+  publishTemplate,
+  publishTab,
+  firstPublishedTaskOnly = false,
+  hidePublishHeading = false,
+  hidePublishTabs = false,
+  draftTask = null,
+  interceptDraftSave = false,
   showDescription = false,
 }) {
-  const request = JSON.stringify({ view, subview });
+  const request = JSON.stringify({
+    view,
+    subview,
+    publishTemplate,
+    publishTab,
+    firstPublishedTaskOnly,
+    draftTask,
+    interceptDraftSave,
+  });
   const descriptionWidth = 360;
   const embeddedTaskStyles = `
     .sidebar, .topbar, .logic, .dev-doc-btn { display: none !important; }
     .app, .stage { height: 100dvh !important; }
     .content { padding: 16px 20px 32px !important; }
     html, body { background: #f5f7fa !important; }
+    ${hidePublishHeading ? "#view-publish > .section-title { display: none !important; }" : ""}
+    ${hidePublishTabs ? "#pubPageTabs { display: none !important; }" : ""}
     body.devdoc-open .app { padding-bottom: 0 !important; padding-right: ${showDescription ? `${descriptionWidth}px` : "0"} !important; }
     #devDocDrawer {
       display: ${showDescription ? "flex" : "none"} !important;
@@ -5160,6 +5409,64 @@ function EmbeddedTaskFrame({
           if (request.subview === "lt-inst" && typeof window.ledgerTab === "function") {
             window.ledgerTab("lt-inst");
           }
+          if (request.publishTemplate && typeof window.enterTaskPage === "function") {
+            window.enterTaskPage("publish", null, { name: request.publishTemplate });
+            if (request.draftTask) {
+              var draftName = document.getElementById("pTaskName");
+              var draftExecutor = document.getElementById("pExecutor");
+              var draftFormType = document.getElementById("pFormType");
+              if (draftName) draftName.value = request.draftTask.name || request.publishTemplate;
+              if (draftExecutor && request.draftTask.executor) {
+                draftExecutor.textContent = request.draftTask.executor;
+                draftExecutor.style.color = "var(--text-primary)";
+              }
+              if (draftFormType && request.draftTask.formType) draftFormType.textContent = request.draftTask.formType;
+            }
+            var backButton = document.getElementById("btnBackPub");
+            if (backButton) {
+              backButton.addEventListener("click", function (event) {
+                event.preventDefault();
+                event.stopImmediatePropagation();
+                window.parent.postMessage(
+                  { type: "prevention-task-publish-back" },
+                  "*",
+                );
+              }, true);
+            }
+            if (request.interceptDraftSave) {
+              var draftButton = document.getElementById("btnPubDraft");
+              if (draftButton) {
+                draftButton.addEventListener("click", function (event) {
+                  event.preventDefault();
+                  event.stopImmediatePropagation();
+                  var getText = function (id) {
+                    var field = document.getElementById(id);
+                    return field ? String(field.value || field.textContent || "").trim() : "";
+                  };
+                  var executor = getText("pExecutor").replace(/^已选\\s*\\d+\\s*人：/, "");
+                  window.parent.postMessage({
+                    type: "prevention-task-draft-save",
+                    draft: {
+                      draftId: request.draftTask && request.draftTask.id,
+                      templateName: request.publishTemplate,
+                      name: getText("pTaskName") || request.publishTemplate,
+                      executor: executor === "点击选择执行人" ? "" : executor,
+                      formType: getText("pFormType"),
+                      isRepeated: Boolean(document.querySelector('.switch[data-sw="prepeat"].on')),
+                    },
+                  }, "*");
+                }, true);
+              }
+            }
+          }
+          if (request.publishTab === "pt-launch" && typeof window.pubPageTab === "function") {
+            window.pubPageTab("pt-launch");
+            if (request.firstPublishedTaskOnly) {
+              document.querySelectorAll("#launchBody tr").forEach(function (row, index) {
+                row.hidden = index !== 0;
+              });
+            }
+          }
           if (${showDescription} && typeof window.openDevDoc === "function") {
             window.openDevDoc();
           }
@@ -5167,7 +5474,7 @@ function EmbeddedTaskFrame({
       </script></body>`,
     );
 
-  return <iframe key={`${view}-${subview ?? "default"}-${showDescription ? "with-description" : "workspace-only"}`} className={className} srcDoc={srcDoc} title={title} />;
+  return <iframe key={`${view}-${subview ?? "default"}-${publishTemplate ?? "default"}-${publishTab ?? "default"}-${draftTask?.id ?? "new-task"}-${firstPublishedTaskOnly ? "first-task" : "all-tasks"}-${hidePublishTabs ? "without-publish-tabs" : "with-publish-tabs"}-${showDescription ? "with-description" : "workspace-only"}`} className={className} srcDoc={srcDoc} title={title} />;
 }
 
 function EmbeddedTasksPage({ initialTab = "我的任务" }) {
@@ -10425,6 +10732,7 @@ function App() {
   const [processRecords, setProcessRecords] = useState(processEntries);
   const [preventionDrafts, setPreventionDrafts] = useState([]);
   const [dynamicsInitial, setDynamicsInitial] = useState("动态");
+  const [dynamicsFocusFeedId, setDynamicsFocusFeedId] = useState("");
   const [preventionInitial, setPreventionInitial] = useState(
     preventionForms[0].title,
   );
@@ -10602,10 +10910,11 @@ function App() {
       setActiveNav("看板");
     });
   };
-  const openSafetyDynamics = (initialTab = "动态") => {
+  const openSafetyDynamics = (initialTab = "动态", focusFeedId = "") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
       setDynamicsInitial(initialTab);
+      setDynamicsFocusFeedId(focusFeedId);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "safety-dynamics")
           ? current
@@ -10783,6 +11092,7 @@ function App() {
                 onMarkAllRead={markAllMessagesRead}
                 onReturn={() => selectTab("workbench")}
                 onOpenProcess={openProcesses}
+                onOpenDynamics={(focusFeedId) => openSafetyDynamics("动态", focusFeedId)}
               />
             ) : activeTab === "todos" ? (
               <TodoOverviewPage
@@ -10803,8 +11113,9 @@ function App() {
               />
             ) : activeTab === "safety-dynamics" ? (
               <EmbeddedDynamicsPage
-                key={dynamicsInitial}
+                key={`${dynamicsInitial}-${dynamicsFocusFeedId || "all"}`}
                 initialTab={dynamicsInitial}
+                focusFeedId={dynamicsFocusFeedId}
                 onAction={showNotice}
               />
             ) : activeTab === "warnings" ? (

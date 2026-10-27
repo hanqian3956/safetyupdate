@@ -1112,7 +1112,7 @@ button.lnk:hover { border-color: var(--accent); color: var(--accent); }
             </div>
             <button class="feed-scope-item sel" data-scope="all">全部动态</button>
             <button class="feed-scope-item" data-scope="mine">我发过的动态</button>
-            <button class="feed-scope-item" data-scope="faved">我收藏的动态</button>
+            <button class="feed-scope-item" data-scope="faved">我的关注</button>
             <button class="feed-scope-item" data-scope="commented">我评论的动态</button>
             <button class="feed-scope-item" data-scope="liked">我点赞的动态</button>
           </aside>
@@ -2723,13 +2723,13 @@ function toggleLike(id) {
   if (detailId === id) openDetail(id);
 }
 
-/* 收藏：卡片/详情页星标切换，配合左侧筛选树「我收藏的动态」 */
+/* 关注：卡片/详情页星标切换，配合左侧筛选树「我的关注」 */
 function toggleFav(id) {
   const f = feeds.find(x => x.id === id); if (!f) return;
   f.faved = !f.faved;
   renderFeed();
   if (detailId === id) openDetail(id);
-  toast(f.faved ? '已收藏该动态，可在左侧「我收藏的动态」查看' : '已取消收藏');
+  toast(f.faved ? '已关注该动态，可在左侧「我的关注」查看' : '已取消关注');
 }
 
 /* ============ Toast ============ */
