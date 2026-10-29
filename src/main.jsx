@@ -57,8 +57,8 @@ import "./user-management.css";
 import "./login.css";
 import "./enterprise-settings.css";
 import lowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
-import newTaskPrototypeHtml from "../xiaodong/新任务.html?raw";
-import warningPrototypeHtml from "../xiaodong/预警.html?raw";
+import newTaskPrototypeHtml from "../xiaodong/最新的任务.html?raw";
+import warningPrototypeHtml from "../xiaodong/最新的预警.html?raw";
 import dynamicsPrototypeHtml from "../xiaodong/新动态.html?raw";
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
@@ -260,6 +260,25 @@ const messageEntries = [
     content: "流程已流转至当前审批节点，请及时处理。",
     attachment: "审批流表单",
     formKind: "approval",
+    read: false,
+    icon: ApprovalsApp24Regular,
+    tone: "blue",
+  },
+  {
+    id: "msg-missing-approval",
+    source: "流程审批",
+    type: "审批提醒",
+    sender: "井下通风设施改造申请",
+    time: "今天 10:05",
+    initiator: "李明",
+    initiatedAt: "今天 09:50",
+    application: "安全管理",
+    processNumber: "202610290001",
+    title: "井下通风设施改造申请",
+    content: "流程已流转至当前审批节点，请及时处理。",
+    attachment: "审批流表单",
+    formKind: "approval",
+    unavailable: true,
     read: false,
     icon: ApprovalsApp24Regular,
     tone: "blue",
@@ -650,6 +669,7 @@ const processEntries = [
     initiatedAt: "2026-08-28 10:36:00",
     currentNode: "待提交",
     status: "草稿",
+    application: "消防管理",
     department: "安全管理部",
     description: "已完成离职原因与交接安排说明，待补充附件后提交。",
     draft: true,
@@ -661,6 +681,7 @@ const processEntries = [
     initiatedAt: "2026-08-27 16:18:00",
     currentNode: "待提交",
     status: "草稿",
+    application: "消防管理",
     department: "安全管理部",
     description: "已填写基本离职信息，待确认最后工作日期。",
     draft: true,
@@ -720,44 +741,40 @@ const recentApps = [
 
 const feedItems = [
   {
-    tab: "待我处理",
-    person: "陈伟",
+    id: "f1",
+    person: "张宇",
     tone: "blue",
-    avatar: "陈",
-    headline: "在设备保养计划中提及了你",
-    detail: "请协助确认 2# 渣浆泵更换备件的到货日期。",
+    avatar: "张",
+    headline: "提交了《日常巡检表》",
     time: "12 分钟前",
-    icon: PersonClock24Regular,
+    icon: DocumentText24Regular,
   },
   {
-    tab: "流程提醒",
-    person: "系统通知",
-    tone: "green",
-    avatar: "系",
-    headline: "外协队入场审批已通过",
-    detail: "流程已归档，可查看审批意见与附件。",
-    time: "45 分钟前",
-    icon: CheckmarkCircle24Regular,
+    id: "f2",
+    person: "系统预警",
+    tone: "red",
+    avatar: "预",
+    headline: "《隐患整改单 #HT-2026-0384》已逾期",
+    time: "35 分钟前",
+    icon: ErrorCircle24Regular,
   },
   {
-    tab: "待我处理",
-    person: "安环部",
+    id: "f3",
+    person: "王芳",
     tone: "orange",
-    avatar: "安",
-    headline: "向你分派了隐患整改复查",
-    detail: "整改期限为 7 月 30 日，请及时跟进。",
-    time: "今天 09:16",
+    avatar: "王",
+    headline: "派发了《设备检修任务》",
+    time: "1 小时前",
     icon: ClipboardTask24Regular,
   },
   {
-    tab: "业务动态",
+    id: "f4",
     person: "李明",
     tone: "violet",
     avatar: "李",
-    headline: "更新了南区排水泵巡检记录",
-    detail: "本次数据已同步到设备管理台账。",
-    time: "昨天 16:50",
-    icon: Wrench24Regular,
+    headline: "发起了《隐患整改流程》并通过部门负责人审批",
+    time: "2 小时前",
+    icon: Flowchart24Regular,
   },
 ];
 
@@ -1434,7 +1451,7 @@ function SystemPagination({
   );
 }
 
-function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenProcess, onOpenDynamics }) {
+function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenProcess, onOpenDynamics, onProcessUnavailable }) {
   const [messageSource, setMessageSource] = useState("全部");
   const [messageType, setMessageType] = useState("全部");
   const [status, setStatus] = useState("未读");
@@ -1571,6 +1588,10 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
                 onClick={() => {
                   onMarkRead(id);
                   if (!isDynamicMessage) {
+                    if (message.unavailable) {
+                      onProcessUnavailable();
+                      return;
+                    }
                     onOpenProcess(messageType === "结束提醒" ? "我发起的" : "待审批", processNumber);
                   } else {
                     onOpenDynamics(dynamicFeedId);
@@ -2741,10 +2762,15 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     setRevokeCandidate(null);
   };
   const resumeDraft = (draft) => {
-    const template = processTemplates.find((item) => item.name === draft.name) ?? {
+    const template = processTemplates.find(
+      (item) =>
+        item.name === draft.name &&
+        (!draft.application || item.application === draft.application),
+    ) ?? {
       category: "其他流程",
       tone: "blue",
       name: draft.name,
+      application: draft.application,
     };
     setSelectedProcess(null);
     setProcessFilter("发起流程");
@@ -2778,6 +2804,17 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     setFlowchartDialog(false);
   };
   const selectProcessTemplate = (template) => {
+    const matchingDrafts = processRecords.filter(
+      (process) =>
+        process.draft &&
+        process.name === template.name &&
+        process.application === template.application,
+    );
+    if (matchingDrafts.length) {
+      setSelectedDraftId(matchingDrafts[0].id);
+      setDraftRestore({ template, drafts: matchingDrafts });
+      return;
+    }
     openProcessForm(template);
   };
   const closeProcessForm = () => {
@@ -3114,7 +3151,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
                 </div>
               </section>
             </div>
-            <footer><span>{selectedDraft ? formMode === "resubmit" ? "请根据驳回意见核对信息后重新提交。" : `正在恢复 ${selectedDraft.initiatedAt} 保存的草稿。` : "请确认信息无误后再发起流程。"}</span><div><button type="button" className="process-reject" onClick={closeProcessForm}>取消</button><button type="button" className="process-draft-action" onClick={saveProcessDraft}>存草稿</button><button type="submit" className="process-approve">{formMode === "resubmit" ? "重新提交" : "发起流程"}</button></div></footer>
+            <footer><span>{selectedDraft ? formMode === "resubmit" ? "请根据驳回意见核对信息后重新提交。" : `正在恢复 ${selectedDraft.initiatedAt} 保存的草稿。` : "请确认信息无误后再发起流程。"}</span><div><button type="button" className="process-reject" onClick={closeProcessForm}>取消</button>{formMode !== "resubmit" ? <button type="button" className="process-draft-action" onClick={saveProcessDraft}>存草稿</button> : null}<button type="submit" className="process-approve">{formMode === "resubmit" ? "重新提交" : "发起流程"}</button></div></footer>
           </form>
         </div>
       ) : null}
@@ -4792,7 +4829,7 @@ function MockApplicationPage({ app, onReturn, onAction, onSwitchApplication }) {
   );
 }
 
-function ActivityFeed({ onOpen, onOpenAll }) {
+function ActivityFeed({ onOpenDynamics, onOpenAll }) {
   return (
     <section className="activity-feed" aria-labelledby="activity-title">
       <div className="section-title">
@@ -4806,11 +4843,11 @@ function ActivityFeed({ onOpen, onOpenAll }) {
       <div className="feed-list">
         {feedItems.length ? (
           feedItems.map(
-            ({ person, tone, avatar, headline, detail, time, icon: Icon }) => (
+            ({ id, person, tone, avatar, headline, time, icon: Icon }) => (
               <button
                 className="feed-item"
-                key={headline}
-                onClick={() => onOpen(headline)}
+                key={id}
+                onClick={() => onOpenDynamics(id)}
               >
                 <span className={`feed-avatar ${tone}`}>{avatar}</span>
                 <span className="feed-content">
@@ -4818,7 +4855,6 @@ function ActivityFeed({ onOpen, onOpenAll }) {
                     <b>{person}</b>
                     <strong>{headline}</strong>
                   </span>
-                  <p>{detail}</p>
                   <time>{time}</time>
                 </span>
                 <Icon className="feed-icon" />
@@ -5245,7 +5281,7 @@ function DashboardPage() {
   );
 }
 
-function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "" }) {
+function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "", dynamicNumber = null }) {
   const embeddedDynamicsStyles = `
     .app-nav, .app-topbar, .nav-subpanel { display: none !important; }
     .page-shell, body.nav-shifted .page-shell { margin-left: 0 !important; }
@@ -5265,6 +5301,56 @@ function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "" }) {
             window.switchView(${JSON.stringify(view)});
           }
           var focusFeedId = ${JSON.stringify(focusFeedId)};
+          var dynamicNumber = ${JSON.stringify(dynamicNumber)};
+          if (dynamicNumber) {
+            try {
+              if (!FEEDNOS.some(function (item) { return item.id === dynamicNumber.id; })) {
+                FEEDNOS.push({
+                  id: dynamicNumber.id,
+                  name: dynamicNumber.name,
+                  icon: "doc",
+                  tone: dynamicNumber.tone === "gold" ? "orange" : dynamicNumber.tone,
+                  desc: dynamicNumber.category + "相关业务的动态记录与协同跟踪。",
+                  owner: "张宇",
+                  creator: "张宇",
+                  dept: dynamicNumber.category,
+                  created: "2026-10-29",
+                  status: "on",
+                  followed: Boolean(dynamicNumber.followed),
+                  subs: 12,
+                  binds: [{ kind: "form", id: "FM-01" }, { kind: "process", id: "PR-01" }],
+                  rules: { events: ["start", "flow", "approve", "done"], toEnd: true, autoFollow: false, archive: "auto" },
+                  scope: { type: "dept", list: [dynamicNumber.category] }
+                });
+              }
+              if (typeof window.openNoDetail === "function") window.openNoDetail(dynamicNumber.id);
+              var backButton = document.getElementById("backFromNd");
+              if (backButton) {
+                var customBackButton = backButton.cloneNode(true);
+                backButton.replaceWith(customBackButton);
+                customBackButton.addEventListener("click", function () {
+                  window.parent.postMessage({ type: "dynamics:return-to-number-library" }, "*");
+                });
+              }
+            } catch (error) {
+              // The detail view remains available when an optional dynamic number cannot be initialized.
+            }
+          }
+          var detailPanel = document.getElementById("ndBasic");
+          if (detailPanel) {
+            detailPanel.addEventListener("click", function (event) {
+              if (!event.target.closest("[data-nd-follow-btn]")) return;
+              window.setTimeout(function () {
+                var currentDynamicNumber = typeof noOf === "function" ? noOf(ndId) : null;
+                if (!currentDynamicNumber) return;
+                window.parent.postMessage({
+                  type: "dynamics:follow-changed",
+                  dynamicNumber: currentDynamicNumber.name,
+                  followed: Boolean(currentDynamicNumber.followed)
+                }, "*");
+              }, 0);
+            });
+          }
           if (focusFeedId) {
             try {
               curFilter = "all";
@@ -5306,6 +5392,7 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
   const [activeTab, setActiveTab] = useState(initialTab);
   const [libraryTab, setLibraryTab] = useState("全部");
   const [selectedCategory, setSelectedCategory] = useState("安全管理");
+  const [selectedDynamicNumber, setSelectedDynamicNumber] = useState(null);
   const [keyword, setKeyword] = useState("");
   const [publishDynamicNumber, setPublishDynamicNumber] = useState(null);
   const [dynamicTitle, setDynamicTitle] = useState("");
@@ -5317,15 +5404,15 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
     () => new Set(["安全检查动态号", "生产日报动态号"]),
   );
   const dynamicNumbers = [
-    { category: "安全管理", tone: "blue", name: "安全检查动态号", favorite: true },
-    { category: "安全管理", tone: "blue", name: "隐患整改动态号", recent: true },
-    { category: "安全管理", tone: "blue", name: "班前会动态号" },
-    { category: "生产管理", tone: "gold", name: "生产日报动态号", favorite: true },
-    { category: "生产管理", tone: "gold", name: "现场交接动态号", recent: true },
-    { category: "生产管理", tone: "gold", name: "产量异常动态号" },
-    { category: "设备管理", tone: "red", name: "设备点检动态号" },
-    { category: "设备管理", tone: "red", name: "设备保养动态号", recent: true },
-    { category: "设备管理", tone: "red", name: "故障处置动态号" },
+    { id: "dynamic-safety-check", category: "安全管理", tone: "blue", name: "安全检查动态号", favorite: true },
+    { id: "dynamic-hazard-fix", category: "安全管理", tone: "blue", name: "隐患整改动态号", recent: true },
+    { id: "dynamic-pre-shift", category: "安全管理", tone: "blue", name: "班前会动态号" },
+    { id: "dynamic-production-daily", category: "生产管理", tone: "gold", name: "生产日报动态号", favorite: true },
+    { id: "dynamic-shift-handover", category: "生产管理", tone: "gold", name: "现场交接动态号", recent: true },
+    { id: "dynamic-output-alert", category: "生产管理", tone: "gold", name: "产量异常动态号" },
+    { id: "dynamic-equipment-check", category: "设备管理", tone: "red", name: "设备点检动态号" },
+    { id: "dynamic-equipment-care", category: "设备管理", tone: "red", name: "设备保养动态号", recent: true },
+    { id: "dynamic-fault-disposal", category: "设备管理", tone: "red", name: "故障处置动态号" },
   ];
   const visibleDynamicNumbers = dynamicNumbers.filter(
     (item) =>
@@ -5381,6 +5468,33 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
     setMentionedUsers([]);
     setDynamicAttachments([]);
   };
+  useEffect(() => {
+    const openPublisherFromDynamicsDetail = (event) => {
+      const payload = event.data;
+      if (payload?.type === "dynamics:return-to-number-library") {
+        setSelectedDynamicNumber(null);
+        return;
+      }
+      if (payload?.type === "dynamics:follow-changed") {
+        setFollowedDynamicNumbers((current) => {
+          const next = new Set(current);
+          if (payload.followed) next.add(payload.dynamicNumber);
+          else next.delete(payload.dynamicNumber);
+          return next;
+        });
+        return;
+      }
+      if (payload?.type === "dynamics:open-publisher") {
+        setPublishDynamicNumber(payload.dynamicNumber || "动态圈");
+        setDynamicTitle("");
+        setDynamicContent("");
+        setMentionedUsers([]);
+        setDynamicAttachments([]);
+      }
+    };
+    window.addEventListener("message", openPublisherFromDynamicsDetail);
+    return () => window.removeEventListener("message", openPublisherFromDynamicsDetail);
+  }, []);
   const publishDynamic = (event) => {
     event.preventDefault();
     if (!dynamicContent.trim()) {
@@ -5411,6 +5525,13 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
           view="feed"
           focusFeedId={focusFeedId}
           title="动态"
+        />
+      ) : selectedDynamicNumber ? (
+        <EmbeddedDynamicsFrame
+          className="embedded-dynamics-frame"
+          dynamicNumber={selectedDynamicNumber}
+          title={`${selectedDynamicNumber.name}详情`}
+          view="nodetail"
         />
       ) : (
         <section className="dynamic-publish-library" aria-label="动态号">
@@ -5460,14 +5581,32 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
                     {selectedCategoryItems.map((item) => {
                       const isFollowed = followedDynamicNumbers.has(item.name);
                       return (
-                        <article key={item.name} className="dynamic-number-entry">
+                        <article
+                          key={item.name}
+                          className="dynamic-number-entry"
+                          onClick={() => setSelectedDynamicNumber({
+                            ...item,
+                            followed: followedDynamicNumbers.has(item.name),
+                          })}
+                          onKeyDown={(event) => {
+                            if (event.key === "Enter" || event.key === " ") {
+                              event.preventDefault();
+                              setSelectedDynamicNumber({
+                                ...item,
+                                followed: followedDynamicNumbers.has(item.name),
+                              });
+                            }
+                          }}
+                          role="button"
+                          tabIndex={0}
+                        >
                           <span className={`dynamic-number-mark ${item.tone}`} />
                           <b>{item.name}</b>
                           <div>
-                            <button onClick={() => openDynamicPublisher(item.name)}>发动态</button>
+                            <button onClick={(event) => { event.stopPropagation(); openDynamicPublisher(item.name); }}>发动态</button>
                             <button
                               className={isFollowed ? "followed" : ""}
-                              onClick={() => toggleFollow(item.name)}
+                              onClick={(event) => { event.stopPropagation(); toggleFollow(item.name); }}
                             >
                               {isFollowed ? "已关注" : "关注"}
                             </button>
@@ -5899,6 +6038,12 @@ function EmbeddedWarningsPage() {
 
 function EmbeddedLowCodePage({ module, view, showDescription = false }) {
   const query = new URLSearchParams({ module, ...(view ? { view } : {}) });
+  // Inner worktable and flow pages run from Blob URLs, so their vendor files must
+  // use an absolute project URL instead of a Blob-relative "./vendor" path.
+  const localVendorUrl = new URL(
+    "vendor/",
+    new URL(import.meta.env.BASE_URL, window.location.origin),
+  ).href;
   const request = JSON.stringify({
     module,
     view,
@@ -5914,6 +6059,7 @@ function EmbeddedLowCodePage({ module, view, showDescription = false }) {
   `;
   const embeddedHead = `<head><style>${embeddedWorkspaceStyles}</style>`;
   const srcDoc = lowCodePrototypeHtml
+    .replaceAll("./vendor/", localVendorUrl)
     .replaceAll("<head>", embeddedHead)
     .replace(
       embeddedHead,
@@ -9287,7 +9433,11 @@ function DictionaryManagement({ onAction }) {
       updatedAt: "2026-08-14 10:24",
       data: [
         { id: "level-1", code: "01", name: "重大风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-1-1", parentId: "level-1", code: "0101", name: "瓦斯爆炸风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-1-2", parentId: "level-1", code: "0102", name: "透水风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
         { id: "level-2", code: "02", name: "较大风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-2-1", parentId: "level-2", code: "0201", name: "顶板事故风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-2-2", parentId: "level-2", code: "0202", name: "机电运输风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
       ],
     },
     {
@@ -10996,10 +11146,13 @@ function App() {
       cancelled = true;
     };
   }, []);
-  const showNotice = (label) => {
-    setNotice(`已选择 ${label}`);
+  const showToast = (message) => {
+    setNotice(message);
     window.clearTimeout(appNoticeTimer.current);
     appNoticeTimer.current = window.setTimeout(() => setNotice(""), 3000);
+  };
+  const showNotice = (label) => {
+    showToast(`已选择 ${label}`);
   };
   const selectTab = (id) => {
     window.scrollTo({ top: 0, behavior: "smooth" });
@@ -11321,6 +11474,7 @@ function App() {
                 onReturn={() => selectTab("workbench")}
                 onOpenProcess={openProcesses}
                 onOpenDynamics={(focusFeedId) => openSafetyDynamics("动态", focusFeedId)}
+                onProcessUnavailable={() => showToast("无法找到该条待办，已被其他或签人审批")}
               />
             ) : activeTab === "todos" ? (
               <TodoOverviewPage
@@ -11446,8 +11600,10 @@ function App() {
                       onOpenDynamics={() => openSafetyDynamics("动态号")}
                     />
                     <ActivityFeed
-                      onOpen={showNotice}
-                      onOpenAll={openSafetyDynamics}
+                      onOpenDynamics={(focusFeedId) =>
+                        openSafetyDynamics("动态", focusFeedId)
+                      }
+                      onOpenAll={() => openSafetyDynamics("动态")}
                     />
                   </div>
                 </div>

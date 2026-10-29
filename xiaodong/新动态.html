@@ -877,6 +877,8 @@ main { padding: 16px 28px 40px; }
 .nd-follow { padding: 5px 16px; border-radius: 8px; border: 1px solid var(--accent); background: var(--accent); color: #fff; font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background .15s, color .15s, border-color .15s; }
 .nd-follow:hover { filter: brightness(1.06); }
 .nd-follow.on { border-color: var(--line); background: var(--surface-soft); color: var(--muted); }
+.nd-publish { padding: 5px 14px; border-radius: 8px; border: 1px solid var(--accent); background: var(--surface); color: var(--accent); font-size: 12px; font-weight: 600; white-space: nowrap; cursor: pointer; transition: background .15s, color .15s; }
+.nd-publish:hover { background: var(--accent-soft); }
 .nd-basic--collapsed .nd-basic-body { display: none; }
 .nd-basic-meta { display: flex; flex-wrap: wrap; gap: 5px 18px; margin-top: 11px; }
 .nd-basic-meta span { display: inline-flex; align-items: baseline; gap: 5px; font-size: 12px; }
@@ -1274,7 +1276,7 @@ button.lnk:hover { border-color: var(--accent); color: var(--accent); }
         <div class="feed-page-head">
           <div class="section-title">
             <div><p class="kicker" id="ndKicker">动态圈</p><h2 id="ndTitle">—</h2></div>
-            <button class="quiet-action" id="backFromNd">返回动态圈列表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="quiet-action" id="backFromNd"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg>返回</button>
           </div>
         </div>
         <div class="side-card nd-basic" id="ndBasic"></div>
@@ -3015,6 +3017,7 @@ document.addEventListener('click', (e) => {
 
   /* ---- 列表 / 筛选 / 详情 ---- */
   if (d.detail) { openDetail(d.detail); }
+  else if (d.feedno) { openNoDetail(d.feedno); }
   else if (d.like) { toggleLike(d.like); }
   else if (d.fav) { toggleFav(d.fav); }
   else if (d.scope) { feedScope = d.scope; $$('#feedScopeTree .feed-scope-item').forEach(b => b.classList.toggle('sel', b.dataset.scope === feedScope)); renderFeed(); }
@@ -3711,9 +3714,11 @@ function wizDoneSuccess(n, bindTxt, isEdit) {
 }
 
 /* ---------- 动态圈详情页 ---------- */
+let noDetailReturnView = 'feed';
 function openNoDetail(id) {
   const n = noOf(id);
   if (!n) { toast('未找到该动态圈'); return; }
+  if (curView !== 'nodetail') noDetailReturnView = curView;
   ndId = id;
   closeSheet(); closeLightbox(); closeDetail();
   renderNoDetail();
@@ -3733,6 +3738,7 @@ function renderNoDetail() {
       <span class="rec-icon" style="background:${tone[0]};color:${tone[1]}">${I[n.icon] || I.doc}</span>
       <div class="nd-basic-titles"><h3>${esc(n.name)}</h3><p>${esc(n.id)} · ${esc(n.dept)}</p></div>
       <div class="nd-basic-aside">
+        <button class="nd-publish" data-nd-publish="${n.id}" type="button">发动态</button>
         <button class="nd-follow ${n.followed ? 'on' : ''}" data-nd-follow-btn type="button" title="${n.followed ? '取消关注' : '关注该动态圈'}">${n.followed ? '已关注' : '关注'}</button>
         <span class="rec-status" style="background:${n.status === 'on' ? 'var(--ok-soft)' : 'var(--surface-soft)'};color:${n.status === 'on' ? 'var(--ok)' : 'var(--muted)'}">${n.status === 'on' ? '已启用' : '已停用'}</span>
         <button class="nd-basic-toggle" data-nd-collapse type="button" title="折叠/展开" aria-expanded="${ndBasicCollapsed ? 'false' : 'true'}">
@@ -3945,7 +3951,7 @@ function renderLife() {
 
 /* ---------- 事件绑定 ---------- */
 $('#noCreateBtn').addEventListener('click', openCreateNo);
-$('#backFromNd').addEventListener('click', () => switchView('feedno'));
+$('#backFromNd').addEventListener('click', () => switchView(noDetailReturnView));
 $('#ndTimeSeg').addEventListener('click', (e) => {
   const b = e.target.closest('[data-nd-time]'); if (!b) return;
   ndTimeFilter = b.dataset.ndTime;
@@ -3955,6 +3961,12 @@ $('#ndTimeSeg').addEventListener('click', (e) => {
 $('#ndDeptSel').addEventListener('change', (e) => { ndDeptFilter = e.target.value; renderNdFeeds(); });
 $('#ndSearch').addEventListener('input', (e) => { ndSearch = e.target.value; renderNdFeeds(); });
 $('#ndBasic').addEventListener('click', (e) => {
+  const publish = e.target.closest('[data-nd-publish]');
+  if (publish) {
+    const n = noOf(publish.dataset.ndPublish); if (!n) return;
+    window.parent.postMessage({ type: 'dynamics:open-publisher', dynamicNumber: n.name }, '*');
+    return;
+  }
   const btn = e.target.closest('[data-nd-collapse]');
   if (btn) {
     ndBasicCollapsed = !ndBasicCollapsed;
