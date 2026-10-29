@@ -5263,7 +5263,17 @@ function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "" }) {
 function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "" }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [libraryTab, setLibraryTab] = useState("全部");
+  const [selectedCategory, setSelectedCategory] = useState("安全管理");
   const [keyword, setKeyword] = useState("");
+  const [publishDynamicNumber, setPublishDynamicNumber] = useState(null);
+  const [dynamicTitle, setDynamicTitle] = useState("");
+  const [dynamicContent, setDynamicContent] = useState("");
+  const [mentionedUsers, setMentionedUsers] = useState([]);
+  const [mentionPickerOpen, setMentionPickerOpen] = useState(false);
+  const [dynamicAttachments, setDynamicAttachments] = useState([]);
+  const [followedDynamicNumbers, setFollowedDynamicNumbers] = useState(
+    () => new Set(["安全检查动态号", "生产日报动态号"]),
+  );
   const dynamicNumbers = [
     { category: "安全管理", tone: "blue", name: "安全检查动态号", favorite: true },
     { category: "安全管理", tone: "blue", name: "隐患整改动态号", recent: true },
@@ -5278,15 +5288,72 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
   const visibleDynamicNumbers = dynamicNumbers.filter(
     (item) =>
       (libraryTab === "全部" ||
-        (libraryTab === "我的关注" && item.favorite) ||
-        (libraryTab === "最近使用" && item.recent)) &&
+        (libraryTab === "我的关注" && followedDynamicNumbers.has(item.name))) &&
       (!keyword.trim() || item.name.includes(keyword.trim())),
   );
+  const dynamicCategories = ["安全管理", "生产管理", "设备管理"];
+  const mentionOrganizations = [
+    {
+      id: "group",
+      name: "华北矿业集团",
+      children: [
+        {
+          id: "mine",
+          name: "矿山事业部",
+          children: [
+            { id: "safety", name: "安全管理部" },
+            { id: "equipment", name: "设备管理部" },
+            { id: "production", name: "生产技术部" },
+          ],
+        },
+      ],
+    },
+  ];
+  const mentionUsers = [
+    { id: "u-zhang", name: "张宇", account: "zhangyu", department: "安全管理部", organization: "safety" },
+    { id: "u-li", name: "李明", account: "liming", department: "设备管理部", organization: "equipment" },
+    { id: "u-wang", name: "王强", account: "wangqiang", department: "生产技术部", organization: "production" },
+    { id: "u-zhao", name: "赵敏", account: "zhaomin", department: "安全管理部", organization: "safety" },
+    { id: "u-chen", name: "陈磊", account: "chenlei", department: "设备管理部", organization: "equipment" },
+  ];
+  const selectedCategoryItems = visibleDynamicNumbers.filter(
+    (item) => item.category === selectedCategory,
+  );
+  const categoryScopeItems = libraryTab === "我的关注"
+    ? dynamicNumbers.filter((item) => followedDynamicNumbers.has(item.name))
+    : dynamicNumbers;
+  const toggleFollow = (name) => {
+    const isFollowed = followedDynamicNumbers.has(name);
+    setFollowedDynamicNumbers((current) => {
+      const next = new Set(current);
+      if (isFollowed) next.delete(name);
+      else next.add(name);
+      return next;
+    });
+    onAction?.(isFollowed ? `已取消关注${name}` : `已关注${name}`);
+  };
+  const openDynamicPublisher = (name) => {
+    setPublishDynamicNumber(name);
+    setDynamicTitle("");
+    setDynamicContent("");
+    setMentionedUsers([]);
+    setDynamicAttachments([]);
+  };
+  const publishDynamic = (event) => {
+    event.preventDefault();
+    if (!dynamicContent.trim()) {
+      onAction?.("请填写动态内容");
+      return;
+    }
+    onAction?.(`已通过${publishDynamicNumber}发布动态`);
+    setPublishDynamicNumber(null);
+  };
 
   return (
-    <section className="embedded-dynamics-page" aria-label="动态">
+    <>
+      <section className="embedded-dynamics-page" aria-label="动态">
       <nav className="embedded-dynamic-tabs" aria-label="动态页面">
-        {["动态", "发动态"].map((tab) => (
+        {["动态", "动态号"].map((tab) => (
           <button
             key={tab}
             className={activeTab === tab ? "active" : ""}
@@ -5304,10 +5371,10 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
           title="动态"
         />
       ) : (
-        <section className="dynamic-publish-library" aria-label="发动态">
+        <section className="dynamic-publish-library" aria-label="动态号">
           <header>
             <div className="dynamic-publish-tabs" role="tablist" aria-label="动态号筛选">
-              {["全部", "我的关注", "最近使用"].map((tab) => (
+              {["全部", "我的关注"].map((tab) => (
                 <button
                   key={tab}
                   role="tab"
@@ -5326,23 +5393,124 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
               aria-label="搜索动态号"
             />
           </header>
-          <div className="dynamic-publish-groups">
-            {["安全管理", "生产管理", "设备管理"].map((category) => {
-              const items = visibleDynamicNumbers.filter((item) => item.category === category);
-              const tone = dynamicNumbers.find((item) => item.category === category)?.tone;
-              return (
-                <section key={category} className={`dynamic-publish-group ${tone}`}>
-                  <h2><i />{category}<small>（{items.length}）</small></h2>
-                  {items.length ? items.map((item) => (
-                    <button key={item.name} onClick={() => onAction?.(`已选择${item.name}`)}>{item.name}</button>
-                  )) : <p>暂无动态号</p>}
-                </section>
-              );
-            })}
-          </div>
+          <div className="dynamic-number-browser">
+              <aside className="dynamic-category-list" aria-label="动态号类别">
+                {dynamicCategories.map((category) => {
+                  const count = categoryScopeItems.filter((item) => item.category === category).length;
+                  return (
+                    <button
+                      key={category}
+                      className={selectedCategory === category ? "active" : ""}
+                      onClick={() => setSelectedCategory(category)}
+                    >
+                      <span>{category}</span><small>（{count}）</small>
+                    </button>
+                  );
+                })}
+              </aside>
+              <section className="dynamic-number-list" aria-label={`${selectedCategory}动态号`}>
+                <header>
+                  <b>{selectedCategory}</b>
+                  <span>共 {selectedCategoryItems.length} 个动态号</span>
+                </header>
+                {selectedCategoryItems.length ? (
+                  <div>
+                    {selectedCategoryItems.map((item) => {
+                      const isFollowed = followedDynamicNumbers.has(item.name);
+                      return (
+                        <article key={item.name} className="dynamic-number-entry">
+                          <span className={`dynamic-number-mark ${item.tone}`} />
+                          <b>{item.name}</b>
+                          <div>
+                            <button onClick={() => openDynamicPublisher(item.name)}>发动态</button>
+                            <button
+                              className={isFollowed ? "followed" : ""}
+                              onClick={() => toggleFollow(item.name)}
+                            >
+                              {isFollowed ? "已关注" : "关注"}
+                            </button>
+                          </div>
+                        </article>
+                      );
+                    })}
+                  </div>
+                ) : <p>暂无匹配的动态号</p>}
+              </section>
+            </div>
         </section>
       )}
-    </section>
+      </section>
+      {publishDynamicNumber ? (
+        <div className="dynamic-publish-layer" onMouseDown={() => setPublishDynamicNumber(null)} role="presentation">
+          <form className="dynamic-publish-dialog" onMouseDown={(event) => event.stopPropagation()} onSubmit={publishDynamic}>
+            <header>
+              <div>
+                <h2>发动态</h2>
+              </div>
+              <button type="button" aria-label="关闭发动态弹窗" onClick={() => setPublishDynamicNumber(null)}><DismissRegular /></button>
+            </header>
+            <div className="dynamic-publish-form">
+              <label>
+                <span>动态标题 <em>选填</em></span>
+                <input value={dynamicTitle} maxLength={40} onChange={(event) => setDynamicTitle(event.target.value)} placeholder="一句话概括这条动态" />
+              </label>
+              <label>
+                <span>动态内容 <em>必填</em></span>
+                <textarea value={dynamicContent} maxLength={500} onChange={(event) => setDynamicContent(event.target.value)} placeholder="记录业务进展、风险提示或需要协同的事项..." required />
+              </label>
+              <section className="dynamic-mention-field">
+                <header><span>提及成员</span><small>{mentionedUsers.length} 人</small></header>
+                <button type="button" onClick={() => setMentionPickerOpen(true)}>
+                  <b>@</b>
+                  <span>{mentionedUsers.length ? mentionedUsers.map((user) => user.name).join("、") : "添加提及成员"}</span>
+                  <small>去选择 <ChevronRight24Regular /></small>
+                </button>
+              </section>
+              <section className="dynamic-attachment-field">
+                <header><span>附件</span><small>{dynamicAttachments.length} 个</small></header>
+                <label className="dynamic-attachment-upload">
+                  <input type="file" multiple onChange={(event) => setDynamicAttachments(Array.from(event.target.files ?? []))} />
+                  <Add24Regular />
+                  <span>上传附件</span>
+                </label>
+                {dynamicAttachments.length ? (
+                  <div className="dynamic-attachment-list">
+                    {dynamicAttachments.map((file, index) => (
+                      <div key={`${file.name}-${index}`}>
+                        <DocumentText24Regular />
+                        <span title={file.name}>{file.name}</span>
+                        <button
+                          type="button"
+                          aria-label={`移除附件 ${file.name}`}
+                          onClick={() => setDynamicAttachments((current) => current.filter((_, itemIndex) => itemIndex !== index))}
+                        >
+                          <DismissRegular />
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                ) : null}
+              </section>
+            </div>
+            <footer>
+              <button type="button" onClick={() => setPublishDynamicNumber(null)}>取消</button>
+              <button type="submit">发布</button>
+            </footer>
+          </form>
+        </div>
+      ) : null}
+      {mentionPickerOpen ? (
+        <MultiPersonPickerDialog
+          organizations={mentionOrganizations}
+          users={mentionUsers}
+          selectedUsers={mentionedUsers}
+          title="提及成员"
+          selectedLabel="已提及成员"
+          onSelect={setMentionedUsers}
+          onClose={() => setMentionPickerOpen(false)}
+        />
+      ) : null}
+    </>
   );
 }
 
@@ -11215,7 +11383,7 @@ function App() {
                       onAction={setDialog}
                       onOpenTask={() => openTasks("发布任务")}
                       onOpenProcess={() => openProcesses("发起流程")}
-                      onOpenDynamics={() => openSafetyDynamics("发动态")}
+                      onOpenDynamics={() => openSafetyDynamics("动态号")}
                     />
                     <ActivityFeed
                       onOpen={showNotice}

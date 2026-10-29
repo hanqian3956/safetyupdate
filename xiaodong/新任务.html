@@ -703,8 +703,8 @@ body.devdoc-open .app { padding-bottom:var(--devdoc-h, 40vh); }
                         <th class="required" data-comp="execForm" onclick="selectComponent('execForm')">执行任务@表单</th>
                         <th data-comp="workType" onclick="selectComponent('workType')">执行工种</th>
                         <th data-comp="location" onclick="selectComponent('location')">执行地点</th>
-                        <th class="required" data-comp="planStart" onclick="selectComponent('planStart')">计划开始</th>
-                        <th class="required" data-comp="planEnd" onclick="selectComponent('planEnd')">计划结束</th>
+                        <th class="required" data-comp="planStart" onclick="selectComponent('planStart')">当次任务开始时间</th>
+                        <th class="required" data-comp="planEnd" onclick="selectComponent('planEnd')">当次任务结束时间</th>
                         <th data-comp="desc" onclick="selectComponent('desc')">执行说明</th>
                     </tr></thead><tbody><tr>
                         <td><div style="display:flex;align-items:center;gap:5px;justify-content:center;"><i class="bi bi-person"></i>@成员</div><div style="font-size:10px;color:var(--text-muted);margin-top:4px;">当前操作人</div></td>
@@ -2013,8 +2013,8 @@ var COMP_CONFIG = {
     execForm:    { title:'执行任务@表单', desc:'执行任务时填写的业务表单，按分类选取', type:'form', scope:true, def:'普通业务表单' },
     workType:    { title:'执行工种', desc:'执行任务所需的工种类型', type:'text', scope:false, def:'' },
     location:    { title:'执行地点', desc:'任务执行的具体地点/区域', type:'text', scope:false, def:'' },
-    planStart:   { title:'计划开始', desc:'任务计划开始时间；开启执行控制后须到时方可执行', type:'date', scope:false, def:'' },
-    planEnd:     { title:'计划结束', desc:'任务计划结束时间，超期判定基准', type:'date', scope:false, def:'' },
+    planStart:   { title:'当次任务开始时间', desc:'当次任务开始时间；开启执行控制后须到时方可执行', type:'date', scope:false, def:'' },
+    planEnd:     { title:'当次任务结束时间', desc:'当次任务结束时间，超期判定基准', type:'date', scope:false, def:'' },
     desc:        { title:'执行说明', desc:'对执行内容的补充说明', type:'text', scope:false, def:'' }
 };
 var COMP_STATE = {};   // 组件运行时配置（覆盖默认）

@@ -93,3 +93,76 @@ main { max-width: 1530px; margin: 0 auto; padding: 16px 26px 40px; }.section-tit
 .inspection-data-pagination { border-radius: 0 0 10px 10px; }
 .message-row { min-height: 82px; }
 .message-row-content .message-action-type { color: #8a98a6; font-size: 11px; font-weight: 500; }
+.dynamic-number-browser { min-height: 420px; display: grid; grid-template-columns: 198px minmax(0, 1fr); background: #fff; }
+.dynamic-category-list { padding: 14px 10px; border-right: 1px solid #e5ebf0; background: #fbfdff; }
+.dynamic-category-list button { width: 100%; min-height: 40px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border: 0; border-radius: 5px; background: transparent; color: #52677a; font-size: 12px; font-weight: 600; text-align: left; }
+.dynamic-category-list button:hover { background: #f0f7fc; color: var(--accent); }
+.dynamic-category-list button.active { background: #e8f4fc; color: var(--accent); }
+.dynamic-category-list button small { color: #96a4b3; font-size: 11px; font-weight: 500; }
+.dynamic-category-list button.active small { color: var(--accent); }
+.dynamic-number-list { min-width: 0; padding: 14px 22px 28px; }
+.dynamic-number-list > header { min-height: 35px; padding: 0; display: flex; align-items: center; justify-content: space-between; border: 0; background: transparent; }
+.dynamic-number-list > header b { color: var(--text); font-size: 14px; }
+.dynamic-number-list > header span { color: #8b9aa8; font-size: 11px; }
+.dynamic-number-list > div { border-top: 1px solid #eaf0f4; }
+.dynamic-number-list > div > button { width: 100%; min-height: 54px; padding: 0 12px; display: grid; grid-template-columns: 7px minmax(0, 1fr) auto; align-items: center; gap: 10px; border: 0; border-bottom: 1px dashed #e0e8ee; background: transparent; color: #415365; text-align: left; }
+.dynamic-number-list > div > button:hover { background: #f5faff; color: var(--accent); }
+.dynamic-number-list > div > button b { overflow: hidden; font-size: 12px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.dynamic-number-list > div > button small { color: #94a3b0; font-size: 10px; }
+.dynamic-number-list > div > button:hover small { color: var(--accent); }
+.dynamic-number-mark { width: 5px; height: 18px; display: block; border-radius: 3px; background: #62a0d8; }
+.dynamic-number-mark.gold { background: #d9aa37; }
+.dynamic-number-mark.red { background: #dc6a60; }
+.dynamic-number-list > p { padding: 36px 12px; color: var(--muted); font-size: 11px; text-align: center; }
+.dynamic-number-entry { width: 100%; min-height: 54px; padding: 0 12px; display: grid; grid-template-columns: 7px minmax(0, 1fr) auto; align-items: center; gap: 10px; border-bottom: 1px dashed #e0e8ee; color: #415365; }
+.dynamic-number-entry:hover { background: #f5faff; }
+.dynamic-number-entry > b { overflow: hidden; font-size: 12px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.dynamic-number-entry > div { display: flex; align-items: center; gap: 7px; }
+.dynamic-number-entry button { min-width: 52px; height: 26px; padding: 0 8px; border: 1px solid #b7d2e5; border-radius: 4px; background: #fff; color: var(--accent); font-size: 10px; font-weight: 650; white-space: nowrap; }
+.dynamic-number-entry button:hover { border-color: var(--accent); background: #eef8fe; }
+.dynamic-number-entry button.followed { border-color: #d9e3ea; background: #f5f8fa; color: #718292; }
+.dynamic-number-entry button.followed:hover { border-color: #b9c9d5; background: #eef3f6; color: #526b7d; }
+.dynamic-publish-layer { position: fixed; z-index: 90; inset: 0; padding: 24px; display: grid; place-items: center; background: rgb(19 35 51 / 46%); }
+.dynamic-publish-layer + .single-person-picker-layer { z-index: 100; }
+.dynamic-publish-dialog { width: min(520px, calc(100vw - 48px)); overflow: hidden; border: 1px solid #d9e3ea; border-radius: 10px; background: #fff; box-shadow: 0 24px 66px rgb(20 38 55 / 28%); }
+.dynamic-publish-dialog > header { min-height: 62px; padding: 0 18px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid #e6edf2; background: #fff; }
+.dynamic-publish-dialog header p, .dynamic-publish-dialog header h2 { margin: 0; }
+.dynamic-publish-dialog header p { color: var(--accent); font-size: 10px; font-weight: 700; }
+.dynamic-publish-dialog header h2 { margin-top: 3px; color: #263748; font-size: 16px; }
+.dynamic-publish-dialog > header > button { width: 28px; height: 28px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 5px; background: transparent; color: #7d8d9d; }
+.dynamic-publish-dialog > header > button:hover { background: #f0f4f7; color: #475d70; }
+.dynamic-publish-dialog > header svg { width: 17px; }
+.dynamic-publish-form { padding: 17px 18px 20px; display: grid; gap: 16px; }
+.dynamic-publish-form > label { display: grid; gap: 8px; }
+.dynamic-publish-form > label > span, .dynamic-mention-field > header span, .dynamic-attachment-field > header span { color: #597188; font-size: 12px; font-weight: 650; }
+.dynamic-publish-form em { float: right; color: #8796a5; font-size: 10px; font-style: normal; font-weight: 500; }
+.dynamic-publish-form input, .dynamic-publish-form textarea { width: 100%; border: 1px solid #ccd8e2; border-radius: 6px; background: #fbfcfd; color: #34495c; font: inherit; font-size: 12px; outline: none; }
+.dynamic-publish-form input { height: 35px; padding: 0 10px; }
+.dynamic-publish-form textarea { min-height: 84px; padding: 10px; line-height: 1.55; resize: vertical; }
+.dynamic-publish-form input:focus, .dynamic-publish-form textarea:focus { border-color: var(--accent); box-shadow: 0 0 0 2px rgb(15 108 189 / 12%); }
+.dynamic-mention-field, .dynamic-attachment-field { display: grid; gap: 8px; }
+.dynamic-mention-field > header, .dynamic-attachment-field > header { min-height: 18px; padding: 0; display: flex; align-items: center; justify-content: space-between; border: 0; background: transparent; }
+.dynamic-mention-field > header small, .dynamic-attachment-field > header small { color: #8494a4; font-size: 11px; }
+.dynamic-mention-field > button { min-height: 44px; padding: 0 13px; display: grid; grid-template-columns: 21px minmax(0, 1fr) auto; align-items: center; gap: 8px; border: 1px solid #d7e0e7; border-radius: 8px; background: #fff; color: #52687b; text-align: left; }
+.dynamic-mention-field > button:hover { border-color: #9bc6e5; background: #f8fcff; }
+.dynamic-mention-field > button > b { color: #334b60; font-size: 19px; font-weight: 500; }
+.dynamic-mention-field > button > span { overflow: hidden; color: #52687b; font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.dynamic-mention-field > button > small { display: inline-flex; align-items: center; gap: 2px; color: #687c8f; font-size: 11px; font-weight: 600; }
+.dynamic-mention-field > button svg { width: 14px; }
+.dynamic-attachment-upload { width: 108px; height: 34px; display: inline-flex; align-items: center; justify-content: center; gap: 5px; border: 1px dashed #9ec5e2; border-radius: 5px; background: #f7fbfe; color: var(--accent); cursor: pointer; }
+.dynamic-attachment-upload:hover { border-color: var(--accent); background: #eef8fe; }
+.dynamic-attachment-upload input { position: absolute; width: 1px; height: 1px; opacity: 0; pointer-events: none; }
+.dynamic-attachment-upload svg { width: 15px; }
+.dynamic-attachment-upload span { font-size: 11px; font-weight: 600; }
+.dynamic-attachment-list { display: grid; gap: 6px; }
+.dynamic-attachment-list > div { min-height: 31px; padding: 0 8px; display: grid; grid-template-columns: 16px minmax(0, 1fr) 22px; align-items: center; gap: 6px; border: 1px solid #e0e8ee; border-radius: 5px; background: #fbfdff; color: #5d7183; }
+.dynamic-attachment-list svg { width: 14px; color: #6f8ca5; }
+.dynamic-attachment-list span { overflow: hidden; font-size: 11px; text-overflow: ellipsis; white-space: nowrap; }
+.dynamic-attachment-list button { width: 22px; height: 22px; padding: 0; display: grid; place-items: center; border: 0; border-radius: 4px; background: transparent; color: #8b9baa; }
+.dynamic-attachment-list button:hover { background: #f2f5f7; color: #bd5a53; }
+.dynamic-attachment-list button svg { width: 13px; color: currentColor; }
+.dynamic-publish-dialog > footer { min-height: 58px; padding: 0 18px; display: flex; align-items: center; justify-content: flex-end; gap: 8px; border-top: 1px solid #e6edf2; background: #fbfcfd; }
+.dynamic-publish-dialog > footer button { min-width: 72px; height: 30px; padding: 0 12px; border: 1px solid #cad7e0; border-radius: 5px; background: #fff; color: #5d7183; font-size: 11px; font-weight: 650; }
+.dynamic-publish-dialog > footer button[type="submit"] { border-color: var(--accent); background: var(--accent); color: #fff; }
+.dynamic-publish-dialog > footer button:hover { border-color: #8db6d2; background: #f3f9fd; color: var(--accent); }
+.dynamic-publish-dialog > footer button[type="submit"]:hover { border-color: #075d9f; background: #075d9f; color: #fff; }
