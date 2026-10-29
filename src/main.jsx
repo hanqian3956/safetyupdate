@@ -59,7 +59,7 @@ import "./enterprise-settings.css";
 import lowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
 import newTaskPrototypeHtml from "../xiaodong/新任务.html?raw";
 import warningPrototypeHtml from "../xiaodong/预警.html?raw";
-import dynamicsPrototypeHtml from "../xiaodong/动态.html?raw";
+import dynamicsPrototypeHtml from "../xiaodong/新动态.html?raw";
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "人事管理",
@@ -3619,6 +3619,8 @@ function DualPreventionPage({
   const [taskDraftFilters, setTaskDraftFilters] = useState({ keyword: "", type: "" });
   const importInputRef = useRef(null);
   const approvalFormRef = useRef(null);
+  const taskPublishFrameRef = useRef(null);
+  const pendingTaskNavigationRef = useRef(null);
   useEffect(() => {
     const handleTaskPublishBack = (event) => {
       if (event.data?.type === "prevention-task-publish-back") {
@@ -3664,6 +3666,7 @@ function DualPreventionPage({
       if (event.data?.type !== "prevention-task-draft-save") return;
       const payload = event.data.draft ?? {};
       if (payload.templateName !== activeFormRecord.title) return;
+      const pendingNavigation = pendingTaskNavigationRef.current;
       const now = new Date();
       const savedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}`;
       const draft = {
@@ -3686,12 +3689,35 @@ function DualPreventionPage({
       );
       setSelectedApprovalDraft(draft);
       setHasUnsavedFormChanges(false);
-      setInspectionTab("草稿箱");
       onAction(`${draft.name}已存入草稿任务`);
+      if (pendingNavigation) {
+        pendingTaskNavigationRef.current = null;
+        setPendingFormNavigation(null);
+        if (pendingNavigation.type === "page") {
+          setSelectedItem(pendingNavigation.item);
+          setActiveForm(false);
+          setSubmitted(false);
+        }
+        if (pendingNavigation.type === "application") {
+          onSwitchApplication(pendingNavigation.application);
+        }
+        return;
+      }
+      setInspectionTab("草稿箱");
+    };
+    const handleTaskPublishDirty = (event) => {
+      if (event.data?.type !== "prevention-task-publish-dirty") return;
+      if (event.data.templateName === activeFormRecord.title) {
+        setHasUnsavedFormChanges(true);
+      }
     };
     window.addEventListener("message", handleTaskDraftSave);
-    return () => window.removeEventListener("message", handleTaskDraftSave);
-  }, [activeFormRecord.title, onAction, setApprovalDrafts]);
+    window.addEventListener("message", handleTaskPublishDirty);
+    return () => {
+      window.removeEventListener("message", handleTaskDraftSave);
+      window.removeEventListener("message", handleTaskPublishDirty);
+    };
+  }, [activeFormRecord.title, onAction, onSwitchApplication, setApprovalDrafts]);
   const openFormDirect = (
     form = preventionForms[0],
     source = "岗位隐患排查清单",
@@ -3813,23 +3839,14 @@ function DualPreventionPage({
     onAction(`${activeFormRecord.title}已暂存到草稿箱`);
   };
   const switchInspectionTab = (tab) => {
-    if (tab === "页面" && inspectionTab !== "页面" && inspectionDrafts.length) {
-      setApprovalDraftRestore({ form: activeFormRecord, source: formSource, drafts: inspectionDrafts });
-      setSelectedApprovalDraftId(inspectionDrafts[0].id);
-      return;
-    }
     setInspectionTab(tab);
   };
   const requestInspectionTabChange = (tab) => {
     if (tab === inspectionTab) return;
-    if (inspectionTab === "页面" && hasUnsavedFormChanges) {
-      setPendingFormNavigation({ type: "tab", tab });
-      return;
-    }
     switchInspectionTab(tab);
   };
   const requestPreventionPageChange = (item) => {
-    if (activeForm && inspectionTab === "页面" && hasUnsavedFormChanges) {
+    if (activeForm && hasUnsavedFormChanges) {
       setPendingFormNavigation({ type: "page", item });
       return;
     }
@@ -3838,20 +3855,13 @@ function DualPreventionPage({
     setSubmitted(false);
   };
   const requestApplicationSwitch = (application) => {
-    if (activeForm && inspectionTab === "页面" && hasUnsavedFormChanges) {
+    if (activeForm && hasUnsavedFormChanges) {
       setPendingFormNavigation({ type: "application", application });
       return;
     }
     onSwitchApplication(application);
   };
-  const confirmPendingFormNavigation = () => {
-    const pendingNavigation = pendingFormNavigation;
-    setPendingFormNavigation(null);
-    setHasUnsavedFormChanges(false);
-    if (pendingNavigation?.type === "tab") {
-      switchInspectionTab(pendingNavigation.tab);
-      return;
-    }
+  const finishPendingFormNavigation = (pendingNavigation) => {
     if (pendingNavigation?.type === "page") {
       setSelectedItem(pendingNavigation.item);
       setActiveForm(false);
@@ -3860,6 +3870,28 @@ function DualPreventionPage({
     if (pendingNavigation?.type === "application") {
       onSwitchApplication(pendingNavigation.application);
     }
+  };
+  const discardPendingFormNavigation = () => {
+    const pendingNavigation = pendingFormNavigation;
+    setPendingFormNavigation(null);
+    setHasUnsavedFormChanges(false);
+    finishPendingFormNavigation(pendingNavigation);
+  };
+  const savePendingFormNavigation = () => {
+    const pendingNavigation = pendingFormNavigation;
+    if (!pendingNavigation) return;
+    if (isInspectionTask) {
+      pendingTaskNavigationRef.current = pendingNavigation;
+      taskPublishFrameRef.current?.contentWindow?.postMessage(
+        { type: "prevention-task-save-draft-request" },
+        "*",
+      );
+      return;
+    }
+    if (isApprovalFlow) saveApprovalDraft();
+    else saveInspectionDraft();
+    setPendingFormNavigation(null);
+    finishPendingFormNavigation(pendingNavigation);
   };
   const filteredInspectionRecords = inspectionRecords.filter((record) =>
     (!inspectionFilters.reporter || record.reporter.includes(inspectionFilters.reporter))
@@ -4011,18 +4043,20 @@ function DualPreventionPage({
                 </button>
               ))}
             </nav>
-            {inspectionTab === "页面" ? (
-            isInspectionTask ? (
-              <EmbeddedTaskFrame
-                view="view-publish"
-                publishTemplate={activeFormRecord.title}
-                draftTask={selectedApprovalDraft?.kind === "task" ? selectedApprovalDraft : null}
-                interceptDraftSave
-                className="prevention-task-publish-frame"
-                title={`${activeFormRecord.title}任务发布`}
-                hidePublishHeading
-              />
-            ) : (
+            <>
+              <div className="inspection-page-panel" hidden={inspectionTab !== "页面"}>
+              {isInspectionTask ? (
+                <EmbeddedTaskFrame
+                  frameRef={taskPublishFrameRef}
+                  view="view-publish"
+                  publishTemplate={activeFormRecord.title}
+                  draftTask={selectedApprovalDraft?.kind === "task" ? selectedApprovalDraft : null}
+                  interceptDraftSave
+                  className="prevention-task-publish-frame"
+                  title={`${activeFormRecord.title}任务发布`}
+                  hidePublishHeading
+                />
+              ) : (
             <form
               key={selectedApprovalDraft?.id ?? selectedForm}
               ref={approvalFormRef}
@@ -4197,8 +4231,9 @@ function DualPreventionPage({
                 </div>
               </footer>
             </form>
-            )
-            ) : inspectionTab === "数据" ? (
+              )}
+              </div>
+            {inspectionTab === "数据" ? (
               isInspectionTask ? (
                 <EmbeddedTaskFrame
                   view="view-publish"
@@ -4435,6 +4470,7 @@ function DualPreventionPage({
                 ) : <div className="inspection-draft-empty">暂无草稿，页面内暂存的填报数据会显示在这里。</div>}
               </section>
             )}
+            </>
           </section>
         ) : (
           <>
@@ -4616,12 +4652,11 @@ function DualPreventionPage({
             >
               ×
             </button>
-            <p className="dialog-kicker">未保存内容</p>
-            <h2 id="unsaved-inspection-form-title">确认切换吗？</h2>
+            <h2 id="unsaved-inspection-form-title">离开当前页面？</h2>
             <p className="dialog-description">
-              当前内容没有保存，切换后填写内容将无法恢复。
+              当前填写内容尚未保存。离开页面后内容不会保留，是否保存为草稿？
             </p>
-            <div className="dialog-actions">
+            <div className="dialog-actions save-draft-confirm-actions">
               <button
                 type="button"
                 className="secondary-button"
@@ -4631,10 +4666,17 @@ function DualPreventionPage({
               </button>
               <button
                 type="button"
-                className="primary-button"
-                onClick={confirmPendingFormNavigation}
+                className="secondary-button discard-draft-button"
+                onClick={discardPendingFormNavigation}
               >
-                确认切换
+                不保存离开
+              </button>
+              <button
+                type="button"
+                className="primary-button"
+                onClick={savePendingFormNavigation}
+              >
+                保存草稿
               </button>
             </div>
           </section>
@@ -5527,6 +5569,7 @@ function EmbeddedTaskFrame({
   draftTask = null,
   interceptDraftSave = false,
   showDescription = false,
+  frameRef = null,
 }) {
   const request = JSON.stringify({
     view,
@@ -5624,8 +5667,25 @@ function EmbeddedTaskFrame({
                     },
                   }, "*");
                 }, true);
+                window.addEventListener("message", function (event) {
+                  if (event.data?.type === "prevention-task-save-draft-request") {
+                    draftButton.click();
+                  }
+                });
               }
             }
+            document.addEventListener("input", function () {
+              window.parent.postMessage({
+                type: "prevention-task-publish-dirty",
+                templateName: request.publishTemplate,
+              }, "*");
+            }, true);
+            document.addEventListener("change", function () {
+              window.parent.postMessage({
+                type: "prevention-task-publish-dirty",
+                templateName: request.publishTemplate,
+              }, "*");
+            }, true);
           }
           if (request.publishTab === "pt-launch" && typeof window.pubPageTab === "function") {
             window.pubPageTab("pt-launch");
@@ -5642,7 +5702,7 @@ function EmbeddedTaskFrame({
       </script></body>`,
     );
 
-  return <iframe key={`${view}-${subview ?? "default"}-${publishTemplate ?? "default"}-${publishTab ?? "default"}-${draftTask?.id ?? "new-task"}-${firstPublishedTaskOnly ? "first-task" : "all-tasks"}-${hidePublishTabs ? "without-publish-tabs" : "with-publish-tabs"}-${showDescription ? "with-description" : "workspace-only"}`} className={className} srcDoc={srcDoc} title={title} />;
+  return <iframe ref={frameRef} key={`${view}-${subview ?? "default"}-${publishTemplate ?? "default"}-${publishTab ?? "default"}-${draftTask?.id ?? "new-task"}-${firstPublishedTaskOnly ? "first-task" : "all-tasks"}-${hidePublishTabs ? "without-publish-tabs" : "with-publish-tabs"}-${showDescription ? "with-description" : "workspace-only"}`} className={className} srcDoc={srcDoc} title={title} />;
 }
 
 function EmbeddedTasksPage({ initialTab = "我的任务" }) {
