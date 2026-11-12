@@ -824,7 +824,10 @@ body {
 .sub-cond-list{ margin-top:4px; }
 .sub-cond-row{ display:flex; align-items:center; gap:8px; flex-wrap:wrap; padding:9px 10px; background:var(--bg-hover); border:1px solid var(--border-light); border-radius:var(--radius); margin-bottom:6px; }
 .sub-cond-row select, .sub-cond-row input{ padding:6px 10px; font-size:12px; border:1px solid var(--border-color); border-radius:4px; }
-.sc-field{ min-width:120px; } .sc-logic{ min-width:110px; } .sc-value{ min-width:120px; }
+.sc-field{ min-width:120px; } .sc-logic{ min-width:110px; }
+.sc-value-wrap{ display:inline-flex; align-items:center; gap:6px; }
+.sc-value{ min-width:120px; }
+.sc-value-unit{ color:var(--text-secondary); font-size:12px; white-space:nowrap; }
 .sub-cond-connector{ padding:2px 0 2px 10px; }
 .sc-conn-tag{ display:inline-block; padding:2px 12px; border-radius:12px; background:var(--amber-soft); color:#0b5394; font-weight:700; font-size:11px; }
 .cg-add{ width:100%; margin-top:6px; border:1px dashed var(--border-color); color:var(--text-secondary); background:transparent; }
@@ -885,10 +888,11 @@ body {
 .hit-detail-table td{ padding:6px 8px; border-bottom:1px solid var(--border-light); }
 .hit-conclusion{ margin-top:8px; font-size:12px; color:var(--text-secondary); }
 
-/* ====== 超期徽标（独立于状态，放在状态列）====== */
+/* ====== 超期徽标（独立于状态，展示在「是否超期」列）====== */
 .ovd{ display:inline-block; margin-left:6px; padding:1px 7px; border-radius:9px; font-size:11px; line-height:16px; vertical-align:middle; }
 .ovd-late{ background:#fef0f0; color:var(--danger); }
 .ovd-done{ background:#fdf6ec; color:var(--warning); }
+.overdue-cell{ white-space:nowrap; }
 /* ====== 处置记录（只读 · 按人分块）====== */
 #excTableBody td{ vertical-align:top; }
 #excTableBody td:first-child, #excTableBody td:last-child{ white-space:nowrap; }
@@ -1480,14 +1484,14 @@ body.devdoc-open .app-container { padding-right: 600px; }
                         <div class="cond-tip">
                           <div class="cond-tip-title">处理人（共 2 个）</div>
                           <div>· 表单提交人</div>
-                          <div>· 预警所在事事号的负责人</div>
+                          <div>· 预警所在动态号的负责人</div>
                         </div>
                       </td>
                       <td class="cond-cell">
-                        <span class="cond-main">预警所在事事号的成员</span><span class="hit-badge">等 2 个</span>
+                        <span class="cond-main">预警所在动态号的成员</span><span class="hit-badge">等 2 个</span>
                         <div class="cond-tip">
                           <div class="cond-tip-title">通知人（共 2 个）</div>
-                          <div>· 预警所在事事号的成员</div>
+                          <div>· 预警所在动态号的成员</div>
                           <div>· 表单提交人的部门负责人</div>
                         </div>
                       </td>
@@ -1498,7 +1502,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
                         <div class="cond-tip">
                           <div class="cond-tip-title">超期提醒规则（共 2 条）</div>
                           <div>· 超期1小时 → 表单提交人的部门负责人</div>
-                          <div>· 超期3小时 → 预警所在事事号的负责人</div>
+                          <div>· 超期3小时 → 预警所在动态号的负责人</div>
                         </div>
                       </td>
                       <td><button class="btn-text btn-sm">编辑</button><button class="btn-text btn-sm text-danger">删除</button></td>
@@ -1506,7 +1510,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
                     <tr>
                       <td class="cond-cell"><span class="cond-main">管道压力异常预警</span></td>
                       <td class="cond-cell"><span class="cond-main">表单提交人</span></td>
-                      <td class="cond-cell"><span class="cond-main">预警所在事事号的成员</span></td>
+                      <td class="cond-cell"><span class="cond-main">预警所在动态号的成员</span></td>
                       <td>并行处置，全部完成</td>
                       <td>表单字段（截止日期）</td>
                       <td class="cond-cell">
@@ -1534,7 +1538,6 @@ body.devdoc-open .app-container { padding-right: 600px; }
         <div class="card">
           <div class="card-header">
             <div class="card-title">预警分级看板</div>
-            <button class="btn btn-sm">📥 导出Excel</button>
           </div>
           <div class="card-body">
             
@@ -1762,6 +1765,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
             </div>
 
             <div class="search-bar" id="task-search-bar">
+              <input class="input" id="taskWarningNumberFilter" style="width:180px;" placeholder="请输入预警编号">
               <span class="text-muted">时间维度</span>
               <select class="select" style="width:150px;">
                 <option>触发时间</option>
@@ -1779,8 +1783,8 @@ body.devdoc-open .app-container { padding-right: 600px; }
                 <option>三级风险</option>
                 <option>四级风险</option>
               </select>
-              <button class="btn btn-primary btn-sm">查询</button>
-              <button class="btn btn-sm">重置</button>
+              <button class="btn btn-primary btn-sm" onclick="searchTaskWarnings()">查询</button>
+              <button class="btn btn-sm" onclick="resetTaskWarningSearch()">重置</button>
             </div>
 
             <!-- ====== Tab Contents ====== -->
@@ -1985,7 +1989,6 @@ body.devdoc-open .app-container { padding-right: 600px; }
             <div class="card-title">预警信息表统计</div>
             <div class="btn-group">
               <button class="btn btn-sm">📥 导出Excel</button>
-              <button class="btn btn-danger btn-sm" onclick="showVoidConfirmModal()">🗑️ 作废</button>
             </div>
           </div>
           <div class="card-body">
@@ -1998,6 +2001,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
 
             <div class="stats-pane" id="statsPaneLedger">
             <div class="search-bar">
+              <input class="input" id="ledgerWarningNumberFilter" style="width:180px;" placeholder="请输入预警编号">
               <span class="text-muted">时间维度</span>
               <select class="select" style="width:150px;">
                 <option>触发时间</option>
@@ -2019,7 +2023,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
                 <option>已完成</option>
                 <option>已作废</option>
               </select>
-              <button class="btn btn-primary btn-sm">查询</button>
+              <button class="btn btn-primary btn-sm" onclick="searchLedgerWarnings()">查询</button>
             </div>
 
             <table class="data-table">
@@ -2206,20 +2210,15 @@ body.devdoc-open .app-container { padding-right: 600px; }
             <div class="stats-pane" id="statsPaneException" style="display:none;">
               
               <div class="search-bar" style="margin-bottom:10px;">
+                <input class="input" id="exceptionWarningNumberFilter" style="width:180px;" placeholder="请输入预警编号">
                 <span class="text-muted">状态</span>
-                <select class="select" style="width:130px;">
-                  <option>全部</option>
-                  <option>待指派</option>
-                  <option>已指派</option>
+                <select class="select" id="exceptionStatusFilter" style="width:130px;">
+                  <option value="">全部</option>
+                  <option value="待指派">待指派</option>
+                  <option value="已指派">已指派</option>
                 </select>
-                <span class="text-muted">失败原因</span>
-                <select class="select" style="width:170px;">
-                  <option>全部原因</option>
-                  <option>组织架构未配置</option>
-                  <option>表单字段为空</option>
-                  <option>人员已离职</option>
-                </select>
-                <button class="btn btn-sm">📥 导出异常清单</button>
+                <button class="btn btn-primary btn-sm" onclick="searchExceptions()">搜索</button>
+                <button class="btn btn-sm" onclick="resetExceptionSearch()">重置</button>
               </div>
               <table class="data-table">
                 <thead>
@@ -2229,7 +2228,6 @@ body.devdoc-open .app-container { padding-right: 600px; }
                     <th>工作表</th>
                     <th>触发时间</th>
                     <th>原角色类别</th>
-                    <th>失败原因</th>
                     <th>状态</th>
                     <th style="text-align:right;">操作</th>
                   </tr>
@@ -2523,9 +2521,9 @@ body.devdoc-open .app-container { padding-right: 600px; }
 
         <div class="person-cat-divider">表单创建者-表单相关</div>
 
-        <!-- 预警所在事事号的负责人 -->
+        <!-- 预警所在动态号的负责人 -->
         <div class="person-cat-row">
-          <div class="person-cat-label">预警所在事事号的负责人</div>
+          <div class="person-cat-label">预警所在动态号的负责人</div>
           <div class="person-cat-state"></div>
           <div class="person-cat-actions">
             <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
@@ -2533,9 +2531,9 @@ body.devdoc-open .app-container { padding-right: 600px; }
           </div>
         </div>
 
-        <!-- 预警所在事事号的成员 -->
+        <!-- 预警所在动态号的成员 -->
         <div class="person-cat-row">
-          <div class="person-cat-label">预警所在事事号的成员</div>
+          <div class="person-cat-label">预警所在动态号的成员</div>
           <div class="person-cat-state"></div>
           <div class="person-cat-actions">
             <label class="checkbox-item-inline"><input type="checkbox" checked> 处理人</label>
@@ -2643,18 +2641,18 @@ body.devdoc-open .app-container { padding-right: 600px; }
 
         <div class="person-cat-divider">表单创建者-表单相关</div>
 
-        <!-- 预警所在事事号的负责人 -->
+        <!-- 预警所在动态号的负责人 -->
         <div class="person-cat-row">
-          <div class="person-cat-label">预警所在事事号的负责人</div>
+          <div class="person-cat-label">预警所在动态号的负责人</div>
           <div class="person-cat-state"></div>
           <div class="person-cat-actions">
             <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
           </div>
         </div>
 
-        <!-- 预警所在事事号的成员 -->
+        <!-- 预警所在动态号的成员 -->
         <div class="person-cat-row">
-          <div class="person-cat-label">预警所在事事号的成员</div>
+          <div class="person-cat-label">预警所在动态号的成员</div>
           <div class="person-cat-state"></div>
           <div class="person-cat-actions">
             <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
@@ -2672,7 +2670,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
 
         <!-- 表单提交人的部门负责人 -->
         <div class="person-cat-row">
-          <div class="person-cat-label">发布所在事事号的负责人接收</div>
+          <div class="person-cat-label">发布所在动态号的负责人接收</div>
           <div class="person-cat-state"></div>
           <div class="person-cat-actions">
             <label class="checkbox-item-inline"><input type="checkbox"> 提醒人</label>
@@ -2887,11 +2885,6 @@ body.devdoc-open .app-container { padding-right: 600px; }
         </div>
       </div>
 
-      <div class="form-row mb-8">
-        <div class="form-item"><label class="form-label">失败原因</label><div class="readonly-field" id="rsReason">—</div></div>
-        <div class="form-item"><label class="form-label">当前处理人</label><div class="readonly-field">暂无（待指派，未派发给任何人）</div></div>
-      </div>
-
       <!-- 待指派 / 再次指派：编辑区 -->
       <div id="rsEditArea">
         <div class="form-item">
@@ -2900,8 +2893,8 @@ body.devdoc-open .app-container { padding-right: 600px; }
           <div class="rp-list" id="rsPeople"></div>
         </div>
         <div class="form-item">
-          <label class="form-label">指派原因 <span class="text-danger">*</span></label>
-          <textarea class="textarea" id="rsReasonInput" placeholder="请说明为什么指派（如：该事事号未配置负责人，由我指定安全员跟进）"></textarea>
+          <label class="form-label">指派原因</label>
+          <textarea class="textarea" id="rsReasonInput" placeholder="选填，如：由我指定安全员跟进"></textarea>
         </div>
       </div>
     </div>
@@ -3231,6 +3224,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
 <p><b>空态</b>：新增规则时条件组为空，显示「尚未配置预警条件组，点击上方「添加预警条件组」开始配置」。</p>
 
 <h5>4.5 子条件行（条件组内）</h5>
+<p><b>开发说明 · 字段类型与判定方式</b>：触发条件的“阈值”控件须由所选“工作项”的字段类型驱动。例如选择“设备温度”等数字型字段时，阈值只能输入数字；文本、日期/时间、枚举等字段分别按对应类型限制输入或选择。<b>判定方式</b>使用固定下拉选项；数字型字段即使因历史配置选择了“包含 / 不包含”，这两种关系也不参与预警命中判定（视为不生效）。</p>
 <table class="devdoc-table">
   <thead><tr><th>字段</th><th>控件</th><th>取值与校验</th></tr></thead>
   <tbody>
@@ -3436,7 +3430,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
 <h4>3. 区块结构</h4>
 <ol>
   <li><b>Tab 预警台账</b>：筛选条 + 工具栏（导出 Excel、作废）+ 13 列表格（含勾选列），行尾「操作」列含<b>调整处理人 / 作废</b>；点「预警工作项」展开命中明细，点「处理人」打开<b>处理人明细</b>，点「预警编号」打开<b>任务详情</b>。</li>
-  <li><b>Tab 分派异常</b>：筛选条（状态 / 失败原因）+ 导出异常清单 + 8 列表格，行操作「重新指派 / 查看」。</li>
+  <li><b>Tab 分派异常</b>：筛选条（状态）+ 搜索 / 重置 + 7 列表格，行操作「重新指派 / 查看」。</li>
   <li><b>层级</b>：台账（列表）→ <b>任务详情</b>（整条任务：处理人列表 + 处理日志）→ <b>个人处置详情</b>（某个人处理成什么样，只读）。日志只挂在任务详情，不进个人详情。</li>
 </ol>
 
@@ -3625,10 +3619,9 @@ body.devdoc-open .app-container { padding-right: 600px; }
 <table class="devdoc-table devdoc-table--spec">
   <thead><tr><th>字段</th><th>控件</th><th>必填</th><th>长度 / 格式</th><th>取值与校验</th></tr></thead>
   <tbody>
-    <tr><td>预警内容 / 原角色类别 / 失败原因</td><td>只读</td><td>—</td><td>—</td><td>由异常记录带出</td></tr>
-    <tr><td>当前处理人</td><td>只读</td><td>—</td><td>—</td><td>待指派时显示「暂无（待指派，未派发给任何人）」</td></tr>
+    <tr><td>预警内容 / 原角色类别</td><td>只读</td><td>—</td><td>—</td><td>由异常记录带出</td></tr>
     <tr><td>指派给</td><td>组织架构选人</td><td>是</td><td>单人</td><td>按部门树展开，支持姓名筛选；不可选自己；未选提示「请选择要指派的人员」</td></tr>
-    <tr><td>指派原因</td><td>多行文本</td><td>是</td><td>≤ 200 字</td><td>非空校验，为空提示「请填写指派原因」</td></tr>
+    <tr><td>指派原因</td><td>多行文本</td><td>否</td><td>≤ 200 字</td><td>选填；为空可直接确认指派</td></tr>
     <tr><td>指派详情（已指派）</td><td>只读</td><td>—</td><td>—</td><td>指派给谁 / 指派时间 / 指派操作人 / 指派原因；底部按钮变「重新指派」，再次指派覆盖为最新一次</td></tr>
   </tbody>
 </table>
@@ -3654,7 +3647,7 @@ body.devdoc-open .app-container { padding-right: 600px; }
   <li><b>转发历史</b>：只在任务详情的处理日志中查看，处理人列表里以「转发自 XX」标注来路。</li>
   <li><b>处理日志</b>：在任务详情最底部，默认收起，点标题行展开；无筛选、不可编辑；<b>处理人明细与个人处置详情里都没有日志</b>。</li>
   <li><b>作废</b>：勾选 → 点「作废」→ 填原因 → 确认（批量）；或直接点行尾「作废」（单条）；这些预警状态变「已作废」，从预警任务全部页签移除，台账保留。</li>
-  <li><b>导出</b>：台账导 Excel；异常 Tab 单独导出异常清单；导出内容与列表字段一致，不含日志与处置明细。</li>
+  <li><b>导出</b>：仅台账支持导出 Excel；导出内容与列表字段一致，不含日志与处置明细。</li>
   <li><b>指派</b>：确认后状态变「已指派」、生成指派记录；本条进入被指派人待办，<b>不写入处理日志</b>，只刷新异常清单。</li>
   <li><b>只读边界</b>：本页所有操作均为管理动作（作废 / 调整处理人 / 指派），<b>不能代替处理人提交处置</b>，也不能修改处置内容或删除附件。</li>
 </ol>
@@ -3906,6 +3899,81 @@ function switchTaskTab(el, tabId) {
   if (contentEl) contentEl.classList.add('active');
 }
 
+function filterWarningNumberRows(tableSelector, warningNumber) {
+  const keyword = (warningNumber || '').trim().toUpperCase();
+  document.querySelectorAll(tableSelector + ' tbody > tr').forEach(function(row) {
+    if (row.classList.contains('hit-detail-row')) return;
+    const numberCell = row.querySelector('.wrn-link') || row.cells[0];
+    const number = numberCell ? numberCell.textContent.trim().toUpperCase() : '';
+    const matched = !keyword || number.indexOf(keyword) !== -1;
+    row.style.display = matched ? '' : 'none';
+
+    // A new search always collapses the expanded hit-detail row.
+    const detailRow = row.nextElementSibling;
+    if (detailRow && detailRow.classList.contains('hit-detail-row')) {
+      detailRow.style.display = 'none';
+    }
+  });
+}
+
+function searchTaskWarnings() {
+  const input = document.getElementById('taskWarningNumberFilter');
+  filterWarningNumberRows('#page-warning-task .task-tab-content .data-table', input ? input.value : '');
+}
+
+function resetTaskWarningSearch() {
+  const input = document.getElementById('taskWarningNumberFilter');
+  if (input) input.value = '';
+  searchTaskWarnings();
+}
+
+function searchLedgerWarnings() {
+  const input = document.getElementById('ledgerWarningNumberFilter');
+  filterWarningNumberRows('#statsPaneLedger > .data-table', input ? input.value : '');
+}
+
+// 预警任务及预警台账共用超期展示规则：处理状态与是否超期拆分为独立字段。
+function addWarningTaskOverdueColumn() {
+  document.querySelectorAll('#page-warning-task .task-tab-content .data-table, #statsPaneLedger > .data-table').forEach(function(table) {
+    const header = table.querySelector('thead tr');
+    if (!header) return;
+    const statusIndex = Array.prototype.findIndex.call(header.children, function(cell) {
+      return cell.textContent.trim() === '状态';
+    });
+    if (statusIndex < 0) return;
+    if (header && !header.querySelector('[data-overdue-column]')) {
+      const th = document.createElement('th');
+      th.dataset.overdueColumn = 'true';
+      th.textContent = '是否超期';
+      header.insertBefore(th, header.lastElementChild);
+    }
+
+    table.querySelectorAll('tbody > tr').forEach(function(row) {
+      if (row.classList.contains('hit-detail-row')) {
+        const detailCell = row.querySelector('td[colspan]');
+        if (detailCell) detailCell.colSpan = header.children.length;
+        return;
+      }
+      if (row.querySelector('.overdue-cell')) return;
+
+      const statusCell = row.children[statusIndex];
+      const operationCell = row.lastElementChild;
+      if (!statusCell || !operationCell) return;
+      const overdueCell = document.createElement('td');
+      overdueCell.className = 'overdue-cell';
+      const overdueBadge = statusCell.querySelector('.ovd');
+      if (overdueBadge) {
+        overdueBadge.style.marginLeft = '0';
+        overdueCell.appendChild(overdueBadge);
+      } else {
+        overdueCell.innerHTML = '<span class="text-muted">否</span>';
+      }
+      row.insertBefore(overdueCell, operationCell);
+    });
+  });
+}
+addWarningTaskOverdueColumn();
+
 // ====== Warning Info Table Views ======
 function enterWitEditView() {
   document.getElementById('wit-list-view').style.display = 'none';
@@ -3960,9 +4028,9 @@ let ruleListData = [
       { content:'管道压力异常预警', relation:'all', riskLevel:'一级', type:'触电', subs:[{field:'管道压力',logic:'大于',value:'3.0MPa'},{field:'设备状态',logic:'等于',value:'故障'}] }
     ],
     plans:[
-      { condIdxs:[0,1,2], handlers:['表单提交人','预警所在事事号的负责人'], notifiers:['预警所在事事号的成员','表单提交人的部门负责人'],
+      { condIdxs:[0,1,2], handlers:['表单提交人','预警所在动态号的负责人'], notifiers:['预警所在动态号的成员','表单提交人的部门负责人'],
         mode:'any', deadlineType:'fixed', deadlineUnit:'小时', deadlineValue:24, deadlineField:'',
-        reminders:[{value:1,unit:'小时',targets:['表单提交人的部门负责人']},{value:3,unit:'小时',targets:['预警所在事事号的负责人']}],
+        reminders:[{value:1,unit:'小时',targets:['表单提交人的部门负责人']},{value:3,unit:'小时',targets:['预警所在动态号的负责人']}],
         channels:['系统站内消息'] }
     ] },
   { id:'RL-20260702-002', name:'设备运行异常预警规则', sheet:'设备运行日检表', enabled:true,
@@ -3972,10 +4040,10 @@ let ruleListData = [
       { content:'接地电阻超标预警', relation:'any', riskLevel:'二级', type:'触电', subs:[{field:'接地电阻',logic:'大于',value:'4Ω'}] }
     ],
     plans:[
-      { condIdxs:[0], handlers:['表单提交人'], notifiers:['预警所在事事号的成员'],
+      { condIdxs:[0], handlers:['表单提交人'], notifiers:['预警所在动态号的成员'],
         mode:'any', deadlineType:'fixed', deadlineUnit:'小时', deadlineValue:8, deadlineField:'',
-        reminders:[{value:2,unit:'小时',targets:['预警所在事事号的负责人']}], channels:['系统站内消息'] },
-      { condIdxs:[1], handlers:['表单提交人的部门负责人'], notifiers:['预警所在事事号的成员'],
+        reminders:[{value:2,unit:'小时',targets:['预警所在动态号的负责人']}], channels:['系统站内消息'] },
+      { condIdxs:[1], handlers:['表单提交人的部门负责人'], notifiers:['预警所在动态号的成员'],
         mode:'all', deadlineType:'field', deadlineUnit:'', deadlineValue:0, deadlineField:'截止日期',
         reminders:[], channels:['系统站内消息'] }
     ] },
@@ -3985,7 +4053,7 @@ let ruleListData = [
       { content:'防护设施缺失预警', relation:'any', riskLevel:'一级', type:'高处坠落', subs:[{field:'防护栏状态',logic:'等于',value:'缺失'}] }
     ],
     plans:[
-      { condIdxs:[0], handlers:['预警所在事事号的负责人'], notifiers:['表单提交人的部门负责人'],
+      { condIdxs:[0], handlers:['预警所在动态号的负责人'], notifiers:['表单提交人的部门负责人'],
         mode:'any', deadlineType:'fixed', deadlineUnit:'天', deadlineValue:2, deadlineField:'',
         reminders:[{value:4,unit:'小时',targets:['表单提交人的部门负责人']}], channels:['系统站内消息'] }
     ] },
@@ -3995,7 +4063,7 @@ let ruleListData = [
       { content:'单次爆破药量超限预警', relation:'any', riskLevel:'一级', type:'放炮', subs:[{field:'堆垛高度',logic:'大于',value:'5m'}] }
     ],
     plans:[
-      { condIdxs:[0], handlers:['表单提交人'], notifiers:['预警所在事事号的负责人'],
+      { condIdxs:[0], handlers:['表单提交人'], notifiers:['预警所在动态号的负责人'],
         mode:'any', deadlineType:'fixed', deadlineUnit:'小时', deadlineValue:4, deadlineField:'',
         reminders:[], channels:['系统站内消息'] }
     ] }
@@ -4220,7 +4288,7 @@ function openNotifyConfigModal(planId){
 
   // 处理人 / 通知人
   _ncfHandlers = p ? p.handlers.slice() : ['表单提交人'];
-  _ncfNotifiers = p ? p.notifiers.slice() : ['预警所在事事号的成员'];
+  _ncfNotifiers = p ? p.notifiers.slice() : ['预警所在动态号的成员'];
   renderNcfTags();
 
   // 处置模式 & 期限
@@ -4536,7 +4604,7 @@ function syncCondFromDom(){
       const f = row.querySelector('.sc-field'), l = row.querySelector('.sc-logic'), v = row.querySelector('.sc-value');
       if(f) g.subs[i].field = f.value;
       if(l) g.subs[i].logic = l.value;
-      if(v) g.subs[i].value = v.value;
+      if(v) g.subs[i].value = normalizeThresholdValue(g.subs[i].field, v.value);
     });
   });
 }
@@ -4706,12 +4774,23 @@ function subCondRowHtml(gid, idx, s){
   const logics = ['大于','小于','等于','不等于','大于等于','小于等于','包含','不包含'];
   const fieldOpts = fields.map(f=>`<option value="${f}" ${s.field===f?'selected':''}>${f||'请选择工作项'}</option>`).join('');
   const logicOpts = logics.map(l=>`<option ${s.logic===l?'selected':''}>${l}</option>`).join('');
+  const unit = getThresholdUnit(s.field);
+  const value = normalizeThresholdValue(s.field, s.value);
+  const inputType = unit ? 'number' : 'text';
   return conn + `<div class="sub-cond-row" data-gid="${gid}" data-sidx="${idx}">
     <select class="sc-field" onchange="setSubField(${gid}, ${idx}, this.value)">${fieldOpts}</select>
     <select class="sc-logic" onchange="setSubLogic(${gid}, ${idx}, this.value)">${logicOpts}</select>
-    <input class="sc-value" value="${s.value}" placeholder="阈值" oninput="setSubValue(${gid}, ${idx}, this.value)">
+    <span class="sc-value-wrap"><input class="sc-value" type="${inputType}" ${unit ? 'step="any" inputmode="decimal"' : ''} value="${value}" placeholder="阈值" oninput="setSubValue(${gid}, ${idx}, this.value)">${unit ? `<span class="sc-value-unit">${unit}</span>` : ''}</span>
     <button class="btn-text text-danger" onclick="removeSubCond(${gid}, ${idx})">✕</button>
   </div>`;
+}
+function getThresholdUnit(field){
+  return { '设备温度':'°C', 'CO 浓度':'ppm', '管道压力':'MPa' }[field] || '';
+}
+function normalizeThresholdValue(field, value){
+  const unit = getThresholdUnit(field);
+  const text = String(value == null ? '' : value).trim();
+  return unit && text.endsWith(unit) ? text.slice(0, -unit.length).trim() : text;
 }
 function groupRelText(gid){
   const g = conditionGroups.find(x=>x.id===gid);
@@ -4748,7 +4827,12 @@ function refreshConnectors(id){
 function setGroupRisk(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.riskLevel=v; }
 function setGroupType(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.type=v; }
 function setGroupContent(id,v){ const g=conditionGroups.find(x=>x.id===id); if(g) g.content=v; }
-function setSubField(id, idx, v){ const g=conditionGroups.find(x=>x.id===id); if(g && g.subs[idx]) g.subs[idx].field=v; }
+function setSubField(id, idx, v){
+  const g=conditionGroups.find(x=>x.id===id); if(!g || !g.subs[idx]) return;
+  g.subs[idx].field=v;
+  g.subs[idx].value=normalizeThresholdValue(v, g.subs[idx].value);
+  renderCondGroups();
+}
 function setSubLogic(id, idx, v){ const g=conditionGroups.find(x=>x.id===id); if(g && g.subs[idx]) g.subs[idx].logic=v; }
 function setSubValue(id, idx, v){ const g=conditionGroups.find(x=>x.id===id); if(g && g.subs[idx]) g.subs[idx].value=v; }
 function addSubCond(id){
@@ -4906,10 +4990,19 @@ const exceptionData = [
    fixedBy:'张建国（企业管理员）', fixReason:'原负责人已离职，由我指派机电队李国强跟进'}
 ];
 
+let _exceptionStatusFilter = '';
+let _exceptionWarningNumberFilter = '';
+
 function renderExceptions(){
   const tb = document.getElementById('excTableBody');
   if(!tb) return;
-  tb.innerHTML = exceptionData.map(function(e, i){
+  const list = exceptionData.filter(function(e){
+    const matchesStatus = !_exceptionStatusFilter || e.status === _exceptionStatusFilter;
+    const matchesWarningNumber = !_exceptionWarningNumberFilter
+      || e.id.toUpperCase().indexOf(_exceptionWarningNumberFilter) !== -1;
+    return matchesStatus && matchesWarningNumber;
+  });
+  tb.innerHTML = list.map(function(e, i){
     const assigned = e.status === '已指派';
     const st = assigned
       ? '<span class="tag tag-success">已指派</span>'
@@ -4923,13 +5016,28 @@ function renderExceptions(){
       + '<td>' + e.sheet + '</td>'
       + '<td>' + e.time + '</td>'
       + '<td>' + e.cat + '</td>'
-      + '<td>' + e.reason + '<div class="hit-sub">' + e.reasonDetail + '</div></td>'
       + '<td>' + st + '</td>'
       + '<td style="text-align:right;">' + op + '</td>'
       + '</tr>';
-  }).join('');
+  }).join('') || '<tr><td colspan="7" class="text-muted" style="text-align:center;padding:24px;">暂无符合条件的分派异常</td></tr>';
   const c = document.getElementById('excTabCount');
   if(c) c.textContent = exceptionData.filter(function(e){ return e.status === '待指派'; }).length;
+}
+function searchExceptions(){
+  const filter = document.getElementById('exceptionStatusFilter');
+  const warningNumber = document.getElementById('exceptionWarningNumberFilter');
+  _exceptionStatusFilter = filter ? filter.value : '';
+  _exceptionWarningNumberFilter = warningNumber ? warningNumber.value.trim().toUpperCase() : '';
+  renderExceptions();
+}
+function resetExceptionSearch(){
+  _exceptionStatusFilter = '';
+  _exceptionWarningNumberFilter = '';
+  const filter = document.getElementById('exceptionStatusFilter');
+  const warningNumber = document.getElementById('exceptionWarningNumberFilter');
+  if(filter) filter.value = '';
+  if(warningNumber) warningNumber.value = '';
+  renderExceptions();
 }
 
 function switchStatsTab(key, el){
@@ -4953,7 +5061,6 @@ function openReassignModal(i){
   set('rsTitle', (assigned ? '指派详情 - ' : '重新指派 - ') + e.id);
   set('rsContent', e.content);
   set('rsCat', e.cat);
-  set('rsReason', e.reason + '（' + e.reasonDetail + '）');
   // 详情区
   set('rsDetailTo', e.fixedTo || '—');
   set('rsDetailAt', e.fixedAt || '—');
@@ -5027,12 +5134,11 @@ function confirmReassign(){
   if(!e) return;
   if(!_rsPick){ alert('请选择要指派的人员'); return; }
   const r = document.getElementById('rsReasonInput');
-  if(!r || !r.value.trim()){ alert('请填写指派原因'); return; }
   e.status = '已指派';
   e.fixedTo = _rsPick;
   e.fixedAt = nowShort();
   e.fixedBy = '企业管理员';
-  e.fixReason = r.value.trim();
+  e.fixReason = r ? r.value.trim() : '';
   renderExceptions();
   closeModal('modal-reassign');
   toast('success', '已指派给 ' + _rsPick + '，状态更新为「已指派」');

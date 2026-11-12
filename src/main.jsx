@@ -60,6 +60,8 @@ import lowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
 import newTaskPrototypeHtml from "../xiaodong/最新的任务.html?raw";
 import warningPrototypeHtml from "../xiaodong/最新的预警.html?raw";
 import dynamicsPrototypeHtml from "../xiaodong/新动态.html?raw";
+import MinePrevention from "./MinePrevention";
+import { MINE_APP_NAME, mineMenu } from "./mine-prevention-data";
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "人事管理",
@@ -207,6 +209,7 @@ const apps = [
   { name: "机电管理", description: "运行与保全", icon: Briefcase24Regular },
   { name: "消防管理", description: "巡检与演练", icon: Fire24Regular },
   { name: "应急管理", description: "预案与响应", icon: Lightbulb24Regular },
+  { name: MINE_APP_NAME, description: "矿山风险与隐患闭环", icon: ShieldCheckmark24Regular },
 ];
 
 const initialManagedRoles = [
@@ -216,6 +219,7 @@ const initialManagedRoles = [
     creator: "系统管理员",
     status: "启用",
     createdAt: "2026-07-01 09:20",
+    companyIds: ["company-east-mine"],
   },
   {
     id: "safety",
@@ -223,6 +227,7 @@ const initialManagedRoles = [
     creator: "张宇",
     status: "启用",
     createdAt: "2026-07-08 14:35",
+    companyIds: ["company-east-mine"],
   },
   {
     id: "executor",
@@ -230,6 +235,7 @@ const initialManagedRoles = [
     creator: "李明",
     status: "启用",
     createdAt: "2026-07-12 10:16",
+    companyIds: ["company-east-mine"],
   },
   {
     id: "viewer",
@@ -237,6 +243,7 @@ const initialManagedRoles = [
     creator: "王强",
     status: "停用",
     createdAt: "2026-07-15 16:42",
+    companyIds: ["company-east-mine"],
   },
 ];
 const managedPositionOptions = ["安全管理员", "设备工程师", "生产主管"];
@@ -2519,6 +2526,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     status: "",
   });
   const [processLibraryTab, setProcessLibraryTab] = useState("全部");
+  const [selectedProcessCategory, setSelectedProcessCategory] = useState("人资管理");
   const [processLibraryKeyword, setProcessLibraryKeyword] = useState("");
   const [selectedTemplate, setSelectedTemplate] = useState(null);
   const [selectedDraft, setSelectedDraft] = useState(null);
@@ -2604,6 +2612,10 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
         (processLibraryTab === "最近使用" && template.recent)) &&
       (!processLibraryKeyword.trim() ||
         template.name.includes(processLibraryKeyword.trim())),
+  );
+  const processCategories = ["人资管理", "基建管理", "选矿管理"];
+  const selectedProcessTemplates = visibleTemplates.filter(
+    (template) => template.category === selectedProcessCategory,
   );
   const processDetails = (process) => ({
     number: getFlowNumber(process),
@@ -2872,9 +2884,9 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
         </div>
       </div>
       {processFilter === "发起流程" ? (
-        <section className="process-library" aria-label="流程库">
+        <section className="dynamic-publish-library process-launch-library" aria-label="流程库">
           <header>
-            <div className="process-library-tabs" role="tablist" aria-label="流程库分类">
+            <div className="dynamic-publish-tabs" role="tablist" aria-label="流程库分类">
               {["全部", "最近使用"].map((tab) => (
                 <button
                   key={tab}
@@ -2894,24 +2906,55 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
               aria-label="搜索流程模板"
             />
           </header>
-          <div className="process-library-groups">
-            {["人资管理", "基建管理", "选矿管理"].map((category) => {
-              const templates = visibleTemplates.filter((item) => item.category === category);
-              const tone = processTemplates.find((item) => item.category === category)?.tone;
-              return (
-                <section key={category} className={`process-library-group ${tone}`}>
-                  <h2><i />{category}<small>（{templates.length}）</small></h2>
-                  {templates.length ? templates.map((template) => (
-                    <button
-                      key={template.name}
-                      onClick={() => selectProcessTemplate(template)}
-                    >
-                      {template.name}（{template.application}）
-                    </button>
-                  )) : <p>暂无流程</p>}
-                </section>
-              );
-            })}
+          <div className="dynamic-number-browser">
+            <aside className="dynamic-category-list" aria-label="流程分类">
+              {processCategories.map((category) => {
+                const count = visibleTemplates.filter((item) => item.category === category).length;
+                return (
+                  <button
+                    key={category}
+                    className={selectedProcessCategory === category ? "active" : ""}
+                    onClick={() => setSelectedProcessCategory(category)}
+                  >
+                    <span>{category}</span><small>（{count}）</small>
+                  </button>
+                );
+              })}
+            </aside>
+            <section className="dynamic-number-list process-template-list" aria-label={`${selectedProcessCategory}流程`}>
+              <header>
+                <b>{selectedProcessCategory}</b>
+                <span>共 {selectedProcessTemplates.length} 个流程</span>
+              </header>
+              {selectedProcessTemplates.length ? (
+                <div>
+                  {selectedProcessTemplates.map((template) => {
+                    const tone = processTemplates.find((item) => item.category === template.category)?.tone ?? "blue";
+                    return (
+                      <article
+                        key={template.name}
+                        className="dynamic-number-entry process-template-entry"
+                        onClick={() => selectProcessTemplate(template)}
+                        onKeyDown={(event) => {
+                          if (event.key === "Enter" || event.key === " ") {
+                            event.preventDefault();
+                            selectProcessTemplate(template);
+                          }
+                        }}
+                        role="button"
+                        tabIndex={0}
+                      >
+                        <span className={`dynamic-number-mark ${tone}`} />
+                        <b>{template.name}</b>
+                        <div>
+                          <button type="button" onClick={(event) => { event.stopPropagation(); selectProcessTemplate(template); }}>发起</button>
+                        </div>
+                      </article>
+                    );
+                  })}
+                </div>
+              ) : <p>暂无匹配的流程</p>}
+            </section>
           </div>
         </section>
       ) : (
@@ -5220,6 +5263,342 @@ function DashboardChart({ type }) {
   );
 }
 
+const safetyRiskLevels = [
+  { id: "重大", count: 3, className: "critical" },
+  { id: "较大", count: 12, className: "major" },
+  { id: "一般", count: 27, className: "general" },
+  { id: "低", count: 44, className: "low" },
+];
+
+const safetyRiskPoints = [
+  {
+    id: "R-001",
+    name: "东翼回采工作面",
+    level: "重大",
+    area: "东区矿井",
+    owner: "李强",
+    status: "待复查",
+    issues: 3,
+    x: 42,
+    y: 30,
+  },
+  {
+    id: "R-014",
+    name: "主运输皮带巷",
+    level: "较大",
+    area: "运输系统",
+    owner: "王博",
+    status: "整改中",
+    issues: 2,
+    x: 55,
+    y: 55,
+  },
+  {
+    id: "R-026",
+    name: "西区掘进工作面",
+    level: "较大",
+    area: "西区矿井",
+    owner: "陈伟",
+    status: "监测中",
+    issues: 1,
+    x: 24,
+    y: 44,
+  },
+  {
+    id: "R-039",
+    name: "选煤厂浓缩池",
+    level: "一般",
+    area: "选煤厂",
+    owner: "赵敏",
+    status: "已管控",
+    issues: 1,
+    x: 72,
+    y: 32,
+  },
+  {
+    id: "R-051",
+    name: "副井提升系统",
+    level: "低",
+    area: "提升系统",
+    owner: "刘辉",
+    status: "已管控",
+    issues: 0,
+    x: 68,
+    y: 67,
+  },
+  {
+    id: "R-064",
+    name: "井下变电所",
+    level: "一般",
+    area: "机电硐室",
+    owner: "张宇",
+    status: "待复查",
+    issues: 2,
+    x: 36,
+    y: 74,
+  },
+];
+
+const safetyTrend = [42, 55, 48, 61, 57, 71, 64];
+
+function SafetyRiskOverview() {
+  const boardRef = useRef(null);
+  const [activeLevel, setActiveLevel] = useState("全部");
+  const [selectedPointId, setSelectedPointId] = useState("R-001");
+  const [isFullscreen, setIsFullscreen] = useState(false);
+  const visiblePoints = safetyRiskPoints.filter(
+    (point) => activeLevel === "全部" || point.level === activeLevel,
+  );
+  const selectedPoint =
+    visiblePoints.find((point) => point.id === selectedPointId) ?? visiblePoints[0];
+
+  useEffect(() => {
+    const syncFullscreen = () => {
+      setIsFullscreen(document.fullscreenElement === boardRef.current);
+    };
+    document.addEventListener("fullscreenchange", syncFullscreen);
+    return () => document.removeEventListener("fullscreenchange", syncFullscreen);
+  }, []);
+
+  function chooseLevel(level) {
+    const nextLevel = level === activeLevel ? "全部" : level;
+    setActiveLevel(nextLevel);
+    const nextPoint = safetyRiskPoints.find(
+      (point) => nextLevel === "全部" || point.level === nextLevel,
+    );
+    if (nextPoint) setSelectedPointId(nextPoint.id);
+  }
+
+  async function toggleFullscreen() {
+    try {
+      if (document.fullscreenElement) {
+        await document.exitFullscreen();
+      } else {
+        await boardRef.current?.requestFullscreen();
+      }
+    } catch {
+      setIsFullscreen(false);
+    }
+  }
+
+  return (
+    <section className="safety-risk-board" ref={boardRef} aria-label="安全风险总览大屏">
+      <div className="safety-risk-board__canvas">
+      <header className="risk-board-header">
+        <div className="risk-board-brand">
+          <span className="risk-board-mark" aria-hidden="true" />
+          <div>
+            <p>智慧应急安全管理平台 / 安全驾驶舱</p>
+            <h1 id="dashboard-title">安全风险总览</h1>
+          </div>
+        </div>
+        <div className="risk-board-actions">
+          <span className="risk-board-status"><i /> 数据实时更新</span>
+          <time dateTime="2026-11-04T10:24:18">2026-11-04 10:24:18</time>
+          <button type="button" onClick={toggleFullscreen}>
+            {isFullscreen ? "退出全屏" : "全屏展示"}
+          </button>
+        </div>
+      </header>
+
+      <div className="risk-metric-strip" aria-label="核心风险指标">
+        <article className="risk-metric-main">
+          <span>在册风险点</span>
+          <strong>86</strong>
+          <small>较昨日新增 2 处</small>
+        </article>
+        {safetyRiskLevels.map((item) => (
+          <button
+            type="button"
+            key={item.id}
+            className={`risk-level-metric ${item.className} ${activeLevel === item.id ? "is-active" : ""}`}
+            onClick={() => chooseLevel(item.id)}
+            aria-pressed={activeLevel === item.id}
+          >
+            <span>{item.id}风险</span>
+            <strong>{item.count}</strong>
+            <i aria-hidden="true" />
+          </button>
+        ))}
+        <article className="risk-metric-compact">
+          <span>待整改隐患</span>
+          <strong>16</strong>
+          <small>4 项临近逾期</small>
+        </article>
+        <article className="risk-metric-compact completion">
+          <span>本月整改完成率</span>
+          <strong>86<span>%</span></strong>
+          <small>本月累计 112 项</small>
+        </article>
+      </div>
+
+      <div className="risk-board-primary">
+        <section className="risk-map-panel" aria-labelledby="risk-map-title">
+          <div className="risk-panel-heading">
+            <div>
+              <p>风险空间分布</p>
+              <h2 id="risk-map-title">矿区风险四色图</h2>
+            </div>
+            <div className="risk-legend" aria-label="风险等级筛选">
+              <button
+                type="button"
+                className={activeLevel === "全部" ? "is-active" : ""}
+                onClick={() => chooseLevel("全部")}
+                aria-pressed={activeLevel === "全部"}
+              >
+                全部
+              </button>
+              {safetyRiskLevels.map((item) => (
+                <button
+                  type="button"
+                  key={item.id}
+                  className={`${item.className} ${activeLevel === item.id ? "is-active" : ""}`}
+                  onClick={() => chooseLevel(item.id)}
+                  aria-pressed={activeLevel === item.id}
+                >
+                  <i aria-hidden="true" />{item.id}
+                </button>
+              ))}
+            </div>
+          </div>
+          <div className="risk-map-stage">
+            <svg className="risk-mine-map" viewBox="0 0 900 465" role="img" aria-label="矿区风险分布示意图">
+              <defs>
+                <linearGradient id="mineArea" x1="0" x2="1">
+                  <stop stopColor="#132b42" />
+                  <stop offset="1" stopColor="#0d2033" />
+                </linearGradient>
+                <pattern id="mapGrid" width="36" height="36" patternUnits="userSpaceOnUse">
+                  <path d="M 36 0 L 0 0 0 36" fill="none" stroke="#2e4c63" strokeWidth=".7" opacity=".45" />
+                </pattern>
+              </defs>
+              <rect x="1" y="1" width="898" height="463" rx="10" fill="url(#mineArea)" stroke="#2b4b62" />
+              <rect x="1" y="1" width="898" height="463" rx="10" fill="url(#mapGrid)" />
+              <path className="mine-route mine-route-main" d="M102 234H289L350 145H559L634 224H812" />
+              <path className="mine-route" d="M289 234V357H481L559 315H746" />
+              <path className="mine-route" d="M350 145V82H698V151" />
+              <path className="mine-route mine-route-dashed" d="M162 360H289M559 145V315M634 224H702V384" />
+              <g className="mine-area">
+                <rect x="82" y="184" width="178" height="92" rx="8" />
+                <text x="104" y="217">西区矿井</text><text x="104" y="242">掘进作业区</text>
+              </g>
+              <g className="mine-area">
+                <rect x="354" y="95" width="178" height="91" rx="8" />
+                <text x="376" y="128">东区矿井</text><text x="376" y="153">回采作业区</text>
+              </g>
+              <g className="mine-area">
+                <rect x="623" y="174" width="170" height="93" rx="8" />
+                <text x="644" y="207">运输系统</text><text x="644" y="232">主皮带巷</text>
+              </g>
+              <g className="mine-area">
+                <rect x="600" y="296" width="155" height="87" rx="8" />
+                <text x="621" y="328">选煤厂</text><text x="621" y="353">洗选系统</text>
+              </g>
+              <g className="mine-area">
+                <rect x="287" y="320" width="182" height="88" rx="8" />
+                <text x="309" y="351">机电硐室</text><text x="309" y="376">副井变电所</text>
+              </g>
+              {visiblePoints.map((point) => {
+                const x = point.x * 9;
+                const y = point.y * 4.65;
+                return (
+                  <g
+                    key={point.id}
+                    className={`risk-map-point ${point.level === "重大" ? "critical" : point.level === "较大" ? "major" : point.level === "一般" ? "general" : "low"} ${selectedPoint?.id === point.id ? "is-selected" : ""}`}
+                    transform={`translate(${x} ${y})`}
+                    role="button"
+                    tabIndex={0}
+                    onClick={() => setSelectedPointId(point.id)}
+                    onKeyDown={(event) => {
+                      if (event.key === "Enter" || event.key === " ") {
+                        event.preventDefault();
+                        setSelectedPointId(point.id);
+                      }
+                    }}
+                  >
+                    <title>{`${point.name}，${point.level}风险`}</title>
+                    <circle className="risk-map-pulse" r="18" />
+                    <circle className="risk-map-dot" r="8" />
+                    <text x="14" y="4">{point.id}</text>
+                  </g>
+                );
+              })}
+            </svg>
+          </div>
+          <aside className="risk-point-detail" aria-live="polite">
+              {selectedPoint ? (
+                <>
+                  <span className={`risk-badge ${selectedPoint.level === "重大" ? "critical" : selectedPoint.level === "较大" ? "major" : selectedPoint.level === "一般" ? "general" : "low"}`}>{selectedPoint.level}风险</span>
+                  <b>{selectedPoint.name}</b>
+                  <small>{selectedPoint.id} · {selectedPoint.area}</small>
+                  <dl>
+                    <div><dt>责任人</dt><dd>{selectedPoint.owner}</dd></div>
+                    <div><dt>管控状态</dt><dd>{selectedPoint.status}</dd></div>
+                    <div><dt>关联隐患</dt><dd>{selectedPoint.issues} 项</dd></div>
+                  </dl>
+                </>
+              ) : (
+                <p>当前筛选条件下暂无风险点</p>
+              )}
+          </aside>
+        </section>
+
+        <aside className="risk-side-panels">
+          <section className="risk-panel risk-distribution-panel">
+            <div className="risk-panel-heading compact"><div><p>在册风险</p><h2>等级分布</h2></div><span>86 处</span></div>
+            <div className="risk-donut-wrap">
+              <div className="risk-donut"><strong>86</strong><span>风险点</span></div>
+              <ul>
+                {safetyRiskLevels.map((item) => (
+                  <li key={item.id}><i className={item.className} /><span>{item.id}风险</span><b>{item.count}</b></li>
+                ))}
+              </ul>
+            </div>
+          </section>
+          <section className="risk-panel risk-alert-panel">
+            <div className="risk-panel-heading compact"><div><p>风险预警</p><h2>实时告警</h2></div><span className="risk-alert-count">7 条</span></div>
+            <ol className="risk-alert-list">
+              <li><i className="critical" /><div><b>东翼回采工作面瓦斯浓度预警</b><span>10:18 · 通防部 · 需立即处置</span></div></li>
+              <li><i className="major" /><div><b>主运输皮带巷防护装置异常</b><span>09:42 · 机电部 · 整改中</span></div></li>
+              <li><i className="general" /><div><b>井下变电所巡检逾期</b><span>08:16 · 机电部 · 待复查</span></div></li>
+            </ol>
+          </section>
+          <section className="risk-panel risk-trend-panel">
+            <div className="risk-panel-heading compact"><div><p>近 7 日</p><h2>隐患排查趋势</h2></div><span className="trend-rise">+ 14.3%</span></div>
+            <div className="risk-mini-trend" aria-label="近七日隐患排查趋势">
+              {safetyTrend.map((value, index) => <div key={value} style={{ "--bar-height": `${value}%` }}><span>{value}</span><i /><small>{["29", "30", "31", "01", "02", "03", "04"][index]}</small></div>)}
+            </div>
+          </section>
+        </aside>
+      </div>
+
+      <div className="risk-board-secondary">
+        <section className="risk-panel risk-source-panel">
+          <div className="risk-panel-heading compact"><div><p>本月隐患来源</p><h2>专业分布</h2></div><span>共 112 项</span></div>
+          <div className="risk-source-bars">
+            {[["采矿", 35], ["通防", 27], ["机电", 21], ["运输", 17], ["选矿", 12]].map(([name, value]) => <div key={name}><span>{name}</span><div><i style={{ width: `${value * 2.4}%` }} /></div><b>{value}</b></div>)}
+          </div>
+        </section>
+        <section className="risk-panel risk-closure-panel">
+          <div className="risk-panel-heading compact"><div><p>隐患整改</p><h2>闭环进度</h2></div><span>完成率 86%</span></div>
+          <div className="risk-closure-stages">
+            <div><b>112</b><span>发现隐患</span></div><i /><div><b>96</b><span>已整改</span></div><i /><div><b>82</b><span>已验收</span></div>
+          </div>
+          <div className="risk-progress"><i /></div>
+          <p>4 项临近逾期，2 项需重点督办</p>
+        </section>
+        <section className="risk-panel risk-key-list">
+          <div className="risk-panel-heading compact"><div><p>重点管控</p><h2>高风险点清单</h2></div><span>{visiblePoints.length} 条</span></div>
+          <div className="risk-key-rows">
+            {visiblePoints.slice(0, 4).map((point) => <button type="button" key={point.id} className={selectedPoint?.id === point.id ? "is-selected" : ""} onClick={() => setSelectedPointId(point.id)}><i className={point.level === "重大" ? "critical" : point.level === "较大" ? "major" : point.level === "一般" ? "general" : "low"} /><span><b>{point.name}</b><small>{point.area} · {point.owner}</small></span><em>{point.status}</em></button>)}
+          </div>
+        </section>
+      </div>
+      </div>
+    </section>
+  );
+}
+
 function DashboardPage() {
   const [selectedId, setSelectedId] = useState("safety");
   const active =
@@ -5249,32 +5628,38 @@ function DashboardPage() {
           </nav>
         </aside>
         <div className="dashboard-content">
-          <header className="dashboard-header">
-            <div>
-              <p>看板中心</p>
-              <h1 id="dashboard-title">{active.name}</h1>
-              <span>{active.description}</span>
-            </div>
-            <button>
-              <CalendarLtr24Regular />近 30 天<ChevronDown24Regular />
-            </button>
-          </header>
-          <div className="dashboard-metrics">
-            {active.metrics.map(([label, value, note]) => (
-              <article key={label}>
-                <span>{label}</span>
-                <b>{value}</b>
-                <small>{note}</small>
-              </article>
-            ))}
-          </div>
-          <div className="dashboard-charts">
-            {active.charts.map((type) => (
-              <section key={`${active.id}-${type}`}>
-                <DashboardChart type={type} />
-              </section>
-            ))}
-          </div>
+          {active.id === "safety" ? (
+            <SafetyRiskOverview />
+          ) : (
+            <>
+              <header className="dashboard-header">
+                <div>
+                  <p>看板中心</p>
+                  <h1 id="dashboard-title">{active.name}</h1>
+                  <span>{active.description}</span>
+                </div>
+                <button>
+                  <CalendarLtr24Regular />近 30 天<ChevronDown24Regular />
+                </button>
+              </header>
+              <div className="dashboard-metrics">
+                {active.metrics.map(([label, value, note]) => (
+                  <article key={label}>
+                    <span>{label}</span>
+                    <b>{value}</b>
+                    <small>{note}</small>
+                  </article>
+                ))}
+              </div>
+              <div className="dashboard-charts">
+                {active.charts.map((type) => (
+                  <section key={`${active.id}-${type}`}>
+                    <DashboardChart type={type} />
+                  </section>
+                ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
     </section>
@@ -5290,6 +5675,7 @@ function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "", dynam
     html, body { background: #f5f7fa !important; }
     .feed-card.message-focus-target { border-color: #5ba6dc !important; box-shadow: 0 0 0 3px rgb(15 108 189 / 12%), 0 12px 28px rgb(15 108 189 / 12%) !important; }
     .message-focus-mention { margin-left: 4px; padding: 2px 7px; display: inline-flex; align-items: center; border-radius: 5px; color: #0f6cbd; background: #e7f2fb; font-size: 10px; font-weight: 700; }
+    ${view === "feedno" ? ".nd-basic-aside .nd-publish, .nd-basic-aside .nd-follow { display: none !important; }" : ""}
   `;
   const srcDoc = dynamicsPrototypeHtml
     .replace("</head>", `<style>${embeddedDynamicsStyles}</style></head>`)
@@ -5485,7 +5871,7 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
         return;
       }
       if (payload?.type === "dynamics:open-publisher") {
-        setPublishDynamicNumber(payload.dynamicNumber || "动态圈");
+        setPublishDynamicNumber(payload.dynamicNumber || "动态号");
         setDynamicTitle("");
         setDynamicContent("");
         setMentionedUsers([]);
@@ -6039,10 +6425,12 @@ function EmbeddedWarningsPage() {
 function EmbeddedLowCodePage({ module, view, showDescription = false }) {
   const query = new URLSearchParams({ module, ...(view ? { view } : {}) });
   // Inner worktable and flow pages run from Blob URLs, so their vendor files must
-  // use an absolute project URL instead of a Blob-relative "./vendor" path.
+  // use a deployed application URL instead of a Blob-relative "./vendor" path.
+  // Resolve it from Vite's entry script so OSS folder deployments keep the prefix.
+  const entryScriptUrl = document.querySelector('script[type="module"][src]')?.src;
   const localVendorUrl = new URL(
-    "vendor/",
-    new URL(import.meta.env.BASE_URL, window.location.origin),
+    "../vendor/",
+    entryScriptUrl || new URL("assets/", document.baseURI).href,
   ).href;
   const request = JSON.stringify({
     module,
@@ -6428,10 +6816,10 @@ function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenSafety }) {
 
 const settingsItems = [
   {
-    label: "安全动态",
+    label: "动态号管理",
     icon: ShieldCheckmark24Regular,
-    title: "安全动态",
-    description: "设置与你相关的安全提醒、预警升级和动态订阅。",
+    title: "动态号管理",
+    description: "管理动态号、关联业务与成员订阅范围。",
   },
   {
     label: "工作表",
@@ -7742,6 +8130,7 @@ function RbacPage({ onAction, roles, setRoles }) {
     {
       name: "应用",
       children: [
+        { name: MINE_APP_NAME, children: mineMenu },
         {
           name: "双重预防机制",
           children: [
@@ -7913,7 +8302,7 @@ function RbacPage({ onAction, roles, setRoles }) {
     {
       name: "设置中心",
       children: [
-        { name: "安全动态" },
+        { name: "动态号管理" },
         { name: "工作表" },
         { name: "任务" },
         { name: "流程" },
@@ -8043,9 +8432,74 @@ function RbacPage({ onAction, roles, setRoles }) {
   };
   const defaultDataMenuScopes = () =>
     Object.fromEntries(leafMenus(menuTree).map((name) => [name, "仅自己"]));
+  // Role scope is limited to company-level nodes; departments are intentionally omitted.
+  const roleCompanyTree = [
+    {
+      id: "company-north",
+      name: "华北矿业集团",
+      children: [
+        {
+          id: "company-mine",
+          name: "矿山开发公司",
+          children: [
+            { id: "company-east-mine", name: "东区矿业公司" },
+            { id: "company-west", name: "西区矿业公司" },
+          ],
+        },
+        {
+          id: "company-information",
+          name: "矿业信息公司",
+          children: [
+            { id: "company-technology", name: "智能科技公司" },
+            { id: "company-software", name: "软件服务公司" },
+          ],
+        },
+        { id: "company-service", name: "综合服务公司" },
+      ],
+    },
+  ];
+  const flattenRoleCompanies = (nodes) =>
+    nodes.flatMap((node) => [
+      ...(node.selectable === false ? [] : [node]),
+      ...flattenRoleCompanies(node.children ?? []),
+    ]);
+  const roleCompanies = flattenRoleCompanies(roleCompanyTree);
+  const syncRoleCompanySelection = (ids, expandSelectedParents = false) => {
+    const selected = new Set(ids);
+    const visit = (node, parentSelected = false) => {
+      const includeChildren = expandSelectedParents
+        && (parentSelected || selected.has(node.id));
+      if (includeChildren) selected.add(node.id);
+      if (node.children?.length) {
+        const childrenSelected = node.children.map((child) => visit(child, includeChildren));
+        if (childrenSelected.every(Boolean)) selected.add(node.id);
+        else selected.delete(node.id);
+      }
+      return selected.has(node.id);
+    };
+    roleCompanyTree.forEach((node) => visit(node));
+    return [...selected];
+  };
   const [dialog, setDialog] = useState(null);
   const [roleName, setRoleName] = useState("");
+  const [roleNameError, setRoleNameError] = useState(false);
   const [roleStatus, setRoleStatus] = useState("启用");
+  const [roleCompanyIds, setRoleCompanyIds] = useState(() =>
+    syncRoleCompanySelection(["company-east-mine"]),
+  );
+  const [roleCompanyPickerOpen, setRoleCompanyPickerOpen] = useState(false);
+  const [roleCompanyError, setRoleCompanyError] = useState(false);
+  const roleCompanyFieldRef = useRef(null);
+  useEffect(() => {
+    if (!roleCompanyPickerOpen) return;
+    const closeOutsideCompanyPicker = (event) => {
+      if (!roleCompanyFieldRef.current?.contains(event.target)) {
+        setRoleCompanyPickerOpen(false);
+      }
+    };
+    document.addEventListener("pointerdown", closeOutsideCompanyPicker);
+    return () => document.removeEventListener("pointerdown", closeOutsideCompanyPicker);
+  }, [roleCompanyPickerOpen]);
   const [roleMenus, setRoleMenus] = useState(
     new Set(allRolePermissionIds.slice(0, 18)),
   );
@@ -8155,7 +8609,11 @@ function RbacPage({ onAction, roles, setRoles }) {
   ];
   const openCreate = () => {
     setRoleName("");
+    setRoleNameError(false);
     setRoleStatus("启用");
+    setRoleCompanyIds(syncRoleCompanySelection(["company-east-mine"]));
+    setRoleCompanyPickerOpen(false);
+    setRoleCompanyError(false);
     setRoleMenus(new Set(allRolePermissionIds.slice(0, 40)));
     setDataMenuScopes(defaultDataMenuScopes());
     setRolePermissionTab("menu");
@@ -8164,7 +8622,11 @@ function RbacPage({ onAction, roles, setRoles }) {
   };
   const openEdit = (role) => {
     setRoleName(role.name);
+    setRoleNameError(false);
     setRoleStatus(role.status);
+    setRoleCompanyIds(syncRoleCompanySelection(role.companyIds ?? ["company-east-mine"]));
+    setRoleCompanyPickerOpen(false);
+    setRoleCompanyError(false);
     setRoleMenus(new Set(allRolePermissionIds.slice(0, 40)));
     setDataMenuScopes(defaultDataMenuScopes());
     setRolePermissionTab("menu");
@@ -8174,12 +8636,19 @@ function RbacPage({ onAction, roles, setRoles }) {
   const saveRole = (event) => {
     event.preventDefault();
     const name = roleName.trim();
-    if (!name) return;
+    if (!name) {
+      setRoleNameError(true);
+      return;
+    }
+    if (!roleCompanyIds.length) {
+      setRoleCompanyError(true);
+      return;
+    }
     if (dialog.mode === "edit")
       setRoles((current) =>
         current.map((item) =>
           item.id === dialog.role.id
-            ? { ...item, name, status: roleStatus }
+            ? { ...item, name, status: roleStatus, companyIds: roleCompanyIds }
             : item,
         ),
       );
@@ -8192,6 +8661,7 @@ function RbacPage({ onAction, roles, setRoles }) {
           creator: "张宇",
           status: roleStatus,
           createdAt: "2026-08-12 10:30",
+          companyIds: roleCompanyIds,
         },
       ]);
     setDialog(null);
@@ -8210,6 +8680,20 @@ function RbacPage({ onAction, roles, setRoles }) {
       });
       return next;
     });
+  const toggleRoleCompany = (companyId) => {
+    const company = roleCompanies.find((item) => item.id === companyId);
+    if (!company) return;
+    setRoleCompanyIds((current) => {
+      const selected = new Set(current);
+      const checked = !selected.has(companyId);
+      flattenRoleCompanies([company]).forEach((item) => {
+        if (checked) selected.add(item.id);
+        else selected.delete(item.id);
+      });
+      return syncRoleCompanySelection([...selected]);
+    });
+    setRoleCompanyError(false);
+  };
   const toggleRoleMenuExpanded = (menuId) =>
     setExpandedRoleMenuIds((current) => {
       const next = new Set(current);
@@ -8286,6 +8770,27 @@ function RbacPage({ onAction, roles, setRoles }) {
           {node.children && expandedRoleMenuIds.has(node.id) ? (
             <MenuTree nodes={node.children} />
           ) : null}
+        </li>
+      ))}
+    </ul>
+  );
+  const renderRoleCompanyTree = (nodes) => (
+    <ul className="role-company-tree">
+      {nodes.map((company) => (
+        <li key={company.id}>
+          {company.selectable === false ? (
+            <strong>{company.name}</strong>
+          ) : (
+            <label>
+              <input
+                type="checkbox"
+                checked={roleCompanyIds.includes(company.id)}
+                onChange={() => toggleRoleCompany(company.id)}
+              />
+              <span>{company.name}</span>
+            </label>
+          )}
+          {company.children?.length ? renderRoleCompanyTree(company.children) : null}
         </li>
       ))}
     </ul>
@@ -8491,7 +8996,8 @@ const organizationLeafIds = (node) =>
             }
           >
             <option>全部</option>
-            <option>所在组织及下级</option>
+            <option>本公司及以下</option>
+            <option>本部门及以下</option>
             <option>仅自己</option>
           </select>
         </li>
@@ -8519,6 +9025,9 @@ const organizationLeafIds = (node) =>
   const confirmRoleUserCount = confirmRole
     ? (roleUserAssignments[confirmRole.id] ?? []).length
     : 0;
+  const selectedRoleCompanyNames = roleCompanies
+    .filter((company) => roleCompanyIds.includes(company.id))
+    .map((company) => company.name);
   return (
     <>
       <section className="role-list-page" aria-label="角色权限管理">
@@ -8591,14 +9100,20 @@ const organizationLeafIds = (node) =>
             </header>
             <div className="management-dialog-body">
               <div className="role-form-grid">
-                <label>
-                  角色名称
+                <label className={`role-name-field${roleNameError ? " has-error" : ""}`}>
+                  <span><i>*</i>角色名称</span>
                   <input
                     value={roleName}
-                    onChange={(event) => setRoleName(event.target.value)}
+                    onChange={(event) => {
+                      setRoleName(event.target.value);
+                      if (event.target.value.trim()) setRoleNameError(false);
+                    }}
                     placeholder="例如：车间安全员"
                     autoFocus
+                    aria-invalid={roleNameError}
+                    aria-describedby={roleNameError ? "role-name-error" : undefined}
                   />
+                  {roleNameError ? <small id="role-name-error">请输入角色名称</small> : null}
                 </label>
                 <label>
                   角色状态
@@ -8610,6 +9125,39 @@ const organizationLeafIds = (node) =>
                     <option>停用</option>
                   </select>
                 </label>
+                <div
+                  ref={roleCompanyFieldRef}
+                  className={`role-company-field${roleCompanyError ? " has-error" : ""}`}
+                  onBlur={(event) => {
+                    if (!event.currentTarget.contains(event.relatedTarget)) {
+                      setRoleCompanyPickerOpen(false);
+                    }
+                  }}
+                  onKeyDown={(event) => {
+                    if (event.key === "Escape") setRoleCompanyPickerOpen(false);
+                  }}
+                >
+                  <span id="role-company-label"><i>*</i>所属公司</span>
+                  <button
+                    type="button"
+                    className="role-company-trigger"
+                    onClick={() => setRoleCompanyPickerOpen((current) => !current)}
+                    aria-expanded={roleCompanyPickerOpen}
+                    aria-labelledby="role-company-label role-company-value"
+                    aria-controls="role-company-options"
+                    aria-invalid={roleCompanyError}
+                  >
+                    <b id="role-company-value">{selectedRoleCompanyNames.length ? selectedRoleCompanyNames.join("、") : "请选择所属公司"}</b>
+                    <ChevronDown24Regular />
+                  </button>
+                  {roleCompanyPickerOpen ? (
+                    <div id="role-company-options" className="role-company-picker" role="group" aria-label="所属公司选择">
+                      <p>仅展示公司组织，支持选择多个公司</p>
+                      {renderRoleCompanyTree(roleCompanyTree)}
+                    </div>
+                  ) : null}
+                  {roleCompanyError ? <small>请选择所属公司</small> : null}
+                </div>
               </div>
               <nav className="role-permission-tabs" role="tablist" aria-label="角色权限类型">
                 <button
@@ -8645,7 +9193,7 @@ const organizationLeafIds = (node) =>
                     <b>授权项</b>
                     <div className="role-data-permission-header-actions">
                       <span>全部设置为：</span>
-                      {['全部', '所在组织及下级', '仅自己'].map((scope) => (
+                      {['全部', '本公司及以下', '本部门及以下', '仅自己'].map((scope) => (
                         <button
                           type="button"
                           key={scope}
@@ -9433,11 +9981,11 @@ function DictionaryManagement({ onAction }) {
       updatedAt: "2026-08-14 10:24",
       data: [
         { id: "level-1", code: "01", name: "重大风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
-        { id: "level-1-1", parentId: "level-1", code: "0101", name: "瓦斯爆炸风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
-        { id: "level-1-2", parentId: "level-1", code: "0102", name: "透水风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-1-1", code: "0101", name: "瓦斯爆炸风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-1-2", code: "0102", name: "透水风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
         { id: "level-2", code: "02", name: "较大风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
-        { id: "level-2-1", parentId: "level-2", code: "0201", name: "顶板事故风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
-        { id: "level-2-2", parentId: "level-2", code: "0202", name: "机电运输风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-2-1", code: "0201", name: "顶板事故风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
+        { id: "level-2-2", code: "0202", name: "机电运输风险", updater: "张宇", updatedAt: "2026-08-14 10:24" },
       ],
     },
     {
@@ -9451,9 +9999,9 @@ function DictionaryManagement({ onAction }) {
       updatedAt: "2026-08-13 16:40",
       data: [
         { id: "type-1", code: "01", name: "采矿设备", updater: "李明", updatedAt: "2026-08-13 16:40" },
-        { id: "type-1-1", parentId: "type-1", code: "0101", name: "采矿车", updater: "李明", updatedAt: "2026-08-13 16:40" },
+        { id: "type-1-1", code: "0101", name: "采矿车", updater: "李明", updatedAt: "2026-08-13 16:40" },
         { id: "type-2", code: "02", name: "掘进设备", updater: "李明", updatedAt: "2026-08-13 16:40" },
-        { id: "type-2-1", parentId: "type-2", code: "0201", name: "掘进机", updater: "李明", updatedAt: "2026-08-13 16:40" },
+        { id: "type-2-1", code: "0201", name: "掘进机", updater: "李明", updatedAt: "2026-08-13 16:40" },
       ],
     },
     {
@@ -9499,28 +10047,17 @@ function DictionaryManagement({ onAction }) {
   const [dataSearch, setDataSearch] = useState("");
   const [dataPage, setDataPage] = useState(1);
   const [dataPageSize, setDataPageSize] = useState(10);
-  const [expandedParentId, setExpandedParentId] = useState(null);
 
   const normalizedDataSearch = dataSearch.trim().toLowerCase();
   const filteredDataRows = dataRows.filter((item) =>
     item.name.toLowerCase().includes(normalizedDataSearch),
   );
-  const orderedDataRows = [
-    ...filteredDataRows
-      .filter((item) => !item.parentId)
-      .flatMap((item) => [
-        item,
-        ...(expandedParentId === item.id
-          ? filteredDataRows.filter((child) => child.parentId === item.id)
-          : []),
-      ]),
-  ];
   const dataPageCount = Math.max(
     1,
-    Math.ceil(orderedDataRows.length / dataPageSize),
+    Math.ceil(filteredDataRows.length / dataPageSize),
   );
   const currentDataPage = Math.min(dataPage, dataPageCount);
-  const pagedDataRows = orderedDataRows.slice(
+  const pagedDataRows = filteredDataRows.slice(
     (currentDataPage - 1) * dataPageSize,
     currentDataPage * dataPageSize,
   );
@@ -9536,12 +10073,13 @@ function DictionaryManagement({ onAction }) {
           }
         : { code: "", name: "", type: "业务字典", remark: "" },
     );
-    setDataRows(dictionary?.data ?? []);
+    setDataRows(
+      (dictionary?.data ?? []).map(({ parentId, ...entry }) => entry),
+    );
     setSelectedDataIds([]);
     setEditingData(null);
     setDataSearch("");
     setDataPage(1);
-    setExpandedParentId(null);
     setDialog({ type: "editor", dictionary });
   };
 
@@ -9602,7 +10140,7 @@ function DictionaryManagement({ onAction }) {
 
     const data = dataRows
       .filter((entry) => !entry.isDraft)
-      .map(({ isDraft, ...entry }) => entry);
+      .map(({ isDraft, parentId, ...entry }) => entry);
     setDictionaries((current) =>
       current.map((item) =>
         item.id === dialog.dictionary.id
@@ -9620,10 +10158,9 @@ function DictionaryManagement({ onAction }) {
     setDialog(null);
   };
 
-  const addDataRow = (parentId = null) => {
+  const addDataRow = () => {
     setDataPage(1);
     setEditingData(null);
-    if (parentId) setExpandedParentId(parentId);
     setDataRows((current) =>
       current.some((item) => item.isDraft)
         ? current
@@ -9632,7 +10169,6 @@ function DictionaryManagement({ onAction }) {
               id: `data-${Date.now()}`,
               code: "",
               name: "",
-              parentId,
               updater: "",
               updatedAt: "",
               isDraft: true,
@@ -9721,17 +10257,10 @@ function DictionaryManagement({ onAction }) {
 
   const deleteDataRows = (ids) => {
     const deletedIds = new Set(ids);
-    dataRows.forEach((item) => {
-      if (item.parentId && deletedIds.has(item.parentId)) deletedIds.add(item.id);
-    });
     setDataRows((current) => current.filter((item) => !deletedIds.has(item.id)));
     setSelectedDataIds((current) => current.filter((id) => !deletedIds.has(id)));
     setEditingData((current) => (current && deletedIds.has(current.id) ? null : current));
-    if (expandedParentId && deletedIds.has(expandedParentId)) setExpandedParentId(null);
   };
-
-  const getParentDataName = (parentId) =>
-    dataRows.find((item) => item.id === parentId)?.name || "-";
 
   const deleteDictionary = () => {
     setDictionaries((current) =>
@@ -9863,12 +10392,12 @@ function DictionaryManagement({ onAction }) {
                         aria-label="全选字典数据"
                         type="checkbox"
                         checked={
-                          Boolean(orderedDataRows.filter((item) => !item.isDraft).length) &&
+                          Boolean(filteredDataRows.filter((item) => !item.isDraft).length) &&
                           selectedDataIds.length ===
-                            orderedDataRows.filter((item) => !item.isDraft).length
+                            filteredDataRows.filter((item) => !item.isDraft).length
                         }
                         onChange={() => {
-                          const selectableIds = orderedDataRows
+                          const selectableIds = filteredDataRows
                             .filter((item) => !item.isDraft)
                             .map((item) => item.id);
                           setSelectedDataIds((current) =>
@@ -9879,19 +10408,16 @@ function DictionaryManagement({ onAction }) {
                     </span>
                     <span>编码</span>
                     <span>数据名称</span>
-                    <span>上级数据</span>
                     <span>更新人</span>
                     <span>更新时间</span>
                     <span>操作</span>
                   </div>
                   {pagedDataRows.map((item) => {
                     const isInlineEditing = editingData?.id === item.id;
-                    const isExpandedParent = !item.parentId && expandedParentId === item.id;
 
                     return (
-                    <Fragment key={item.id}>
                     <div
-                      className={`dictionary-data-row ${item.isDraft || isInlineEditing ? "draft" : ""} ${item.parentId ? "dictionary-data-row-child" : "dictionary-data-row-root"}`}
+                      className={`dictionary-data-row ${item.isDraft || isInlineEditing ? "draft" : ""}`}
                       key={item.id}
                       onBlur={(event) => {
                         if (event.currentTarget.contains(event.relatedTarget)) return;
@@ -9932,11 +10458,8 @@ function DictionaryManagement({ onAction }) {
                           }
                         />
                       ) : (
-                        <strong className={item.parentId ? "dictionary-data-child-name" : ""}>{item.name}</strong>
+                        <strong>{item.name}</strong>
                       )}
-                      <span className={item.parentId ? "dictionary-parent-data" : "dictionary-root-data"}>
-                        {item.parentId ? getParentDataName(item.parentId) : "-"}
-                      </span>
                       <span>{item.updater}</span>
                       <time>{item.updatedAt}</time>
                       {item.isDraft ? (
@@ -9959,18 +10482,6 @@ function DictionaryManagement({ onAction }) {
                         </span>
                       ) : (
                         <span className="dictionary-actions">
-                          {!item.parentId ? (
-                            <button
-                              type="button"
-                              className="dictionary-toggle-child"
-                              aria-label={`${isExpandedParent ? "收起" : "展开"}${item.name}的子级数据`}
-                              aria-expanded={isExpandedParent}
-                              title={isExpandedParent ? "收起子级" : "展开子级"}
-                              onClick={() => setExpandedParentId((current) => (current === item.id ? null : item.id))}
-                            >
-                              子级
-                            </button>
-                          ) : null}
                           <button type="button" aria-label={`编辑${item.name}`} title="编辑" onClick={() => startEditingDataRow(item)}>
                             <Edit24Regular />
                           </button>
@@ -9980,13 +10491,6 @@ function DictionaryManagement({ onAction }) {
                         </span>
                       )}
                     </div>
-                    {isExpandedParent ? (
-                      <div className="dictionary-child-add-row" key={`${item.id}-child-add`}>
-                        <span className="dictionary-child-add-label">子级数据</span>
-                        <button type="button" onClick={() => addDataRow(item.id)}>新增子级</button>
-                      </div>
-                    ) : null}
-                    </Fragment>
                     );
                   })}
                 </div>
@@ -10305,11 +10809,18 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
 }
 
 function MenuManagementPage({ onAction }) {
+  const toMineManagementMenu = (node, index = 0) => ({
+    id: node.id, name: node.name, type: node.children ? "目录" : "菜单", icon: "shield", sort: index + 1,
+    path: node.id, component: node.children ? "" : "MinePrevention", perms: `${node.id}:view`,
+    visible: "显示", status: "启用", createdAt: "2026-11-09 09:00",
+    children: (node.children || []).map(toMineManagementMenu),
+  });
   const initialMenus = [
     { id: "workbench", name: "工作台", type: "菜单", icon: "home", sort: 1, path: "/workbench", component: "WorkbenchPage", perms: "workbench:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
     {
       id: "applications", name: "应用", type: "目录", icon: "apps", sort: 2, path: "/applications", component: "", perms: "", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00",
       children: [
+        toMineManagementMenu({ id: "mine-prevention", name: MINE_APP_NAME, children: mineMenu }, 8),
         {
           id: "application-dual-prevention", name: "双重预防机制", type: "目录", icon: "shield", sort: 1, path: "dual-prevention", component: "", perms: "application:dual-prevention:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00",
           children: [
@@ -10350,7 +10861,7 @@ function MenuManagementPage({ onAction }) {
     {
       id: "settings", name: "设置中心", type: "目录", icon: "settings", sort: 8, path: "/settings", component: "", perms: "", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00",
       children: [
-        { id: "settings-dynamics", name: "安全动态", type: "菜单", icon: "message", sort: 1, path: "dynamics", component: "DynamicsSettings", perms: "settings:dynamics:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
+        { id: "settings-dynamics", name: "动态号管理", type: "菜单", icon: "message", sort: 1, path: "dynamics", component: "DynamicsSettings", perms: "settings:dynamics:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
         { id: "settings-worksheet", name: "工作表", type: "菜单", icon: "document", sort: 2, path: "worksheet", component: "EmbeddedLowCodePage", perms: "settings:worksheet:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
         { id: "settings-task", name: "任务", type: "菜单", icon: "task", sort: 3, path: "task", component: "EmbeddedTaskFrame", perms: "settings:task:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
         { id: "settings-flow", name: "流程", type: "菜单", icon: "flow", sort: 4, path: "flow", component: "EmbeddedLowCodePage", perms: "settings:flow:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
@@ -10500,7 +11011,7 @@ function MenuManagementPage({ onAction }) {
 
 function SettingsPage({
   onAction,
-  initialSelected = "安全动态",
+  initialSelected = "动态号管理",
   branding,
   onBrandingChange,
   roles,
@@ -10545,7 +11056,7 @@ function SettingsPage({
     settingsItems[0];
   const Icon = item.icon ?? DocumentText24Regular;
   const rowsBySetting = {
-    安全动态: [
+    动态号管理: [
       ["隐患整改逾期提醒", "整改期限前 24 小时通知", "已启用"],
       ["高风险作业预警", "出现预警时即时通知", "已启用"],
       ["安全检查动态", "每日汇总推送", "已启用"],
@@ -10590,7 +11101,7 @@ function SettingsPage({
   const isUserCenter = selected === "组织用户";
   const isRbac = selected === "角色权限";
   const isMenuManagement = selected === "菜单管理";
-  const isDynamicsSetting = selected === "安全动态";
+  const isDynamicsSetting = selected === "动态号管理";
   const isDictionarySetting = selected === "字典管理";
   const isEnterpriseSetting = selected === "企业设置";
   const isLowCodeSetting = Boolean(lowCodeMenu);
@@ -10675,7 +11186,7 @@ function SettingsPage({
                 >
                   <MenuIcon />
                   <span>{label}</span>
-                  {label === "安全动态" ? null : <ChevronRight24Regular />}
+                  {label === "动态号管理" ? null : <ChevronRight24Regular />}
                 </button>
               ),
             )}
@@ -10708,12 +11219,12 @@ function SettingsPage({
           {isDynamicsSetting ? (
             <section
               className="settings-dynamics-embed"
-              aria-label="动态圈管理"
+              aria-label="动态号管理"
             >
               <EmbeddedDynamicsFrame
                 className="settings-dynamics-frame"
                 view="feedno"
-                title="动态圈管理"
+                title="动态号管理"
               />
             </section>
           ) : isEnterpriseSetting ? (
@@ -11115,7 +11626,7 @@ function App() {
     preventionForms[0].title,
   );
   const [preventionFormOpen, setPreventionFormOpen] = useState(false);
-  const [settingsInitial, setSettingsInitial] = useState("安全动态");
+  const [settingsInitial, setSettingsInitial] = useState("动态号管理");
   const [messages, setMessages] = useState(messageEntries);
   const [taskDetail, setTaskDetail] = useState(null);
   const [annotationsOpen, setAnnotationsOpen] = useState(true);
@@ -11342,7 +11853,7 @@ function App() {
       setActiveNav("工作台");
     });
   };
-  const openSettings = (initialSelected = "安全动态") => {
+  const openSettings = (initialSelected = "动态号管理") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
       setSettingsInitial(initialSelected);
@@ -11516,6 +12027,13 @@ function App() {
               />
             ) : activeTab === "personal-center" ? (
               <PersonalCenter onAction={showNotice} roles={managedRoles} />
+            ) : activeApplication?.name === MINE_APP_NAME ? (
+              <MinePrevention
+                onAction={showNotice}
+                onSwitchApplication={openApplication}
+                AppSwitcher={AppSwitcher}
+                Pagination={SystemPagination}
+              />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
                 key={`${preventionInitial}-${preventionFormOpen ? "form" : "catalog"}`}

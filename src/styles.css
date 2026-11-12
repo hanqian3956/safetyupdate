@@ -122,6 +122,11 @@ main { max-width: 1530px; margin: 0 auto; padding: 16px 26px 40px; }.section-tit
 .dynamic-number-entry button:hover { border-color: var(--accent); background: #eef8fe; }
 .dynamic-number-entry button.followed { border-color: #d9e3ea; background: #f5f8fa; color: #718292; }
 .dynamic-number-entry button.followed:hover { border-color: #b9c9d5; background: #eef3f6; color: #526b7d; }
+.process-launch-library { min-height: 520px; overflow: hidden; border: 1px solid var(--line); border-top: 0; border-radius: 0 0 10px 10px; }
+.process-launch-library .dynamic-number-browser { min-height: 466px; }
+.process-template-entry > b { min-width: 0; display: block; overflow: hidden; color: #415365; font-size: 12px; font-weight: 650; text-overflow: ellipsis; white-space: nowrap; }
+.process-template-entry > b small { color: #8b9aa8; font-size: 11px; font-weight: 500; }
+.process-template-entry:hover > b { color: var(--accent); }
 .dynamic-publish-layer { position: fixed; z-index: 90; inset: 0; padding: 24px; display: grid; place-items: center; background: rgb(19 35 51 / 46%); }
 .dynamic-publish-layer + .single-person-picker-layer { z-index: 100; }
 .dynamic-publish-dialog { width: min(520px, calc(100vw - 48px)); overflow: hidden; border: 1px solid #d9e3ea; border-radius: 10px; background: #fff; box-shadow: 0 24px 66px rgb(20 38 55 / 28%); }

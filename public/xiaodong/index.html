@@ -575,7 +575,7 @@ main { padding: 16px 28px 40px; }
   .qr-box { width: 148px; height: 148px; }
   .toast { right: 14px; left: 14px; bottom: 82px; justify-content: center; }
 }
-/* ===== 消息中心（独立列表页，区别于动态圈） ===== */
+/* ===== 消息中心（独立列表页，区别于动态号） ===== */
 .message-entry.on { background: var(--accent-soft); color: var(--accent); }
 
 /* 工具条：已读状态分段 + 批量操作 */
@@ -640,13 +640,13 @@ main { padding: 16px 28px 40px; }
 .msg-field b { font-size: 12px; font-weight: 600; word-break: break-all; }
 .msg-ops { display: flex; gap: 8px; flex-wrap: wrap; }
 
-/* 侧栏统计（已移除消息概览/需优先处理/消息与动态圈，相关样式一并清理） */
+/* 侧栏统计（已移除消息概览/需优先处理/消息与动态号，相关样式一并清理） */
 
 @media (max-width: 850px) {
   .msg-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
-/* ===== 动态圈（创建 / 关联 / 全生命周期） ===== */
+/* ===== 动态号（创建 / 关联 / 全生命周期） ===== */
 .no-toolbar { display: flex; align-items: center; justify-content: space-between; gap: 12px; flex-wrap: wrap; margin: 0 0 14px; }
 .no-grid { display: grid; grid-template-columns: repeat(auto-fit, minmax(320px, 1fr)); gap: 16px; }
 .no-card { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); box-shadow: var(--shadow); padding: 0; display: flex; flex-direction: column; overflow: hidden; transition: box-shadow .15s ease, border-color .15s ease; }
@@ -685,7 +685,7 @@ main { padding: 16px 28px 40px; }
 .no-acts button { flex: 0 0 auto; min-height: 26px; padding: 0 11px; border-radius: 7px; font-size: 11px; font-weight: 560; border: 1px solid var(--line); background: var(--surface); color: var(--text); display: inline-flex; align-items: center; gap: 4px; }
 .no-acts button svg { width: 13px; height: 13px; flex: 0 0 auto; }
 .no-acts button:hover { border-color: var(--accent); color: var(--accent); }
-/* 动态圈条件筛选 */
+/* 动态号条件筛选 */
 .no-filters { display: flex; flex-wrap: wrap; gap: 16px 32px; margin: 16px 0 14px; }
 .no-seg { display: flex; align-items: center; gap: 9px; }
 .no-seg-label { font-size: 11px; font-weight: 680; color: var(--muted); letter-spacing: .04em; white-space: nowrap; }
@@ -847,7 +847,7 @@ button.lnk:hover { border-color: var(--accent); color: var(--accent); }
 .life-summary b svg { width: 17px; }
 .life-summary p { margin: 0; font-size: 12px; line-height: 1.65; color: var(--text); }
 
-/* 来源动态圈标识（信息流卡片） */
+/* 来源动态号标识（信息流卡片） */
 .feed-source { border: 0; border-radius: 5px; background: var(--surface-soft); color: var(--muted); font-size: 10px; font-weight: 650; padding: 2px 7px; display: inline-flex; align-items: center; gap: 4px; }
 .feed-source svg { width: 11px; }
 .feed-source:hover { background: var(--accent-soft); color: var(--accent); }
@@ -1052,12 +1052,12 @@ html, body, .workbench { background: #f5f7fa; }
       <li><b>筛选维度</b>（与搜索取交集，全部在 <code>filterFeeds</code> 内判定）：
         <ul>
           <li>类型 <code>curFilter</code>：全部 / 表单 / 流程 / 任务 / 预警（<code>FILTERS</code> 渲染 <code>#feedFilter</code> 标签）；</li>
-          <li>动态圈 <code>curNo</code>：下拉 <code>#feedNo</code> 由 <code>populateFeedNoOptions()</code> 灌入，按 <code>f.noId === curNo</code> 过滤；</li>
+          <li>动态号 <code>curNo</code>：下拉 <code>#feedNo</code> 由 <code>populateFeedNoOptions()</code> 灌入，按 <code>f.noId === curNo</code> 过滤；</li>
           <li>时间 <code>curTime</code>：全部 / 今天 / 近7天 / 近30天，用 <code>Date.now()</code> 与当天 0 点毫秒数比较 <code>f.ts</code>；</li>
           <li>仅我看过的 <code>curMine</code>：<code>f.operator === ME</code> 才显示。</li>
         </ul>
       </li>
-      <li><b>列表渲染</b> <code>feedCardHTML(f)</code>：头像 + 类型标签 + 来源动态圈（<code>data-feedno</code> 可跳详情）+ 正文 + 附件；底部五钮 <code>like / comment / @ / 照片 / relate</code>；评论取前 2 条预览，超出显示「查看全部 N 条」。右栏 <code>renderTypeStats()</code> 按类型输出统计条形。</li>
+      <li><b>列表渲染</b> <code>feedCardHTML(f)</code>：头像 + 类型标签 + 来源动态号（<code>data-feedno</code> 可跳详情）+ 正文 + 附件；底部五钮 <code>like / comment / @ / 照片 / relate</code>；评论取前 2 条预览，超出显示「查看全部 N 条」。右栏 <code>renderTypeStats()</code> 按类型输出统计条形。</li>
       <li><b>交互</b>：点赞 <code>toggleLike()</code>（张宇进/出 <code>likes</code>，实时重渲染）；<code>@</code> / 照片 经 <code>openMemberPicker</code> / <code>openPhotoPicker</code> 选人后进入 <code>openComposePage</code> 发评论；<code>related</code> 为 null 的手动动态不渲染关联单据钮；无结果时显示 <code>#feedEmpty</code>。</li>
     </ul></div>
 </aside>
@@ -1085,7 +1085,7 @@ html, body, .workbench { background: #f5f7fa; }
             </select>
           </div>
           <div class="feed-adv-field">
-            <span class="feed-adv-label">动态圈</span>
+            <span class="feed-adv-label">动态号</span>
             <select id="feedNo" class="feed-select"></select>
           </div>
           <label class="feed-adv-check"><input type="checkbox" id="feedMine" /> 我发过的动态</label>
@@ -1098,7 +1098,7 @@ html, body, .workbench { background: #f5f7fa; }
             <div id="feedList"></div>
             <div id="feedEmpty" class="empty-side" hidden>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><path d="M4 6h16M4 12h16M4 18h10"/></svg>
-              <p>没有符合条件的动态圈。</p>
+              <p>没有符合条件的动态号。</p>
             </div>
           </div>
         </div>
@@ -1171,14 +1171,14 @@ html, body, .workbench { background: #f5f7fa; }
         </div>
       </section>
 
-      <!-- ===== View: 动态圈列表（U-7） ===== -->
+      <!-- ===== View: 动态号列表（U-7） ===== -->
       <section id="view-feedno" hidden>
 <aside class="logic-note" data-logic="page">
-  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 动态圈管理 / 列表（U-7）</span>
+  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 动态号管理 / 列表（U-7）</span>
   <div class="ln-body">
     <ul>
-      <li><b>概念</b>：动态圈 = 把表单 / 流程 / 任务 关联起来、自动记录业务从发生到结束全过程的容器（对应实体 <code>FEEDNOS</code>）。</li>
-      <li><b>入口与渲染</b>：左导航「动态圈管理」→ <code>openModule('feedno')</code> → <code>switchView('feedno')</code> → <code>renderNoView()</code>（卡片/列表由 <code>noViewMode</code> 切换）。</li>
+      <li><b>概念</b>：动态号 = 把表单 / 流程 / 任务 关联起来、自动记录业务从发生到结束全过程的容器（对应实体 <code>FEEDNOS</code>）。</li>
+      <li><b>入口与渲染</b>：左导航「动态号管理」→ <code>openModule('feedno')</code> → <code>switchView('feedno')</code> → <code>renderNoView()</code>（卡片/列表由 <code>noViewMode</code> 切换）。</li>
       <li><b>搜索与筛选</b> <code>noVisible()</code>：按 <code>noSearch</code> 匹配 名称/编号/负责人/部门/简介/关联业务名；按 <code>noFilters</code> 过滤 <b>归属</b>（全部 / 我创建的）、<b>状态</b>（已启用 / 已停用）、<b>部门</b>（<code>#noDept</code> 动态生成）。</li>
       <li><b>卡片信息</b> <code>noCardHTML</code>：名称 / 编号 / 负责人 / 简介 / 主题色图标 / <b>最新更新时间</b> <code>latestUpdateOf(n)</code>（有动态取最新 <code>f.time</code>，否则「创建于 X」）/ 订阅数 <code>n.subs</code>。</li>
       <li><b>操作</b>：进入详情 <code>openNoDetail</code>；编辑（<code>canManage</code>：创建者或负责人）；删除 <code>openDeleteNo</code> → <code>canDeleteNo(n)</code>：
@@ -1193,25 +1193,25 @@ html, body, .workbench { background: #f5f7fa; }
 
         <div class="feed-page-head">
           <div class="section-title">
-            <div><p class="kicker">配置业务来源 · 自动记录全过程</p><h2>动态圈</h2></div>
-            <button class="quiet-action" id="noHelpBtn">什么是动态圈？ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button>
+            <div><p class="kicker">配置业务来源 · 自动记录全过程</p><h2>动态号</h2></div>
+            <button class="quiet-action" id="noHelpBtn">什么是动态号？ <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M9 6l6 6-6 6"/></svg></button>
           </div>
           <label class="feed-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
-            <input id="noSearchInput" type="text" placeholder="搜索动态圈名称、编号、负责人、关联的表单/流程/任务…" />
+            <input id="noSearchInput" type="text" placeholder="搜索动态号名称、编号、负责人、关联的表单/流程/任务…" />
           </label>
         </div>
 
         <div class="no-filters" id="noFilter"></div>
 
         <div class="no-toolbar">
-          <p class="side-note" style="margin:0">创建动态圈并关联<b>表单 / 流程 / 任务</b>；一旦有人发起所关联的业务，该动态圈将自动记录业务从<b>发生到结束</b>的每一个节点。</p>
+          <p class="side-note" style="margin:0">创建动态号并关联<b>表单 / 流程 / 任务</b>；一旦有人发起所关联的业务，该动态号将自动记录业务从<b>发生到结束</b>的每一个节点。</p>
           <div class="no-toolbar-right">
             <div class="no-view-toggle">
               <button data-no-viewmode="card" title="卡片展示"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg> 卡片</button>
               <button class="on" data-no-viewmode="list" title="列表展示"><svg viewBox="0 0 24 24" width="14" height="14" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M8 6h13M8 12h13M8 18h13M3.5 6h.01M3.5 12h.01M3.5 18h.01"/></svg> 列表</button>
             </div>
-            <button class="btn-primary" id="noCreateBtn" style="flex:0 0 auto">＋ 新建动态圈</button>
+            <button class="btn-primary" id="noCreateBtn" style="flex:0 0 auto">＋ 新建动态号</button>
           </div>
         </div>
 
@@ -1220,19 +1220,19 @@ html, body, .workbench { background: #f5f7fa; }
             <div class="no-grid" id="noGrid"></div>
             <div id="noEmpty" class="empty-side" hidden>
               <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="4" width="18" height="16" rx="2.5"/><path d="M7.5 9.5h9M7.5 13h6"/></svg>
-              <p>没有符合条件的动态圈。</p>
+              <p>没有符合条件的动态号。</p>
             </div>
           </div>
         </div>
       </section>
 
-      <!-- ===== View: 新建动态圈（整页 · 基础配置） ===== -->
+      <!-- ===== View: 新建动态号（整页 · 基础配置） ===== -->
       <section id="view-create" hidden>
 <aside class="logic-note" data-logic="page">
-  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 新建 / 编辑动态圈（4 步向导，整页）</span>
+  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 新建 / 编辑动态号（4 步向导，整页）</span>
   <div class="ln-body">
     <ul>
-      <li><b>入口</b>：列表「＋新建动态圈」→ <code>openCreateNo()</code>（草稿 <code>noDraft</code> 初始化：编号 <code>nextNoCode()</code>、默认 owner=张宇 / 部门=安全管理部 / 全勾记录节点）；或卡片「编辑」→ <code>openEditNo(id)</code>（从 <code>FEEDNOS</code> 回填草稿）。</li>
+      <li><b>入口</b>：列表「＋新建动态号」→ <code>openCreateNo()</code>（草稿 <code>noDraft</code> 初始化：编号 <code>nextNoCode()</code>、默认 owner=张宇 / 部门=安全管理部 / 全勾记录节点）；或卡片「编辑」→ <code>openEditNo(id)</code>（从 <code>FEEDNOS</code> 回填草稿）。</li>
       <li><b>页面</b>：整页 <code>#view-create</code>（非弹窗），<code>renderCreateView()</code> 渲染第 <code>noDraft.step</code> 步；顶部进度条 <code>wizPaneHTML</code> 高亮 1–4 步，<code>wizFoot()</code> 按步校验可进入下一步。</li>
       <li><b>① 基础配置</b> <code>wizStep1</code>：名称* / 编号(禁用) / 负责人 / 部门 / 简介 / 图标 <code>NO_ICONS</code> / 主题色 <code>NO_TONES</code>。</li>
       <li><b>② 关联业务</b> <code>wizStep2</code>：按 <code>BIZKIND</code> 分组展示 <code>BIZLIB</code>（表单/流程/任务），勾选写入 <code>noDraft.binds</code>（≥1 项才能下一步）。</li>
@@ -1245,7 +1245,7 @@ html, body, .workbench { background: #f5f7fa; }
         <div class="feed-page-head">
           <div class="section-title">
             <div><p class="kicker" id="createKicker">新建动态</p><h2 id="createTitle">基础配置</h2></div>
-            <button class="quiet-action" id="createBack" data-create-cancel>返回动态圈列表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="quiet-action" id="createBack" data-create-cancel>返回动态号列表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
           </div>
         </div>
         <div class="create-wrap">
@@ -1254,15 +1254,15 @@ html, body, .workbench { background: #f5f7fa; }
         </div>
       </section>
 
-      <!-- ===== View: 动态圈详情（U-8） ===== -->
+      <!-- ===== View: 动态号详情（U-8） ===== -->
       <section id="view-nodetail" hidden>
 <aside class="logic-note" data-logic="page">
-  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 动态圈详情（U-8）</span>
+  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 动态号详情（U-8）</span>
   <div class="ln-body">
     <ul>
       <li><b>入口</b>：列表卡片「进入详情」→ <code>openNoDetail(id)</code> → <code>renderNoDetail()</code> + <code>switchView('nodetail')</code>。</li>
       <li><b>可折叠介绍卡</b> <code>#ndBasic</code>：编号·部门 + 负责人 / 创建于 / 可见(订阅数) / 状态 + 关联业务 chips；<code>ndBasicCollapsed</code> 默认 <code>true</code>（每次打开重置），点 <code>data-nd-collapse</code> 切换展开/折叠。</li>
-      <li><b>筛选栏</b>（介绍卡下、动态上）：搜索 <code>ndSearch</code> + 部门筛选 <code>ndDeptSel</code>（进入重置为全部，选项来自 <code>DEPTS</code>）+ 时间 <code>ndTimeFilter</code>（全部/今天/7d/30d）。<b>已去掉动态圈筛选</b>。</li>
+      <li><b>筛选栏</b>（介绍卡下、动态上）：搜索 <code>ndSearch</code> + 部门筛选 <code>ndDeptSel</code>（进入重置为全部，选项来自 <code>DEPTS</code>）+ 时间 <code>ndTimeFilter</code>（全部/今天/7d/30d）。<b>已去掉动态号筛选</b>。</li>
       <li><b>本圈动态</b> <code>renderNdFeeds()</code>：先 <code>feeds.filter(f =&gt; f.noId === n.id)</code>，再按 时间 / 关键字(标题+内容+操作人) / 部门 过滤，按 <code>f.ts</code> 倒序；0 条显示空态；计数写 <code>#ndFeedCount</code>。</li>
       <li><b>发布动态</b>：详情内「发起动态」→ <code>openNewFeedPage(noId)</code>，手动发布 <code>related=null</code>（只记 <code>noId</code>），故详情中不显示关联单据。</li>
     </ul></div>
@@ -1270,8 +1270,8 @@ html, body, .workbench { background: #f5f7fa; }
 
         <div class="feed-page-head">
           <div class="section-title">
-            <div><p class="kicker" id="ndKicker">动态圈</p><h2 id="ndTitle">—</h2></div>
-            <button class="quiet-action" id="backFromNd">返回动态圈列表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <div><p class="kicker" id="ndKicker">动态号</p><h2 id="ndTitle">—</h2></div>
+            <button class="quiet-action" id="backFromNd">返回动态号列表 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
           </div>
         </div>
         <div class="side-card nd-basic" id="ndBasic"></div>
@@ -1286,7 +1286,7 @@ html, body, .workbench { background: #f5f7fa; }
           </div></div>
         </div>
         <div class="side-card">
-          <p class="side-kicker">本动态圈产生的动态 <span class="count" id="ndFeedCount">0</span></p>
+          <p class="side-kicker">本动态号产生的动态 <span class="count" id="ndFeedCount">0</span></p>
           <div id="ndFeeds"></div>
         </div>
       </section>
@@ -1309,7 +1309,7 @@ html, body, .workbench { background: #f5f7fa; }
         <div class="feed-page-head">
           <div class="section-title">
             <div><p class="kicker" id="lfKicker">业务全过程记录</p><h2 id="lfTitle">—</h2></div>
-            <button class="quiet-action" id="backFromLife">返回动态圈 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <button class="quiet-action" id="backFromLife">返回动态号 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
           </div>
         </div>
         <div class="tl-record" id="lfHead"></div>
@@ -1335,13 +1335,13 @@ html, body, .workbench { background: #f5f7fa; }
         </div>
       </section>
 
-      <!-- ===== View: 消息中心（列表页，区别于动态圈） ===== -->
+      <!-- ===== View: 消息中心（列表页，区别于动态号） ===== -->
       <section id="view-message" hidden>
 <aside class="logic-note" data-logic="page">
-  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 消息中心（独立列表页，区别于动态圈）</span>
+  <span class="ln-tag"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><path d="M4 6h16M4 12h16M4 18h10"/></svg>页面逻辑 · 消息中心（独立列表页，区别于动态号）</span>
   <div class="ln-body">
     <ul>
-      <li><b>定位</b>：仅发给「我（张宇）」的消息，区别于动态圈聚合。顶栏铃铛 <code>#msgEntry</code> 进入本页并高亮。</li>
+      <li><b>定位</b>：仅发给「我（张宇）」的消息，区别于动态号聚合。顶栏铃铛 <code>#msgEntry</code> 进入本页并高亮。</li>
       <li><b>数据源</b>：<code>MESSAGES[]</code>，每条含 <code>cat(分类) / title / text / read / prio(important|urgent)</code>；未读统计 <code>msgUnread(arr) = arr.filter(m =&gt; !m.read).length</code>。</li>
       <li><b>渲染</b> <code>renderMsgView()</code> → <code>renderMsgFilter()</code>（分类 tab + 各分类未读数）/ <code>renderMsgList()</code>（<code>msgVisible()</code> 按计划：搜索关键字 + 分类 <code>msgOfCat</code> + 已读未读 <code>msgReadFilter</code>）/ <code>renderMsgBadge()</code>（顶栏角标）。</li>
       <li><b>交互</b>：行点击 <code>msgToggleRow</code> <b>展开即视为已读</b>；单条「标为已读/未读」<code>data-msg-toggleread</code>；「全部标为已读」<code>data-msg-readall</code>；「清空已读」保留未读、<code>splice</code> 移除已读项。</li>
@@ -1350,8 +1350,8 @@ html, body, .workbench { background: #f5f7fa; }
 
         <div class="feed-page-head">
           <div class="section-title">
-            <div><p class="kicker">仅发给我的 · 区别于动态圈</p><h2>消息中心</h2></div>
-            <button class="quiet-action" id="backFromMsg">返回动态圈 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
+            <div><p class="kicker">仅发给我的 · 区别于动态号</p><h2>消息中心</h2></div>
+            <button class="quiet-action" id="backFromMsg">返回动态号 <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M15 6l-6 6 6 6"/></svg></button>
           </div>
           <label class="feed-search">
             <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="11" cy="11" r="7"/><path d="m20 20-3-3"/></svg>
@@ -1408,13 +1408,13 @@ html, body, .workbench { background: #f5f7fa; }
   <div class="ln-body">
     <ul>
       <li><b>触发</b>：当全部 workspace 标签页被关闭（<code>openTabs</code> 为空）→ <code>showEmptyWorkspace()</code> 隐藏 <code>view-feed / feedno / message / module</code>，显示 <code>#view-empty</code>。</li>
-      <li><b>内容</b>：「开始使用动态圈」引导语，提示用户从左侧菜单选择功能模块，将以可关闭标签页形式在此打开。</li>
+      <li><b>内容</b>：「开始使用动态号」引导语，提示用户从左侧菜单选择功能模块，将以可关闭标签页形式在此打开。</li>
     </ul></div>
 </aside>
 
         <div class="module-placeholder">
           <div class="mp-icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg></div>
-          <h2>开始使用动态圈</h2>
+          <h2>开始使用动态号</h2>
           <p>从左侧菜单选择功能模块，将以可关闭的标签页形式在这里打开。</p>
         </div>
       </section>
@@ -1453,7 +1453,7 @@ html, body, .workbench { background: #f5f7fa; }
       <li><b>栈结构</b>：<code>const SHEETS=[]</code>；<code>pushSheet(cfg)</code> 入栈渲染，<code>replaceSheet</code> 替换栈顶（用于成功页），<code>popSheet</code> 出栈回上一步，<code>closeSheet</code> 清空并解锁滚动。</li>
       <li><b>渲染</b> <code>renderSheet()</code>：取栈顶 <code>cfg</code>，按 <code>cfg.title / sub / body() / foot() / mount()</code> 渲染 <code>#sheetPanel</code>；多步时显示返回 <code>data-sheet-back</code>；<code>cfg.modal</code> 时加 <code>is-modal</code> 遮罩。</li>
       <li><b>成功页</b> <code>sheetDone()</code>：<code>replaceSheet</code> 为结果页，点 <code>#doneBtn</code> 才关闭（或执行 <code>onPrimary</code>）。</li>
-      <li><b>承载页面</b>：删除确认、成员/部门选人（<code>openMemberPicker</code>）、图库（<code>openPhotoPicker</code>）、发布动态（<code>openNewFeedPage</code> / <code>newFeed*</code>）、点赞人列表、评论编辑（<code>openComposePage</code>）、文件预览、创建动态圈成功页等。</li>
+      <li><b>承载页面</b>：删除确认、成员/部门选人（<code>openMemberPicker</code>）、图库（<code>openPhotoPicker</code>）、发布动态（<code>openNewFeedPage</code> / <code>newFeed*</code>）、点赞人列表、评论编辑（<code>openComposePage</code>）、文件预览、创建动态号成功页等。</li>
     </ul></div>
 </aside>
 
@@ -1537,7 +1537,7 @@ const TYPES = {
   manual:  { label: '动态发布', tone: 'blue',   color: 'var(--accent)', soft: 'var(--accent-soft)' },
 };
 
-/* ============ Data (动态圈 feed) ============ */
+/* ============ Data (动态号 feed) ============ */
 let feeds = [
   {
     id: 'f1', type: 'form', operator: '张宇', dept: '安全管理部', avatar: '张', tone: 'blue',
@@ -1606,7 +1606,7 @@ function tsFromLabel(label) {
 feeds.forEach(f => { if (f.ts == null) f.ts = tsFromLabel(f.time) ?? (Date.now() - 86400000); });
 
 /* ============================================================
-   动态圈：业务对象库 / 生命周期模板 / 记录规则 / 动态圈 / 业务实例
+   动态号：业务对象库 / 生命周期模板 / 记录规则 / 动态号 / 业务实例
    ============================================================ */
 const BIZKIND = {
   form:    { label: '表单', icon: 'doc',  color: 'var(--accent)', soft: 'var(--accent-soft)' },
@@ -1614,7 +1614,7 @@ const BIZKIND = {
   task:    { label: '任务', icon: 'task', color: 'var(--warn)',   soft: 'var(--warn-soft)' },
 };
 
-/* 可被动态圈关联的业务对象 */
+/* 可被动态号关联的业务对象 */
 const BIZLIB = {
   form: [
     { id: 'FM-01', name: '日常巡检表', ver: 'V2.3', dept: '机电管理部', desc: '设备日常巡检数据填报' },
@@ -1661,7 +1661,7 @@ const LIFECYCLE = {
 };
 const lifeOf = (kind) => LIFECYCLE[kind] || LIFECYCLE.form;
 
-/* 记录规则：动态圈在哪些节点事件上生成动态（按 工作表 / 流程 / 任务 / 预警 四大类区分） */
+/* 记录规则：动态号在哪些节点事件上生成动态（按 工作表 / 流程 / 任务 / 预警 四大类区分） */
 const RULE_GROUPS = [
   { cat: 'sheet', label: '工作表', icon: I.doc,
     items: [
@@ -1704,7 +1704,7 @@ const EV_OF = {
 const evOf = (k) => (k in EV_OF ? EV_OF[k] : null);
 const RULE_LABEL = {};
 RULE_GROUPS.forEach(g => g.items.forEach(([k, lbl]) => { RULE_LABEL[k] = lbl; }));
-/* 旧版事件键 → 新版动作键（编辑旧动态圈时迁移） */
+/* 旧版事件键 → 新版动作键（编辑旧动态号时迁移） */
 const OLD_EV_TO_NEW = {
   start:   ['sheet_submit', 'proc_start', 'task_start', 'warn_trigger'],
   flow:    ['proc_transfer', 'task_exec', 'task_forward', 'warn_exec', 'warn_transfer'],
@@ -1723,10 +1723,10 @@ const migrateEvents = (arr) => {
   return [...new Set(out)];
 };
 
-/* 已创建的动态圈 */
+/* 已创建的动态号 */
 let FEEDNOS = [
   {
-    id: 'DTH-1001', name: '安全生产动态圈', icon: 'alert', tone: 'red',
+    id: 'DTH-1001', name: '安全生产动态号', icon: 'alert', tone: 'red',
     desc: '汇总隐患排查、动火作业、整改任务等安全类业务，从发起到闭环全过程留痕。',
     owner: '李明', creator: '张宇', dept: '安全管理部', created: '2026-07-12', status: 'on', subs: 28,
     binds: [{ kind: 'process', id: 'PR-01' }, { kind: 'process', id: 'PR-02' }, { kind: 'form', id: 'FM-03' }, { kind: 'task', id: 'TK-02' }],
@@ -1734,7 +1734,7 @@ let FEEDNOS = [
     scope: { type: 'dept', list: ['安全管理部', '机电管理部', '生产管理部'] },
   },
   {
-    id: 'DTH-1002', name: '设备运维动态圈', icon: 'task', tone: 'orange',
+    id: 'DTH-1002', name: '设备运维动态号', icon: 'task', tone: 'orange',
     desc: '关联日常巡检、停机检修审批与检修任务，跟踪设备类业务的完整生命周期。',
     owner: '张宇', creator: '张宇', dept: '维修班', created: '2026-07-20', status: 'on', subs: 16,
     binds: [{ kind: 'form', id: 'FM-01' }, { kind: 'process', id: 'PR-03' }, { kind: 'task', id: 'TK-01' }],
@@ -1742,7 +1742,7 @@ let FEEDNOS = [
     scope: { type: 'dept', list: ['机电管理部', '设备管理部', '维修班'] },
   },
   {
-    id: 'DTH-1003', name: '生产交接动态圈', icon: 'doc', tone: 'blue',
+    id: 'DTH-1003', name: '生产交接动态号', icon: 'doc', tone: 'blue',
     desc: '记录班组交接班信息，暂未启用，启用后关联业务被发起时才会产生动态。',
     owner: '陈刚', creator: '陈刚', dept: '生产管理部', created: '2026-08-01', status: 'off', subs: 5,
     binds: [{ kind: 'form', id: 'FM-04' }],
@@ -1752,7 +1752,7 @@ let FEEDNOS = [
 ];
 const noOf = (id) => FEEDNOS.find(n => n.id === id);
 
-/* 业务实例：某个关联对象被发起后，动态圈记录的一次完整业务过程 */
+/* 业务实例：某个关联对象被发起后，动态号记录的一次完整业务过程 */
 let INSTANCES = [
   {
     id: 'INS-8801', noId: 'DTH-1002', kind: 'form', bizId: 'FM-01', title: '3# 主扇风机房日常巡检',
@@ -1800,7 +1800,7 @@ let INSTANCES = [
 const insOf = (id) => INSTANCES.find(i => i.id === id);
 const insOfNo = (noId) => INSTANCES.filter(i => i.noId === noId);
 
-/* 为现有动态补「来源动态圈 / 业务实例」标识 */
+/* 为现有动态补「来源动态号 / 业务实例」标识 */
 [['f1', 'DTH-1002', 'INS-8801'], ['f2', 'DTH-1001', 'INS-8805'], ['f3', 'DTH-1002', 'INS-8803'],
  ['f4', 'DTH-1001', 'INS-8802'], ['f6', 'DTH-1001', 'INS-8804']].forEach(([fid, noId, insId]) => {
   const f = feeds.find(x => x.id === fid);
@@ -1955,7 +1955,7 @@ const NAV = [
   { label: '工作台', icon: I.home, module: 'workbench' },
   { label: '动态', icon: I.apps, key: 'dyn', children: [
       { label: '动态', icon: ICON_FEED, module: 'feed' },
-      { label: '动态圈管理', icon: I.folder, module: 'feedno' },
+      { label: '动态号管理', icon: I.folder, module: 'feedno' },
   ]},
   { label: '任务', icon: I.task, module: 'task' },
   { label: '流程', icon: I.flow, module: 'flow' },
@@ -1965,7 +1965,7 @@ const NAV = [
 const MODULES = {
   workbench: { label: '工作台', view: 'workbench', icon: I.home },
   feed:      { label: '动态', view: 'feed', icon: ICON_FEED },
-  feedno:    { label: '动态圈管理', view: 'feedno', icon: I.folder },
+  feedno:    { label: '动态号管理', view: 'feedno', icon: I.folder },
   task:      { label: '任务', view: 'task', icon: I.task },
   flow:      { label: '流程', view: 'flow', icon: I.flow },
   chart:     { label: '数据洞察', view: 'chart', icon: I.chart },
@@ -2075,7 +2075,7 @@ $('#wsTabs').addEventListener('click', (e) => {
 });
 
 
-/* 根据嵌入入口打开信息流或动态圈管理页。 */
+/* 根据嵌入入口打开信息流或动态号管理页。 */
 const initialView = new URLSearchParams(window.location.search).get('view');
 openModule('feed');
 
@@ -2084,7 +2084,7 @@ const FILTERS = [['all', '全部'], ['form', '表单动态'], ['process', '流�
 let curFilter = 'all';
 let curSearch = '';
 let curTime = 'all';    /* 时间筛选：all / today / 7d / 30d */
-let curNo = 'all';      /* 动态圈名称筛选：all 或 FEEDNOS.id */
+let curNo = 'all';      /* 动态号名称筛选：all 或 FEEDNOS.id */
 let curMine = false;    /* 仅看我发过的动态 */
 
 function filterFeeds(list) {
@@ -2130,7 +2130,7 @@ function feedCardHTML(f) {
     ? `<button class="feed-view-all" data-detail="${f.id}">查看全部 ${commentCount} 条评论</button>` : '';
   const srcNo = f.noId ? noOf(f.noId) : null;
   const srcTag = srcNo
-    ? `<button class="feed-source" data-feedno="${srcNo.id}" title="来源动态圈：${esc(srcNo.name)}">${I.link}${esc(srcNo.name)}</button>`
+    ? `<button class="feed-source" data-feedno="${srcNo.id}" title="来源动态号：${esc(srcNo.name)}">${I.link}${esc(srcNo.name)}</button>`
     : '';
   return `
   <article class="feed-card" data-id="${f.id}">
@@ -2525,7 +2525,7 @@ function composeMount() {
 }
 function composeRefresh() { $('#sheetBody').innerHTML = composeBody(); $('#sheetFoot').innerHTML = composeFoot(); composeMount(); }
 
-/* ---------- 发起动态：手动发布一条动态到动态圈 ---------- */
+/* ---------- 发起动态：手动发布一条动态到动态号 ---------- */
 let feedDraft = null;
 function openNewFeedPage(noId) {
   const n = noOf(noId); if (!n) return;
@@ -2566,14 +2566,14 @@ function newFeedMount() {
       avatar: ME.slice(0, 1), tone: 'blue', ts: Date.now(),
       title, summary: raw, time: '刚刚',
       attachments: feedDraft.photos.map(p => ({ name: p.n })),
-      related: null, /* 手动发布的动态未关联任何单据（所属动态圈由 noId 记录） */
+      related: null, /* 手动发布的动态未关联任何单据（所属动态号由 noId 记录） */
       likes: [], liked: false, comments: [], noId: n.id,
     });
     renderFeed(); renderNoView();
     sheetDone({
       title: '动态已发布',
       modal: true,
-      html: `《<b>${esc(n.name)}</b>》已新增一条动态，将出现在动态圈信息流中${feedDraft.mentions.length ? '，并已提及 <b>' + esc(feedDraft.mentions.join('、')) + '</b>' : ''}。`,
+      html: `《<b>${esc(n.name)}</b>》已新增一条动态，将出现在动态号信息流中${feedDraft.mentions.length ? '，并已提及 <b>' + esc(feedDraft.mentions.join('、')) + '</b>' : ''}。`,
       primary: '查看信息流',
       onPrimary: () => { const fid = seq; closeSheet(); switchView('feed'); renderFeed(); openDetail(fid); },
     });
@@ -2828,7 +2828,7 @@ document.addEventListener('click', (e) => {
   else if (d.recact) { toast(`已执行：${d.recact}`); }
   else if (t.hasAttribute('data-open-tl')) { switchView('timeline'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
 
-  /* ---- 动态卡片来源标签 → 打开动态圈 ---- */
+  /* ---- 动态卡片来源标签 → 打开动态号 ---- */
   else if (d.feedno) { openNoDetail(d.feedno); }
 });
 
@@ -2861,16 +2861,16 @@ $('#themeToggle').addEventListener('click', () => {
 });
 
 /* ============================================================
-   动态圈：列表页 / 创建向导 / 详情页 / 业务全生命周期
+   动态号：列表页 / 创建向导 / 详情页 / 业务全生命周期
    ============================================================ */
 const ME = '张宇';           /* 当前登录用户（与右上角个人资料一致，创建向导默认负责人） */
 let noFilters = { owner: 'all', status: 'all', dept: 'all' };
 let noSearch = '';
-let ndId = null;             /* 当前查看的动态圈 */
+let ndId = null;             /* 当前查看的动态号 */
 let ndTimeFilter = 'all';    /* 详情页时间筛选：all/today/7d/30d */
 let ndDeptFilter = 'all';    /* 详情页部门筛选：all 或 DEPTS.name */
 let ndSearch = '';           /* 详情页关键字搜索 */
-let ndBasicCollapsed = true;  /* 详情页「动态圈介绍」卡片是否折叠（默认收起） */
+let ndBasicCollapsed = true;  /* 详情页「动态号介绍」卡片是否折叠（默认收起） */
 let lifeInsId = null;        /* 当前查看的业务实例 */
 let lifeFrom = 'nodetail';
 let insSeq = 8805, feedSeq = 6, noSeq = 1003;
@@ -2924,20 +2924,20 @@ function renderNoFilter() {
   const ds = $('#noDept');
   if (ds) ds.addEventListener('change', (e) => { noFilters.dept = e.target.value; renderNoView(); });
 }
-/* 当前登录用户能否管理（编辑 / 停用启用）该动态圈：创建者或负责人 */
+/* 当前登录用户能否管理（编辑 / 停用启用）该动态号：创建者或负责人 */
 function canManage(n) { return (n.creator || n.owner) === ME; }
-/* 该动态圈产生的「最新一条动态」 */
+/* 该动态号产生的「最新一条动态」 */
 function latestFeedOf(n) {
   const fl = feeds.filter(f => f.noId === n.id).sort((a, b) => (b.ts || 0) - (a.ts || 0));
   return fl[0] || null;
 }
-/* 动态圈的最近一次更新时间：有动态取最新动态时间，否则取创建时间 */
+/* 动态号的最近一次更新时间：有动态取最新动态时间，否则取创建时间 */
 function latestUpdateOf(n) {
   const f = latestFeedOf(n);
   if (f) return { time: f.time, ts: f.ts || 0, has: true };
   return { time: n.created ? '创建于 ' + n.created : '暂无更新', ts: 0, has: false };
 }
-/* 动态圈是否可删除
+/* 动态号是否可删除
  * 权限：仅创建者 / 负责人（canManage）
  * 条件：未产生动态 或 已停用 → 可删；已产生动态 且 已启用 → 不可删 */
 function canDeleteNo(n) {
@@ -2953,17 +2953,17 @@ function openDeleteNo(id) {
   if (!chk.ok) { toast(chk.reason); return; }
   const feedCnt = feeds.filter(f => f.noId === id).length;
   pushSheet({
-    title: '删除动态圈',
+    title: '删除动态号',
     sub: n.name,
     modal: true,
     body: () => `<div class="no-del-box">
-        <div class="no-del-warn">${I.alert}<div><b>此操作不可恢复</b><p>${feedCnt ? `该动态圈下仍有 <b>${feedCnt}</b> 条动态，删除后将一并清除。` : '删除后该动态将无法找回。'}</p></div></div>
+        <div class="no-del-warn">${I.alert}<div><b>此操作不可恢复</b><p>${feedCnt ? `该动态号下仍有 <b>${feedCnt}</b> 条动态，删除后将一并清除。` : '删除后该动态将无法找回。'}</p></div></div>
         <p class="no-del-name">确认删除 <b>${esc(n.name)}</b>（${esc(n.id)}）吗？</p>
       </div>`,
     foot: () => `<button class="btn-ghost" data-sheet-close>取消</button><button class="btn-danger" id="delConfirmBtn">${I.trash}删除</button>`,
     mount() {
       const btn = $('#delConfirmBtn');
-      if (btn) btn.addEventListener('click', () => { deleteNo(id); closeSheet(); toast('动态圈已删除'); });
+      if (btn) btn.addEventListener('click', () => { deleteNo(id); closeSheet(); toast('动态号已删除'); });
     }
   });
 }
@@ -2996,9 +2996,9 @@ function noCardHTML(n) {
       <span class="no-meta">${I.clock}<span>最新更新</span><b>${esc(upd.time)}</b></span>
     </button>
     <div class="no-acts">
-      <button class="go" data-no-feed="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态圈已停用，无法新建动态' : ''}">新建动态</button>
+      <button class="go" data-no-feed="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态号已停用，无法新建动态' : ''}">新建动态</button>
       ${mng ? `<button data-no-toggle="${n.id}">${n.status === 'on' ? '停用' : '启用'}</button>` : ''}
-      ${mng ? `<button data-no-edit="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态圈已停用，无法编辑' : ''}">编辑</button>` : ''}
+      ${mng ? `<button data-no-edit="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态号已停用，无法编辑' : ''}">编辑</button>` : ''}
       ${mng ? `<button class="del" data-no-delete="${n.id}" ${del.ok ? '' : 'disabled'} title="${esc(del.reason)}">${I.trash}删除</button>` : ''}
     </div>
   </article>`;
@@ -3008,7 +3008,7 @@ function renderNoGrid() {
   if (noViewMode === 'list') {
     $('#noGrid').innerHTML = list.length
       ? `<table class="no-table"><thead><tr>
-           <th>动态圈</th><th>状态</th><th>负责人 / 部门</th><th>可见</th><th>最新动态</th><th>最新更新</th><th class="no-th-act">操作</th>
+           <th>动态号</th><th>状态</th><th>负责人 / 部门</th><th>可见</th><th>最新动态</th><th>最新更新</th><th class="no-th-act">操作</th>
          </tr></thead><tbody>${list.map(noRowHTML).join('')}</tbody></table>`
       : '';
   } else {
@@ -3039,9 +3039,9 @@ function noRowHTML(n) {
       : `<span class="no-no-feed">暂无动态</span>`}</td>
     <td class="no-td-update">${upd.has ? `<b>${esc(upd.time)}</b>` : `<small>${esc(upd.time)}</small>`}</td>
     <td class="no-td-act">
-      <button class="feed-action" data-no-feed="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态圈已停用，无法新建动态' : ''}">新建动态</button>
+      <button class="feed-action" data-no-feed="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态号已停用，无法新建动态' : ''}">新建动态</button>
       ${mng ? `<button class="feed-action" data-no-toggle="${n.id}">${n.status === 'on' ? '停用' : '启用'}</button>` : ''}
-      ${mng ? `<button class="feed-action" data-no-edit="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态圈已停用，无法编辑' : ''}">编辑</button>` : ''}
+      ${mng ? `<button class="feed-action" data-no-edit="${n.id}" ${off ? 'disabled' : ''} title="${off ? '动态号已停用，无法编辑' : ''}">编辑</button>` : ''}
       ${mng ? `<button class="feed-action del" data-no-delete="${n.id}" ${del.ok ? '' : 'disabled'} title="${esc(del.reason)}">${I.trash}删除</button>` : ''}
     </td>
   </tr>`;
@@ -3068,7 +3068,7 @@ function openCreateNo() {
   renderCreateView();
 }
 function openEditNo(id) {
-  const n = noOf(id); if (!n) { toast('未找到该动态圈'); return; }
+  const n = noOf(id); if (!n) { toast('未找到该动态号'); return; }
   const scopeList = (n.scope && n.scope.list ? n.scope.list : []).slice();
   const scopePeople = {};
   scopeList.forEach(dep => { scopePeople[dep] = ((n.scope && n.scope.people && n.scope.people[dep]) || []).slice(); });
@@ -3091,7 +3091,7 @@ function wizPaneHTML() {
   const d = noDraft;
   const bar = `<div class="wz-steps">${[1, 2, 3, 4].map(i => `<i class="${i <= d.step ? 'on' : ''}"></i>`).join('')}</div>`;
   const caps = {
-    1: '第 1 / 4 步 · <b>基本信息</b>：给动态圈起名并指定负责人',
+    1: '第 1 / 4 步 · <b>基本信息</b>：给动态号起名并指定负责人',
     2: '第 2 / 4 步 · <b>关联业务</b>：勾选要跟踪的表单、流程、任务',
     3: '第 3 / 4 步 · <b>记录规则</b>：设定在哪些节点自动生成动态',
     4: '第 4 / 4 步 · <b>可见范围与确认</b>：确定谁能看到并完成创建',
@@ -3101,16 +3101,16 @@ function wizPaneHTML() {
 function wizStep1() {
   const d = noDraft;
   return `
-    <div class="fld"><label>动态圈名称 <b style="color:var(--danger)">*</b></label>
-      <input id="wzName" type="text" value="${esc(d.name)}" placeholder="例如：安全生产动态圈" maxlength="24" />
-      <span class="hint">建议以「业务领域 + 动态圈」命名，便于成员识别。</span></div>
+    <div class="fld"><label>动态号名称 <b style="color:var(--danger)">*</b></label>
+      <input id="wzName" type="text" value="${esc(d.name)}" placeholder="例如：安全生产动态号" maxlength="24" />
+      <span class="hint">建议以「业务领域 + 动态号」命名，便于成员识别。</span></div>
     <div class="fld-row">
-      <div class="fld"><label>动态圈编号</label><input type="text" value="${esc(d.code)}" disabled /></div>
+      <div class="fld"><label>动态号编号</label><input type="text" value="${esc(d.code)}" disabled /></div>
       <div class="fld"><label>负责人</label><select id="wzOwner">${MEMBERS.map(m => `<option ${d.owner === m ? 'selected' : ''}>${esc(m)}</option>`).join('')}</select></div>
     </div>
     <div class="fld"><label>所属部门</label><select id="wzDept">${DEPTS.map(x => `<option ${d.dept === x.name ? 'selected' : ''}>${esc(x.name)}</option>`).join('')}</select></div>
     <div class="fld"><label>简介</label>
-      <textarea id="wzDesc" placeholder="说明该动态圈跟踪哪些业务、面向哪些人">${esc(d.desc)}</textarea></div>
+      <textarea id="wzDesc" placeholder="说明该动态号跟踪哪些业务、面向哪些人">${esc(d.desc)}</textarea></div>
     <div class="fld"><label>标识图标</label>
       <div class="icon-pick">${NO_ICONS.map(k => `<button data-wz-icon="${k}" class="${d.icon === k ? 'on' : ''}" title="${k}">${I[k]}</button>`).join('')}</div></div>
     <div class="fld"><label>主题色</label>
@@ -3136,7 +3136,7 @@ function wizStep2() {
 function wizStep3() {
   const d = noDraft;
   return `
-    <p class="side-note" style="margin:0 0 14px">按业务类型勾选需要记录的动作，勾选的节点事件发生时，动态圈会自动生成一条动态并写入业务实例的生命周期轨迹。</p>
+    <p class="side-note" style="margin:0 0 14px">按业务类型勾选需要记录的动作，勾选的节点事件发生时，动态号会自动生成一条动态并写入业务实例的生命周期轨迹。</p>
     <div class="rule-groups">${RULE_GROUPS.map(g => `
       <div class="rule-group">
         <div class="rule-grp-head"><span class="rule-grp-ico ${g.cat}">${g.icon}</span><b>${esc(g.label)}</b><span class="rule-grp-count">${g.items.filter(([k]) => d.events.includes(k)).length}/${g.items.length}</span></div>
@@ -3149,7 +3149,7 @@ function wizStep3() {
 }
 function wizStep4() {
   const d = noDraft;
-  const scopes = [['all', '全员可见', '公司全体成员均可在动态圈中看到'], ['dept', '指定部门', '仅所选部门成员可见'], ['none', '仅负责人与相关人', '仅负责人及业务参与人可见']];
+  const scopes = [['all', '全员可见', '公司全体成员均可在动态号中看到'], ['dept', '指定部门', '仅所选部门成员可见'], ['none', '仅负责人与相关人', '仅负责人及业务参与人可见']];
   const deptPick = d.scopeType === 'dept'
     ? `<div class="cascader">
         <div class="casc-col casc-left">
@@ -3233,7 +3233,7 @@ function wizFoot() {
 }
 function wizRepaint() { $('#createPane').innerHTML = wizPaneHTML(); $('#createFoot').innerHTML = wizFoot(); }
 function renderCreateView() {
-  $('#createKicker').textContent = noDraft.editId ? '编辑动态圈' : '新建动态圈';
+  $('#createKicker').textContent = noDraft.editId ? '编辑动态号' : '新建动态号';
   $('#createTitle').textContent = ['基本信息', '关联业务', '记录规则', '可见范围与确认'][noDraft.step - 1];
   /* 重置容器节点，丢弃上一次进入时绑定的监听，避免重复触发 */
   ['createPane', 'createFoot'].forEach((id) => {
@@ -3329,21 +3329,21 @@ function createFeedNo() {
 }
 function wizDoneSuccess(n, bindTxt, isEdit) {
   $('#createKicker').textContent = isEdit ? '编辑完成' : '创建完成';
-  $('#createTitle').textContent = isEdit ? '动态圈修改成功' : '动态圈创建成功';
+  $('#createTitle').textContent = isEdit ? '动态号修改成功' : '动态号创建成功';
   $('#createPane').innerHTML = `<div class="wiz-done">
     <span class="ok">${I.check}</span>
     <b>${esc(n.name)}（${esc(n.id)}）${isEdit ? '已保存修改' : '已创建并启用'}</b>
     <p>${isEdit
-      ? '你对动态圈的配置已更新，列表与详情将同步反映最新设置。'
-      : `已关联 <b>${n.binds.length}</b> 项业务：${esc(bindTxt)}。<br>一旦有人发起这些业务，动态圈将自动记录从发起到结束的完整过程。`}</p>
+      ? '你对动态号的配置已更新，列表与详情将同步反映最新设置。'
+      : `已关联 <b>${n.binds.length}</b> 项业务：${esc(bindTxt)}。<br>一旦有人发起这些业务，动态号将自动记录从发起到结束的完整过程。`}</p>
   </div>`;
-  $('#createFoot').innerHTML = `<button class="btn-ghost" data-create-back-list>返回动态圈列表</button><button class="btn-primary" data-create-view-no>查看动态圈</button>`;
+  $('#createFoot').innerHTML = `<button class="btn-ghost" data-create-back-list>返回动态号列表</button><button class="btn-primary" data-create-view-no>查看动态号</button>`;
 }
 
-/* ---------- 动态圈详情页 ---------- */
+/* ---------- 动态号详情页 ---------- */
 function openNoDetail(id) {
   const n = noOf(id);
-  if (!n) { toast('未找到该动态圈'); return; }
+  if (!n) { toast('未找到该动态号'); return; }
   ndId = id;
   closeSheet(); closeLightbox(); closeDetail();
   renderNoDetail();
@@ -3354,7 +3354,7 @@ function renderNoDetail() {
   const n = noOf(ndId); if (!n) return;
   ndBasicCollapsed = true; /* 每次打开详情默认收起介绍卡片 */
   const tone = TONE_MAP[n.tone] || TONE_MAP.blue;
-  $('#ndKicker').textContent = `动态圈 · ${n.id}`;
+  $('#ndKicker').textContent = `动态号 · ${n.id}`;
   $('#ndTitle').textContent = n.name;
 
   /* 基本信息 */
@@ -3390,7 +3390,7 @@ function renderNoDetail() {
 
   renderNdFeeds();
 }
-/* 详情页：该动态圈产生的动态，按时间倒序，支持时间筛选 / 关键字搜索 */
+/* 详情页：该动态号产生的动态，按时间倒序，支持时间筛选 / 关键字搜索 */
 function renderNdFeeds() {
   const n = noOf(ndId); if (!n) return;
   let fl = feeds.filter(f => f.noId === n.id);
@@ -3436,7 +3436,7 @@ const ACTORS = ['王芳', '李明', '张宇', '赵磊', '陈刚'];
 function stepNote(ins, node, idx) {
   const biz = (bizOf(ins.kind, ins.bizId) || {}).name || ins.bizId;
   const map = {
-    start: `${ins.starter} 通过《${biz}》发起「${ins.title}」，动态圈开始记录本次业务全过程。`,
+    start: `${ins.starter} 通过《${biz}》发起「${ins.title}」，动态号开始记录本次业务全过程。`,
     flow: `「${ins.title}」流转至第 ${idx + 1} 个节点：${node.k}，${node.a}。`,
     approve: `「${ins.title}」在 ${node.k} 节点${node.a}，业务继续向下流转。`,
     done: `「${ins.title}」全部节点已完成，${node.a}，本次业务正式结束。`,
@@ -3512,7 +3512,7 @@ function renderLife() {
   const tone = TONE_MAP[m.label === '表单' ? 'blue' : m.label === '流程' ? 'violet' : 'orange'];
   const stTone = ins.state === 'done' ? ['var(--ok-soft)', 'var(--ok)'] : ins.state === 'aborted' ? ['var(--surface-soft)', 'var(--muted)'] : ['var(--accent-soft)', 'var(--accent)'];
 
-  $('#lfKicker').textContent = `${n.name || '动态圈'} · ${ins.id}`;
+  $('#lfKicker').textContent = `${n.name || '动态号'} · ${ins.id}`;
   $('#lfTitle').textContent = ins.title;
   $('#lfHead').innerHTML = `
     <span class="rec-icon" style="background:${tone[0]};color:${tone[1]}">${I[m.icon]}</span>
@@ -3521,7 +3521,7 @@ function renderLife() {
 
   $('#lfSummary').innerHTML = ins.state === 'done'
     ? `<div class="life-summary"><b>${I.check}业务已闭环，全过程记录完成</b>
-        <p>「${esc(ins.title)}」由 <b>${esc(ins.starter)}</b> 于 ${esc(ins.startAt)} 发起，历经 <b>${life.length}</b> 个节点，于 ${esc(ins.endAt)} 结束。动态圈「${esc(n.name || '')}」共记录 <b>${ins.logs.filter(l => l.feedId).length}</b> 条动态，完整覆盖业务的发生、流转与结束。</p></div>`
+        <p>「${esc(ins.title)}」由 <b>${esc(ins.starter)}</b> 于 ${esc(ins.startAt)} 发起，历经 <b>${life.length}</b> 个节点，于 ${esc(ins.endAt)} 结束。动态号「${esc(n.name || '')}」共记录 <b>${ins.logs.filter(l => l.feedId).length}</b> 条动态，完整覆盖业务的发生、流转与结束。</p></div>`
     : ins.state === 'aborted'
       ? `<div class="life-summary" style="border-color:var(--muted);background:var(--surface-soft)"><b style="color:var(--muted)">${I.close}业务已中途终止</b>
         <p>「${esc(ins.title)}」在第 ${ins.cursor} 个节点被终止，终止前的全部过程已完整留痕。</p></div>`
@@ -3554,7 +3554,7 @@ function renderLife() {
     ? `<button class="btn-primary" data-life-next="${ins.id}">${I.check}推进到下一节点（${esc((insCurNode(ins) || {}).k || '')}）</button>
        <button class="btn-ghost" data-life-all="${ins.id}">一键推进至业务结束</button>
        <button class="btn-ghost" data-life-abort="${ins.id}">终止业务</button>`
-    : `<button class="btn-ghost" data-no-open="${ins.noId}">返回动态圈</button>
+    : `<button class="btn-ghost" data-no-open="${ins.noId}">返回动态号</button>
        <button class="btn-ghost" data-life-feeds="${ins.id}">在信息流中查看全部动态</button>`;
 
   const fl = feeds.filter(f => f.insId === ins.id);
@@ -3564,7 +3564,7 @@ function renderLife() {
     : `<div class="empty-side">${I.link}<p>暂无动态。</p></div>`;
 
   $('#lfFields').innerHTML = [
-    ['业务实例编号', ins.id], ['来源动态圈', n.name || '—'],
+    ['业务实例编号', ins.id], ['来源动态号', n.name || '—'],
     ['业务对象', `${m.label}《${biz.name || ins.bizId}》`], ['对象编号', ins.bizId],
     ['发起人', `${ins.starter}（${ins.dept}）`], ['发起时间', ins.startAt],
     ['当前状态', insStateText(ins)], ['结束时间', ins.endAt || '进行中'],
@@ -3596,9 +3596,9 @@ $('#backFromLife').addEventListener('click', () => {
 $('#noSearchInput').addEventListener('input', (e) => { noSearch = e.target.value.trim(); renderNoGrid(); });
 $('#noHelpBtn').addEventListener('click', () => {
   pushSheet({
-    title: '什么是动态圈？', sub: '业务来源的配置单元',
+    title: '什么是动态号？', sub: '业务来源的配置单元',
     body: () => `
-      <p class="side-note" style="margin:0 0 12px"><b>动态圈</b>是「动态圈」的业务来源配置。它把散落的表单、流程、任务收敛到一个号下，并规定在哪些节点自动生成动态。</p>
+      <p class="side-note" style="margin:0 0 12px"><b>动态号</b>是「动态号」的业务来源配置。它把散落的表单、流程、任务收敛到一个号下，并规定在哪些节点自动生成动态。</p>
       <div class="wz-preview">
         <div class="wz-kv"><span>① 创建</span><b>设定名称、负责人、图标与可见范围</b></div>
         <div class="wz-kv"><span>② 关联</span><b>勾选要跟踪的表单 / 流程 / 任务</b></div>
@@ -3606,8 +3606,8 @@ $('#noHelpBtn').addEventListener('click', () => {
         <div class="wz-kv"><span>④ 记录</span><b>发起 → 流转 → 审批 → 完成/终止，逐节点生成动态</b></div>
         <div class="wz-kv"><span>⑤ 结束</span><b>业务闭环后形成完整可追溯的全过程链路</b></div>
       </div>
-      <p class="side-note" style="margin:12px 0 0">与「消息中心」的区别：消息中心只收发给你个人的系统消息、抄送与通知；动态圈面向<b>业务本身</b>，记录的是业务对象的客观过程。</p>`,
-    foot: () => `<button class="btn-primary" id="helpNew">去创建一个动态圈</button>`,
+      <p class="side-note" style="margin:12px 0 0">与「消息中心」的区别：消息中心只收发给你个人的系统消息、抄送与通知；动态号面向<b>业务本身</b>，记录的是业务对象的客观过程。</p>`,
+    foot: () => `<button class="btn-primary" id="helpNew">去创建一个动态号</button>`,
     mount() { $('#helpNew').addEventListener('click', () => { closeSheet(); openCreateNo(); }); },
   });
 });
@@ -3626,16 +3626,16 @@ $('#noHelpBtn').addEventListener('click', () => {
       renderNoGrid();
     }
     else if (t.hasAttribute('data-no-create')) openCreateNo();
-    else if (d.noFeed) { const n = noOf(d.noFeed); if (!n || n.status === 'off') { if (n) toast('动态圈已停用，无法发起动态'); return; } openNewFeedPage(d.noFeed); }
+    else if (d.noFeed) { const n = noOf(d.noFeed); if (!n || n.status === 'off') { if (n) toast('动态号已停用，无法发起动态'); return; } openNewFeedPage(d.noFeed); }
     else if (d.noLatest) openDetail(d.noLatest);
     else if (d.noOpen) openNoDetail(d.noOpen);
     else if (d.noToggle) {
       const n = noOf(d.noToggle); if (!n) return;
       n.status = n.status === 'on' ? 'off' : 'on';
-      toast(n.status === 'on' ? '动态圈已启用，将开始记录关联业务' : '动态圈已停用，不再记录新业务');
+      toast(n.status === 'on' ? '动态号已启用，将开始记录关联业务' : '动态号已停用，不再记录新业务');
       renderNoDetail(); renderNoView();
     }
-    else if (d.noEdit) { const n = noOf(d.noEdit); if (!n || n.status === 'off') { if (n) toast('动态圈已停用，无法编辑'); return; } openEditNo(d.noEdit); }
+    else if (d.noEdit) { const n = noOf(d.noEdit); if (!n || n.status === 'off') { if (n) toast('动态号已停用，无法编辑'); return; } openEditNo(d.noEdit); }
     else if (d.noDelete) { openDeleteNo(d.noDelete); }
     else if (d.life) openLife(d.life);
     else if (d.lifeNext) { advanceInstance(d.lifeNext); renderLife(); toast('已推进到下一节点，并生成动态'); }
@@ -3649,7 +3649,7 @@ $('#noHelpBtn').addEventListener('click', () => {
   });
 });
 
-/* ============ 消息中心（独立列表页，区别于动态圈） ============ */
+/* ============ 消息中心（独立列表页，区别于动态号） ============ */
 const MSGCAT = {
   mention: { label: '@我的', cls: 'mention', color: 'var(--accent)',
     icon: '<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7"><circle cx="12" cy="12" r="4"/><path d="M16 8v5a3 3 0 0 0 3 3h1M8 8v5a3 3 0 0 1-3 3H4"/></svg>' },
@@ -3670,7 +3670,7 @@ const MESSAGES = [
     text: '李强 在纪要中 @ 你跟进「有限空间作业审批」事项，请于本周内反馈。', read: false },
   /* 系统消息 */
   { id: 's1', cat: 'system', title: '系统将于今晚 22:00 进行版本升级维护', source: '系统运维', time: '10 分钟前',
-    text: '澄明工作台 v2.8 升级，预计停机 30 分钟，期间「动态圈」与流程审批暂不可用，请提前保存工作。', read: false, prio: 'important' },
+    text: '澄明工作台 v2.8 升级，预计停机 30 分钟，期间「动态号」与流程审批暂不可用，请提前保存工作。', read: false, prio: 'important' },
   { id: 's2', cat: 'system', title: '《安全生产管理制度（2026版）》已发布', source: '安全管理部', time: '今天 08:30',
     text: '新版制度已生效，请各部门组织宣贯学习，相关考核于下月启动。', read: false },
   { id: 's3', cat: 'system', title: '月度经营数据报表已生成', source: '数据中心', time: '昨天 18:00',
