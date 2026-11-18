@@ -1,0 +1,267 @@
+/* The stage and everything drawn on it. Colours come from the theme variables that
+   ScreenStage / the designer set on .bi-stage, so widgets never hard-code a palette. */
+
+/* The stage keeps its full size in layout and is only scaled visually, so its box is larger
+   than what is shown. `clip` (unlike `hidden`) cannot be scrolled, not even by a button
+   inside the stage taking focus, which would otherwise shift the whole screen sideways. */
+.bi-stage-box { position: relative; flex: none; overflow: hidden; overflow: clip; }
+.bi-stage {
+  position: relative;
+  overflow: hidden;
+  overflow: clip;
+  transform-origin: 0 0;
+  background: var(--bi-stage);
+  color: var(--bi-text);
+  font-family: var(--bi-text-font);
+  font-size: 14px;
+  line-height: 1.4;
+  text-align: left;
+  -webkit-font-smoothing: antialiased;
+}
+.bi-stage *, .bi-stage *::before, .bi-stage *::after { box-sizing: border-box; }
+.bi-stage button { font: inherit; }
+.bi-item { position: absolute; }
+.bi-item:has(.bi-filter__menu) { z-index: 50; }
+
+/* 安全风险总览的实时预警直接来自任务填报场景，和大屏一起缩放。 */
+.bi-risk-alert { position: absolute; z-index: 20; top: 88px; right: 24px; width: 452px; max-height: 128px; overflow: hidden; border: 1px solid color-mix(in srgb, #e34d44 62%, var(--bi-panel-border)); background: linear-gradient(90deg, color-mix(in srgb, #e34d44 14%, var(--bi-panel-solid)), var(--bi-panel-solid) 66%); box-shadow: inset 3px 0 0 #e34d44; }
+.bi-risk-alert > header { height: 32px; padding: 0 12px 0 15px; display: flex; align-items: center; justify-content: space-between; border-bottom: 1px solid color-mix(in srgb, #e34d44 24%, var(--bi-panel-border)); }
+.bi-risk-alert > header span { display: inline-flex; align-items: center; gap: 7px; color: var(--bi-text); font-size: 13px; font-weight: 700; letter-spacing: .05em; }
+.bi-risk-alert > header span i { width: 7px; height: 7px; border-radius: 50%; background: #e34d44; box-shadow: 0 0 0 4px color-mix(in srgb, #e34d44 18%, transparent); animation: bi-risk-alert-pulse 1.6s ease-in-out infinite; }
+.bi-risk-alert > header b { color: #e36b62; font-family: var(--bi-number-font); font-size: 12px; font-weight: 600; }
+.bi-risk-alert > div { display: grid; }
+.bi-risk-alert article { min-width: 0; height: 46px; padding: 6px 11px 6px 15px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 9px; border-top: 1px solid color-mix(in srgb, var(--bi-line) 74%, transparent); }
+.bi-risk-alert article:first-child { border-top: 0; }
+.bi-risk-alert em { padding: 2px 6px; border-radius: 2px; background: rgb(227 77 68 / 16%); color: #f2776f; font-size: 11px; font-style: normal; font-weight: 700; white-space: nowrap; }
+.bi-risk-alert em.is-一级 { background: rgb(227 77 68 / 24%); color: #ff8d83; }
+.bi-risk-alert em.is-二级 { background: rgb(235 156 49 / 18%); color: #f0ae58; }
+.bi-risk-alert em.is-三级 { background: rgb(42 143 111 / 18%); color: #57b99b; }
+.bi-risk-alert p { min-width: 0; margin: 0; display: grid; gap: 1px; }
+.bi-risk-alert strong, .bi-risk-alert span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bi-risk-alert strong { color: var(--bi-text); font-size: 12px; font-weight: 600; }
+.bi-risk-alert p span, .bi-risk-alert time { color: var(--bi-muted); font-size: 10px; }
+.bi-risk-alert time { font-family: var(--bi-number-font); white-space: nowrap; }
+@keyframes bi-risk-alert-pulse { 0%, 100% { opacity: .55; } 50% { opacity: 1; } }
+
+/* ---------- widget frame ---------- */
+.bi-w { position: relative; height: 100%; min-height: 0; display: flex; flex-direction: column; }
+.bi-w--card, .bi-w--shaft { background: var(--bi-panel); border: 1px solid var(--bi-panel-border); border-radius: 3px; }
+.bi-w--shaft { border-left-color: var(--bi-accent); padding-left: 8px; }
+/* 井深刻度：左缘像竖井深度标尺一样，每 8px 一道短刻度、每 40px 一道长刻度。 */
+.bi-w--shaft::before, .bi-border--shaft::before {
+  content: "";
+  position: absolute;
+  left: 0;
+  top: 0;
+  bottom: 0;
+  width: 10px;
+  background:
+    repeating-linear-gradient(to bottom, var(--bi-accent) 0 1px, transparent 1px 40px) left top / 10px 100% no-repeat,
+    repeating-linear-gradient(to bottom, var(--bi-faint) 0 1px, transparent 1px 8px) left top / 5px 100% no-repeat;
+  pointer-events: none;
+}
+.bi-w__head { flex: none; height: 42px; padding: 0 14px 0 16px; display: flex; align-items: center; justify-content: space-between; gap: 12px; }
+.bi-w__head h3 { min-width: 0; margin: 0; display: flex; align-items: center; gap: 10px; overflow: hidden; color: var(--bi-text); font-size: 16px; font-weight: 600; letter-spacing: .04em; white-space: nowrap; text-overflow: ellipsis; }
+.bi-w__head h3::before { content: ""; flex: none; width: 3px; height: 14px; background: var(--bi-accent); }
+.bi-w__body { position: relative; flex: 1; min-height: 0; padding: 2px 14px 12px 16px; }
+.bi-w--none .bi-w__head { padding: 0 2px; }
+.bi-w--none .bi-w__body { padding: 2px 2px 0; }
+.bi-echart { width: 100%; height: 100%; }
+.bi-echart.is-clickable { cursor: pointer; }
+.bi-empty { height: 100%; padding: 8px; display: grid; place-items: center; color: var(--bi-faint); font-size: 13px; text-align: center; }
+
+.bi-w__tools { flex: none; min-width: 0; display: flex; align-items: center; gap: 10px; }
+.bi-w__tools.is-floating { position: absolute; z-index: 2; top: 8px; right: 10px; }
+/* 明细按钮平时不占视线，鼠标移到组件上才出现。 */
+.bi-w__detail { flex: none; height: 24px; padding: 0 9px; border: 1px solid var(--bi-panel-border); border-radius: 2px; background: var(--bi-panel-solid); color: var(--bi-accent-2); font-size: 12px; opacity: 0; transition: opacity .16s ease, border-color .16s ease; }
+.bi-item:hover .bi-w__detail, .bi-w__detail:focus-visible { opacity: 1; }
+.bi-w__detail:hover { border-color: var(--bi-accent-2); }
+
+.bi-drill { flex: none; min-width: 0; display: flex; align-items: center; font-size: 12px; white-space: nowrap; }
+.bi-drill button { padding: 2px 3px; border: 0; background: transparent; color: var(--bi-accent-2); }
+.bi-drill button:hover:not(:disabled) { text-decoration: underline; }
+.bi-drill button:disabled { color: var(--bi-text); cursor: default; }
+.bi-drill button + button::before { content: "›"; margin-right: 6px; color: var(--bi-faint); }
+.bi-drill span { margin-left: 8px; padding: 1px 7px; border: 1px dashed var(--bi-panel-border); border-radius: 2px; color: var(--bi-muted); }
+.bi-drill span:first-child { margin-left: 0; }
+
+/* ---------- metric ---------- */
+.bi-metric { position: relative; height: 100%; display: flex; flex-direction: column; justify-content: center; }
+.bi-metric--center { align-items: center; text-align: center; }
+.bi-metric__value { position: relative; z-index: 1; font-family: var(--bi-number-font); font-weight: 600; font-variant-numeric: tabular-nums; line-height: 1; letter-spacing: .01em; white-space: nowrap; }
+.bi-metric__value small { margin-left: .35em; color: var(--bi-muted); font-family: var(--bi-text-font); font-size: .3em; font-weight: 400; }
+.bi-metric__change { position: relative; z-index: 1; margin-top: 8px; color: var(--bi-muted); font-size: 13px; }
+.bi-metric__change b { margin-left: 6px; color: var(--bi-text); font-family: var(--bi-number-font); font-weight: 500; }
+.bi-metric__spark { position: absolute; right: -4px; bottom: 0; width: 42%; height: 38%; }
+.bi-metric__spark-line { fill: none; stroke: var(--bi-accent-2); stroke-width: 1.5; }
+.bi-metric__spark-area { fill: color-mix(in srgb, var(--bi-accent-2) 16%, transparent); stroke: none; }
+
+/* ---------- progress ---------- */
+.bi-progress { height: 100%; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 8px; }
+.bi-progress__ring { position: relative; flex: 1; width: 100%; min-height: 0; container-type: size; }
+.bi-progress__ring svg { width: 100%; height: 100%; transform: rotate(-90deg); }
+.bi-progress__rail { fill: none; stroke: color-mix(in srgb, var(--bi-text) 10%, transparent); stroke-width: 7; }
+.bi-progress__arc { fill: none; stroke-width: 7; stroke-linecap: round; transition: stroke-dasharray .6s ease; }
+.bi-progress__ring strong { position: absolute; inset: 0; display: grid; place-items: center; font-family: var(--bi-number-font); font-size: clamp(16px, 21cqmin, 46px); font-weight: 600; }
+.bi-progress__detail { flex: none; margin: 0; color: var(--bi-muted); font-size: 12px; white-space: nowrap; }
+.bi-progress__detail b { color: var(--bi-text); font-family: var(--bi-number-font); font-size: 14px; font-weight: 500; }
+.bi-progress__detail i { margin: 0 6px; color: var(--bi-faint); font-style: normal; }
+.bi-progress--bar { align-items: stretch; }
+.bi-progress--bar strong { font-family: var(--bi-number-font); font-size: 34px; font-weight: 600; line-height: 1; }
+.bi-progress__track { height: 10px; overflow: hidden; border-radius: 5px; background: color-mix(in srgb, var(--bi-text) 10%, transparent); }
+.bi-progress__track span { display: block; height: 100%; border-radius: 5px; transition: width .6s ease; }
+
+/* ---------- rank ---------- */
+.bi-rank { height: 100%; margin: 0; padding: 0; display: flex; flex-direction: column; justify-content: space-around; list-style: none; }
+.bi-rank li { min-height: 24px; padding: 0 4px; display: flex; align-items: center; gap: 10px; border-radius: 2px; font-size: 14px; transition: opacity .2s ease, background .2s ease; }
+.bi-rank li.is-clickable { cursor: pointer; }
+.bi-rank li.is-clickable:hover { background: color-mix(in srgb, var(--bi-text) 6%, transparent); }
+.bi-rank li.is-faded { opacity: .34; }
+.bi-rank i { flex: none; width: 22px; height: 22px; display: grid; place-items: center; border: 1px solid var(--bi-line); color: var(--bi-muted); font-family: var(--bi-number-font); font-size: 12px; font-style: normal; }
+.bi-rank li.is-top i { border-color: transparent; background: var(--bi-accent); color: var(--bi-stage-color); font-weight: 700; }
+.bi-rank span { flex: 0 1 34%; min-width: 64px; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bi-rank em { flex: 1; height: 6px; overflow: hidden; border-radius: 3px; background: color-mix(in srgb, var(--bi-text) 9%, transparent); }
+.bi-rank u { display: block; height: 100%; border-radius: 3px; background: var(--bi-rank-color); transition: width .5s ease; }
+.bi-rank b { flex: none; min-width: 40px; margin-left: auto; font-family: var(--bi-number-font); font-size: 16px; font-weight: 600; text-align: right; }
+.bi-rank b small { margin-left: 3px; color: var(--bi-muted); font-family: var(--bi-text-font); font-size: 11px; font-weight: 400; }
+
+/* ---------- marquee / table / ticker ---------- */
+.bi-marquee { height: 100%; overflow: hidden; }
+.bi-marquee__track.is-scrolling { animation: bi-marquee linear infinite; }
+.bi-marquee:hover .bi-marquee__track.is-scrolling { animation-play-state: paused; }
+@keyframes bi-marquee { to { transform: translateY(-50%); } }
+
+.bi-table { height: 100%; display: flex; flex-direction: column; font-size: 13px; }
+.bi-table .bi-marquee { flex: 1; min-height: 0; height: auto; }
+.bi-table__head, .bi-table__row { padding: 0 10px; display: grid; align-items: center; column-gap: 12px; }
+.bi-table__head { flex: none; height: 34px; background: color-mix(in srgb, var(--bi-accent-2) 10%, transparent); color: var(--bi-muted); font-size: 12px; }
+.bi-table__row { border-bottom: 1px solid var(--bi-line); }
+.bi-table.is-striped .bi-table__row:nth-child(even) { background: color-mix(in srgb, var(--bi-text) 3%, transparent); }
+.bi-table__head span, .bi-table__row span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bi-table .is-number { font-family: var(--bi-number-font); text-align: right; }
+.bi-table__index { color: var(--bi-faint); font-family: var(--bi-number-font); }
+.bi-tag { padding: 1px 7px; display: inline-block; border: 1px solid color-mix(in srgb, var(--bi-tag) 42%, transparent); border-radius: 2px; background: color-mix(in srgb, var(--bi-tag) 15%, transparent); color: var(--bi-tag); font-size: 12px; font-style: normal; line-height: 1.5; }
+
+.bi-ticker__item { margin-bottom: 6px; padding: 9px 6px 9px 12px; display: grid; grid-template-columns: auto minmax(0, 1fr) auto; align-items: center; gap: 12px; border-left: 2px solid var(--bi-tag); background: linear-gradient(90deg, color-mix(in srgb, var(--bi-tag) 11%, transparent), transparent 62%); }
+.bi-ticker__tag { min-width: 30px; color: var(--bi-tag); font-size: 13px; font-style: normal; font-weight: 700; }
+.bi-ticker__item b { display: block; overflow: hidden; font-size: 14px; font-weight: 500; text-overflow: ellipsis; white-space: nowrap; }
+.bi-ticker__item p { margin: 3px 0 0; overflow: hidden; color: var(--bi-muted); font-size: 12px; text-overflow: ellipsis; white-space: nowrap; }
+.bi-ticker__item aside { display: grid; gap: 3px; color: var(--bi-muted); font-size: 12px; text-align: right; white-space: nowrap; }
+
+/* ---------- text & decoration ---------- */
+.bi-title { height: 100%; display: flex; align-items: center; gap: 28px; }
+.bi-title--center { justify-content: center; text-align: center; }
+.bi-title h1 { margin: 0; font-weight: 600; line-height: 1.15; white-space: nowrap; }
+.bi-title p { margin: 5px 0 0; color: var(--bi-muted); font-size: 14px; letter-spacing: .28em; white-space: nowrap; }
+/* 岩层线：三道由近及远渐隐的横线，像地层剖面。 */
+.bi-title__deco {
+  flex: 1;
+  min-width: 40px;
+  height: 22px;
+  background:
+    linear-gradient(to left, var(--bi-accent), transparent) right 2px / 100% 2px no-repeat,
+    linear-gradient(to left, var(--bi-accent-2), transparent) right 10px / 72% 1px no-repeat,
+    linear-gradient(to left, var(--bi-faint), transparent) right 18px / 46% 1px no-repeat;
+}
+.bi-title__deco--end { transform: scaleX(-1); }
+.bi-title--left .bi-title__deco:first-child, .bi-title--none .bi-title__deco, .bi-title--underline .bi-title__deco { display: none; }
+.bi-title--underline > div { padding-bottom: 8px; border-bottom: 2px solid var(--bi-accent); }
+.bi-text { height: 100%; margin: 0; overflow: hidden; white-space: pre-wrap; word-break: break-word; }
+.bi-clock { height: 100%; display: flex; align-items: center; gap: .6em; font-family: var(--bi-number-font); font-variant-numeric: tabular-nums; white-space: nowrap; }
+.bi-clock b { color: var(--bi-text); font-weight: 600; letter-spacing: .04em; }
+
+.bi-border { position: relative; height: 100%; }
+.bi-border--shaft { border: 1px solid var(--bi-panel-border); border-left-color: var(--bi-accent); background: var(--bi-panel); }
+.bi-border--corner {
+  border: 1px solid var(--bi-line);
+  background:
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) left top / 18px 2px no-repeat,
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) left top / 2px 18px no-repeat,
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) right top / 18px 2px no-repeat,
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) right top / 2px 18px no-repeat,
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) left bottom / 18px 2px no-repeat,
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) left bottom / 2px 18px no-repeat,
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) right bottom / 18px 2px no-repeat,
+    linear-gradient(var(--bi-accent-2), var(--bi-accent-2)) right bottom / 2px 18px no-repeat,
+    var(--bi-panel);
+}
+.bi-border--glow { border: 1px solid var(--bi-panel-border); border-radius: 6px; background: var(--bi-panel); box-shadow: inset 0 0 46px color-mix(in srgb, var(--bi-accent-2) 12%, transparent); }
+.bi-border--line { border: 1px solid var(--bi-panel-border); }
+.bi-border__title { position: absolute; top: -1px; left: 18px; padding: 3px 12px; background: var(--bi-accent); color: var(--bi-stage-color); font-size: 13px; font-weight: 600; letter-spacing: .08em; }
+.bi-image { width: 100%; height: 100%; display: block; }
+.bi-image--empty { padding: 12px; display: grid; place-items: center; border: 1px dashed var(--bi-faint); color: var(--bi-faint); font-size: 13px; text-align: center; }
+
+/* ---------- filter ---------- */
+.bi-filter { position: relative; height: 100%; display: flex; align-items: center; gap: 12px; font-size: 14px; }
+.bi-filter__label { flex: none; color: var(--bi-muted); white-space: nowrap; }
+.bi-filter__segments { flex: 1; height: 100%; max-height: 40px; display: flex; overflow: hidden; border: 1px solid var(--bi-panel-border); border-radius: 3px; background: var(--bi-panel); }
+.bi-filter__segments button { flex: 1; padding: 0 8px; border: 0; border-right: 1px solid var(--bi-panel-border); background: transparent; color: var(--bi-muted); white-space: nowrap; }
+.bi-filter__segments button:last-child { border-right: 0; }
+.bi-filter__segments button:hover { color: var(--bi-text); }
+.bi-filter__segments button.is-active { background: var(--bi-accent); color: var(--bi-stage-color); font-weight: 600; }
+.bi-filter__trigger { flex: 1; min-width: 0; height: 100%; max-height: 40px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; gap: 8px; border: 1px solid var(--bi-panel-border); border-radius: 3px; background: var(--bi-panel); color: var(--bi-text); }
+.bi-filter__trigger span { overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.bi-filter__trigger svg { flex: none; width: 12px; height: 12px; color: var(--bi-muted); }
+.bi-filter__menu { position: absolute; z-index: 5; top: calc(100% + 4px); right: 0; min-width: 220px; max-height: 340px; padding: 4px; display: grid; overflow: auto; border: 1px solid var(--bi-panel-border); border-radius: 3px; background: var(--bi-panel-solid); box-shadow: 0 14px 34px rgba(0, 0, 0, .34); }
+.bi-filter__menu button { padding: 7px 10px; display: flex; align-items: center; gap: 9px; border: 0; border-radius: 2px; background: transparent; color: var(--bi-text); text-align: left; white-space: nowrap; }
+.bi-filter__menu button:hover:not(:disabled) { background: color-mix(in srgb, var(--bi-text) 8%, transparent); }
+.bi-filter__menu button i { flex: none; width: 14px; height: 14px; border: 1px solid var(--bi-faint); border-radius: 2px; }
+.bi-filter__menu button.is-selected i { border-color: var(--bi-accent); background: var(--bi-accent) center / 10px no-repeat url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath d='M2.5 6.2 5 8.6l4.5-5' fill='none' stroke='%23111' stroke-width='1.8'/%3E%3C/svg%3E"); }
+.bi-filter__menu .bi-filter__clear { margin-bottom: 2px; border-bottom: 1px solid var(--bi-line); color: var(--bi-accent-2); font-size: 12px; }
+.bi-filter__menu .bi-filter__clear:disabled { color: var(--bi-faint); cursor: default; }
+
+/* ---------- selection bar & detail panel ----------
+   Both sit on the stage box, outside the scaled stage, so their text keeps its size. */
+.bi-selection, .bi-detail { font-family: var(--bi-text-font); font-size: 13px; line-height: 1.5; color: var(--bi-text); text-align: left; }
+.bi-selection *, .bi-detail * { box-sizing: border-box; }
+.bi-selection button, .bi-detail button { font: inherit; cursor: pointer; }
+/* At the top, over the title strip: the bottom of a screen is usually charts, which it would hide. */
+.bi-selection { position: absolute; z-index: 60; left: 50%; top: 10px; max-width: calc(100% - 28px); padding: 7px 8px 7px 14px; display: flex; align-items: center; gap: 8px; transform: translateX(-50%); border: 1px solid var(--bi-accent); border-radius: 4px; background: var(--bi-panel-solid); box-shadow: 0 12px 32px rgba(0, 0, 0, .36); white-space: nowrap; }
+.bi-selection p { min-width: 0; margin: 0 6px 0 0; display: flex; align-items: center; gap: 6px; overflow: hidden; color: var(--bi-muted); }
+.bi-selection p b { color: var(--bi-accent); font-weight: 600; }
+.bi-selection p i { color: var(--bi-faint); font-style: normal; }
+.bi-selection p span { margin-left: 8px; padding-left: 12px; overflow: hidden; border-left: 1px solid var(--bi-line); text-overflow: ellipsis; }
+.bi-selection p strong { margin: 0 3px; color: var(--bi-text); font-family: var(--bi-number-font); font-size: 15px; }
+.bi-selection button { flex: none; height: 28px; padding: 0 12px; border: 1px solid var(--bi-panel-border); border-radius: 3px; background: transparent; color: var(--bi-text); }
+.bi-selection button:hover { border-color: var(--bi-accent); }
+.bi-selection button.is-primary { border-color: var(--bi-accent); background: var(--bi-accent); color: var(--bi-stage-color); font-weight: 600; }
+
+.bi-detail { position: absolute; z-index: 70; inset: 0; display: flex; justify-content: flex-end; }
+.bi-detail__scrim { position: absolute; inset: 0; padding: 0; border: 0; background: rgba(0, 0, 0, .5); cursor: default; }
+.bi-detail__panel { position: relative; width: min(1120px, 94%); height: 100%; display: flex; flex-direction: column; border-left: 1px solid var(--bi-panel-border); background: var(--bi-panel-solid); box-shadow: -18px 0 48px rgba(0, 0, 0, .4); animation: bi-detail-in .22s ease; }
+@keyframes bi-detail-in { from { transform: translateX(28px); opacity: 0; } }
+.bi-detail__panel > header { flex: none; padding: 14px 16px 12px 20px; display: flex; align-items: flex-start; justify-content: space-between; gap: 16px; border-bottom: 1px solid var(--bi-line); }
+.bi-detail__panel h2 { margin: 0; font-size: 17px; font-weight: 600; }
+.bi-detail__panel h2 span { margin-left: 10px; padding: 1px 8px; border: 1px solid var(--bi-accent); border-radius: 2px; color: var(--bi-accent); font-size: 12px; font-weight: 400; vertical-align: 2px; }
+.bi-detail__panel header p { margin: 4px 0 0; color: var(--bi-muted); font-size: 12px; }
+.bi-detail__close { flex: none; height: 28px; padding: 0 12px; border: 1px solid var(--bi-panel-border); border-radius: 3px; background: transparent; color: var(--bi-text); }
+.bi-detail__close:hover { border-color: var(--bi-accent); }
+.bi-detail__conditions { flex: none; padding: 10px 20px; display: flex; flex-wrap: wrap; align-items: center; gap: 6px 8px; border-bottom: 1px solid var(--bi-line); color: var(--bi-muted); font-size: 12px; }
+.bi-detail__conditions i { padding: 2px 9px; border: 1px solid var(--bi-panel-border); border-radius: 2px; color: var(--bi-text); font-style: normal; }
+.bi-detail__conditions b { margin-left: auto; color: var(--bi-text); font-weight: 600; }
+.bi-detail__scroll { flex: 1; min-height: 0; overflow: auto; scrollbar-width: thin; scrollbar-color: var(--bi-faint) transparent; }
+.bi-detail table { width: 100%; border-collapse: collapse; white-space: nowrap; }
+.bi-detail th { position: sticky; z-index: 1; top: 0; height: 34px; padding: 0 12px; background: var(--bi-panel-solid); box-shadow: inset 0 -1px 0 var(--bi-line); color: var(--bi-muted); font-size: 12px; font-weight: 400; text-align: left; }
+.bi-detail td { height: 36px; padding: 0 12px; border-bottom: 1px solid var(--bi-line); }
+.bi-detail tbody tr:not(.bi-detail__expand) { cursor: pointer; }
+.bi-detail tbody tr:not(.bi-detail__expand):hover td, .bi-detail tr.is-open td { background: color-mix(in srgb, var(--bi-text) 5%, transparent); }
+.bi-detail .is-number { font-family: var(--bi-number-font); text-align: right; }
+.bi-detail td.is-text { max-width: 280px; overflow: hidden; text-overflow: ellipsis; }
+.bi-detail__no { color: var(--bi-accent-2); font-family: var(--bi-number-font); font-variant-numeric: tabular-nums; }
+.bi-detail__toggle { padding: 2px 8px; border: 1px solid var(--bi-panel-border); border-radius: 2px; background: transparent; color: var(--bi-accent-2); font-size: 12px; }
+.bi-detail__toggle[aria-expanded="true"] { border-color: var(--bi-accent-2); }
+.bi-detail__expand td { height: auto; padding: 10px 12px 12px 28px; background: color-mix(in srgb, var(--bi-text) 3%, transparent); white-space: normal; }
+.bi-detail__related { margin: 0; padding: 0; display: grid; gap: 6px; list-style: none; }
+.bi-detail__related li { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; }
+.bi-detail__related em { padding: 1px 7px; border-radius: 2px; background: color-mix(in srgb, var(--bi-accent-2) 16%, transparent); color: var(--bi-accent-2); font-size: 12px; font-style: normal; }
+.bi-detail__related b { font-weight: 500; }
+.bi-detail__related time, .bi-detail__related small { color: var(--bi-muted); font-size: 12px; }
+.bi-detail__none, .bi-detail__empty { margin: 0; color: var(--bi-muted); }
+.bi-detail__empty { padding: 48px 20px; text-align: center; }
+
+.bi-stage :focus-visible, .bi-selection :focus-visible, .bi-detail :focus-visible { outline: 2px solid var(--bi-accent); outline-offset: 2px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .bi-marquee__track.is-scrolling { animation: none; }
+  .bi-marquee { overflow-y: auto; }
+}

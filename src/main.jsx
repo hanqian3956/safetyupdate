@@ -56,12 +56,28 @@ import "./organization-center.css";
 import "./user-management.css";
 import "./login.css";
 import "./enterprise-settings.css";
-import lowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
+import rawLowCodePrototypeHtml from "../xiaodong/新新低代码.html?raw";
 import newTaskPrototypeHtml from "../xiaodong/最新的任务.html?raw";
-import warningPrototypeHtml from "../xiaodong/最新的预警.html?raw";
-import dynamicsPrototypeHtml from "../xiaodong/新动态.html?raw";
+import sourceTaskPrototypeHtml from "../xiaodong/最新的任务.html?raw";
+import sourceWarningPrototypeHtml from "../xiaodong/最新的预警.html?raw";
+import sourceDynamicsPrototypeHtml from "../xiaodong/新动态.html?raw";
+import warningTaskFilterBridge from "./scenario/bridges/warning-task-filter.js?raw";
 import MinePrevention from "./MinePrevention";
 import { MINE_APP_NAME, mineMenu } from "./mine-prevention-data";
+import WorkPermit from "./WorkPermit";
+import { WORK_PERMIT_APP_NAME, permitTypes, workPermitMenu } from "./work-permit-data";
+import { BiScreenManager, BiScreenViewer, BiShareView, getBiShareId } from "./bi/index.jsx";
+import { withInspectionFormBridge } from "./scenario/lowcode-form-embed.js";
+import { withTaskBridge } from "./scenario/task-embed.js";
+import { withInspectionDynamicsBridge } from "./scenario/dynamics-embed.js";
+import { withInspectionWarningBridge } from "./scenario/warning-embed.js";
+import {
+  INSPECTION_FEED_NO,
+  getInspectionProcessRecords,
+  subscribeInspection,
+} from "./scenario/inspectionStore.js";
+
+const primaryTaskPrototypeHtml = withTaskBridge(sourceTaskPrototypeHtml);
 
 const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
   "人事管理",
@@ -74,6 +90,9 @@ const FLOW_CATEGORY_DICTIONARY_OPTIONS = [
 
 const PROTOTYPE_ANNOTATIONS_URL = `${import.meta.env.BASE_URL}prototype-annotations.json`;
 const PROTOTYPE_SPECIFICATION_URL = "https://my.feishu.cn/wiki/SFXWwVnkZiBKEukrNnqcmXRhn2e";
+const lowCodePrototypeHtml = withInspectionFormBridge(rawLowCodePrototypeHtml);
+const warningPrototypeHtml = withInspectionWarningBridge(sourceWarningPrototypeHtml);
+const dynamicsPrototypeHtml = withInspectionDynamicsBridge(sourceDynamicsPrototypeHtml);
 
 function getAnnotationsFromPayload(payload) {
   const annotations = Array.isArray(payload) ? payload : payload?.annotations;
@@ -197,6 +216,8 @@ const workQueues = [
 ];
 
 const apps = [
+  { name: MINE_APP_NAME, description: "矿山风险与隐患闭环", icon: ShieldCheckmark24Regular },
+  { name: WORK_PERMIT_APP_NAME, description: "特殊作业许可与闭环", icon: ClipboardTask24Regular },
   {
     name: "双重预防机制",
     description: "风险与隐患",
@@ -209,7 +230,6 @@ const apps = [
   { name: "机电管理", description: "运行与保全", icon: Briefcase24Regular },
   { name: "消防管理", description: "巡检与演练", icon: Fire24Regular },
   { name: "应急管理", description: "预案与响应", icon: Lightbulb24Regular },
-  { name: MINE_APP_NAME, description: "矿山风险与隐患闭环", icon: ShieldCheckmark24Regular },
 ];
 
 const initialManagedRoles = [
@@ -471,7 +491,13 @@ function getFlowDatePart(initiatedAt = "") {
   return FLOW_NUMBER_REFERENCE_DATE;
 }
 
+function getCurrentDateTime() {
+  const now = new Date();
+  return `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+}
+
 function getFlowNumber(process) {
+  if (/^\d{12}$/.test(String(process.number ?? ""))) return process.number;
   const source = String(process.id ?? "");
   const sequenceFromId = Number(source.match(/(\d+)(?!.*\d)/)?.[1]);
   const sequence = Number(process.sequence) || (sequenceFromId % 9999) || 1;
@@ -1952,7 +1978,7 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
   const returnTarget = returnConfirmTarget === "initiator"
     ? { label: "发起人", name: process.initiator }
     : { label: "上一节点", name: process.previousApprover ?? "张七" };
-  const logs = [
+  const legacyLogs = [
     {
       time: "2026-08-23 12:00:00",
       title: "系统发起",
@@ -2039,7 +2065,41 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
       : []),
     ...(process.actionLogs ?? []),
   ];
-  const formFields = [
+  const isLiveProcess = Boolean(
+    process.formFields || process.workPermitId || process.inspectionRecordId,
+  );
+  const logs = isLiveProcess
+    ? [
+        {
+          time: process.initiatedAt,
+          title: "发起申请",
+          details: [
+            `${process.initiator}发起了${process.name}`,
+            `流程到达时间：${process.initiatedAt}`,
+          ],
+          action: "发起",
+          state: "done",
+        },
+        ...(process.actionLogs ?? []),
+        ...(["待审批", "审批中"].includes(process.status)
+          ? [{
+              time: "当前",
+              title: process.currentNode || "待审批",
+              details: [`当前待 ${process.approver || "待指定处理人"} 审批`],
+              state: "current",
+            }]
+          : process.status === "已撤销" && !(process.actionLogs?.length)
+            ? [{
+                time: process.revokedAt || "-",
+                title: "撤销",
+                details: [`${process.revokedBy || process.initiator}已撤销该流程`],
+                action: "撤销",
+                state: "done",
+              }]
+            : []),
+      ]
+    : legacyLogs;
+  const formFields = process.formFields ?? [
     ["所属部门", process.department],
     ["发起人", process.initiator],
     ["发起时间", process.initiatedAt],
@@ -2072,7 +2132,9 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
     }
     onApprove(`已${action}`);
   };
-  const visibleLogs = hideFinalLog && !isRejected && !isRevoked && !isResubmitted && !isApproved && !isRefused && !(process.actionLogs?.length) ? logs.slice(0, -1) : logs;
+  const visibleLogs = isLiveProcess
+    ? logs
+    : hideFinalLog && !isRejected && !isRevoked && !isResubmitted && !isApproved && !isRefused && !(process.actionLogs?.length) ? logs.slice(0, -1) : logs;
   const submitTransfer = (event) => {
     event.preventDefault();
     if (!transferPerson) return;
@@ -2136,7 +2198,7 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
                 <textarea
                   rows="5"
                   readOnly
-                  defaultValue={`${process.name}相关事项，请按流程审核处理。`}
+                  defaultValue={process.description ?? `${process.name}相关事项，请按流程审核处理。`}
                 />
               </label>
               {canRevoke && !isRejected && !isRevoked ? (
@@ -2171,8 +2233,8 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
                 <button type="button" onClick={() => setFlowchartOpen(true)}>流程图</button>
               </header>
               <ol>
-                {visibleLogs.map((log) => (
-                  <li key={log.title}>
+                {visibleLogs.map((log, index) => (
+                  <li key={`${log.time}-${log.title}-${index}`}>
                     <span className={log.state} />
                     <div>
                       <div className="process-log-entry-heading">
@@ -2621,10 +2683,10 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
     number: getFlowNumber(process),
     title: process.name,
     application: process.application ?? "综合管理",
-    type: process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批",
+    type: process.flowType ?? (process.name.includes("动火") ? "作业审批" : process.name.includes("采购") ? "采购申请" : "业务审批"),
     initiator: process.initiator,
     arrivalAt: process.initiatedAt,
-    completedAt: process.handledByMe ? "今天 10:18" : "-",
+    completedAt: process.handledByMe ? (process.completedAt ?? "今天 10:18") : "-",
     duration: process.handledByMe ? "42 分钟" : "进行中",
     result: process.handledByMe ? (process.handledResult ?? "同意") : "-",
     sentAt: process.initiatedAt,
@@ -2654,6 +2716,36 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
   });
   const approve = (result, payload = {}) => {
     const actionPayload = typeof payload === "string" ? { opinion: payload } : payload;
+    const actionTime = getCurrentDateTime();
+    if (result === "已同意") {
+      setProcessRecords((current) =>
+        current.map((process) =>
+          process.id === selectedProcess.id
+            ? {
+                ...process,
+                status: "已通过",
+                currentNode: "流程已结束",
+                handledByMe: true,
+                handledResult: "同意",
+                finalOperator: "张宇",
+                completedAt: actionTime,
+                actionLogs: [...(process.actionLogs ?? []), {
+                  time: actionTime,
+                  title: "审批通过",
+                  details: ["张宇已同意", `审批意见：${actionPayload.opinion || "同意办理"}`],
+                  action: "同意",
+                  state: "done",
+                }],
+              }
+            : process,
+        ),
+      );
+      setProcessFilters({ number: "", title: "", application: "", type: "", status: "" });
+      setProcessFilter("待审批");
+      setSelectedProcess(null);
+      onAction(`${selectedProcess.name}审批通过`);
+      return;
+    }
     if (result === "已撤销") {
       setProcessRecords((current) =>
         current.map((process) =>
@@ -2664,7 +2756,14 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
                 startedByMe: true,
                 currentNode: "流程已撤销",
                 revokedBy: "张宇",
-                revokedAt: "2026-08-28 10:36:00",
+                revokedAt: actionTime,
+                actionLogs: [...(process.actionLogs ?? []), {
+                  time: actionTime,
+                  title: "撤销",
+                  details: ["张宇已撤销该流程"],
+                  action: "撤销",
+                  state: "done",
+                }],
               }
             : process,
         ),
@@ -2682,6 +2781,14 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
                 finalOperator: "张宇",
                 refusalOpinion: actionPayload.opinion ?? "",
                 currentNode: "流程已结束",
+                completedAt: actionTime,
+                actionLogs: [...(process.actionLogs ?? []), {
+                  time: actionTime,
+                  title: "审批拒绝",
+                  details: ["张宇已拒绝", `审批意见：${actionPayload.opinion || "未填写"}`],
+                  action: "拒绝",
+                  state: "done",
+                }],
               }
             : process,
         ),
@@ -2699,7 +2806,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
                 handledByMe: true,
                 handledResult: "转办",
                 actionLogs: [...(process.actionLogs ?? []), {
-                  time: "2026-08-28 11:00:00",
+                  time: actionTime,
                   title: "转办",
                   details: [`张宇已转办给${actionPayload.target?.name ?? "处理人"}`, `转办原因：${actionPayload.reason || "未填写"}`],
                   action: "转办",
@@ -2717,7 +2824,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
             ? {
                 ...process,
                 actionLogs: [...(process.actionLogs ?? []), {
-                  time: "2026-08-28 11:02:00",
+                  time: actionTime,
                   title: "加签",
                   details: [`张宇已加签给${actionPayload.targets?.map((user) => user.name).join("、") || "处理人"}`, `加签原因：${actionPayload.reason || "未填写"}`],
                   action: "加签",
@@ -2741,7 +2848,7 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
                 rejectedBy: "张宇",
                 rejectionOpinion: actionPayload.reason || "未填写",
                 actionLogs: [...(process.actionLogs ?? []), {
-                  time: "2026-08-28 11:05:00",
+                  time: actionTime,
                   title: "驳回",
                   details: [`张宇已驳回至${actionPayload.target?.label ?? "上一节点"}`, `驳回原因：${actionPayload.reason || "未填写"}`],
                   action: "驳回",
@@ -3609,6 +3716,10 @@ const preventionApprovalFlows = [
   },
 ];
 
+const mineHazardReportFlows = preventionApprovalFlows.filter(
+  (flow) => flow.title !== "员工离职申请",
+);
+
 const preventionInspectionTasks = [
   {
     title: "平巷凿岩作业隐患排查任务",
@@ -3665,13 +3776,16 @@ const initialInspectionRecords = [
 function DualPreventionPage({
   onAction,
   onSwitchApplication,
+  embedded = false,
+  onSubmitApproval,
   approvalDrafts,
   setApprovalDrafts,
   onSaveProcessDraft,
   onDeleteProcessDraft,
   initialFormTitle = preventionForms[0].title,
   initialOpenForm = false,
-  initialFormSource = preventionApprovalFlows.some(
+  approvalFlows = preventionApprovalFlows,
+  initialFormSource = approvalFlows.some(
     (form) => form.title === initialFormTitle,
   )
     ? "隐患排查审批流程"
@@ -3716,7 +3830,7 @@ function DualPreventionPage({
   const selectedLabel = selectedItem;
   const allPreventionForms = [
     ...preventionForms,
-    ...preventionApprovalFlows,
+    ...approvalFlows,
     ...preventionInspectionTasks,
   ];
   const activeFormRecord =
@@ -3839,6 +3953,55 @@ function DualPreventionPage({
   };
   const submitForm = (event) => {
     event.preventDefault();
+    if (submitted) return;
+    const values = new FormData(event.currentTarget);
+    const now = new Date();
+    const submittedAt = `${now.getFullYear()}-${String(now.getMonth() + 1).padStart(2, "0")}-${String(now.getDate()).padStart(2, "0")} ${String(now.getHours()).padStart(2, "0")}:${String(now.getMinutes()).padStart(2, "0")}:${String(now.getSeconds()).padStart(2, "0")}`;
+    const record = {
+      id: `inspection-submission-${Date.now()}`,
+      reporter: values.get("reporter") || "张宇",
+      initiator: values.get("reporter") || "张宇",
+      initiatedAt: submittedAt,
+      date: values.get("inspectionDate") || "",
+      shift: values.get("shift") || "",
+      location: values.get("location") || "",
+      equipment: values.get("equipment") === "issue" ? "发现问题" : "正常",
+      environment: values.get("environment") === "issue" ? "发现问题" : "正常",
+      protection: values.get("protection") === "issue" ? "发现问题" : "正常",
+      description: values.get("description") || "",
+      status: "已提交",
+      flowStatus: isApprovalFlow ? "待审批" : undefined,
+    };
+    if (isApprovalFlow) {
+      setInspectionRecords((current) => [record, ...current]);
+      onSubmitApproval?.({
+        id: record.id,
+        name: activeFormRecord.title,
+        initiator: record.initiator,
+        initiatedAt: submittedAt,
+        currentNode: "安全管理部审批",
+        application: "双重预防机制",
+        department: "安全管理部",
+        description: record.description,
+        formFields: [
+          ["填报人", record.reporter],
+          ["检查日期", record.date],
+          ["作业班次", record.shift],
+          ["作业地点", record.location],
+          ["凿岩设备防护装置完好", record.equipment],
+          ["作业面通风与照明符合要求", record.environment],
+          ["人员防护用品佩戴规范", record.protection],
+          ["隐患描述与整改建议", record.description || "未填写"],
+        ],
+      });
+      if (selectedApprovalDraft?.id) {
+        setApprovalDrafts((current) => current.filter((draft) => draft.id !== selectedApprovalDraft.id));
+        if (selectedApprovalDraft.processDraftId) onDeleteProcessDraft?.(selectedApprovalDraft.processDraftId);
+        setSelectedApprovalDraft(null);
+      }
+    } else if (!isInspectionTask) {
+      setInspectionRecords((current) => [record, ...current]);
+    }
     setSubmitted(true);
     setHasUnsavedFormChanges(false);
     onAction(
@@ -4024,10 +4187,10 @@ function DualPreventionPage({
   };
   return (
     <section
-      className="prevention-page"
+      className={`prevention-page${embedded ? " prevention-page-embedded" : ""}`}
       aria-labelledby="prevention-page-title"
     >
-      <aside className="prevention-sidebar" aria-label="双重预防机制功能导航">
+      {!embedded ? <aside className="prevention-sidebar" aria-label="双重预防机制功能导航">
         <AppSwitcher
           currentName="双重预防机制"
           onSelect={requestApplicationSwitch}
@@ -4092,7 +4255,7 @@ function DualPreventionPage({
             <ChevronRight24Regular />
           </button>
         </nav>
-      </aside>
+      </aside> : null}
       <div className="prevention-content">
         {activeForm ? (
           <section
@@ -4575,7 +4738,7 @@ function DualPreventionPage({
                   {(selectedItem === "隐患排查任务发布"
                     ? preventionInspectionTasks
                     : selectedItem === "隐患排查审批流程"
-                      ? preventionApprovalFlows
+                      ? approvalFlows
                       : preventionForms
                   ).map((form) => {
                     const { title, icon: Icon, tone } = form;
@@ -5787,9 +5950,10 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
   const [mentionPickerOpen, setMentionPickerOpen] = useState(false);
   const [dynamicAttachments, setDynamicAttachments] = useState([]);
   const [followedDynamicNumbers, setFollowedDynamicNumbers] = useState(
-    () => new Set(["安全检查动态号", "生产日报动态号"]),
+    () => new Set([INSPECTION_FEED_NO.name, "安全检查动态号", "生产日报动态号"]),
   );
   const dynamicNumbers = [
+    { id: INSPECTION_FEED_NO.id, category: INSPECTION_FEED_NO.category, tone: "blue", name: INSPECTION_FEED_NO.name, recent: true },
     { id: "dynamic-safety-check", category: "安全管理", tone: "blue", name: "安全检查动态号", favorite: true },
     { id: "dynamic-hazard-fix", category: "安全管理", tone: "blue", name: "隐患整改动态号", recent: true },
     { id: "dynamic-pre-shift", category: "安全管理", tone: "blue", name: "班前会动态号" },
@@ -6095,6 +6259,7 @@ function EmbeddedTaskFrame({
   interceptDraftSave = false,
   showDescription = false,
   frameRef = null,
+  prototypeHtml = newTaskPrototypeHtml,
 }) {
   const request = JSON.stringify({
     view,
@@ -6128,7 +6293,7 @@ function EmbeddedTaskFrame({
     }
     #devDocDrawer .dev-doc-resizer, #devDocDrawer .dd-hint { display: none !important; }
   `;
-  const srcDoc = newTaskPrototypeHtml
+  const srcDoc = prototypeHtml
     .replace(
       "</head>",
       `<style>${embeddedTaskStyles}</style></head>`,
@@ -6265,6 +6430,7 @@ function EmbeddedTasksPage({ initialTab = "我的任务" }) {
         className="embedded-tasks-frame"
         title={activeTask.label}
         showDescription={showDescription}
+        prototypeHtml={primaryTaskPrototypeHtml}
       />
     </section>
   );
@@ -6309,7 +6475,7 @@ function TaskEmbeddedWorkspace({ view, label, className = "" }) {
   );
 }
 
-function EmbeddedWarningFrame({ view, title, showDescription = false }) {
+function EmbeddedWarningFrame({ view, title, showDescription = false, initialKeyword = "" }) {
   const descriptionWidth = 360;
   const embeddedWarningStyles = `
     .sidebar, .top-bar, .dev-doc-btn { display: none !important; }
@@ -6341,6 +6507,8 @@ function EmbeddedWarningFrame({ view, title, showDescription = false }) {
           if (typeof window.navigateTo === "function") {
             window.navigateTo(hostWarningView);
           }
+          var hostWarningKeyword = ${JSON.stringify(initialKeyword).replaceAll("<", "\\u003c")};
+          ${warningTaskFilterBridge}
           if (${showDescription} && typeof window.renderDevDoc === "function") {
             window.renderDevDoc(hostWarningView);
           }
@@ -6382,7 +6550,7 @@ function WarningEmbeddedWorkspace({ view, label, className = "" }) {
   );
 }
 
-function EmbeddedWarningsPage() {
+function EmbeddedWarningsPage({ initialKeyword = "" }) {
   const warningTabs = [
     { label: "预警分级看板", view: "warning-dashboard" },
     { label: "预警任务", view: "warning-task" },
@@ -6417,6 +6585,7 @@ function EmbeddedWarningsPage() {
         view={activeWarning.view}
         title={activeWarning.label}
         showDescription={showDescription}
+        initialKeyword={initialKeyword}
       />
     </section>
   );
@@ -6596,6 +6765,26 @@ function WarningCenterPage() {
   );
 }
 
+function getPendingTodoWarnings() {
+  const document = new DOMParser().parseFromString(sourceWarningPrototypeHtml, "text/html");
+  const table = document.querySelector("#task-pending-content > table");
+  if (!table) return [];
+  const headings = Array.from(table.querySelectorAll(":scope > thead > tr > th"));
+  const indexOf = (name) => headings.findIndex((heading) => heading.textContent.trim() === name);
+  return Array.from(table.querySelectorAll(":scope > tbody > tr:not(.hit-detail-row)")).filter((row) => row.cells.length >= headings.length).map((row) => {
+    const value = (field) => row.cells[indexOf(field)]?.textContent.trim() || "";
+    const triggeredAt = value("触发时间");
+    return {
+      title: value("工作表"),
+      warningContent: value("预警内容"),
+      riskLevel: value("风险等级").replace(/[●\s]/g, ""),
+      triggeredAt: triggeredAt.length === 16 ? `${triggeredAt}:00` : triggeredAt,
+      deadline: value("处理期限"),
+      action: "查看处置",
+    };
+  });
+}
+
 const todoGroups = [
   {
     id: "task",
@@ -6605,6 +6794,7 @@ const todoGroups = [
     items: [
       {
         title: "完成设备点检复核",
+        arrivalAt: "2026-11-18 08:30:00",
         source: "设备管理",
         deadline: "今天 17:30 前",
         owner: "陈伟",
@@ -6613,6 +6803,7 @@ const todoGroups = [
       },
       {
         title: "平巷凿岩作业隐患排查",
+        arrivalAt: "2026-11-18 08:45:00",
         source: "双重预防机制",
         deadline: "今天 16:00 前",
         owner: "李明",
@@ -6621,6 +6812,7 @@ const todoGroups = [
       },
       {
         title: "南区排水泵巡检",
+        arrivalAt: "2026-11-18 09:00:00",
         source: "设备管理",
         deadline: "明天 10:00 前",
         owner: "设备管理部",
@@ -6629,6 +6821,7 @@ const todoGroups = [
       },
       {
         title: "提交第二季度风险排查记录",
+        arrivalAt: "2026-11-18 09:10:00",
         source: "安全管理",
         deadline: "7 月 30 日 18:00 前",
         owner: "安环部",
@@ -6637,6 +6830,7 @@ const todoGroups = [
       },
       {
         title: "核对井下作业人员定位数据",
+        arrivalAt: "2026-11-18 09:20:00",
         source: "安全管理",
         deadline: "7 月 31 日 10:00 前",
         owner: "调度室",
@@ -6645,6 +6839,7 @@ const todoGroups = [
       },
       {
         title: "更新选矿车间设备保养记录",
+        arrivalAt: "2026-11-18 09:30:00",
         source: "设备管理",
         deadline: "7 月 31 日 17:00 前",
         owner: "刘海",
@@ -6692,52 +6887,11 @@ const todoGroups = [
     label: "待处理预警",
     tone: "red",
     icon: ErrorCircle24Regular,
-    items: [
-      {
-        title: "南区排水泵房液位接近预警阈值",
-        source: "安全预警",
-        deadline: "立即处理",
-        owner: "系统监测",
-        note: "液位持续上升，请安排现场复核",
-        action: "查看处置",
-      },
-      {
-        title: "动火作业许可将在 2 小时后到期",
-        source: "作业许可",
-        deadline: "今天 14:30 前",
-        owner: "系统监测",
-        note: "作业区域：南区 2# 采场",
-        action: "查看处置",
-      },
-      {
-        title: "高风险作业视频监控离线",
-        source: "安全预警",
-        deadline: "今天内处理",
-        owner: "安环部",
-        note: "北区提升机房摄像头离线 18 分钟",
-        action: "查看处置",
-      },
-      {
-        title: "井下局部通风机风量波动预警",
-        source: "通风监测",
-        deadline: "今天 18:00 前",
-        owner: "通风区",
-        note: "连续 15 分钟低于设定风量阈值",
-        action: "查看处置",
-      },
-      {
-        title: "尾矿库在线监测数据中断",
-        source: "安全预警",
-        deadline: "明天 09:00 前",
-        owner: "环保部",
-        note: "请核实数据采集设备与通信链路",
-        action: "查看处置",
-      },
-    ],
+    items: getPendingTodoWarnings(),
   },
 ];
 
-function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenSafety }) {
+function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenWarnings }) {
   const visibleGroups = todoGroups;
   const totalCount = todoGroups.reduce(
     (total, group) => total + group.items.length,
@@ -6746,7 +6900,7 @@ function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenSafety }) {
   const handleAction = (group, item) => {
     if (group.id === "task") onOpenTasks();
     else if (group.id === "approval") onOpenProcesses("待审批", item?.processNumber);
-    else onOpenSafety();
+    else onOpenWarnings(item?.warningContent || "");
   };
   return (
     <section
@@ -6792,13 +6946,13 @@ function TodoOverviewPage({ onOpenTasks, onOpenProcesses, onOpenSafety }) {
                     <span className="todo-row-dot" />
                     <div className="todo-row-main">
                       <h3>{item.title}</h3>
-                      <p>
+                      {group.id === "task" ? <p className="todo-row-metadata"><span>发起人：{item.owner}</span><span>任务到达时间：{item.arrivalAt}</span></p> : group.id === "warning" ? <p className="todo-row-metadata"><span>{item.warningContent}</span><span>风险等级：{item.riskLevel}</span><span>触发时间：{item.triggeredAt}</span></p> : <p>
                         <b>{item.source}</b>
                         <i>发起人：{item.owner}</i>
                         {item.note}
-                      </p>
+                      </p>}
                     </div>
-                    {group.id !== "approval" ? <time>{item.deadline}</time> : null}
+                    {group.id !== "approval" ? <time title={group.id === "warning" ? "处理期限" : undefined}>{item.deadline}{group.id === "warning" && item.deadline ? " 前" : ""}</time> : null}
                     <button onClick={() => handleAction(group, item)}>
                       {item.action}
                       <ArrowRight24Regular />
@@ -6907,6 +7061,14 @@ function flattenOrganizationNodes(nodes) {
     node,
     ...flattenOrganizationNodes(node.children),
   ]);
+}
+
+function organizationDescendantIds(node) {
+  if (!node) return [];
+  return [
+    node.id,
+    ...(node.children ?? []).flatMap(organizationDescendantIds),
+  ];
 }
 
 function OrganizationTree({ nodes, onAddChild, onEdit, onDelete }) {
@@ -7488,9 +7650,12 @@ function UserManagementCenter({ organizations, setOrganizations, users, setUsers
   const selectedNode = organizationNodes.find(
     (node) => node.id === selectedOrganization,
   );
+  const selectedOrganizationIds = new Set(
+    selectedOrganization ? organizationDescendantIds(selectedNode) : [],
+  );
   const visibleUsers = users.filter(
     (user) =>
-      (!selectedOrganization || user.organizationId === selectedOrganization) &&
+      (!selectedOrganization || selectedOrganizationIds.has(user.organizationId)) &&
       (!filters.name || user.name.includes(filters.name)) &&
       (!filters.account || user.account.includes(filters.account)) &&
       (!filters.phone || user.phone.includes(filters.phone)) &&
@@ -8131,6 +8296,7 @@ function RbacPage({ onAction, roles, setRoles }) {
       name: "应用",
       children: [
         { name: MINE_APP_NAME, children: mineMenu },
+        { name: WORK_PERMIT_APP_NAME, children: workPermitMenu },
         {
           name: "双重预防机制",
           children: [
@@ -10809,18 +10975,19 @@ function EnterpriseSettings({ branding, onBrandingChange, onAction }) {
 }
 
 function MenuManagementPage({ onAction }) {
-  const toMineManagementMenu = (node, index = 0) => ({
+  const toApplicationManagementMenu = (node, component, index = 0) => ({
     id: node.id, name: node.name, type: node.children ? "目录" : "菜单", icon: "shield", sort: index + 1,
-    path: node.id, component: node.children ? "" : "MinePrevention", perms: `${node.id}:view`,
+    path: node.id, component: node.children ? "" : component, perms: `${node.id}:view`,
     visible: "显示", status: "启用", createdAt: "2026-11-09 09:00",
-    children: (node.children || []).map(toMineManagementMenu),
+    children: (node.children || []).map((child, childIndex) => toApplicationManagementMenu(child, component, childIndex)),
   });
   const initialMenus = [
     { id: "workbench", name: "工作台", type: "菜单", icon: "home", sort: 1, path: "/workbench", component: "WorkbenchPage", perms: "workbench:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00", children: [] },
     {
       id: "applications", name: "应用", type: "目录", icon: "apps", sort: 2, path: "/applications", component: "", perms: "", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00",
       children: [
-        toMineManagementMenu({ id: "mine-prevention", name: MINE_APP_NAME, children: mineMenu }, 8),
+        toApplicationManagementMenu({ id: "mine-prevention", name: MINE_APP_NAME, children: mineMenu }, "MinePrevention", 8),
+        toApplicationManagementMenu({ id: "work-permit", name: WORK_PERMIT_APP_NAME, children: workPermitMenu }, "WorkPermit", 9),
         {
           id: "application-dual-prevention", name: "双重预防机制", type: "目录", icon: "shield", sort: 1, path: "dual-prevention", component: "", perms: "application:dual-prevention:view", visible: "显示", status: "启用", createdAt: "2026-08-20 09:00",
           children: [
@@ -11009,6 +11176,61 @@ function MenuManagementPage({ onAction }) {
   );
 }
 
+const mockOrganizationTree = [
+  {
+    id: "org-group",
+    name: "华北矿业集团",
+    children: [
+      {
+        id: "org-east-company",
+        name: "东区矿业公司",
+        type: "公司",
+        leaderId: "user-zhangyu",
+        leaderName: "张宇",
+        children: [
+          { id: "org-east-safety", name: "安全管理部", type: "部门", leaderId: "user-zhangyu", leaderName: "张宇", children: [] },
+          { id: "org-east-production", name: "生产技术部", type: "部门", leaderId: "user-wangqiang", leaderName: "王强", children: [] },
+          { id: "org-east-equipment", name: "设备管理部", type: "部门", leaderId: "user-liming", leaderName: "李明", children: [] },
+        ],
+      },
+      {
+        id: "org-west-company",
+        name: "西区矿业公司",
+        type: "公司",
+        leaderId: "user-chenwei",
+        leaderName: "陈伟",
+        children: [
+          { id: "org-west-safety", name: "安全环保部", type: "部门", leaderId: "user-sunhai", leaderName: "孙海", children: [] },
+          { id: "org-west-mining", name: "采矿管理部", type: "部门", leaderId: "user-zhaolei", leaderName: "赵磊", children: [] },
+        ],
+      },
+      {
+        id: "org-support-company",
+        name: "集团职能中心",
+        type: "公司",
+        leaderId: "user-zhoujie",
+        leaderName: "周杰",
+        children: [
+          { id: "org-human", name: "人力资源部", type: "部门", leaderId: "user-zhoujie", leaderName: "周杰", children: [] },
+          { id: "org-finance", name: "财务管理部", type: "部门", leaderId: "user-liufang", leaderName: "刘芳", children: [] },
+        ],
+      },
+    ],
+  },
+];
+
+const mockOrganizationUsers = [
+  { id: "user-zhangyu", name: "张宇", account: "zhangyu", phone: "13800000000", password: "abc123#", organizationId: "org-east-safety", department: "华北矿业集团 / 东区矿业公司 / 安全管理部", positions: ["安全管理员"], roles: ["系统管理员", "安全管理员"], status: "启用" },
+  { id: "user-zhaomin", name: "赵敏", account: "zhaomin", phone: "13800000001", password: "abc123#", organizationId: "org-east-safety", department: "华北矿业集团 / 东区矿业公司 / 安全管理部", positions: ["安全管理员"], roles: ["安全管理员"], status: "启用" },
+  { id: "user-wangqiang", name: "王强", account: "wangqiang", phone: "13800000002", password: "abc123#", organizationId: "org-east-production", department: "华北矿业集团 / 东区矿业公司 / 生产技术部", positions: ["生产主管"], roles: ["任务执行人"], status: "启用" },
+  { id: "user-liming", name: "李明", account: "liming", phone: "13800000003", password: "abc123#", organizationId: "org-east-equipment", department: "华北矿业集团 / 东区矿业公司 / 设备管理部", positions: ["设备工程师"], roles: ["任务执行人"], status: "启用" },
+  { id: "user-chenwei", name: "陈伟", account: "chenwei", phone: "13800000004", password: "abc123#", organizationId: "org-west-company", department: "华北矿业集团 / 西区矿业公司", positions: ["生产主管"], roles: ["安全管理员"], status: "启用" },
+  { id: "user-sunhai", name: "孙海", account: "sunhai", phone: "13800000005", password: "abc123#", organizationId: "org-west-safety", department: "华北矿业集团 / 西区矿业公司 / 安全环保部", positions: ["安全管理员"], roles: ["任务执行人"], status: "启用" },
+  { id: "user-zhaolei", name: "赵磊", account: "zhaolei", phone: "13800000006", password: "abc123#", organizationId: "org-west-mining", department: "华北矿业集团 / 西区矿业公司 / 采矿管理部", positions: ["生产主管"], roles: ["数据查看员"], status: "停用" },
+  { id: "user-zhoujie", name: "周杰", account: "zhoujie", phone: "13800000007", password: "abc123#", organizationId: "org-human", department: "华北矿业集团 / 集团职能中心 / 人力资源部", positions: [], roles: ["数据查看员"], status: "启用" },
+  { id: "user-liufang", name: "刘芳", account: "liufang", phone: "13800000008", password: "abc123#", organizationId: "org-finance", department: "华北矿业集团 / 集团职能中心 / 财务管理部", positions: [], roles: ["数据查看员"], status: "启用" },
+];
+
 function SettingsPage({
   onAction,
   initialSelected = "动态号管理",
@@ -11016,10 +11238,11 @@ function SettingsPage({
   onBrandingChange,
   roles,
   setRoles,
+  onOpenDashboard,
 }) {
   const [selected, setSelected] = useState(initialSelected);
-  const [organizations, setOrganizations] = useState([]);
-  const [users, setUsers] = useState([]);
+  const [organizations, setOrganizations] = useState(() => structuredClone(mockOrganizationTree));
+  const [users, setUsers] = useState(() => structuredClone(mockOrganizationUsers));
   const [worksheetExpanded, setWorksheetExpanded] = useState(false);
   const [processExpanded, setProcessExpanded] = useState(false);
   const [taskExpanded, setTaskExpanded] = useState(false);
@@ -11104,6 +11327,7 @@ function SettingsPage({
   const isDynamicsSetting = selected === "动态号管理";
   const isDictionarySetting = selected === "字典管理";
   const isEnterpriseSetting = selected === "企业设置";
+  const isBiSetting = selected === "数据看板";
   const isLowCodeSetting = Boolean(lowCodeMenu);
   const isWorksheetPageSetting = Boolean(worksheetMenu?.module);
   const isTaskPageSetting = Boolean(taskPageMenu);
@@ -11197,6 +11421,7 @@ function SettingsPage({
           !isRbac &&
           !isMenuManagement &&
           !isEnterpriseSetting &&
+          !isBiSetting &&
           !isDynamicsSetting &&
           !isDictionarySetting &&
           !isLowCodeSetting &&
@@ -11235,6 +11460,8 @@ function SettingsPage({
             />
           ) : isDictionarySetting ? (
             <DictionaryManagement onAction={onAction} />
+          ) : isBiSetting ? (
+            <BiScreenManager onOpenViewer={onOpenDashboard} />
           ) : isLowCodeSetting ? (
             <LowCodeEmbeddedWorkspace
               module={lowCodeMenu.module}
@@ -11607,6 +11834,7 @@ function App() {
   });
   const [activeNav, setActiveNav] = useState("工作台");
   const [activeQueue, setActiveQueue] = useState("task");
+  const [pendingTaskCount, setPendingTaskCount] = useState(2);
   const [dialog, setDialog] = useState(null);
   const [notice, setNotice] = useState("");
   const appNoticeTimer = useRef(null);
@@ -11618,6 +11846,7 @@ function App() {
   const [taskInitial, setTaskInitial] = useState("我的任务");
   const [processInitial, setProcessInitial] = useState("待审批");
   const [processInitialNumber, setProcessInitialNumber] = useState("");
+  const [warningNavigation, setWarningNavigation] = useState({ keyword: "", version: 0 });
   const [processRecords, setProcessRecords] = useState(processEntries);
   const [preventionDrafts, setPreventionDrafts] = useState([]);
   const [dynamicsInitial, setDynamicsInitial] = useState("动态");
@@ -11631,6 +11860,7 @@ function App() {
   const [taskDetail, setTaskDetail] = useState(null);
   const [annotationsOpen, setAnnotationsOpen] = useState(true);
   const [prototypeAnnotations, setPrototypeAnnotations] = useState([]);
+  const knownInspectionProcessIdsRef = useRef(new Set());
   useEffect(() => {
     try {
       localStorage.setItem("enterprise-branding", JSON.stringify(enterpriseBranding));
@@ -11656,6 +11886,63 @@ function App() {
     return () => {
       cancelled = true;
     };
+  }, []);
+  useEffect(() => {
+    const receivePendingTaskCount = (event) => {
+      const payload = event.data;
+      if (payload?.type !== "workbench:pending-task-count") return;
+      const total = Number(payload.count);
+      if (!Number.isInteger(total) || total < 0) return;
+
+      setPendingTaskCount(total);
+    };
+    window.addEventListener("message", receivePendingTaskCount);
+    return () => window.removeEventListener("message", receivePendingTaskCount);
+  }, []);
+  useEffect(() => {
+    // 历史巡检流程不重复注入；只将当前会话中新提交的任务同步到主流程与消息中心。
+    knownInspectionProcessIdsRef.current = new Set(
+      getInspectionProcessRecords().map((process) => process.id),
+    );
+
+    return subscribeInspection(() => {
+      const createdProcesses = getInspectionProcessRecords().filter(
+        (process) => !knownInspectionProcessIdsRef.current.has(process.id),
+      );
+      if (!createdProcesses.length) return;
+
+      createdProcesses.forEach((process) => knownInspectionProcessIdsRef.current.add(process.id));
+      setProcessRecords((current) => [
+        ...createdProcesses,
+        ...current.filter(
+          (process) => !createdProcesses.some((created) => created.id === process.id),
+        ),
+      ]);
+      setMessages((current) => {
+        const existingIds = new Set(current.map((message) => message.id));
+        const approvalMessages = createdProcesses
+          .filter((process) => !existingIds.has(`message-${process.id}`))
+          .map((process) => ({
+            id: `message-${process.id}`,
+            source: "流程审批",
+            type: "审批提醒",
+            sender: process.name,
+            time: process.initiatedAt,
+            initiator: process.initiator,
+            initiatedAt: process.initiatedAt,
+            application: process.application,
+            processNumber: getFlowNumber(process),
+            title: process.name,
+            content: `《${process.formTitle}》已提交审批，请及时处理。`,
+            attachment: "审批流程表单",
+            formKind: "approval",
+            read: false,
+            icon: ApprovalsApp24Regular,
+            tone: "blue",
+          }));
+        return approvalMessages.length ? [...approvalMessages, ...current] : current;
+      });
+    });
   }, []);
   const showToast = (message) => {
     setNotice(message);
@@ -11716,7 +12003,7 @@ function App() {
       });
       return;
     }
-    const targetName = name === "应用中心" ? "双重预防机制" : name;
+    const targetName = name === "应用中心" ? MINE_APP_NAME : name;
     const app = apps.find((item) => item.name === targetName);
     if (!app) {
       showNotice(name);
@@ -11783,6 +12070,118 @@ function App() {
       setActiveNav("流程");
     });
   };
+  const createWorkPermitApproval = (permit) => {
+    const dateKey = getFlowDatePart(permit.applyAt);
+    const sequence = processRecords.filter((item) => getFlowDatePart(item.initiatedAt) === dateKey).length + 1;
+    const permitType = permitTypes.find((item) => item.id === permit.type)?.name ?? "作业票";
+    const process = {
+      id: `work-permit-flow-${dateKey}-${sequence}`,
+      sequence,
+      name: permit.title,
+      initiator: permit.requester,
+      initiatedAt: permit.applyAt,
+      currentNode: "安全管理部审批",
+      approver: "张宇",
+      status: "待审批",
+      application: WORK_PERMIT_APP_NAME,
+      flowType: "作业票审批",
+      department: permit.area,
+      urgency: "常规",
+      startedByMe: permit.requester === "张宇",
+      workPermitId: permit.id,
+      formFields: [
+        ["作业票编号", permit.id],
+        ["作业类型", permitType],
+        ["作业区域", permit.area],
+        ["具体位置", permit.location],
+        ["作业负责人", permit.lead],
+        ["现场监护人", permit.guardian],
+        ["计划作业时间", `${permit.start} 至 ${permit.end}`],
+        ["发起人", permit.requester],
+        ["发起时间", permit.applyAt],
+      ],
+      description: `作业票类型：${permitType}\n作业区域：${permit.area} / ${permit.location}\n风险辨识：${permit.hazards?.join("、") || "未填写"}\n安全措施：${permit.measures?.join("、") || "未填写"}`,
+    };
+    const processNumber = getFlowNumber(process);
+    setProcessRecords((current) => [process, ...current]);
+    setMessages((current) => [{
+      id: `message-work-permit-${permit.id}`,
+      source: "流程审批",
+      type: "审批提醒",
+      sender: permit.title,
+      time: permit.applyAt,
+      initiator: permit.requester,
+      initiatedAt: permit.applyAt,
+      application: WORK_PERMIT_APP_NAME,
+      processNumber,
+      title: permit.title,
+      content: "作业票已提交审批，请及时处理。",
+      attachment: "作业票表单",
+      formKind: "approval",
+      read: false,
+      icon: ApprovalsApp24Regular,
+      tone: "blue",
+    }, ...current]);
+  };
+  const createPreventionApproval = (submission) => {
+    const dateKey = getFlowDatePart(submission.initiatedAt);
+    const sequence = processRecords.filter((item) => getFlowDatePart(item.initiatedAt) === dateKey).length + 1;
+    const process = {
+      id: `prevention-flow-${dateKey}-${sequence}`,
+      sequence,
+      name: submission.name,
+      initiator: submission.initiator,
+      initiatedAt: submission.initiatedAt,
+      currentNode: submission.currentNode,
+      approver: "张宇",
+      status: "待审批",
+      application: submission.application,
+      flowType: "隐患排查审批",
+      department: submission.department,
+      urgency: "常规",
+      startedByMe: submission.initiator === "张宇",
+      inspectionRecordId: submission.id,
+      formFields: submission.formFields,
+      description: submission.description || "已提交隐患排查审批，请及时处理。",
+    };
+    const processNumber = getFlowNumber(process);
+    setProcessRecords((current) => [process, ...current]);
+    setMessages((current) => [{
+      id: `message-prevention-${submission.id}`,
+      source: "流程审批",
+      type: "审批提醒",
+      sender: submission.name,
+      time: submission.initiatedAt,
+      initiator: submission.initiator,
+      initiatedAt: submission.initiatedAt,
+      application: submission.application,
+      processNumber,
+      title: submission.name,
+      content: "隐患排查审批已提交，请及时处理。",
+      attachment: "隐患排查审批表单",
+      formKind: "approval",
+      read: false,
+      icon: ApprovalsApp24Regular,
+      tone: "blue",
+    }, ...current]);
+  };
+  const dashboardQueues = workQueues.map((queue) =>
+    queue.id === "task"
+      ? {
+          ...queue,
+          count: pendingTaskCount,
+        }
+      : queue.id === "approval"
+      ? {
+          ...queue,
+          count: processRecords.filter(
+            (process) =>
+              ["待审批", "审批中"].includes(process.status) &&
+              process.approver === "张宇",
+          ).length,
+        }
+      : queue,
+  );
   const openDashboard = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
@@ -11823,9 +12222,10 @@ function App() {
       setActiveNav("动态");
     });
   };
-  const openWarnings = () => {
+  const openWarnings = (keyword = "") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
+      setWarningNavigation((current) => ({ keyword, version: current.version + 1 }));
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "warnings")
           ? current
@@ -11916,6 +12316,8 @@ function App() {
     });
   };
   const activeApplication = apps.find((app) => app.name === activeTab);
+  const sharedScreenId = getBiShareId();
+  if (sharedScreenId) return <BiShareView screenId={sharedScreenId} />;
   if (!authenticated) {
     return (
       <FluentProvider theme={webLightTheme}>
@@ -11991,7 +12393,7 @@ function App() {
               <TodoOverviewPage
                 onOpenTasks={openTasks}
                 onOpenProcesses={openProcesses}
-                onOpenSafety={openSafetyDynamics}
+                onOpenWarnings={openWarnings}
               />
             ) : activeTab === "tasks" ? (
               <EmbeddedTasksPage key={taskInitial} initialTab={taskInitial} />
@@ -12012,9 +12414,9 @@ function App() {
                 onAction={showNotice}
               />
             ) : activeTab === "warnings" ? (
-              <EmbeddedWarningsPage />
+              <EmbeddedWarningsPage key={warningNavigation.version} initialKeyword={warningNavigation.keyword} />
             ) : activeTab === "dashboard" ? (
-              <DashboardPage />
+              <BiScreenViewer />
             ) : activeTab === "settings" ? (
               <SettingsPage
                 key={settingsInitial}
@@ -12024,6 +12426,7 @@ function App() {
                 onBrandingChange={setEnterpriseBranding}
                 roles={managedRoles}
                 setRoles={setManagedRoles}
+                onOpenDashboard={openDashboard}
               />
             ) : activeTab === "personal-center" ? (
               <PersonalCenter onAction={showNotice} roles={managedRoles} />
@@ -12033,6 +12436,47 @@ function App() {
                 onSwitchApplication={openApplication}
                 AppSwitcher={AppSwitcher}
                 Pagination={SystemPagination}
+                inspectionChecklist={<DualPreventionPage
+                  embedded
+                  approvalDrafts={preventionDrafts}
+                  setApprovalDrafts={setPreventionDrafts}
+                  onSubmitApproval={createPreventionApproval}
+                  onSaveProcessDraft={(draft) => setProcessRecords((current) => current.some((item) => item.id === draft.id) ? current.map((item) => item.id === draft.id ? draft : item) : [draft, ...current])}
+                  onDeleteProcessDraft={(draftId) => setProcessRecords((current) => current.filter((item) => item.id !== draftId))}
+                  onAction={showNotice}
+                  onSwitchApplication={openApplication}
+                />}
+                inspectionApprovalFlow={<DualPreventionPage
+                  embedded
+                  approvalFlows={mineHazardReportFlows}
+                  initialFormTitle="平巷凿岩作业隐患排查审批流程"
+                  approvalDrafts={preventionDrafts}
+                  setApprovalDrafts={setPreventionDrafts}
+                  onSubmitApproval={createPreventionApproval}
+                  onSaveProcessDraft={(draft) => setProcessRecords((current) => current.some((item) => item.id === draft.id) ? current.map((item) => item.id === draft.id ? draft : item) : [draft, ...current])}
+                  onDeleteProcessDraft={(draftId) => setProcessRecords((current) => current.filter((item) => item.id !== draftId))}
+                  onAction={showNotice}
+                  onSwitchApplication={openApplication}
+                />}
+                inspectionTaskPublisher={<DualPreventionPage
+                  embedded
+                  initialFormTitle="平巷凿岩作业隐患排查任务"
+                  approvalDrafts={preventionDrafts}
+                  setApprovalDrafts={setPreventionDrafts}
+                  onSubmitApproval={createPreventionApproval}
+                  onSaveProcessDraft={(draft) => setProcessRecords((current) => current.some((item) => item.id === draft.id) ? current.map((item) => item.id === draft.id ? draft : item) : [draft, ...current])}
+                  onDeleteProcessDraft={(draftId) => setProcessRecords((current) => current.filter((item) => item.id !== draftId))}
+                  onAction={showNotice}
+                  onSwitchApplication={openApplication}
+                />}
+              />
+            ) : activeApplication?.name === WORK_PERMIT_APP_NAME ? (
+              <WorkPermit
+                onAction={showToast}
+                onSwitchApplication={openApplication}
+                AppSwitcher={AppSwitcher}
+                Pagination={SystemPagination}
+                onSubmitApproval={createWorkPermitApproval}
               />
             ) : activeApplication?.name === "双重预防机制" ? (
               <DualPreventionPage
@@ -12041,6 +12485,7 @@ function App() {
                 initialOpenForm={preventionFormOpen}
                 approvalDrafts={preventionDrafts}
                 setApprovalDrafts={setPreventionDrafts}
+                onSubmitApproval={createPreventionApproval}
                 onSaveProcessDraft={(draft) => setProcessRecords((current) => current.some((item) => item.id === draft.id) ? current.map((item) => item.id === draft.id ? draft : item) : [draft, ...current])}
                 onDeleteProcessDraft={(draftId) => setProcessRecords((current) => current.filter((item) => item.id !== draftId))}
                 onAction={showNotice}
@@ -12087,7 +12532,7 @@ function App() {
                       </button>
                     </div>
                     <div className="queue-grid">
-                      {workQueues.map((item) => (
+                      {dashboardQueues.map((item) => (
                         <WorkQueue
                           item={item}
                           key={item.id}

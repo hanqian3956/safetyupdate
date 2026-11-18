@@ -1,4 +1,5 @@
 .todo-overview-page { min-width: 980px; max-width: 1160px; }
+.todo-row .todo-row-metadata { display:flex; flex-wrap:wrap; gap:3px 16px; line-height:1.6; padding-bottom:3px; }
 .todo-overview-header, .todo-group { border: 1px solid var(--line); border-radius: 10px; background: var(--surface); }
 .todo-overview-header { min-height: 96px; padding: 16px 18px; display: flex; align-items: center; justify-content: space-between; gap: 18px; }
 .todo-overview-header p, .todo-overview-header h1, .todo-overview-header span { margin: 0; }

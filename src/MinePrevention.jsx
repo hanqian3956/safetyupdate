@@ -1,14 +1,20 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
+import MineRiskZones from "./MineRiskZones";
+import MineStandardVideos from "./MineStandardVideos";
 import { MINE_APP_NAME, mineMenu, minePages, pageSpec, createMineData, LEVELS, AREAS, PEOPLE, timestamp, dateOffset, levelFor } from "./mine-prevention-data";
 import "./mine-prevention.css";
 
 const STORAGE = "mine-dual-prevention-v1";
 const colors = ["#c84242", "#db8128", "#bd9718", "#2874b5"];
-const labels = { name: "名称", area: "所属区域", profession: "专业分类", owner: "责任人", level: "风险等级", measure: "管控措施", due: "期限", riskId: "关联风险点", hazardId: "关联隐患", grade: "隐患等级", status: "状态", mineType: "矿山类型", scope: "适用范围", frequency: "检查频次" };
+const labels = { name: "名称", area: "所属区域", profession: "专业分类", owner: "责任人", level: "风险等级", measure: "管控措施", due: "期限", riskId: "关联风险点", hazardId: "关联隐患", grade: "隐患等级", status: "状态", mineType: "矿山类型", scope: "适用范围", frequency: "检查频次", category: "风险源类别", source: "风险源位置", factor: "主要风险因素" };
 const initialId = minePages[0].id;
 const iconNames = ["览", "档", "辨", "控", "查", "重", "警", "析", "设"];
 const isLate = row => row.due < dateOffset(0) && !["已销号", "已完成"].includes(row.status);
+const legalDocuments = [
+  { name: "2026版《煤矿重大事故隐患判定标准》解读培训", type: "PDF", updated: "2026-11-16", url: "/assets/legal-regulations/coal-major-hazard-standard-training-2026.pdf" },
+  { name: "2026煤矿重大事故隐患判定标准", type: "PDF", updated: "2026-11-16", url: "/assets/legal-regulations/coal-major-hazard-standard-2026.pdf" },
+];
 
 function loadData() {
   const defaults = createMineData();
@@ -45,7 +51,7 @@ function Dialog({ title, children, onClose, wide = false }) {
   return createPortal(<div className="mp-overlay" onKeyDown={event => {
     if (event.key === "Escape") { event.stopPropagation(); onClose(); }
     if (event.key === "Tab") {
-      const items = [...ref.current.querySelectorAll('button:not(:disabled), input, select, textarea, [tabindex="0"]')];
+      const items = [...ref.current.querySelectorAll('button:not(:disabled), input, select, textarea, a[href], video[controls], [tabindex="0"]')];
       const first = items[0], last = items.at(-1);
       if (event.shiftKey && (document.activeElement === first || document.activeElement === ref.current)) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
@@ -65,7 +71,7 @@ function RiskMap({ risks, onSelect, large = false }) {
   return <section ref={ref} className={`mp-map ${large ? "mp-map-large" : ""}`}>
     <header className="mp-panel-head"><div><h3>矿区安全风险分布</h3><small>示意底图 · 按区域最高风险着色</small></div><button onClick={async () => { try { if (full) await document.exitFullscreen(); else await ref.current.requestFullscreen(); } catch { /* Browsers without full-screen retain the regular map view. */ } }}>{full ? "退出全屏" : "全屏展示"}</button></header>
     <div className="mp-map-key"><button className={!level ? "selected" : ""} onClick={() => setLevel("")}>全部点位</button>{LEVELS.map((name, i) => <button key={name} className={level === name ? "selected" : ""} onClick={() => setLevel(level === name ? "" : name)}><i style={{ background: colors[i] }} />{name}</button>)}</div>
-    <svg viewBox="0 0 780 450" role="img" aria-label="矿区六个生产区域的风险分布示意图">
+    {large ? <div className="mp-risk-map-image"><img src="/assets/mine-risk-spatial-map.png" alt="矿区安全风险空间分布图，展示办公楼、大门、一号井、火工品仓库、维修场和堆存区的四色风险与预警数量" /></div> : <svg viewBox="0 0 780 450" role="img" aria-label="矿区六个生产区域的风险分布示意图">
       <defs><pattern id="mp-grid" width="24" height="24" patternUnits="userSpaceOnUse"><path d="M 24 0 L 0 0 0 24" fill="none" stroke="#dfe7ed" strokeWidth="0.7" /></pattern></defs>
       <rect width="780" height="450" fill="url(#mp-grid)" />
       <path d="M20 225 Q260 240 380 220 T760 230 M280 10 Q290 250 285 430 M500 10 L495 430" stroke="#cbd5de" strokeWidth="10" fill="none" />
@@ -83,7 +89,7 @@ function RiskMap({ risks, onSelect, large = false }) {
         </g>;
       })}
       <text x="742" y="30" fontSize="12" fill="#607184">北 ↑</text><text x="30" y="435" fontSize="11" fill="#607184">示意图不代表实际矿山测绘位置</text>
-    </svg>
+    </svg>}
   </section>;
 }
 
@@ -96,16 +102,18 @@ function Distribution({ title, rows, field, options, onFilter }) {
   })}{!values.length && <p className="mp-empty">暂无统计数据</p>}</div></section>;
 }
 
-export default function MinePrevention({ onAction, onSwitchApplication, AppSwitcher, Pagination }) {
+export default function MinePrevention({ onAction, onSwitchApplication, AppSwitcher, Pagination, inspectionChecklist, inspectionApprovalFlow, inspectionTaskPublisher }) {
   const [data, setData] = useState(loadData);
   const [selected, setSelected] = useState(initialId);
   const [expanded, setExpanded] = useState(["mine-overview"]);
+  const [expandedGroups, setExpandedGroups] = useState(() => [mineMenu[0].children[0].id]);
   const [menuSearch, setMenuSearch] = useState("");
   const [query, setQuery] = useState({ keyword: "", area: "", status: "" });
   const [applied, setApplied] = useState(query);
   const [page, setPage] = useState(1);
   const [size, setSize] = useState(10);
   const [modal, setModal] = useState(null);
+  const [previewFile, setPreviewFile] = useState(null);
   const [form, setForm] = useState({});
   const [note, setNote] = useState("");
   const [dirty, setDirty] = useState(false);
@@ -124,7 +132,11 @@ export default function MinePrevention({ onAction, onSwitchApplication, AppSwitc
   function navigate(name, status = "") {
     const target = minePages.find(item => item.id === name || item.name === name);
     if (!target) return;
-    setSelected(target.id); setExpanded(previous => [...new Set([...previous, `mine-${target.section}`])]);
+    const section = mineMenu.find(item => item.id === `mine-${target.section}`);
+    const group = section?.children.find(item => item.name === target.group);
+    setSelected(target.id);
+    if (section) setExpanded([section.id]);
+    if (group) setExpandedGroups([group.id]);
     const filters = { keyword: "", area: "", status }; setQuery(filters); setApplied(filters); setPage(1);
   }
   function closeModal() {
@@ -202,12 +214,17 @@ export default function MinePrevention({ onAction, onSwitchApplication, AppSwitc
         const groups = section.children.map(group => ({ ...group, children: group.children.filter(leaf => !menuSearch || `${section.name}${group.name}${leaf.name}`.includes(menuSearch)) })).filter(group => group.children.length);
         if (!groups.length) return null;
         const open = expanded.includes(section.id) || !!menuSearch;
-        return <div key={section.id} className="mp-nav-section"><button className={`mp-nav-heading ${current.section === structureKey(section.id) ? "current" : ""}`} aria-expanded={open} onClick={() => setExpanded(previous => open ? previous.filter(id => id !== section.id) : [...previous, section.id])}><i>{iconNames[index]}</i><b>{section.name}</b><span>{open ? "⌄" : "›"}</span></button>{open && <div className="mp-nav-group">{groups.flatMap(group => group.children).map(leaf => <button key={leaf.id} className={selected === leaf.id ? "active" : ""} aria-current={selected === leaf.id ? "page" : undefined} onClick={() => navigate(leaf.id)}>{leaf.name}</button>)}</div>}</div>;
+        return <div key={section.id} className="mp-nav-section"><button className={`mp-nav-heading ${current.section === structureKey(section.id) ? "current" : ""}`} aria-expanded={open} onClick={() => setExpanded(open ? [] : [section.id])}><i>{iconNames[index]}</i><b>{section.name}</b><span>{open ? "⌄" : "›"}</span></button>{open && <div className="mp-nav-group">{groups.map(group => {
+          const groupOpen = Boolean(menuSearch) || expandedGroups.includes(group.id);
+          return <section key={group.id} className="mp-nav-subgroup"><button className="mp-nav-subheading" aria-expanded={groupOpen} onClick={() => setExpandedGroups(groupOpen ? [] : [group.id])}><span>{group.name}</span><i>{groupOpen ? "⌄" : "›"}</i></button>{groupOpen && <div className="mp-nav-pages">{group.children.map(leaf => <button key={leaf.id} className={selected === leaf.id ? "active" : ""} aria-current={selected === leaf.id ? "page" : undefined} onClick={() => navigate(leaf.id)}>{leaf.name}</button>)}</div>}</section>;
+        })}</div>}</div>;
       })}{!minePages.some(item => !menuSearch || `${mineMenu.find(s => s.id === `mine-${item.section}`).name}${item.group}${item.name}`.includes(menuSearch)) && <p className="mp-empty">未找到相关功能</p>}</nav>
     </aside>
-    <main className="mp-main"><header className="mp-page-heading"><div><h1>{current.name}</h1><span>东区矿业公司 · {current.group}</span></div><span className="mp-prototype">演示数据 · 本地保存</span></header>
+    <main className="mp-main">{current.name === "岗位隐患排查清单" ? inspectionChecklist : current.name === "隐患上报" ? inspectionApprovalFlow : current.name === "排查任务发布" ? inspectionTaskPublisher : <><header className="mp-page-heading"><div><h1>{current.name}</h1><span>东区矿业公司 · {current.group}</span></div><span className="mp-prototype">演示数据 · 本地保存</span></header>
       {spec.kind === "overview" && <>{summary}<div className="mp-overview-grid"><RiskMap risks={data.risks} onSelect={row => detail("risk", row)} /><section className="mp-panel mp-priority"><div className="mp-panel-head"><h3>重点处置</h3><button onClick={() => navigate("隐患总台账")}>查看台账</button></div>{openHazards.map(row => <button key={row.id} className="mp-priority-row" onClick={() => detail("hazard", row)}><span><Badge value={row.grade} />{isLate(row) && <em>已逾期</em>}</span><b>{row.name}</b><small>{row.area} · {row.owner} · {row.due}</small></button>)}{!openHazards.length && <p className="mp-empty">所有隐患已闭环</p>}</section></div><div className="mp-two-columns"><Distribution title="风险等级分布" rows={data.risks} field="level" options={LEVELS} onFilter={value => navigate("风险分级清单", value)} /><Distribution title="隐患治理进度" rows={data.hazards} field="status" options={["待认定", "待整改", "待验收", "退回整改", "已销号"]} onFilter={value => navigate("隐患总台账", value)} /></div></>}
+      {spec.kind === "risk-zones" && <MineRiskZones risks={data.risks} colors={colors} Badge={Badge} onOpenRisk={row => detail("risk", row)} />}
       {spec.kind === "map" && <><RiskMap risks={data.risks} onSelect={row => detail("risk", row)} large /><section className="mp-panel"><h3>风险点位清单</h3><div className="mp-point-list">{data.risks.map(row => <button key={row.id} onClick={() => detail("risk", row)}><Badge value={row.level} /><span>{row.name}</span><small>{row.area} · {row.owner}</small></button>)}</div></section></>}
+      {spec.kind === "legal" && <section className="mp-ledger mp-legal-ledger"><div className="mp-table-toolbar"><div><b>法规文件</b><small>已归集 {legalDocuments.length} 份文件</small></div></div><div className="mp-table-scroll"><table className="mp-table"><thead><tr><th>文件名称</th><th>文件类型</th><th>来源</th><th>更新时间</th><th className="mp-sticky">操作</th></tr></thead><tbody>{legalDocuments.map(file => <tr key={file.url}><td><span className="mp-document-name">{file.name}</span></td><td><span className={`mp-file-type ${file.type.toLowerCase()}`}>{file.type}</span></td><td>制度与标准附件</td><td>{file.updated}</td><td className="mp-sticky"><button className="mp-link" onClick={() => setPreviewFile(file)}>查看</button></td></tr>)}</tbody></table></div></section>}
       {spec.kind === "analysis" && <>{summary}<div className="mp-two-columns"><Distribution title={current.group === "风险分析" ? current.name : "风险专业分布"} rows={data.risks} field={current.name === "风险等级分布" ? "level" : "profession"} /><Distribution title="隐患闭环情况" rows={data.hazards} field="status" options={["待认定", "待整改", "待验收", "退回整改", "已销号"]} /></div><section className="mp-panel"><div className="mp-panel-head"><div><h3>{current.name}明细</h3><small>根据当前台账实时汇总；趋势需积累历史快照</small></div><button onClick={() => downloadRows(AREAS.map(area => ({ area, risk: data.risks.filter(r => r.area === area).length, hazard: data.hazards.filter(r => r.area === area).length, closed: data.hazards.filter(r => r.area === area && r.status === "已销号").length, done: data.inspections.filter(r => r.area === area && r.status === "已完成").length })), [{ key: "area", label: "区域" }, { key: "risk", label: "风险点" }, { key: "hazard", label: "隐患数" }, { key: "closed", label: "已销号" }, { key: "done", label: "已完成排查" }], current.name)}>导出报表</button></div><table className="mp-table"><thead><tr><th>区域</th><th>风险点</th><th>隐患数</th><th>已销号</th><th>已完成排查</th></tr></thead><tbody>{AREAS.map(area => <tr key={area}><td>{area}</td><td>{data.risks.filter(r => r.area === area).length}</td><td>{data.hazards.filter(r => r.area === area).length}</td><td>{data.hazards.filter(r => r.area === area && r.status === "已销号").length}</td><td>{data.inspections.filter(r => r.area === area && r.status === "已完成").length}</td></tr>)}</tbody></table></section></>}
       {spec.kind === "warning" && <section className="mp-panel"><div className="mp-panel-head"><h3>当前待处理 {warnings.length} 项</h3><small>按台账风险等级及任务期限生成</small></div><table className="mp-table"><thead><tr><th>编号</th><th>事项</th><th>区域</th><th>责任人</th><th>期限</th><th>操作</th></tr></thead><tbody>{warnings.map(row => <tr key={row.id}><td>{row.id}</td><td>{row.name}</td><td>{row.area}</td><td>{row.owner}</td><td>{row.due}</td><td><button className="mp-link" onClick={() => { navigate(row.origin === "risk" ? "风险点台账" : row.origin === "inspection" ? "排查任务台账" : "隐患总台账"); detail(row.origin, row); }}>去处理</button></td></tr>)}{!warnings.length && <tr><td colSpan="6" className="mp-empty">暂无待处理预警</td></tr>}</tbody></table></section>}
       {spec.collection && <section className="mp-ledger"><form className="mp-filters" onSubmit={event => { event.preventDefault(); setApplied({ ...query }); setPage(1); }}><label>编号 / 名称<input value={query.keyword} onChange={e => setQuery({ ...query, keyword: e.target.value })} maxLength={100} placeholder="输入关键词" /></label><label>所属区域<select value={query.area} onChange={e => setQuery({ ...query, area: e.target.value })}><option value="">全部区域</option>{AREAS.map(area => <option key={area}>{area}</option>)}</select></label><label>{spec.kind === "risk" ? "风险等级" : "状态"}<select value={query.status} onChange={e => setQuery({ ...query, status: e.target.value })}><option value="">全部</option>{(spec.kind === "risk" ? LEVELS : [...new Set(scoped.map(r => r.status))]).map(status => <option key={status}>{status}</option>)}</select></label><button className="mp-primary" type="submit">搜索</button><button type="button" onClick={() => { const empty = { keyword: "", area: "", status: "" }; setQuery(empty); setApplied(empty); setPage(1); }}>重置</button></form>
@@ -215,11 +232,14 @@ export default function MinePrevention({ onAction, onSwitchApplication, AppSwitc
         <div className="mp-table-scroll"><table className="mp-table"><thead><tr><th>编号</th>{spec.columns.map(key => <th key={key}>{spec.fields.find(f => f.key === key)?.label || labels[key]}</th>)}<th className="mp-sticky">操作</th></tr></thead><tbody>{rows.slice((currentPage - 1) * size, currentPage * size).map(row => <tr key={row.id}><td><button className="mp-link" onClick={() => detail(spec.kind, row)}>{row.id}</button></td>{spec.columns.map(key => <td key={key}>{["status", "level", "grade"].includes(key) ? <Badge value={row[key]} /> : <span className={key === "measure" ? "mp-truncate" : ""} title={display(row, key)}>{display(row, key)}</span>}{key === "due" && isLate(row) && <small className="mp-late">逾期</small>}</td>)}<td className="mp-sticky"><div className="mp-actions"><button onClick={() => detail(spec.kind, row)}>查看</button>{rowActions(row)}{!["已销号", "已完成"].includes(row.status) && <button onClick={() => edit(spec.kind, row)}>编辑</button>}{spec.kind !== "hazard" && spec.kind !== "inspection" && <button className="mp-danger-text" onClick={() => removeRow(row)}>删除</button>}</div></td></tr>)}{!rows.length && <tr><td colSpan={spec.columns.length + 2} className="mp-empty">暂无符合条件的记录</td></tr>}</tbody></table></div>
         <Pagination total={rows.length} page={currentPage} pageSize={size} onPageChange={setPage} onPageSizeChange={value => { setSize(value); setPage(1); }} />
       </section>}
+      {current.section === "base" && current.group === "制度与标准" && <MineStandardVideos key={current.id} pageId={current.id} Dialog={Dialog} onAction={onAction} />}
+    </>}
     </main>
     {modal?.mode === "edit" && <Dialog title={`${modal.row ? "编辑" : "新增"}${{ risk: "风险点", hazard: "隐患", inspection: "排查任务", record: current.name }[modal.kind]}`} onClose={closeModal} wide><form onSubmit={save}><div className="mp-dialog-body mp-form">{modal.spec.fields.map(f => <label key={f.key} className={f.type === "textarea" ? "mp-span" : ""}><span>{f.required && <em>*</em>}{f.label}</span>{["select", "risk", "hazard"].includes(f.type) ? <select required={f.required} value={form[f.key] || ""} onChange={event => { setForm({ ...form, [f.key]: event.target.value }); setDirty(true); }}><option value="">请选择</option>{f.type === "select" ? f.options.map(option => <option key={option}>{option}</option>) : data[f.type === "risk" ? "risks" : "hazards"].map(row => <option key={row.id} value={row.id}>{row.name}</option>)}</select> : f.type === "textarea" ? <textarea required={f.required} maxLength={1000} rows="3" value={form[f.key] || ""} onChange={event => { setForm({ ...form, [f.key]: event.target.value }); setDirty(true); }} /> : <input required={f.required} type={f.type} maxLength={100} value={form[f.key] || ""} onChange={event => { setForm({ ...form, [f.key]: event.target.value }); setDirty(true); }} />}</label>)}{modal.kind === "risk" && <div className="mp-span mp-assessment">风险值 R = L × S：<b>{Number(form.l) * Number(form.s)}</b><Badge value={levelFor(form.l, form.s)} /><small>演示矩阵：20–25 重大，12–19 较大，6–11 一般，1–5 低风险。正式使用需校准本矿规则。</small></div>}</div><footer><button type="button" onClick={closeModal}>取消</button><button className="mp-primary" type="submit">保存</button></footer></form></Dialog>}
     {modal?.mode === "detail" && <Dialog title={modal.row.name} onClose={closeModal} wide><div className="mp-dialog-body"><div className="mp-detail-meta"><span>{modal.row.id}</span><Badge value={modal.row.level || modal.row.status} /></div><dl className="mp-details">{fieldsForModal.map(f => <div key={f.key} className={f.type === "textarea" ? "mp-span" : ""}><dt>{f.label}</dt><dd>{display(modal.row, f.key)}</dd></div>)}</dl>{modal.row.feedback && <section className="mp-detail-note"><h3>最近处理反馈</h3><p>{modal.row.feedback}</p></section>}{modal.kind === "risk" && <section className="mp-detail-note"><h3>关联隐患</h3>{data.hazards.filter(h => h.riskId === modal.row.id).map(h => <button className="mp-related" key={h.id} onClick={() => detail("hazard", h)}>{h.name}<Badge value={h.status} /></button>)}{!data.hazards.some(h => h.riskId === modal.row.id) && <p>暂无关联隐患</p>}</section>}<h3>流转记录</h3><ol className="mp-timeline">{(modal.row.logs || []).map((log, i) => <li key={i}><b>{log.text}</b><small>{log.time} · {log.person}</small></li>)}</ol></div><footer><button onClick={closeModal}>关闭</button>{modal.kind === "hazard" && modal.row.status === "待认定" && <button className="mp-primary" onClick={() => action(modal.row, "待整改", "认定并派发")}>认定并派发</button>}{modal.kind === "hazard" && ["待整改", "退回整改"].includes(modal.row.status) && <button className="mp-primary" onClick={() => action(modal.row, "待验收", "提交整改反馈")}>整改反馈</button>}{modal.kind === "hazard" && modal.row.status === "待验收" && <><button onClick={() => action(modal.row, "退回整改", "退回整改")}>退回整改</button><button className="mp-primary" onClick={() => action(modal.row, "已销号", "验收销号")}>验收销号</button></>}</footer></Dialog>}
     {modal?.mode === "action" && <Dialog title={modal.text} onClose={closeModal}><form onSubmit={completeAction}><div className="mp-dialog-body"><p>{modal.row.name}</p><label className="mp-note-label">处理意见 / 执行结果 <em>*</em><textarea required maxLength={1000} rows="5" value={note} onChange={event => { setNote(event.target.value); setDirty(true); }} placeholder="请填写现场情况、处理结果及相关依据" /></label><p className="mp-muted">提交后状态变为“{modal.target}”，并记录本次操作。</p></div><footer><button type="button" onClick={closeModal}>取消</button><button className="mp-primary" type="submit">确认提交</button></footer></form></Dialog>}
     {modal?.mode === "delete" && <Dialog title="删除确认" onClose={closeModal}><div className="mp-dialog-body">确定删除“{modal.row.name}”吗？删除后无法恢复。</div><footer><button onClick={closeModal}>取消</button><button className="mp-danger" onClick={confirmDelete}>确认删除</button></footer></Dialog>}
+    {previewFile && <Dialog title={previewFile.name} onClose={() => setPreviewFile(null)} wide><div className="mp-file-preview"><iframe src={previewFile.url} title={`${previewFile.name}在线预览`} /></div><footer><button onClick={() => setPreviewFile(null)}>关闭</button><a className="mp-primary" href={previewFile.url} target="_blank" rel="noreferrer">新窗口打开</a></footer></Dialog>}
   </section>;
 }
 

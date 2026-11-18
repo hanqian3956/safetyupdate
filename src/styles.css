@@ -174,3 +174,7 @@ main { max-width: 1530px; margin: 0 auto; padding: 16px 26px 40px; }.section-tit
 .dynamic-publish-dialog > footer button[type="submit"] { border-color: var(--accent); background: var(--accent); color: #fff; }
 .dynamic-publish-dialog > footer button:hover { border-color: #8db6d2; background: #f3f9fd; color: var(--accent); }
 .dynamic-publish-dialog > footer button[type="submit"]:hover { border-color: #075d9f; background: #075d9f; color: #fff; }
+
+/* Reuse the dual-prevention checklist inside the mine version without a second sidebar. */
+.prevention-page-embedded { min-width: 0; display: block; }
+.prevention-page-embedded .prevention-content { padding-top: 0; }

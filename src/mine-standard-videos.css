@@ -1,0 +1,13 @@
+.mp-video-ledger { margin:14px 0 16px; }
+.mp-video-ledger .mp-table-toolbar { gap:12px; border-bottom:1px solid var(--mp-line); }
+.mp-video-ledger .mp-table-toolbar > div { align-items:center; }
+.mp-video-ledger .mp-table-toolbar span { color:#657687; font-size:12px; }
+.mp-video-ledger .mp-table-toolbar > button { padding:7px 13px; border-radius:5px; border:1px solid transparent; font-size:13px; }
+.mp-video-ledger .mp-table-toolbar > button:disabled { opacity:.5; }
+.mp-video-ledger .mp-video-title { width:46%; white-space:normal; overflow-wrap:anywhere; }
+.mp-video-form small { color:#657687; }
+.mp-video-form input[type="file"] { height:auto; }
+.mp-video-error { margin:0; font-size:13px; color:#a93630; }
+.mp-video-preview { display:flex; align-items:center; aspect-ratio:16/9; max-height:66vh; background:#141c25; }
+.mp-video-preview video { width:100%; height:100%; max-height:66vh; object-fit:contain; }
+.mp-video-preview-error { margin:0; padding:12px 16px; color:#a93630; font-size:13px; }

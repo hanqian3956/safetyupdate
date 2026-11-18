@@ -4,7 +4,7 @@ export const MINE_APP_NAME = "双重预防管理（矿山版）";
 const structure = [
   ["overview", "安全总览", [["态势", "综合态势", ["双重预防总览", "重大风险与隐患"]], ["地图", "风险地图", ["安全风险四色图", "风险点位分布"]]]],
   ["base", "基础资料", [["矿山", "矿山基础信息", ["矿山档案", "生产区域", "设备设施"]], ["责任", "责任体系", ["安全责任清单", "区域责任分工", "岗位责任清单"]], ["制度", "制度与标准", ["法律法规", "管理制度", "排查依据与判定标准"]]]],
-  ["risk", "风险辨识评估", [["点位", "风险点管理", ["风险点台账", "作业活动清单", "设备设施风险清单"]], ["评估", "辨识评估管理", ["年度辨识评估", "专项辨识评估", "动态辨识评估"]], ["成果", "评估成果", ["风险分级清单", "重大风险清单", "辨识评估报告"]]]],
+  ["risk", "风险辨识评估", [["点位", "风险点管理", ["风险源库", "风险点台账", "作业活动清单", "设备设施风险清单"]], ["评估", "辨识评估管理", ["年度辨识评估", "专项辨识评估", "动态辨识评估"]], ["成果", "评估成果", ["风险分级清单", "重大风险清单", "辨识评估报告"]]]],
   ["control", "风险分级管控", [["措施", "管控措施", ["风险管控措施库", "风险管控责任清单", "重大风险管控方案"]], ["执行", "管控执行", ["管控检查计划", "管控检查任务", "管控执行记录"]], ["告知", "风险告知", ["岗位风险告知卡", "区域风险告知牌", "风险告知记录"]], ["效果", "管控评估", ["管控效果评估", "措施调整记录"]]]],
   ["hazard", "隐患排查治理", [["清单", "排查清单", ["岗位隐患排查清单", "专业隐患排查清单", "综合隐患排查清单"]], ["排查", "排查任务", ["排查计划", "排查任务发布", "排查任务台账"]], ["登记", "隐患登记", ["隐患上报", "隐患认定", "隐患总台账"]], ["整改", "整改治理", ["整改任务", "整改反馈", "延期申请"]], ["验收", "验收闭环", ["待复查验收", "退回整改", "销号归档"]]]],
   ["major", "重大事故隐患", [["管理", "隐患管理", ["重大事故隐患台账", "重大隐患判定依据"]], ["治理", "治理管理", ["专项治理方案", "治理措施落实", "治理进度"]], ["督办", "督办与验收", ["督办任务", "督办记录", "验收销号"]], ["归档", "报告归档", ["重大隐患报告", "治理档案"]]]],
@@ -32,12 +32,17 @@ export const dateOffset = days => {
 const field = (key, label, type = "text", options, required = true) => ({ key, label, type, options, required });
 const common = [field("name", "名称"), field("area", "所属区域", "select", AREAS), field("owner", "责任人", "select", PEOPLE)];
 const riskFields = [field("name", "风险点名称"), ...common.slice(1), field("profession", "专业分类", "select", PROFESSIONS), field("kind", "辨识对象", "select", ["作业活动", "设备设施"]), field("assessment", "辨识类型", "select", ["年度辨识", "专项辨识", "动态辨识"]), field("l", "发生可能性 L", "select", [1, 2, 3, 4, 5]), field("s", "后果严重性 S", "select", [1, 2, 3, 4, 5]), field("measure", "管控措施", "textarea"), field("due", "下次检查日期", "date")];
+const riskSourceFields = [field("name", "风险源名称"), field("category", "风险源类别", "select", ["设备设施", "作业活动", "作业环境", "管理因素"]), field("area", "所在区域", "select", AREAS), field("source", "风险源位置"), field("profession", "专业分类", "select", PROFESSIONS), field("factor", "主要风险因素", "textarea"), field("measure", "建议管控措施", "textarea"), field("owner", "责任人", "select", PEOPLE)];
 const hazardFields = [field("name", "隐患描述"), ...common.slice(1), field("riskId", "关联风险点", "risk"), field("grade", "隐患等级", "select", ["一般隐患", "重大事故隐患"]), field("basis", "判定依据", "textarea"), field("measure", "整改措施", "textarea"), field("due", "整改期限", "date")];
 const inspectionFields = [field("name", "排查任务名称"), ...common.slice(1), field("riskId", "关联风险点", "risk"), field("due", "计划执行日期", "date"), field("measure", "检查内容与标准", "textarea")];
 
 export function pageSpec(page) {
   const name = page.name;
-  if (page.section === "overview") return { kind: /图|点位/.test(name) ? "map" : "overview" };
+  if (page.section === "overview") {
+    return { kind: name === "安全风险四色图" ? "risk-zones" : name === "风险点位分布" ? "map" : "overview" };
+  }
+  if (name === "法律法规") return { kind: "legal" };
+  if (name === "风险源库") return { kind: "record", collection: "riskSources", fields: riskSourceFields, columns: ["name", "category", "area", "source", "profession", "owner", "status"] };
   if (page.section === "analysis") return { kind: "analysis" };
   if (["风险点台账", "作业活动清单", "设备设施风险清单", "年度辨识评估", "专项辨识评估", "动态辨识评估", "风险分级清单", "重大风险清单", "风险管控措施库", "风险管控责任清单", "重大风险管控方案", "岗位风险告知卡", "区域风险告知牌"].includes(name)) return {
     kind: "risk", collection: "risks", fields: riskFields, columns: ["name", "area", "profession", "owner", "level", "measure", "due"],
@@ -67,7 +72,13 @@ export function createMineData() {
   const risks = names.map((name, i) => ({ id: `FX-202611-${String(i + 1).padStart(3, "0")}`, name, area: AREAS[i], owner: PEOPLE[i], profession: PROFESSIONS[i], kind: i % 2 ? "设备设施" : "作业活动", assessment: ["年度辨识", "专项辨识", "动态辨识"][i % 3], l: [5, 4, 3, 2, 5, 1][i], s: [4, 3, 3, 2, 4, 3][i], level: levelFor([5, 4, 3, 2, 5, 1][i], [4, 3, 3, 2, 4, 3][i]), measure: measures[i], due: dateOffset(i - 1), status: "管控中", updated: timestamp(), logs: [{ text: "完成风险辨识并落实管控责任", time: timestamp(), person: PEOPLE[i] }] }));
   const hazards = ["东翼运输巷局部支护松动", "主井提升机制动试验记录缺失", "井下备用排水泵无法正常启动", "露天采场截水沟淤堵", "尾矿库排洪入口杂物堆积"].map((name, i) => ({ id: `YH-202611-${String(i + 1).padStart(3, "0")}`, name, area: AREAS[i], owner: PEOPLE[i], riskId: risks[i].id, grade: i === 2 ? "重大事故隐患" : "一般隐患", basis: "演示判定记录；正式使用时需引用本矿适用的判定标准并完成认定。", measure: ["复紧锚杆并补充支护，检查围岩稳定情况。", "补做制动试验并完善记录。", "检修备用排水泵，落实临时防护措施。", "清淤疏通并检查排水能力。", "清理入口杂物并加强巡查。 "][i], due: dateOffset(i - 2), status: ["待认定", "待整改", "待整改", "待验收", "已销号"][i], feedback: i >= 3 ? "已完成现场整改，复查记录齐全。" : "", updated: timestamp(), logs: [{ text: "排查发现隐患，建立治理台账", time: timestamp(), person: PEOPLE[i] }] }));
   const inspections = risks.map((risk, i) => ({ id: `PC-202611-${String(i + 1).padStart(3, "0")}`, name: `${risk.area}日常安全排查`, area: risk.area, owner: risk.owner, riskId: risk.id, due: dateOffset(i - 2), measure: risk.measure, status: i > 3 ? "已完成" : "待执行", updated: timestamp(), logs: [{ text: "发布排查任务", time: timestamp(), person: "张宇" }] }));
-  const data = { risks, hazards, inspections };
+  const riskSources = [
+    { id: "FXY-202611-001", name: "主井提升系统", category: "设备设施", area: "主井提升区", source: "主井提升机房及井筒", profession: "提升运输", factor: "钢丝绳断丝、制动失效、过卷保护异常。", measure: "执行日检与定期试验，双人复核保护装置。", owner: "李明", status: "有效", updated: timestamp(), logs: [{ text: "建立风险源档案", time: timestamp(), person: "张宇" }] },
+    { id: "FXY-202611-002", name: "井下排水作业", category: "作业活动", area: "井下泵房", source: "泵房水仓及排水设备", profession: "防治水", factor: "水泵失效、水仓淤积、供电中断。", measure: "落实双回路供电和备用泵试运，定期清理水仓。", owner: "王建国", status: "有效", updated: timestamp(), logs: [{ text: "建立风险源档案", time: timestamp(), person: "张宇" }] },
+    { id: "FXY-202611-003", name: "露天边坡", category: "作业环境", area: "露天采场", source: "采场北侧高边坡", profession: "边坡", factor: "边坡裂缝、局部滑移、雨季排水不畅。", measure: "开展边坡监测和雨后专项巡查，及时疏通截排水沟。", owner: "陈伟", status: "有效", updated: timestamp(), logs: [{ text: "建立风险源档案", time: timestamp(), person: "张宇" }] },
+    { id: "FXY-202611-004", name: "爆破作业管理", category: "管理因素", area: "东翼采区", source: "爆破作业审批与现场警戒", profession: "爆破作业", factor: "作业票审批不完整、警戒范围设置不足。", measure: "执行爆破作业票闭环管理，作业前完成警戒确认。", owner: "赵海", status: "有效", updated: timestamp(), logs: [{ text: "建立风险源档案", time: timestamp(), person: "张宇" }] },
+  ];
+  const data = { risks, hazards, inspections, riskSources };
   minePages.forEach(page => {
     const spec = pageSpec(page);
     if (spec.kind !== "record") return;

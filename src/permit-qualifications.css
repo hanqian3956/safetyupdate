@@ -1,0 +1,35 @@
+.wp-qualification-panel { margin-top:11px; }
+.wp-qualification-panel .wp-cert-filters {
+  align-items:end;
+  flex-wrap:wrap;
+  margin:0;
+  padding:14px 16px 10px;
+  border:0;
+  border-radius:0;
+  background:#fff;
+}
+.wp-cert-filters label { display:grid; gap:5px; color:#465c70; font-size:12px; }
+.wp-cert-filters input { width:244px; }
+.wp-cert-filters select { width:145px; }
+.wp-cert-filters .wp-button { min-height:34px; margin:0; }
+.wp-cert-caption { padding:0 16px 12px; color:#657687; font-size:12px; }
+.wp-table.wp-cert-table { min-width:820px; text-align:left; }
+.wp-cert-table td:last-child { min-width:130px; white-space:nowrap; }
+.wp-cert-table .wp-cert-number { max-width:200px; overflow-wrap:anywhere; }
+.wp-cert-date { white-space:nowrap; font-variant-numeric:tabular-nums; }
+.wp-cert-table .wp-cert-empty { height:100px; text-align:center; color:#66798a; }
+.wp-qualification-editor .wp-form-grid label { display:grid; gap:6px; margin:0; }
+.wp-qualification-editor .wp-form-grid select { margin:0; }
+.wp-qualification-upload { padding-top:4px; }
+.wp-qualification-upload input { margin:6px 0; }
+.wp-qualification-upload > span, .wp-cert-filename { color:#5d7183; font-size:12px; }
+.wp-cert-filename { margin-top:6px; overflow-wrap:anywhere; }
+.wp-qualification-editor .wp-cert-error { margin:12px 0 0; color:#a93630; }
+.wp-cert-detail dl { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:12px 20px; margin:0 0 16px; }
+.wp-cert-detail dt { margin-bottom:4px; color:#607487; font-size:12px; }
+.wp-cert-detail dd { margin:0; color:#253d50; font-size:13px; overflow-wrap:anywhere; }
+.wp-cert-detail h4 { margin:0 0 8px; border-top:1px solid #e6edf1; padding-top:12px; }
+.wp-cert-detail a { color:#1675bd; overflow-wrap:anywhere; }
+.wp-cert-detail iframe, .wp-cert-detail img { display:block; width:100%; margin-top:8px; border:0; background:#f7fafb; }
+.wp-cert-detail iframe { height:50vh; }
+.wp-cert-detail img { max-height:55vh; object-fit:contain; }
