@@ -518,6 +518,12 @@ body {
   transition: border-color 0.15s;
 }
 .upload-area:hover { border-color: var(--primary); color: var(--primary); }
+.disposal-upload-list{ display:flex; flex-wrap:wrap; gap:6px; margin-top:8px; }
+.disposal-upload-file{ display:inline-flex; align-items:center; gap:6px; max-width:100%; padding:4px 8px; border-radius:4px; background:#f0f6ff; color:var(--primary); font-size:12px; }
+.disposal-upload-file span{ overflow:hidden; text-overflow:ellipsis; white-space:nowrap; max-width:176px; }
+.disposal-upload-file button{ border:0; padding:0; background:transparent; color:#8290a5; line-height:1; cursor:pointer; font-size:15px; }
+.disposal-upload-file button:hover{ color:var(--danger); }
+.upload-hint{ margin-top:6px; color:var(--text-secondary); font-size:11px; line-height:1.5; }
 
 /* ====== Signature Area ====== */
 .signature-area {
@@ -2786,9 +2792,23 @@ body.devdoc-open .app-container { padding-right: 600px; }
           <label class="form-label">处理情况 <span class="text-danger">*</span></label>
           <textarea class="textarea" placeholder="请填写处理情况..."></textarea>
         </div>
-        <div class="form-item">
-          <label class="form-label">整改照片/附件</label>
-          <div class="upload-area">📎 点击或拖拽文件上传</div>
+        <div class="form-row">
+          <div class="form-item">
+            <label class="form-label">整改照片</label>
+            <label class="upload-area disposal-upload-area" for="tdPhotoUpload">🖼️ 点击或拖拽照片上传
+              <input class="disposal-upload-input" id="tdPhotoUpload" data-upload-kind="photo" type="file" accept="image/*" multiple hidden>
+            </label>
+            <div class="upload-hint">支持 JPG、PNG 等图片格式</div>
+            <div class="disposal-upload-list" id="tdPhotoUploadList"></div>
+          </div>
+          <div class="form-item">
+            <label class="form-label">处置附件</label>
+            <label class="upload-area disposal-upload-area" for="tdAttachmentUpload">📎 点击或拖拽附件上传
+              <input class="disposal-upload-input" id="tdAttachmentUpload" data-upload-kind="attachment" type="file" accept=".pdf,.doc,.docx,.xls,.xlsx,.zip,.rar" multiple hidden>
+            </label>
+            <div class="upload-hint">支持 PDF、Word、Excel、压缩包等文件</div>
+            <div class="disposal-upload-list" id="tdAttachmentUploadList"></div>
+          </div>
         </div>
         <div class="form-row">
           <div class="form-item">
@@ -5413,6 +5433,55 @@ function renderTaskAssignees(warnId){
     : '<tr><td colspan="5" class="text-muted">暂无处理人</td></tr>';
 }
 
+function renderDisposalUploadList(input){
+  if(!input) return;
+  const kind = input.dataset.uploadKind;
+  const list = document.getElementById(kind === 'photo' ? 'tdPhotoUploadList' : 'tdAttachmentUploadList');
+  if(!list) return;
+  const files = Array.prototype.slice.call(input.files || []);
+  list.innerHTML = files.map(function(file){
+    const icon = kind === 'photo' ? '🖼️' : '📎';
+    const name = String(file.name).replace(/[&<>"']/g, function(char){
+      return { '&':'&amp;', '<':'&lt;', '>':'&gt;', '"':'&quot;', "'":'&#39;' }[char];
+    });
+    return '<span class="disposal-upload-file" title="' + name + '"><b>' + icon + '</b><span>' + name + '</span></span>';
+  }).join('');
+}
+
+function resetDisposalUploads(){
+  document.querySelectorAll('.disposal-upload-input').forEach(function(input){
+    input.value = '';
+    renderDisposalUploadList(input);
+  });
+}
+
+document.addEventListener('change', function(event){
+  if(event.target.matches('.disposal-upload-input')) renderDisposalUploadList(event.target);
+});
+
+document.addEventListener('dragover', function(event){
+  const area = event.target.closest('.disposal-upload-area');
+  if(!area) return;
+  event.preventDefault();
+  area.style.borderColor = 'var(--primary)';
+});
+
+document.addEventListener('dragleave', function(event){
+  const area = event.target.closest('.disposal-upload-area');
+  if(area) area.style.borderColor = '';
+});
+
+document.addEventListener('drop', function(event){
+  const area = event.target.closest('.disposal-upload-area');
+  if(!area) return;
+  event.preventDefault();
+  area.style.borderColor = '';
+  const input = area.querySelector('.disposal-upload-input');
+  if(!input || !event.dataTransfer || !event.dataTransfer.files.length) return;
+  input.files = event.dataTransfer.files;
+  input.dispatchEvent(new Event('change', { bubbles:true }));
+});
+
 // 三种模式：edit 处理（当前人填写） / person 个人处置详情（只读，无日志） / task 任务详情（只读，含处理人列表与日志）
 function showTaskDetailModal(warnId, mode, person, focusAssignees) {
   mode = (mode === 'view') ? 'person' : (mode || 'edit');
@@ -5441,6 +5510,7 @@ function showTaskDetailModal(warnId, mode, person, focusAssignees) {
   const ed = document.getElementById('tdDisposalEdit'), vw = document.getElementById('tdDisposalView');
   if(ed) ed.style.display = isEdit ? '' : 'none';
   if(vw) vw.style.display = isEdit ? 'none' : '';
+  if(isEdit) resetDisposalUploads();
   const zt = document.getElementById('tdDisposalZoneTitle'), zg = document.getElementById('tdDisposalZoneTag');
   if(zt) zt.textContent = isPerson ? '预警处置（只读）' : '预警处置（人工填写）';
   if(zg) zg.textContent = isPerson ? ('处理人：' + (person || '—') + ' · 只读') : '支持增行';

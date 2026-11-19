@@ -102,6 +102,9 @@
     prepend("#t-forward tbody", forwarded.join(""));
     prepend("#lt-inst", ledger.join(""));
 
+    // Newly injected execution rows need the same ID column as the prototype rows.
+    if (typeof renderTaskInstanceIds === "function") renderTaskInstanceIds();
+
     // 周期计划：发布任务 › 我发起的、任务总台账 › 任务总览。
     var plan = view.plan;
     var count = view.instances.length;

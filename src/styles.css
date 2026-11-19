@@ -93,6 +93,12 @@ main { max-width: 1530px; margin: 0 auto; padding: 16px 26px 40px; }.section-tit
 .inspection-data-pagination { border-radius: 0 0 10px 10px; }
 .message-row { min-height: 82px; }
 .message-row-content .message-action-type { color: #8a98a6; font-size: 11px; font-weight: 500; }
+.message-row-content .message-template-body { white-space:normal; overflow-wrap:anywhere; line-height:1.7; }
+.message-template-details { padding:17px 21px 0; }
+.message-template-details dl { display:grid; grid-template-columns:repeat(2,minmax(0,1fr)); gap:14px; margin:0; font-size:12px; }
+.message-template-details dt { color:var(--muted); margin-bottom:5px; }
+.message-template-details dd { margin:0; color:var(--text); overflow-wrap:anywhere; }
+.message-form-dialog { position:relative; max-height:calc(100vh - 44px); overflow:auto; }
 .dynamic-number-browser { min-height: 420px; display: grid; grid-template-columns: 198px minmax(0, 1fr); background: #fff; }
 .dynamic-category-list { padding: 14px 10px; border-right: 1px solid #e5ebf0; background: #fbfdff; }
 .dynamic-category-list button { width: 100%; min-height: 40px; padding: 0 12px; display: flex; align-items: center; justify-content: space-between; border: 0; border-radius: 5px; background: transparent; color: #52677a; font-size: 12px; font-weight: 600; text-align: left; }

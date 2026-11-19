@@ -62,6 +62,7 @@ import sourceTaskPrototypeHtml from "../xiaodong/最新的任务.html?raw";
 import sourceWarningPrototypeHtml from "../xiaodong/最新的预警.html?raw";
 import sourceDynamicsPrototypeHtml from "../xiaodong/新动态.html?raw";
 import warningTaskFilterBridge from "./scenario/bridges/warning-task-filter.js?raw";
+import { createTemplateMessageMocks } from "./message-template-mocks";
 import MinePrevention from "./MinePrevention";
 import { MINE_APP_NAME, mineMenu } from "./mine-prevention-data";
 import WorkPermit from "./WorkPermit";
@@ -273,6 +274,11 @@ const initialTabs = [
 ];
 
 const messageEntries = [
+  ...createTemplateMessageMocks().map((message) => ({
+    ...message,
+    icon: message.source === "任务" ? ClipboardTask24Regular : ErrorCircle24Regular,
+    tone: /超期|异常|作废/.test(message.type) ? "red" : /完成/.test(message.type) ? "green" : message.source === "预警" ? "orange" : "blue",
+  })),
   {
     id: "msg-1",
     source: "流程审批",
@@ -1331,7 +1337,17 @@ function MessageAttachmentDialog({ message, onClose }) {
           <h2 id="message-form-title">{message.title}</h2>
           <p>{message.content}</p>
         </header>
-        {kind === "task" ? (
+        {message.templateMock ? (
+          <div className="message-template-details">
+            <dl>
+              <div><dt>消息来源</dt><dd>{message.source}</dd></div>
+              <div><dt>消息类型</dt><dd>{message.keyword}</dd></div>
+              <div><dt>接收对象</dt><dd>{message.recipient}</dd></div>
+              <div><dt>发送时间</dt><dd>{message.time}</dd></div>
+            </dl>
+            <footer><button className="message-form-primary" type="button" onClick={onClose}>关闭</button></footer>
+          </div>
+        ) : kind === "task" ? (
           <form>
             <div className="message-form-grid">
               <label>
@@ -1484,7 +1500,7 @@ function SystemPagination({
   );
 }
 
-function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenProcess, onOpenDynamics, onProcessUnavailable }) {
+function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenProcess, onOpenDynamics, onOpenTasks, onOpenWarnings, onProcessUnavailable }) {
   const [messageSource, setMessageSource] = useState("全部");
   const [messageType, setMessageType] = useState("全部");
   const [status, setStatus] = useState("未读");
@@ -1499,6 +1515,7 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
         messageType === "全部" ||
         message.source === messageType) &&
       (messageSource !== "动态" || message.type === messageType) &&
+      (!["任务", "预警"].includes(messageSource) || messageType === "全部" || message.type === messageType) &&
       (status === "全部" || (status === "未读" ? !message.read : message.read)),
   );
   const pageCount = Math.max(1, Math.ceil(filteredMessages.length / pageSize));
@@ -1540,7 +1557,7 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
               const nextSource = event.target.value;
               setMessageSource(nextSource);
               setMessageType(
-                nextSource === "动态" ? "@我" : ["流程", "全部"].includes(nextSource) ? "全部" : "",
+                nextSource === "动态" ? "@我" : "全部",
               );
               setPage(1);
             }}
@@ -1556,7 +1573,6 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
           消息类型
           <select
             value={messageType}
-            disabled={!['流程', '动态', '全部'].includes(messageSource)}
             onChange={(event) => {
               setMessageType(event.target.value);
               setPage(1);
@@ -1575,6 +1591,11 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
               <option>全部</option>
             ) : messageSource === "动态" ? (
               <option>@我</option>
+            ) : ["任务", "预警"].includes(messageSource) ? (
+              <>
+                <option>全部</option>
+                {[...new Set(messages.filter((message) => message.source === messageSource).map((message) => message.type))].map((type) => <option key={type}>{type}</option>)}
+              </>
             ) : (
               <option value=""> </option>
             )}
@@ -1620,6 +1641,14 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
                 key={id}
                 onClick={() => {
                   onMarkRead(id);
+                  if (message.templateMock) {
+                    if (message.source === "任务") {
+                      onOpenTasks("我的任务", message.navigationTab);
+                    } else {
+                      onOpenWarnings("", message.navigationTab);
+                    }
+                    return;
+                  }
                   if (!isDynamicMessage) {
                     if (message.unavailable) {
                       onProcessUnavailable();
@@ -1641,10 +1670,10 @@ function MessageCenter({ messages, onMarkRead, onMarkAllRead, onReturn, onOpenPr
                     {!read ? <i>未读</i> : null}
                   </span>
                   <strong>
-                    <em>{isDynamicMessage ? "@我的" : messageSource}</em>
+                    <em>{message.templateMock ? message.keyword : isDynamicMessage ? "@我的" : messageSource}</em>
                   </strong>
-                  <p className="message-process-origin">
-                    {isDynamicMessage
+                  <p className={message.templateMock ? "message-template-body" : "message-process-origin"}>
+                    {message.templateMock ? message.content : isDynamicMessage
                       ? `${initiator}于${initiatedAt}@了我`
                       : `${initiator}于${initiatedAt}通过${application}应用发起的流程编号为：${processNumber}`}
                   </p>
@@ -6260,6 +6289,7 @@ function EmbeddedTaskFrame({
   showDescription = false,
   frameRef = null,
   prototypeHtml = newTaskPrototypeHtml,
+  myTaskTab = "t-exec",
 }) {
   const request = JSON.stringify({
     view,
@@ -6269,6 +6299,7 @@ function EmbeddedTaskFrame({
     firstPublishedTaskOnly,
     draftTask,
     interceptDraftSave,
+    myTaskTab,
   });
   const descriptionWidth = 360;
   const embeddedTaskStyles = `
@@ -6301,11 +6332,20 @@ function EmbeddedTaskFrame({
     .replace(
       "</body>",
       `<script>
-        window.addEventListener("load", function () {
+        (function () {
+        var initializeEmbeddedTask = function () {
           var request = ${request};
           var taskViews = ["view-template", "view-publish", "view-mytask", "view-ledger"];
           if (taskViews.indexOf(request.view) !== -1 && typeof window.switchView === "function") {
             window.switchView(request.view);
+          }
+          if (request.view === "view-mytask") {
+            // 原型自身初始化会重置为待我执行，最后再切换到消息指定的页签。
+            window.setTimeout(function () {
+              if (typeof window.activateMyTab === "function") {
+                window.activateMyTab(request.myTaskTab || "t-exec");
+              }
+            }, 80);
           }
           if (request.subview === "lt-inst" && typeof window.ledgerTab === "function") {
             window.ledgerTab("lt-inst");
@@ -6388,14 +6428,20 @@ function EmbeddedTaskFrame({
           if (${showDescription} && typeof window.openDevDoc === "function") {
             window.openDevDoc();
           }
-        });
+        };
+        if (document.readyState === "loading") {
+          document.addEventListener("DOMContentLoaded", initializeEmbeddedTask, { once: true });
+        } else {
+          initializeEmbeddedTask();
+        }
+        })();
       </script></body>`,
     );
 
   return <iframe ref={frameRef} key={`${view}-${subview ?? "default"}-${publishTemplate ?? "default"}-${publishTab ?? "default"}-${draftTask?.id ?? "new-task"}-${firstPublishedTaskOnly ? "first-task" : "all-tasks"}-${hidePublishTabs ? "without-publish-tabs" : "with-publish-tabs"}-${showDescription ? "with-description" : "workspace-only"}`} className={className} srcDoc={srcDoc} title={title} />;
 }
 
-function EmbeddedTasksPage({ initialTab = "我的任务" }) {
+function EmbeddedTasksPage({ initialTab = "我的任务", initialMyTaskTab = "t-exec" }) {
   const taskTabs = [
     { label: "发布任务", view: "view-publish" },
     { label: "我的任务", view: "view-mytask" },
@@ -6430,6 +6476,7 @@ function EmbeddedTasksPage({ initialTab = "我的任务" }) {
         className="embedded-tasks-frame"
         title={activeTask.label}
         showDescription={showDescription}
+        myTaskTab={initialMyTaskTab}
         prototypeHtml={primaryTaskPrototypeHtml}
       />
     </section>
@@ -6475,7 +6522,7 @@ function TaskEmbeddedWorkspace({ view, label, className = "" }) {
   );
 }
 
-function EmbeddedWarningFrame({ view, title, showDescription = false, initialKeyword = "" }) {
+function EmbeddedWarningFrame({ view, title, showDescription = false, initialKeyword = "", initialTaskTab = "task-pending" }) {
   const descriptionWidth = 360;
   const embeddedWarningStyles = `
     .sidebar, .top-bar, .dev-doc-btn { display: none !important; }
@@ -6508,6 +6555,7 @@ function EmbeddedWarningFrame({ view, title, showDescription = false, initialKey
             window.navigateTo(hostWarningView);
           }
           var hostWarningKeyword = ${JSON.stringify(initialKeyword).replaceAll("<", "\\u003c")};
+          var hostWarningTaskTab = ${JSON.stringify(initialTaskTab)};
           ${warningTaskFilterBridge}
           if (${showDescription} && typeof window.renderDevDoc === "function") {
             window.renderDevDoc(hostWarningView);
@@ -6550,7 +6598,7 @@ function WarningEmbeddedWorkspace({ view, label, className = "" }) {
   );
 }
 
-function EmbeddedWarningsPage({ initialKeyword = "" }) {
+function EmbeddedWarningsPage({ initialKeyword = "", initialTaskTab = "task-pending" }) {
   const warningTabs = [
     { label: "预警分级看板", view: "warning-dashboard" },
     { label: "预警任务", view: "warning-task" },
@@ -6586,6 +6634,7 @@ function EmbeddedWarningsPage({ initialKeyword = "" }) {
         title={activeWarning.label}
         showDescription={showDescription}
         initialKeyword={initialKeyword}
+        initialTaskTab={initialTaskTab}
       />
     </section>
   );
@@ -11844,9 +11893,11 @@ function App() {
     apps.map((app) => app.name),
   );
   const [taskInitial, setTaskInitial] = useState("我的任务");
+  const [taskMyTab, setTaskMyTab] = useState("t-exec");
+  const [taskNavigationVersion, setTaskNavigationVersion] = useState(0);
   const [processInitial, setProcessInitial] = useState("待审批");
   const [processInitialNumber, setProcessInitialNumber] = useState("");
-  const [warningNavigation, setWarningNavigation] = useState({ keyword: "", version: 0 });
+  const [warningNavigation, setWarningNavigation] = useState({ keyword: "", taskTab: "task-pending", version: 0 });
   const [processRecords, setProcessRecords] = useState(processEntries);
   const [preventionDrafts, setPreventionDrafts] = useState([]);
   const [dynamicsInitial, setDynamicsInitial] = useState("动态");
@@ -12036,11 +12087,13 @@ function App() {
       setActiveNav("工作台");
     });
   };
-  const openTasks = (initialTab = "我的任务") => {
+  const openTasks = (initialTab = "我的任务", myTaskTab = "t-exec") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
       setTaskDetail(null);
       setTaskInitial(initialTab);
+      setTaskMyTab(myTaskTab);
+      setTaskNavigationVersion((current) => current + 1);
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "tasks")
           ? current
@@ -12222,10 +12275,10 @@ function App() {
       setActiveNav("动态");
     });
   };
-  const openWarnings = (keyword = "") => {
+  const openWarnings = (keyword = "", taskTab = "task-pending") => {
     window.scrollTo({ top: 0, behavior: "smooth" });
     startTransition(() => {
-      setWarningNavigation((current) => ({ keyword, version: current.version + 1 }));
+      setWarningNavigation((current) => ({ keyword, taskTab, version: current.version + 1 }));
       setOpenTabs((current) =>
         current.some((tab) => tab.id === "warnings")
           ? current
@@ -12387,6 +12440,8 @@ function App() {
                 onReturn={() => selectTab("workbench")}
                 onOpenProcess={openProcesses}
                 onOpenDynamics={(focusFeedId) => openSafetyDynamics("动态", focusFeedId)}
+                onOpenTasks={openTasks}
+                onOpenWarnings={openWarnings}
                 onProcessUnavailable={() => showToast("无法找到该条待办，已被其他或签人审批")}
               />
             ) : activeTab === "todos" ? (
@@ -12396,7 +12451,7 @@ function App() {
                 onOpenWarnings={openWarnings}
               />
             ) : activeTab === "tasks" ? (
-              <EmbeddedTasksPage key={taskInitial} initialTab={taskInitial} />
+              <EmbeddedTasksPage key={`${taskInitial}-${taskMyTab}-${taskNavigationVersion}`} initialTab={taskInitial} initialMyTaskTab={taskMyTab} />
             ) : activeTab === "processes" ? (
               <ProcessListPage
                 key={`${processInitial}-${processInitialNumber}`}
@@ -12414,7 +12469,7 @@ function App() {
                 onAction={showNotice}
               />
             ) : activeTab === "warnings" ? (
-              <EmbeddedWarningsPage key={warningNavigation.version} initialKeyword={warningNavigation.keyword} />
+              <EmbeddedWarningsPage key={warningNavigation.version} initialKeyword={warningNavigation.keyword} initialTaskTab={warningNavigation.taskTab} />
             ) : activeTab === "dashboard" ? (
               <BiScreenViewer />
             ) : activeTab === "settings" ? (

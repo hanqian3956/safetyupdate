@@ -49,9 +49,12 @@
   if (taskPage) new MutationObserver(function () {
     window.searchTaskWarnings();
   }).observe(taskPage, { childList: true, subtree: true });
+  if (hostWarningKeyword || hostWarningTaskTab) {
+    var initialTaskTab = hostWarningTaskTab || "task-pending";
+    var initialTab = document.querySelector('#task-tabs [onclick*="' + initialTaskTab + '"]');
+    if (initialTab) window.switchTaskTab(initialTab, initialTaskTab);
+  }
   if (hostWarningKeyword) {
-    var pendingTab = document.querySelector('#task-tabs [onclick*="task-pending"]');
-    if (pendingTab) window.switchTaskTab(pendingTab, "task-pending");
     keywordInput.value = hostWarningKeyword;
     window.searchTaskWarnings();
   }
