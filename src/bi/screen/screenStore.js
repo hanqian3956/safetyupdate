@@ -7,6 +7,7 @@ import { buildTemplates } from "./templates.js";
 
 const STORAGE_KEY = "bi:screens:v1";
 const SEED_KEY = "bi:screens:seed";
+const SAFETY_SPACE_CLEANUP_KEY = "bi:screens:safety-space-cleanup:v1";
 // Bump when the built-in templates change. Built-in screens nobody has edited are then
 // replaced by the new version; edited ones are left as they are.
 const SEED_VERSION = "3";
@@ -58,6 +59,24 @@ function load() {
     } catch {
       // Without storage the templates are simply rebuilt on the next visit.
     }
+  }
+  // The space component is opt-in. Clean the initial safety overview once without
+  // touching the screen's other widgets or any other dashboard.
+  try {
+    if (!window.localStorage.getItem(SAFETY_SPACE_CLEANUP_KEY)) {
+      const next = screens.map((screen) =>
+        screen.id === "tpl-safety" && screen.widgets.some((widget) => widget.type === "space")
+          ? { ...screen, widgets: screen.widgets.filter((widget) => widget.type !== "space") }
+          : screen,
+      );
+      if (next.some((screen, index) => screen !== screens[index])) {
+        screens = next;
+        writeStorage();
+      }
+      window.localStorage.setItem(SAFETY_SPACE_CLEANUP_KEY, "1");
+    }
+  } catch {
+    // Without storage, the built-in template is regenerated from its space-free definition.
   }
   return screens;
 }

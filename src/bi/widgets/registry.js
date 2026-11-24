@@ -31,6 +31,7 @@ export const WIDGET_GROUPS = [
   { id: "chart", label: "图表" },
   { id: "metric", label: "指标" },
   { id: "list", label: "列表" },
+  { id: "space", label: "空间" },
   { id: "decor", label: "文本与装饰" },
   { id: "control", label: "筛选控件" },
 ];
@@ -270,6 +271,17 @@ export const WIDGET_TYPES = {
       { key: "autoScroll", label: "自动滚动", control: "switch", section: "列表" },
     ],
   },
+  space: {
+    label: "安全空间",
+    group: "space",
+    size: [640, 360],
+    binding: "none",
+    style: { title: "矿山安全空间", description: "点击区域，打开空间组件进行编辑" },
+    schema: [
+      { key: "title", label: "空间名称", control: "text", section: "空间" },
+      { key: "description", label: "说明", control: "textarea", section: "空间" },
+    ],
+  },
   title: {
     label: "大屏标题",
     group: "decor",
@@ -366,6 +378,7 @@ export const WIDGET_ORDER = [
   "bar", "line", "pie", "radar", "funnel", "gauge",
   "metric", "progress",
   "rank", "table", "ticker",
+  "space",
   "title", "text", "clock", "border", "image",
   "filter",
 ];

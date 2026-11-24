@@ -8,8 +8,13 @@
 
   var view = host.views.lowcode();
   var def = view.form;
+  var fieldNameMap = {};
 
   function toField(field) {
+    var generatedFieldName = typeof genFieldName === "function"
+      ? genFieldName(field.type)
+      : field.fieldName;
+    fieldNameMap[field.fieldName] = generatedFieldName;
     var extra = {};
     if (field.options) {
       extra.source = "static";
@@ -23,7 +28,7 @@
     if (field.placeholder) extra.placeholder = field.placeholder;
     return Object.assign(
       {
-        id: nid(), type: field.type, label: field.label, fieldName: field.fieldName, span: field.span, required: field.required, helpText: field.helpText,
+        id: nid(), type: field.type, label: field.label, fieldName: generatedFieldName, span: field.span, required: field.required, helpText: field.helpText,
         visible: { mode: "always", logic: "and", conditions: [{ field: "", op: "eq", value: "" }] }
       },
       CONTROL_DEFS[field.type].defaults(),
@@ -45,5 +50,11 @@
     ensureViews(form);
     SAMPLE_FORMS.unshift(form);
   }
-  SAMPLE_SUBMISSIONS[def.id] = view.submissions;
+  SAMPLE_SUBMISSIONS[def.id] = view.submissions.map(function (submission) {
+    var values = {};
+    Object.keys(submission.vals || {}).forEach(function (fieldName) {
+      values[fieldNameMap[fieldName] || fieldName] = submission.vals[fieldName];
+    });
+    return Object.assign({}, submission, { vals: values });
+  });
 })(window.__inspectionHost);

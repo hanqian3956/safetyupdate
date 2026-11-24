@@ -288,6 +288,14 @@ select.bi-input { padding-right: 4px; }
 .bi-preview__close { opacity: .9; }
 .bi-preview__close:hover { opacity: 1; border-color: #fff; }
 
+/* 空间组件以全屏覆盖层打开，关闭后不离开当前大屏画布。 */
+.bi-space-dialog-layer { position: fixed; z-index: 320; inset: 0; display: grid; background: #07111d; }
+.bi-space-dialog { position: relative; width: 100vw; height: 100dvh; overflow: hidden; background: #07111d; }
+.bi-space-dialog__frame { display: block; width: 100%; height: 100%; border: 0; background: #060c18; }
+.bi-space-dialog__close { position: absolute; z-index: 2; top: 14px; right: 14px; width: 34px; height: 34px; padding: 0; display: grid; place-items: center; border: 1px solid rgb(154 206 242 / 50%); border-radius: 6px; background: rgb(5 18 31 / 78%); color: #d6eeff; box-shadow: 0 4px 14px rgb(0 0 0 / 30%); }
+.bi-space-dialog__close:hover { border-color: #bfe8ff; background: #163550; color: #fff; }
+.bi-space-dialog__close svg { width: 18px; height: 18px; }
+
 /* right panel forms */
 .bi-form { padding-bottom: 20px; }
 .bi-section { padding: 12px 14px 14px; display: grid; gap: 9px; border-bottom: 1px solid var(--ui-line); }

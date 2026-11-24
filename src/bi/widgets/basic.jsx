@@ -9,6 +9,15 @@ import { useAggregate, useCategoryClick, useDetail, useRuntime } from "../runtim
 const NO_DIMENSIONS = { dimensions: [] };
 const WEEKDAYS = ["周日", "周一", "周二", "周三", "周四", "周五", "周六"];
 const pad = (value) => String(value).padStart(2, "0");
+const SPACE_THEME_BACKGROUNDS = { sketch: "#eef3f8", dark: "#060c18", blueprint: "#0d3a6e" };
+
+function savedSpaceTheme() {
+  try {
+    return JSON.parse(window.localStorage.getItem("mine-space-layout-v2") || "null")?.canvas?.theme || "sketch";
+  } catch {
+    return "sketch";
+  }
+}
 
 export function toneVar(tone) {
   if (typeof tone === "string" && tone.startsWith("#")) return tone;
@@ -438,5 +447,32 @@ export function ImageWidget({ widget }) {
       draggable={false}
       style={{ objectFit: style.fit ?? "cover", borderRadius: `${style.radius ?? 0}px`, opacity: style.opacity ?? 1 }}
     />
+  );
+}
+
+export function SpaceWidget({ widget }) {
+  const { style } = widget;
+  const frameRef = useRef(null);
+  const [theme, setTheme] = useState(savedSpaceTheme);
+  useEffect(() => {
+    const onMessage = (event) => {
+      if (event.origin !== window.location.origin || event.data?.source !== "mine-space" || event.data?.type !== "theme") return;
+      setTheme(event.data.theme || "sketch");
+    };
+    window.addEventListener("message", onMessage);
+    return () => window.removeEventListener("message", onMessage);
+  }, []);
+  return (
+    <div className="bi-space-widget" style={{ "--bi-space-preview-bg": SPACE_THEME_BACKGROUNDS[theme] ?? SPACE_THEME_BACKGROUNDS.sketch }}>
+      <iframe
+        key={theme}
+        ref={frameRef}
+        className="bi-space-widget__preview"
+        title={`${style.title || "矿山安全空间"}预览`}
+        src={`${import.meta.env.BASE_URL}mine-space/index.html#canvas`}
+        tabIndex={-1}
+      />
+      <em>点击编辑</em>
+    </div>
   );
 }

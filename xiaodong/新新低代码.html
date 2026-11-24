@@ -130,6 +130,33 @@
     .modal-hidden { opacity: 0; pointer-events: none; }
     .modal-hidden .modal-content { transform: scale(.95); opacity: 0; }
 
+    /* 预览弹窗需跨过画布连线、侧栏与嵌入页的层叠上下文，长表单只滚动内容区。 */
+    #previewModal {
+      position: fixed !important;
+      inset: 0 !important;
+      z-index: 2147483000 !important;
+      isolation: isolate;
+      padding: 24px;
+    }
+    #previewModal .modal-content {
+      width: min(840px, calc(100vw - 48px)) !important;
+      max-width: none !important;
+      max-height: calc(100dvh - 48px) !important;
+      display: flex;
+      flex-direction: column;
+      overflow: hidden !important;
+    }
+    #previewModal .modal-content.preview-mobile {
+      width: min(410px, calc(100vw - 48px)) !important;
+    }
+    #previewBody {
+      flex: 1 1 auto;
+      min-height: 0;
+      overflow-y: auto;
+      overscroll-behavior: contain;
+    }
+    #previewBtns { flex: none; position: relative; z-index: 1; }
+
     .formula-layout { display:flex; height:420px; overflow:hidden; }
     .formula-sidebar { width:230px; border-right:1px solid #e5e7eb; overflow-y:auto; background:#fafafa; }
     .formula-main { flex:1; display:flex; flex-direction:column; padding:16px; }
@@ -722,6 +749,7 @@
   /* ===================== 控件定义 ===================== */
   const CONTROL_DEFS = {
     text:    { group:'basic',    icon:'fa-font',         label:'单行文本', fnPrefix:'text',  defaults:()=>({placeholder:'请输入',defaultValue:'',defaultType:'manual',maxLength:50,minLength:0,format:'none',password:false,trim:true,errMsg:'',linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''}}) },
+    label:   { group:'basic',    icon:'fa-tag',          label:'标签',     fnPrefix:'label', defaults:()=>({defaultValue:'标签文本',defaultType:'manual'}) },
     textarea:{ group:'basic',    icon:'fa-align-left',   label:'多行文本', fnPrefix:'textarea', defaults:()=>({placeholder:'请输入',defaultValue:'',defaultType:'manual',maxLength:500,minLength:0,rows:4,trim:true,showCount:true,errMsg:'',linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''}}) },
     number:     { group:'basic',    icon:'fa-hashtag',      label:'数字',     fnPrefix:'number', defaults:()=>({placeholder:'请输入数字',defaultValue:'',defaultType:'manual',min:null,max:null,precision:0,unit:'',showStepper:true,thousand:false,errMsg:''}) },
     radio:      { group:'select',   icon:'fa-dot-circle',   label:'单选按钮组', fnPrefix:'radio', defaults:()=>({layout:'h',source:'static',dictKey:'',apiUrl:'',options:[{label:'选项一',value:'opt1'},{label:'选项二',value:'opt2'}],defaultValue:'',defaultType:'manual'}) },
@@ -1117,13 +1145,27 @@
 
   let uid = 1;
   const nid = () => 'f' + (uid++);
-  // 字段名自动生成：取标题做英文规范化（小写、空格/连字符→下划线、仅保留 a-z0-9_）；若标题全为中文/符号则回退到控件类型前缀；同表单内重名自动追加序号。创建时一次性生成并锁定，用户不可修改。
-  function genFieldName(label, type){
-    let base = (label||'').toString().trim().toLowerCase().replace(/[\s\-]+/g,'_').replace(/[^a-z0-9_]/g,'');
-    if(!base) base = (CONTROL_DEFS[type] && CONTROL_DEFS[type].fnPrefix) || 'field';
-    let name = base, i = 1;
-    while(fields.some(f=>f.fieldName===name)) name = base + '_' + (i++);
-    return name;
+  let lastFieldNameTimestamp = 0;
+  // 字段名由控件英文标识、13 位毫秒时间戳和 4 位小写字母数字组成。
+  function nextFieldNameTimestamp(){
+    lastFieldNameTimestamp = Math.max(Date.now(), lastFieldNameTimestamp + 1);
+    return lastFieldNameTimestamp;
+  }
+  function randomFieldNameSuffix(){
+    const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';
+    let suffix = '';
+    if(window.crypto && window.crypto.getRandomValues){
+      const values = new Uint32Array(4);
+      window.crypto.getRandomValues(values);
+      values.forEach(value => { suffix += characters[value % characters.length]; });
+      return suffix;
+    }
+    for(let index=0; index<4; index++) suffix += characters[Math.floor(Math.random() * characters.length)];
+    return suffix;
+  }
+  function genFieldName(type){
+    const prefix = (CONTROL_DEFS[type] && CONTROL_DEFS[type].fnPrefix) || 'field';
+    return prefix + '_' + nextFieldNameTimestamp() + '_' + randomFieldNameSuffix();
   }
   /* 按 id 取字段：先找顶层字段，再找子表单内的列（子列也是独立组件，可单独配置） */
   const getField = id => {
@@ -1199,6 +1241,60 @@
         { id:nid(), type:'text', label:'姓名', fieldName:'name', span:6, required:true, maxLength:20, defaultValue:'', defaultType:'manual', linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''} },
         { id:nid(), type:'member', label:'所属部门', fieldName:'dept', span:6, range:'all', depts:[], roles:[], includeDept:true, defaultValue:'', defaultType:'manual' },
         { id:nid(), type:'text', label:'紧急联系人', fieldName:'contact', span:12, placeholder:'姓名+电话', defaultValue:'', defaultType:'manual', linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''} },
+      ]},
+    { id:'form-pre-shift-meeting', name:'班前会', status:'已发布', updatedAt:'2026-11-20 08:30', cat:'安全', creator:'张宇', createdAt:'2026-11-20 08:30',
+      refs:[{type:'应用菜单',name:'安全管理 / 班组安全管理'},{type:'流程任务',name:'班前会记录 · 安全交底'}],
+      fc:{ name:'班前会', desc:'班组班前安全活动与作业风险交底记录', icon:'fa-clipboard-list', category:'安全', submitScope:'all', submitDepts:[], submitRoles:[], allowDraft:true, allowMultiple:true, afterSubmit:'tip', afterUrl:'', dataVisible:'dept', dataDept:['安全管理部','生产技术部'], editScope:'creator', editDepts:[], editRoles:[], labelPos:'top', labelAlign:'left', labelWidth:'medium', formWidth:'wide', printable:true, showSubmitTime:true, dedupe:false },
+      fields:[
+        { id:nid(), type:'divider', label:'班前会基本信息', fieldName:'meeting_basic', span:12, showText:true, text:'班前会基本信息', divPos:'left', divStyle:'solid' },
+        { id:nid(), type:'dept', label:'所属组织', fieldName:'organization', span:6, required:true, range:'all', multi:false, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'text', label:'班组名称', fieldName:'team_name', span:6, required:true, placeholder:'请选择或填写班组名称', maxLength:30, defaultValue:'', defaultType:'manual', linkage:{formId:'',formName:'',conditions:[{localField:'',refField:''}],returnField:''} },
+        { id:nid(), type:'select', label:'活动类型', fieldName:'activity_type', span:6, required:true, source:'static', options:[{label:'班前会',value:'pre_shift'},{label:'班后会',value:'post_shift'}], defaultValue:'pre_shift', defaultType:'manual' },
+        { id:nid(), type:'datetime', label:'活动时间', fieldName:'activity_date', span:6, required:true, dateType:'date', format:'YYYY-MM-DD', defaultValue:'', defaultType:'today' },
+        { id:nid(), type:'select', label:'班次', fieldName:'shift', span:6, required:true, source:'static', options:[{label:'白班',value:'day'},{label:'中班',value:'middle'},{label:'夜班',value:'night'}], defaultValue:'day', defaultType:'manual' },
+        { id:nid(), type:'select', label:'天气', fieldName:'weather', span:6, required:true, source:'static', options:[{label:'晴',value:'sunny'},{label:'阴',value:'cloudy'},{label:'雨',value:'rainy'},{label:'雪',value:'snowy'}], defaultValue:'sunny', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'上一班次是否进行交接班', fieldName:'shift_handover', span:6, required:true, layout:'h', source:'static', options:[{label:'是',value:'yes'},{label:'否',value:'no'}], defaultValue:'yes', defaultType:'manual' },
+        { id:nid(), type:'member', label:'班组活动主持人', fieldName:'meeting_host', span:6, required:true, range:'all', depts:[], roles:[], multi:false, defaultValue:'', defaultType:'manual', includeDept:false },
+        { id:nid(), type:'radio', label:'是否正常召开', fieldName:'held_normally', span:6, required:true, layout:'h', source:'static', options:[{label:'是',value:'yes'},{label:'否',value:'no'}], defaultValue:'yes', defaultType:'manual' },
+        { id:nid(), type:'member', label:'班组内参会人员', fieldName:'team_attendees', span:6, required:true, range:'all', depts:[], roles:[], multi:true, defaultValue:'', defaultType:'manual', includeDept:false },
+        { id:nid(), type:'member', label:'其他参会人员', fieldName:'other_attendees', span:6, range:'all', depts:[], roles:[], multi:true, defaultValue:'', defaultType:'manual', includeDept:false },
+        { id:nid(), type:'number', label:'活动人数', fieldName:'attendee_count', span:6, required:true, placeholder:'请输入人数', min:1, precision:0, unit:'人', defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'member', label:'酒精检测监督人', fieldName:'alcohol_supervisor', span:6, required:true, range:'all', depts:[], roles:[], multi:false, defaultValue:'', defaultType:'manual', includeDept:false },
+        { id:nid(), type:'member', label:'活动记录人', fieldName:'recorder', span:6, required:true, range:'all', depts:[], roles:[], multi:false, defaultValue:'', defaultType:'manual', includeDept:false },
+        { id:nid(), type:'divider', label:'班前检查个人安全状态及防护用品配备', fieldName:'ppe_check', span:12, showText:true, text:'班前检查个人安全状态及防护用品配备', divPos:'left', divStyle:'solid' },
+        { id:nid(), type:'radio', label:'安全帽', fieldName:'safety_helmet', span:6, required:true, layout:'h', source:'static', options:[{label:'已佩戴',value:'wearing'},{label:'未佩戴',value:'not_wearing'}], defaultValue:'wearing', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'作业服', fieldName:'work_clothes', span:6, required:true, layout:'h', source:'static', options:[{label:'已穿戴',value:'wearing'},{label:'未穿戴',value:'not_wearing'}], defaultValue:'wearing', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'防护鞋', fieldName:'safety_shoes', span:6, required:true, layout:'h', source:'static', options:[{label:'已穿戴',value:'wearing'},{label:'未穿戴',value:'not_wearing'}], defaultValue:'wearing', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'安全带', fieldName:'safety_belt', span:6, required:true, layout:'h', source:'static', options:[{label:'已穿戴',value:'wearing'},{label:'未穿戴',value:'not_wearing'}], defaultValue:'wearing', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'班前是否饮酒', fieldName:'alcohol_check', span:6, required:true, layout:'h', source:'static', options:[{label:'是',value:'yes'},{label:'否',value:'no'}], defaultValue:'no', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'精神状态是否良好', fieldName:'mental_condition', span:6, required:true, layout:'h', source:'static', options:[{label:'是',value:'yes'},{label:'否',value:'no'}], defaultValue:'yes', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'防护手套', fieldName:'safety_gloves', span:6, required:true, layout:'h', source:'static', options:[{label:'已佩戴',value:'wearing'},{label:'未佩戴',value:'not_wearing'}], defaultValue:'wearing', defaultType:'manual' },
+        { id:nid(), type:'radio', label:'检测设备及其他防护用品', fieldName:'other_protection', span:6, required:true, layout:'h', source:'static', options:[{label:'已配备',value:'equipped'},{label:'未配备',value:'not_equipped'}], defaultValue:'equipped', defaultType:'manual' },
+
+        { id:nid(), type:'divider', label:'宣贯上级文件精神', fieldName:'document_briefing', span:12, showText:true, text:'宣贯上级文件精神', divPos:'left', divStyle:'solid' },
+        { id:nid(), type:'textarea', label:'宣贯内容', fieldName:'briefing_content', span:8, required:true, placeholder:'请输入宣贯内容', rows:4, maxLength:500, showCount:true, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'member', label:'宣贯人', fieldName:'briefer', span:4, required:true, range:'all', depts:[], roles:[], multi:false, defaultValue:'', defaultType:'manual', includeDept:false },
+
+        { id:nid(), type:'divider', label:'上一班次安全问题处理情况', fieldName:'last_shift_issues', span:12, showText:true, text:'上一班次安全问题处理情况', divPos:'left', divStyle:'solid' },
+        { id:nid(), type:'textarea', label:'1.问题描述', fieldName:'last_issue_1', span:6, required:true, placeholder:'请输入问题描述', rows:3, maxLength:300, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'处理情况', fieldName:'last_issue_1_handling', span:6, required:true, placeholder:'请输入处理情况', rows:3, maxLength:300, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'2.问题描述', fieldName:'last_issue_2', span:6, required:true, placeholder:'请输入问题描述', rows:3, maxLength:300, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'处理情况', fieldName:'last_issue_2_handling', span:6, required:true, placeholder:'请输入处理情况', rows:3, maxLength:300, defaultValue:'', defaultType:'manual' },
+
+        { id:nid(), type:'divider', label:'作业现场风险辨识及管控措施', fieldName:'site_risk_control', span:12, showText:true, text:'作业现场风险辨识及管控措施', divPos:'left', divStyle:'solid' },
+        { id:nid(), type:'select', label:'工种', fieldName:'site_work_type', span:12, required:true, source:'static', options:[{label:'电焊工',value:'welder'},{label:'钳工',value:'fitter'},{label:'机修工',value:'mechanic'},{label:'采掘工',value:'miner'},{label:'其他',value:'other'}], defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'1.风险描述', fieldName:'site_risk_description', span:6, required:true, placeholder:'请输入作业现场风险描述', rows:4, maxLength:500, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'管控措施', fieldName:'site_control_measures', span:6, required:true, placeholder:'请输入管控措施', rows:4, maxLength:500, defaultValue:'', defaultType:'manual' },
+
+        { id:nid(), type:'divider', label:'本班次施工作业安排', fieldName:'shift_work_arrangement', span:12, showText:true, text:'本班次施工作业安排', divPos:'left', divStyle:'solid' },
+        { id:nid(), type:'textarea', label:'1.', fieldName:'work_arrangement_1', span:12, required:true, placeholder:'请输入本班次施工作业安排', rows:3, maxLength:300, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'2.', fieldName:'work_arrangement_2', span:12, required:true, placeholder:'请输入本班次施工作业安排', rows:3, maxLength:300, defaultValue:'', defaultType:'manual' },
+
+        { id:nid(), type:'divider', label:'本班次安全风险', fieldName:'shift_safety_risk', span:12, showText:true, text:'本班次安全风险', divPos:'left', divStyle:'solid' },
+        { id:nid(), type:'select', label:'工种', fieldName:'shift_work_type', span:12, required:true, source:'static', options:[{label:'电焊工',value:'welder'},{label:'钳工',value:'fitter'},{label:'机修工',value:'mechanic'},{label:'采掘工',value:'miner'},{label:'其他',value:'other'}], defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'1.风险描述', fieldName:'shift_risk_description', span:6, required:true, placeholder:'请输入本班次安全风险描述', rows:4, maxLength:500, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'textarea', label:'管控措施', fieldName:'shift_control_measures', span:6, required:true, placeholder:'请输入管控措施', rows:4, maxLength:500, defaultValue:'', defaultType:'manual' },
+        { id:nid(), type:'attachment', label:'班前会视频', fieldName:'pre_shift_meeting_video', span:12, required:false, maxCount:1, maxSize:500, formats:['mp4','mov','avi','wmv'], attachmentDefaultType:'none', defaultAttachment:'', defaultAttachmentName:'' },
       ]},
   ];
 
@@ -1465,7 +1561,7 @@
   /* ===================== 字段增删 / 排序 ===================== */
   function addFieldAt(type, index){
     const d=CONTROL_DEFS[type];
-    const f=Object.assign({ id:nid(), type, label:d.label, fieldName:genFieldName(d.label,type), span:12, required:false, helpText:'', visible:{mode:'always',logic:'and',conditions:[{field:'',op:'eq',value:''}]} }, d.defaults());
+    const f=Object.assign({ id:nid(), type, label:d.label, fieldName:genFieldName(type), span:12, required:false, helpText:'', visible:{mode:'always',logic:'and',conditions:[{field:'',op:'eq',value:''}]} }, d.defaults());
     let idx = (index==null)?fields.length:index;
     if(idx<0) idx=0; if(idx>fields.length) idx=fields.length;
     fields.splice(idx,0,f); selectedId=f.id;
@@ -1499,14 +1595,9 @@
   function activeField(){
     return findSubField(selectedSub) || fields.find(x=>x.id===selectedId) || null;
   }
-  /* 列字段名：子表单内唯一；英文规范化失败时回退为类型前缀 */
+  /* 子表单列沿用统一字段名规则，与普通组件保持一致。 */
   function genSubFieldName(pf, label, type){
-    let base=(label||'').toString().trim().toLowerCase().replace(/[\s\-]+/g,'_').replace(/[^a-z0-9_]/g,'');
-    if(!base) base=(CONTROL_DEFS[type] && CONTROL_DEFS[type].fnPrefix) || 'col';
-    const used=(pf.subFields||[]).map(s=>s.fieldName);
-    let name=base, i=1;
-    while(used.indexOf(name)>=0) name=base+'_'+(i++);
-    return name;
+    return genFieldName(type);
   }
   /* 兼容旧数据：补齐列的 id / 字段名 / 类型默认属性（幂等） */
   function ensureSubCols(pf){
@@ -1949,6 +2040,8 @@
     if(f.type==='text'){
       const fmt = f.format&&f.format!=='none' ? `（${FORMATS[f.format]}）` : '';
       return `<input disabled placeholder="${f.placeholder||''}" class="w-full border border-gray-200 rounded-md px-3 py-2 text-sm bg-gray-50 text-gray-400" value="${defaultDisplay(f)}"><span class="text-[11px] text-gray-300">${fmt}</span>`;
+    } else if(f.type==='label'){
+      return `<div class="text-sm text-gray-700 whitespace-pre-wrap">${escapeHTML(defaultDisplay(f)||'标签文本')}</div>`;
     } else if(f.type==='textarea'){
       const fmt = f.format&&f.format!=='none' ? `（${FORMATS[f.format]}）` : '';
       const rows = f.rows||4;
@@ -2066,6 +2159,12 @@
       return `<div class="field-card group relative bg-white border border-gray-200 rounded-lg px-4 py-3 ${sel}" style="grid-column: span ${f.span||12}" data-id="${f.id}" draggable="true" ondragstart="onFieldDragStart(event,'${f.id}')">
         <button class="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded text-gray-300 hover:text-red-500 hover:bg-red-50 btn-click opacity-0 group-hover:opacity-100 transition" title="删除" onclick="event.stopPropagation();deleteField('${f.id}')"><i class="fas fa-trash text-[11px]"></i></button>
         <div class="pointer-events-none">${dividerInnerHTML(f,true)}</div>
+      </div>`;
+    }
+    if(f.type==='label'){
+      return `<div class="field-card group relative bg-white border border-gray-200 rounded-lg px-4 py-3 ${sel}" style="grid-column: span ${f.span||12}" data-id="${f.id}" draggable="true" ondragstart="onFieldDragStart(event,'${f.id}')">
+        <button class="absolute top-1.5 right-1.5 w-5 h-5 flex items-center justify-center rounded text-gray-300 hover:text-red-500 hover:bg-red-50 btn-click opacity-0 group-hover:opacity-100 transition" title="删除" onclick="event.stopPropagation();deleteField('${f.id}')"><i class="fas fa-trash text-[11px]"></i></button>
+        <div class="pointer-events-none text-sm text-gray-700 whitespace-pre-wrap">${escapeHTML(defaultDisplay(f)||'标签文本')}</div>
       </div>`;
     }
     const drag = `draggable="true" data-id="${f.id}" ondragstart="onFieldDragStart(event,'${f.id}')"`;
@@ -2275,7 +2374,7 @@
     const lpos=f.labelPos||formConfig.labelPos, lalign=f.labelAlign||formConfig.labelAlign;
     let h=cfg2Sec('基础');
     h+=cfg2Row('标题',`<input id="cfg2_label" class="cfg2-in" value="${cfg2Esc(f.label)}">`,'字段在表单上显示的名称，运行态展示给用户，同时作为「字段名」自动生成的基础。');
-    h+=cfg2Row('字段名',`<input class="cfg2-in cfg2-mono" value="${cfg2Esc(f.fieldName)}" readonly>`,'自动生成规则：取「标题」做英文规范化（转小写、空格/连字符→下划线、仅保留 a-z / 0-9 / _）；标题全为中文或符号时回退为控件类型前缀（单行文本 = text、多行文本 = textarea、数字 = number、日期时间 = datetime、分隔线 = divider）；同表单内重名自动追加序号（name → name_2）；创建字段时一次性生成并锁定，不可手动修改，保证与提交数据 / 接口字段稳定对应。');
+    h+=cfg2Row('字段名',`<input class="cfg2-in cfg2-mono" value="${cfg2Esc(f.fieldName)}" readonly>`,'自动生成规则：使用「控件英文标识_13位时间戳_4位小写字母数字」，例如 member_1760000000000_a7k3。创建字段时一次性生成并锁定，不可手动修改，保证与提交数据 / 接口字段稳定对应。');
     h+=cfg2Row('帮助说明',`<input id="cfg2_help" class="cfg2-in" value="${cfg2Esc(f.helpText||'')}" placeholder="显示在字段下方">`,'显示在输入框下方的灰色说明文字，用于补充填写要求；不参与提交数据。留空则不显示。');
     /* 子表单内的列是子组件：由子表单统一排版，不提供「布局」类配置（宽度 / 标签位置 / 对齐） */
     if(window.CFG_SUB_MODE) return h;
@@ -2287,9 +2386,10 @@
       '标题在上 / 标题在左：未单独设置时继承表单级「标签位置」，标题在左时列宽取表单级「标签宽度」（窄 80px / 中 110px / 宽 140px）。对齐方式仅在标题在左时生效：右对齐=标签贴齐输入框。');
     return h;
   }
-  function cfg2AttrHTML(f){
+  function cfg2AttrHTML(f, opts){
+    opts=opts||{};
     let h=cfg2Sec('字段属性');
-    h+=cfg2Row('必填',`<input id="cfg2_req" type="checkbox" class="cfg2-cb" ${f.required?'checked':''}>`,'勾选后运行态该字段不能为空，为空则拦截提交并提示「请填写{标题}」。默认不勾选。字段被「显示条件」隐藏时不参与必填校验。',true);
+    if(!opts.hideRequired) h+=cfg2Row('必填',`<input id="cfg2_req" type="checkbox" class="cfg2-cb" ${f.required?'checked':''}>`,'勾选后运行态该字段不能为空，为空则拦截提交并提示「请填写{标题}」。默认不勾选。字段被「显示条件」隐藏时不参与必填校验。',true);
     h+=cfg2Row('字段权限',cfg2Seg(CFG2_PERM,f.readonly?'readonly':'edit','setFieldPerm'),'只读=运行态仅展示、不可编辑，值由默认值 / 数据联动 / 系统带出；可编辑=用户可填写。默认「可编辑」。只读字段仍参与提交。',true);
     h+=cfg2Row('显示条件',`<select id="cfg_vmode" class="cfg2-in">${[['always','始终显示'],['when','满足条件时显示']].map(o=>`<option value="${o[0]}" ${((f.visible&&f.visible.mode)||'always')===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>`,'始终显示=任何时候都展示；满足条件时显示=按下方条件动态显隐。隐藏时不参与必填与格式校验，提交值为空。默认「始终显示」。');
     if(f.visible&&f.visible.mode==='when') h+=`<div class="cfg2-cond" style="margin-left:0">${cfg2VisibleConds(f)}</div>`;
@@ -2404,6 +2504,22 @@
     if(g('cfg2_pwd')) g('cfg2_pwd').onchange=e=>{ f.password=e.target.checked; renderCanvas(); };
     if(g('cfg2_trim')) g('cfg2_trim').onchange=e=>{ f.trim=e.target.checked; };
     if(g('cfg2_err')) g('cfg2_err').oninput=e=>{ f.errMsg=e.target.value; };
+  }
+
+  /* ---------- 标签：仅展示固定文本，不参与输入与校验 ---------- */
+  function renderLabelPanelV2(f){
+    cfg2TipInit();
+    let h=`<div class="cfg2-head"><i class="fas fa-tag"></i>标签 · 字段配置</div>`;
+    h+=cfg2BaseHTML(f);
+    h+=cfg2AttrHTML(f,{hideRequired:true});
+    h+=cfg2Sec('标签');
+    h+=cfg2Row('默认文本',`<input id="cfg2_labeltext" class="cfg2-in" value="${cfg2Esc(f.defaultValue||'')}" placeholder="请输入展示文本">`,'标签仅用于展示此处配置的固定文本，不提供填写、格式、长度或校验等单行文本配置。');
+    return h;
+  }
+  function bindLabelPanelV2(f){
+    bindCfg2Base(f);
+    const input=document.getElementById('cfg2_labeltext');
+    if(input) input.oninput=e=>{ f.defaultValue=e.target.value; renderCanvas(); };
   }
 
   /* ---------- 多行文本 ---------- */
@@ -3231,12 +3347,9 @@
     const x=(typeof fields!=='undefined'?fields:[]).find(v=>v.fieldName===fn);
     return x?x.label:'字段';
   }
-  /* 字段代号：取字段标题的中文拼音首字母（部门代码→BMDM），最多 maxLen 个字符 */
-  function anFieldCode(fn, maxLen){
-    const x=(typeof fields!=='undefined'?fields:[]).find(v=>v.fieldName===fn);
-    const label=(x&&x.label)?x.label:'';
-    const code=zhInitials(label, maxLen||4);
-    return code || 'F';
+  /* 引用字段直接使用填写内容；未填写时以字段标题作占位，不再转换为拼音首字母。 */
+  function anFieldCode(fn){
+    return anFieldLabel(fn) || '字段';
   }
   function anDate(fmt, base){
     let d;
@@ -3256,9 +3369,8 @@
       if(sg.kind==='text') p=sg.text||'';
       else if(sg.kind==='date') p=anDate(sg.fmt||'YYYYMMDD', dateStr);
       else if(sg.kind==='field'){
-        const ml=Math.max(1,Math.min(12,sg.maxLen||4));
         const raw=(vals&&vals[sg.field]!=null&&vals[sg.field]!=='')?String(vals[sg.field]):'';
-        p=raw?zhInitials(raw, ml):('{'+anFieldCode(sg.field,ml)+'}');
+        p=raw||('{'+anFieldCode(sg.field)+'}');
       }
       else if(sg.kind==='seq'){ const n=(seq==null?(sg.start==null?1:sg.start):seq); p=String(n).padStart(Math.max(1,Math.min(8,sg.len||4)),'0'); }
       if(p!=='') parts.push(p);
@@ -3273,17 +3385,10 @@
       if(sg.kind==='text'){ tag='文字'; ctrl=`<input draggable="false" class="cfg2-in" style="flex:1" value="${cfg2Esc(sg.text||'')}" placeholder="如 HT" oninput="anSegSet(${i},'text',this.value)">`; }
       else if(sg.kind==='date'){ tag='日期'; ctrl=`<select draggable="false" class="cfg2-in" style="flex:1" onchange="anSegSet(${i},'fmt',this.value)">${[['YYYYMMDD','年月日 20261104'],['YYYYMM','年月 202611'],['YYYY','年 2026']].map(o=>`<option value="${o[0]}" ${(sg.fmt||'YYYYMMDD')===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>`; }
       else if(sg.kind==='field'){ tag='字段';
-        const ml=Math.max(1,Math.min(12,sg.maxLen||4));
-        const code=anFieldCode(sg.field, ml);
-        const hint=code?('如 {'+code+'}'):'取字段值的拼音首字母';
+        const hint=sg.field?'直接引用字段填写的内容':'请选择需要引用的字段';
         ctrl=`<div style="flex:1;min-width:0">
           <select draggable="false" class="cfg2-in" onchange="anSegSet(${i},'field',this.value)"><option value="">选择字段</option>${others.map(x=>`<option value="${x.fieldName}" ${sg.field===x.fieldName?'selected':''}>${cfg2Esc(x.label)}</option>`).join('')}</select>
-          <div style="display:flex;align-items:center;gap:4px;margin-top:4px">
-            <span style="font-size:10.5px;color:#94a3b8;flex:none">最多</span>
-            <input draggable="false" type="number" min="1" max="12" class="cfg2-in" style="width:46px;height:26px" value="${ml}" title="最多取几个字符" oninput="anSegSet(${i},'maxLen',Math.max(1,Math.min(12,+this.value||4)))">
-            <span style="font-size:10.5px;color:#94a3b8;flex:none">字符</span>
-            <span style="font-size:10.5px;color:#b6c2d4;margin-left:2px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${hint}</span>
-          </div>
+          <div style="font-size:10.5px;color:#b6c2d4;margin-top:4px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap">${hint}</div>
         </div>`;
       }
       else { tag='流水'; ctrl=`<div style="display:flex;gap:4px;flex:1"><input draggable="false" type="number" min="1" max="8" class="cfg2-in" style="width:52px" value="${sg.len||4}" title="位数" oninput="anSegSet(${i},'len',Math.max(1,Math.min(8,+this.value||4)))"><select draggable="false" class="cfg2-in" style="flex:1" onchange="anSegSet(${i},'reset',this.value)">${[['none','不重置'],['daily','每日重置'],['monthly','每月重置'],['yearly','每年重置']].map(o=>`<option value="${o[0]}" ${(sg.reset||'none')===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select></div>`; }
@@ -3295,7 +3400,7 @@
     if(!Array.isArray(f.anSegs)||!f.anSegs.length) f.anSegs=anSegsFromLegacy(f);
     if(kind==='text') f.anSegs.push({kind:'text',text:''});
     else if(kind==='date') f.anSegs.push({kind:'date',fmt:'YYYYMMDD'});
-    else if(kind==='field') f.anSegs.push({kind:'field',field:'',maxLen:4});
+    else if(kind==='field') f.anSegs.push({kind:'field',field:''});
     else f.anSegs.push({kind:'seq',len:4,step:1,start:1,reset:'none'});
     renderConfig(); renderCanvas();
   }
@@ -3341,7 +3446,7 @@
           <button type="button" onclick="anSegAdd('field')" style="font-size:12px;color:#00b39a;background:none;border:none;padding:0;cursor:pointer"><i class="fas fa-plus" style="font-size:10px;margin-right:3px"></i>引用字段</button>
           <button type="button" onclick="anSegAdd('seq')" style="font-size:12px;color:#00b39a;background:none;border:none;padding:0;cursor:pointer"><i class="fas fa-plus" style="font-size:10px;margin-right:3px"></i>流水号</button>
         </div></div>`,
-      '从上到下依次拼接；可拖动左侧手柄调整片段顺序。固定文字=业务前缀；日期=生成当天；引用字段=取字段值的中文拼音首字母（如「研发部」→YFB），最多取前 N 个字符；未填写时显示字段标题的拼音首字母（如 {BMDM}）；流水号=按位数补零的递增序号。');
+      '从上到下依次拼接；可拖动左侧手柄调整片段顺序。固定文字=业务前缀；日期=生成当天；引用字段=直接取用户填写的字段内容；未填写时以字段标题占位（如 {部门代码}）；流水号=按位数补零的递增序号。');
     h+=cfg2Row('连接符',`<select id="cfg2_ansep" class="cfg2-in">${[['','无'],['-','连字符 -'],['_','下划线 _'],['/','斜杠 /'],['.','点 .']].map(o=>`<option value="${o[0]}" ${(f.anSep||'')===o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>`,'相邻片段之间自动插入的分隔字符；选「无」则直接相连。业务编号常用「-」，如 XS-20261104-0001。');
 
     const seg=(f.anSegs||[]).find(x=>x.kind==='seq');
@@ -3634,7 +3739,7 @@
   function closeBizPicker(){ closeModal('bizPickerModal'); }
 
   /* v2 面板注册表（顶层：顶层字段与子表单列共用） */
-  const V2PANELS={ text:[renderTextPanelV2,bindTextPanelV2], textarea:[renderTextareaPanelV2,bindTextareaPanelV2],
+  const V2PANELS={ text:[renderTextPanelV2,bindTextPanelV2], label:[renderLabelPanelV2,bindLabelPanelV2], textarea:[renderTextareaPanelV2,bindTextareaPanelV2],
                    number:[renderNumberPanelV2,bindNumberPanelV2], datetime:[renderDatetimePanelV2,bindDatetimePanelV2],
                    divider:[renderDividerPanelV2,bindDividerPanelV2], address:[renderAddressPanelV2,bindAddressPanelV2],
                    radio:[renderRadioPanelV2,bindRadioPanelV2], checkbox:[renderCheckboxPanelV2,bindCheckboxPanelV2],
@@ -3783,7 +3888,7 @@
     }
     let h = sec('通用配置（所有控件共有）','common');
     h += row('标题', `<input id="cfg_label" ${inp(f.label)}>`, '字段在表单上显示的名称，运行态展示给用户。');
-    h += row('字段名（API 标识·自动生成）', `<input id="cfg_field" value="${f.fieldName}" disabled class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm bg-gray-100 text-gray-500 cursor-not-allowed">`, '<b>自动生成规则：</b>取「标题」做英文规范化（转小写、空格/连字符→下划线、仅保留 a–z / 0–9 / _）；标题全为中文或符号时回退为控件类型前缀（单行文本=text、下拉单选=select、子表单=subform、成员=member 等）；同表单内重名自动追加序号（如 name、name_2）。字段名在创建字段时一次性生成并锁定，<b>不可手动修改</b>，以保证与提交数据 / 接口稳定对应。');
+    h += row('字段名（API 标识·自动生成）', `<input id="cfg_field" value="${f.fieldName}" disabled class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm bg-gray-100 text-gray-500 cursor-not-allowed">`, '<b>自动生成规则：</b>使用「控件英文标识_13位时间戳_4位小写字母数字」，例如 member_1760000000000_a7k3。字段名在创建字段时一次性生成并锁定，<b>不可手动修改</b>，以保证与提交数据 / 接口稳定对应。');
     h += row('字段宽度（单元格长度）', `<select id="cfg_span" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">${SPAN_OPTS.map(o=>`<option value="${o[0]}" ${(f.span||12)==o[0]?'selected':''}>${o[1]}</option>`).join('')}</select>`, '基于 12 栅格系统决定该字段横向占位（整行/1/2/1/3/1/4），实现不同字段并排布局，提升空间利用率。');
     h += row('标签位置', `<select id="cfg_lpos" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="top" ${(f.labelPos||formConfig.labelPos)==='top'?'selected':''}>标题在上</option><option value="left" ${(f.labelPos||formConfig.labelPos)==='left'?'selected':''}>标题在左</option></select>`, '字段标题相对输入框的位置；不设置时继承表单级「标签位置」。切换后画布即时呈现上下/左右两种版式。');
     h += row('标签对齐', `<select id="cfg_lalign" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="left" ${(f.labelAlign||formConfig.labelAlign)==='left'?'selected':''}>左对齐</option><option value="right" ${(f.labelAlign||formConfig.labelAlign)==='right'?'selected':''}>右对齐</option></select>`, '标签文字对齐方式；标题在左时常用右对齐更整齐。切换即时反映在画布。');
@@ -4989,6 +5094,7 @@
     const mobile=(previewDevice==='mobile');
     body.classList.toggle('pv-mobile', mobile);
     body.classList.toggle('pv-pc', !mobile);
+    if(shell) shell.classList.toggle('preview-mobile', mobile);
     if(mobile){
       if(shell){ shell.style.maxWidth='410px'; shell.style.maxHeight='92vh'; }
       body.classList.remove('px-6','py-5');
@@ -5010,6 +5116,13 @@
       let html = formConfig.desc?`<p class="text-sm text-gray-500 mb-4">${formConfig.desc}</p>`:'';
       fields.forEach(f=>{
         if(f.type==='divider'){ html += `<div class="my-4">${dividerPreviewHTML(f)}</div>`; return; }
+        if(f.type==='label'){
+          const title=`<label class="block text-sm font-medium text-gray-700 mb-1">${escapeHTML(f.label||'标签')}</label>`;
+          const content=`<div class="text-sm text-gray-700 whitespace-pre-wrap">${escapeHTML(defaultDisplay(f)||'标签文本')}</div>`;
+          const help=f.helpText?`<div class="text-[11px] text-gray-400 mt-1">${escapeHTML(f.helpText)}</div>`:'';
+          html += `<div class="mb-4">${title}${content}${help}</div>`;
+          return;
+        }
         const lp = f.labelPos || formConfig.labelPos;
         const la = f.labelAlign || formConfig.labelAlign;
         const lwKey = f.labelWidth==='inherit'||!f.labelWidth ? formConfig.labelWidth : f.labelWidth;
@@ -5085,6 +5198,7 @@
       const err=`<div id="pverr_${fn}" class="text-[11px] text-red-500 mt-1" style="display:none"></div>`;
       return `<input id="pv_${fn}" ${max} ${da} class="pv-validate w-full border border-gray-300 rounded-md px-3 py-2 text-sm" placeholder="${f.placeholder||''}" value="${defaultDisplay(f)}">`+fmtLabel+err;
     }
+    if(f.type==='label') return `<div class="text-sm text-gray-700 whitespace-pre-wrap">${escapeHTML(defaultDisplay(f)||'标签文本')}</div>`;
     if(f.type==='textarea'){
       const rows=f.rows||4; const max=f.maxLength||0;
       const da=`data-min="${f.minLength||''}" data-err="${esc(f.errMsg||'')}"`;

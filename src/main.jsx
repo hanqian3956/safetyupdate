@@ -2605,7 +2605,7 @@ function ProcessApprovalDialog({ process, onClose, onApprove, viewOnly = false, 
   );
 }
 
-function ProcessListPage({ onAction, initialFilter = "待审批", initialProcessNumber = "", processRecords, setProcessRecords }) {
+function ProcessListPage({ onAction, onApprovalPassed, initialFilter = "待审批", initialProcessNumber = "", processRecords, setProcessRecords }) {
   const [selectedProcess, setSelectedProcess] = useState(null);
   const [revokeCandidate, setRevokeCandidate] = useState(null);
   const [processFilter, setProcessFilter] = useState(initialFilter);
@@ -2772,6 +2772,18 @@ function ProcessListPage({ onAction, initialFilter = "待审批", initialProcess
       setProcessFilters({ number: "", title: "", application: "", type: "", status: "" });
       setProcessFilter("待审批");
       setSelectedProcess(null);
+      onApprovalPassed?.({
+        id: `process-approved-${selectedProcess.id}-${Date.now()}`,
+        processId: selectedProcess.id,
+        processNumber: getFlowNumber(selectedProcess),
+        name: selectedProcess.name,
+        application: selectedProcess.application ?? "综合管理",
+        initiator: selectedProcess.initiator,
+        initiatorDepartment: selectedProcess.department ?? "-",
+        approver: "张宇",
+        approvedAt: actionTime,
+        opinion: actionPayload.opinion || "同意办理",
+      });
       onAction(`${selectedProcess.name}审批通过`);
       return;
     }
@@ -5858,7 +5870,7 @@ function DashboardPage() {
   );
 }
 
-function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "", dynamicNumber = null }) {
+function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "", dynamicNumber = null, processApprovalDynamics = [], taskCompletionDynamics = [] }) {
   const embeddedDynamicsStyles = `
     .app-nav, .app-topbar, .nav-subpanel { display: none !important; }
     .page-shell, body.nav-shifted .page-shell { margin-left: 0 !important; }
@@ -5877,6 +5889,54 @@ function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "", dynam
         window.addEventListener("load", function () {
           if (typeof window.switchView === "function") {
             window.switchView(${JSON.stringify(view)});
+          }
+          var hostProcessApprovalDynamics = ${JSON.stringify(processApprovalDynamics).replaceAll("<", "\\u003c")};
+          if (Array.isArray(hostProcessApprovalDynamics) && typeof feeds !== "undefined") {
+            hostProcessApprovalDynamics.slice().reverse().forEach(function (item) {
+              if (feeds.some(function (feed) { return feed.id === item.id; })) return;
+              feeds.unshift({
+                id: item.id,
+                type: "process",
+                operator: item.approver || "张宇",
+                dept: item.application || "综合管理",
+                avatar: (item.approver || "张").slice(0, 1),
+                tone: "violet",
+                title: "审批通过了《" + item.name + "》",
+                summary: "流程编号：" + item.processNumber + "；发起人：" + item.initiator + "；审批意见：" + item.opinion + "；流程状态：已通过。",
+                time: "刚刚",
+                ts: Date.parse(String(item.approvedAt || "").replace(" ", "T")) || Date.now(),
+                attachments: [],
+                related: { label: "《" + item.name + "》", id: item.processNumber },
+                likes: [],
+                comments: [],
+                followed: false,
+              });
+            });
+            if (typeof renderFeed === "function") renderFeed();
+          }
+          var hostTaskCompletionDynamics = ${JSON.stringify(taskCompletionDynamics).replaceAll("<", "\\u003c")};
+          if (Array.isArray(hostTaskCompletionDynamics) && typeof feeds !== "undefined") {
+            hostTaskCompletionDynamics.slice().reverse().forEach(function (item) {
+              if (feeds.some(function (feed) { return feed.id === item.id; })) return;
+              feeds.unshift({
+                id: item.id,
+                type: "task",
+                operator: item.operator || "张宇",
+                dept: "安全管理部",
+                avatar: (item.operator || "张").slice(0, 1),
+                tone: "green",
+                title: "完成了《" + item.taskName + "》",
+                summary: "任务编号：" + item.taskId + "；执行表单：《" + item.formName + "》；已完成班前安全活动并提交记录。",
+                time: "刚刚",
+                ts: Date.parse(String(item.completedAt || "").replace(" ", "T")) || Date.now(),
+                attachments: [],
+                related: { label: "《" + item.taskName + "》", id: item.taskId },
+                likes: [],
+                comments: [],
+                followed: false,
+              });
+            });
+            if (typeof renderFeed === "function") renderFeed();
           }
           var focusFeedId = ${JSON.stringify(focusFeedId)};
           var dynamicNumber = ${JSON.stringify(dynamicNumber)};
@@ -5963,10 +6023,10 @@ function EmbeddedDynamicsFrame({ view, title, className, focusFeedId = "", dynam
       </script></body>`,
     );
 
-  return <iframe key={`${view}-${focusFeedId || "all"}`} className={className} srcDoc={srcDoc} title={title} />;
+  return <iframe key={`${view}-${focusFeedId || "all"}-${processApprovalDynamics.length}-${taskCompletionDynamics.length}`} className={className} srcDoc={srcDoc} title={title} />;
 }
 
-function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "" }) {
+function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "", processApprovalDynamics = [], taskCompletionDynamics = [] }) {
   const [activeTab, setActiveTab] = useState(initialTab);
   const [libraryTab, setLibraryTab] = useState("全部");
   const [selectedCategory, setSelectedCategory] = useState("安全管理");
@@ -6104,6 +6164,8 @@ function EmbeddedDynamicsPage({ onAction, initialTab = "动态", focusFeedId = "
           view="feed"
           focusFeedId={focusFeedId}
           title="动态"
+          processApprovalDynamics={processApprovalDynamics}
+          taskCompletionDynamics={taskCompletionDynamics}
         />
       ) : selectedDynamicNumber ? (
         <EmbeddedDynamicsFrame
@@ -11899,6 +11961,8 @@ function App() {
   const [processInitialNumber, setProcessInitialNumber] = useState("");
   const [warningNavigation, setWarningNavigation] = useState({ keyword: "", taskTab: "task-pending", version: 0 });
   const [processRecords, setProcessRecords] = useState(processEntries);
+  const [processApprovalDynamics, setProcessApprovalDynamics] = useState([]);
+  const [taskCompletionDynamics, setTaskCompletionDynamics] = useState([]);
   const [preventionDrafts, setPreventionDrafts] = useState([]);
   const [dynamicsInitial, setDynamicsInitial] = useState("动态");
   const [dynamicsFocusFeedId, setDynamicsFocusFeedId] = useState("");
@@ -11949,6 +12013,26 @@ function App() {
     };
     window.addEventListener("message", receivePendingTaskCount);
     return () => window.removeEventListener("message", receivePendingTaskCount);
+  }, []);
+  useEffect(() => {
+    const receiveTaskCompletion = (event) => {
+      const payload = event.data;
+      if (payload?.type !== "task:completed" || !payload.taskId) return;
+      setTaskCompletionDynamics((current) =>
+        current.some((item) => item.taskId === payload.taskId)
+          ? current
+          : [{
+              id: `task-completed-${payload.taskId}`,
+              taskId: payload.taskId,
+              taskName: payload.taskName || "班前会",
+              formName: payload.formName || "班前会",
+              operator: payload.operator || "张宇",
+              completedAt: payload.completedAt || new Date().toISOString(),
+            }, ...current],
+      );
+    };
+    window.addEventListener("message", receiveTaskCompletion);
+    return () => window.removeEventListener("message", receiveTaskCompletion);
   }, []);
   useEffect(() => {
     // 历史巡检流程不重复注入；只将当前会话中新提交的任务同步到主流程与消息中心。
@@ -12122,6 +12206,13 @@ function App() {
       setActiveTab("processes");
       setActiveNav("流程");
     });
+  };
+  const addProcessApprovalDynamic = (dynamic) => {
+    setProcessApprovalDynamics((current) =>
+      current.some((item) => item.processId === dynamic.processId)
+        ? current
+        : [dynamic, ...current],
+    );
   };
   const createWorkPermitApproval = (permit) => {
     const dateKey = getFlowDatePart(permit.applyAt);
@@ -12459,6 +12550,7 @@ function App() {
                 initialProcessNumber={processInitialNumber}
                 processRecords={processRecords}
                 setProcessRecords={setProcessRecords}
+                onApprovalPassed={addProcessApprovalDynamic}
                 onAction={showNotice}
               />
             ) : activeTab === "safety-dynamics" ? (
@@ -12466,6 +12558,8 @@ function App() {
                 key={`${dynamicsInitial}-${dynamicsFocusFeedId || "all"}`}
                 initialTab={dynamicsInitial}
                 focusFeedId={dynamicsFocusFeedId}
+                processApprovalDynamics={processApprovalDynamics}
+                taskCompletionDynamics={taskCompletionDynamics}
                 onAction={showNotice}
               />
             ) : activeTab === "warnings" ? (

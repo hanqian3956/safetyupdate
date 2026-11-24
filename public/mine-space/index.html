@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>矿山安全空间态势组件 - 编辑器</title>
+  <link rel="stylesheet" href="mine-space/mine-space.css">
+  <style>
+    html, body { margin: 0; height: 100%; background: #060c18; }
+    #app { position: fixed; inset: 0; }
+    /* 供 BI 大屏嵌入：仅保留空间画布，不展示外围的控制与信息区域。 */
+    html.mine-space-canvas-only .ms-root { min-height: 0; }
+    html.mine-space-canvas-only .ms-toolbar,
+    html.mine-space-canvas-only .ms-hud,
+    html.mine-space-canvas-only .ms-drawer,
+    html.mine-space-canvas-only .ms-sim,
+    html.mine-space-canvas-only .ms-legend,
+    html.mine-space-canvas-only .ms-coord,
+    html.mine-space-canvas-only .ms-zoombar { display: none !important; }
+  </style>
+</head>
+<body>
+  <div id="app"></div>
+
+  <script src="mine-space/iso.js"></script>
+  <script src="mine-space/shapes.js"></script>
+  <script src="mine-space/mine-space.js"></script>
+  <script src="mine-space/demo-layout.js"></script>
+  <script>
+    var KEY = 'mine-space-layout-v2';
+    var saved = null;
+    try { saved = JSON.parse(localStorage.getItem(KEY)); } catch (e) {}
+
+    var canvasOnly = location.hash === '#canvas';
+    if (canvasOnly) document.documentElement.classList.add('mine-space-canvas-only');
+    function syncTheme(layout) {
+      if (window.parent === window) return;
+      window.parent.postMessage({ source: 'mine-space', type: 'theme', theme: layout && layout.canvas ? layout.canvas.theme : 'sketch' }, window.location.origin);
+    }
+
+    var ms = MineSpace.create('#app', {
+      mode: location.hash === '#preview' || canvasOnly ? 'preview' : 'edit',
+      readonly: canvasOnly,
+      canvasOnly: canvasOnly,
+      layout: saved || MineSpace.demoLayout,
+      alarms: MineSpace.demoAlarms,
+      onChange: function (layout) { localStorage.setItem(KEY, JSON.stringify(layout)); syncTheme(layout); },
+      onSelectZone: function (info) { console.log('[区域点击]', info); },
+      onAlarmClick: function (alarm) { console.log('[报警点击]', alarm); },
+      onAlarmClear: function (alarm) { console.log('[消警]', alarm); }
+    });
+    syncTheme(ms.getLayout());
+    window.ms = ms; // 方便在控制台调试：ms.addAlarm({...})
+  </script>
+</body>
+</html>

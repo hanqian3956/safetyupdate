@@ -653,7 +653,7 @@ body.devdoc-open .app { padding-bottom:var(--devdoc-h, 40vh); }
         <div class="nav-group-label">核心模块</div>
         <div class="nav-item active" data-view="view-template"><i class="bi bi-layers"></i>任务模板</div>
         <div class="nav-item" data-view="view-publish"><i class="bi bi-send-check"></i>发布任务</div>
-        <div class="nav-item" data-view="view-mytask"><i class="bi bi-kanban"></i>我的任务<span class="badge" id="navBadge">5</span></div>
+        <div class="nav-item" data-view="view-mytask"><i class="bi bi-kanban"></i>我的任务<span class="badge" id="navBadge">6</span></div>
         <div class="nav-group-label">数据统计</div>
         <div class="nav-item" data-view="view-ledger"><i class="bi bi-graph-up"></i>任务总台账</div>
     </nav>
@@ -1029,8 +1029,8 @@ body.devdoc-open .app { padding-bottom:var(--devdoc-h, 40vh); }
 <div class="card">
     <div class="card-top"></div>
     <div class="tabs" id="myTabs">
-        <div class="tab active" data-tab="t-exec">待我执行<span class="num">2</span></div>
-        <div class="tab" data-tab="t-done">已执行<span class="num">2</span></div>
+        <div class="tab active" data-tab="t-exec">待我执行<span class="num">3</span></div>
+        <div class="tab" data-tab="t-done">已执行<span class="num">3</span></div>
         <div class="tab" data-tab="t-forward">已转发<span class="num">1</span></div>
         <div class="tab" data-tab="t-join">我参与的<span class="num">2</span></div>
     </div>
@@ -1039,6 +1039,7 @@ body.devdoc-open .app { padding-bottom:var(--devdoc-h, 40vh); }
         <div class="fb-bar" data-fb="myExecTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="4"><option value="">状态</option><option value="未执行">未执行</option><option value="执行中">执行中</option><option value="已完成">已完成</option></select><select class="fb-sel" data-k="sel" data-mode="overdue"><option value="">是否超期</option><option value="1">仅超期</option><option value="0">未超期</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="myExecTable"><thead><tr><th>任务名称</th><th>任务编号</th><th>发布时间</th><th>执行人</th><th>状态</th><th>超期</th><th>操作</th></tr></thead>
         <tbody>
 <tr data-tid="I20260714001" data-prog="1/2" data-name="东区3号矿井日常巡检" data-ft="普通业务表单"><td>东区3号矿井日常巡检</td><td style="font-size:11px;">2026-07-14 08:00</td><td>李强、王建国</td><td><span class="status status-signing">执行中 1/2</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-amber btn-xs act-exec">执行</button><button class="btn btn-ghost btn-xs act-forward">转办</button></div></td></tr>
+<tr data-tid="BQH20261120001" data-prog="0/1" data-name="班前会" data-ft="班前会"><td>班前会</td><td style="font-size:11px;">2026-11-20 07:20</td><td>张宇</td><td><span class="status status-pending">未执行</span></td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-amber btn-xs act-exec">执行</button><button class="btn btn-ghost btn-xs act-forward">转办</button></div></td></tr>
 <tr data-tid="I20260701007" data-prog="0/1" data-name="瓦斯浓度监测" data-ft="无"><td>瓦斯浓度监测</td><td style="font-size:11px;">2026-07-02 08:00</td><td>李强</td><td><span class="status status-pending">未执行</span></td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-amber btn-xs act-exec">执行</button><button class="btn btn-ghost btn-xs act-forward">转办</button></div></td></tr>
         </tbody></table>
       </div>
@@ -1046,6 +1047,7 @@ body.devdoc-open .app { padding-bottom:var(--devdoc-h, 40vh); }
         <div class="fb-bar" data-fb="myDoneTable"><input class="fb-input" data-k="q" placeholder="搜索任务名称"><select class="fb-sel" data-k="sel" data-col="4"><option value="">状态</option><option value="已完成">已完成</option><option value="已作废">已作废</option><option value="已撤回">已撤回</option></select><select class="fb-sel" data-k="sel" data-mode="overdue"><option value="">是否超期</option><option value="1">仅超期</option><option value="0">未超期</option></select><span class="fb-count"></span><button class="fb-reset" type="button">重置</button></div><table class="data-table" id="myDoneTable"><thead><tr><th>任务名称</th><th>任务编号</th><th>发布时间</th><th>执行人</th><th>状态</th><th>我的提交时间</th><th>超期</th><th>操作</th></tr></thead>
         <tbody>
 <tr data-tid="I20260626004" data-prog="2/2" data-name="北区提升机检修" data-ft="无"><td>北区提升机检修</td><td style="font-size:11px;">2026-06-28 08:00</td><td>李强、赵志远</td><td><span class="status status-done">已完成</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-29 10:12</td><td><span class="overdue-mark"><i class="bi bi-exclamation-triangle-fill"></i>超期</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
+<tr data-tid="BQH20261119001" data-prog="1/1" data-name="班前会" data-ft="班前会"><td>班前会</td><td style="font-size:11px;">2026-11-19 07:20</td><td>张宇</td><td><span class="status status-done">已完成</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-11-19 07:48</td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
 <tr data-tid="I20260627005" data-prog="2/2" data-name="中央水泵房安全检查" data-ft="普通业务表单"><td>中央水泵房安全检查</td><td style="font-size:11px;">2026-06-27 09:00</td><td>陈安平、李强</td><td><span class="status status-done">已完成</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-27 15:20</td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
         <tr data-tid="I20260620013" data-prog="1/2" data-name="西区回风巷巡检" data-ft="普通业务表单"><td>西区回风巷巡检</td><td style="font-size:11px;">2026-06-20 08:00</td><td>李强、刘明辉</td><td><span class="status status-draft">已作废</span></td><td style="font-size:11px;color:var(--text-secondary);">2026-06-20 09:00</td><td><span style="color:var(--text-muted);font-size:11px;">—</span></td><td><div class="actions"><button class="btn btn-ghost btn-xs act-inst-detail">查看</button></div></td></tr>
         </tbody></table>
@@ -1264,7 +1266,14 @@ function showModal(title, bodyHtml, footHtml, large){
     modalEl.classList.toggle('lg', !!large);
     overlay.classList.add('show');
 }
-function closeModal(){ overlay.classList.remove('show'); }
+function closeModal(){
+    /* 关闭弹窗时主动停止媒体，避免视频在隐藏后继续播放声音。 */
+    modalBody.querySelectorAll('video, audio').forEach(function(media){
+        media.pause();
+        media.currentTime = 0;
+    });
+    overlay.classList.remove('show');
+}
 document.getElementById('modalX').addEventListener('click', closeModal);
 overlay.addEventListener('click', function(e){ if(e.target===overlay) closeModal(); });
 document.addEventListener('keydown', function(e){ if(e.key==='Escape') closeModal(); });
@@ -1724,7 +1733,7 @@ function instStatusHtml(prog){
 var TASK_ID_PREFIX = {
     '东区3号矿井日常巡检':'DQ3H', '瓦斯浓度监测':'WSND', '北区提升机检修':'BQTS',
     '中央水泵房安全检查':'ZYSB', '西区回风巷巡检':'XQHF', '东区3号矿井巡检':'DQ3H',
-    '南区排水系统巡检':'NQPS', '西区通风系统巡检':'XQTF'
+    '南区排水系统巡检':'NQPS', '西区通风系统巡检':'XQTF', '班前会':'BQH'
 };
 function taskIdPrefix(name){
     var raw = String(name || '');
@@ -1773,6 +1782,8 @@ var EXEC_INFO = {
     'I20260626004': { starter:'张伟明', part:'—', work:'机电维修工', loc:'北区提升机房', span:'2026-06-28 08:00 ~ 2026-06-29 17:00', pe:'2026-06-29 17:00', desc:'更换闸瓦、试运行' },
     'I20260627005': { starter:'张伟明', part:'刘明辉', work:'安全员', loc:'中央水泵房', span:'2026-06-27 09:00 ~ 17:00', pe:'2026-06-27 17:00', desc:'检查水泵及配电设备' },
     'I20260630008': { starter:'张伟明', part:'李强', work:'巡检工', loc:'南区排水系统', span:'2026-06-30 14:00 ~ 2026-07-01 14:00', pe:'2026-07-01 14:00', desc:'检查排水泵与管路是否畅通' },
+    'I20261120001': { starter:'张宇', part:'李强、王建国', work:'机修工', loc:'东区矿业公司机修班组', span:'2026-11-20 07:20 ~ 08:00', pe:'2026-11-20 08:00', desc:'组织班前安全活动，完成作业交底、劳保检查与风险管控确认' },
+    'I20261119001': { starter:'张宇', part:'李强、王建国', work:'机修工', loc:'东区矿业公司机修班组', span:'2026-11-19 07:20 ~ 08:00', pe:'2026-11-19 08:00', desc:'组织班前安全活动，完成作业交底、劳保检查与风险管控确认' },
     'I20260628002': { starter:'张伟明', part:'李强', work:'通风工', loc:'西区通风机房', span:'2026-06-28 09:00 ~ 2026-06-29 09:00', pe:'2026-06-29 09:00', desc:'检查主扇运行状态与风量' },
     'I20260625003': { starter:'张伟明', part:'—', work:'巡检工', loc:'东区3号矿井', span:'2026-06-30 08:00 ~ 2026-07-01 08:00', pe:'2026-07-01 08:00', desc:'日常巡检，重点看通风与顶板' },
     'I20260620013': { starter:'张伟明', part:'—', work:'巡检工', loc:'西区回风巷', span:'2026-06-20 08:00 ~ 2026-06-21 08:00', pe:'2026-06-21 08:00', desc:'回风巷支护与瓦斯检查' }
@@ -1780,8 +1791,62 @@ var EXEC_INFO = {
 /* 已提交表单的演示数据（用于「查看提交」只读页） */
 var SUBMIT_DEMO = {
     'I20260626004': { ft:'无', desc:'更换提升机闸瓦，试运行正常', files:'闸瓦照片.jpg' },
-    'I20260627005': { ft:'普通业务表单', ef1:'中央水泵房', ef2:'正常', ef3:'无', ef4:'已记录并归档', ef5:'水泵及配电设备运行正常' }
+    'I20260627005': { ft:'普通业务表单', ef1:'中央水泵房', ef2:'正常', ef3:'无', ef4:'已记录并归档', ef5:'水泵及配电设备运行正常' },
+    'BQH20261119001': { ft:'班前会', t:'2026-11-19 07:48', org:'东区矿业公司', team:'机修班组', shift:'白班', weather:'晴', host:'张宇', attendees:'张宇、李强、王建国、陈刚、刘健', count:'5', ppe:'全员劳保穿戴规范，班前未饮酒，精神状态良好', briefing:'宣贯《井下机电设备检修作业安全管理规定》及当班安全注意事项。', work:'井下运输设备巡检、主排水泵房设备检查。', risk:'设备检修存在触电、机械伤害风险。', measures:'严格执行停送电、验电、挂牌制度，作业前确认防护用品齐全。', files:'班前会视频.mp4' }
 };
+/* 班前会任务与「工作表 - 班前会」使用同一组字段，执行态可填、查看态只读回显。 */
+function preShiftMeetingTaskForm(sub, isView){
+    var d = {
+        org:'东区矿业公司', team:'机修班组', activity:'班前会', activityDate:'2026-11-20', shift:'白班', weather:'晴', handover:'是',
+        host:'张宇', held:'是', attendees:'张宇、李强、王建国', otherAttendees:'', count:'3', alcoholSupervisor:'刘健', recorder:'张宇',
+        helmet:'已佩戴', clothes:'已穿戴', shoes:'已穿戴', belt:'已穿戴', alcohol:'否', mental:'是', gloves:'已佩戴', equipment:'已配备',
+        briefing:'请宣贯当班安全注意事项及作业规程。', briefer:'张宇', issue1:'无', issue1Handling:'无', issue2:'无', issue2Handling:'无',
+        siteWork:'机修工', siteRisk:'设备检修存在触电、机械伤害风险。', siteMeasures:'严格执行停送电、验电、挂牌制度。',
+        arrangement1:'井下运输设备巡检。', arrangement2:'主排水泵房设备检查。', shiftWork:'机修工', shiftRisk:'设备检修存在触电、机械伤害风险。', shiftMeasures:'作业前确认防护用品齐全并设置现场监护人。'
+    };
+    Object.keys(d).forEach(function(k){ if(sub && sub[k] !== undefined && sub[k] !== '') d[k] = sub[k]; });
+    if(sub && sub.work){ d.arrangement1 = sub.work; }
+    if(sub && sub.risk){ d.shiftRisk = sub.risk; }
+    if(sub && sub.measures){ d.shiftMeasures = sub.measures; }
+    var read = isView ? ' readonly' : '';
+    var disabled = isView ? ' disabled' : '';
+    var required = '<span class="required">*</span>';
+    function field(label, key, must){ return '<div class="form-group"><label class="form-label">' + label + (must ? required : '') + '</label><input class="form-input" id="bf_' + key + '"' + read + ' value="' + d[key] + '"></div>'; }
+    function area(label, key, must, full){ return '<div class="form-group' + (full ? ' full' : '') + '"><label class="form-label">' + label + (must ? required : '') + '</label><textarea class="form-input" id="bf_' + key + '" rows="3"' + read + '>' + d[key] + '</textarea></div>'; }
+    function choices(label, key, values, must){
+        return '<div class="form-group"><label class="form-label">' + label + (must ? required : '') + '</label><div style="display:flex;gap:16px;padding-top:8px">' + values.map(function(v){ return '<label style="font-size:13px;color:var(--text-secondary)"><input type="radio" name="bf_' + key + '" value="' + v + '"' + (d[key] === v ? ' checked' : '') + disabled + '> ' + v + '</label>'; }).join('') + '</div></div>';
+    }
+    function section(title){ return '<div class="exec-block-head" style="margin-top:18px"><i class="bi bi-list-check"></i> ' + title + '</div>'; }
+    var h = '';
+    h += section('班前会基本信息') + '<div class="modal-grid">'
+       + field('所属组织','org',true) + field('班组名称','team',true) + field('活动类型','activity',true) + field('活动时间','activityDate',true)
+       + field('班次','shift',true) + field('天气','weather',true) + choices('上一班次是否进行交接班','handover',['是','否'],true) + field('班组活动主持人','host',true)
+       + choices('是否正常召开','held',['是','否'],true) + field('班组内参会人员','attendees',true) + field('其他参会人员','otherAttendees',false) + field('活动人数','count',true)
+       + field('酒精检测监督人','alcoholSupervisor',true) + field('活动记录人','recorder',true) + '</div>';
+    h += section('班前检查个人安全状态及防护用品配备') + '<div class="modal-grid">'
+       + choices('安全帽','helmet',['已佩戴','未佩戴'],true) + choices('作业服','clothes',['已穿戴','未穿戴'],true)
+       + choices('防护鞋','shoes',['已穿戴','未穿戴'],true) + choices('安全带','belt',['已穿戴','未穿戴'],true)
+       + choices('班前是否饮酒','alcohol',['是','否'],true) + choices('精神状态是否良好','mental',['是','否'],true)
+       + choices('防护手套','gloves',['已佩戴','未佩戴'],true) + choices('检测设备及其他防护用品','equipment',['已配备','未配备'],true) + '</div>';
+    h += section('宣贯上级文件精神') + '<div class="modal-grid">' + area('宣贯内容','briefing',true,true) + field('宣贯人','briefer',true) + '</div>';
+    h += section('上一班次安全问题处理情况') + '<div class="modal-grid">'
+       + area('1.问题描述','issue1',true,false) + area('处理情况','issue1Handling',true,false)
+       + area('2.问题描述','issue2',true,false) + area('处理情况','issue2Handling',true,false) + '</div>';
+    h += section('作业现场风险辨识及管控措施') + '<div class="modal-grid">'
+       + field('工种','siteWork',true) + area('1.风险描述','siteRisk',true,false) + area('管控措施','siteMeasures',true,false) + '</div>';
+    h += section('本班次施工作业安排') + '<div class="modal-grid">' + area('1.','arrangement1',true,true) + area('2.','arrangement2',true,true) + '</div>';
+    h += section('本班次安全风险') + '<div class="modal-grid">'
+       + field('工种','shiftWork',true) + area('1.风险描述','shiftRisk',true,false) + area('管控措施','shiftMeasures',true,false) + '</div>';
+    h += '<div class="form-group" style="margin-top:18px"><label class="form-label">班前会视频</label>'
+       + (isView ? '<button type="button" class="btn btn-ghost btn-sm" onclick="openPreShiftVideo()"><i class="bi bi-play-circle"></i> ' + (sub.files || '班前会视频.mp4') + '</button>' : '<input class="form-input" type="file" accept="video/mp4,video/quicktime,video/x-msvideo,video/x-ms-wmv"><div class="form-hint" style="margin-top:8px"><i class="bi bi-info-circle"></i>支持 mp4、mov、avi、wmv 格式视频</div>')
+       + '</div>';
+    return h;
+}
+function openPreShiftVideo(){
+    showModal('<i class="bi bi-play-circle"></i> 班前会视频',
+        '<video controls preload="metadata" style="display:block;width:100%;max-height:58vh;background:#111;border-radius:8px"><source src="./media/pre-shift-meeting-video.mp4" type="video/mp4">当前浏览器不支持视频播放。</video>',
+        '<button class="btn btn-ghost btn-sm" onclick="closeModal()">关闭</button>');
+}
 /* 按「实例 + 执行人」存提交内容（管理员从台账下钻查看某人交了什么） */
 var SUBMIT_BY = {
     'I20260714001': {
@@ -1870,6 +1935,8 @@ function renderExecPage(row, mode){
                 area += '<div class="form-group"><label class="form-label">执行完成情况<span class="required">*</span></label>'
                       + '<textarea class="form-input" id="execDesc" rows="4" placeholder="请详细描述任务执行完成情况"></textarea></div>';
             }
+        } else if(ft === '班前会'){
+            area += preShiftMeetingTaskForm(sub, isView);
         } else if(isView){
             area += '<div class="modal-grid">'
                   + '<div class="form-group"><label class="form-label">巡检区域</label><input class="form-input" id="ef1" readonly value="' + (sub.ef1 || '') + '"></div>'
@@ -1887,10 +1954,10 @@ function renderExecPage(row, mode){
                   + '<div class="form-group full"><label class="form-label">备注</label><textarea class="form-input" id="ef5" rows="2"></textarea></div>'
                   + '</div>';
         }
-        if(isView){
+        if(isView && ft !== '班前会'){
             area += '<div class="form-group"><label class="form-label">附件</label>'
                   + '<div class="form-hint"><i class="bi bi-paperclip"></i> ' + (sub.files || '无附件') + '</div></div>';
-        } else {
+        } else if(!isView && ft !== '班前会') {
             area += '<div class="form-group"><label class="form-label">附件</label><input class="form-input" type="file" multiple>'
                   + '<div class="form-hint" style="margin-top:8px;"><i class="bi bi-info-circle"></i>支持图片、文件上传</div></div>';
         }
@@ -1925,6 +1992,16 @@ document.getElementById('btnExecSubmit').addEventListener('click', function(){
     if((row.dataset.ft || '无') === '无'){
         var d = document.getElementById('execDesc');
         if(!d || !d.value.trim()){ toast('请填写执行完成情况','err'); return; }
+    }
+    if((row.dataset.ft || '') === '班前会' && window.parent && typeof window.parent.postMessage === 'function'){
+        window.parent.postMessage({
+            type: 'task:completed',
+            taskId: row.dataset.tid || '',
+            taskName: row.dataset.name || '班前会',
+            formName: '班前会',
+            operator: '张宇',
+            completedAt: new Date().toISOString()
+        }, '*');
     }
     delete EXEC_DRAFT[row.dataset.tid];
     completeMyTask(row);

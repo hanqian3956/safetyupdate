@@ -18,7 +18,7 @@ const isTyping = () => {
   return Boolean(element && (/^(INPUT|TEXTAREA|SELECT)$/.test(element.tagName) || element.isContentEditable));
 };
 
-export function CanvasEditor({ editor, view, setView, workspaceRef, onDropWidget, onContextMenu }) {
+export function CanvasEditor({ editor, view, setView, workspaceRef, onDropWidget, onContextMenu, onOpenSpace }) {
   const { screen, selection } = editor;
   const [guides, setGuides] = useState(null);
   const [marquee, setMarquee] = useState(null);
@@ -120,6 +120,8 @@ export function CanvasEditor({ editor, view, setView, workspaceRef, onDropWidget
       const moving = current.screen.widgets.filter((widget) => ids.includes(widget.id) && !widget.locked);
       drag.current = {
         kind: "move",
+        openSpace: item.type === "space" && !event.shiftKey,
+        widgetId: item.id,
         point,
         starts: new Map(moving.map((widget) => [widget.id, { x: widget.x, y: widget.y }])),
         box: boundsOf(moving),
@@ -197,6 +199,10 @@ export function CanvasEditor({ editor, view, setView, workspaceRef, onDropWidget
     const state = drag.current;
     if (!state) return;
     if (state.moved) editor.end();
+    if (!state.moved && state.openSpace) {
+      const widget = latest.current.screen.widgets.find((entry) => entry.id === state.widgetId);
+      if (widget) onOpenSpace?.(widget);
+    }
     drag.current = null;
     setGuides(null);
     setMarquee(null);

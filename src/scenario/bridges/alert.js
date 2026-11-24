@@ -62,6 +62,9 @@
     var doneBody = document.querySelector("#task-done-content tbody");
     if (pendingBody) pendingBody.insertAdjacentHTML("afterbegin", pending.join(""));
     if (doneBody) doneBody.insertAdjacentHTML("afterbegin", done.join(""));
+    // Rows are injected after the prototype creates its independent overdue column.
+    // Run that normalizer again so both pending and completed rows retain the action column.
+    if (typeof window.addWarningTaskOverdueColumn === "function") window.addWarningTaskOverdueColumn();
     var badge = document.querySelector("#task-tabs .tab-item .tag");
     if (badge && pendingBody) badge.textContent = pendingBody.querySelectorAll(":scope > tr:not(.hit-detail-row)").length;
   }

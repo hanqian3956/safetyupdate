@@ -2,6 +2,7 @@ import { useState, useSyncExternalStore } from "react";
 import {
   BorderOutside24Regular,
   Clock24Regular,
+  Cube24Regular,
   DataBarVertical24Regular,
   DataFunnel24Regular,
   DataLine24Regular,
@@ -39,6 +40,7 @@ export const WIDGET_ICONS = {
   rank: Trophy24Regular,
   table: Table24Regular,
   ticker: Megaphone24Regular,
+  space: Cube24Regular,
   title: TextHeader124Regular,
   text: TextT24Regular,
   clock: Clock24Regular,

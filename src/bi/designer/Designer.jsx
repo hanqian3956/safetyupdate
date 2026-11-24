@@ -27,6 +27,7 @@ import { CanvasEditor, MAX_ZOOM, MIN_ZOOM } from "./CanvasEditor.jsx";
 import { DatasetPreview } from "./DatasetPreview.jsx";
 import { LeftPanel } from "./LeftPanel.jsx";
 import { RightPanel } from "./panels.jsx";
+import { SpaceDialog } from "./SpaceDialog.jsx";
 import { useEditor } from "./useEditor.js";
 
 const isTyping = () => {
@@ -108,6 +109,7 @@ export function Designer({ screen: initialScreen, onClose }) {
   const [confirmClose, setConfirmClose] = useState(false);
   const [sharing, setSharing] = useState(false);
   const [showDoc, setShowDoc] = useState(false);
+  const [spaceWidget, setSpaceWidget] = useState(null);
 
   const fitView = useCallback(() => {
     const workspace = workspaceRef.current;
@@ -354,6 +356,7 @@ export function Designer({ screen: initialScreen, onClose }) {
             workspaceRef={workspaceRef}
             onDropWidget={placeWidget}
             onContextMenu={setContextMenu}
+            onOpenSpace={setSpaceWidget}
           />
         </ScreenRuntime>
         <RightPanel editor={editor} onPreviewDataset={setDatasetPreview} />
@@ -364,6 +367,7 @@ export function Designer({ screen: initialScreen, onClose }) {
         <ContextMenu menu={contextMenu} items={contextMenu.onWidget && selected.length ? widgetMenu : canvasMenu} onClose={() => setContextMenu(null)} />
       ) : null}
       {previewing ? <PreviewOverlay screen={screen} onClose={() => setPreviewing(false)} /> : null}
+      {spaceWidget ? <SpaceDialog widget={spaceWidget} onClose={() => setSpaceWidget(null)} /> : null}
       {datasetPreview ? <DatasetPreview datasetId={datasetPreview} onClose={() => setDatasetPreview(null)} /> : null}
       {sharing ? <ShareDialog screenId={screen.id} onClose={() => setSharing(false)} /> : null}
       {confirmClose ? (
