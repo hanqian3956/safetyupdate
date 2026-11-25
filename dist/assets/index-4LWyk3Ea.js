@@ -1171,7 +1171,7 @@ Error generating stack: `+e.message+`
   let uid = 1;
   const nid = () => 'f' + (uid++);
   let lastFieldNameTimestamp = 0;\r
-  // 字段名由控件英文标识、13 位毫秒时间戳和 4 位小写字母数字组成。\r
+  // 字段名由控件英文标识、13 位毫秒时间戳和 5 位小写字母数字组成。\r
   function nextFieldNameTimestamp(){\r
     lastFieldNameTimestamp = Math.max(Date.now(), lastFieldNameTimestamp + 1);\r
     return lastFieldNameTimestamp;\r
@@ -1180,12 +1180,12 @@ Error generating stack: `+e.message+`
     const characters = 'abcdefghijklmnopqrstuvwxyz0123456789';\r
     let suffix = '';\r
     if(window.crypto && window.crypto.getRandomValues){\r
-      const values = new Uint32Array(4);\r
+      const values = new Uint32Array(5);\r
       window.crypto.getRandomValues(values);\r
       values.forEach(value => { suffix += characters[value % characters.length]; });\r
       return suffix;\r
     }\r
-    for(let index=0; index<4; index++) suffix += characters[Math.floor(Math.random() * characters.length)];\r
+    for(let index=0; index<5; index++) suffix += characters[Math.floor(Math.random() * characters.length)];\r
     return suffix;\r
   }\r
   function genFieldName(type){\r
@@ -2399,7 +2399,7 @@ Error generating stack: `+e.message+`
     const lpos=f.labelPos||formConfig.labelPos, lalign=f.labelAlign||formConfig.labelAlign;
     let h=cfg2Sec('基础');
     h+=cfg2Row('标题',\`<input id="cfg2_label" class="cfg2-in" value="\${cfg2Esc(f.label)}">\`,'字段在表单上显示的名称，运行态展示给用户，同时作为「字段名」自动生成的基础。');
-    h+=cfg2Row('字段名',\`<input class="cfg2-in cfg2-mono" value="\${cfg2Esc(f.fieldName)}" readonly>\`,'自动生成规则：使用「控件英文标识_13位时间戳_4位小写字母数字」，例如 member_1760000000000_a7k3。创建字段时一次性生成并锁定，不可手动修改，保证与提交数据 / 接口字段稳定对应。');\r
+    h+=cfg2Row('字段名',\`<input class="cfg2-in cfg2-mono" value="\${cfg2Esc(f.fieldName)}" readonly>\`,'自动生成规则：使用「控件英文标识_13位时间戳_5位小写字母数字」，例如 member_1760000000000_a7k3m。创建字段时一次性生成并锁定，不可手动修改，保证与提交数据 / 接口字段稳定对应。');\r
     h+=cfg2Row('帮助说明',\`<input id="cfg2_help" class="cfg2-in" value="\${cfg2Esc(f.helpText||'')}" placeholder="显示在字段下方">\`,'显示在输入框下方的灰色说明文字，用于补充填写要求；不参与提交数据。留空则不显示。');
     /* 子表单内的列是子组件：由子表单统一排版，不提供「布局」类配置（宽度 / 标签位置 / 对齐） */
     if(window.CFG_SUB_MODE) return h;
@@ -2415,7 +2415,7 @@ Error generating stack: `+e.message+`
     opts=opts||{};\r
     let h=cfg2Sec('字段属性');
     if(!opts.hideRequired) h+=cfg2Row('必填',\`<input id="cfg2_req" type="checkbox" class="cfg2-cb" \${f.required?'checked':''}>\`,'勾选后运行态该字段不能为空，为空则拦截提交并提示「请填写{标题}」。默认不勾选。字段被「显示条件」隐藏时不参与必填校验。',true);\r
-    h+=cfg2Row('字段权限',cfg2Seg(CFG2_PERM,f.readonly?'readonly':'edit','setFieldPerm'),'只读=运行态仅展示、不可编辑，值由默认值 / 数据联动 / 系统带出；可编辑=用户可填写。默认「可编辑」。只读字段仍参与提交。',true);
+    if(!opts.hidePermission) h+=cfg2Row('字段权限',cfg2Seg(CFG2_PERM,f.readonly?'readonly':'edit','setFieldPerm'),'只读=运行态仅展示、不可编辑，值由默认值 / 数据联动 / 系统带出；可编辑=用户可填写。默认「可编辑」。只读字段仍参与提交。',true);\r
     h+=cfg2Row('显示条件',\`<select id="cfg_vmode" class="cfg2-in">\${[['always','始终显示'],['when','满足条件时显示']].map(o=>\`<option value="\${o[0]}" \${((f.visible&&f.visible.mode)||'always')===o[0]?'selected':''}>\${o[1]}</option>\`).join('')}</select>\`,'始终显示=任何时候都展示；满足条件时显示=按下方条件动态显隐。隐藏时不参与必填与格式校验，提交值为空。默认「始终显示」。');
     if(f.visible&&f.visible.mode==='when') h+=\`<div class="cfg2-cond" style="margin-left:0">\${cfg2VisibleConds(f)}</div>\`;
     return h;
@@ -2536,7 +2536,7 @@ Error generating stack: `+e.message+`
     cfg2TipInit();\r
     let h=\`<div class="cfg2-head"><i class="fas fa-tag"></i>标签 · 字段配置</div>\`;\r
     h+=cfg2BaseHTML(f);\r
-    h+=cfg2AttrHTML(f,{hideRequired:true});\r
+    h+=cfg2AttrHTML(f,{hideRequired:true,hidePermission:true});\r
     h+=cfg2Sec('标签');\r
     h+=cfg2Row('默认文本',\`<input id="cfg2_labeltext" class="cfg2-in" value="\${cfg2Esc(f.defaultValue||'')}" placeholder="请输入展示文本">\`,'标签仅用于展示此处配置的固定文本，不提供填写、格式、长度或校验等单行文本配置。');\r
     return h;\r
@@ -3913,7 +3913,7 @@ Error generating stack: `+e.message+`
     }
     let h = sec('通用配置（所有控件共有）','common');
     h += row('标题', \`<input id="cfg_label" \${inp(f.label)}>\`, '字段在表单上显示的名称，运行态展示给用户。');
-    h += row('字段名（API 标识·自动生成）', \`<input id="cfg_field" value="\${f.fieldName}" disabled class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm bg-gray-100 text-gray-500 cursor-not-allowed">\`, '<b>自动生成规则：</b>使用「控件英文标识_13位时间戳_4位小写字母数字」，例如 member_1760000000000_a7k3。字段名在创建字段时一次性生成并锁定，<b>不可手动修改</b>，以保证与提交数据 / 接口稳定对应。');\r
+    h += row('字段名（API 标识·自动生成）', \`<input id="cfg_field" value="\${f.fieldName}" disabled class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm bg-gray-100 text-gray-500 cursor-not-allowed">\`, '<b>自动生成规则：</b>使用「控件英文标识_13位时间戳_5位小写字母数字」，例如 member_1760000000000_a7k3m。字段名在创建字段时一次性生成并锁定，<b>不可手动修改</b>，以保证与提交数据 / 接口稳定对应。');\r
     h += row('字段宽度（单元格长度）', \`<select id="cfg_span" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm">\${SPAN_OPTS.map(o=>\`<option value="\${o[0]}" \${(f.span||12)==o[0]?'selected':''}>\${o[1]}</option>\`).join('')}</select>\`, '基于 12 栅格系统决定该字段横向占位（整行/1/2/1/3/1/4），实现不同字段并排布局，提升空间利用率。');
     h += row('标签位置', \`<select id="cfg_lpos" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="top" \${(f.labelPos||formConfig.labelPos)==='top'?'selected':''}>标题在上</option><option value="left" \${(f.labelPos||formConfig.labelPos)==='left'?'selected':''}>标题在左</option></select>\`, '字段标题相对输入框的位置；不设置时继承表单级「标签位置」。切换后画布即时呈现上下/左右两种版式。');
     h += row('标签对齐', \`<select id="cfg_lalign" class="form-input w-full border border-gray-300 rounded-md px-2.5 py-1.5 text-sm"><option value="left" \${(f.labelAlign||formConfig.labelAlign)==='left'?'selected':''}>左对齐</option><option value="right" \${(f.labelAlign||formConfig.labelAlign)==='right'?'selected':''}>右对齐</option></select>\`, '标签文字对齐方式；标题在左时常用右对齐更整齐。切换即时反映在画布。');
